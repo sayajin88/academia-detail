@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,10 +20,15 @@ import {
   Phone,
   Mail,
   MapPin,
-  X
+  X,
+  Menu
 } from "lucide-react";
 
-// Import new components
+// Import new optimized components
+import { OptimizedHero } from "@/components/OptimizedHero";
+import { AdvancedInteractives } from "@/components/AdvancedInteractives";
+import { PsychologicalTriggers } from "@/components/PsychologicalTriggers";
+import { MobileOptimization } from "@/components/MobileOptimization";
 import { ExitIntentPopup } from "@/components/ExitIntentPopup";
 import { StickyFloatingCTA } from "@/components/StickyFloatingCTA";
 import { ROICalculator } from "@/components/ROICalculator";
@@ -45,108 +51,43 @@ import danielLopezInstructor from "@/assets/daniel-lopez-instructor.webp";
 import certificadoDetailing from "@/assets/certificado-detailing.png";
 
 const Index = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen animated-bg">
-      {/* New Interactive Components */}
+      {/* Enhanced Interactive Components */}
       <ExitIntentPopup />
       <StickyFloatingCTA />
       <LiveChat />
       <ProgressTracker />
       <SocialProofBar />
-      {/* Top Banner - FunnelLabs Style */}
+      <PsychologicalTriggers />
+      <MobileOptimization isOpen={mobileMenuOpen} onToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
+      
+      {/* Mobile Menu Button */}
+      <Button
+        variant="ghost"
+        size="sm"
+        className="fixed top-4 right-4 z-50 lg:hidden glass-card"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+      >
+        <Menu className="w-5 h-5" />
+      </Button>
+
+      {/* Top Banner - Enhanced */}
       <div className="bg-primary text-white text-center py-3 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary opacity-90"></div>
-        <div className="relative z-10 flex items-center justify-center gap-4">
-          <span className="text-sm font-bold">Esta oferta desaparece en</span>
+        <div className="relative z-10 flex items-center justify-center gap-4 container mx-auto px-4">
+          <span className="text-sm font-bold">🔥 Oferta limitada termina en</span>
           <Countdown />
-          <Button variant="glass" size="sm" className="ml-4">
-            COMPRAR
+          <Button variant="glass" size="sm" className="ml-4 animate-pulse">
+            RESERVAR PLAZA
           </Button>
         </div>
       </div>
 
-      {/* Floating Logo */}
-      <div className="fixed top-4 left-4 z-50 animate-float">
-        <img src={detailParkLogo} alt="Detail Park" className="h-12 filter brightness-0 invert" />
-      </div>
-
-      {/* Hero Section - Exact FunnelLabs Style */}
-      <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-        {/* Background Video/Image Effect */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{ backgroundImage: `url(${heroDetailing})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-hero"></div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-4 h-4 bg-primary rounded-full animate-pulse opacity-60"></div>
-        <div className="absolute top-40 right-20 w-6 h-6 bg-primary/50 rounded-full animate-float"></div>
-        <div className="absolute bottom-40 left-1/4 w-3 h-3 bg-primary rounded-full animate-bounce"></div>
-        
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 glass-intense rounded-full px-6 py-3 mb-8 animate-bounce-in">
-            <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-            <span className="text-white text-sm font-bold uppercase tracking-wide">Oferta por tiempo limitado</span>
-          </div>
-          
-          {/* Main Headline - FunnelLabs Style */}
-          <h1 className="text-5xl md:text-8xl font-black mb-8 leading-none animate-fade-in-up">
-            <span className="text-white">La clave para conseguir</span><br />
-            <span className="gradient-text animate-glow-pulse">Técnicas de Detailing</span><br />
-            <span className="text-white">Disruptivas y Altamente</span><br />
-            <span className="gradient-text animate-glow-pulse">Efectivas</span><br />
-            <span className="text-white">en</span> <span className="gradient-text italic">Solo unos Días</span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-white/80 mb-4 max-w-4xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            *Aun sin tener experiencia previa y sin tener que invertir miles de euros*
-          </p>
-          
-          <Button variant="hero" size="xl" className="mb-12 animate-bounce-in" style={{ animationDelay: '0.4s' }}>
-            Obtén Acceso Ahora
-          </Button>
-          
-          <div className="flex items-center justify-center gap-2 text-white/80 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <span className="text-lg">+300 personas han utilizado nuestras técnicas para crecer profesionalmente</span>
-          </div>
-          
-          {/* Social Proof Avatars - FunnelLabs Style */}
-          <div className="flex justify-center gap-3 mt-8 animate-slide-in-right" style={{ animationDelay: '0.8s' }}>
-            {[1,2,3,4,5].map((i) => (
-              <div key={i} className="w-16 h-16 rounded-full bg-gradient-primary border-4 border-white/20 flex items-center justify-center hover-glow transform transition-all duration-300 hover:scale-110">
-                <span className="text-white font-bold text-lg">{i}</span>
-              </div>
-            ))}
-            <div className="ml-4 flex items-center">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          {/* Video Preview - FunnelLabs Style */}
-          <div className="mt-16 max-w-4xl mx-auto animate-scale-in" style={{ animationDelay: '1s' }}>
-            <div className="glass-intense rounded-3xl p-8 hover-glow">
-              <div className="relative">
-                <img 
-                  src={beforeAfterDetailing} 
-                  alt="Preview del curso" 
-                  className="rounded-2xl w-full shadow-glow-intense"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Button variant="glass" size="xl" className="rounded-full w-20 h-20 animate-pulse-glow">
-                    <PlayCircle className="w-10 h-10" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Ultra-Optimized Hero Section */}
+      <OptimizedHero />
 
       {/* Logos Carousel - FunnelLabs Style */}
       <section className="py-16 bg-black/50 overflow-hidden">
@@ -343,16 +284,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Urgency & Interactive Section */}
-      <section className="py-16 bg-black/30">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-3 gap-8 mb-16">
-            <UrgencyTimer />
-            <ROICalculator />
-            <PersonalityQuiz />
-          </div>
-        </div>
-      </section>
+      {/* Advanced Interactive Components */}
+      <AdvancedInteractives />
 
       {/* Video Testimonials */}
       <VideoTestimonials />

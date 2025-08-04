@@ -249,7 +249,7 @@
   animation: glow-pulse 2s ease-in-out infinite;
 }
 
-/* Responsive utilities & image optimization */
+/* Enhanced responsive utilities & performance optimization */
 img {
   max-width: 100%;
   height: auto;
@@ -264,9 +264,35 @@ img {
   align-items: center;
 }
 
-@media (max-width: 768px) {
+/* Mobile-first responsive design */
+@media (max-width: 480px) {
   .text-responsive {
-    font-size: clamp(2rem, 8vw, 4rem);
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    line-height: 1.2;
+  }
+  
+  .container-responsive {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  .grid-responsive {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .glass-card {
+    padding: 1rem;
+  }
+  
+  .glass-intense {
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .text-responsive {
+    font-size: clamp(2rem, 7vw, 3.5rem);
   }
   
   .container-responsive {
@@ -283,6 +309,34 @@ img {
 @media (min-width: 769px) and (max-width: 1024px) {
   .grid-responsive {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Touch-friendly mobile interactions */
+@media (hover: none) and (pointer: coarse) {
+  .hover-glow:hover {
+    transform: none;
+    box-shadow: var(--shadow-glow-subtle);
+  }
+  
+  .hover-scale:hover {
+    transform: none;
+  }
+  
+  button, .button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
