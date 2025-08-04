@@ -222,6 +222,43 @@
   animation: bounce-in 0.8s ease-out;
 }
 
+/* Responsive utilities & image optimization */
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  loading: lazy;
+}
+
+.image-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .text-responsive {
+    font-size: clamp(2rem, 8vw, 4rem);
+  }
+  
+  .container-responsive {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .grid-responsive {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* FunnelLabs style gradient text */
 .gradient-text {
   background: var(--gradient-primary);
