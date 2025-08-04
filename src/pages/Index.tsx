@@ -22,6 +22,20 @@ import {
   X
 } from "lucide-react";
 
+// Import new components
+import { ExitIntentPopup } from "@/components/ExitIntentPopup";
+import { StickyFloatingCTA } from "@/components/StickyFloatingCTA";
+import { ROICalculator } from "@/components/ROICalculator";
+import { PersonalityQuiz } from "@/components/PersonalityQuiz";
+import { LiveChat } from "@/components/LiveChat";
+import { ProgressTracker } from "@/components/ProgressTracker";
+import { SocialProofBar } from "@/components/SocialProofBar";
+import { UrgencyTimer } from "@/components/UrgencyTimer";
+import { VideoTestimonials } from "@/components/VideoTestimonials";
+import { TrustSignals } from "@/components/TrustSignals";
+import { FAQ } from "@/components/FAQ";
+import { PricingComparison } from "@/components/PricingComparison";
+
 // Import images
 import detailParkLogo from "@/assets/detail-park-logo.webp";
 import heroDetailing from "@/assets/hero-detailing.jpg";
@@ -33,6 +47,12 @@ import certificadoDetailing from "@/assets/certificado-detailing.png";
 const Index = () => {
   return (
     <div className="min-h-screen animated-bg">
+      {/* New Interactive Components */}
+      <ExitIntentPopup />
+      <StickyFloatingCTA />
+      <LiveChat />
+      <ProgressTracker />
+      <SocialProofBar />
       {/* Top Banner - FunnelLabs Style */}
       <div className="bg-primary text-white text-center py-3 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary opacity-90"></div>
@@ -322,6 +342,29 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Urgency & Interactive Section */}
+      <section className="py-16 bg-black/30">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+            <UrgencyTimer />
+            <ROICalculator />
+            <PersonalityQuiz />
+          </div>
+        </div>
+      </section>
+
+      {/* Video Testimonials */}
+      <VideoTestimonials />
+
+      {/* Trust Signals */}
+      <TrustSignals />
+
+      {/* Pricing Comparison */}
+      <PricingComparison />
+
+      {/* FAQ Section */}
+      <FAQ />
 
       {/* Access Section - FunnelLabs Style */}
       <section className="py-24 bg-black/50">
