@@ -18,9 +18,10 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-gradient-primary text-white border-2 border-primary/20 hover:border-primary/40 shadow-glow hover:shadow-[0_0_60px_hsl(0_84%_60%/0.5)] transform hover:scale-105 transition-all duration-300 font-semibold",
-        cta: "bg-primary text-primary-foreground hover:bg-primary-glow shadow-primary hover:shadow-glow transform hover:scale-105 font-bold text-lg",
-        glass: "glass-card text-white border-white/20 hover:border-white/40 backdrop-blur-md hover:bg-white/10"
+        hero: "bg-gradient-primary text-white border-2 border-primary/30 hover:border-primary/60 shadow-glow-intense hover:shadow-glow-intense transform hover:scale-110 transition-all duration-500 font-bold uppercase tracking-wide hover:animate-glow-pulse",
+        cta: "bg-primary text-primary-foreground hover:bg-primary-glow shadow-primary hover:shadow-glow-intense transform hover:scale-105 font-bold text-lg uppercase tracking-wide transition-all duration-300",
+        glass: "glass-card text-white border-white/20 hover:border-primary/40 backdrop-blur-md hover:bg-white/10 transform hover:scale-105 transition-all duration-300",
+        funnel: "glass-intense text-white border-primary/50 hover:border-primary shadow-glow-subtle hover:shadow-glow-intense transform hover:scale-105 transition-all duration-300 font-bold uppercase"
       },
       size: {
         default: "h-10 px-4 py-2",

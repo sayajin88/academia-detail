@@ -6,100 +6,104 @@
 
 @layer base {
   :root {
-    /* Dark theme inspired by FunnelLabs with red gradient background */
-    --background: 0 0% 5%; /* Very dark background */
-    --foreground: 0 0% 95%;
+    /* FunnelLabs exact color scheme - very dark with red accents */
+    --background: 220 13% 6%; /* Deep dark blue-black */
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 8%;
+    --card: 220 13% 8%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 8%;
+    --popover: 220 13% 8%;
     --popover-foreground: 0 0% 95%;
 
-    /* Red primary colors like FunnelLabs */
-    --primary: 0 84% 60%; /* Bright red */
+    /* Bright red primary like FunnelLabs */
+    --primary: 0 91% 55%; /* Vibrant red */
     --primary-foreground: 0 0% 98%;
-    --primary-glow: 0 84% 70%; /* Lighter red for glow effects */
+    --primary-glow: 0 91% 65%; /* Lighter red for glow */
+    --primary-dark: 0 91% 45%; /* Darker red */
 
-    --secondary: 0 0% 12%;
+    --secondary: 220 13% 12%;
     --secondary-foreground: 0 0% 85%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 220 13% 10%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 0 84% 60%;
+    --accent: 0 91% 55%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 12%;
-    --ring: 0 84% 60%;
+    --border: 220 13% 15%;
+    --input: 220 13% 12%;
+    --ring: 0 91% 55%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Beautiful gradients inspired by FunnelLabs */
-    --gradient-primary: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(15 84% 55%) 100%);
-    --gradient-background: linear-gradient(135deg, hsl(0 0% 5%) 0%, hsl(0 0% 8%) 50%, hsl(15 20% 10%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 3%) 0%, hsl(15 30% 8%) 100%);
+    /* FunnelLabs style gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(0 91% 55%) 0%, hsl(15 91% 60%) 50%, hsl(30 91% 65%) 100%);
+    --gradient-background: radial-gradient(ellipse at top, hsl(220 13% 8%) 0%, hsl(220 13% 6%) 50%, hsl(220 13% 4%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(220 13% 4%) 0%, hsl(220 13% 6%) 50%, hsl(0 91% 10%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(220 13% 8% / 0.8) 0%, hsl(220 13% 10% / 0.6) 100%);
     
-    /* Shadows with red glow */
-    --shadow-glow: 0 0 40px hsl(0 84% 60% / 0.3);
-    --shadow-primary: 0 10px 30px hsl(0 84% 60% / 0.2);
-    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.4);
+    /* Intense glow effects like FunnelLabs */
+    --shadow-glow-intense: 0 0 80px hsl(0 91% 55% / 0.6);
+    --shadow-primary: 0 20px 40px hsl(0 91% 55% / 0.3);
+    --shadow-card: 0 8px 32px hsl(220 13% 2% / 0.8);
+    --shadow-glow-subtle: 0 0 40px hsl(0 91% 55% / 0.2);
 
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Advanced animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-glow: box-shadow 0.3s ease-in-out;
 
-    --sidebar-background: 0 0% 7%;
+    --sidebar-background: 220 13% 7%;
     --sidebar-foreground: 0 0% 85%;
-    --sidebar-primary: 0 84% 60%;
+    --sidebar-primary: 0 91% 55%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent: 220 13% 12%;
     --sidebar-accent-foreground: 0 0% 85%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 84% 60%;
+    --sidebar-border: 220 13% 15%;
+    --sidebar-ring: 0 91% 55%;
   }
 
   .dark {
-    /* Already using dark theme as default, keeping consistent */
-    --background: 0 0% 5%;
-    --foreground: 0 0% 95%;
+    /* Consistent with default dark theme */
+    --background: 220 13% 6%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 8%;
+    --card: 220 13% 8%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 8%;
+    --popover: 220 13% 8%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 0 84% 60%;
+    --primary: 0 91% 55%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 12%;
+    --secondary: 220 13% 12%;
     --secondary-foreground: 0 0% 85%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 220 13% 10%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 0 84% 60%;
+    --accent: 0 91% 55%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 12%;
-    --ring: 0 84% 60%;
-    --sidebar-background: 0 0% 7%;
+    --border: 220 13% 15%;
+    --input: 220 13% 12%;
+    --ring: 0 91% 55%;
+    --sidebar-background: 220 13% 7%;
     --sidebar-foreground: 0 0% 85%;
-    --sidebar-primary: 0 84% 60%;
+    --sidebar-primary: 0 91% 55%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent: 220 13% 12%;
     --sidebar-accent-foreground: 0 0% 85%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 84% 60%;
+    --sidebar-border: 220 13% 15%;
+    --sidebar-ring: 0 91% 55%;
   }
 }
 
@@ -119,45 +123,148 @@
   }
 }
 
-/* Custom animations */
+/* FunnelLabs style animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-20px); }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: var(--shadow-glow); }
-  50% { box-shadow: 0 0 60px hsl(0 84% 60% / 0.5); }
+  0%, 100% { box-shadow: var(--shadow-glow-subtle); }
+  50% { box-shadow: var(--shadow-glow-intense); }
 }
 
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes fade-in-up {
+  from { 
+    opacity: 0; 
+    transform: translateY(40px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    filter: drop-shadow(0 0 20px hsl(0 91% 55% / 0.4));
+  }
+  50% { 
+    filter: drop-shadow(0 0 40px hsl(0 91% 55% / 0.8));
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+  animation: pulse-glow 3s ease-in-out infinite;
 }
 
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out;
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out;
 }
 
-/* Custom gradient text */
+.animate-scale-in {
+  animation: scale-in 0.6s ease-out;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.8s ease-out;
+}
+
+/* FunnelLabs style gradient text */
 .gradient-text {
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: drop-shadow(0 0 20px hsl(0 91% 55% / 0.3));
 }
 
-/* Glassmorphism effects */
+/* Enhanced glassmorphism effects */
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  background: var(--gradient-card);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-card);
+}
+
+.glass-intense {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(30px);
+  border: 2px solid rgba(255, 0, 0, 0.2);
+  box-shadow: var(--shadow-glow-intense);
+}
+
+/* FunnelLabs style hover effects */
+.hover-glow {
+  transition: var(--transition-glow);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow-intense);
+  transform: translateY(-5px);
+}
+
+/* Animated backgrounds */
+.animated-bg {
+  background: var(--gradient-background);
+  background-size: 200% 200%;
+  animation: gradient-shift 10s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
