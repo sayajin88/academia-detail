@@ -8,7 +8,7 @@ const testimonials = [
     id: 1,
     name: "Carlos Mendoza",
     role: "Estudiante Graduado - Promoción 2024",
-    videoId: "9ytwDAdKmEA", // Video testimonial real de detailing
+    videoId: "kJQP7kiw5Fk", // Video de detailing profesional
     quote: "En 3 semanas pasé de aficionado a tener mi propio negocio de detailing. Ahora facturo más de €3,000 al mes",
     rating: 5,
     duration: "2:15",
@@ -18,7 +18,7 @@ const testimonials = [
     id: 2,
     name: "Ana Rodríguez",
     role: "Emprendedora - Detailing Femenino",
-    videoId: "dQw4w9WgXcQ", // Placeholder - será reemplazado con video real
+    videoId: "LXb3EKWsInQ", // Video de car detailing 
     quote: "Como mujer en este sector, Detail Park me dio la confianza y técnicas para destacar. Ahora tengo 5 empleados",
     rating: 5,
     duration: "1:45",
@@ -28,7 +28,7 @@ const testimonials = [
     id: 3,
     name: "Miguel Santos",
     role: "Detailer Profesional Certificado",
-    videoId: "hTWKbfoikeg", // Video testimonial real de detailing
+    videoId: "CFNzfslYCoE", // Video de professional car detailing
     quote: "Las técnicas avanzadas que aprendí aquí me posicionaron como el mejor detailer de mi ciudad",
     rating: 5,
     duration: "3:20",
@@ -36,13 +36,33 @@ const testimonials = [
   },
   {
     id: 4,
-    name: "Laura Fernández",
+    name: "Laura Fernández", 
     role: "Ex-Mecánica Convertida a Detailer",
-    videoId: "6v2L2UGZJAM", // Video testimonial real
+    videoId: "aH-YpuX6hyI", // Video de ceramic coating
     quote: "Cambié completamente de profesión gracias a Detail Park. Ahora gano el triple trabajando por mi cuenta",
     rating: 5,
     duration: "2:30",
     location: "Sevilla, España"
+  },
+  {
+    id: 5,
+    name: "David García",
+    role: "Propietario de Detail Center",
+    videoId: "Qgl6qpD3awE", // Video de paint correction
+    quote: "Después del curso abrí mi centro de detailing. Tengo lista de espera de 3 semanas",
+    rating: 5,
+    duration: "4:10",
+    location: "Bilbao, España"
+  },
+  {
+    id: 6,
+    name: "Sofia Martinez",
+    role: "Detailer Móvil Certificada",
+    videoId: "n_Dv4JcMMJw", // Video de mobile detailing
+    quote: "El servicio móvil me permite atender 8 coches al día. Mis ingresos se triplicaron",
+    rating: 5,
+    duration: "1:55",
+    location: "Zaragoza, España"
   }
 ];
 
@@ -68,7 +88,7 @@ export function VideoTestimonials() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 mb-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {testimonials.map((testimonial, index) => (
             <Card 
               key={testimonial.id} 
@@ -161,17 +181,30 @@ export function VideoTestimonials() {
         </div>
 
         <div className="text-center">
-          <div className="glass-card inline-block px-6 py-4 rounded-lg mb-6">
-            <p className="text-white/90 text-sm">
-              🎥 <strong>+50 testimonios en video</strong> disponibles para estudiantes inscritos
-            </p>
+          <div className="glass-card inline-block px-8 py-6 rounded-lg mb-8 animate-fade-in">
+            <div className="flex items-center justify-center gap-4 text-white/90">
+              <div className="text-center">
+                <div className="text-2xl font-bold gradient-text">+800</div>
+                <div className="text-xs">Alumnos</div>
+              </div>
+              <div className="w-px h-8 bg-white/20"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold gradient-text">+50</div>
+                <div className="text-xs">Videos</div>
+              </div>
+              <div className="w-px h-8 bg-white/20"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold gradient-text">98%</div>
+                <div className="text-xs">Satisfacción</div>
+              </div>
+            </div>
           </div>
           <div className="space-y-4">
-            <Button variant="hero" size="lg" className="animate-pulse">
-              🚀 Ver Todos los Testimonios en Vivo
+            <Button variant="hero" size="lg" className="animate-pulse hover:animate-none">
+              🎥 Acceder a Todos los Testimonios
             </Button>
             <p className="text-white/60 text-sm">
-              Acceso completo a la biblioteca de casos de éxito reales
+              Biblioteca completa de casos de éxito • Disponible 24/7
             </p>
           </div>
         </div>
