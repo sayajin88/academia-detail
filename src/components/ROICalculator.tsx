@@ -7,12 +7,15 @@ import { TrendingUp, Calculator, Euro } from "lucide-react";
 export function ROICalculator() {
   const [servicesPerMonth, setServicesPerMonth] = useState([10]);
   const [pricePerService, setPricePerService] = useState([50]);
+  const [coursePrice, setCoursePrice] = useState([297]);
   
   const monthlyRevenue = servicesPerMonth[0] * pricePerService[0];
   const yearlyRevenue = monthlyRevenue * 12;
-  const courseInvestment = 297;
+  const courseInvestment = coursePrice[0];
   const roi = ((yearlyRevenue - courseInvestment) / courseInvestment * 100).toFixed(0);
   const paybackDays = Math.ceil((courseInvestment / monthlyRevenue) * 30);
+  const paybackWeeks = Math.ceil(paybackDays / 7);
+  const paybackMonths = Math.ceil(courseInvestment / monthlyRevenue);
 
   return (
     <Card className="glass-intense border-primary/30 hover-glow">
@@ -51,6 +54,31 @@ export function ROICalculator() {
             step={5}
             className="w-full"
           />
+        </div>
+
+        <div>
+          <label className="text-white text-sm font-semibold mb-2 block">
+            Precio del curso: €{coursePrice[0]}
+          </label>
+          <Slider
+            value={coursePrice}
+            onValueChange={setCoursePrice}
+            max={500}
+            min={97}
+            step={10}
+            className="w-full"
+          />
+        </div>
+
+        {/* Tiempo de Amortización - Resultado Principal */}
+        <div className="bg-gradient-primary/30 rounded-xl p-6 border border-primary/40 text-center">
+          <h4 className="text-white font-bold text-lg mb-3">⏱️ Tiempo de Amortización</h4>
+          <div className="text-4xl font-bold gradient-text mb-2">
+            {paybackMonths} {paybackMonths === 1 ? 'mes' : 'meses'}
+          </div>
+          <div className="text-sm text-white/80">
+            Recuperas la inversión en <strong>{paybackDays} días</strong>
+          </div>
         </div>
 
         <div className="bg-gradient-primary/20 rounded-xl p-4 border border-primary/30">
