@@ -86,200 +86,145 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Ultra-Optimized Hero Section */}
-      <OptimizedHero />
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img 
+            src={heroDetailing} 
+            alt="Professional Detailing" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60"></div>
+        </div>
+        
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
+            Domina el Detailing Profesional 
+            <br/>y <span className="gradient-text">Crea tu Negocio Rentable</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
+            Aprende técnicas profesionales de detailing y construye una carrera exitosa. 
+            Sin experiencia previa necesaria.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <Button variant="hero" size="xl" className="animate-pulse">
+              EMPEZAR AHORA
+            </Button>
+            <Button variant="glass" size="xl">
+              Ver Demostración
+            </Button>
+          </div>
+          
+          <div className="flex items-center justify-center gap-8 text-white/80">
+            <div className="flex items-center gap-2">
+              <Users className="w-5 h-5" />
+              <span>+2,000 estudiantes</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+              <span>4.9/5 valoración</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Award className="w-5 h-5" />
+              <span>Certificación oficial</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* Logos Carousel - FunnelLabs Style */}
-      <section className="py-16 bg-black/50 overflow-hidden">
+      {/* Countdown Section */}
+      <section className="py-12 bg-primary">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-12 opacity-60 animate-float">
-            {['DETAILING PROFESIONAL', 'TÉCNICAS AVANZADAS', 'CERTIFICACIÓN OFICIAL', 'PRÁCTICA REAL', 'BOLSA DE EMPLEO'].map((text, index) => (
-              <div key={index} className="flex-shrink-0">
-                <span className="text-white font-bold text-xl tracking-wider">{text}</span>
+          <div className="text-center">
+            <h3 className="text-2xl font-bold text-white mb-4">
+              🔥 Oferta Especial Termina en:
+            </h3>
+            <Countdown />
+            <Button variant="glass" className="mt-4 animate-pulse">
+              ACCEDER AHORA
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Logos Section */}
+      <section className="py-12 bg-black/20">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center gap-8 opacity-60">
+            {['DETAILING PROFESIONAL', 'TÉCNICAS AVANZADAS', 'CERTIFICACIÓN OFICIAL'].map((text, index) => (
+              <div key={index} className="text-white font-semibold text-sm">
+                {text}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Problems Section - FunnelLabs Style */}
-      <section className="py-24">
+      {/* Problems Section */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <div className="inline-block glass-card px-8 py-3 rounded-full mb-8">
-              <span className="gradient-text font-bold uppercase tracking-wide">Tus problemas</span>
-            </div>
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
-              Si estás aquí... te sucede esto cuando vas a
-              <br/><span className="gradient-text">aprender Detailing profesional.</span>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+              ¿Te sientes <span className="gradient-text">frustrado</span> con tu progreso?
             </h2>
-            <p className="text-xl text-white/80">Y sabemos lo frustrante que puede llegar a ser.</p>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+              Sabemos lo que se siente al intentar aprender detailing sin la guía adecuada.
+            </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
               {
-                icon: "❌",
-                title: "No Conviertes Hobby en Negocio",
-                description: "Tener pasión no basta, necesitas técnicas profesionales. Aquí verás cómo convertir afición en dinero."
+                title: "Técnicas Amateur",
+                description: "Resultados que no impresionan a los clientes"
               },
               {
-                icon: "❌", 
-                title: "Técnicas Genéricas y Poco Profesionales",
-                description: "Si tu trabajo parece amateur, espanta clientes. Aquí aprenderás técnicas de élite."
+                title: "Formación Cara",
+                description: "Miles de euros sin garantía de éxito"
               },
               {
-                icon: "❌",
-                title: "Altos Precios por Formación",
-                description: "No necesitas una academia cara, necesitas formación que realmente funcione."
-              },
-              {
-                icon: "❌",
-                title: "Falta de Conocimientos y Experiencia Previa", 
-                description: "No necesitas ser un pro en detailing, solo adaptar técnicas que ya están optimizadas."
-              },
-              {
-                icon: "❌",
-                title: "Prueba y Error = Tiempo Perdido",
-                description: "Cada error es dinero perdido. Usa técnicas que ya han pasado la prueba."
-              },
-              {
-                icon: "❌",
-                title: "Frustración por los Resultados",
-                description: "Si tu detailing no impresiona, el problema no eres tú. Es la formación. Cámbiala."
+                title: "Prueba y Error",
+                description: "Perdiendo tiempo y dinero sin dirección"
               }
             ].map((problem, index) => (
-              <Card key={index} className="glass-card border-red-500/30 hover:border-red-500/60 transition-all duration-500 hover-glow group">
-                <CardContent className="p-8 text-center">
-                  <div className="text-4xl mb-4 group-hover:animate-bounce">{problem.icon}</div>
-                  <h3 className="text-xl font-bold text-white mb-4">{problem.title}</h3>
-                  <p className="text-white/80">{problem.description}</p>
-                </CardContent>
+              <Card key={index} className="glass-card p-6 text-center">
+                <h3 className="text-lg font-semibold text-white mb-3">{problem.title}</h3>
+                <p className="text-white/70">{problem.description}</p>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Solution Section - FunnelLabs Style */}
-      <section className="py-24 bg-black/30">
+      {/* Solution Section */}
+      <section className="py-16 bg-black/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <div className="inline-block glass-card px-8 py-3 rounded-full mb-8">
-              <span className="gradient-text font-bold uppercase tracking-wide">Tu solución</span>
-            </div>
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
-              No te gastes miles de euros en una formación,
-              <br/><span className="gradient-text">hemos simplificado el proceso.</span>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+              La <span className="gradient-text">solución</span> que necesitas
             </h2>
-            <p className="text-xl text-white/80 max-w-4xl mx-auto">
-              Hemos redefinido el juego. Para que en vez de pagarle miles de euros a una academia cualquier 
-              persona pueda tener acceso a Técnicas Profesionales de Detailing para su Carrera en Días y Sin Experiencia Previa.
+            <p className="text-lg text-white/80 max-w-3xl mx-auto">
+              Hemos simplificado el proceso para que cualquier persona pueda acceder 
+              a técnicas profesionales de detailing.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              {
-                step: "01",
-                title: "Accede a Detail Park",
-                description: "Inscríbete en nuestro curso y accede a todas nuestras técnicas profesionales y bonuses",
-                image: detailingTools
-              },
-              {
-                step: "02", 
-                title: "Practica en Taller Real",
-                description: "Selecciona las técnicas que más te gusten dentro de nuestro catálogo completo y practícalas en nuestro taller.",
-                image: beforeAfterDetailing
-              },
-              {
-                step: "03",
-                title: "Personaliza tu Aprendizaje",
-                description: "Realiza pequeños ajustes en las técnicas sobre tu estilo (especialización, objetivos, etc.) y en unos días tendrás tu método personalizado.",
-                image: heroDetailing
-              },
-              {
-                step: "04",
-                title: "¡Obtén tu Certificado!",
-                description: "Una vez completada la formación y estés satisfecho, únicamente recibe tu certificado y en tan solo unos días habrás creado tu carrera profesional.",
-                image: certificadoDetailing
-              }
+              { step: "1", title: "Accede", description: "Únete a Detail Park" },
+              { step: "2", title: "Aprende", description: "Técnicas profesionales" },
+              { step: "3", title: "Practica", description: "En taller real" },
+              { step: "4", title: "Certifícate", description: "Obtén tu diploma" }
             ].map((step, index) => (
-              <div key={index} className="text-center group">
-                <div className="glass-intense rounded-3xl p-8 mb-6 hover-glow transition-all duration-500 group-hover:scale-105">
-                  <div className="text-6xl font-black gradient-text mb-4 group-hover:animate-glow-pulse">#{step.step}</div>
-                  <img 
-                    src={step.image} 
-                    alt={step.title}
-                    className="w-full h-40 object-cover rounded-xl mb-4 group-hover:scale-110 transition-transform duration-500"
-                  />
+              <div key={index} className="text-center">
+                <div className="glass-card rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold gradient-text">{step.step}</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:gradient-text transition-all duration-300">{step.title}</h3>
-                <p className="text-white/80">{step.description}</p>
+                <h3 className="text-lg font-semibold text-white mb-2">{step.title}</h3>
+                <p className="text-white/70 text-sm">{step.description}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Us Section - FunnelLabs Style */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <div className="inline-block glass-card px-8 py-3 rounded-full mb-8">
-              <span className="gradient-text font-bold uppercase tracking-wide">¿Por qué nosotros?</span>
-            </div>
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
-              ¿Por qué Detail Park va a 
-              <br/><span className="gradient-text">Cambiar el Juego?</span>
-            </h2>
-            <p className="text-xl text-white/80 max-w-4xl mx-auto">
-              Hemos decidido no guardarnos nada y hacer accesible para cualquier persona 
-              una Formación en Detailing Disruptiva y Efectiva.
-            </p>
-          </div>
-
-          {/* Comparison Table - FunnelLabs Style */}
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Other Options */}
-              <div className="glass-card p-8 border-red-500/30">
-                <h3 className="text-2xl font-bold text-red-400 mb-6 text-center">❌ Otras Opciones</h3>
-                <ul className="space-y-4">
-                  {[
-                    "Cursos Genéricos y Poco Atractivos",
-                    "Curva de Aprendizaje Limitada", 
-                    "Altos Costos por Menor Valor",
-                    "Proceso Lento y Complicado",
-                    "Sin Resultados Respaldados"
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-center gap-3 text-white/80">
-                      <X className="w-5 h-5 text-red-400 flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              {/* Our Solution */}
-              <div className="glass-intense p-8 border-primary/50 shadow-glow-intense">
-                <h3 className="text-2xl font-bold gradient-text mb-6 text-center">✅ Nosotros</h3>
-                <ul className="space-y-4">
-                  {[
-                    "Enfocados en Convertir Afición en Profesión",
-                    "Fácil e Intuitivo de Aprender",
-                    "Optimizado para Todos los Niveles",
-                    "Técnicas, Cursos y Formación Efectivas",
-                    "Respaldado por Resultados Reales"
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-center gap-3 text-white">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                      <span className="font-semibold">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
           </div>
         </div>
       </section>
