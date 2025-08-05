@@ -128,20 +128,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Countdown Section */}
-      <section className="py-12 bg-primary">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              🔥 Oferta Especial Termina en:
-            </h3>
-            <Countdown />
-            <Button variant="glass" className="mt-4 animate-pulse">
-              ACCEDER AHORA
-            </Button>
-          </div>
-        </div>
-      </section>
 
       {/* Logos Section */}
       <section className="py-12 bg-black/20">
