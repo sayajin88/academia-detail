@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { TrendingUp, Calculator, Euro } from "lucide-react";
 
-export function ROICalculator() {
+interface ROICalculatorProps {
+  onCtaClick?: () => void;
+}
+
+export function ROICalculator({ onCtaClick }: ROICalculatorProps = {}) {
   const [servicesPerMonth, setServicesPerMonth] = useState([10]);
   const [pricePerService, setPricePerService] = useState([50]);
   const [coursePrice, setCoursePrice] = useState([297]);
@@ -104,7 +108,7 @@ export function ROICalculator() {
           </div>
         </div>
 
-        <Button variant="hero" className="w-full">
+        <Button variant="hero" className="w-full" onClick={onCtaClick}>
           <Euro className="w-4 h-4 mr-2" />
           EMPEZAR A GANAR AHORA
         </Button>

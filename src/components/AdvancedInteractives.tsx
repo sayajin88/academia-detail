@@ -24,7 +24,11 @@ interface QuizResult {
   courseMatch: number;
 }
 
-export const AdvancedInteractives = () => {
+interface AdvancedInteractivesProps {
+  onCtaClick?: () => void;
+}
+
+export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps = {}) => {
   const [currentQuiz, setCurrentQuiz] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
@@ -273,7 +277,7 @@ export const AdvancedInteractives = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <Button variant="hero" size="lg" className="w-full">
+                    <Button variant="hero" size="lg" className="w-full" onClick={onCtaClick}>
                       Acceder a Mi Plan Personalizado
                     </Button>
                     <Button variant="ghost" size="sm" className="w-full" onClick={resetQuiz}>
@@ -380,7 +384,7 @@ export const AdvancedInteractives = () => {
                 </div>
               </div>
 
-              <Button variant="hero" size="lg" className="w-full">
+              <Button variant="hero" size="lg" className="w-full" onClick={onCtaClick}>
                 <Calculator className="w-5 h-5 mr-2" />
                 Comenzar Mi Negocio de Detailing
               </Button>

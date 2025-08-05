@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Users } from "lucide-react";
 
-export function StickyFloatingCTA() {
+interface StickyFloatingCTAProps {
+  onCtaClick?: () => void;
+}
+
+export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
   const [isVisible, setIsVisible] = useState(false);
   const [spotsLeft] = useState(Math.floor(Math.random() * 8) + 3); // Random between 3-10
 
@@ -34,7 +38,7 @@ export function StickyFloatingCTA() {
           </div>
         </div>
 
-        <Button variant="hero" size="sm" className="w-full group">
+        <Button variant="hero" size="sm" className="w-full group" onClick={onCtaClick}>
           <ShoppingCart className="w-4 h-4 mr-2 group-hover:animate-bounce" />
           RESERVAR AHORA
         </Button>

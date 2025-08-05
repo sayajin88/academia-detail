@@ -41,6 +41,8 @@ import { VideoTestimonials } from "@/components/VideoTestimonials";
 import { TrustSignals } from "@/components/TrustSignals";
 import { FAQ } from "@/components/FAQ";
 import { PricingComparison } from "@/components/PricingComparison";
+import { RegistrationModal } from "@/components/RegistrationModal";
+import { useRegistrationModal } from "@/hooks/useRegistrationModal";
 
 // Import images
 import detailParkLogo from "@/assets/detail-park-logo.webp";
@@ -52,11 +54,12 @@ import certificadoDetailing from "@/assets/certificado-detailing.png";
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isOpen, openModal, closeModal } = useRegistrationModal();
 
   return (
     <div className="min-h-screen animated-bg">
       {/* Enhanced Interactive Components */}
-      <StickyFloatingCTA />
+      <StickyFloatingCTA onCtaClick={openModal} />
       <MobileOptimization isOpen={mobileMenuOpen} onToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
       
       {/* Mobile Menu Button */}
@@ -103,7 +106,7 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="hero" size="xl" className="animate-pulse">
+            <Button variant="hero" size="xl" className="animate-pulse" onClick={openModal}>
               EMPEZAR AHORA
             </Button>
             <Button variant="glass" size="xl">
@@ -211,7 +214,7 @@ const Index = () => {
       </section>
 
       {/* Advanced Interactive Components */}
-      <AdvancedInteractives />
+      <AdvancedInteractives onCtaClick={openModal} />
 
       {/* Video Testimonials */}
       <VideoTestimonials />
@@ -296,7 +299,7 @@ const Index = () => {
               ))}
             </div>
             
-            <Button variant="hero" size="xl" className="mt-12">
+            <Button variant="hero" size="xl" className="mt-12" onClick={openModal}>
               Obtén Acceso Ahora
             </Button>
             
@@ -392,7 +395,7 @@ const Index = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button variant="hero" size="xl">
+            <Button variant="hero" size="xl" onClick={openModal}>
               Obtén Acceso Ahora
             </Button>
             
@@ -491,6 +494,11 @@ const Index = () => {
           </p>
         </div>
       </footer>
+
+      {/* Registration Modal */}
+      <RegistrationModal isOpen={isOpen} onClose={closeModal} />
+
+      <ExitIntentPopup />
     </div>
   );
 };
