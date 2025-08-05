@@ -56,12 +56,7 @@ const Index = () => {
   return (
     <div className="min-h-screen animated-bg">
       {/* Enhanced Interactive Components */}
-      <ExitIntentPopup />
       <StickyFloatingCTA />
-      <LiveChat />
-      <ProgressTracker />
-      <SocialProofBar />
-      <PsychologicalTriggers />
       <MobileOptimization isOpen={mobileMenuOpen} onToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
       
       {/* Mobile Menu Button */}
