@@ -41,6 +41,7 @@ import { VideoTestimonials } from "@/components/VideoTestimonials";
 import { TrustSignals } from "@/components/TrustSignals";
 import { FAQ } from "@/components/FAQ";
 import { PricingComparison } from "@/components/PricingComparison";
+import { InstructorProfile } from "@/components/InstructorProfile";
 import { RegistrationModal } from "@/components/RegistrationModal";
 import { useRegistrationModal } from "@/hooks/useRegistrationModal";
 
@@ -97,12 +98,12 @@ const Index = () => {
         
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            Domina el Detailing Profesional 
-            <br/>y <span className="gradient-text">Crea tu Negocio Rentable</span>
+            Obtén tu Certificación Profesional: 
+            <br/><span className="gradient-text">Inicia tu Carrera en Detailing Hoy</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-            Aprende técnicas profesionales de detailing y construye una carrera exitosa. 
-            Sin experiencia previa necesaria.
+            Domina técnicas avanzadas de detailing automotriz en 3 semanas y lanza tu negocio rentable. 
+            Certificación oficial reconocida en la industria + Garantía de empleo.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -224,6 +225,9 @@ const Index = () => {
 
       {/* Pricing Comparison */}
       <PricingComparison />
+
+      {/* Instructor Profile */}
+      <InstructorProfile />
 
       {/* FAQ Section */}
       <FAQ />

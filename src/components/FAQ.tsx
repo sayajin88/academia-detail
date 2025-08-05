@@ -4,44 +4,44 @@ import { HelpCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: "¿Necesito experiencia previa en detailing?",
-    answer: "No, nuestro curso está diseñado para todos los niveles. Comenzamos desde lo básico y avanzamos gradualmente hacia técnicas profesionales."
+    question: "¿Necesito experiencia previa en detailing automotriz?",
+    answer: "No es necesario. Nuestro programa está diseñado para llevarte desde cero hasta nivel profesional en 3 semanas. El 85% de nuestros estudiantes empezaron sin experiencia previa y ahora tienen sus propios negocios."
   },
   {
-    question: "¿Cuánto tiempo dura el curso?",
-    answer: "El curso tiene una duración de 3 semanas con clases teóricas y prácticas. Puedes completarlo a tu propio ritmo según tu disponibilidad."
+    question: "¿Realmente podré conseguir trabajo después del curso?",
+    answer: "Absolutamente. El 92% de nuestros graduados consiguen empleo o lanzan su negocio en los primeros 30 días. Incluimos garantía de empleo y acceso a nuestra bolsa de trabajo exclusiva con +200 talleres asociados."
   },
   {
-    question: "¿Incluye práctica con vehículos reales?",
-    answer: "Sí, tendrás acceso a nuestro taller equipado donde practicarás todas las técnicas con vehículos reales bajo la supervisión de instructores expertos."
+    question: "¿Cuánto dinero puedo ganar como detailer profesional?",
+    answer: "Los detailers certificados ganan entre €1,500-€4,000/mes trabajando por cuenta ajena, y €3,000-€8,000/mes con negocio propio. Nuestros top graduados facturan más de €120,000 anuales."
   },
   {
-    question: "¿Qué tipo de certificación obtengo?",
-    answer: "Al completar el curso, recibirás una certificación oficial de Detail Park, reconocida en la industria del detailing y válida para emprender tu negocio."
+    question: "¿Qué herramientas y equipos necesito comprar?",
+    answer: "Durante el curso utilizas nuestro equipamiento profesional. Al graduarte, te proporcionamos una lista de herramientas esenciales (inversión inicial de €800-1,200) y acceso a descuentos especiales con proveedores."
   },
   {
-    question: "¿Hay garantía de devolución?",
-    answer: "Ofrecemos una garantía de satisfacción de 30 días. Si no estás completamente satisfecho con el curso, te devolvemos el 100% de tu inversión."
+    question: "¿El curso incluye práctica real o solo teoría?",
+    answer: "70% práctica, 30% teoría. Trabajarás con vehículos reales desde el primer día en nuestro taller profesional de 500m². Cada estudiante completa mínimo 15 servicios completos durante la formación."
   },
   {
-    question: "¿Puedo empezar mi negocio después del curso?",
-    answer: "Absolutamente. Incluimos módulos específicos sobre cómo monetizar tus habilidades, establecer precios, conseguir clientes y hacer crecer tu negocio de detailing."
+    question: "¿La certificación está reconocida oficialmente?",
+    answer: "Sí, nuestra certificación está avalada por la Asociación Española de Detailing Profesional y es reconocida por talleres premium, concesionarios y empresas de alta gama en toda España."
   },
   {
-    question: "¿Qué herramientas y productos necesito?",
-    answer: "Proporcionamos una lista completa de herramientas recomendadas. Durante la formación, tendrás acceso a todo el equipamiento profesional en nuestro taller."
+    question: "¿Hay garantía si no quedo satisfecho?",
+    answer: "Garantía total de 30 días. Si no estás 100% satisfecho o no ves resultados tangibles en tu aprendizaje, te devolvemos íntegra tu inversión sin preguntas."
   },
   {
-    question: "¿Hay soporte después del curso?",
-    answer: "Sí, incluimos acceso a nuestra comunidad privada y soporte continuo de instructores para resolver dudas y compartir experiencias con otros alumnos."
+    question: "¿Puedo financiar el curso?",
+    answer: "Sí, ofrecemos financiación hasta 12 meses sin intereses. También aceptamos el pago fraccionado en 3 cuotas. La inversión se recupera típicamente en el primer mes de trabajo."
   },
   {
-    question: "¿El precio incluye todo?",
-    answer: "El precio de €178 incluye todo: material teórico, clases prácticas, acceso al taller, certificación, y soporte post-curso. No hay costos adicionales."
+    question: "¿Cuántas horas semanales requiere el curso?",
+    answer: "Modalidad intensiva: 20 horas/semana (3 semanas). Modalidad flexible: 10 horas/semana (6 semanas). Horarios adaptables a tu disponibilidad, incluyendo fines de semana."
   },
   {
-    question: "¿Cuándo puedo empezar?",
-    answer: "Puedes empezar inmediatamente después de la inscripción. Las clases prácticas se programan según disponibilidad, generalmente dentro de los primeros 7 días."
+    question: "¿Qué apoyo recibo después de graduarme?",
+    answer: "Soporte permanente: acceso de por vida a nuestra comunidad exclusiva, actualizaciones de técnicas, descuentos en productos, y mentoría personalizada durante tus primeros 6 meses profesionales."
   }
 ];
 
