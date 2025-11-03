@@ -47,11 +47,15 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
     
     try {
       setLoading(true);
+      console.log('🚀 Starting registration process...');
       
       // Validar datos
+      console.log('📝 Validating form data...');
       const validatedData = registrationSchema.parse(formData);
+      console.log('✅ Validation successful');
       
       // Guardar en Supabase
+      console.log('💾 Inserting registration into database...');
       const { data, error } = await supabase
         .from('registrations')
         .insert([
@@ -69,7 +73,10 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
         .single();
 
       if (error) {
-        console.error('Registration insert error:', error);
+        console.error('❌ Registration insert error:', error);
+        console.error('Error code:', (error as any).code);
+        console.error('Error message:', error.message);
+        console.error('Error details:', error.details);
         if ((error as any).code === '23505') { // Duplicate email
           toast.error("Este email ya está registrado");
           return;
@@ -77,10 +84,12 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
         throw error;
       }
 
+      console.log('✅ Registration inserted successfully:', data);
       const newRegistrationId = data.id;
       setRegistrationId(newRegistrationId);
       
       // Enviar emails de confirmación
+      console.log('📧 Sending confirmation emails...');
       try {
         const emailResponse = await supabase.functions.invoke('send-registration-emails', {
           body: {
@@ -102,32 +111,48 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
         });
 
         if (emailResponse.error) {
-          console.error('Email sending error:', emailResponse.error);
+          console.error('⚠️ Email sending error:', emailResponse.error);
         } else {
-          console.log('Emails sent successfully');
+          console.log('✅ Emails sent successfully');
         }
       } catch (emailError) {
-        console.error('Failed to send emails:', emailError);
+        console.error('⚠️ Failed to send emails:', emailError);
       }
       
       // Crear sesión de pago con Stripe
+      console.log('💳 Creating Stripe checkout session...');
       const { data: checkoutData, error: checkoutError } = await supabase.functions.invoke('create-checkout', {
         body: { registrationId: newRegistrationId }
       });
 
-      if (checkoutError || !checkoutData?.url) {
-        console.error('Checkout creation error:', checkoutError);
-        toast.error("Error al crear la sesión de pago");
+      console.log('Checkout response:', { checkoutData, checkoutError });
+
+      if (checkoutError) {
+        console.error('❌ Checkout creation error:', checkoutError);
+        toast.error("Error al crear la sesión de pago: " + (checkoutError.message || 'Desconocido'));
         return;
       }
 
+      if (!checkoutData?.url) {
+        console.error('❌ No checkout URL received:', checkoutData);
+        toast.error("No se recibió la URL de pago");
+        return;
+      }
+
+      console.log('✅ Redirecting to Stripe checkout:', checkoutData.url);
       // Redirigir a Stripe Checkout
       window.location.href = checkoutData.url;
       
     } catch (error) {
-      console.error('Registration submit failed:', error);
+      console.error('❌ Registration submit failed:', error);
+      console.error('Error type:', typeof error);
+      console.error('Error details:', JSON.stringify(error, null, 2));
+      
       if (error instanceof z.ZodError) {
+        console.error('Validation errors:', error.errors);
         toast.error(error.errors[0].message);
+      } else if (error instanceof Error) {
+        toast.error("Error al registrar: " + error.message);
       } else {
         toast.error("Error al registrar. Intenta de nuevo");
       }
