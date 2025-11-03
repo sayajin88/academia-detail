@@ -43,23 +43,23 @@ export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 animate-slide-in-right">
-      <div className="glass-intense rounded-2xl p-4 border border-primary/30 shadow-glow max-w-sm">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-          <span className="text-white text-sm font-semibold">La Jornada Cero - Evento Exclusivo</span>
+    <div className="fixed bottom-4 right-4 left-4 md:left-auto md:right-6 z-50 animate-slide-in-right">
+      <div className="glass-intense rounded-xl md:rounded-2xl p-3 md:p-4 border border-primary/30 shadow-glow md:max-w-sm mx-auto md:mx-0">
+        <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+          <div className="w-2 h-2 md:w-3 md:h-3 bg-primary rounded-full animate-pulse flex-shrink-0"></div>
+          <span className="text-white text-xs md:text-sm font-semibold truncate">La Jornada Cero - Evento Exclusivo</span>
         </div>
         
-        <div className="text-center mb-4">
-          <div className="text-2xl font-bold gradient-text mb-1">€999 → €299 + IVA</div>
+        <div className="text-center mb-3 md:mb-4">
+          <div className="text-lg md:text-2xl font-bold gradient-text mb-1">€999 → €299 + IVA</div>
           <div className="flex items-center justify-center gap-1 text-xs text-white/80">
-            <Users className="w-3 h-3" />
+            <Users className="w-3 h-3 flex-shrink-0" />
             <span>Solo quedan {spotsLeft} de 10 plazas</span>
           </div>
         </div>
 
-        <Button variant="hero" size="sm" className="w-full group" onClick={onCtaClick}>
-          <ShoppingCart className="w-4 h-4 mr-2 group-hover:animate-bounce" />
+        <Button variant="hero" size="sm" className="w-full group text-sm md:text-base" onClick={onCtaClick}>
+          <ShoppingCart className="w-3 h-3 md:w-4 md:h-4 mr-2 group-hover:animate-bounce" />
           RESERVAR PLAZA
         </Button>
       </div>

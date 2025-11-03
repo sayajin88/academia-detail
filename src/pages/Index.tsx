@@ -418,16 +418,16 @@ const Index = () => {
             <p className="text-xl text-white/80">Listas para empezar a trabajar, en tan solo unos días.</p>
           </div>
           
-          {/* Scrolling Templates Preview */}
-          <div className="relative overflow-hidden mb-16">
-            <div className="flex gap-8 animate-float">
+          {/* Scrolling Templates Preview - Mobile optimized */}
+          <div className="relative overflow-x-auto mb-16 -mx-4 px-4 md:mx-0 md:px-0">
+            <div className="flex gap-4 md:gap-8">
               {[eventoClaseCompleta, eventoAlumnosAtentos, eventoPracticaPulidora, eventoLimpiezaInterior, eventoPulidoFaro].map((img, index) => (
                 <div key={index} className="flex-shrink-0">
-                  <div className="glass-intense rounded-2xl p-4 hover-glow">
+                  <div className="glass-intense rounded-xl md:rounded-2xl p-3 md:p-4 hover-glow">
                     <img 
                       src={img} 
                       alt={`Momento del evento ${index + 1}`}
-                      className="w-80 h-64 object-cover object-center rounded-xl"
+                      className="w-64 md:w-80 h-48 md:h-64 object-cover object-center rounded-lg md:rounded-xl"
                     />
                   </div>
                 </div>
@@ -599,9 +599,9 @@ const Index = () => {
             </h2>
           </div>
           
-          {/* Scrolling Testimonials - Mobile Optimized */}
-          <div className="relative overflow-hidden">
-            <div className="flex gap-4 md:gap-8 animate-float">
+          {/* Scrolling Testimonials - Mobile Optimized with horizontal scroll */}
+          <div className="relative overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+            <div className="flex gap-4 md:gap-8">
               {[
                 {
                   name: "Nacho Amirola",
@@ -616,7 +616,7 @@ const Index = () => {
                   content: "Descubrí este curso a través de un amigo y debo agradecérselo. En 4 días aprendí más que en años de intentar aprender por mi cuenta."
                 }
               ].map((testimonial, index) => (
-                <div key={index} className="flex-shrink-0 w-80 md:w-96">
+                <div key={index} className="flex-shrink-0 w-72 md:w-80 lg:w-96">
                   <TestimonialCard {...testimonial} />
                 </div>
               ))}
