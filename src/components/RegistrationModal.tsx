@@ -76,7 +76,41 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
         throw error;
       }
 
-      setRegistrationId((data as any)?.[0]?.id ?? "");
+      const newRegistrationId = (data as any)?.[0]?.id ?? "";
+      setRegistrationId(newRegistrationId);
+      
+      // Enviar emails de confirmación
+      try {
+        const emailResponse = await supabase.functions.invoke('send-registration-emails', {
+          body: {
+            id: newRegistrationId,
+            firstName: validatedData.firstName,
+            lastName: validatedData.lastName,
+            email: validatedData.email,
+            phone: validatedData.phone,
+            eventDate: "Sábado 13 de Diciembre, 2025",
+            price: "€299 + IVA",
+            reservationExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            })
+          }
+        });
+
+        if (emailResponse.error) {
+          console.error('Email sending error:', emailResponse.error);
+          // No mostramos error al usuario, los emails son secundarios
+        } else {
+          console.log('Emails sent successfully');
+        }
+      } catch (emailError) {
+        console.error('Failed to send emails:', emailError);
+        // Continuar aunque fallen los emails
+      }
+      
       toast.success("¡Pre-inscripción exitosa! Revisa tu email");
       setStep('confirmation');
       
