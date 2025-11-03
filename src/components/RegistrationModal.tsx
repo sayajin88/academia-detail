@@ -64,8 +64,9 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
             accept_marketing: validatedData.acceptMarketing,
             payment_status: 'pending'
           }
-        ]);
-
+        ])
+        .select()
+        .single();
 
       if (error) {
         console.error('Registration insert error:', error);
@@ -76,7 +77,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
         throw error;
       }
 
-      const newRegistrationId = (data as any)?.[0]?.id ?? "";
+      const newRegistrationId = data.id;
       setRegistrationId(newRegistrationId);
       
       // Enviar emails de confirmación
@@ -102,17 +103,26 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
 
         if (emailResponse.error) {
           console.error('Email sending error:', emailResponse.error);
-          // No mostramos error al usuario, los emails son secundarios
         } else {
           console.log('Emails sent successfully');
         }
       } catch (emailError) {
         console.error('Failed to send emails:', emailError);
-        // Continuar aunque fallen los emails
       }
       
-      toast.success("¡Pre-inscripción exitosa! Revisa tu email");
-      setStep('confirmation');
+      // Crear sesión de pago con Stripe
+      const { data: checkoutData, error: checkoutError } = await supabase.functions.invoke('create-checkout', {
+        body: { registrationId: newRegistrationId }
+      });
+
+      if (checkoutError || !checkoutData?.url) {
+        console.error('Checkout creation error:', checkoutError);
+        toast.error("Error al crear la sesión de pago");
+        return;
+      }
+
+      // Redirigir a Stripe Checkout
+      window.location.href = checkoutData.url;
       
     } catch (error) {
       console.error('Registration submit failed:', error);
