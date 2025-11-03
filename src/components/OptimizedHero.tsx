@@ -56,7 +56,7 @@ export const OptimizedHero = () => {
         <div className="absolute inset-0">
           <iframe
             src="https://www.youtube.com/embed/ByRhg2kYD-A?autoplay=1&mute=1&loop=1&playlist=ByRhg2kYD-A&controls=0&showinfo=0&rel=0&modestbranding=1&start=39"
-            className="w-full h-full object-cover opacity-30 md:opacity-20 scale-110 md:scale-150"
+            className="w-full h-full object-cover opacity-50 md:opacity-20 scale-110 md:scale-150"
             allow="autoplay; encrypted-media"
             style={{ pointerEvents: 'none' }}
             title="Detail Park Background"
@@ -64,8 +64,8 @@ export const OptimizedHero = () => {
         </div>
 
         {/* Enhanced Gradient Overlay - Better visibility on mobile */}
-        <div className="absolute inset-0 bg-gradient-hero opacity-90 md:opacity-90"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80 md:from-transparent md:via-black/50 md:to-black/80"></div>
+        <div className="absolute inset-0 bg-gradient-hero opacity-70 md:opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70 md:from-transparent md:via-black/50 md:to-black/80"></div>
         
         {/* Floating Particles - Hidden on mobile for performance */}
         <div className="hidden md:block">

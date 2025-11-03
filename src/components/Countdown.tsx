@@ -36,33 +36,37 @@ export function Countdown({ targetDate }: CountdownProps) {
   }, [timeLeft]);
 
   return (
-    <div className="flex items-center justify-center gap-4 text-white">
+    <div className="flex items-center justify-center gap-1.5 md:gap-4 text-white px-2">
+      {timeLeft.days > 0 && (
+        <>
+          <div className="text-center">
+            <div className="text-xl md:text-3xl font-bold bg-red-600/20 rounded-lg px-2 py-1 md:px-4 md:py-2 border border-red-500/30">
+              {String(timeLeft.days).padStart(2, '0')}
+            </div>
+            <div className="text-[10px] md:text-xs mt-1 text-muted-foreground">Días</div>
+          </div>
+          <div className="text-lg md:text-2xl">:</div>
+        </>
+      )}
       <div className="text-center">
-        <div className="text-3xl font-bold bg-red-600/20 rounded-lg px-4 py-2 border border-red-500/30">
-          {String(timeLeft.days).padStart(2, '0')}
-        </div>
-        <div className="text-xs mt-1 text-muted-foreground">Días</div>
-      </div>
-      <div className="text-2xl">:</div>
-      <div className="text-center">
-        <div className="text-3xl font-bold bg-red-600/20 rounded-lg px-4 py-2 border border-red-500/30">
+        <div className="text-xl md:text-3xl font-bold bg-red-600/20 rounded-lg px-2 py-1 md:px-4 md:py-2 border border-red-500/30">
           {String(timeLeft.hours).padStart(2, '0')}
         </div>
-        <div className="text-xs mt-1 text-muted-foreground">Horas</div>
+        <div className="text-[10px] md:text-xs mt-1 text-muted-foreground">Horas</div>
       </div>
-      <div className="text-2xl">:</div>
+      <div className="text-lg md:text-2xl">:</div>
       <div className="text-center">
-        <div className="text-3xl font-bold bg-red-600/20 rounded-lg px-4 py-2 border border-red-500/30">
+        <div className="text-xl md:text-3xl font-bold bg-red-600/20 rounded-lg px-2 py-1 md:px-4 md:py-2 border border-red-500/30">
           {String(timeLeft.minutes).padStart(2, '0')}
         </div>
-        <div className="text-xs mt-1 text-muted-foreground">Minutos</div>
+        <div className="text-[10px] md:text-xs mt-1 text-muted-foreground">Min</div>
       </div>
-      <div className="text-2xl">:</div>
+      <div className="text-lg md:text-2xl">:</div>
       <div className="text-center">
-        <div className="text-3xl font-bold bg-red-600/20 rounded-lg px-4 py-2 border border-red-500/30">
+        <div className="text-xl md:text-3xl font-bold bg-red-600/20 rounded-lg px-2 py-1 md:px-4 md:py-2 border border-red-500/30">
           {String(timeLeft.seconds).padStart(2, '0')}
         </div>
-        <div className="text-xs mt-1 text-muted-foreground">Segundos</div>
+        <div className="text-[10px] md:text-xs mt-1 text-muted-foreground">Seg</div>
       </div>
     </div>
   );
