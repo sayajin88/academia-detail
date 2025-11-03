@@ -4,6 +4,7 @@ import { PlayCircle, Star, Users, Award, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroDetailing from "@/assets/hero-detailing.jpg";
 import detailParkLogo from "@/assets/detail-park-logo.webp";
+import mobileHeroBg from "@/assets/mobile-hero-bg.jpg";
 
 export const OptimizedHero = () => {
   const [videoPlaying, setVideoPlaying] = useState(false);
@@ -52,11 +53,20 @@ export const OptimizedHero = () => {
       </div>
 
       <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        {/* Video Background - Optimized for mobile visibility */}
-        <div className="absolute inset-0">
+        {/* Mobile Hero Background Image - Only visible on mobile */}
+        <div className="absolute inset-0 md:hidden">
+          <img 
+            src={mobileHeroBg} 
+            alt="Detail Park Background" 
+            className="w-full h-full object-cover opacity-40"
+          />
+        </div>
+
+        {/* Video Background - Only visible on desktop */}
+        <div className="absolute inset-0 hidden md:block">
           <iframe
             src="https://www.youtube.com/embed/ByRhg2kYD-A?autoplay=1&mute=1&loop=1&playlist=ByRhg2kYD-A&controls=0&showinfo=0&rel=0&modestbranding=1&start=39"
-            className="w-full h-full object-cover opacity-60 md:opacity-20 scale-125 md:scale-150"
+            className="w-full h-full object-cover opacity-20 scale-150"
             allow="autoplay; encrypted-media"
             style={{ pointerEvents: 'none' }}
             title="Detail Park Background"
@@ -64,8 +74,8 @@ export const OptimizedHero = () => {
         </div>
 
         {/* Enhanced Gradient Overlay - Better visibility on mobile */}
-        <div className="absolute inset-0 bg-gradient-hero opacity-60 md:opacity-90"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60 md:from-transparent md:via-black/50 md:to-black/80"></div>
+        <div className="absolute inset-0 bg-gradient-hero opacity-70 md:opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70 md:from-transparent md:via-black/50 md:to-black/80"></div>
         
         {/* Floating Particles - Hidden on mobile for performance */}
         <div className="hidden md:block">
