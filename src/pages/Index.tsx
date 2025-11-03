@@ -81,26 +81,28 @@ const Index = () => {
         <Menu className="w-5 h-5" />
       </Button>
 
-      {/* Logo Header */}
-      <div className="bg-black/40 py-4 border-b border-white/10">
-        <div className="container mx-auto px-4 flex justify-center">
+      {/* Top Banner with Logo - Enhanced */}
+      <div className="bg-primary text-white text-center py-3 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-primary opacity-90"></div>
+        <div className="relative z-10 flex items-center justify-between gap-4 container mx-auto px-4">
+          {/* Logo en esquina izquierda */}
           <img 
             src={detailParkLogoWhite} 
             alt="Detail Park Logo" 
-            className="h-12 md:h-16 object-contain"
+            className="h-8 md:h-10 object-contain"
           />
-        </div>
-      </div>
-
-      {/* Top Banner - Enhanced */}
-      <div className="bg-primary text-white text-center py-3 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-primary opacity-90"></div>
-        <div className="relative z-10 flex items-center justify-center gap-4 container mx-auto px-4">
-          <span className="text-sm font-bold">🔥 Oferta limitada termina en</span>
-          <Countdown />
-          <Button variant="glass" size="sm" className="ml-4 animate-pulse" onClick={openModal}>
-            RESERVAR PLAZA
-          </Button>
+          
+          {/* Contenido central */}
+          <div className="flex items-center justify-center gap-4 flex-1">
+            <span className="text-sm font-bold hidden sm:inline">🔥 Oferta limitada termina en</span>
+            <Countdown />
+            <Button variant="glass" size="sm" className="ml-4 animate-pulse" onClick={openModal}>
+              RESERVAR PLAZA
+            </Button>
+          </div>
+          
+          {/* Espaciador para mantener centrado el contenido */}
+          <div className="h-8 md:h-10 w-[100px] md:w-[120px]"></div>
         </div>
       </div>
 
