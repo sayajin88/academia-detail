@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { PlayCircle, Star, Users, Award, TrendingUp } from "lucide-react";
+import { PlayCircle, Star, Users, Award, TrendingUp, Calendar } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroDetailing from "@/assets/hero-detailing.jpg";
 import detailParkLogo from "@/assets/detail-park-logo.webp";
@@ -71,11 +71,13 @@ export const OptimizedHero = () => {
             style={{ pointerEvents: 'none' }}
             title="Detail Park Background"
           />
+          {/* Bottom fade to black */}
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
         </div>
 
         {/* Enhanced Gradient Overlay - Better visibility on mobile */}
         <div className="absolute inset-0 bg-gradient-hero opacity-40 md:opacity-90"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/50 md:from-transparent md:via-black/50 md:to-black/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/50 md:from-transparent md:via-black/50 md:to-black"></div>
         
         {/* Floating Particles - Hidden on mobile for performance */}
         <div className="hidden md:block">
@@ -110,7 +112,14 @@ export const OptimizedHero = () => {
             <span className="text-white block mb-2">La Jornada Cero:</span>
             <span className="gradient-text block mb-2">Empieza tu Carrera</span>
             <span className="text-white block mb-2">en Detailing</span>
-            <span className="gradient-text block">Hoy</span>
+            <span className="gradient-text block mb-4">Hoy</span>
+            
+            {/* Event Date Badge */}
+            <div className="inline-flex items-center gap-3 glass-intense border-2 border-primary/60 rounded-2xl px-6 md:px-10 py-4 md:py-6 mb-4 animate-pulse shadow-[0_0_30px_rgba(239,68,68,0.4)]">
+              <Calendar className="w-5 h-5 md:w-8 md:h-8 text-primary" />
+              <span className="text-white text-lg md:text-3xl lg:text-4xl font-bold">Sábado 13 Diciembre 2025</span>
+            </div>
+            
             <span className="text-white/90 text-base md:text-2xl lg:text-4xl block mt-3 md:mt-4 font-normal">1 día que transformará tu visión del detailing</span>
           </h1>
           

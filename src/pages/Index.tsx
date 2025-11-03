@@ -61,6 +61,7 @@ import eventoPracticaPulidora from "@/assets/evento-practica-pulidora.jpg";
 import certificadoAlumno from "@/assets/certificado-alumno.png";
 import certificadoAlumnoFeliz from "@/assets/certificado-alumno-feliz.jpg";
 import mobileHeroBg from "@/assets/mobile-hero-bg.jpg";
+import eventoGrupoDetailing from "@/assets/evento-grupo-detailing.jpg";
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -87,33 +88,34 @@ const Index = () => {
       </Button>
 
       {/* Top Banner with Logo - Mobile Optimized */}
-      <div className="bg-primary text-white py-2 md:py-3 relative overflow-hidden sticky top-0 z-40">
-        <div className="absolute inset-0 bg-gradient-primary opacity-90"></div>
-        <div className="relative z-10 container mx-auto px-3 md:px-4">
-          <div className="flex items-center justify-between gap-2 md:gap-4">
-            {/* Logo - Más pequeño en mobile */}
+      <div className="bg-gradient-to-r from-primary via-primary/90 to-primary text-white py-3 md:py-4 relative overflow-hidden sticky top-0 z-40 shadow-[0_4px_20px_rgba(239,68,68,0.3)]">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-red-600 to-primary opacity-90 animate-gradient-shift"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-400/20 via-transparent to-transparent"></div>
+        <div className="relative z-10 container mx-auto px-4 md:px-6">
+          <div className="flex items-center justify-between gap-4 md:gap-8 max-w-7xl mx-auto">
+            {/* Logo */}
             <img 
               src={detailParkLogoWhite} 
               alt="Detail Park Logo" 
-              className="h-6 md:h-10 object-contain flex-shrink-0"
+              className="h-8 md:h-12 lg:h-14 object-contain flex-shrink-0 drop-shadow-lg"
             />
             
-            {/* Countdown compacto en mobile */}
+            {/* Countdown */}
             <div className="flex items-center gap-2 md:gap-4 flex-1 justify-center">
-              <span className="text-xs md:text-sm font-bold hidden sm:inline">🔥 Oferta termina</span>
-              <div className="scale-75 md:scale-100 origin-center">
+              <span className="text-sm md:text-base lg:text-lg font-bold hidden sm:inline text-white/90">🔥 Oferta termina en:</span>
+              <div className="scale-90 md:scale-100">
                 <Countdown />
               </div>
             </div>
             
-            {/* Botón CTA - Oculto en mobile */}
+            {/* Botón CTA */}
             <Button 
               variant="glass" 
-              size="sm" 
-              className="hidden md:flex animate-pulse text-xs md:text-sm px-3 md:px-4 whitespace-nowrap flex-shrink-0" 
+              size="lg" 
+              className="hidden md:flex text-sm lg:text-base font-bold px-6 lg:px-8 py-3 whitespace-nowrap flex-shrink-0 hover:scale-105 transition-all duration-300 shadow-lg border-2 border-white/30" 
               onClick={openModal}
             >
-              RESERVAR
+              RESERVAR PLAZA
             </Button>
           </div>
         </div>
@@ -207,6 +209,36 @@ const Index = () => {
                 <p className="text-xs md:text-sm text-white/70">{step.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Event Team Image Section */}
+      <section className="relative py-16 md:py-20 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="relative max-w-6xl mx-auto">
+            {/* Image with faded edges */}
+            <div className="relative rounded-3xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black z-10 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80 z-10 pointer-events-none"></div>
+              <img 
+                src={eventoGrupoDetailing} 
+                alt="Equipo Detail Park Academy en acción" 
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            
+            {/* Overlay text */}
+            <div className="absolute inset-0 flex items-center justify-center z-20">
+              <div className="text-center px-4">
+                <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3 drop-shadow-2xl">
+                  Aprende de los <span className="gradient-text">Mejores Profesionales</span>
+                </h3>
+                <p className="text-base md:text-xl text-white/90 drop-shadow-lg">
+                  Experiencia práctica con vehículos reales
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
