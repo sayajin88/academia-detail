@@ -18,6 +18,15 @@ import portfolioAlfaRomeo from "@/assets/portfolio-alfa-romeo.png";
 import portfolioAudiYellow from "@/assets/portfolio-audi-yellow.png";
 import portfolioAudiR8 from "@/assets/portfolio-audi-r8.png";
 import portfolioAudiRed from "@/assets/portfolio-audi-red.png";
+import portfolioAudiR8Yellow from "@/assets/portfolio-audi-r8-yellow.png";
+import portfolioAudiRs7 from "@/assets/portfolio-audi-rs7.png";
+import portfolioAudiRs3 from "@/assets/portfolio-audi-rs3.png";
+import portfolioAudiS6 from "@/assets/portfolio-audi-s6.png";
+import portfolioBmwM2 from "@/assets/portfolio-bmw-m2.png";
+import portfolioCorvette from "@/assets/portfolio-corvette.png";
+import portfolioFerrari458 from "@/assets/portfolio-ferrari-458.png";
+import portfolioFerrariF430 from "@/assets/portfolio-ferrari-f430.png";
+import portfolioFerrariGtc4 from "@/assets/portfolio-ferrari-gtc4.png";
 
 const portfolioImages = [
   { src: portfolioMclaren, alt: "McLaren 720S Detailing Profesional" },
@@ -30,6 +39,15 @@ const portfolioImages = [
   { src: portfolioAudiYellow, alt: "Audi S1 Detailing" },
   { src: portfolioAudiR8, alt: "Audi R8 V10 Detailing" },
   { src: portfolioAudiRed, alt: "Audi R8 Detailing Exclusivo" },
+  { src: portfolioAudiR8Yellow, alt: "Audi R8 Yellow Detailing" },
+  { src: portfolioAudiRs7, alt: "Audi RS7 Sportback Detailing" },
+  { src: portfolioAudiRs3, alt: "Audi RS3 Sportback Detailing" },
+  { src: portfolioAudiS6, alt: "Audi S6 Sedan Detailing" },
+  { src: portfolioBmwM2, alt: "BMW M2 Competition Detailing" },
+  { src: portfolioCorvette, alt: "Chevrolet Corvette C7 Detailing" },
+  { src: portfolioFerrari458, alt: "Ferrari 458 Italia Detailing" },
+  { src: portfolioFerrariF430, alt: "Ferrari F430 Detailing" },
+  { src: portfolioFerrariGtc4, alt: "Ferrari GTC4Lusso Detailing" },
 ];
 
 const stats = [
