@@ -29,7 +29,6 @@ import { OptimizedHero } from "@/components/OptimizedHero";
 import { AdvancedInteractives } from "@/components/AdvancedInteractives";
 import { PsychologicalTriggers } from "@/components/PsychologicalTriggers";
 import { MobileOptimization } from "@/components/MobileOptimization";
-import { ExitIntentPopup } from "@/components/ExitIntentPopup";
 import { StickyFloatingCTA } from "@/components/StickyFloatingCTA";
 import { ROICalculator } from "@/components/ROICalculator";
 import { PersonalityQuiz } from "@/components/PersonalityQuiz";
@@ -678,8 +677,6 @@ const Index = () => {
 
       {/* Registration Modal */}
       <RegistrationModal isOpen={isOpen} onClose={closeModal} />
-
-      <ExitIntentPopup />
     </div>
   );
 };
