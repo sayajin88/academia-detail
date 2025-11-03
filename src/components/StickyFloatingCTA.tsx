@@ -9,7 +9,7 @@ interface StickyFloatingCTAProps {
 
 export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
   const [isVisible, setIsVisible] = useState(false);
-  const [spotsLeft, setSpotsLeft] = useState(10);
+  const [spotsLeft, setSpotsLeft] = useState(12);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +29,7 @@ export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
         .eq('payment_status', 'completed');
       
       if (!error && count !== null) {
-        setSpotsLeft(Math.max(0, 10 - count));
+        setSpotsLeft(Math.max(0, 12 - count));
       }
     };
 
@@ -51,10 +51,13 @@ export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
         </div>
         
         <div className="text-center mb-3 md:mb-4">
-          <div className="text-lg md:text-2xl font-bold gradient-text mb-1">€999 → €299 + IVA</div>
+          <div className="text-lg md:text-2xl font-bold gradient-text mb-1">
+            <span className="text-white/60 line-through text-base mr-2">€999</span>
+            €199 + IVA
+          </div>
           <div className="flex items-center justify-center gap-1 text-xs text-white/80">
             <Users className="w-3 h-3 flex-shrink-0" />
-            <span>Solo quedan {spotsLeft} de 10 plazas</span>
+            <span>Solo quedan {spotsLeft} de 12 plazas</span>
           </div>
         </div>
 

@@ -44,7 +44,10 @@ export function ExitIntentPopup() {
             </p>
 
             <div className="bg-gradient-primary/20 rounded-xl p-4 mb-6 border border-primary/30">
-              <div className="text-3xl font-black gradient-text mb-2">€999 → €299 + IVA</div>
+              <div className="text-3xl font-black gradient-text mb-2">
+                <span className="text-white/60 line-through text-xl mr-2">€999</span>
+                €199 + IVA
+              </div>
               <div className="text-sm text-white/80">Solo hasta las 23:59 de hoy</div>
             </div>
 

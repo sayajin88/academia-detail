@@ -8,7 +8,7 @@ const faqs = [
     answer: "No, La Jornada Cero está diseñada para personas sin experiencia que quieren conocer el mundo del detailing profesional de forma práctica e intensiva."
   },
   {
-    question: "¿Qué está incluido en los €299 + IVA?",
+    question: "¿Qué está incluido en los €199 + IVA?",
     answer: "Jornada completa de formación práctica (9:00-18:00h), todos los materiales y productos profesionales, comida, certificado de asistencia y acceso a nuestra comunidad exclusiva de detailers."
   },
   {
@@ -20,8 +20,8 @@ const faqs = [
     answer: "La Jornada Cero es un evento introductorio que te da las bases fundamentales del detailing. Para nivel profesional completo, te ofreceremos opciones de formación avanzada posterior."
   },
   {
-    question: "¿Por qué solo 10 plazas?",
-    answer: "Limitamos las plazas a 10 participantes máximo para garantizar atención personalizada, práctica hands-on para todos y un ambiente de aprendizaje óptimo."
+    question: "¿Por qué solo 12 plazas?",
+    answer: "Limitamos las plazas a 12 participantes máximo para garantizar atención personalizada, práctica hands-on para todos y un ambiente de aprendizaje óptimo."
   },
   {
     question: "¿Puedo conseguir reembolso si no puedo asistir?",

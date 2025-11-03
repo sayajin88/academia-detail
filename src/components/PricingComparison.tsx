@@ -24,7 +24,7 @@ const pricingOptions = [
   },
   {
     name: "La Jornada Cero",
-    price: "€299",
+    price: "€199",
     originalPrice: "€999",
     period: "+ IVA (1 día)",
     popular: true,

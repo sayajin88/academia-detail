@@ -385,10 +385,10 @@ const Index = () => {
                   ¿Listo para tu primera experiencia en detailing profesional?
                 </h3>
                 <p className="text-white/80 mb-6">
-                  Plazas limitadas: Solo 10 participantes para garantizar atención personalizada
+                  Plazas limitadas: Solo 12 participantes para garantizar atención personalizada
                 </p>
                 <Button variant="hero" size="xl" onClick={openModal} className="animate-pulse-glow">
-                  🎯 Reservar Mi Plaza - €299 + IVA
+                  🎯 Reservar Mi Plaza - €199 + IVA
                 </Button>
               </div>
             </div>

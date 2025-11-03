@@ -89,7 +89,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
             email: validatedData.email,
             phone: validatedData.phone,
             eventDate: "Sábado 13 de Diciembre, 2025",
-            price: "€299 + IVA",
+            price: "€199 + IVA",
             reservationExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES', {
               day: 'numeric',
               month: 'long',
@@ -174,10 +174,10 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                   <div className="text-sm md:text-base lg:text-lg text-white/90 mb-2">Jornada Intensiva de 1 Día</div>
                   <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
                     <span className="text-lg md:text-xl lg:text-2xl text-white/60 line-through">€999 + IVA</span>
-                    <span className="text-2xl md:text-3xl lg:text-4xl font-bold gradient-text">€299 + IVA</span>
+                    <span className="text-2xl md:text-3xl lg:text-4xl font-bold gradient-text">€199 + IVA</span>
                   </div>
                   <div className="text-xs md:text-sm text-white/70 mt-2">
-                    Ahorras €700 - Solo 10 plazas
+                    Ahorras €800 (80% dto.) - Solo 12 plazas
                   </div>
                 </div>
               </div>
@@ -261,7 +261,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                   </div>
                   <div className="flex flex-col items-center">
                     <Users className="w-5 h-5 text-primary mb-1" />
-                    <span className="text-xs text-white/80">Máx. 10 Plazas</span>
+                    <span className="text-xs text-white/80">Máx. 12 Plazas</span>
                   </div>
                 </div>
               </div>
@@ -321,7 +321,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     Procesando...
                   </>
                 ) : (
-                  <>🚀 RESERVAR MI PLAZA - €299 + IVA</>
+                  <>🚀 RESERVAR MI PLAZA - €199 + IVA</>
                 )}
               </Button>
 
@@ -374,7 +374,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-white/70">Precio:</span>
-                    <span className="font-medium text-primary">€299 + IVA (70% dto.)</span>
+                    <span className="font-medium text-primary">€199 + IVA (80% dto.)</span>
                   </div>
                 </div>
               </div>
@@ -428,8 +428,8 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                 <p className="text-sm font-semibold text-center text-white">Información Importante</p>
                 <ul className="text-xs text-white/80 space-y-1">
                   <li>• Tu plaza está reservada por 7 días</li>
-                  <li>• Plazas limitadas a 10 personas</li>
-                  <li>• Precio con 70% de descuento: €299 + IVA</li>
+                  <li>• Plazas limitadas a 12 personas</li>
+                  <li>• Precio con 80% de descuento: €199 + IVA</li>
                   <li>• Fecha: Sábado 13 de Diciembre, 2025</li>
                   <li>• Horario: 10:00 AM - 18:00 PM</li>
                 </ul>

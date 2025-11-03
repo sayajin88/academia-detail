@@ -113,7 +113,7 @@ export const MobileOptimization = ({ isOpen, onToggle, onCtaClick }: MobileMenuP
             <div className="flex-1 min-w-0">
               <p className="text-white font-bold text-xs truncate">La Jornada Cero</p>
               <div className="flex items-center gap-2">
-                <p className="text-primary text-base font-black">€299 + IVA</p>
+                <p className="text-primary text-base font-black">€199 + IVA</p>
                 <span className="text-xs text-white/60 line-through">€999</span>
               </div>
             </div>

@@ -266,8 +266,8 @@ const handler = async (req: Request): Promise<Response> => {
                 <h3>📌 Información Importante</h3>
                 <ul>
                   <li>Tu reserva expira el: <strong>${registrationData.reservationExpiresAt}</strong></li>
-                  <li>Plazas limitadas a <strong>10 personas</strong> por evento</li>
-                  <li>Precio especial: <strong>${registrationData.price}</strong> (70% de descuento)</li>
+                  <li>Plazas limitadas a <strong>12 personas</strong> por evento</li>
+                  <li>Precio especial: <strong>${registrationData.price}</strong> (80% de descuento)</li>
                   <li>Fecha del evento: <strong>${registrationData.eventDate}</strong></li>
                   <li>Horario: <strong>10:00 AM - 18:00 PM</strong></li>
                 </ul>
