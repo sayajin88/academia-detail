@@ -64,23 +64,24 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
             accept_marketing: validatedData.acceptMarketing,
             payment_status: 'pending'
           }
-        ])
-        .select()
-        .single();
+        ]);
+
 
       if (error) {
-        if (error.code === '23505') { // Duplicate email
+        console.error('Registration insert error:', error);
+        if ((error as any).code === '23505') { // Duplicate email
           toast.error("Este email ya está registrado");
           return;
         }
         throw error;
       }
 
-      setRegistrationId(data.id);
+      setRegistrationId((data as any)?.[0]?.id ?? "");
       toast.success("¡Pre-inscripción exitosa! Revisa tu email");
       setStep('confirmation');
       
     } catch (error) {
+      console.error('Registration submit failed:', error);
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
       } else {
@@ -317,10 +318,12 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
 
             <div className="space-y-6 mt-6">
               <div className="glass-card p-6 rounded-xl space-y-4">
-                <div className="flex justify-between items-center pb-4 border-b border-white/10">
-                  <span className="font-semibold text-white">ID de Pre-inscripción:</span>
-                  <span className="font-mono text-sm text-primary">{registrationId?.slice(0, 8).toUpperCase()}</span>
-                </div>
+                {registrationId && (
+                  <div className="flex justify-between items-center pb-4 border-b border-white/10">
+                    <span className="font-semibold text-white">ID de Pre-inscripción:</span>
+                    <span className="font-mono text-sm text-primary">{registrationId?.slice(0, 8).toUpperCase()}</span>
+                  </div>
+                )}
                 
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
