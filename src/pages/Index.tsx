@@ -47,11 +47,19 @@ import { useRegistrationModal } from "@/hooks/useRegistrationModal";
 
 // Import images
 import detailParkLogo from "@/assets/detail-park-logo.webp";
+import detailParkLogoWhite from "@/assets/detail-park-logo-white.png";
 import heroDetailing from "@/assets/hero-detailing.jpg";
 import beforeAfterDetailing from "@/assets/before-after-detailing.jpg";
 import detailingTools from "@/assets/detailing-tools.jpg";
 import danielLopezInstructor from "@/assets/daniel-lopez-instructor.webp";
 import certificadoDetailing from "@/assets/certificado-detailing.png";
+import eventoLimpiezaInterior from "@/assets/evento-limpieza-interior.jpg";
+import eventoPulidoFaro from "@/assets/evento-pulido-faro.jpg";
+import eventoClaseCompleta from "@/assets/evento-clase-completa.jpg";
+import eventoAlumnosAtentos from "@/assets/evento-alumnos-atentos.jpg";
+import eventoPracticaPulidora from "@/assets/evento-practica-pulidora.jpg";
+import certificadoAlumno from "@/assets/certificado-alumno.png";
+import certificadoAlumnoFeliz from "@/assets/certificado-alumno-feliz.jpg";
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -73,13 +81,24 @@ const Index = () => {
         <Menu className="w-5 h-5" />
       </Button>
 
+      {/* Logo Header */}
+      <div className="bg-black/40 py-4 border-b border-white/10">
+        <div className="container mx-auto px-4 flex justify-center">
+          <img 
+            src={detailParkLogoWhite} 
+            alt="Detail Park Logo" 
+            className="h-12 md:h-16 object-contain"
+          />
+        </div>
+      </div>
+
       {/* Top Banner - Enhanced */}
       <div className="bg-primary text-white text-center py-3 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary opacity-90"></div>
         <div className="relative z-10 flex items-center justify-center gap-4 container mx-auto px-4">
           <span className="text-sm font-bold">🔥 Oferta limitada termina en</span>
           <Countdown />
-          <Button variant="glass" size="sm" className="ml-4 animate-pulse">
+          <Button variant="glass" size="sm" className="ml-4 animate-pulse" onClick={openModal}>
             RESERVAR PLAZA
           </Button>
         </div>
@@ -437,13 +456,13 @@ const Index = () => {
           {/* Scrolling Templates Preview */}
           <div className="relative overflow-hidden mb-16">
             <div className="flex gap-8 animate-float">
-              {[heroDetailing, beforeAfterDetailing, detailingTools].map((img, index) => (
+              {[eventoClaseCompleta, eventoAlumnosAtentos, eventoPracticaPulidora, eventoLimpiezaInterior, eventoPulidoFaro].map((img, index) => (
                 <div key={index} className="flex-shrink-0">
                   <div className="glass-intense rounded-2xl p-4 hover-glow">
                     <img 
                       src={img} 
-                      alt={`Técnica ${index + 1}`}
-                      className="w-80 h-48 object-cover rounded-xl"
+                      alt={`Momento del evento ${index + 1}`}
+                      className="w-80 h-64 object-cover object-center rounded-xl"
                     />
                   </div>
                 </div>
@@ -454,37 +473,37 @@ const Index = () => {
           {/* Course Preview */}
           <div className="text-center">
             <h3 className="text-2xl font-bold text-white mb-4">
-              👀 Te revelaremos un Sneak Peek de algunas de las técnicas que encontrarás dentro de Nuestra Formación...
+              👀 Así es La Jornada Cero: Experiencia Real en Detailing
             </h3>
             
             <div className="grid md:grid-cols-3 gap-8 mt-12">
               {[
                 {
-                  title: "Curso Aficionado",
-                  description: "Perfecto para empezar en el mundo del detailing",
-                  image: detailingTools
+                  title: "Formación Práctica",
+                  description: "Aprende técnicas reales de detailing hands-on",
+                  image: eventoPracticaPulidora
                 },
                 {
-                  title: "Curso Profesional", 
-                  description: "Domina todas las técnicas avanzadas",
-                  image: beforeAfterDetailing
+                  title: "Ambiente Profesional", 
+                  description: "Centro Detail Park con equipamiento completo",
+                  image: eventoClaseCompleta
                 },
                 {
-                  title: "Carrera Detailing",
-                  description: "Conviértete en un experto certificado",
-                  image: heroDetailing
+                  title: "Certificado Oficial",
+                  description: "Acredita tu participación en el evento",
+                  image: certificadoAlumnoFeliz
                 }
               ].map((course, index) => (
                 <div key={index} className="glass-intense rounded-2xl p-6 hover-glow transition-all duration-500 hover:scale-105">
                   <img 
                     src={course.image} 
                     alt={course.title}
-                    className="w-full h-48 object-cover rounded-xl mb-4"
+                    className="w-full h-64 object-cover object-center rounded-xl mb-4"
                   />
                   <h4 className="text-xl font-bold text-white mb-2">{course.title}</h4>
                   <p className="text-white/80 mb-4">{course.description}</p>
-                  <Button variant="funnel" size="sm" className="w-full">
-                    VER DEMOSTRACIÓN
+                  <Button variant="funnel" size="sm" className="w-full" onClick={openModal}>
+                    RESERVAR PLAZA
                   </Button>
                 </div>
               ))}
@@ -523,21 +542,21 @@ const Index = () => {
             {[
               {
                 bonus: "BONUS #1",
-                title: "Certificado Profesional Reconocido",
-                description: "Te vamos a dar un certificado oficial que te permitirá trabajar en cualquier taller profesional de España.",
-                image: certificadoDetailing
+                title: "Certificado Oficial de Asistencia",
+                description: "Recibe tu certificado que acredita 8 horas de formación intensiva en detailing profesional.",
+                image: certificadoAlumnoFeliz
               },
               {
                 bonus: "BONUS #2", 
-                title: "Acceso a Bolsa de Empleo Nacional",
-                description: "Obtén acceso a nuestra red de talleres profesionales que buscan detailers certificados como tú.",
-                image: danielLopezInstructor
+                title: "Material Didáctico Digital",
+                description: "Acceso a guías en PDF, videos de repaso y lista de productos recomendados para seguir practicando.",
+                image: eventoAlumnosAtentos
               },
               {
                 bonus: "BONUS #3",
-                title: "Asistencia Posterior Personalizada", 
-                description: "Como Bonus Exclusivo tendrás acceso directo a nuestros expertos para resolver cualquier duda.",
-                image: detailingTools
+                title: "Comunidad Exclusiva Alumni", 
+                description: "Únete al grupo de asistentes anteriores con ofertas especiales y prioridad en futuros eventos.",
+                image: eventoClaseCompleta
               }
             ].map((bonus, index) => (
               <div key={index} className="glass-intense rounded-2xl p-8 hover-glow transition-all duration-500 hover:scale-105">
@@ -546,7 +565,7 @@ const Index = () => {
                 <img 
                   src={bonus.image} 
                   alt={bonus.title}
-                  className="w-full h-48 object-cover rounded-xl mb-4"
+                  className="w-full h-64 object-cover object-center rounded-xl mb-4"
                 />
                 <p className="text-white/80">{bonus.description}</p>
               </div>
