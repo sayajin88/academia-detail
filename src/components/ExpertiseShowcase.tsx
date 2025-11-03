@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
 import { Award, Users, TrendingUp, Shield } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 import portfolioMclaren from "@/assets/portfolio-mclaren.png";
 import portfolioMercedes from "@/assets/portfolio-mercedes.png";
 import portfolioBmw from "@/assets/portfolio-bmw.png";
@@ -152,42 +153,57 @@ export function ExpertiseShowcase() {
                 align: "start",
                 loop: true,
               }}
-              className="w-full max-w-6xl mx-auto"
+              plugins={[
+                Autoplay({
+                  delay: 3000,
+                }),
+              ]}
+              className="w-full max-w-7xl mx-auto"
             >
               <CarouselContent>
                 {portfolioImages.map((image, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
                     <div className="p-2">
-                      <Card className="glass-card border-white/10 overflow-hidden hover-scale">
-                        <CardContent className="p-0">
-                          <img
-                            src={image.src}
-                            alt={image.alt}
-                            className="w-full h-64 object-cover"
-                            loading="lazy"
-                          />
+                      <Card className="glass-card border-white/10 overflow-hidden group hover:border-primary/40 transition-all duration-500">
+                        <CardContent className="p-0 relative">
+                          <div className="overflow-hidden">
+                            <img
+                              src={image.src}
+                              alt={image.alt}
+                              className="w-full h-72 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                              loading="lazy"
+                            />
+                          </div>
+                          {/* Overlay on hover */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
+                            <p className="text-white text-sm font-semibold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                              {image.alt}
+                            </p>
+                          </div>
                         </CardContent>
                       </Card>
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="glass-card border-primary/40 text-white hover:bg-primary/20" />
-              <CarouselNext className="glass-card border-primary/40 text-white hover:bg-primary/20" />
+              <CarouselPrevious className="glass-card border-primary/40 text-white hover:bg-primary/20 hover:scale-110 transition-all duration-300" />
+              <CarouselNext className="glass-card border-primary/40 text-white hover:bg-primary/20 hover:scale-110 transition-all duration-300" />
             </Carousel>
           </div>
 
-          {/* Mobile Grid */}
+          {/* Mobile Grid with Animation */}
           <div className="md:hidden grid grid-cols-2 gap-3">
-            {portfolioImages.map((image, index) => (
-              <Card key={index} className="glass-card border-white/10 overflow-hidden">
-                <CardContent className="p-0">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-40 object-cover"
-                    loading="lazy"
-                  />
+            {portfolioImages.slice(0, 8).map((image, index) => (
+              <Card key={index} className="glass-card border-white/10 overflow-hidden group">
+                <CardContent className="p-0 relative">
+                  <div className="overflow-hidden">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-40 object-cover transition-all duration-500 group-active:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
                 </CardContent>
               </Card>
             ))}
