@@ -77,7 +77,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
       }
 
       setRegistrationId(data.id);
-      toast.success("¡Registro exitoso! Procede al pago");
+      toast.success("¡Pre-inscripción exitosa! Revisa tu email");
       setStep('payment');
       
     } catch (error) {
@@ -282,7 +282,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     Procesando...
                   </>
                 ) : (
-                  <>🚀 CONTINUAR AL PAGO - €299 + IVA</>
+                  <>🚀 RESERVAR MI PLAZA - €299 + IVA</>
                 )}
               </Button>
 
@@ -297,75 +297,110 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
           <>
             <DialogHeader className="text-center space-y-4">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center animate-scale-in">
                   <CheckCircle className="w-10 h-10 text-primary" />
                 </div>
               </div>
               
               <DialogTitle className="text-3xl font-bold gradient-text">
-                ¡Un Paso Más!
+                ¡Pre-inscripción Exitosa!
               </DialogTitle>
               
               <p className="text-white/80">
-                Completa tu reserva para La Jornada Cero
+                Tu plaza está reservada temporalmente
               </p>
             </DialogHeader>
 
             <div className="space-y-6 mt-6">
               <div className="glass-card p-6 rounded-xl space-y-4">
-                <h3 className="text-lg font-bold text-white mb-4">Resumen del Pedido</h3>
+                <div className="flex justify-between items-center pb-4 border-b border-white/10">
+                  <span className="font-semibold text-white">ID de Pre-inscripción:</span>
+                  <span className="font-mono text-sm text-primary">{registrationId?.slice(0, 8).toUpperCase()}</span>
+                </div>
                 
                 <div className="space-y-2">
-                  <div className="flex justify-between text-white/80">
-                    <span>La Jornada Cero (1 día)</span>
-                    <span>€999 + IVA</span>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/70">Nombre:</span>
+                    <span className="font-medium text-white">{formData.firstName} {formData.lastName}</span>
                   </div>
-                  <div className="flex justify-between text-primary font-semibold">
-                    <span>Descuento especial (70%)</span>
-                    <span>-€700</span>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/70">Email:</span>
+                    <span className="font-medium text-white">{formData.email}</span>
                   </div>
-                  <div className="border-t border-white/10 pt-2 mt-2">
-                    <div className="flex justify-between text-white font-bold text-xl">
-                      <span>Total a Pagar</span>
-                      <span className="gradient-text">€299 + IVA</span>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/70">Evento:</span>
+                    <span className="font-medium text-white">13 de Diciembre, 2025</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/70">Precio:</span>
+                    <span className="font-medium text-primary">€299 + IVA (70% dto.)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="font-semibold text-center text-white text-lg">Próximos Pasos</h3>
+                <div className="space-y-3">
+                  <div className="flex gap-3 items-start glass-card p-3 rounded-lg">
+                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                      <span className="text-sm font-bold text-primary">1</span>
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-sm text-white">📧 Revisa tu email</p>
+                      <p className="text-xs text-white/70">Recibirás un correo de confirmación en los próximos minutos</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3 items-start glass-card p-3 rounded-lg">
+                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                      <span className="text-sm font-bold text-primary">2</span>
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-sm text-white">💳 Recibirás el enlace de pago</p>
+                      <p className="text-xs text-white/70">En las próximas 24-48h te enviaremos el acceso para completar tu pago</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3 items-start glass-card p-3 rounded-lg">
+                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                      <span className="text-sm font-bold text-primary">3</span>
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-sm text-white">⏰ Completa tu pago</p>
+                      <p className="text-xs text-white/70">Tendrás 7 días para confirmar tu plaza con el pago</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3 items-start glass-card p-3 rounded-lg">
+                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                      <span className="text-sm font-bold text-primary">4</span>
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-sm text-white">🎉 ¡Listo para La Jornada Cero!</p>
+                      <p className="text-xs text-white/70">Recibirás toda la información del evento por email</p>
                     </div>
                   </div>
                 </div>
-
-                <div className="bg-primary/10 rounded-lg p-3 mt-4">
-                  <h4 className="text-white font-semibold mb-2 text-sm">✅ Incluye:</h4>
-                  <ul className="text-xs text-white/80 space-y-1">
-                    <li>• Jornada completa 9:00-18:00h</li>
-                    <li>• Formación práctica hands-on</li>
-                    <li>• Material y productos profesionales</li>
-                    <li>• Comida incluida</li>
-                    <li>• Certificado de asistencia</li>
-                    <li>• Acceso a comunidad exclusiva</li>
-                  </ul>
-                </div>
               </div>
 
-              <div className="glass-card p-6 rounded-xl text-center">
-                <p className="text-white/80 mb-4">
-                  La integración de pago con Stripe se configurará próximamente
-                </p>
-                <div className="bg-primary/20 border border-primary/30 rounded-lg p-4">
-                  <p className="text-white font-semibold mb-2">
-                    🎉 ¡Tu registro se ha guardado correctamente!
-                  </p>
-                  <p className="text-white/70 text-sm">
-                    ID de Registro: {registrationId.substring(0, 8)}...
-                  </p>
-                </div>
+              <div className="bg-primary/10 p-4 rounded-lg border border-primary/30 space-y-2">
+                <p className="text-sm font-semibold text-center text-white">Información Importante</p>
+                <ul className="text-xs text-white/80 space-y-1">
+                  <li>• Tu plaza está reservada por 7 días</li>
+                  <li>• Plazas limitadas a 10 personas</li>
+                  <li>• Precio con 70% de descuento: €299 + IVA</li>
+                  <li>• Fecha: Sábado 13 de Diciembre, 2025</li>
+                  <li>• Horario: 10:00 AM - 18:00 PM</li>
+                </ul>
               </div>
 
               <Button 
-                variant="glass" 
+                variant="hero"
                 size="lg" 
                 className="w-full"
                 onClick={handleClose}
               >
-                Cerrar
+                Entendido
               </Button>
             </div>
           </>

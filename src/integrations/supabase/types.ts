@@ -24,8 +24,12 @@ export type Database = {
           first_name: string
           id: string
           last_name: string
+          notes: string | null
+          payment_link_sent_at: string | null
           payment_status: Database["public"]["Enums"]["payment_status"]
           phone: string
+          reminder_sent: boolean | null
+          reservation_expires_at: string | null
           updated_at: string
         }
         Insert: {
@@ -37,8 +41,12 @@ export type Database = {
           first_name: string
           id?: string
           last_name: string
+          notes?: string | null
+          payment_link_sent_at?: string | null
           payment_status?: Database["public"]["Enums"]["payment_status"]
           phone: string
+          reminder_sent?: boolean | null
+          reservation_expires_at?: string | null
           updated_at?: string
         }
         Update: {
@@ -50,8 +58,12 @@ export type Database = {
           first_name?: string
           id?: string
           last_name?: string
+          notes?: string | null
+          payment_link_sent_at?: string | null
           payment_status?: Database["public"]["Enums"]["payment_status"]
           phone?: string
+          reminder_sent?: boolean | null
+          reservation_expires_at?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -64,7 +76,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      payment_status: "pending" | "completed" | "cancelled"
+      payment_status: "pending" | "completed" | "cancelled" | "expired"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -192,7 +204,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      payment_status: ["pending", "completed", "cancelled"],
+      payment_status: ["pending", "completed", "cancelled", "expired"],
     },
   },
 } as const
