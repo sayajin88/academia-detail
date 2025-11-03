@@ -58,7 +58,7 @@ export const OptimizedHero = () => {
           <img 
             src={mobileHeroBg} 
             alt="Detail Park Background" 
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover opacity-70"
           />
         </div>
 
@@ -74,8 +74,8 @@ export const OptimizedHero = () => {
         </div>
 
         {/* Enhanced Gradient Overlay - Better visibility on mobile */}
-        <div className="absolute inset-0 bg-gradient-hero opacity-70 md:opacity-90"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70 md:from-transparent md:via-black/50 md:to-black/80"></div>
+        <div className="absolute inset-0 bg-gradient-hero opacity-40 md:opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/50 md:from-transparent md:via-black/50 md:to-black/80"></div>
         
         {/* Floating Particles - Hidden on mobile for performance */}
         <div className="hidden md:block">
