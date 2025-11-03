@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,7 +25,7 @@ const registrationSchema = z.object({
 });
 
 export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
-  const [step, setStep] = useState<'registration' | 'payment'>('registration');
+  const [step, setStep] = useState<'registration' | 'confirmation'>('registration');
   const [loading, setLoading] = useState(false);
   const [registrationId, setRegistrationId] = useState<string>("");
   
@@ -78,7 +78,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
 
       setRegistrationId(data.id);
       toast.success("¡Pre-inscripción exitosa! Revisa tu email");
-      setStep('payment');
+      setStep('confirmation');
       
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -129,6 +129,10 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
               <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-bold gradient-text">
                 ¡Reserva Tu Plaza!
               </DialogTitle>
+              
+              <DialogDescription className="text-white/70 text-sm">
+                Completa el formulario para reservar tu plaza en La Jornada Cero
+              </DialogDescription>
               
               <div className="bg-gradient-primary/20 rounded-xl p-3 md:p-4 border border-primary/30">
                 <div className="text-center">
@@ -302,13 +306,13 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                 </div>
               </div>
               
-              <DialogTitle className="text-3xl font-bold gradient-text">
+              <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-bold gradient-text">
                 ¡Pre-inscripción Exitosa!
               </DialogTitle>
               
-              <p className="text-white/80">
+              <DialogDescription className="text-white/80 text-sm md:text-base">
                 Tu plaza está reservada temporalmente
-              </p>
+              </DialogDescription>
             </DialogHeader>
 
             <div className="space-y-6 mt-6">
