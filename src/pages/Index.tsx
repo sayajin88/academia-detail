@@ -117,19 +117,6 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Logos Section - Hidden on mobile */}
-      <section className="py-12 bg-black/20 hidden md:block">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center gap-8 opacity-60">
-            {['DETAILING PROFESIONAL', 'TÉCNICAS AVANZADAS', 'CERTIFICACIÓN OFICIAL'].map((text, index) => (
-              <div key={index} className="text-white font-semibold text-sm">
-                {text}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Problems Section with background video */}
       <section className="relative py-16 md:py-24 overflow-hidden min-h-screen md:min-h-[60vh]">
         {/* Background video (desktop and mobile, muted inline) */}
