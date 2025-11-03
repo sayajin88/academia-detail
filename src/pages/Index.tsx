@@ -69,7 +69,11 @@ const Index = () => {
     <div className="min-h-screen animated-bg">
       {/* Enhanced Interactive Components */}
       <StickyFloatingCTA onCtaClick={openModal} />
-      <MobileOptimization isOpen={mobileMenuOpen} onToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
+      <MobileOptimization 
+        isOpen={mobileMenuOpen} 
+        onToggle={() => setMobileMenuOpen(!mobileMenuOpen)}
+        onCtaClick={openModal}
+      />
       
       {/* Mobile Menu Button */}
       <Button
@@ -81,28 +85,36 @@ const Index = () => {
         <Menu className="w-5 h-5" />
       </Button>
 
-      {/* Top Banner with Logo - Enhanced */}
-      <div className="bg-primary text-white text-center py-3 relative overflow-hidden">
+      {/* Top Banner with Logo - Mobile Optimized */}
+      <div className="bg-primary text-white py-2 md:py-3 relative overflow-hidden sticky top-0 z-40">
         <div className="absolute inset-0 bg-gradient-primary opacity-90"></div>
-        <div className="relative z-10 flex items-center justify-between gap-4 container mx-auto px-4">
-          {/* Logo en esquina izquierda */}
-          <img 
-            src={detailParkLogoWhite} 
-            alt="Detail Park Logo" 
-            className="h-8 md:h-10 object-contain"
-          />
-          
-          {/* Contenido central */}
-          <div className="flex items-center justify-center gap-4 flex-1">
-            <span className="text-sm font-bold hidden sm:inline">🔥 Oferta limitada termina en</span>
-            <Countdown />
-            <Button variant="glass" size="sm" className="ml-4 animate-pulse" onClick={openModal}>
-              RESERVAR PLAZA
+        <div className="relative z-10 container mx-auto px-3 md:px-4">
+          <div className="flex items-center justify-between gap-2 md:gap-4">
+            {/* Logo - Más pequeño en mobile */}
+            <img 
+              src={detailParkLogoWhite} 
+              alt="Detail Park Logo" 
+              className="h-6 md:h-10 object-contain flex-shrink-0"
+            />
+            
+            {/* Countdown compacto en mobile */}
+            <div className="flex items-center gap-2 md:gap-4 flex-1 justify-center">
+              <span className="text-xs md:text-sm font-bold hidden sm:inline">🔥 Oferta termina</span>
+              <div className="scale-75 md:scale-100 origin-center">
+                <Countdown />
+              </div>
+            </div>
+            
+            {/* Botón CTA - Más compacto en mobile */}
+            <Button 
+              variant="glass" 
+              size="sm" 
+              className="animate-pulse text-xs md:text-sm px-3 md:px-4 whitespace-nowrap flex-shrink-0" 
+              onClick={openModal}
+            >
+              RESERVAR
             </Button>
           </div>
-          
-          {/* Espaciador para mantener centrado el contenido */}
-          <div className="h-8 md:h-10 w-[100px] md:w-[120px]"></div>
         </div>
       </div>
 
@@ -119,19 +131,19 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Problems Section */}
-      <section className="py-16">
+      {/* Problems Section - Mobile Optimized */}
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
               ¿Quieres vivir del detailing pero <span className="gradient-text">no sabes por dónde empezar</span>?
             </h2>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-white/80 max-w-2xl mx-auto">
               Entendemos las dudas de quien está considerando entrar al mundo del detailing profesional.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
             {[
               {
                 title: "¿Es para mí?",
@@ -146,29 +158,29 @@ const Index = () => {
                 description: "Dudas antes de comprometerte con formación cara"
               }
             ].map((problem, index) => (
-              <Card key={index} className="glass-card p-6 text-center">
-                <h3 className="text-lg font-semibold text-white mb-3">{problem.title}</h3>
-                <p className="text-white/70">{problem.description}</p>
+              <Card key={index} className="glass-card p-4 md:p-6 text-center">
+                <h3 className="text-base md:text-lg font-semibold text-white mb-2 md:mb-3">{problem.title}</h3>
+                <p className="text-sm md:text-base text-white/70">{problem.description}</p>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Solution Section */}
-      <section className="py-16 bg-black/30">
+      {/* Solution Section - Mobile Optimized */}
+      <section className="py-12 md:py-16 bg-black/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
               La Jornada Cero: Tu <span className="gradient-text">primer paso</span> al éxito
             </h2>
-            <p className="text-lg text-white/80 max-w-3xl mx-auto">
+            <p className="text-base md:text-lg text-white/80 max-w-3xl mx-auto px-2">
               Un día intensivo diseñado para iniciados que quieren descubrir 
               si el detailing profesional es su futuro.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
             {[
               { step: "1", title: "Reserva", description: "Tu plaza en La Jornada Cero" },
               { step: "2", title: "Experimenta", description: "Práctica real 1 día" },
@@ -176,11 +188,11 @@ const Index = () => {
               { step: "4", title: "Decide", description: "Si es tu camino" }
             ].map((step, index) => (
               <div key={index} className="text-center">
-                <div className="glass-card rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold gradient-text">{step.step}</span>
+                <div className="glass-card rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-3 md:mb-4">
+                  <span className="text-xl md:text-2xl font-bold gradient-text">{step.step}</span>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">{step.title}</h3>
-                <p className="text-white/70 text-sm">{step.description}</p>
+                <h3 className="text-sm md:text-lg font-semibold text-white mb-1 md:mb-2">{step.title}</h3>
+                <p className="text-xs md:text-sm text-white/70">{step.description}</p>
               </div>
             ))}
           </div>
@@ -429,7 +441,7 @@ const Index = () => {
               👀 Así es La Jornada Cero: Experiencia Real en Detailing
             </h3>
             
-            <div className="grid md:grid-cols-3 gap-8 mt-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-8 md:mt-12">
               {[
                 {
                   title: "Formación Práctica",
@@ -447,14 +459,14 @@ const Index = () => {
                   image: certificadoAlumnoFeliz
                 }
               ].map((course, index) => (
-                <div key={index} className="glass-intense rounded-2xl p-6 hover-glow transition-all duration-500 hover:scale-105">
+                <div key={index} className="glass-intense rounded-xl md:rounded-2xl p-4 md:p-6 hover-glow transition-all duration-500 hover:scale-105">
                   <img 
                     src={course.image} 
                     alt={course.title}
-                    className="w-full h-64 object-cover object-center rounded-xl mb-4"
+                    className="w-full h-48 md:h-64 object-cover object-center rounded-lg md:rounded-xl mb-3 md:mb-4"
                   />
-                  <h4 className="text-xl font-bold text-white mb-2">{course.title}</h4>
-                  <p className="text-white/80 mb-4">{course.description}</p>
+                  <h4 className="text-lg md:text-xl font-bold text-white mb-2">{course.title}</h4>
+                  <p className="text-sm md:text-base text-white/80 mb-3 md:mb-4">{course.description}</p>
                   <Button variant="funnel" size="sm" className="w-full" onClick={openModal}>
                     RESERVAR PLAZA
                   </Button>
@@ -478,20 +490,20 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Bonuses Section - FunnelLabs Style */}
-      <section className="py-24">
+      {/* Bonuses Section - Mobile Optimized */}
+      <section className="py-12 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <div className="inline-block glass-card px-8 py-3 rounded-full mb-8">
-              <span className="gradient-text font-bold uppercase tracking-wide">Y por si fuese poco...</span>
+          <div className="text-center mb-12 md:mb-20">
+            <div className="inline-block glass-card px-4 md:px-8 py-2 md:py-3 rounded-full mb-4 md:mb-8">
+              <span className="gradient-text font-bold uppercase tracking-wide text-xs md:text-base">Y por si fuese poco...</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-6xl font-black text-white mb-6 md:mb-8 leading-tight">
               Obtén acceso a todos nuestros
               <br/><span className="gradient-text">Bonus y Actualizaciones.</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 bonus: "BONUS #1",
@@ -512,42 +524,42 @@ const Index = () => {
                 image: eventoClaseCompleta
               }
             ].map((bonus, index) => (
-              <div key={index} className="glass-intense rounded-2xl p-8 hover-glow transition-all duration-500 hover:scale-105">
-                <div className="text-primary font-bold text-sm mb-2">{bonus.bonus}</div>
-                <h3 className="text-xl font-bold text-white mb-4">{bonus.title}</h3>
+              <div key={index} className="glass-intense rounded-xl md:rounded-2xl p-6 md:p-8 hover-glow transition-all duration-500 hover:scale-105">
+                <div className="text-primary font-bold text-xs md:text-sm mb-2">{bonus.bonus}</div>
+                <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4">{bonus.title}</h3>
                 <img 
                   src={bonus.image} 
                   alt={bonus.title}
-                  className="w-full h-64 object-cover object-center rounded-xl mb-4"
+                  className="w-full h-48 md:h-64 object-cover object-center rounded-lg md:rounded-xl mb-3 md:mb-4"
                 />
-                <p className="text-white/80">{bonus.description}</p>
+                <p className="text-sm md:text-base text-white/80">{bonus.description}</p>
               </div>
             ))}
           </div>
 
-          {/* Special Bonus */}
-          <div className="mt-16 text-center">
-            <h3 className="text-3xl font-bold gradient-text mb-4">Y, la Joya de la Corona</h3>
-            <p className="text-xl text-white/80 mb-8">Algo Nunca Antes Visto</p>
+          {/* Special Bonus - Mobile Optimized */}
+          <div className="mt-12 md:mt-16 text-center">
+            <h3 className="text-2xl md:text-3xl font-bold gradient-text mb-3 md:mb-4">Y, la Joya de la Corona</h3>
+            <p className="text-lg md:text-xl text-white/80 mb-6 md:mb-8">Algo Nunca Antes Visto</p>
             
-            <div className="max-w-4xl mx-auto glass-intense rounded-3xl p-12 hover-glow">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
+            <div className="max-w-4xl mx-auto glass-intense rounded-2xl md:rounded-3xl p-6 md:p-12 hover-glow">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
+                <div className="order-2 md:order-1">
                   <img 
                     src={danielLopezInstructor} 
                     alt="Formador experto"
-                    className="w-full rounded-2xl"
+                    className="w-full rounded-xl md:rounded-2xl"
                   />
                 </div>
-                <div className="text-left">
-                  <h4 className="text-3xl font-bold gradient-text mb-4">Formador Experto: Daniel López</h4>
-                  <p className="text-white/90 mb-6">
+                <div className="text-left order-1 md:order-2">
+                  <h4 className="text-2xl md:text-3xl font-bold gradient-text mb-3 md:mb-4">Formador Experto: Daniel López</h4>
+                  <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6">
                     Dentro de Detail Park tendrás acceso exclusivo a nuestro formador experto con +15 años de experiencia 
                     que te ayudará a dominar todas las técnicas profesionales en días.
                   </p>
-                  <div className="bg-primary/20 border-l-4 border-primary p-4 rounded-r-lg mb-6">
-                    <h5 className="text-lg font-bold text-white mb-2">X1 Sesión Estratégica 15min</h5>
-                    <p className="text-white/80 text-sm">
+                  <div className="bg-primary/20 border-l-4 border-primary p-3 md:p-4 rounded-r-lg mb-4 md:mb-6">
+                    <h5 className="text-base md:text-lg font-bold text-white mb-2">X1 Sesión Estratégica 15min</h5>
+                    <p className="text-white/80 text-xs md:text-sm">
                       Como Bonus nunca antes visto te regalaremos una sesión estratégica de 15 minutos con nuestros 
                       expertos que te darán un paso a paso para que puedas crecer profesionalmente.
                     </p>
@@ -557,8 +569,8 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="text-center mt-12">
-            <Button variant="hero" size="xl" onClick={openModal}>
+          <div className="text-center mt-8 md:mt-12">
+            <Button variant="hero" size="xl" onClick={openModal} className="w-full md:w-auto">
               Obtén Acceso Ahora
             </Button>
             
@@ -574,22 +586,22 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials Section - FunnelLabs Style */}
-      <section className="py-24 bg-black/30">
+      {/* Testimonials Section - Mobile Optimized */}
+      <section className="py-16 md:py-24 bg-black/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <div className="inline-block glass-card px-8 py-3 rounded-full mb-8">
-              <span className="gradient-text font-bold uppercase tracking-wide">Testimonios</span>
+          <div className="text-center mb-12 md:mb-20">
+            <div className="inline-block glass-card px-4 md:px-8 py-2 md:py-3 rounded-full mb-4 md:mb-8">
+              <span className="gradient-text font-bold uppercase tracking-wide text-xs md:text-base">Testimonios</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-6xl font-black text-white mb-6 md:mb-8 leading-tight">
               ¿Qué opina la gente sobre
               <br/><span className="gradient-text">nuestros cursos?</span>
             </h2>
           </div>
           
-          {/* Scrolling Testimonials */}
+          {/* Scrolling Testimonials - Mobile Optimized */}
           <div className="relative overflow-hidden">
-            <div className="flex gap-8 animate-float">
+            <div className="flex gap-4 md:gap-8 animate-float">
               {[
                 {
                   name: "Nacho Amirola",
@@ -604,7 +616,7 @@ const Index = () => {
                   content: "Descubrí este curso a través de un amigo y debo agradecérselo. En 4 días aprendí más que en años de intentar aprender por mi cuenta."
                 }
               ].map((testimonial, index) => (
-                <div key={index} className="flex-shrink-0 w-96">
+                <div key={index} className="flex-shrink-0 w-80 md:w-96">
                   <TestimonialCard {...testimonial} />
                 </div>
               ))}
@@ -613,19 +625,19 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Final CTA Section - FunnelLabs Style */}
-      <section className="py-24 bg-gradient-primary relative overflow-hidden">
+      {/* Final CTA Section - Mobile Optimized */}
+      <section className="py-16 md:py-24 bg-gradient-primary relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary opacity-90"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
+          <h2 className="text-2xl md:text-4xl lg:text-6xl font-black text-white mb-6 md:mb-8 leading-tight">
             ¿Listo para convertirte en un
             <br/><span className="text-white/90">Detailer Profesional?</span>
           </h2>
-          <p className="text-2xl text-white/90 mb-12 max-w-3xl mx-auto">
+          <p className="text-lg md:text-2xl text-white/90 mb-8 md:mb-12 max-w-3xl mx-auto px-2">
             No dejes pasar esta oportunidad. Los cupos son limitados y la demanda es alta.
           </p>
           
-          <Button variant="glass" size="xl" className="mb-8 text-2xl py-6 px-16">
+          <Button variant="glass" size="xl" className="mb-6 md:mb-8 text-lg md:text-2xl py-5 md:py-6 px-10 md:px-16 w-full md:w-auto" onClick={openModal}>
             Inscribirme Ahora
           </Button>
           
@@ -645,15 +657,19 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black py-16">
+      {/* Footer - Mobile Optimized */}
+      <footer className="bg-black py-12 md:py-16">
         <div className="container mx-auto px-4 text-center">
-          <img src={detailParkLogo} alt="Detail Park" className="h-12 mx-auto mb-8 filter brightness-0 invert" />
-          <p className="text-white/60 mb-8">
-            Derechos reservados para Detail Park S.L. 2024 | 
-            <a href="#" className="text-white/80 hover:text-white mx-2">Aviso Legal</a> |
-            <a href="#" className="text-white/80 hover:text-white mx-2">Política de Privacidad</a> |
-            <a href="#" className="text-white/80 hover:text-white mx-2">Condiciones de Venta</a>
+          <img src={detailParkLogo} alt="Detail Park" className="h-10 md:h-12 mx-auto mb-6 md:mb-8 filter brightness-0 invert" />
+          <p className="text-white/60 text-xs md:text-sm mb-6 md:mb-8 leading-relaxed">
+            Derechos reservados para Detail Park S.L. 2024
+            <span className="hidden md:inline"> | </span>
+            <br className="md:hidden" />
+            <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block mt-2 md:mt-0">Aviso Legal</a>
+            <span className="mx-1">•</span>
+            <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Privacidad</a>
+            <span className="mx-1">•</span>
+            <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Condiciones</a>
           </p>
         </div>
       </footer>
