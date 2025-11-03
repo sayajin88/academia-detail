@@ -23,7 +23,7 @@ const pricingOptions = [
     variant: "outline" as const
   },
   {
-    name: "Detail Park UP DETAIL",
+    name: "La Jornada Cero",
     price: "€299",
     originalPrice: "€999",
     period: "+ IVA (1 día)",

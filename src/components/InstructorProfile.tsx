@@ -53,7 +53,7 @@ export function InstructorProfile() {
                     Daniel López
                   </h3>
                   <p className="text-xl gradient-text font-bold mb-6">
-                    Instructor Principal UP DETAIL
+                    Instructor Principal La Jornada Cero
                   </p>
 
                   <div className="space-y-6 mb-8">
@@ -120,15 +120,15 @@ export function InstructorProfile() {
               {[
                 {
                   text: "Increíble experiencia. En un solo día aprendí más que en meses viendo videos. La práctica real marca toda la diferencia.",
-                  author: "Carlos M., Asistente UP DETAIL Madrid"
+                  author: "Carlos M., Asistente La Jornada Cero Madrid"
                 },
                 {
                   text: "El ambiente, los instructores y la calidad son TOP. Volví con ganas de especializarme en detailing profesional.",
-                  author: "Ana R., Asistente UP DETAIL Barcelona"
+                  author: "Ana R., Asistente La Jornada Cero Barcelona"
                 },
                 {
                   text: "Totalmente recomendado. Pequeño grupo, mucha práctica y conexiones valiosas con otros apasionados del sector.",
-                  author: "Miguel S., Asistente UP DETAIL Valencia"
+                  author: "Miguel S., Asistente La Jornada Cero Valencia"
                 }
               ].map((testimonial, index) => (
                 <div key={index} className="glass-card p-6 rounded-2xl">

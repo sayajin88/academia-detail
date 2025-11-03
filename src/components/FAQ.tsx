@@ -5,7 +5,7 @@ import { HelpCircle } from "lucide-react";
 const faqs = [
   {
     question: "¿Necesito experiencia previa?",
-    answer: "No, el evento UP DETAIL está diseñado para personas sin experiencia que quieren conocer el mundo del detailing profesional de forma práctica e intensiva."
+    answer: "No, La Jornada Cero está diseñada para personas sin experiencia que quieren conocer el mundo del detailing profesional de forma práctica e intensiva."
   },
   {
     question: "¿Qué está incluido en los €299 + IVA?",
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     question: "¿Saldré preparado para trabajar como detailer profesional?",
-    answer: "UP DETAIL es un evento introductorio que te da las bases fundamentales del detailing. Para nivel profesional completo, te ofreceremos opciones de formación avanzada posterior."
+    answer: "La Jornada Cero es un evento introductorio que te da las bases fundamentales del detailing. Para nivel profesional completo, te ofreceremos opciones de formación avanzada posterior."
   },
   {
     question: "¿Por qué solo 10 plazas?",
@@ -40,8 +40,8 @@ const faqs = [
     answer: "Por la mañana: lavado profesional completo, descontaminación y limpieza de interiores. Por la tarde: introducción al pulido, uso de máquinas pulidoras y corrección básica de pintura. Todo con práctica real en vehículos."
   },
   {
-    question: "¿Habrá más eventos UP DETAIL en el futuro?",
-    answer: "Sí, organizamos eventos periódicamente. Los asistentes de UP DETAIL tienen prioridad en reservas de futuros eventos y descuentos especiales en formaciones avanzadas."
+    question: "¿Habrá más eventos La Jornada Cero en el futuro?",
+    answer: "Sí, organizamos eventos periódicamente. Los asistentes de La Jornada Cero tienen prioridad en reservas de futuros eventos y descuentos especiales en formaciones avanzadas."
   }
 ];
 

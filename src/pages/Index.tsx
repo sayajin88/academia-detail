@@ -99,7 +99,7 @@ const Index = () => {
         
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            UP DETAIL: Tu Primera Toma de Contacto
+            La Jornada Cero: Tu Primera Toma de Contacto
             <br/><span className="gradient-text">con el Detailing Profesional</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
@@ -188,7 +188,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              UP DETAIL: Tu <span className="gradient-text">primer paso</span> al éxito
+              La Jornada Cero: Tu <span className="gradient-text">primer paso</span> al éxito
             </h2>
             <p className="text-lg text-white/80 max-w-3xl mx-auto">
               Un día intensivo diseñado para iniciados que quieren descubrir 
@@ -198,7 +198,7 @@ const Index = () => {
           
           <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { step: "1", title: "Reserva", description: "Tu plaza en UP DETAIL" },
+              { step: "1", title: "Reserva", description: "Tu plaza en La Jornada Cero" },
               { step: "2", title: "Experimenta", description: "Práctica real 1 día" },
               { step: "3", title: "Aprende", description: "Técnicas principales" },
               { step: "4", title: "Decide", description: "Si es tu camino" }
@@ -220,7 +220,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-block glass-card px-8 py-3 rounded-full mb-8">
-              <span className="gradient-text font-bold uppercase tracking-wide">Tu Día en UP DETAIL</span>
+              <span className="gradient-text font-bold uppercase tracking-wide">Tu Día en La Jornada Cero</span>
             </div>
             <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
               Itinerario Completo de la <span className="gradient-text">Jornada Intensiva</span>

@@ -47,7 +47,7 @@ export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
       <div className="glass-intense rounded-2xl p-4 border border-primary/30 shadow-glow max-w-sm">
         <div className="flex items-center gap-3 mb-3">
           <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-          <span className="text-white text-sm font-semibold">UP DETAIL - Evento Exclusivo</span>
+          <span className="text-white text-sm font-semibold">La Jornada Cero - Evento Exclusivo</span>
         </div>
         
         <div className="text-center mb-4">

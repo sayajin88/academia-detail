@@ -94,10 +94,10 @@ export const OptimizedHero = () => {
           
           {/* Ultra-Optimized Headline */}
           <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.9] animate-fade-in-up">
-            <span className="text-white block mb-2">UP DETAIL:</span>
-            <span className="gradient-text animate-glow-pulse block mb-2">Evento Intensivo</span>
-            <span className="text-white block mb-2">de Detailing</span>
-            <span className="gradient-text animate-glow-pulse block">Profesional</span>
+            <span className="text-white block mb-2">La Jornada Cero:</span>
+            <span className="gradient-text animate-glow-pulse block mb-2">Empieza tu Carrera</span>
+            <span className="text-white block mb-2">en Detailing</span>
+            <span className="gradient-text animate-glow-pulse block">Hoy</span>
             <span className="text-white/80 text-2xl md:text-4xl block mt-4 font-normal">1 día que transformará tu visión del detailing</span>
           </h1>
           
@@ -180,7 +180,7 @@ export const OptimizedHero = () => {
               {/* Video Description */}
               <div className="mt-6 text-center">
                 <h3 className="text-xl font-bold text-white mb-2">
-                  Así es la experiencia UP DETAIL
+                  Así es la experiencia La Jornada Cero
                 </h3>
                 <p className="text-white/80">
                   Descubre cómo es nuestro evento intensivo de detailing profesional

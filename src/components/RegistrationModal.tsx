@@ -127,7 +127,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
               </div>
               
               <DialogTitle className="text-3xl font-bold gradient-text">
-                ¡Reserva Tu Plaza en UP DETAIL!
+                ¡Reserva Tu Plaza en La Jornada Cero!
               </DialogTitle>
               
               <div className="bg-gradient-primary/20 rounded-xl p-4 border border-primary/30">
@@ -307,7 +307,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
               </DialogTitle>
               
               <p className="text-white/80">
-                Completa tu reserva para el evento UP DETAIL
+                Completa tu reserva para La Jornada Cero
               </p>
             </DialogHeader>
 
@@ -317,7 +317,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                 
                 <div className="space-y-2">
                   <div className="flex justify-between text-white/80">
-                    <span>Evento UP DETAIL (1 día)</span>
+                    <span>La Jornada Cero (1 día)</span>
                     <span>€999 + IVA</span>
                   </div>
                   <div className="flex justify-between text-primary font-semibold">

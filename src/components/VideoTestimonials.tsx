@@ -7,9 +7,9 @@ const testimonials = [
   {
     id: 1,
     name: "Javier Morales",
-    role: "Participante UP DETAIL - Madrid",
+    role: "Participante La Jornada Cero - Madrid",
     videoId: "Kzqde_z1c2o",
-    quote: "UP DETAIL me abrió los ojos al mundo del detailing profesional. Ahora sé que quiero dedicarme a esto",
+    quote: "La Jornada Cero me abrió los ojos al mundo del detailing profesional. Ahora sé que quiero dedicarme a esto",
     rating: 5,
     duration: "2:30",
     location: "Madrid, España"
@@ -39,7 +39,7 @@ const testimonials = [
     name: "Andrés Ruiz", 
     role: "Aspirante a Detailer - Sevilla",
     videoId: "LyXGdONRt5g",
-    quote: "UP DETAIL es la mejor inversión si estás pensando en entrar al mundo del detailing profesional",
+    quote: "La Jornada Cero es la mejor inversión si estás pensando en entrar al mundo del detailing profesional",
     rating: 5,
     duration: "2:45",
     location: "Sevilla, España"
@@ -57,7 +57,7 @@ const testimonials = [
   {
     id: 6,
     name: "Marcos Torres",
-    role: "Asistente UP DETAIL - Bilbao",
+    role: "Asistente La Jornada Cero - Bilbao",
     videoId: "HYGRN-HdVc8",
     quote: "La mejor forma de saber si el detailing es tu camino. Práctica real desde el primer momento",
     rating: 5,
@@ -84,7 +84,7 @@ export function VideoTestimonials() {
             Escucha a quienes ya dieron <span className="gradient-text">el primer paso</span>
           </h2>
           <p className="text-xl text-white/80 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            Más de 200 personas han descubierto su camino en el detailing con UP DETAIL
+            Más de 200 personas han descubierto su camino en el detailing con La Jornada Cero
           </p>
         </div>
 
