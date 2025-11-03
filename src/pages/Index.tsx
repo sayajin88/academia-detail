@@ -106,57 +106,8 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <iframe
-            src="https://www.youtube.com/embed/ByRhg2kYD-A?autoplay=1&mute=1&loop=1&playlist=ByRhg2kYD-A&controls=0&showinfo=0&rel=0&modestbranding=1&start=39"
-            className="w-full h-full object-cover scale-150"
-            allow="autoplay; encrypted-media"
-            style={{ pointerEvents: 'none' }}
-          />
-          <div className="absolute inset-0 bg-black/60"></div>
-        </div>
-        
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            La Jornada Cero: Tu Primera Toma de Contacto
-            <br/><span className="gradient-text">con el Detailing Profesional</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-            Jornada intensiva de 1 día para iniciados que quieren descubrir si el detailing es su futuro. 
-            Aprende las técnicas principales y decide si quieres vivir de esto.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="hero" size="xl" className="animate-pulse" onClick={openModal}>
-              EMPEZAR AHORA
-            </Button>
-            <Button variant="glass" size="xl">
-              Ver Demostración
-            </Button>
-          </div>
-          
-          <div className="flex items-center justify-center gap-8 text-white/80">
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5" />
-              <span>+200 participantes</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-              <span>5.0/5 valoración</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Award className="w-5 h-5" />
-              <span>Certificado incluido</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Logos Section */}
-      <section className="py-12 bg-black/20">
+      {/* Logos Section - Hidden on mobile */}
+      <section className="py-12 bg-black/20 hidden md:block">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center gap-8 opacity-60">
             {['DETAILING PROFESIONAL', 'TÉCNICAS AVANZADAS', 'CERTIFICACIÓN OFICIAL'].map((text, index) => (

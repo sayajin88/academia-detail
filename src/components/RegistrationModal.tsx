@@ -117,28 +117,28 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
         {step === 'registration' ? (
           <>
             <DialogHeader className="text-center space-y-4">
-              <div className="flex justify-center items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/30">
+              <div className="flex flex-wrap justify-center items-center gap-2 mb-2">
+                <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/30 text-xs md:text-sm">
                   🔥 EVENTO EXCLUSIVO
                 </Badge>
-                <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30">
+                <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30 text-xs md:text-sm">
                   40% OFF
                 </Badge>
               </div>
               
-              <DialogTitle className="text-3xl font-bold gradient-text">
-                ¡Reserva Tu Plaza en La Jornada Cero!
+              <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-bold gradient-text">
+                ¡Reserva Tu Plaza!
               </DialogTitle>
               
-              <div className="bg-gradient-primary/20 rounded-xl p-4 border border-primary/30">
+              <div className="bg-gradient-primary/20 rounded-xl p-3 md:p-4 border border-primary/30">
                 <div className="text-center">
-                  <div className="text-lg text-white/90 mb-2">Jornada Intensiva de 1 Día</div>
-                  <div className="flex items-center justify-center gap-4">
-                    <span className="text-2xl text-white/60 line-through">€999 + IVA</span>
-                    <span className="text-4xl font-bold gradient-text">€299 + IVA</span>
+                  <div className="text-sm md:text-base lg:text-lg text-white/90 mb-2">Jornada Intensiva de 1 Día</div>
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+                    <span className="text-lg md:text-xl lg:text-2xl text-white/60 line-through">€999 + IVA</span>
+                    <span className="text-2xl md:text-3xl lg:text-4xl font-bold gradient-text">€299 + IVA</span>
                   </div>
-                  <div className="text-sm text-white/70 mt-2">
-                    Ahorras €700 - Solo 10 plazas máximo
+                  <div className="text-xs md:text-sm text-white/70 mt-2">
+                    Ahorras €700 - Solo 10 plazas
                   </div>
                 </div>
               </div>

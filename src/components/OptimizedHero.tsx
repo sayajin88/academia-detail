@@ -30,8 +30,8 @@ export const OptimizedHero = () => {
 
   return (
     <>
-      {/* Floating Logo with Progress */}
-      <div className="fixed top-4 left-4 z-50 animate-float">
+      {/* Floating Logo with Progress - Hidden on mobile */}
+      <div className="fixed top-4 left-4 z-50 animate-float hidden lg:block">
         <div className="flex items-center gap-3 glass-intense px-4 py-2 rounded-full">
           <img src={detailParkLogo} alt="Detail Park" className="h-8 filter brightness-0 invert" />
           <div className="w-16 h-1 bg-white/20 rounded-full overflow-hidden">
@@ -43,8 +43,8 @@ export const OptimizedHero = () => {
         </div>
       </div>
 
-      {/* Live Viewers Indicator */}
-      <div className="fixed top-4 right-4 z-50 animate-pulse">
+      {/* Live Viewers Indicator - Hidden on mobile */}
+      <div className="fixed top-4 right-4 z-50 animate-pulse hidden lg:flex">
         <div className="glass-intense px-4 py-2 rounded-full flex items-center gap-2">
           <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
           <span className="text-white text-sm font-bold">{liveViewers} viendo</span>
@@ -52,33 +52,36 @@ export const OptimizedHero = () => {
       </div>
 
       <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        {/* Video Background */}
+        {/* Video Background - Optimized for mobile */}
         <div className="absolute inset-0">
           <iframe
             src="https://www.youtube.com/embed/ByRhg2kYD-A?autoplay=1&mute=1&loop=1&playlist=ByRhg2kYD-A&controls=0&showinfo=0&rel=0&modestbranding=1&start=39"
-            className="w-full h-full object-cover opacity-20 scale-150"
+            className="w-full h-full object-cover opacity-10 md:opacity-20 scale-100 md:scale-150"
             allow="autoplay; encrypted-media"
             style={{ pointerEvents: 'none' }}
+            title="Detail Park Background"
           />
         </div>
 
-        {/* Enhanced Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-hero opacity-90"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/80"></div>
+        {/* Enhanced Gradient Overlay - Darker on mobile */}
+        <div className="absolute inset-0 bg-gradient-hero opacity-95 md:opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/80 to-black/90 md:from-transparent md:via-black/50 md:to-black/80"></div>
         
-        {/* Floating Particles */}
-        {[...Array(15)].map((_, i) => (
-          <div 
-            key={i}
-            className="absolute w-1 h-1 bg-primary rounded-full animate-float opacity-60"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 6}s`,
-              animationDuration: `${4 + Math.random() * 4}s`
-            }}
-          />
-        ))}
+        {/* Floating Particles - Hidden on mobile for performance */}
+        <div className="hidden md:block">
+          {[...Array(15)].map((_, i) => (
+            <div 
+              key={i}
+              className="absolute w-1 h-1 bg-primary rounded-full animate-float opacity-60"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 6}s`,
+                animationDuration: `${4 + Math.random() * 4}s`
+              }}
+            />
+          ))}
+        </div>
         
         <div className="relative z-10 container mx-auto px-4 text-center max-w-6xl">
           {/* Enhanced Badge */}
@@ -92,106 +95,110 @@ export const OptimizedHero = () => {
             <Badge variant="destructive" className="animate-pulse">-75%</Badge>
           </div>
           
-          {/* Ultra-Optimized Headline */}
-          <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.9] animate-fade-in-up">
+          {/* Mobile-Optimized Headline */}
+          <h1 className="text-3xl md:text-5xl lg:text-7xl xl:text-8xl font-black mb-6 md:mb-8 leading-tight animate-fade-in-up">
             <span className="text-white block mb-2">La Jornada Cero:</span>
-            <span className="gradient-text animate-glow-pulse block mb-2">Empieza tu Carrera</span>
+            <span className="gradient-text block mb-2">Empieza tu Carrera</span>
             <span className="text-white block mb-2">en Detailing</span>
-            <span className="gradient-text animate-glow-pulse block">Hoy</span>
-            <span className="text-white/80 text-2xl md:text-4xl block mt-4 font-normal">1 día que transformará tu visión del detailing</span>
+            <span className="gradient-text block">Hoy</span>
+            <span className="text-white/90 text-base md:text-2xl lg:text-4xl block mt-3 md:mt-4 font-normal">1 día que transformará tu visión del detailing</span>
           </h1>
           
-          {/* Value Proposition */}
-          <div className="max-w-4xl mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          <p className="text-xl md:text-2xl text-white/90 mb-4 font-semibold">
+          {/* Value Proposition - Mobile optimized */}
+          <div className="max-w-4xl mx-auto mb-6 md:mb-8 px-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-base md:text-xl lg:text-2xl text-white/90 mb-4 font-semibold">
             Descubre en 1 día si el detailing es tu futuro profesional
           </p>
-          <div className="flex flex-wrap justify-center gap-4 text-white/80">
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-primary" />
+          <div className="flex flex-col md:flex-row flex-wrap justify-center gap-3 md:gap-4 text-sm md:text-base text-white/80">
+            <div className="flex items-center justify-center gap-2">
+              <Users className="w-4 h-4 md:w-5 md:h-5 text-primary" />
               <span>Perfecto para iniciarse</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Award className="w-5 h-5 text-primary" />
+            <div className="flex items-center justify-center gap-2">
+              <Award className="w-4 h-4 md:w-5 md:h-5 text-primary" />
               <span>Primera toma de contacto</span>
             </div>
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-primary" />
-              <span>Decide tu camino profesional</span>
+            <div className="flex items-center justify-center gap-2">
+              <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+              <span>Decide tu camino</span>
             </div>
           </div>
           </div>
           
-          {/* Enhanced CTA Group */}
-          <div className="space-y-4 mb-12 animate-bounce-in" style={{ animationDelay: '0.4s' }}>
+          {/* Enhanced CTA Group - Mobile optimized */}
+          <div className="space-y-3 md:space-y-4 mb-8 md:mb-12 px-4 animate-bounce-in" style={{ animationDelay: '0.4s' }}>
             <Button 
               variant="hero" 
               size="xl" 
-              className="animate-pulse-glow hover:animate-none hover:scale-105 transition-all duration-300 shadow-glow-intense"
+              className="w-full md:w-auto text-sm md:text-base lg:text-xl py-4 md:py-6 px-6 md:px-12 hover:scale-105 transition-all duration-300"
             >
-              🚀 Reservar Plaza Ahora (€299 + IVA en lugar de €999 + IVA)
+              🚀 RESERVAR PLAZA - €299 + IVA
             </Button>
-            <div className="flex items-center justify-center gap-4 text-sm text-white/70">
+            <p className="text-xs md:text-sm text-white/60 text-center">
+              Normal: €999 + IVA • Ahorras €700
+            </p>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-xs md:text-sm text-white/70">
               <span>✅ Primera toma de contacto</span>
-              <span>✅ Práctica real incluida</span>
-              <span>✅ Decide si es tu camino</span>
+              <span>✅ Práctica real</span>
+              <span>✅ Decide tu camino</span>
             </div>
           </div>
 
-          {/* Social Proof with Real Avatars */}
-          <div className="flex flex-col items-center gap-6 animate-slide-in-right" style={{ animationDelay: '0.6s' }}>
-            <div className="flex justify-center items-center gap-3">
-              <div className="flex -space-x-3">
-                {[1,2,3,4,5,6].map((i) => (
+          {/* Social Proof - Mobile optimized */}
+          <div className="flex flex-col items-center gap-4 md:gap-6 px-4 animate-slide-in-right" style={{ animationDelay: '0.6s' }}>
+            <div className="flex flex-col md:flex-row justify-center items-center gap-3 md:gap-4">
+              <div className="flex -space-x-2 md:-space-x-3">
+                {[1,2,3,4,5].map((i) => (
                   <div 
                     key={i} 
-                    className="w-12 h-12 rounded-full bg-gradient-primary border-3 border-white/20 flex items-center justify-center hover-glow transform transition-all duration-300 hover:scale-110 hover:z-10"
+                    className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-gradient-primary border-2 md:border-3 border-white/20 flex items-center justify-center"
                   >
-                    <span className="text-white font-bold text-sm">{String.fromCharCode(65 + i)}</span>
+                    <span className="text-white font-bold text-xs md:text-sm">{String.fromCharCode(65 + i)}</span>
                   </div>
                 ))}
-                <div className="w-12 h-12 rounded-full bg-white/10 border-3 border-white/20 flex items-center justify-center">
+                <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-white/10 border-2 md:border-3 border-white/20 flex items-center justify-center">
                   <span className="text-white text-xs font-bold">+200</span>
                 </div>
               </div>
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-center md:items-start">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                    <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <span className="text-white/80 text-sm">5.0/5 de 200+ asistentes</span>
+                <span className="text-white/80 text-xs md:text-sm">5.0/5 de 200+ asistentes</span>
               </div>
             </div>
           </div>
           
-          {/* Enhanced Video Preview */}
-          <div className="mt-16 max-w-5xl mx-auto animate-scale-in" style={{ animationDelay: '0.8s' }}>
-            <div className="glass-intense rounded-3xl p-8 hover-glow group transition-all duration-500">
-              <div className="relative overflow-hidden rounded-2xl aspect-video">
+          {/* Video Preview - Mobile optimized */}
+          <div className="mt-8 md:mt-16 max-w-5xl mx-auto px-4 animate-scale-in" style={{ animationDelay: '0.8s' }}>
+            <div className="glass-intense rounded-xl md:rounded-3xl p-3 md:p-8 hover-glow group transition-all duration-500">
+              <div className="relative overflow-hidden rounded-lg md:rounded-2xl aspect-video">
                 <iframe
                   src="https://www.youtube.com/embed/ByRhg2kYD-A"
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
+                  title="La Jornada Cero"
                 />
               </div>
               
               {/* Video Description */}
-              <div className="mt-6 text-center">
-                <h3 className="text-xl font-bold text-white mb-2">
+              <div className="mt-3 md:mt-6 text-center">
+                <h3 className="text-base md:text-xl font-bold text-white mb-1 md:mb-2">
                   Así es la experiencia La Jornada Cero
                 </h3>
-                <p className="text-white/80">
-                  Descubre cómo es nuestro evento intensivo de detailing profesional
+                <p className="text-xs md:text-base text-white/80">
+                  Evento intensivo de detailing profesional
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        {/* Scroll Indicator - Hidden on mobile */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
           <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
           </div>

@@ -27,6 +27,7 @@ export const MobileOptimization = ({ isOpen, onToggle }: MobileMenuProps) => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Show sticky CTA after scrolling past hero (300px)
       setShowStickyCTA(window.scrollY > 300);
     };
 
@@ -104,16 +105,19 @@ export const MobileOptimization = ({ isOpen, onToggle }: MobileMenuProps) => {
         </div>
       )}
 
-      {/* Sticky Mobile CTA */}
+      {/* Sticky Mobile CTA - Optimized */}
       {showStickyCTA && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 p-4 bg-black/90 backdrop-blur-sm border-t border-primary/30 lg:hidden animate-fade-in">
-          <div className="flex items-center gap-3">
-            <div className="flex-1">
-              <div className="text-white font-bold text-sm">Detail Park</div>
-              <div className="text-white/70 text-xs">Curso completo €47</div>
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-white/10 p-3 z-50 shadow-2xl animate-slide-in-right">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-white font-bold text-xs truncate">La Jornada Cero</p>
+              <div className="flex items-center gap-2">
+                <p className="text-primary text-base font-black">€299 + IVA</p>
+                <span className="text-xs text-white/60 line-through">€999</span>
+              </div>
             </div>
-            <Button variant="hero" size="sm" className="px-6">
-              Inscribirme
+            <Button variant="hero" size="sm" className="shrink-0 mobile-touch-target">
+              RESERVAR
             </Button>
           </div>
         </div>
