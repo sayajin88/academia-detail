@@ -43,6 +43,7 @@ import { PricingComparison } from "@/components/PricingComparison";
 import { InstructorProfile } from "@/components/InstructorProfile";
 import { RegistrationModal } from "@/components/RegistrationModal";
 import { useRegistrationModal } from "@/hooks/useRegistrationModal";
+import { ExpertiseShowcase } from "@/components/ExpertiseShowcase";
 
 // Import images
 import detailParkLogo from "@/assets/detail-park-logo.webp";
@@ -406,6 +407,9 @@ const Index = () => {
 
       {/* Trust Signals */}
       <TrustSignals />
+
+      {/* Expertise Showcase - Portfolio */}
+      <ExpertiseShowcase />
 
       {/* Pricing Comparison */}
       <PricingComparison />
