@@ -27,6 +27,16 @@ import portfolioCorvette from "@/assets/portfolio-corvette.png";
 import portfolioFerrari458 from "@/assets/portfolio-ferrari-458.png";
 import portfolioFerrariF430 from "@/assets/portfolio-ferrari-f430.png";
 import portfolioFerrariGtc4 from "@/assets/portfolio-ferrari-gtc4.png";
+import portfolioToyotaSupra from "@/assets/portfolio-toyota-supra.png";
+import portfolioRangeRoverVelar from "@/assets/portfolio-range-rover-velar.png";
+import portfolioMclaren720sOrange from "@/assets/portfolio-mclaren-720s-orange.png";
+import portfolioLotusEvora from "@/assets/portfolio-lotus-evora.png";
+import portfolioPorscheCayenne from "@/assets/portfolio-porsche-cayenne.png";
+import portfolioLamborghiniUrus from "@/assets/portfolio-lamborghini-urus.png";
+import portfolioJaguarFType from "@/assets/portfolio-jaguar-f-type.png";
+import portfolioLamborghiniHuracan from "@/assets/portfolio-lamborghini-huracan.png";
+import portfolioHondaNsx from "@/assets/portfolio-honda-nsx.png";
+import portfolioBentleyContinental from "@/assets/portfolio-bentley-continental.png";
 
 const portfolioImages = [
   { src: portfolioMclaren, alt: "McLaren 720S Detailing Profesional" },
@@ -48,6 +58,16 @@ const portfolioImages = [
   { src: portfolioFerrari458, alt: "Ferrari 458 Italia Detailing" },
   { src: portfolioFerrariF430, alt: "Ferrari F430 Detailing" },
   { src: portfolioFerrariGtc4, alt: "Ferrari GTC4Lusso Detailing" },
+  { src: portfolioToyotaSupra, alt: "Toyota Supra Detailing" },
+  { src: portfolioRangeRoverVelar, alt: "Range Rover Velar Detailing" },
+  { src: portfolioMclaren720sOrange, alt: "McLaren 720S Orange Detailing" },
+  { src: portfolioLotusEvora, alt: "Lotus Evora Detailing" },
+  { src: portfolioPorscheCayenne, alt: "Porsche Cayenne Detailing" },
+  { src: portfolioLamborghiniUrus, alt: "Lamborghini Urus Detailing" },
+  { src: portfolioJaguarFType, alt: "Jaguar F-Type Detailing" },
+  { src: portfolioLamborghiniHuracan, alt: "Lamborghini Huracán Detailing" },
+  { src: portfolioHondaNsx, alt: "Honda NSX Detailing" },
+  { src: portfolioBentleyContinental, alt: "Bentley Continental GT Detailing" },
 ];
 
 const stats = [
