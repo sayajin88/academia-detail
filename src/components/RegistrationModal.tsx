@@ -47,82 +47,24 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
     
     try {
       setLoading(true);
-      console.log('🚀 Starting registration process...');
+      console.log('🚀 Starting checkout process...');
       
       // Validar datos
       console.log('📝 Validating form data...');
       const validatedData = registrationSchema.parse(formData);
       console.log('✅ Validation successful');
-      
-      // Guardar en Supabase
-      console.log('💾 Inserting registration into database...');
-      const { data, error } = await supabase
-        .from('registrations')
-        .insert([
-          {
-            first_name: validatedData.firstName,
-            last_name: validatedData.lastName,
-            email: validatedData.email,
-            phone: validatedData.phone,
-            accept_terms: validatedData.acceptTerms,
-            accept_marketing: validatedData.acceptMarketing,
-            payment_status: 'pending'
-          }
-        ])
-        .select()
-        .single();
 
-      if (error) {
-        console.error('❌ Registration insert error:', error);
-        console.error('Error code:', (error as any).code);
-        console.error('Error message:', error.message);
-        console.error('Error details:', error.details);
-        if ((error as any).code === '23505') { // Duplicate email
-          toast.error("Este email ya está registrado");
-          return;
-        }
-        throw error;
-      }
-
-      console.log('✅ Registration inserted successfully:', data);
-      const newRegistrationId = data.id;
-      setRegistrationId(newRegistrationId);
-      
-      // Enviar emails de confirmación
-      console.log('📧 Sending confirmation emails...');
-      try {
-        const emailResponse = await supabase.functions.invoke('send-registration-emails', {
-          body: {
-            id: newRegistrationId,
-            firstName: validatedData.firstName,
-            lastName: validatedData.lastName,
-            email: validatedData.email,
-            phone: validatedData.phone,
-            eventDate: "Sábado 13 de Diciembre, 2025",
-            price: "€199 + IVA",
-            reservationExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            })
-          }
-        });
-
-        if (emailResponse.error) {
-          console.error('⚠️ Email sending error:', emailResponse.error);
-        } else {
-          console.log('✅ Emails sent successfully');
-        }
-      } catch (emailError) {
-        console.error('⚠️ Failed to send emails:', emailError);
-      }
-      
-      // Crear sesión de pago con Stripe
-      console.log('💳 Creating Stripe checkout session...');
+      // Crear sesión de pago con Stripe desde el servidor (inserta y crea checkout)
+      console.log('💳 Creating Stripe checkout session (server)...');
       const { data: checkoutData, error: checkoutError } = await supabase.functions.invoke('create-checkout', {
-        body: { registrationId: newRegistrationId }
+        body: {
+          firstName: validatedData.firstName,
+          lastName: validatedData.lastName,
+          email: validatedData.email,
+          phone: validatedData.phone,
+          acceptTerms: validatedData.acceptTerms,
+          acceptMarketing: validatedData.acceptMarketing,
+        }
       });
 
       console.log('Checkout response:', { checkoutData, checkoutError });
@@ -140,13 +82,12 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
       }
 
       console.log('✅ Redirecting to Stripe checkout:', checkoutData.url);
-      // Redirigir a Stripe Checkout
       window.location.href = checkoutData.url;
       
     } catch (error) {
       console.error('❌ Registration submit failed:', error);
       console.error('Error type:', typeof error);
-      console.error('Error details:', JSON.stringify(error, null, 2));
+      try { console.error('Error details:', JSON.stringify(error, null, 2)); } catch {}
       
       if (error instanceof z.ZodError) {
         console.error('Validation errors:', error.errors);

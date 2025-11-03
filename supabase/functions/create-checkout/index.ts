@@ -17,52 +17,102 @@ serve(async (req) => {
       apiVersion: '2023-10-16',
     });
 
+    // Use service role to bypass RLS securely on the server
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? ''
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    const { registrationId } = await req.json();
+    const body = await req.json();
 
-    if (!registrationId) {
-      throw new Error('Registration ID is required');
+    // Accept both flows: either we receive registrationId or full form data
+    const {
+      registrationId,
+      firstName,
+      lastName,
+      email,
+      phone,
+      acceptTerms,
+      acceptMarketing,
+    } = body || {};
+
+    let regId = registrationId as string | undefined;
+
+    if (!regId) {
+      // Minimal server-side validation
+      if (!firstName || !lastName || !email || !phone || acceptTerms !== true) {
+        throw new Error('Datos inválidos');
+      }
+
+      // Insert registration server-side (bypassing RLS)
+      const { data: inserted, error: insertError } = await supabaseClient
+        .from('registrations')
+        .insert([
+          {
+            first_name: String(firstName).trim(),
+            last_name: String(lastName).trim(),
+            email: String(email).trim().toLowerCase(),
+            phone: String(phone).trim(),
+            accept_terms: true,
+            accept_marketing: !!acceptMarketing,
+            payment_status: 'pending',
+          },
+        ])
+        .select('id')
+        .single();
+
+      if (insertError) {
+        console.error('Insert error:', insertError);
+        throw new Error('No se pudo registrar');
+      }
+
+      regId = inserted.id;
     }
 
-    console.log('Creating checkout for registration:', registrationId);
+    if (!regId) throw new Error('No se pudo obtener el ID de registro');
 
-    // Get registration details
-    const { data: registration, error: regError } = await supabaseClient
-      .from('registrations')
-      .select('*')
-      .eq('id', registrationId)
-      .single();
+    console.log('Creating checkout for registration:', regId);
 
-    if (regError || !registration) {
-      console.error('Registration not found:', regError);
-      throw new Error('Registration not found');
+    // Try to find a suitable existing price for the provided product
+    let priceId: string | undefined;
+    try {
+      const prices = await stripe.prices.list({
+        product: 'prod_TMEHj9ejTLwlIF',
+        active: true,
+        type: 'one_time',
+        limit: 100,
+      });
+      priceId = prices.data.find((p) => p.currency === 'eur' && p.unit_amount === 19900)?.id || prices.data[0]?.id;
+    } catch (err) {
+      console.warn('Could not list prices for product:', err);
     }
+
+    if (!priceId) {
+      // Create a new one-time price for the product
+      const created = await stripe.prices.create({
+        currency: 'eur',
+        unit_amount: 19900,
+        product: 'prod_TMEHj9ejTLwlIF',
+      });
+      priceId = created.id;
+    }
+
+    const origin = req.headers.get('origin') || 'https://ncsatssbhqicptmivmqk.supabase.co';
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
-        {
-          price_data: {
-            currency: 'eur',
-            product: 'prod_TMEHj9ejTLwlIF',
-            unit_amount: 19900, // €199.00
-          },
-          quantity: 1,
-        },
+        { price: priceId!, quantity: 1 },
       ],
       mode: 'payment',
-      success_url: `${req.headers.get('origin') || 'https://ncsatssbhqicptmivmqk.supabase.co'}/?payment=success&registration_id=${registrationId}`,
-      cancel_url: `${req.headers.get('origin') || 'https://ncsatssbhqicptmivmqk.supabase.co'}/?payment=cancelled`,
-      customer_email: registration.email,
+      success_url: `${origin}/?payment=success&registration_id=${regId}`,
+      cancel_url: `${origin}/?payment=cancelled`,
+      customer_email: email,
       metadata: {
-        registration_id: registrationId,
-        customer_name: `${registration.first_name} ${registration.last_name}`,
-        customer_phone: registration.phone,
+        registration_id: regId,
+        customer_name: `${firstName || ''} ${lastName || ''}`.trim(),
+        customer_phone: phone || '',
       },
     });
 
