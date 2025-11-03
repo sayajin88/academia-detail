@@ -2,108 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
-/* FunnelLabs inspired design system with dark background and red accents */
+/* Detail Park Brand Identity - Negro profundo con acentos rojos vivid */
 
 @layer base {
   :root {
-    /* FunnelLabs exact color scheme - very dark with red accents */
-    --background: 220 13% 6%; /* Deep dark blue-black */
-    --foreground: 0 0% 98%;
-
-    --card: 220 13% 8%;
-    --card-foreground: 0 0% 95%;
-
-    --popover: 220 13% 8%;
-    --popover-foreground: 0 0% 95%;
-
-    /* Bright red primary like FunnelLabs */
-    --primary: 0 91% 55%; /* Vibrant red */
-    --primary-foreground: 0 0% 98%;
-    --primary-glow: 0 91% 65%; /* Lighter red for glow */
-    --primary-dark: 0 91% 45%; /* Darker red */
-
-    --secondary: 220 13% 12%;
-    --secondary-foreground: 0 0% 85%;
-
-    --muted: 220 13% 10%;
-    --muted-foreground: 0 0% 55%;
-
-    --accent: 0 91% 55%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 220 13% 15%;
-    --input: 220 13% 12%;
-    --ring: 0 91% 55%;
-
-    --radius: 1rem;
-
-    /* FunnelLabs style gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(0 91% 55%) 0%, hsl(15 91% 60%) 50%, hsl(30 91% 65%) 100%);
-    --gradient-background: radial-gradient(ellipse at top, hsl(220 13% 8%) 0%, hsl(220 13% 6%) 50%, hsl(220 13% 4%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(220 13% 4%) 0%, hsl(220 13% 6%) 50%, hsl(0 91% 10%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(220 13% 8% / 0.8) 0%, hsl(220 13% 10% / 0.6) 100%);
+    /* Detail Park Brand Colors */
+    --background: 0 0% 0%; /* Negro profundo #000000 */
+    --foreground: 0 0% 100%; /* Blanco puro #FFFFFF */
     
-    /* Intense glow effects like FunnelLabs */
-    --shadow-glow-intense: 0 0 80px hsl(0 91% 55% / 0.6);
-    --shadow-primary: 0 20px 40px hsl(0 91% 55% / 0.3);
-    --shadow-card: 0 8px 32px hsl(220 13% 2% / 0.8);
-    --shadow-glow-subtle: 0 0 40px hsl(0 91% 55% / 0.2);
-
-    /* Advanced animations */
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --primary: 10 93% 46%; /* Vivid Red #E52B09 */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 10 93% 56%;
+    --primary-dark: 10 93% 36%;
+    
+    --secondary: 200 2% 60%; /* Gris neutro #97999B */
+    --secondary-foreground: 0 0% 100%;
+    
+    --muted: 210 5% 34%; /* Gris oscuro #53565A */
+    --muted-foreground: 200 2% 60%;
+    
+    --accent: 10 93% 46%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 210 5% 34%;
+    --input: 210 5% 34%;
+    --ring: 10 93% 46%;
+    
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+    
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+    
+    --radius: 0.5rem;
+    
+    /* Brand Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(10 93% 46%), hsl(10 93% 56%));
+    --gradient-background: linear-gradient(180deg, hsl(0 0% 0%), hsl(0 0% 5%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(10 93% 46% / 0.2) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 5% / 0.8), hsl(0 0% 8% / 0.6));
+    
+    /* Red Glow Shadows */
+    --shadow-glow-subtle: 0 0 20px hsl(10 93% 46% / 0.3);
+    --shadow-glow-intense: 0 0 40px hsl(10 93% 46% / 0.6);
+    --shadow-primary: 0 10px 30px -10px hsl(10 93% 46% / 0.5);
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.5);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    --transition-glow: box-shadow 0.3s ease-in-out;
-
-    --sidebar-background: 220 13% 7%;
-    --sidebar-foreground: 0 0% 85%;
-    --sidebar-primary: 0 91% 55%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 220 13% 12%;
-    --sidebar-accent-foreground: 0 0% 85%;
-    --sidebar-border: 220 13% 15%;
-    --sidebar-ring: 0 91% 55%;
+    --transition-glow: all 0.4s ease-in-out;
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 3%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 10 93% 46%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 5% 34%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 210 5% 34%;
+    --sidebar-ring: 10 93% 46%;
   }
 
   .dark {
-    /* Consistent with default dark theme */
-    --background: 220 13% 6%;
-    --foreground: 0 0% 98%;
+    /* Dark theme matching brand identity */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 220 13% 8%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 220 13% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 0 91% 55%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 10 93% 46%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 13% 12%;
-    --secondary-foreground: 0 0% 85%;
+    --secondary: 200 2% 60%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 13% 10%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 210 5% 34%;
+    --muted-foreground: 200 2% 60%;
 
-    --accent: 0 91% 55%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 10 93% 46%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 15%;
-    --input: 220 13% 12%;
-    --ring: 0 91% 55%;
-    --sidebar-background: 220 13% 7%;
-    --sidebar-foreground: 0 0% 85%;
-    --sidebar-primary: 0 91% 55%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 220 13% 12%;
-    --sidebar-accent-foreground: 0 0% 85%;
-    --sidebar-border: 220 13% 15%;
-    --sidebar-ring: 0 91% 55%;
+    --border: 210 5% 34%;
+    --input: 210 5% 34%;
+    --ring: 10 93% 46%;
+    --sidebar-background: 0 0% 3%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 10 93% 46%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 5% 34%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 210 5% 34%;
+    --sidebar-ring: 10 93% 46%;
   }
 }
 
@@ -113,17 +113,26 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
-    background: var(--gradient-background);
-    min-height: 100vh;
+    @apply bg-background text-foreground;
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(0 0% 5%) 100%);
+    font-family: 'Open Sans', sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 
   html {
     scroll-behavior: smooth;
   }
+  
+  /* Typography - Detail Park Brand */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
 }
 
-/* FunnelLabs style animations */
+/* Detail Park Brand Animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
@@ -158,10 +167,10 @@
 
 @keyframes glow-pulse {
   0%, 100% { 
-    filter: drop-shadow(0 0 20px hsl(0 91% 55% / 0.4));
+    filter: drop-shadow(0 0 20px hsl(10 93% 46% / 0.4));
   }
   50% { 
-    filter: drop-shadow(0 0 40px hsl(0 91% 55% / 0.8));
+    filter: drop-shadow(0 0 40px hsl(10 93% 46% / 0.8));
   }
 }
 
@@ -340,13 +349,13 @@ img {
   }
 }
 
-/* FunnelLabs style gradient text */
+/* Detail Park gradient text */
 .gradient-text {
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 20px hsl(0 91% 55% / 0.3));
+  filter: drop-shadow(0 0 20px hsl(10 93% 46% / 0.3));
 }
 
 /* Enhanced glassmorphism effects */
@@ -364,7 +373,7 @@ img {
   box-shadow: var(--shadow-glow-intense);
 }
 
-/* FunnelLabs style hover effects */
+/* Detail Park hover effects */
 .hover-glow {
   transition: var(--transition-glow);
 }
