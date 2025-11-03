@@ -59,6 +59,7 @@ import eventoAlumnosAtentos from "@/assets/evento-alumnos-atentos.jpg";
 import eventoPracticaPulidora from "@/assets/evento-practica-pulidora.jpg";
 import certificadoAlumno from "@/assets/certificado-alumno.png";
 import certificadoAlumnoFeliz from "@/assets/certificado-alumno-feliz.jpg";
+import mobileHeroBg from "@/assets/mobile-hero-bg.jpg";
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -119,16 +120,26 @@ const Index = () => {
 
       {/* Problems Section with background video */}
       <section className="relative py-16 md:py-24 overflow-hidden min-h-[50vh] md:min-h-[60vh]">
-        {/* Background video (desktop and mobile, muted inline) */}
-        <div className="absolute inset-0 w-full h-full">
+        {/* Background image for mobile */}
+        <div className="absolute inset-0 md:hidden">
+          <img 
+            src={mobileHeroBg} 
+            alt="Detail Park Background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Background video for desktop */}
+        <div className="absolute inset-0 w-full h-full hidden md:block">
           <iframe
             src="https://www.youtube.com/embed/ByRhg2kYD-A?autoplay=1&mute=1&loop=1&playlist=ByRhg2kYD-A&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=39"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[140%] md:w-[177.77777778vh] md:min-w-full md:min-h-[56.25vw] md:h-full"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.77777778vh] min-w-full min-h-[56.25vw] h-full"
             allow="autoplay; encrypted-media"
             style={{ pointerEvents: 'none' }}
             title="Detail Park Background"
           />
         </div>
+        
         {/* Overlays for readability */}
         <div className="absolute inset-0 bg-black/60 md:bg-black/50"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70 md:via-black/40 md:to-black/70"></div>
