@@ -105,11 +105,11 @@ const Index = () => {
               </div>
             </div>
             
-            {/* Botón CTA - Más compacto en mobile */}
+            {/* Botón CTA - Oculto en mobile */}
             <Button 
               variant="glass" 
               size="sm" 
-              className="animate-pulse text-xs md:text-sm px-3 md:px-4 whitespace-nowrap flex-shrink-0" 
+              className="hidden md:flex animate-pulse text-xs md:text-sm px-3 md:px-4 whitespace-nowrap flex-shrink-0" 
               onClick={openModal}
             >
               RESERVAR
@@ -385,8 +385,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Advanced Interactive Components */}
-      <AdvancedInteractives onCtaClick={openModal} />
+      {/* Advanced Interactive Components - Hidden on mobile */}
+      <div className="hidden lg:block">
+        <AdvancedInteractives onCtaClick={openModal} />
+      </div>
 
       {/* Video Testimonials */}
       <VideoTestimonials />
