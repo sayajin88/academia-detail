@@ -14,7 +14,7 @@ const autoResponses = {
   "¿Cuánto dura el curso?": "El curso tiene una duración de 3 semanas con clases prácticas y teóricas. Puedes completarlo a tu ritmo.",
   "¿Incluye certificación?": "Sí, incluye certificación oficial al finalizar el curso, reconocida en el sector del detailing.",
   "¿Hay práctica real?": "Por supuesto, tendrás acceso a nuestro taller para practicar con vehículos reales bajo supervisión.",
-  "¿Cuál es el precio final?": "El precio actual con descuento es de €178 (precio normal €297). Incluye todo sin costos adicionales."
+  "¿Cuál es el precio final?": "El precio actual con descuento es de €299 + IVA (precio normal €999 + IVA). Incluye todo sin costos adicionales."
 };
 
 export function LiveChat() {

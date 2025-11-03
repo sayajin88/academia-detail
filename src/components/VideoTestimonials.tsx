@@ -6,63 +6,63 @@ import { useState } from "react";
 const testimonials = [
   {
     id: 1,
-    name: "Carlos Mendoza",
-    role: "Estudiante Graduado - Promoción 2024",
-    videoId: "kJQP7kiw5Fk", // Video de detailing profesional
-    quote: "En 3 semanas pasé de aficionado a tener mi propio negocio de detailing. Ahora facturo más de €3,000 al mes",
+    name: "Javier Morales",
+    role: "Participante UP DETAIL - Madrid",
+    videoId: "Kzqde_z1c2o",
+    quote: "UP DETAIL me abrió los ojos al mundo del detailing profesional. Ahora sé que quiero dedicarme a esto",
     rating: 5,
-    duration: "2:15",
+    duration: "2:30",
     location: "Madrid, España"
   },
   {
     id: 2,
-    name: "Ana Rodríguez",
-    role: "Emprendedora - Detailing Femenino",
-    videoId: "LXb3EKWsInQ", // Video de car detailing 
-    quote: "Como mujer en este sector, Detail Park me dio la confianza y técnicas para destacar. Ahora tengo 5 empleados",
+    name: "Roberto Sánchez",
+    role: "Asistente Evento - Barcelona",
+    videoId: "ItGES_wJUcQ",
+    quote: "En un solo día entendí si el detailing es para mí. La práctica real fue clave para decidir mi futuro",
     rating: 5,
-    duration: "1:45",
+    duration: "1:50",
     location: "Barcelona, España"
   },
   {
     id: 3,
-    name: "Miguel Santos",
-    role: "Detailer Profesional Certificado",
-    videoId: "CFNzfslYCoE", // Video de professional car detailing
-    quote: "Las técnicas avanzadas que aprendí aquí me posicionaron como el mejor detailer de mi ciudad",
+    name: "Pablo Jiménez",
+    role: "Iniciado en Detailing - Valencia",
+    videoId: "ML0eww0kE5k",
+    quote: "Vine sin saber nada y salí con claridad total. Es perfecto para ver si quieres vivir de esto",
     rating: 5,
-    duration: "3:20",
+    duration: "3:10",
     location: "Valencia, España"
   },
   {
     id: 4,
-    name: "Laura Fernández", 
-    role: "Ex-Mecánica Convertida a Detailer",
-    videoId: "aH-YpuX6hyI", // Video de ceramic coating
-    quote: "Cambié completamente de profesión gracias a Detail Park. Ahora gano el triple trabajando por mi cuenta",
+    name: "Andrés Ruiz", 
+    role: "Aspirante a Detailer - Sevilla",
+    videoId: "LyXGdONRt5g",
+    quote: "UP DETAIL es la mejor inversión si estás pensando en entrar al mundo del detailing profesional",
     rating: 5,
-    duration: "2:30",
+    duration: "2:45",
     location: "Sevilla, España"
   },
   {
     id: 5,
-    name: "David García",
-    role: "Propietario de Detail Center",
-    videoId: "Qgl6qpD3awE", // Video de paint correction
-    quote: "Después del curso abrí mi centro de detailing. Tengo lista de espera de 3 semanas",
+    name: "Luis Fernández",
+    role: "Participante Primera Edición - Málaga",
+    videoId: "PLmdelKm45Y",
+    quote: "Me dio la confianza que necesitaba para dar el paso. Ahora estoy preparándome para mi propio taller",
     rating: 5,
-    duration: "4:10",
-    location: "Bilbao, España"
+    duration: "4:00",
+    location: "Málaga, España"
   },
   {
     id: 6,
-    name: "Sofia Martinez",
-    role: "Detailer Móvil Certificada",
-    videoId: "n_Dv4JcMMJw", // Video de mobile detailing
-    quote: "El servicio móvil me permite atender 8 coches al día. Mis ingresos se triplicaron",
+    name: "Marcos Torres",
+    role: "Asistente UP DETAIL - Bilbao",
+    videoId: "HYGRN-HdVc8",
+    quote: "La mejor forma de saber si el detailing es tu camino. Práctica real desde el primer momento",
     rating: 5,
     duration: "1:55",
-    location: "Zaragoza, España"
+    location: "Bilbao, España"
   }
 ];
 
@@ -81,10 +81,10 @@ export function VideoTestimonials() {
             <span className="gradient-text font-bold uppercase tracking-wide">Testimonios Reales en Video</span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-white mb-4 leading-tight animate-slide-up">
-            Escucha a nuestros <span className="gradient-text">estudiantes exitosos</span>
+            Escucha a quienes ya dieron <span className="gradient-text">el primer paso</span>
           </h2>
           <p className="text-xl text-white/80 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            Más de 800 detailers formados - Mira sus historias de éxito reales
+            Más de 200 personas han descubierto su camino en el detailing con UP DETAIL
           </p>
         </div>
 
@@ -182,19 +182,19 @@ export function VideoTestimonials() {
 
         <div className="text-center">
           <div className="glass-card inline-block px-8 py-6 rounded-lg mb-8 animate-fade-in">
-            <div className="flex items-center justify-center gap-4 text-white/90">
+              <div className="flex items-center justify-center gap-4 text-white/90">
               <div className="text-center">
-                <div className="text-2xl font-bold gradient-text">+800</div>
-                <div className="text-xs">Alumnos</div>
+                <div className="text-2xl font-bold gradient-text">+200</div>
+                <div className="text-xs">Participantes</div>
               </div>
               <div className="w-px h-8 bg-white/20"></div>
               <div className="text-center">
-                <div className="text-2xl font-bold gradient-text">+50</div>
-                <div className="text-xs">Videos</div>
+                <div className="text-2xl font-bold gradient-text">+30</div>
+                <div className="text-xs">Eventos</div>
               </div>
               <div className="w-px h-8 bg-white/20"></div>
               <div className="text-center">
-                <div className="text-2xl font-bold gradient-text">98%</div>
+                <div className="text-2xl font-bold gradient-text">100%</div>
                 <div className="text-xs">Satisfacción</div>
               </div>
             </div>

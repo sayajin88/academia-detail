@@ -51,7 +51,7 @@ export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
         </div>
         
         <div className="text-center mb-4">
-          <div className="text-2xl font-bold gradient-text mb-1">€297 → €178</div>
+          <div className="text-2xl font-bold gradient-text mb-1">€999 → €299 + IVA</div>
           <div className="flex items-center justify-center gap-1 text-xs text-white/80">
             <Users className="w-3 h-3" />
             <span>Solo quedan {spotsLeft} de 10 plazas</span>

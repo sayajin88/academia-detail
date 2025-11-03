@@ -11,7 +11,7 @@ interface ROICalculatorProps {
 export function ROICalculator({ onCtaClick }: ROICalculatorProps = {}) {
   const [servicesPerMonth, setServicesPerMonth] = useState([10]);
   const [pricePerService, setPricePerService] = useState([50]);
-  const [coursePrice, setCoursePrice] = useState([297]);
+  const [coursePrice, setCoursePrice] = useState([999]);
   
   const monthlyRevenue = servicesPerMonth[0] * pricePerService[0];
   const yearlyRevenue = monthlyRevenue * 12;

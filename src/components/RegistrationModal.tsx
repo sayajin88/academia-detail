@@ -134,11 +134,11 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                 <div className="text-center">
                   <div className="text-lg text-white/90 mb-2">Jornada Intensiva de 1 Día</div>
                   <div className="flex items-center justify-center gap-4">
-                    <span className="text-2xl text-white/60 line-through">€297</span>
-                    <span className="text-4xl font-bold gradient-text">€178</span>
+                    <span className="text-2xl text-white/60 line-through">€999 + IVA</span>
+                    <span className="text-4xl font-bold gradient-text">€299 + IVA</span>
                   </div>
                   <div className="text-sm text-white/70 mt-2">
-                    Ahorras €119 - Solo 10 plazas máximo
+                    Ahorras €700 - Solo 10 plazas máximo
                   </div>
                 </div>
               </div>
@@ -282,13 +282,13 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     Procesando...
                   </>
                 ) : (
-                  <>🚀 CONTINUAR AL PAGO - €178</>
+                  <>🚀 CONTINUAR AL PAGO - €299 + IVA</>
                 )}
               </Button>
 
               <div className="text-center">
                 <p className="text-xs text-white/60">
-                  Reembolso 100% hasta 7 días antes del evento
+                  Evento perfecto para iniciarse en el detailing profesional
                 </p>
               </div>
             </form>
@@ -318,16 +318,16 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                 <div className="space-y-2">
                   <div className="flex justify-between text-white/80">
                     <span>Evento UP DETAIL (1 día)</span>
-                    <span>€297</span>
+                    <span>€999 + IVA</span>
                   </div>
                   <div className="flex justify-between text-primary font-semibold">
-                    <span>Descuento especial (40%)</span>
-                    <span>-€119</span>
+                    <span>Descuento especial (70%)</span>
+                    <span>-€700</span>
                   </div>
                   <div className="border-t border-white/10 pt-2 mt-2">
                     <div className="flex justify-between text-white font-bold text-xl">
                       <span>Total a Pagar</span>
-                      <span className="gradient-text">€178</span>
+                      <span className="gradient-text">€299 + IVA</span>
                     </div>
                   </div>
                 </div>

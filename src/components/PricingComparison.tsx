@@ -23,10 +23,10 @@ const pricingOptions = [
     variant: "outline" as const
   },
   {
-    name: "Detail Park",
-    price: "€178",
-    originalPrice: "€297",
-    period: "3 semanas",
+    name: "Detail Park UP DETAIL",
+    price: "€299",
+    originalPrice: "€999",
+    period: "+ IVA (1 día)",
     popular: true,
     features: [
       { text: "Formación intensiva práctica", included: true },

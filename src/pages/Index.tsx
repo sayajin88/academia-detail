@@ -99,12 +99,12 @@ const Index = () => {
         
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            Obtén tu Certificación Profesional: 
-            <br/><span className="gradient-text">Inicia tu Carrera en Detailing Hoy</span>
+            UP DETAIL: Tu Primera Toma de Contacto
+            <br/><span className="gradient-text">con el Detailing Profesional</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-            Domina técnicas avanzadas de detailing automotriz en 3 semanas y lanza tu negocio rentable. 
-            Certificación oficial reconocida en la industria + Garantía de empleo.
+            Jornada intensiva de 1 día para iniciados que quieren descubrir si el detailing es su futuro. 
+            Aprende las técnicas principales y decide si quieres vivir de esto.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -119,15 +119,15 @@ const Index = () => {
           <div className="flex items-center justify-center gap-8 text-white/80">
             <div className="flex items-center gap-2">
               <Users className="w-5 h-5" />
-              <span>+2,000 estudiantes</span>
+              <span>+200 participantes</span>
             </div>
             <div className="flex items-center gap-2">
               <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-              <span>4.9/5 valoración</span>
+              <span>5.0/5 valoración</span>
             </div>
             <div className="flex items-center gap-2">
               <Award className="w-5 h-5" />
-              <span>Certificación oficial</span>
+              <span>Certificado incluido</span>
             </div>
           </div>
         </div>
@@ -152,26 +152,26 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              ¿Te sientes <span className="gradient-text">frustrado</span> con tu progreso?
+              ¿Quieres vivir del detailing pero <span className="gradient-text">no sabes por dónde empezar</span>?
             </h2>
             <p className="text-lg text-white/80 max-w-2xl mx-auto">
-              Sabemos lo que se siente al intentar aprender detailing sin la guía adecuada.
+              Entendemos las dudas de quien está considerando entrar al mundo del detailing profesional.
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
               {
-                title: "Técnicas Amateur",
-                description: "Resultados que no impresionan a los clientes"
+                title: "¿Es para mí?",
+                description: "No sabes si el detailing es tu vocación profesional"
               },
               {
-                title: "Formación Cara",
-                description: "Miles de euros sin garantía de éxito"
+                title: "Sin experiencia",
+                description: "Cero conocimientos prácticos del sector"
               },
               {
-                title: "Prueba y Error",
-                description: "Perdiendo tiempo y dinero sin dirección"
+                title: "Miedo a invertir",
+                description: "Dudas antes de comprometerte con formación cara"
               }
             ].map((problem, index) => (
               <Card key={index} className="glass-card p-6 text-center">
@@ -188,20 +188,20 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              La <span className="gradient-text">solución</span> que necesitas
+              UP DETAIL: Tu <span className="gradient-text">primer paso</span> al éxito
             </h2>
             <p className="text-lg text-white/80 max-w-3xl mx-auto">
-              Hemos simplificado el proceso para que cualquier persona pueda acceder 
-              a técnicas profesionales de detailing.
+              Un día intensivo diseñado para iniciados que quieren descubrir 
+              si el detailing profesional es su futuro.
             </p>
           </div>
           
           <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { step: "1", title: "Accede", description: "Únete a Detail Park" },
-              { step: "2", title: "Aprende", description: "Técnicas profesionales" },
-              { step: "3", title: "Practica", description: "En taller real" },
-              { step: "4", title: "Certifícate", description: "Obtén tu diploma" }
+              { step: "1", title: "Reserva", description: "Tu plaza en UP DETAIL" },
+              { step: "2", title: "Experimenta", description: "Práctica real 1 día" },
+              { step: "3", title: "Aprende", description: "Técnicas principales" },
+              { step: "4", title: "Decide", description: "Si es tu camino" }
             ].map((step, index) => (
               <div key={index} className="text-center">
                 <div className="glass-card rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">

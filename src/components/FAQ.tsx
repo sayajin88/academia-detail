@@ -8,7 +8,7 @@ const faqs = [
     answer: "No, el evento UP DETAIL está diseñado para personas sin experiencia que quieren conocer el mundo del detailing profesional de forma práctica e intensiva."
   },
   {
-    question: "¿Qué está incluido en los €178?",
+    question: "¿Qué está incluido en los €299 + IVA?",
     answer: "Jornada completa de formación práctica (9:00-18:00h), todos los materiales y productos profesionales, comida, certificado de asistencia y acceso a nuestra comunidad exclusiva de detailers."
   },
   {

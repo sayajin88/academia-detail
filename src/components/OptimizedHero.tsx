@@ -103,23 +103,23 @@ export const OptimizedHero = () => {
           
           {/* Value Proposition */}
           <div className="max-w-4xl mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <p className="text-xl md:text-2xl text-white/90 mb-4 font-semibold">
-              9:00-18:00h • Máximo 10 plazas • Práctica real en centro profesional
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 text-white/80">
-              <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-primary" />
-                <span>Grupos reducidos</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-5 h-5 text-primary" />
-                <span>Certificado incluido</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-primary" />
-                <span>80% práctica hands-on</span>
-              </div>
+          <p className="text-xl md:text-2xl text-white/90 mb-4 font-semibold">
+            Descubre en 1 día si el detailing es tu futuro profesional
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 text-white/80">
+            <div className="flex items-center gap-2">
+              <Users className="w-5 h-5 text-primary" />
+              <span>Perfecto para iniciarse</span>
             </div>
+            <div className="flex items-center gap-2">
+              <Award className="w-5 h-5 text-primary" />
+              <span>Primera toma de contacto</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-primary" />
+              <span>Decide tu camino profesional</span>
+            </div>
+          </div>
           </div>
           
           {/* Enhanced CTA Group */}
@@ -129,12 +129,12 @@ export const OptimizedHero = () => {
               size="xl" 
               className="animate-pulse-glow hover:animate-none hover:scale-105 transition-all duration-300 shadow-glow-intense"
             >
-              🚀 Reservar Plaza Ahora (€178 en lugar de €297)
+              🚀 Reservar Plaza Ahora (€299 + IVA en lugar de €999 + IVA)
             </Button>
             <div className="flex items-center justify-center gap-4 text-sm text-white/70">
-              <span>✅ Comida incluida</span>
-              <span>✅ Material profesional</span>
-              <span>✅ Reembolso hasta 7 días antes</span>
+              <span>✅ Primera toma de contacto</span>
+              <span>✅ Práctica real incluida</span>
+              <span>✅ Decide si es tu camino</span>
             </div>
           </div>
 
