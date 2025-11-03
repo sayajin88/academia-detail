@@ -131,31 +131,32 @@ const Index = () => {
       </section>
 
       {/* Problems Section with background video */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
+      <section className="relative py-16 md:py-24 overflow-hidden min-h-screen md:min-h-[60vh]">
         {/* Background video (desktop and mobile, muted inline) */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 w-full h-full">
           <iframe
             src="https://www.youtube.com/embed/ByRhg2kYD-A?autoplay=1&mute=1&loop=1&playlist=ByRhg2kYD-A&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=39"
-            className="w-full h-full scale-150 md:scale-125"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.77777778vh] min-w-full min-h-[56.25vw] h-full"
             allow="autoplay; encrypted-media"
             style={{ pointerEvents: 'none' }}
             title="Detail Park Background"
           />
         </div>
         {/* Overlays for readability */}
-        <div className="absolute inset-0 bg-black/50 md:bg-black/40"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/60 md:via-black/40 md:to-black/70"></div>
+        <div className="absolute inset-0 bg-black/60 md:bg-black/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70 md:via-black/40 md:to-black/70"></div>
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
               ¿Quieres vivir del detailing pero <span className="gradient-text">no sabes por dónde empezar</span>?
             </h2>
-            <p className="text-base md:text-lg text-white/80 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto">
               Entendemos las dudas de quien está considerando entrar al mundo del detailing profesional.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
+          {/* Cards - Hidden on mobile */}
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
             {[
               {
                 title: "¿Es para mí?",
