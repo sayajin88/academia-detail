@@ -117,7 +117,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="glass-intense border-primary/30 max-w-lg mx-auto max-h-[90vh] overflow-y-auto">
+      <DialogContent className="glass-intense border-primary/30 max-w-lg mx-auto max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full p-4 sm:p-6">
         <button
           onClick={handleClose}
           className="absolute right-4 top-4 text-white/70 hover:text-white transition-colors z-50"
@@ -127,42 +127,42 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
 
         {step === 'registration' ? (
           <>
-            <DialogHeader className="text-center space-y-4">
-              <div className="flex flex-wrap justify-center items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/30 text-xs md:text-sm">
+            <DialogHeader className="text-center space-y-2 sm:space-y-4">
+              <div className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
+                <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/30 text-xs">
                   🔥 EVENTO EXCLUSIVO
                 </Badge>
-                <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30 text-xs md:text-sm">
+                <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
                   40% OFF
                 </Badge>
               </div>
               
-              <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-bold gradient-text">
+              <DialogTitle className="text-lg sm:text-xl md:text-2xl font-bold gradient-text">
                 ¡Reserva Tu Plaza!
               </DialogTitle>
               
-              <DialogDescription className="text-white/70 text-sm">
-                Completa el formulario para reservar tu plaza en La Jornada Cero
+              <DialogDescription className="text-white/70 text-xs sm:text-sm">
+                Completa el formulario para reservar tu plaza
               </DialogDescription>
               
-              <div className="bg-gradient-primary/20 rounded-xl p-3 md:p-4 border border-primary/30">
+              <div className="bg-gradient-primary/20 rounded-lg sm:rounded-xl p-2.5 sm:p-4 border border-primary/30">
                 <div className="text-center">
-                  <div className="text-sm md:text-base lg:text-lg text-white/90 mb-2">Jornada Intensiva de 1 Día</div>
-                  <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
-                    <span className="text-lg md:text-xl lg:text-2xl text-white/60 line-through">€999 + IVA</span>
-                    <span className="text-2xl md:text-3xl lg:text-4xl font-bold gradient-text">€199 + IVA</span>
+                  <div className="text-xs sm:text-sm md:text-base text-white/90 mb-1.5 sm:mb-2">Jornada 1 Día</div>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-4">
+                    <span className="text-base sm:text-lg md:text-xl text-white/60 line-through">€999</span>
+                    <span className="text-xl sm:text-2xl md:text-3xl font-bold gradient-text">€199 + IVA</span>
                   </div>
-                  <div className="text-xs md:text-sm text-white/70 mt-2">
-                    Ahorras €800 (80% dto.) - Solo 12 plazas
+                  <div className="text-xs text-white/70 mt-1.5 sm:mt-2">
+                    Ahorras €800 (80% dto.)
                   </div>
                 </div>
               </div>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-6 mt-6">
-              <div className="grid grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-6 mt-3 sm:mt-6">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
                 <div>
-                  <Label htmlFor="firstName" className="text-white text-sm font-semibold">
+                  <Label htmlFor="firstName" className="text-white text-xs sm:text-sm font-semibold mb-1 block">
                     Nombre *
                   </Label>
                   <Input
@@ -170,14 +170,14 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     type="text"
                     value={formData.firstName}
                     onChange={(e) => handleInputChange("firstName", e.target.value)}
-                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary h-9 sm:h-10 text-sm"
                     placeholder="Tu nombre"
                     required
                     disabled={loading}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="lastName" className="text-white text-sm font-semibold">
+                  <Label htmlFor="lastName" className="text-white text-xs sm:text-sm font-semibold mb-1 block">
                     Apellidos *
                   </Label>
                   <Input
@@ -185,7 +185,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     type="text"
                     value={formData.lastName}
                     onChange={(e) => handleInputChange("lastName", e.target.value)}
-                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary h-9 sm:h-10 text-sm"
                     placeholder="Tus apellidos"
                     required
                     disabled={loading}
@@ -194,7 +194,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
               </div>
 
               <div>
-                <Label htmlFor="email" className="text-white text-sm font-semibold">
+                <Label htmlFor="email" className="text-white text-xs sm:text-sm font-semibold mb-1 block">
                   Email *
                 </Label>
                 <Input
@@ -202,7 +202,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary h-9 sm:h-10 text-sm"
                   placeholder="tu@email.com"
                   required
                   disabled={loading}
@@ -210,7 +210,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
               </div>
 
               <div>
-                <Label htmlFor="phone" className="text-white text-sm font-semibold">
+                <Label htmlFor="phone" className="text-white text-xs sm:text-sm font-semibold mb-1 block">
                   Teléfono *
                 </Label>
                 <Input
@@ -218,55 +218,55 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => handleInputChange("phone", e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary h-9 sm:h-10 text-sm"
                   placeholder="+34 600 000 000"
                   required
                   disabled={loading}
                 />
               </div>
 
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="bg-white/5 rounded-lg p-2.5 sm:p-4 border border-white/10">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
                   <div className="flex flex-col items-center">
-                    <Shield className="w-5 h-5 text-primary mb-1" />
-                    <span className="text-xs text-white/80">Pago Seguro</span>
+                    <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-primary mb-1" />
+                    <span className="text-[10px] sm:text-xs text-white/80">Pago Seguro</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <Clock className="w-5 h-5 text-primary mb-1" />
-                    <span className="text-xs text-white/80">1 Día Intensivo</span>
+                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-primary mb-1" />
+                    <span className="text-[10px] sm:text-xs text-white/80">1 Día</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <Users className="w-5 h-5 text-primary mb-1" />
-                    <span className="text-xs text-white/80">Máx. 12 Plazas</span>
+                    <Users className="w-4 h-4 sm:w-5 sm:h-5 text-primary mb-1" />
+                    <span className="text-[10px] sm:text-xs text-white/80">12 Plazas</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-primary/10 rounded-lg p-3 border border-primary/20">
-                <div className="flex items-center gap-2 mb-2">
+              <div className="bg-gradient-primary/10 rounded-lg p-2.5 sm:p-3 border border-primary/20">
+                <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
                   <div className="flex text-yellow-400">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 fill-current" />
+                      <Star key={i} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current" />
                     ))}
                   </div>
-                  <span className="text-xs text-white/80">Carlos M., Madrid</span>
+                  <span className="text-[10px] sm:text-xs text-white/80">Carlos M., Madrid</span>
                 </div>
-                <p className="text-xs text-white/90 italic">
-                  "Increíble experiencia. En un día aprendí más que en meses viendo videos online."
+                <p className="text-[10px] sm:text-xs text-white/90 italic">
+                  "En un día aprendí más que en meses viendo videos online."
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <div className="flex items-start space-x-2">
                   <Checkbox
                     id="terms"
                     checked={formData.acceptTerms}
                     onCheckedChange={(checked) => handleInputChange("acceptTerms", checked as boolean)}
-                    className="border-white/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                    className="border-white/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary mt-0.5"
                     disabled={loading}
                   />
-                  <Label htmlFor="terms" className="text-xs text-white/80 leading-tight">
-                    Acepto los términos y condiciones y la política de privacidad *
+                  <Label htmlFor="terms" className="text-[10px] sm:text-xs text-white/80 leading-tight">
+                    Acepto los términos y condiciones *
                   </Label>
                 </div>
                 
@@ -275,11 +275,11 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     id="marketing"
                     checked={formData.acceptMarketing}
                     onCheckedChange={(checked) => handleInputChange("acceptMarketing", checked as boolean)}
-                    className="border-white/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                    className="border-white/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary mt-0.5"
                     disabled={loading}
                   />
-                  <Label htmlFor="marketing" className="text-xs text-white/80 leading-tight">
-                    Quiero recibir información de futuros eventos y ofertas
+                  <Label htmlFor="marketing" className="text-[10px] sm:text-xs text-white/80 leading-tight">
+                    Quiero recibir información de eventos
                   </Label>
                 </div>
               </div>
@@ -287,23 +287,23 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
               <Button 
                 type="submit" 
                 variant="hero" 
-                size="xl" 
-                className="w-full"
+                size="lg" 
+                className="w-full text-sm sm:text-base h-11 sm:h-12"
                 disabled={!formData.acceptTerms || loading}
               >
                 {loading ? (
                   <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
                     Procesando...
                   </>
                 ) : (
-                  <>🚀 RESERVAR MI PLAZA - €199 + IVA</>
+                  <>🚀 RESERVAR - €199 + IVA</>
                 )}
               </Button>
 
               <div className="text-center">
-                <p className="text-xs text-white/60">
-                  Evento perfecto para iniciarse en el detailing profesional
+                <p className="text-[10px] sm:text-xs text-white/60">
+                  Evento para iniciarse en detailing profesional
                 </p>
               </div>
             </form>
