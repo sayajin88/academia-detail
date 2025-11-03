@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, AlertTriangle } from "lucide-react";
+import { Clock, AlertTriangle, Users } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 export function UrgencyTimer() {
   const [timeLeft, setTimeLeft] = useState(25 * 60); // 25 minutes in seconds
-  const [spotsLeft, setSpotsLeft] = useState(7);
+  const [spotsLeft, setSpotsLeft] = useState(10);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,15 +21,20 @@ export function UrgencyTimer() {
   }, []);
 
   useEffect(() => {
-    // Simulate spots being taken
-    const spotsInterval = setInterval(() => {
-      setSpotsLeft(prev => {
-        if (prev <= 3) return Math.floor(Math.random() * 3) + 3; // Keep between 3-5
-        return prev - 1;
-      });
-    }, Math.random() * 60000 + 30000); // Random between 30s-90s
+    const fetchSpotsLeft = async () => {
+      const { count, error } = await supabase
+        .from('registrations')
+        .select('*', { count: 'exact', head: true })
+        .eq('payment_status', 'completed');
+      
+      if (!error && count !== null) {
+        setSpotsLeft(Math.max(0, 10 - count));
+      }
+    };
 
-    return () => clearInterval(spotsInterval);
+    fetchSpotsLeft();
+    const interval = setInterval(fetchSpotsLeft, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const minutes = Math.floor(timeLeft / 60);
@@ -39,21 +45,22 @@ export function UrgencyTimer() {
       <CardContent className="p-6 text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
           <AlertTriangle className="w-6 h-6 text-red-400 animate-bounce" />
-          <h3 className="text-white font-bold">¡OFERTA POR TIEMPO LIMITADO!</h3>
+          <h3 className="text-white font-bold">¡PLAZAS LIMITADAS!</h3>
         </div>
         
         <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-xl p-4 mb-4 border border-red-500/30">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Clock className="w-5 h-5 text-red-400" />
-            <span className="text-red-400 font-semibold">Esta oferta expira en:</span>
+            <span className="text-red-400 font-semibold">Cierre de inscripciones en:</span>
           </div>
           
           <div className="text-3xl font-black text-white mb-2">
             {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
           </div>
           
-          <div className="text-sm text-white/80">
-            Solo quedan <span className="font-bold text-red-400">{spotsLeft} plazas</span> disponibles
+          <div className="text-sm text-white/80 flex items-center justify-center gap-2">
+            <Users className="w-4 h-4" />
+            Solo quedan <span className="font-bold text-red-400">{spotsLeft} de 10 plazas</span>
           </div>
         </div>
 

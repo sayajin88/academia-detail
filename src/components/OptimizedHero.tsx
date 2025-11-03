@@ -54,21 +54,12 @@ export const OptimizedHero = () => {
       <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
         {/* Video Background */}
         <div className="absolute inset-0">
-          {videoPlaying ? (
-            <video
-              autoPlay
-              muted
-              loop
-              className="w-full h-full object-cover opacity-20"
-            >
-              <source src="/hero-video.mp4" type="video/mp4" />
-            </video>
-          ) : (
-            <div 
-              className="w-full h-full bg-cover bg-center opacity-30 scale-105 transition-transform duration-[20s] hover:scale-110"
-              style={{ backgroundImage: `url(${heroDetailing})` }}
-            />
-          )}
+          <iframe
+            src="https://www.youtube.com/embed/ByRhg2kYD-A?autoplay=1&mute=1&loop=1&playlist=ByRhg2kYD-A&controls=0&showinfo=0&rel=0&modestbranding=1"
+            className="w-full h-full object-cover opacity-20 scale-150"
+            allow="autoplay; encrypted-media"
+            style={{ pointerEvents: 'none' }}
+          />
         </div>
 
         {/* Enhanced Gradient Overlay */}
@@ -103,30 +94,30 @@ export const OptimizedHero = () => {
           
           {/* Ultra-Optimized Headline */}
           <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.9] animate-fade-in-up">
-            <span className="text-white block mb-2">Domina el</span>
-            <span className="gradient-text animate-glow-pulse block mb-2">Detailing Profesional</span>
-            <span className="text-white block mb-2">y Crea tu</span>
-            <span className="gradient-text animate-glow-pulse block">Negocio Rentable</span>
-            <span className="text-white/80 text-2xl md:text-4xl block mt-4 font-normal">en solo 21 días</span>
+            <span className="text-white block mb-2">UP DETAIL:</span>
+            <span className="gradient-text animate-glow-pulse block mb-2">Evento Intensivo</span>
+            <span className="text-white block mb-2">de Detailing</span>
+            <span className="gradient-text animate-glow-pulse block">Profesional</span>
+            <span className="text-white/80 text-2xl md:text-4xl block mt-4 font-normal">1 día que transformará tu visión del detailing</span>
           </h1>
           
           {/* Value Proposition */}
           <div className="max-w-4xl mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <p className="text-xl md:text-2xl text-white/90 mb-4 font-semibold">
-              Sin experiencia previa • Sin inversión inicial • Con garantía total
+              9:00-18:00h • Máximo 10 plazas • Práctica real en centro profesional
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-white/80">
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-primary" />
-                <span>+800 estudiantes</span>
+                <span>Grupos reducidos</span>
               </div>
               <div className="flex items-center gap-2">
                 <Award className="w-5 h-5 text-primary" />
-                <span>Certificado oficial</span>
+                <span>Certificado incluido</span>
               </div>
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-primary" />
-                <span>€3,000+ promedio mensual</span>
+                <span>80% práctica hands-on</span>
               </div>
             </div>
           </div>
@@ -138,12 +129,12 @@ export const OptimizedHero = () => {
               size="xl" 
               className="animate-pulse-glow hover:animate-none hover:scale-105 transition-all duration-300 shadow-glow-intense"
             >
-              🚀 Comenzar Ahora (€47 en lugar de €197)
+              🚀 Reservar Plaza Ahora (€178 en lugar de €297)
             </Button>
             <div className="flex items-center justify-center gap-4 text-sm text-white/70">
-              <span>✅ Acceso inmediato</span>
-              <span>✅ 30 días de garantía</span>
-              <span>✅ Soporte 24/7</span>
+              <span>✅ Comida incluida</span>
+              <span>✅ Material profesional</span>
+              <span>✅ Reembolso hasta 7 días antes</span>
             </div>
           </div>
 
@@ -160,7 +151,7 @@ export const OptimizedHero = () => {
                   </div>
                 ))}
                 <div className="w-12 h-12 rounded-full bg-white/10 border-3 border-white/20 flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">+800</span>
+                  <span className="text-white text-xs font-bold">+200</span>
                 </div>
               </div>
               <div className="flex flex-col items-start">
@@ -169,7 +160,7 @@ export const OptimizedHero = () => {
                     <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <span className="text-white/80 text-sm">4.9/5 de 800+ estudiantes</span>
+                <span className="text-white/80 text-sm">5.0/5 de 200+ asistentes</span>
               </div>
             </div>
           </div>
@@ -177,45 +168,22 @@ export const OptimizedHero = () => {
           {/* Enhanced Video Preview */}
           <div className="mt-16 max-w-5xl mx-auto animate-scale-in" style={{ animationDelay: '0.8s' }}>
             <div className="glass-intense rounded-3xl p-8 hover-glow group transition-all duration-500">
-              <div className="relative overflow-hidden rounded-2xl">
-                <img 
-                  src={heroDetailing}
-                  alt="Preview del curso de detailing" 
-                  className="w-full h-[300px] md:h-[400px] object-cover transition-transform duration-500 group-hover:scale-105"
+              <div className="relative overflow-hidden rounded-2xl aspect-video">
+                <iframe
+                  src="https://www.youtube.com/embed/ByRhg2kYD-A"
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 />
-                
-                {/* Video Overlay */}
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-colors duration-300">
-                  <Button 
-                    variant="glass" 
-                    size="xl" 
-                    className="rounded-full w-20 h-20 animate-pulse-glow hover:animate-none hover:scale-110 transition-all duration-300"
-                    onClick={() => setVideoPlaying(!videoPlaying)}
-                  >
-                    <PlayCircle className="w-10 h-10" />
-                  </Button>
-                </div>
-
-                {/* Video Stats Overlay */}
-                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                  <div className="glass-card px-4 py-2 rounded-lg">
-                    <div className="text-white text-sm font-bold">Transformación Real</div>
-                    <div className="text-white/80 text-xs">Ver caso de éxito</div>
-                  </div>
-                  <div className="glass-card px-4 py-2 rounded-lg">
-                    <div className="text-primary text-sm font-bold">2:30 min</div>
-                    <div className="text-white/80 text-xs">Testimonial</div>
-                  </div>
-                </div>
               </div>
               
               {/* Video Description */}
               <div className="mt-6 text-center">
                 <h3 className="text-xl font-bold text-white mb-2">
-                  "De 0 a €3,000/mes en detailing en 21 días"
+                  Así es la experiencia UP DETAIL
                 </h3>
                 <p className="text-white/80">
-                  Mira cómo Carlos pasó de ser un aficionado a tener su propio negocio rentable
+                  Descubre cómo es nuestro evento intensivo de detailing profesional
                 </p>
               </div>
             </div>

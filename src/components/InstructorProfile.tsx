@@ -53,7 +53,7 @@ export function InstructorProfile() {
                     Daniel López
                   </h3>
                   <p className="text-xl gradient-text font-bold mb-6">
-                    Master Detailer & Formador Certificado
+                    Instructor Principal UP DETAIL
                   </p>
 
                   <div className="space-y-6 mb-8">
@@ -62,8 +62,8 @@ export function InstructorProfile() {
                       <div>
                         <h4 className="text-lg font-bold text-white mb-2">+15 Años de Experiencia</h4>
                         <p className="text-white/80">
-                          Pionero en técnicas avanzadas de detailing en España. Ha formado a más de 2,000 profesionales 
-                          que ahora dirigen sus propios negocios exitosos.
+                          Experto en transmitir conocimiento práctico en formato acelerado. Ha impartido más de 50 eventos 
+                          intensivos con 100% de satisfacción entre los participantes.
                         </p>
                       </div>
                     </div>
@@ -82,10 +82,10 @@ export function InstructorProfile() {
                     <div className="flex items-start gap-3">
                       <Users className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                       <div>
-                        <h4 className="text-lg font-bold text-white mb-2">Resultados Comprobados</h4>
+                        <h4 className="text-lg font-bold text-white mb-2">Metodología de Enseñanza Única</h4>
                         <p className="text-white/80">
-                          92% de sus estudiantes consiguen empleo o lanzan su negocio en 30 días. Sus métodos 
-                          han generado más de €50M en facturación entre sus graduados.
+                          Combina teoría práctica con demostraciones en vivo y ejercicios supervisados. Cada participante 
+                          recibe atención personalizada durante toda la jornada.
                         </p>
                       </div>
                     </div>
@@ -94,16 +94,16 @@ export function InstructorProfile() {
                   {/* Estadísticas del Instructor */}
                   <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
                     <div className="text-center">
-                      <div className="text-3xl font-black gradient-text">2,000+</div>
-                      <div className="text-white/80 text-sm">Estudiantes</div>
+                      <div className="text-3xl font-black gradient-text">50+</div>
+                      <div className="text-white/80 text-sm">Eventos</div>
                     </div>
                     <div className="text-center">
                       <div className="text-3xl font-black gradient-text">15+</div>
                       <div className="text-white/80 text-sm">Años Exp.</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-black gradient-text">92%</div>
-                      <div className="text-white/80 text-sm">Éxito Laboral</div>
+                      <div className="text-3xl font-black gradient-text">100%</div>
+                      <div className="text-white/80 text-sm">Satisfacción</div>
                     </div>
                   </div>
                 </div>
@@ -119,16 +119,16 @@ export function InstructorProfile() {
             <div className="grid md:grid-cols-3 gap-6">
               {[
                 {
-                  text: "Daniel no solo enseña técnicas, te transforma en un profesional. Su pasión es contagiosa.",
-                  author: "Carlos M., Propietario de DetailPro"
+                  text: "Increíble experiencia. En un solo día aprendí más que en meses viendo videos. La práctica real marca toda la diferencia.",
+                  author: "Carlos M., Asistente UP DETAIL Madrid"
                 },
                 {
-                  text: "Gracias a Daniel pude abrir mi taller. Su mentoría fue clave para mi éxito empresarial.",
-                  author: "Ana R., DetailCar Studio"
+                  text: "El ambiente, los instructores y la calidad son TOP. Volví con ganas de especializarme en detailing profesional.",
+                  author: "Ana R., Asistente UP DETAIL Barcelona"
                 },
                 {
-                  text: "El mejor formador de España. Su metodología práctica te prepara para el mundo real.",
-                  author: "Miguel S., Detailer en BMW Premium"
+                  text: "Totalmente recomendado. Pequeño grupo, mucha práctica y conexiones valiosas con otros apasionados del sector.",
+                  author: "Miguel S., Asistente UP DETAIL Valencia"
                 }
               ].map((testimonial, index) => (
                 <div key={index} className="glass-card p-6 rounded-2xl">

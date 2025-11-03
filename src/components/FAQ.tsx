@@ -4,44 +4,44 @@ import { HelpCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: "¿Necesito experiencia previa en detailing automotriz?",
-    answer: "No es necesario. Nuestro programa está diseñado para llevarte desde cero hasta nivel profesional en 3 semanas. El 85% de nuestros estudiantes empezaron sin experiencia previa y ahora tienen sus propios negocios."
+    question: "¿Necesito experiencia previa?",
+    answer: "No, el evento UP DETAIL está diseñado para personas sin experiencia que quieren conocer el mundo del detailing profesional de forma práctica e intensiva."
   },
   {
-    question: "¿Realmente podré conseguir trabajo después del curso?",
-    answer: "Absolutamente. El 92% de nuestros graduados consiguen empleo o lanzan su negocio en los primeros 30 días. Incluimos garantía de empleo y acceso a nuestra bolsa de trabajo exclusiva con +200 talleres asociados."
+    question: "¿Qué está incluido en los €178?",
+    answer: "Jornada completa de formación práctica (9:00-18:00h), todos los materiales y productos profesionales, comida, certificado de asistencia y acceso a nuestra comunidad exclusiva de detailers."
   },
   {
-    question: "¿Cuánto dinero puedo ganar como detailer profesional?",
-    answer: "Los detailers certificados ganan entre €1,500-€4,000/mes trabajando por cuenta ajena, y €3,000-€8,000/mes con negocio propio. Nuestros top graduados facturan más de €120,000 anuales."
+    question: "¿Qué debo llevar al evento?",
+    answer: "Solo ropa cómoda que pueda mancharse. Nosotros proporcionamos todo el material y equipo profesional necesario para la jornada."
   },
   {
-    question: "¿Qué herramientas y equipos necesito comprar?",
-    answer: "Durante el curso utilizas nuestro equipamiento profesional. Al graduarte, te proporcionamos una lista de herramientas esenciales (inversión inicial de €800-1,200) y acceso a descuentos especiales con proveedores."
+    question: "¿Saldré preparado para trabajar como detailer profesional?",
+    answer: "UP DETAIL es un evento introductorio que te da las bases fundamentales del detailing. Para nivel profesional completo, te ofreceremos opciones de formación avanzada posterior."
   },
   {
-    question: "¿El curso incluye práctica real o solo teoría?",
-    answer: "70% práctica, 30% teoría. Trabajarás con vehículos reales desde el primer día en nuestro taller profesional de 500m². Cada estudiante completa mínimo 15 servicios completos durante la formación."
+    question: "¿Por qué solo 10 plazas?",
+    answer: "Limitamos las plazas a 10 participantes máximo para garantizar atención personalizada, práctica hands-on para todos y un ambiente de aprendizaje óptimo."
   },
   {
-    question: "¿La certificación está reconocida oficialmente?",
-    answer: "Sí, nuestra certificación está avalada por la Asociación Española de Detailing Profesional y es reconocida por talleres premium, concesionarios y empresas de alta gama en toda España."
+    question: "¿Puedo conseguir reembolso si no puedo asistir?",
+    answer: "Sí, ofrecemos reembolso 100% hasta 7 días antes del evento. Después de esa fecha, podrás transferir tu plaza a otro evento futuro sin coste adicional."
   },
   {
-    question: "¿Hay garantía si no quedo satisfecho?",
-    answer: "Garantía total de 30 días. Si no estás 100% satisfecho o no ves resultados tangibles en tu aprendizaje, te devolvemos íntegra tu inversión sin preguntas."
+    question: "¿Dónde se realiza el evento?",
+    answer: "En nuestras instalaciones profesionales Detail Park. Te enviaremos la ubicación exacta y todas las indicaciones al confirmar tu inscripción."
   },
   {
-    question: "¿Puedo financiar el curso?",
-    answer: "Sí, ofrecemos financiación hasta 12 meses sin intereses. También aceptamos el pago fraccionado en 3 cuotas. La inversión se recupera típicamente en el primer mes de trabajo."
+    question: "¿Recibiré algún certificado?",
+    answer: "Sí, al finalizar el evento recibirás un certificado de asistencia que acredita las 8 horas de formación práctica en detailing profesional y pulido básico."
   },
   {
-    question: "¿Cuántas horas semanales requiere el curso?",
-    answer: "Modalidad intensiva: 20 horas/semana (3 semanas). Modalidad flexible: 10 horas/semana (6 semanas). Horarios adaptables a tu disponibilidad, incluyendo fines de semana."
+    question: "¿Qué aprenderé exactamente en 1 día?",
+    answer: "Por la mañana: lavado profesional completo, descontaminación y limpieza de interiores. Por la tarde: introducción al pulido, uso de máquinas pulidoras y corrección básica de pintura. Todo con práctica real en vehículos."
   },
   {
-    question: "¿Qué apoyo recibo después de graduarme?",
-    answer: "Soporte permanente: acceso de por vida a nuestra comunidad exclusiva, actualizaciones de técnicas, descuentos en productos, y mentoría personalizada durante tus primeros 6 meses profesionales."
+    question: "¿Habrá más eventos UP DETAIL en el futuro?",
+    answer: "Sí, organizamos eventos periódicamente. Los asistentes de UP DETAIL tienen prioridad en reservas de futuros eventos y descuentos especiales en formaciones avanzadas."
   }
 ];
 
