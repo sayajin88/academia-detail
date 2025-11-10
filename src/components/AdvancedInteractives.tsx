@@ -33,11 +33,6 @@ export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps =
   const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
   const [roiInputs, setRoiInputs] = useState({ hours: 20, pricePerCar: 150, carsPerWeek: 8 });
-  const [liveStats, setLiveStats] = useState({
-    studying: 89,
-    enrolled: 23,
-    earned: 1247
-  });
 
   const quizQuestions = [
     {
@@ -77,17 +72,6 @@ export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps =
       ]
     }
   ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLiveStats(prev => ({
-        studying: prev.studying + Math.floor(Math.random() * 5) - 2,
-        enrolled: prev.enrolled + Math.floor(Math.random() * 3) - 1,
-        earned: prev.earned + Math.floor(Math.random() * 50) - 25
-      }));
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   const handleQuizAnswer = (answerIndex: number) => {
     const newAnswers = [...quizAnswers, answerIndex];
@@ -168,28 +152,6 @@ export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps =
   return (
     <section className="py-24 bg-black/30">
       <div className="container mx-auto px-4">
-        {/* Live Stats Bar */}
-        <div className="flex justify-center mb-16">
-          <div className="glass-intense rounded-2xl px-8 py-4 animate-fade-in">
-            <div className="flex items-center gap-8 text-center">
-              <div>
-                <div className="text-2xl font-bold gradient-text">{liveStats.studying}</div>
-                <div className="text-white/70 text-sm">Estudiando ahora</div>
-              </div>
-              <div className="w-px h-8 bg-white/20"></div>
-              <div>
-                <div className="text-2xl font-bold gradient-text">{liveStats.enrolled}</div>
-                <div className="text-white/70 text-sm">Se inscribieron hoy</div>
-              </div>
-              <div className="w-px h-8 bg-white/20"></div>
-              <div>
-                <div className="text-2xl font-bold gradient-text">€{liveStats.earned}</div>
-                <div className="text-white/70 text-sm">Ganados esta semana</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Enhanced Personality Quiz */}
           <Card className="glass-intense border-primary/30 hover-glow">
