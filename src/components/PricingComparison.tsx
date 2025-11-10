@@ -25,7 +25,7 @@ const pricingOptions = [
   {
     name: "La Jornada Cero",
     price: "€199",
-    originalPrice: "€999",
+    originalPrice: "€499",
     period: "+ IVA (1 día)",
     popular: true,
     features: [
@@ -155,7 +155,7 @@ export function PricingComparison() {
         <div className="text-center mt-16">
           <div className="inline-block glass-card px-6 py-3 rounded-xl">
             <p className="text-white/90">
-              💡 <strong>Ahorro de €2,322</strong> comparado con academias tradicionales
+              💡 <strong>Ahorra €300</strong> con el precio de lanzamiento - <span className="text-primary">Después será €299</span>
             </p>
           </div>
         </div>

@@ -70,11 +70,11 @@ export function UrgencyTimer() {
             <div className="text-xs text-white/70">+ IVA Hoy</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-red-400 line-through">€999</div>
+            <div className="text-2xl font-bold text-red-400 line-through">€499</div>
             <div className="text-xs text-white/70">+ IVA Normal</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-green-400">-80%</div>
+            <div className="text-2xl font-bold text-green-400">-60%</div>
             <div className="text-xs text-white/70">Descuento</div>
           </div>
         </div>

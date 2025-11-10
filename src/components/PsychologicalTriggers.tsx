@@ -1,29 +1,17 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
   Clock, 
   Users, 
-  TrendingUp, 
-  AlertTriangle, 
   CheckCircle,
-  Zap,
-  Eye,
-  ShoppingCart,
-  Star
+  Zap
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const PsychologicalTriggers = () => {
   const [timeLeft, setTimeLeft] = useState(48 * 60 * 60); // 48 hours in seconds
-  const [spotsLeft, setSpotsLeft] = useState(23);
-  const [recentPurchases, setRecentPurchases] = useState([
-    { name: "Carlos M.", location: "Madrid", time: "hace 2 min" },
-    { name: "Ana R.", location: "Barcelona", time: "hace 5 min" },
-    { name: "Miguel S.", location: "Valencia", time: "hace 8 min" }
-  ]);
-  const [showPurchaseNotification, setShowPurchaseNotification] = useState(false);
-  const [currentViewers, setCurrentViewers] = useState(247);
+  const [spotsLeft, setSpotsLeft] = useState(12);
 
   useEffect(() => {
     // Countdown timer
@@ -35,47 +23,21 @@ export const PsychologicalTriggers = () => {
   }, []);
 
   useEffect(() => {
-    // Spots scarcity simulation
-    const spotsTimer = setInterval(() => {
-      if (Math.random() < 0.3) {
-        setSpotsLeft(prev => Math.max(prev - 1, 15));
-      }
-    }, 45000);
-
-    return () => clearInterval(spotsTimer);
-  }, []);
-
-  useEffect(() => {
-    // Live purchase notifications
-    const purchaseTimer = setInterval(() => {
-      const names = ["David G.", "Laura F.", "Roberto P.", "Sofia M.", "Andrés K.", "Carmen L."];
-      const locations = ["Madrid", "Barcelona", "Valencia", "Sevilla", "Bilbao", "Zaragoza"];
+    // Fetch real spots left from database
+    const fetchSpotsLeft = async () => {
+      const { count, error } = await supabase
+        .from('registrations')
+        .select('*', { count: 'exact', head: true })
+        .eq('payment_status', 'completed');
       
-      const newPurchase = {
-        name: names[Math.floor(Math.random() * names.length)],
-        location: locations[Math.floor(Math.random() * locations.length)],
-        time: "hace 1 min"
-      };
+      if (!error && count !== null) {
+        setSpotsLeft(Math.max(0, 12 - count));
+      }
+    };
 
-      setRecentPurchases(prev => [newPurchase, ...prev.slice(0, 2)]);
-      setShowPurchaseNotification(true);
-
-      setTimeout(() => setShowPurchaseNotification(false), 4000);
-    }, 25000);
-
-    return () => clearInterval(purchaseTimer);
-  }, []);
-
-  useEffect(() => {
-    // Live viewers counter
-    const viewersTimer = setInterval(() => {
-      setCurrentViewers(prev => {
-        const change = Math.floor(Math.random() * 10) - 5;
-        return Math.max(prev + change, 200);
-      });
-    }, 8000);
-
-    return () => clearInterval(viewersTimer);
+    fetchSpotsLeft();
+    const interval = setInterval(fetchSpotsLeft, 30000); // Update every 30 seconds
+    return () => clearInterval(interval);
   }, []);
 
   const formatTime = (seconds: number) => {
@@ -87,61 +49,6 @@ export const PsychologicalTriggers = () => {
 
   return (
     <>
-      {/* Floating Scarcity Indicator */}
-      <div className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50 animate-fade-in">
-        <div className="glass-intense rounded-lg p-4 max-w-xs border-l-4 border-primary">
-          <div className="flex items-center gap-2 mb-2">
-            <AlertTriangle className="w-5 h-5 text-primary animate-pulse" />
-            <span className="text-white font-bold text-sm">¡Plazas Limitadas!</span>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-black gradient-text">{spotsLeft}</div>
-            <div className="text-white/80 text-xs">plazas restantes</div>
-          </div>
-          <div className="mt-3">
-            <div className="bg-white/10 rounded-full h-2 overflow-hidden">
-              <div 
-                className="bg-primary h-full transition-all duration-1000 animate-pulse"
-                style={{ width: `${(spotsLeft / 50) * 100}%` }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Live Viewers Indicator */}
-      <div className="fixed bottom-4 left-4 z-50 animate-fade-in">
-        <div className="glass-card rounded-full px-4 py-2 flex items-center gap-2">
-          <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-          <Eye className="w-4 h-4 text-white/80" />
-          <span className="text-white text-sm font-medium">{currentViewers}</span>
-          <span className="text-white/70 text-xs">viendo</span>
-        </div>
-      </div>
-
-      {/* Purchase Notification Popup */}
-      {showPurchaseNotification && (
-        <div className="fixed bottom-4 right-4 z-50 animate-slide-in-right">
-          <Alert className="glass-intense border-primary/30 w-80">
-            <ShoppingCart className="h-4 w-4 text-primary" />
-            <AlertDescription className="text-white">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-semibold">{recentPurchases[0]?.name}</div>
-                  <div className="text-white/70 text-sm">
-                    {recentPurchases[0]?.location} • {recentPurchases[0]?.time}
-                  </div>
-                  <div className="text-primary text-sm font-medium">
-                    Se unió a Detail Park ✅
-                  </div>
-                </div>
-                <CheckCircle className="w-6 h-6 text-primary" />
-              </div>
-            </AlertDescription>
-          </Alert>
-        </div>
-      )}
-
       {/* Main Urgency Section */}
       <section className="py-16 bg-gradient-to-r from-primary/10 to-primary/5 border-y border-primary/20">
         <div className="container mx-auto px-4">
@@ -150,11 +57,11 @@ export const PsychologicalTriggers = () => {
             <div className="glass-intense rounded-2xl p-8 mb-8 animate-pulse-glow">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Clock className="w-6 h-6 text-primary animate-pulse" />
-                <Badge variant="destructive" className="animate-bounce">OFERTA LIMITADA</Badge>
+                <Badge variant="destructive" className="animate-bounce">OFERTA DE LANZAMIENTO</Badge>
               </div>
               
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                Esta oferta desaparece en:
+                Precio de lanzamiento finaliza en:
               </h3>
               
               <div className="text-4xl md:text-6xl font-black gradient-text mb-4 animate-glow-pulse">
@@ -162,25 +69,25 @@ export const PsychologicalTriggers = () => {
               </div>
               
               <p className="text-white/80 mb-6">
-                Después de este tiempo, el precio vuelve a €197
+                Después de este tiempo, el precio será de €299
               </p>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div className="glass-card p-3 rounded-lg">
-                  <div className="text-primary font-bold text-lg">€47</div>
-                  <div className="text-white/70 text-sm">Precio Actual</div>
+                  <div className="text-primary font-bold text-lg">€199</div>
+                  <div className="text-white/70 text-sm">Precio Lanzamiento</div>
                 </div>
                 <div className="glass-card p-3 rounded-lg">
-                  <div className="text-white/60 line-through text-lg">€197</div>
-                  <div className="text-white/70 text-sm">Precio Normal</div>
+                  <div className="text-white/60 line-through text-lg">€499</div>
+                  <div className="text-white/70 text-sm">Precio Mercado</div>
                 </div>
                 <div className="glass-card p-3 rounded-lg">
-                  <div className="text-primary font-bold text-lg">76%</div>
+                  <div className="text-primary font-bold text-lg">60%</div>
                   <div className="text-white/70 text-sm">Descuento</div>
                 </div>
                 <div className="glass-card p-3 rounded-lg">
                   <div className="text-primary font-bold text-lg">{spotsLeft}</div>
-                  <div className="text-white/70 text-sm">Plazas</div>
+                  <div className="text-white/70 text-sm">Plazas Reales</div>
                 </div>
               </div>
 
@@ -190,50 +97,33 @@ export const PsychologicalTriggers = () => {
               </Button>
             </div>
 
-            {/* Social Proof Bar */}
+            {/* Real Spots Info */}
             <div className="glass-card rounded-lg p-6">
               <h4 className="text-white font-bold mb-4 flex items-center justify-center gap-2">
                 <Users className="w-5 h-5 text-primary" />
-                Últimas inscripciones
+                Disponibilidad Real
               </h4>
               
               <div className="space-y-3">
-                {recentPurchases.map((purchase, index) => (
-                  <div 
-                    key={index} 
-                    className="flex items-center justify-between p-3 bg-white/5 rounded-lg"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center">
-                        <span className="text-white text-sm font-bold">
-                          {purchase.name.charAt(0)}
-                        </span>
-                      </div>
-                      <div>
-                        <div className="text-white font-medium text-sm">{purchase.name}</div>
-                        <div className="text-white/60 text-xs">{purchase.location}</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-primary text-sm font-bold">Inscrito</div>
-                      <div className="text-white/60 text-xs">{purchase.time}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 pt-4 border-t border-white/10">
-                <div className="flex items-center justify-center gap-4 text-sm text-white/80">
-                  <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    <span>4.9/5 puntuación</span>
-                  </div>
-                  <div className="w-px h-4 bg-white/20"></div>
-                  <div className="flex items-center gap-1">
-                    <TrendingUp className="w-4 h-4 text-primary" />
-                    <span>89% éxito comprobado</span>
+                <div className="text-white/90">
+                  <div className="text-3xl font-black gradient-text mb-2">{spotsLeft} de 12</div>
+                  <div className="text-sm text-white/70">plazas disponibles para el evento del 13 de Diciembre</div>
+                </div>
+                
+                <div className="mt-4">
+                  <div className="bg-white/10 rounded-full h-3 overflow-hidden">
+                    <div 
+                      className="bg-gradient-primary h-full transition-all duration-1000"
+                      style={{ width: `${(spotsLeft / 12) * 100}%` }}
+                    />
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-white/10">
+                <p className="text-white/70 text-sm">
+                  Las plazas se actualizan en tiempo real según las reservas confirmadas
+                </p>
               </div>
             </div>
           </div>
@@ -254,27 +144,31 @@ export const PsychologicalTriggers = () => {
               </div>
               
               <h4 className="text-xl font-bold text-white mb-4">
-                Garantía de Devolución de 30 Días
+                Garantía de Satisfacción - 30 Días
               </h4>
               
               <p className="text-white/80 mb-6">
-                Si no estás 100% satisfecho con el curso o no ves resultados reales en 30 días, 
-                te devolvemos tu dinero completo. Sin preguntas, sin complicaciones.
+                Si asistes a La Jornada Cero y consideras que no cumplió tus expectativas, 
+                tienes 30 días para solicitar el reembolso completo del coste de la formación.
               </p>
               
-              <div className="grid md:grid-cols-3 gap-4 text-sm">
-                <div className="flex items-center gap-2 text-white/80">
-                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span>30 días completos</span>
+              <div className="text-left space-y-3 mb-6">
+                <div className="flex items-start gap-3 text-white/80">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Proceso simple: envía un email a <strong className="text-white">garantia@detailpark.com</strong> con tu número de inscripción</span>
                 </div>
-                <div className="flex items-center gap-2 text-white/80">
-                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span>100% del dinero</span>
+                <div className="flex items-start gap-3 text-white/80">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Devolución procesada en 5-7 días hábiles</span>
                 </div>
-                <div className="flex items-center gap-2 text-white/80">
-                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span>Proceso automático</span>
+                <div className="flex items-start gap-3 text-white/80">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Debes haber asistido al menos al 80% de la jornada</span>
                 </div>
+              </div>
+              
+              <div className="text-sm text-white/70 italic">
+                Confiamos en la calidad de nuestra formación. Tu satisfacción es nuestra prioridad.
               </div>
             </div>
           </div>

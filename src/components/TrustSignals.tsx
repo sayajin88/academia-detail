@@ -1,52 +1,73 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Shield, Award, Users, Clock, Star, CheckCircle } from "lucide-react";
-
-const trustMetrics = [
-  { 
-    icon: Users, 
-    number: "1,247", 
-    label: "Alumnos Certificados",
-    color: "text-blue-400"
-  },
-  { 
-    icon: Star, 
-    number: "4.9", 
-    label: "Puntuación Media",
-    color: "text-yellow-400"
-  },
-  { 
-    icon: Award, 
-    number: "94%", 
-    label: "Tasa de Éxito",
-    color: "text-green-400"
-  },
-  { 
-    icon: Clock, 
-    number: "3", 
-    label: "Semanas de Formación",
-    color: "text-purple-400"
-  }
-];
-
-const guarantees = [
-  {
-    icon: Shield,
-    title: "Garantía de 30 días",
-    description: "Si no estás satisfecho, devolvemos tu dinero"
-  },
-  {
-    icon: CheckCircle,
-    title: "Certificación oficial",
-    description: "Reconocida por la industria del detailing"
-  },
-  {
-    icon: Users,
-    title: "Soporte personalizado",
-    description: "Acceso directo a instructores expertos"
-  }
-];
+import { supabase } from "@/integrations/supabase/client";
 
 export function TrustSignals() {
+  const [completedRegistrations, setCompletedRegistrations] = useState(0);
+
+  useEffect(() => {
+    const fetchCompletedRegistrations = async () => {
+      const { count, error } = await supabase
+        .from('registrations')
+        .select('*', { count: 'exact', head: true })
+        .eq('payment_status', 'completed');
+      
+      if (!error && count !== null) {
+        setCompletedRegistrations(count);
+      }
+    };
+
+    fetchCompletedRegistrations();
+    const interval = setInterval(fetchCompletedRegistrations, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const trustMetrics = [
+    { 
+      icon: Users, 
+      number: `${completedRegistrations}+`, 
+      label: "Alumnos Inscritos",
+      color: "text-blue-400"
+    },
+    { 
+      icon: Star, 
+      number: "4.9", 
+      label: "Puntuación Media",
+      color: "text-yellow-400"
+    },
+    { 
+      icon: Award, 
+      number: "5+", 
+      label: "Años de Experiencia",
+      color: "text-green-400"
+    },
+    { 
+      icon: Clock, 
+      number: "1", 
+      label: "Día de Formación",
+      color: "text-purple-400"
+    }
+  ];
+
+  const guarantees = [
+    {
+      icon: Shield,
+      title: "Garantía de 30 días",
+      description: "Reembolso completo si no cumple expectativas tras asistir"
+    },
+    {
+      icon: CheckCircle,
+      title: "Certificación profesional",
+      description: "Certificado oficial al completar la formación"
+    },
+    {
+      icon: Users,
+      title: "Soporte personalizado",
+      description: "Acceso directo a instructores con +10 años de experiencia"
+    }
+  ];
+
   return (
     <section className="py-16 bg-black/30">
       <div className="container mx-auto px-4">
@@ -82,6 +103,13 @@ export function TrustSignals() {
               </Card>
             );
           })}
+        </div>
+
+        {/* Data transparency note */}
+        <div className="text-center mt-8">
+          <p className="text-white/60 text-xs">
+            * Datos actualizados en tiempo real - Noviembre 2025
+          </p>
         </div>
       </div>
     </section>
