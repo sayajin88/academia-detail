@@ -154,7 +154,7 @@ export const OptimizedHero = () => {
               🚀 RESERVAR PLAZA - €199 + IVA
             </Button>
             <p className="text-xs md:text-sm text-white/60 text-center">
-              Normal: €999 + IVA • Ahorras €800 (80% dto.)
+              Normal: €599 + IVA • Ahorras €400 (67% dto.)
             </p>
             <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-xs md:text-sm text-white/70">
               <span>✅ Primera toma de contacto</span>

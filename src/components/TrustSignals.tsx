@@ -45,7 +45,7 @@ export function TrustSignals() {
     { 
       icon: Clock, 
       number: "1", 
-      label: "Día de Formación",
+      label: "Día de Práctica Intensiva",
       color: "text-purple-400"
     }
   ];
@@ -59,7 +59,7 @@ export function TrustSignals() {
     {
       icon: CheckCircle,
       title: "Certificación profesional",
-      description: "Certificado oficial al completar la formación"
+      description: "Certificado oficial de asistencia"
     },
     {
       icon: Users,

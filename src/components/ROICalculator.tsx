@@ -11,7 +11,7 @@ interface ROICalculatorProps {
 export function ROICalculator({ onCtaClick }: ROICalculatorProps = {}) {
   const [servicesPerMonth, setServicesPerMonth] = useState([10]);
   const [pricePerService, setPricePerService] = useState([50]);
-  const [coursePrice, setCoursePrice] = useState([999]);
+  const [coursePrice, setCoursePrice] = useState([599]);
   
   const monthlyRevenue = servicesPerMonth[0] * pricePerService[0];
   const yearlyRevenue = monthlyRevenue * 12;
@@ -28,7 +28,7 @@ export function ROICalculator({ onCtaClick }: ROICalculatorProps = {}) {
           <Calculator className="w-6 h-6 text-primary" />
           Calculadora de ROI
         </CardTitle>
-        <p className="text-white/80 text-sm">Calcula cuánto ganarás con tu formación</p>
+        <p className="text-white/80 text-sm">Calcula cuánto ganarás con tu experiencia práctica</p>
       </CardHeader>
       
       <CardContent className="space-y-6">
@@ -62,7 +62,7 @@ export function ROICalculator({ onCtaClick }: ROICalculatorProps = {}) {
 
         <div>
           <label className="text-white text-sm font-semibold mb-2 block">
-            Precio del curso: €{coursePrice[0]}
+            Precio del evento: €{coursePrice[0]}
           </label>
           <Slider
             value={coursePrice}

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Countdown } from "@/components/Countdown";
-import { CourseCard } from "@/components/CourseCard";
+import { EventCard } from "@/components/EventCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { FeatureCard } from "@/components/FeatureCard";
 import { 
@@ -44,6 +44,7 @@ import { InstructorProfile } from "@/components/InstructorProfile";
 import { RegistrationModal } from "@/components/RegistrationModal";
 import { useRegistrationModal } from "@/hooks/useRegistrationModal";
 import { ExpertiseShowcase } from "@/components/ExpertiseShowcase";
+import { ValueJustification } from "@/components/ValueJustification";
 
 // Import images
 import detailParkLogo from "@/assets/detail-park-logo.webp";
@@ -446,6 +447,9 @@ const Index = () => {
       {/* Pricing Comparison */}
       <PricingComparison />
 
+      {/* Value Justification */}
+      <ValueJustification />
+
       {/* Instructor Profile */}
       <InstructorProfile />
 
@@ -460,7 +464,7 @@ const Index = () => {
               <span className="gradient-text font-bold uppercase tracking-wide">Tendrás ACCESO a...</span>
             </div>
             <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
-              Nuestra academia con <span className="gradient-text">Formación Completa</span>
+              Nuestra academia con <span className="gradient-text">Experiencia Práctica Completa</span>
               <br/>en Detailing <span className="gradient-text">Disruptiva y Efectiva</span>
               <br/>para Crecer tu Carrera Profesional.
             </h2>

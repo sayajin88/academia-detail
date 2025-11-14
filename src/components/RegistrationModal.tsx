@@ -405,7 +405,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                 <ul className="text-xs text-white/80 space-y-1">
                   <li>• Tu plaza está reservada por 7 días</li>
                   <li>• Plazas limitadas a 12 personas</li>
-                  <li>• Precio con 80% de descuento: €199 + IVA</li>
+                  <li>• Precio con 67% de descuento: €199 + IVA</li>
                   <li>• Fecha: Sábado 17 de Enero, 2026</li>
                   <li>• Horario: 10:00 AM - 18:00 PM</li>
                 </ul>

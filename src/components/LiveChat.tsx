@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle, X, Send, User, Bot } from "lucide-react";
 
 const commonQuestions = [
-  "¿Cuánto dura el curso?",
+  "¿Cuánto dura el evento?",
   "¿Incluye certificación?",
   "¿Hay práctica real?",
   "¿Cuál es el precio final?"
 ];
 
 const autoResponses = {
-  "¿Cuánto dura el curso?": "El curso tiene una duración de 3 semanas con clases prácticas y teóricas. Puedes completarlo a tu ritmo.",
-  "¿Incluye certificación?": "Sí, incluye certificación oficial al finalizar el curso, reconocida en el sector del detailing.",
-  "¿Hay práctica real?": "Por supuesto, tendrás acceso a nuestro taller para practicar con vehículos reales bajo supervisión.",
-  "¿Cuál es el precio final?": "El precio actual con descuento es de €199 + IVA (precio normal €999 + IVA). Incluye todo sin costos adicionales."
+  "¿Cuánto dura el evento?": "El evento tiene una duración de 1 día completo (8 horas) con práctica intensiva en taller real.",
+  "¿Incluye certificación?": "Sí, incluye certificado oficial de asistencia al finalizar el evento, reconocido en el sector del detailing.",
+  "¿Hay práctica real?": "Por supuesto, tendrás acceso a nuestro taller para practicar con vehículos reales bajo supervisión durante todo el día.",
+  "¿Cuál es el precio final?": "El precio actual con descuento es de €199 + IVA (precio normal €599 + IVA). Incluye todo sin costos adicionales."
 };
 
 export function LiveChat() {
