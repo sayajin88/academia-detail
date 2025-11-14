@@ -268,7 +268,7 @@ const Index = () => {
                   </div>
                   <div className="text-left">
                     <div className="text-white/70 text-sm">Fecha del Evento</div>
-                    <div className="text-white font-bold text-xl">Sábado 13 Diciembre 2025</div>
+                    <div className="text-white font-bold text-xl">Sábado 17 Enero 2026</div>
                   </div>
                 </div>
               </div>

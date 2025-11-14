@@ -107,7 +107,7 @@ export const PsychologicalTriggers = () => {
               <div className="space-y-3">
                 <div className="text-white/90">
                   <div className="text-3xl font-black gradient-text mb-2">{spotsLeft} de 12</div>
-                  <div className="text-sm text-white/70">plazas disponibles para el evento del 13 de Diciembre</div>
+                  <div className="text-sm text-white/70">plazas disponibles para el evento del 17 de Enero</div>
                 </div>
                 
                 <div className="mt-4">

@@ -117,7 +117,7 @@ export const OptimizedHero = () => {
             {/* Event Date Badge */}
             <div className="inline-flex items-center gap-3 glass-intense border-2 border-primary/60 rounded-2xl px-6 md:px-10 py-4 md:py-6 mb-4 animate-pulse shadow-[0_0_30px_rgba(239,68,68,0.4)]">
               <Calendar className="w-5 h-5 md:w-8 md:h-8 text-primary" />
-              <span className="text-white text-lg md:text-3xl lg:text-4xl font-bold">Sábado 13 Diciembre 2025</span>
+              <span className="text-white text-lg md:text-3xl lg:text-4xl font-bold">Sábado 17 Enero 2026</span>
             </div>
             
             <span className="text-white/90 text-base md:text-2xl lg:text-4xl block mt-3 md:mt-4 font-normal">1 día que transformará tu visión del detailing</span>

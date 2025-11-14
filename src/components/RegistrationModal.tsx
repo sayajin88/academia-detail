@@ -346,7 +346,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-white/70">Evento:</span>
-                    <span className="font-medium text-white">13 de Diciembre, 2025</span>
+                    <span className="font-medium text-white">17 de Enero, 2026</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-white/70">Precio:</span>
@@ -406,7 +406,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                   <li>• Tu plaza está reservada por 7 días</li>
                   <li>• Plazas limitadas a 12 personas</li>
                   <li>• Precio con 80% de descuento: €199 + IVA</li>
-                  <li>• Fecha: Sábado 13 de Diciembre, 2025</li>
+                  <li>• Fecha: Sábado 17 de Enero, 2026</li>
                   <li>• Horario: 10:00 AM - 18:00 PM</li>
                 </ul>
               </div>
