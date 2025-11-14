@@ -13,9 +13,9 @@ const pricingOptions = [
       { text: "Clases teóricas largas", included: true },
       { text: "Práctica limitada", included: true },
       { text: "Horarios rígidos", included: false },
-      { text: "Certificación básica", included: true },
-      { text: "Sin soporte post-curso", included: false },
-      { text: "Material no incluido", included: false },
+              { text: "Certificación básica", included: true },
+              { text: "Sin soporte post-evento", included: false },
+              { text: "Material no incluido", included: false },
       { text: "Enfoque generalista", included: true },
       { text: "Sin garantía", included: false }
     ],
@@ -25,11 +25,11 @@ const pricingOptions = [
   {
     name: "La Jornada Cero",
     price: "€199",
-    originalPrice: "€499",
+    originalPrice: "€599",
     period: "+ IVA (1 día)",
     popular: true,
     features: [
-      { text: "Formación intensiva práctica", included: true },
+      { text: "Práctica intensiva de 1 día", included: true },
       { text: "Acceso completo al taller", included: true },
       { text: "Horarios flexibles", included: true },
       { text: "Certificación profesional", included: true },
@@ -51,7 +51,7 @@ const pricingOptions = [
       { text: "Sin práctica supervisada", included: false },
       { text: "Información dispersa", included: false },
       { text: "Sin certificación", included: false },
-      { text: "Sin soporte", included: false },
+      { text: "Sin soporte post-evento", included: false },
       { text: "Gastos en errores", included: false },
       { text: "Resultados inciertos", included: false },
       { text: "Tiempo ilimitado", included: false }

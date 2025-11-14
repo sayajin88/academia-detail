@@ -114,7 +114,7 @@ export const MobileOptimization = ({ isOpen, onToggle, onCtaClick }: MobileMenuP
               <p className="text-white font-bold text-xs truncate">La Jornada Cero</p>
               <div className="flex items-center gap-2">
                 <p className="text-primary text-base font-black">€199 + IVA</p>
-                <span className="text-xs text-white/60 line-through">€999</span>
+                <span className="text-xs text-white/60 line-through">€599</span>
               </div>
             </div>
             <Button variant="hero" size="sm" className="shrink-0 mobile-touch-target" onClick={onCtaClick}>

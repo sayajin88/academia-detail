@@ -39,28 +39,28 @@ const results = {
     title: "El Emprendedor",
     icon: Briefcase,
     description: "Tienes mentalidad de negocio y visión para crear tu empresa",
-    recommendation: "Curso Profesional + Módulo de Negocio",
+    recommendation: "Experiencia Profesional + Módulo de Negocio",
     color: "text-blue-400"
   },
   perfectionist: {
     title: "El Perfeccionista", 
     icon: Trophy,
     description: "Buscas la excelencia técnica y resultados impecables",
-    recommendation: "Curso Avanzado + Técnicas Premium",
+    recommendation: "Workshop Avanzado + Técnicas Premium",
     color: "text-purple-400"
   },
   pragmatic: {
     title: "El Pragmático",
     icon: CheckCircle, 
     description: "Quieres resultados efectivos con el mínimo esfuerzo",
-    recommendation: "Curso Express + Guías Rápidas",
+    recommendation: "Evento Express + Guías Rápidas",
     color: "text-green-400"
   },
   passionate: {
     title: "El Apasionado",
     icon: Heart,
     description: "El detailing es tu pasión y quieres vivir de ello",
-    recommendation: "Curso Completo + Especialización Premium",
+    recommendation: "Experiencia Completa + Especialización Premium",
     color: "text-red-400"
   }
 };
@@ -115,7 +115,7 @@ export function PersonalityQuiz() {
 
           <div className="space-y-3">
             <Button variant="hero" className="w-full">
-              VER MI CURSO PERSONALIZADO
+              VER MI EXPERIENCIA PERSONALIZADA
             </Button>
             <Button variant="ghost" onClick={reset} className="w-full text-white/70">
               Repetir Quiz

@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 
-interface CourseCardProps {
+interface EventCardProps {
   title: string;
   price: string;
   duration: string;
@@ -12,7 +12,7 @@ interface CourseCardProps {
   ctaText: string;
 }
 
-export function CourseCard({ title, price, duration, features, isPopular, ctaText }: CourseCardProps) {
+export function EventCard({ title, price, duration, features, isPopular, ctaText }: EventCardProps) {
   return (
     <Card className={`glass-card border-2 ${isPopular ? 'border-primary shadow-glow' : 'border-white/10'} hover:border-primary/50 transition-all duration-300 relative`}>
       {isPopular && (

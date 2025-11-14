@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     question: "¿Qué está incluido en los €199 + IVA?",
-    answer: "Jornada completa de formación práctica (9:00-18:00h), todos los materiales y productos profesionales, comida, certificado de asistencia y acceso a nuestra comunidad exclusiva de detailers."
+    answer: "Jornada completa de práctica intensiva (9:00-18:00h), todos los materiales y productos profesionales, comida, certificado de asistencia y acceso a nuestra comunidad exclusiva de detailers."
   },
   {
     question: "¿Qué debo llevar al evento?",
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     question: "¿Saldré preparado para trabajar como detailer profesional?",
-    answer: "La Jornada Cero es un evento introductorio que te da las bases fundamentales del detailing. Para nivel profesional completo, te ofreceremos opciones de formación avanzada posterior."
+    answer: "La Jornada Cero es un evento introductorio que te da las bases fundamentales del detailing. Para nivel profesional completo, te ofreceremos opciones de workshops avanzados posteriores."
   },
   {
     question: "¿Por qué solo 12 plazas?",
@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     question: "¿Recibiré algún certificado?",
-    answer: "Sí, al finalizar el evento recibirás un certificado de asistencia que acredita las 8 horas de formación práctica en detailing profesional y pulido básico."
+    answer: "Sí, al finalizar el evento recibirás un certificado de asistencia que acredita las 8 horas de práctica intensiva en detailing profesional y pulido básico."
   },
   {
     question: "¿Qué aprenderé exactamente en 1 día?",
@@ -41,7 +41,7 @@ const faqs = [
   },
   {
     question: "¿Habrá más eventos La Jornada Cero en el futuro?",
-    answer: "Sí, organizamos eventos periódicamente. Los asistentes de La Jornada Cero tienen prioridad en reservas de futuros eventos y descuentos especiales en formaciones avanzadas."
+    answer: "Sí, organizamos eventos periódicamente. Los asistentes de La Jornada Cero tienen prioridad en reservas de futuros eventos y descuentos especiales en workshops avanzados."
   }
 ];
 
@@ -57,7 +57,7 @@ export function FAQ() {
             Resolvemos todas tus <span className="gradient-text">dudas</span>
           </h2>
           <p className="text-xl text-white/80 max-w-3xl mx-auto">
-            Las respuestas a las preguntas más comunes sobre nuestro curso de detailing profesional
+            Las respuestas a las preguntas más comunes sobre nuestro evento de detailing profesional
           </p>
         </div>
 

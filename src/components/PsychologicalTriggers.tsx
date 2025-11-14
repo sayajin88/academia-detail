@@ -78,11 +78,11 @@ export const PsychologicalTriggers = () => {
                   <div className="text-white/70 text-sm">Precio Lanzamiento</div>
                 </div>
                 <div className="glass-card p-3 rounded-lg">
-                  <div className="text-white/60 line-through text-lg">€499</div>
+                  <div className="text-white/60 line-through text-lg">€599</div>
                   <div className="text-white/70 text-sm">Precio Mercado</div>
                 </div>
                 <div className="glass-card p-3 rounded-lg">
-                  <div className="text-primary font-bold text-lg">60%</div>
+                  <div className="text-primary font-bold text-lg">67%</div>
                   <div className="text-white/70 text-sm">Descuento</div>
                 </div>
                 <div className="glass-card p-3 rounded-lg">
@@ -122,7 +122,8 @@ export const PsychologicalTriggers = () => {
 
               <div className="mt-6 pt-4 border-t border-white/10">
                 <p className="text-white/70 text-sm">
-                  Las plazas se actualizan en tiempo real según las reservas confirmadas
+                  Cada día, personas se preguntan si deberían haber dado el paso antes. 
+                  Este evento te da la claridad que necesitas para decidir si el detailing es tu camino.
                 </p>
               </div>
             </div>
@@ -168,7 +169,7 @@ export const PsychologicalTriggers = () => {
               </div>
               
               <div className="text-sm text-white/70 italic">
-                Confiamos en la calidad de nuestra formación. Tu satisfacción es nuestra prioridad.
+                Confiamos en la calidad de nuestra experiencia. Tu satisfacción es nuestra prioridad.
               </div>
             </div>
           </div>
