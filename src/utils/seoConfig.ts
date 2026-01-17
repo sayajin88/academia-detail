@@ -82,6 +82,18 @@ export const generateFAQSchema = (faqs: { question: string; answer: string }[]) 
   }))
 });
 
+// BreadcrumbList Schema Generator
+export const generateBreadcrumbSchema = (items: { name: string; url: string }[]) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    "item": `${BASE_URL}${item.url}`
+  }))
+});
+
 // SEO Configuration for each page
 export const seoConfig = {
   home: {
@@ -101,7 +113,10 @@ export const seoConfig = {
           "target": `${BASE_URL}/buscar?q={search_term_string}`,
           "query-input": "required name=search_term_string"
         }
-      }
+      },
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" }
+      ])
     ]
   },
 
@@ -119,7 +134,11 @@ export const seoConfig = {
         endDate: "2026-01-17T18:00:00+01:00",
         price: 97,
         location: "Detail Park Academy"
-      })
+      }),
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" },
+        { name: "La Jornada Cero", url: "/jornada-cero" }
+      ])
     ]
   },
 
@@ -136,7 +155,11 @@ export const seoConfig = {
         price: 4997,
         duration: "P30D",
         url: "/carrera-detailing"
-      })
+      }),
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" },
+        { name: "Carrera Detailing", url: "/carrera-detailing" }
+      ])
     ]
   },
 
@@ -153,7 +176,11 @@ export const seoConfig = {
         "name": "Galería de Trabajos Detail Park",
         "description": "Portfolio de trabajos de detailing, wrapping, PPF y restauración realizados por Detail Park Academy.",
         "url": `${BASE_URL}/galeria`
-      }
+      },
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" },
+        { name: "Galería", url: "/galeria" }
+      ])
     ]
   },
 
@@ -170,7 +197,11 @@ export const seoConfig = {
         "name": "Contacto Detail Park Academy",
         "description": "Página de contacto de Detail Park Academy para información sobre cursos de detailing.",
         "url": `${BASE_URL}/contacto`
-      }
+      },
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" },
+        { name: "Contacto", url: "/contacto" }
+      ])
     ]
   },
 
@@ -189,6 +220,13 @@ export const seoConfig = {
       restauracion: "curso restauración coches, formación restauración vehículos, restaurar coche clásico, reparación pintura, curso chapa y pintura"
     };
 
+    const formationNames: Record<string, string> = {
+      detailing: "Curso Detailing",
+      wrapping: "Curso Car Wrapping",
+      ppf: "Curso PPF",
+      restauracion: "Curso Restauración"
+    };
+
     return {
       title: `${formation.title} | Curso Profesional | Detail Park`,
       description: formation.description.substring(0, 155) + "...",
@@ -203,7 +241,12 @@ export const seoConfig = {
           duration: formation.duration,
           url: `/formacion/${slug}`
         }),
-        generateFAQSchema(formation.faqs.slice(0, 5))
+        generateFAQSchema(formation.faqs.slice(0, 5)),
+        generateBreadcrumbSchema([
+          { name: "Inicio", url: "/" },
+          { name: "Formaciones", url: "/#formaciones" },
+          { name: formationNames[slug] || formation.title, url: `/formacion/${slug}` }
+        ])
       ]
     };
   }
