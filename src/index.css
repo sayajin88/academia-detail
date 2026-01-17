@@ -51,6 +51,21 @@
     --shadow-primary: 0 10px 30px -10px hsl(10 93% 46% / 0.5);
     --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.5);
     
+    /* Gold Premium Colors */
+    --gold: 45 93% 47%;
+    --gold-light: 45 93% 67%;
+    --gold-dark: 45 93% 37%;
+    --gold-glow: 45 80% 50%;
+    --gold-foreground: 0 0% 0%;
+    
+    /* Gold Gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(45 93% 47%), hsl(45 93% 67%), hsl(45 93% 47%));
+    --gradient-gold-dark: linear-gradient(135deg, hsl(45 93% 37%), hsl(45 93% 47%));
+    
+    /* Gold Shadows */
+    --shadow-gold-glow: 0 0 30px hsl(45 93% 47% / 0.4);
+    --shadow-gold-intense: 0 0 50px hsl(45 93% 47% / 0.6);
+    
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
