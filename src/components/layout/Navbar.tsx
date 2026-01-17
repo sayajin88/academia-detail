@@ -120,13 +120,15 @@ export function Navbar() {
             >
               Contacto
             </Link>
-          </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Button asChild variant="hero" size="lg">
-              <Link to="/jornada-cero">Reserva tu Plaza</Link>
-            </Button>
+            <Link
+              to="/jornada-cero"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                location.pathname === '/jornada-cero' ? 'text-primary' : 'text-foreground/80'
+              }`}
+            >
+              Soy nuevo
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -185,11 +187,12 @@ export function Navbar() {
               Contacto
             </Link>
 
-            <div className="pt-4">
-              <Button asChild variant="hero" className="w-full">
-                <Link to="/jornada-cero">Reserva tu Plaza</Link>
-              </Button>
-            </div>
+            <Link
+              to="/jornada-cero"
+              className="block px-4 py-3 rounded-lg text-foreground hover:bg-muted transition-colors"
+            >
+              Soy nuevo
+            </Link>
           </div>
         </div>
       )}
