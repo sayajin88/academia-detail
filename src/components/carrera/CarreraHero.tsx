@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Crown, Clock, Users, Award, Calendar, ArrowRight, Sparkles } from 'lucide-react';
+import { Crown, Clock, Users, Award, ArrowRight, Sparkles, ChevronDown, Euro } from 'lucide-react';
 import { carreraDetailingData } from '@/data/carreraDetailingData';
 import { useCountUp } from '@/hooks/useCountUp';
 import heroImage from '@/assets/hero-detailing.jpg';
@@ -12,198 +11,255 @@ interface CarreraHeroProps {
 
 const CarreraHero = ({ onCTAClick }: CarreraHeroProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const priceCardRef = useRef<HTMLDivElement>(null);
   const priceCount = useCountUp(carreraDetailingData.price, 2000, isVisible);
 
   useEffect(() => {
-    setIsVisible(true);
-    
-    // Spotlight effect
-    const card = priceCardRef.current;
-    if (!card) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--mouse-x', `${x}%`);
-      card.style.setProperty('--mouse-y', `${y}%`);
-    };
-
-    card.addEventListener('mousemove', handleMouseMove);
-    return () => card.removeEventListener('mousemove', handleMouseMove);
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
+  const stats = [
+    { icon: Clock, label: '1 Mes', sublabel: 'Intensivo' },
+    { icon: Users, label: `${carreraDetailingData.spots}`, sublabel: 'Plazas' },
+    { icon: Award, label: '4', sublabel: 'Certificaciones' },
+    { icon: Euro, label: `${priceCount.toLocaleString()}`, sublabel: 'Inversión' },
+  ];
+
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <img 
           src={heroImage} 
           alt="Carrera Detailing" 
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/70" />
-        {/* Gold particles effect */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-10 w-2 h-2 bg-gold rounded-full animate-float" style={{ animationDelay: '0s' }} />
-          <div className="absolute top-40 left-1/4 w-1 h-1 bg-gold-light rounded-full animate-float" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-60 right-1/3 w-2 h-2 bg-gold rounded-full animate-float" style={{ animationDelay: '2s' }} />
-          <div className="absolute bottom-40 left-1/3 w-1 h-1 bg-gold-light rounded-full animate-float" style={{ animationDelay: '0.5s' }} />
-          <div className="absolute bottom-20 right-1/4 w-2 h-2 bg-gold rounded-full animate-float" style={{ animationDelay: '1.5s' }} />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/90" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left - Content */}
-          <div className={`space-y-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            {/* Premium Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/50 bg-gold/10 backdrop-blur-sm">
-              <Crown className="w-4 h-4 text-gold animate-pulse" />
-              <span className="text-gold font-semibold text-sm tracking-wider uppercase shimmer-badge-gold">
-                Programa Exclusivo
-              </span>
-              <Sparkles className="w-4 h-4 text-gold animate-pulse" />
-            </div>
+      {/* Enhanced Gold Particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-gold animate-float opacity-40"
+            style={{
+              width: `${Math.random() * 6 + 2}px`,
+              height: `${Math.random() * 6 + 2}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${Math.random() * 4 + 4}s`,
+            }}
+          />
+        ))}
+      </div>
 
-            {/* Title */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-monument leading-none">
-              <span className="text-foreground">CARRERA</span>
-              <br />
-              <span className="gold-gradient-text">DETAILING</span>
-            </h1>
+      {/* Decorative Gold Frame - Desktop Only */}
+      <div className="hidden lg:block absolute inset-16 xl:inset-24 pointer-events-none">
+        <div className="absolute inset-0 border border-gold/20 rounded-3xl" />
+        <div className="absolute inset-0 rounded-3xl gold-frame-animated opacity-40" />
+        {/* Corner accents */}
+        <div className="absolute -top-1 -left-1 w-8 h-8 border-t-2 border-l-2 border-gold/60 rounded-tl-lg" />
+        <div className="absolute -top-1 -right-1 w-8 h-8 border-t-2 border-r-2 border-gold/60 rounded-tr-lg" />
+        <div className="absolute -bottom-1 -left-1 w-8 h-8 border-b-2 border-l-2 border-gold/60 rounded-bl-lg" />
+        <div className="absolute -bottom-1 -right-1 w-8 h-8 border-b-2 border-r-2 border-gold/60 rounded-br-lg" />
+      </div>
 
-            {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-gold-light font-medium">
-              {carreraDetailingData.subtitle}
-            </p>
+      {/* Content - Fully Centered */}
+      <div className="container mx-auto px-4 relative z-10 text-center py-20">
+        {/* Premium Badge */}
+        <div 
+          className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold/50 bg-gold/10 backdrop-blur-sm mb-8 transition-all duration-1000 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+          }`}
+        >
+          <Crown className="w-4 h-4 text-gold animate-pulse" />
+          <span className="text-gold font-semibold text-sm tracking-[0.2em] uppercase shimmer-badge-gold">
+            Programa Exclusivo
+          </span>
+          <Sparkles className="w-4 h-4 text-gold animate-pulse" />
+        </div>
 
-            <p className="text-lg text-muted-foreground max-w-lg">
-              {carreraDetailingData.tagline}
-            </p>
+        {/* Main Title with Reveal Effect */}
+        <div className={`mb-6 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-monument leading-none tracking-tight">
+            <span className="block text-foreground hero-text-reveal">CARRERA</span>
+            <span className="block gold-gradient-text hero-text-reveal" style={{ animationDelay: '0.3s' }}>
+              DETAILING
+            </span>
+          </h1>
+        </div>
 
-            {/* Stats */}
-            <div className="flex flex-wrap gap-4 pt-4">
-              <div className="flex items-center gap-2 px-4 py-2 bg-card/50 rounded-lg border border-gold/20">
-                <Clock className="w-5 h-5 text-gold" />
-                <span className="text-foreground font-semibold">{carreraDetailingData.duration}</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-card/50 rounded-lg border border-gold/20">
-                <Users className="w-5 h-5 text-gold" />
-                <span className="text-foreground font-semibold">Solo {carreraDetailingData.spots} plazas</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-card/50 rounded-lg border border-gold/20">
-                <Award className="w-5 h-5 text-gold" />
-                <span className="text-foreground font-semibold">4 Certificaciones</span>
-              </div>
-            </div>
+        {/* Subtitle */}
+        <p 
+          className={`text-xl sm:text-2xl md:text-3xl text-gold-light font-medium mb-4 transition-all duration-1000 delay-400 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
+          {carreraDetailingData.subtitle}
+        </p>
 
-            {/* Mobile CTA */}
-            <div className="lg:hidden pt-4">
-              <Button 
-                onClick={onCTAClick}
-                className="w-full h-14 text-lg bg-gradient-to-r from-gold-dark via-gold to-gold-light text-gold-foreground hover:shadow-gold-glow transition-all duration-300 font-bold"
-              >
-                Reservar Mi Plaza <ArrowRight className="ml-2" />
-              </Button>
-              <p className="text-center text-gold/80 text-sm mt-2">
-                Próxima edición: {carreraDetailingData.nextEdition}
-              </p>
-            </div>
-          </div>
+        <p 
+          className={`text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 transition-all duration-1000 delay-500 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
+          {carreraDetailingData.tagline}
+        </p>
 
-          {/* Right - Price Card (Desktop only) */}
-          <div className={`hidden lg:block transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+        {/* Stats Bar - Horizontal on Desktop, 2x2 Grid on Mobile */}
+        <div 
+          className={`flex flex-wrap justify-center gap-3 sm:gap-4 mb-10 transition-all duration-1000 delay-600 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
+          {stats.map((stat, index) => (
             <div 
-              ref={priceCardRef}
-              className="relative p-8 rounded-2xl bg-card/80 backdrop-blur-md border-2 border-gold/30 gold-spotlight overflow-hidden group"
+              key={index}
+              className="group relative flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-card/60 backdrop-blur-md rounded-xl border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:scale-105"
             >
-              {/* Animated gold border */}
-              <div className="absolute inset-0 rounded-2xl gold-border-animated" />
-              
-              {/* Header */}
-              <div className="relative z-10 text-center pb-6 border-b border-gold/20">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/20 border border-gold/40 mb-4">
-                  <Crown className="w-4 h-4 text-gold" />
-                  <span className="text-gold font-bold text-sm uppercase tracking-wider">
-                    Inversión en Tu Futuro
-                  </span>
-                </div>
-                
-                {/* Price */}
-                <div className="space-y-2">
-                  <p className="text-muted-foreground line-through text-lg">
-                    Valor: €{carreraDetailingData.originalValue.toLocaleString()}
-                  </p>
-                  <div className="flex items-center justify-center gap-3">
-                    <span className="text-5xl font-monument gold-gradient-text">
-                      €{priceCount.toLocaleString()}
-                    </span>
-                  </div>
-                </div>
+              <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center group-hover:bg-gold/30 transition-colors">
+                <stat.icon className="w-5 h-5 text-gold" />
               </div>
-
-              {/* Benefits List */}
-              <div className="relative z-10 py-6 space-y-3">
-                {[
-                  "4 Formaciones técnicas completas",
-                  "Módulo de Negocio exclusivo",
-                  "1 mes en taller real",
-                  "Dirigirás el negocio varios días",
-                  "Mentoría 6 meses post-curso",
-                  "Kit de productos premium"
-                ].map((benefit, index) => (
-                  <div 
-                    key={index}
-                    className="flex items-center gap-3 group/item"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <div className="w-5 h-5 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0 group-hover/item:bg-gold/40 transition-colors">
-                      <svg className="w-3 h-3 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <span className="text-foreground">{benefit}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Next Edition */}
-              <div className="relative z-10 flex items-center justify-center gap-2 py-4 border-t border-b border-gold/20">
-                <Calendar className="w-5 h-5 text-gold" />
-                <span className="text-foreground">
-                  Próxima edición: <strong className="text-gold">{carreraDetailingData.nextEdition}</strong>
+              <div className="text-left">
+                <span className="block text-xl sm:text-2xl font-monument text-foreground leading-none">
+                  {stat.label}
+                </span>
+                <span className="text-xs sm:text-sm text-gold/80 uppercase tracking-wider">
+                  {stat.sublabel}
                 </span>
               </div>
-
-              {/* CTA Button */}
-              <div className="relative z-10 pt-6">
-                <Button 
-                  onClick={onCTAClick}
-                  className="w-full h-14 text-lg bg-gradient-to-r from-gold-dark via-gold to-gold-light text-gold-foreground hover:shadow-gold-intense transition-all duration-300 font-bold group"
-                >
-                  <Crown className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  Reservar Mi Plaza
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </div>
-
-              {/* Urgency */}
-              <div className="relative z-10 pt-4 space-y-2 text-center">
-                <p className="text-gold flex items-center justify-center gap-2">
-                  <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
-                  Solo {carreraDetailingData.spots} plazas por edición
-                </p>
-                <p className="text-muted-foreground text-sm flex items-center justify-center gap-2">
-                  <Award className="w-4 h-4 text-gold/70" />
-                  +{carreraDetailingData.stats.alumni} empresarios formados
-                </p>
-              </div>
+              {/* Separator line - hidden on last item and on mobile */}
+              {index < stats.length - 1 && (
+                <div className="hidden lg:block absolute -right-2 top-1/2 -translate-y-1/2 w-px h-8 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
+              )}
             </div>
+          ))}
+        </div>
+
+        {/* CTA Button */}
+        <div 
+          className={`mb-8 transition-all duration-1000 delay-700 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
+          <Button 
+            onClick={onCTAClick}
+            className="relative h-14 sm:h-16 px-8 sm:px-12 text-base sm:text-lg bg-gradient-to-r from-gold-dark via-gold to-gold-light text-gold-foreground hover:shadow-gold-intense transition-all duration-300 font-bold group overflow-hidden cta-shimmer"
+          >
+            <Crown className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+            <span className="relative z-10">Reservar Mi Plaza</span>
+            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </div>
+
+        {/* Urgency & Next Edition Info */}
+        <div 
+          className={`flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 transition-all duration-1000 delay-800 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
+          <div className="flex items-center gap-2 text-gold">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-gold"></span>
+            </span>
+            <span className="font-semibold">Solo {carreraDetailingData.spots} plazas disponibles</span>
+          </div>
+          <div className="hidden sm:block w-px h-5 bg-gold/30" />
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <span>Próxima edición:</span>
+            <span className="text-gold font-semibold">{carreraDetailingData.nextEdition}</span>
+          </div>
+          <div className="hidden sm:block w-px h-5 bg-gold/30" />
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Award className="w-4 h-4 text-gold/70" />
+            <span>+{carreraDetailingData.stats.alumni} empresarios formados</span>
           </div>
         </div>
       </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+        <span className="text-xs text-gold/60 uppercase tracking-widest">Descubre más</span>
+        <ChevronDown className="w-6 h-6 text-gold/60" />
+      </div>
+
+      {/* Inline Styles for new animations */}
+      <style>{`
+        .hero-text-reveal {
+          animation: textReveal 1s ease-out forwards;
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        
+        @keyframes textReveal {
+          0% {
+            opacity: 0;
+            transform: translateY(30px);
+            filter: blur(10px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+          }
+        }
+        
+        .gold-frame-animated {
+          background: linear-gradient(90deg, 
+            transparent, 
+            hsl(45 93% 47% / 0.3), 
+            transparent
+          );
+          background-size: 200% 100%;
+          animation: frameShimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes frameShimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        
+        .cta-shimmer::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+          );
+          transform: translateX(-100%);
+          animation: ctaShimmer 2.5s ease-in-out infinite;
+        }
+        
+        @keyframes ctaShimmer {
+          0% { transform: translateX(-100%); }
+          50%, 100% { transform: translateX(100%); }
+        }
+        
+        .shimmer-badge-gold {
+          background: linear-gradient(
+            90deg,
+            hsl(45 93% 47%) 0%,
+            hsl(45 93% 67%) 50%,
+            hsl(45 93% 47%) 100%
+          );
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: shimmerText 3s linear infinite;
+        }
+        
+        @keyframes shimmerText {
+          0% { background-position: 0% center; }
+          100% { background-position: 200% center; }
+        }
+      `}</style>
     </section>
   );
 };
