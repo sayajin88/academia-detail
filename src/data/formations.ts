@@ -7,44 +7,79 @@ import carreraHero from '@/assets/professional-detailing.jpg';
 export interface Formation {
   id: string;
   title: string;
+  shortTitle: string;
   description: string;
   duration: string;
   image: string;
   href: string;
+  icon: string;
+  highlights: string[];
 }
 
 export const formations: Formation[] = [
   {
     id: 'detailing',
-    title: 'Detailing',
-    description: 'Aprende las técnicas profesionales de limpieza profunda, descontaminación, pulido y protección de vehículos.',
+    title: 'Detailing Profesional',
+    shortTitle: 'Detailing',
+    description: 'Aprende las técnicas profesionales de limpieza profunda, descontaminación, pulido y protección de vehículos. Desde corrección de pintura hasta tratamientos cerámicos.',
     duration: '1-2 días',
     image: detailingHero,
-    href: '/formacion/detailing'
+    href: '/formacion/detailing',
+    icon: 'sparkles',
+    highlights: [
+      'Corrección de pintura y pulido',
+      'Tratamientos cerámicos profesionales',
+      'Limpieza interior profunda',
+      'Descontaminación química y física'
+    ]
   },
   {
     id: 'wrapping',
     title: 'Car Wrapping',
-    description: 'Domina el arte del vinilado integral, cambio de color y personalización profesional de vehículos.',
+    shortTitle: 'Wrapping',
+    description: 'Domina el arte del vinilado integral, cambio de color y personalización profesional de vehículos. Técnicas de instalación en superficies complejas.',
     duration: '2-3 días',
     image: wrappingHero,
-    href: '/formacion/wrapping'
+    href: '/formacion/wrapping',
+    icon: 'palette',
+    highlights: [
+      'Vinilado integral de vehículos',
+      'Cambio de color completo',
+      'Técnicas de corte profesional',
+      'Instalación en superficies complejas'
+    ]
   },
   {
     id: 'ppf',
     title: 'Paint Protection Film',
-    description: 'Especialízate en la instalación de film de protección de pintura para vehículos de alta gama.',
+    shortTitle: 'PPF',
+    description: 'Especialízate en la instalación de film de protección de pintura para vehículos de alta gama. Protección invisible contra impactos y rayones.',
     duration: '2-3 días',
     image: ppfHero,
-    href: '/formacion/ppf'
+    href: '/formacion/ppf',
+    icon: 'shield',
+    highlights: [
+      'Instalación de PPF profesional',
+      'Corte digitalizado y manual',
+      'Protección de zonas críticas',
+      'Técnicas de autorreparación'
+    ]
   },
   {
     id: 'restauracion',
-    title: 'Restauración',
-    description: 'Recupera vehículos dañados y clásicos con técnicas avanzadas de restauración profesional.',
+    title: 'Restauración de Vehículos',
+    shortTitle: 'Restauración',
+    description: 'Recupera vehículos dañados y clásicos con técnicas avanzadas de restauración profesional. Devuelve el esplendor original a cualquier vehículo.',
     duration: '2-3 días',
     image: restauracionHero,
-    href: '/formacion/restauracion'
+    href: '/formacion/restauracion',
+    icon: 'wrench',
+    highlights: [
+      'Restauración de pintura oxidada',
+      'Recuperación de interiores',
+      'Tratamiento de plásticos',
+      'Técnicas de rejuvenecimiento'
+    ]
   }
 ];
 
