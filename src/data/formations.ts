@@ -55,7 +55,7 @@ export const carreraNegocio = {
   description: 'Conviértete en un profesional completo del detailing con acceso a todas las formaciones, prácticas reales en nuestras instalaciones y formación exclusiva en gestión empresarial.',
   duration: '3-6 meses',
   image: carreraHero,
-  href: '/carrera-negocio',
+  href: '/carrera-detailing',
   includes: [
     {
       title: 'Todas las Formaciones',
