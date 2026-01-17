@@ -1,13 +1,14 @@
 import { Star, Quote } from 'lucide-react';
 import { SectionHeading } from '@/components/shared/SectionHeading';
-import alumnoFeliz from '@/assets/certificado-alumno-feliz.jpg';
-import alumno from '@/assets/certificado-alumno.png';
+import eventoAlumnosClase from '@/assets/evento-alumnos-clase.jpg';
+import eventoAlumnosAtencion from '@/assets/evento-alumnos-atencion.jpg';
+import eventoGrupoFormacion from '@/assets/evento-grupo-formacion.jpg';
 
 const testimonials = [
   {
     name: 'Carlos Martínez',
     role: 'Propietario de CM Detailing',
-    image: alumnoFeliz,
+    image: eventoAlumnosClase,
     text: 'La formación en Detail Park cambió mi vida. En 6 meses pasé de aficionado a tener mi propio negocio rentable.',
     rating: 5,
     formation: 'Carrera Negocio',
@@ -15,7 +16,7 @@ const testimonials = [
   {
     name: 'Laura Sánchez',
     role: 'Técnica especialista PPF',
-    image: alumno,
+    image: eventoAlumnosAtencion,
     text: 'El nivel de detalle y la práctica real que ofrecen no tiene comparación. Ahora trabajo con las mejores marcas del sector.',
     rating: 5,
     formation: 'Paint Protection Film',
@@ -23,7 +24,7 @@ const testimonials = [
   {
     name: 'Miguel Ángel',
     role: 'Car Wrapper profesional',
-    image: alumnoFeliz,
+    image: eventoGrupoFormacion,
     text: 'Aprender wrapping con Daniel fue una experiencia increíble. Su metodología y paciencia hacen que todo sea más fácil.',
     rating: 5,
     formation: 'Car Wrapping',
