@@ -51,7 +51,7 @@ const CarreraBenefits = () => {
       <div className="container mx-auto px-4">
         <AnimatedSection className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/5 mb-6">
-            <LucideIcons.Star className="w-4 h-4 text-gold" />
+            <Star className="w-4 h-4 text-gold" />
             <span className="text-gold text-sm font-semibold uppercase tracking-wider">
               {carreraDetailingData.benefits.length}+ Beneficios
             </span>

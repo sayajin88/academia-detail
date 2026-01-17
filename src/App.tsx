@@ -8,6 +8,7 @@ import JornadaCero from "./pages/JornadaCero";
 import FormationDetail from "./pages/FormationDetail";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import CarreraDetailing from "./pages/CarreraDetailing";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/formacion/:slug" element={<FormationDetail />} />
           <Route path="/galeria" element={<Gallery />} />
           <Route path="/contacto" element={<Contact />} />
+          <Route path="/carrera-detailing" element={<CarreraDetailing />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
