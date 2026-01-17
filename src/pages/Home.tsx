@@ -6,17 +6,22 @@ import { GalleryPreview } from '@/components/home/GalleryPreview';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { HomeFAQ } from '@/components/home/HomeFAQ';
 import { HomeCTA } from '@/components/home/HomeCTA';
+import { SEO } from '@/components/SEO';
+import { seoConfig } from '@/utils/seoConfig';
 
 export default function Home() {
   return (
-    <MainLayout>
-      <HomeHero />
-      <FormationsGrid />
-      <CarreraNegocioSection />
-      <GalleryPreview />
-      <TestimonialsSection />
-      <HomeFAQ />
-      <HomeCTA />
-    </MainLayout>
+    <>
+      <SEO {...seoConfig.home} />
+      <MainLayout>
+        <HomeHero />
+        <FormationsGrid />
+        <CarreraNegocioSection />
+        <GalleryPreview />
+        <TestimonialsSection />
+        <HomeFAQ />
+        <HomeCTA />
+      </MainLayout>
+    </>
   );
 }

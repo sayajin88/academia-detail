@@ -45,6 +45,8 @@ import { RegistrationModal } from "@/components/RegistrationModal";
 import { useRegistrationModal } from "@/hooks/useRegistrationModal";
 import { ExpertiseShowcase } from "@/components/ExpertiseShowcase";
 import { ValueJustification } from "@/components/ValueJustification";
+import { SEO } from "@/components/SEO";
+import { seoConfig } from "@/utils/seoConfig";
 
 // Import images
 import detailParkLogo from "@/assets/detail-park-logo.webp";
@@ -69,7 +71,9 @@ const Index = () => {
   const { isOpen, openModal, closeModal } = useRegistrationModal();
 
   return (
-    <div className="min-h-screen animated-bg">
+    <>
+      <SEO {...seoConfig.jornadaCero} />
+      <div className="min-h-screen animated-bg">
       {/* Enhanced Interactive Components */}
       <StickyFloatingCTA onCtaClick={openModal} />
       <MobileOptimization 
@@ -730,6 +734,7 @@ const Index = () => {
       {/* Registration Modal */}
       <RegistrationModal isOpen={isOpen} onClose={closeModal} />
     </div>
+    </>
   );
 };
 

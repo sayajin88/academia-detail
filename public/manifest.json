@@ -1,0 +1,20 @@
+{
+  "name": "Detail Park Academy",
+  "short_name": "Detail Park",
+  "description": "Academia de detailing profesional en España. Cursos de detailing, car wrapping, PPF y restauración.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#ef4444",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["education", "automotive"],
+  "lang": "es",
+  "dir": "ltr"
+}
