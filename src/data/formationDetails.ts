@@ -2,10 +2,33 @@ import detailingHero from '@/assets/hero-detailing.jpg';
 import wrappingHero from '@/assets/portfolio-lamborghini-huracan.png';
 import ppfHero from '@/assets/portfolio-ferrari-458.png';
 import restauracionHero from '@/assets/portfolio-porsche.png';
+import instructorGerardo from '@/assets/daniel-lopez-instructor.webp';
+import certificadoImg from '@/assets/certificado-detailing.png';
 
 export interface FormationModule {
   title: string;
   topics: string[];
+}
+
+export interface FormationAdvantage {
+  icon: string;
+  title: string;
+}
+
+export interface FormationLevel {
+  title: string;
+  subtitle: string;
+  duration?: string;
+  features: string[];
+  highlighted?: boolean;
+}
+
+export interface FormationInstructor {
+  name: string;
+  role: string;
+  image: string;
+  description: string;
+  quote: string;
 }
 
 export interface FormationDetail {
@@ -24,6 +47,14 @@ export interface FormationDetail {
   modules: FormationModule[];
   includes: string[];
   faqs: { question: string; answer: string }[];
+  // Optional extended sections
+  advantages?: FormationAdvantage[];
+  levels?: FormationLevel[];
+  instructor?: FormationInstructor;
+  certificationTitle?: string;
+  certificationText?: string;
+  certificationImage?: string;
+  formacionRegladaItems?: { title: string; description: string }[];
 }
 
 export const formationDetails: Record<string, FormationDetail> = {
@@ -122,27 +153,93 @@ export const formationDetails: Record<string, FormationDetail> = {
   wrapping: {
     id: 'wrapping',
     slug: 'wrapping',
-    title: 'Formación en Car Wrapping',
-    subtitle: 'El arte del vinilado profesional de vehículos',
-    description: 'Domina el arte del vinilado integral, cambio de color y personalización profesional de vehículos.',
-    duration: '3 días intensivos',
+    title: 'Experto en Car Wrapping',
+    subtitle: 'Cursos 100% Prácticos en Taller Real - Sé el Mejor Instalador de Vinilo',
+    description: 'Los cursos de car wrapping en Detail Park están construidos para satisfacer las necesidades tanto de los detallistas entusiastas como profesionales. Basados en experiencia real de trabajo en nuestro taller.',
+    duration: '1-5 días según nivel',
     price: 599,
     originalPrice: 899,
     image: wrappingHero,
-    heroDescription: 'Formación completa en instalación de vinilo para cambio de color, desde las técnicas básicas hasta los acabados más complejos en superficies curvas.',
+    heroDescription: 'Formación 100% práctica en instalación de vinilo para cambio de color. Aprende con experiencia real en taller, desde las técnicas básicas hasta los acabados más complejos en superficies curvas.',
+    advantages: [
+      { icon: 'Award', title: 'Certificado de reconocimiento del sector' },
+      { icon: 'HeadphonesIcon', title: 'Asistencia posterior personalizada' },
+      { icon: 'UserCheck', title: 'Cursos adaptados y 100% personalizados' },
+      { icon: 'Building', title: 'Cursos con experiencia real en taller' },
+      { icon: 'Briefcase', title: 'Posibilidad de entrar en bolsa de empleo' },
+    ],
+    levels: [
+      {
+        title: 'Para Aficionados',
+        subtitle: 'Iniciación al mundo del vinilado',
+        duration: '1-2 días',
+        features: [
+          'Conocimiento del producto y herramientas',
+          'Técnica y aplicación de la teoría',
+          'Cursos adaptados entre semana o fines de semana',
+          'Material de práctica incluido',
+        ],
+      },
+      {
+        title: 'Para Profesionales',
+        subtitle: 'Nivel avanzado para el sector',
+        duration: '3-5 días',
+        features: [
+          'Conocimientos prácticos y teóricos completos',
+          'Nivel profesional para dar calidad al cliente',
+          'Formación avanzada en técnicas complejas',
+          'Trabajo en superficies difíciles',
+        ],
+        highlighted: true,
+      },
+      {
+        title: 'Monta tu Negocio',
+        subtitle: 'Emprende en el sector',
+        features: [
+          'Modelo de franquicia basado en experiencia real',
+          'Información para montar tu centro de detailing',
+          'Acceso al dossier de franquicia',
+          'Asesoramiento empresarial incluido',
+        ],
+      },
+    ],
+    instructor: {
+      name: 'Gerardo',
+      role: 'Experto en Car Wrapping y PPF',
+      image: instructorGerardo,
+      description: 'Soy Detailer desde que tengo uso de la razón y experto en Car Wrapping y PPF. He tenido la gran suerte de formar parte del equipo de Detail Park. Ahora soy el responsable de Detail Park en Alicante con más de 10 años de experiencia tratando miles de coches.',
+      quote: 'Nuestro objetivo es proporcionar una formación personalizada y con un número reducido de personas. Nos importa más la calidad, que la cantidad.',
+    },
+    formacionRegladaItems: [
+      {
+        title: 'Formación Reglada',
+        description: 'Curso estructurado como una carrera universitaria. Preparación y seguridad imprescindibles para convertirte en un profesional.',
+      },
+      {
+        title: 'Car Wrapping',
+        description: 'Unificamos estándares en todo el sector de rotulación con objetivo de marco nacional reconocido.',
+      },
+      {
+        title: 'Calidad Identificable',
+        description: 'Excelencia en el servicio con estándares de calidad europeos. Tu trabajo será reconocido por su profesionalidad.',
+      },
+    ],
+    certificationTitle: 'Certificación y Bolsa de Empleo',
+    certificationText: 'Gracias a nuestra certificación otorgada por Detail Park, no solo tendrás un diploma que avale tus conocimientos, sino que te servirá para añadir valor a tu currículum y dar confianza a tus futuros clientes. Además, tendrás acceso a nuestra bolsa de empleo nacional para encontrar oportunidades laborales en el sector.',
+    certificationImage: certificadoImg,
     forWho: [
-      'Profesionales del detailing que quieren ampliar servicios',
+      'Entusiastas que quieren aprender de forma práctica',
+      'Profesionales del sector que quieren dar mejor calidad',
+      'Emprendedores que quieren montar su negocio de vinilado',
       'Rotulistas que quieren especializarse en vehículos',
-      'Emprendedores del sector automotriz',
-      'Talleres de personalización de coches',
     ],
     whatYouLearn: [
-      'Tipos de vinilos y sus aplicaciones',
-      'Preparación de superficies para vinilado',
-      'Técnicas de instalación sin burbujas',
-      'Trabajo en curvas y zonas complejas',
-      'Recorte y acabado profesional',
-      'Mantenimiento y cuidado del vinilo',
+      'Conocimiento del producto y tipos de vinilo',
+      'Herramientas profesionales del sector',
+      'Técnicas de instalación desde cero',
+      'Trabajo en superficies planas y curvas',
+      'Acabados profesionales',
+      'Preparación para el mundo laboral',
     ],
     modules: [
       {
@@ -150,7 +247,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         topics: [
           'Historia y evolución del car wrapping',
           'Tipos de vinilos: mate, brillo, satinado, texturizados',
-          'Herramientas profesionales',
+          'Herramientas profesionales del sector',
           'Preparación del espacio de trabajo',
         ],
       },
@@ -185,29 +282,46 @@ export const formationDetails: Record<string, FormationDetail> = {
       },
     ],
     includes: [
-      'Material didáctico completo',
-      'Vinilo de práctica ilimitado',
-      'Herramientas profesionales durante el curso',
+      'Comida incluida durante todos los días',
+      'Material de práctica ilimitado',
+      'Herramientas de marcas punteras',
       'Certificado oficial Detail Park',
-      'Acceso a proveedores con descuento',
-      'Soporte post-formación 60 días',
+      'Acceso a bolsa de empleo',
+      'Asistencia post-formación personalizada',
+      'Gestión de alojamiento (alumnos de fuera)',
     ],
     faqs: [
       {
-        question: '¿Cuánto vinilo utilizaremos en prácticas?',
-        answer: 'Proporcionamos vinilo ilimitado para que practiques sin preocupaciones.',
+        question: '¿Es necesario contar con experiencia previa?',
+        answer: 'En absoluto. Estos cursos son 100% prácticos y te darán toda la información necesaria para instalar vinilo en un coche.',
       },
       {
-        question: '¿Puedo traer mi propio coche para practicar?',
-        answer: 'Sí, el último día puedes traer tu vehículo para aplicar lo aprendido.',
+        question: 'Si soy de fuera, ¿Gestionáis el alojamiento?',
+        answer: '¡Por supuesto! Vengas de donde vengas, podemos gestionarte el alojamiento para que te despreocupes totalmente.',
       },
       {
-        question: '¿Qué marcas de vinilo utilizáis?',
-        answer: 'Trabajamos con 3M, Avery Dennison y Hexis, las marcas líderes del sector.',
+        question: '¿Está incluido las dietas?',
+        answer: 'Tendrás incluida la comida durante los días del curso en cualquiera de sus opciones.',
       },
       {
-        question: '¿Es difícil aprender wrapping?',
-        answer: 'Requiere práctica, pero con nuestra metodología lo dominarás en poco tiempo.',
+        question: '¿Necesito llevar material del curso?',
+        answer: 'No necesitas llevar nada. Te proporcionaremos todo el material con las marcas más punteras y mejores herramientas del sector.',
+      },
+      {
+        question: '¿Cuánto tiempo dura el curso?',
+        answer: 'Normalmente jornadas de 8 horas, con 1 hora para comer. La duración varía según el tipo de curso (1-5 días).',
+      },
+      {
+        question: '¿Saldré con una buena base de conocimiento?',
+        answer: 'Saldrás preparado para poder aplicar e instalar vinilo profesionalmente gracias a la experiencia real en taller.',
+      },
+      {
+        question: '¿Podré preguntar dudas después del curso?',
+        answer: 'Por supuesto, tendrás asesoramiento personalizado por un Detailer experto. ¡Nos tendrás siempre a tu disposición!',
+      },
+      {
+        question: '¿Hay algún tipo de certificado?',
+        answer: 'Sí, al finalizar se entrega un certificado de asistencia con reconocimiento otorgado por Detail Park.',
       },
     ],
   },
