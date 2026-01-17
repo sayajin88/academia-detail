@@ -34,6 +34,13 @@ export default {
 					glow: 'hsl(var(--primary-glow))',
 					dark: 'hsl(var(--primary-dark))'
 				},
+				gold: {
+					DEFAULT: 'hsl(var(--gold))',
+					light: 'hsl(var(--gold-light))',
+					dark: 'hsl(var(--gold-dark))',
+					glow: 'hsl(var(--gold-glow))',
+					foreground: 'hsl(var(--gold-foreground))'
+				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
@@ -73,13 +80,17 @@ export default {
 				'gradient-primary': 'var(--gradient-primary)',
 				'gradient-background': 'var(--gradient-background)',
 				'gradient-hero': 'var(--gradient-hero)',
-				'gradient-card': 'var(--gradient-card)'
+				'gradient-card': 'var(--gradient-card)',
+				'gradient-gold': 'var(--gradient-gold)',
+				'gradient-gold-dark': 'var(--gradient-gold-dark)'
 			},
 			boxShadow: {
 				'glow-subtle': 'var(--shadow-glow-subtle)',
 				'glow-intense': 'var(--shadow-glow-intense)',
 				'primary': 'var(--shadow-primary)',
-				'card': 'var(--shadow-card)'
+				'card': 'var(--shadow-card)',
+				'gold-glow': 'var(--shadow-gold-glow)',
+				'gold-intense': 'var(--shadow-gold-intense)'
 			},
 			transitionTimingFunction: {
 				'smooth': 'var(--transition-smooth)',
