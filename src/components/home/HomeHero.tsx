@@ -1,19 +1,40 @@
 import { Link } from 'react-router-dom';
 import { ChevronDown, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
 import heroImage from '@/assets/heroes/hero-home.jpg';
+
 export function HomeHero() {
+  const isMobile = useIsMobile();
+  
   const scrollToFormations = () => {
     document.getElementById('formaciones')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // YouTube video ID for background
+  const videoId = '1JS81ZxslpI';
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      />
+      {/* Video Background for Desktop / Image for Mobile */}
+      {isMobile ? (
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+      ) : (
+        <div className="absolute inset-0 overflow-hidden">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${window.location.origin}`}
+            title="Video de fondo Detail Park"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            style={{ border: 'none' }}
+          />
+        </div>
+      )}
+      
+      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-background" />
 
       {/* Animated Gradient Orbs */}
