@@ -1,4 +1,4 @@
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useLocation } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { FormationHero } from '@/components/formation/FormationHero';
 import { FormationAdvantages } from '@/components/formation/FormationAdvantages';
@@ -16,9 +16,21 @@ import { useToast } from '@/hooks/use-toast';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 
+// Map URL paths to formation slugs
+const pathToSlugMap: Record<string, string> = {
+  '/curso-detailing-profesional': 'curso-detailing-profesional',
+  '/curso-vinilado-vehiculos': 'curso-vinilado-vehiculos',
+  '/curso-ppf-proteccion-pintura': 'curso-ppf-proteccion-pintura',
+  '/curso-restauracion-vehiculos': 'curso-restauracion-vehiculos',
+};
+
 export default function FormationDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug: paramSlug } = useParams<{ slug: string }>();
+  const location = useLocation();
   const { toast } = useToast();
+  
+  // Determine slug from either URL path or route param
+  const slug = pathToSlugMap[location.pathname] || paramSlug;
   
   const formation = slug ? getFormationBySlug(slug) : undefined;
 

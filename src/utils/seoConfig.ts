@@ -94,6 +94,24 @@ export const generateBreadcrumbSchema = (items: { name: string; url: string }[])
   }))
 });
 
+// Slug mapping from old to new
+const slugMapping: Record<string, string> = {
+  'detailing': 'curso-detailing-profesional',
+  'wrapping': 'curso-vinilado-vehiculos',
+  'ppf': 'curso-ppf-proteccion-pintura',
+  'restauracion': 'curso-restauracion-vehiculos',
+  // New slugs map to themselves
+  'curso-detailing-profesional': 'curso-detailing-profesional',
+  'curso-vinilado-vehiculos': 'curso-vinilado-vehiculos',
+  'curso-ppf-proteccion-pintura': 'curso-ppf-proteccion-pintura',
+  'curso-restauracion-vehiculos': 'curso-restauracion-vehiculos',
+};
+
+// Normalize slug (handles both old and new formats)
+const normalizeSlug = (slug: string): string => {
+  return slugMapping[slug] || slug;
+};
+
 // SEO Configuration for each page
 export const seoConfig = {
   home: {
@@ -121,15 +139,15 @@ export const seoConfig = {
   },
 
   jornadaCero: {
-    title: "Curso Detailing 1 Día | Iniciación Detailing Profesional | Detail Park",
-    description: "Curso de detailing intensivo de 1 día. Aprende detailing profesional con práctica real. Solo 10 plazas. Incluye comida y materiales. ¡Ideal para probar antes de invertir!",
-    keywords: "curso detailing 1 día, iniciación detailing, aprender detailing rápido, primera experiencia detailing, evento detailing, jornada detailing, taller detailing intensivo, formación detailing práctica",
-    url: "/jornada-cero",
+    title: "Curso Detailing Iniciación 1 Día | Aprende Detailing desde Cero | Detail Park",
+    description: "Curso de detailing iniciación intensivo de 1 día. Aprende detailing profesional con práctica real. Solo 10 plazas. Incluye comida y materiales. ¡Ideal para probar antes de invertir!",
+    keywords: "curso detailing iniciación, curso detailing 1 día, aprender detailing desde cero, primera experiencia detailing, evento detailing, taller detailing intensivo, formación detailing práctica, curso detailing principiantes",
+    url: "/curso-detailing-iniciacion",
     schema: [
       localBusinessSchema,
       generateEventSchema({
-        name: "Curso Detailing 1 Día - Iniciación Profesional",
-        description: "Curso de detailing intensivo de 1 día. Aprende técnicas de lavado, descontaminación y pulido con práctica real en taller profesional.",
+        name: "Curso Detailing Iniciación - Aprende desde Cero en 1 Día",
+        description: "Curso de detailing intensivo de 1 día para principiantes. Aprende técnicas de lavado, descontaminación y pulido con práctica real en taller profesional.",
         startDate: "2026-01-17T10:00:00+01:00",
         endDate: "2026-01-17T18:00:00+01:00",
         price: 97,
@@ -137,28 +155,28 @@ export const seoConfig = {
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
-        { name: "Curso Detailing 1 Día", url: "/jornada-cero" }
+        { name: "Curso Detailing Iniciación", url: "/curso-detailing-iniciacion" }
       ])
     ]
   },
 
   carreraDetailing: {
-    title: "Montar Centro Detailing | Formación Completa + 4 Certificaciones | Detail Park",
-    description: "Programa premium para montar tu centro de detailing. 4 certificaciones en 1 mes: Detailing, Wrapping, PPF y Restauración. Formación completa para emprender en detailing.",
-    keywords: "montar centro detailing, emprender detailing, abrir taller detailing, negocio detailing, ser empresario detailing, carrera detailing, formación completa detailing, certificación detailing España",
-    url: "/carrera-detailing",
+    title: "Formación Profesional Detailing | Monta tu Centro de Detailing | Detail Park",
+    description: "Programa premium de formación profesional en detailing. 4 certificaciones en 1 mes: Detailing, Wrapping, PPF y Restauración. Formación completa para emprender en detailing.",
+    keywords: "formación profesional detailing, montar centro detailing, emprender detailing, abrir taller detailing, negocio detailing, ser empresario detailing, carrera detailing, formación completa detailing, certificación detailing España",
+    url: "/formacion-profesional-detailing",
     schema: [
       localBusinessSchema,
       generateCourseSchema({
-        name: "Carrera Detailing - Montar Centro de Detailing Profesional",
-        description: "Programa premium para montar tu centro de detailing. Formación intensiva con 4 certificaciones profesionales: Detailing, Wrapping, PPF y Restauración, más módulo de negocio.",
+        name: "Formación Profesional Detailing - Monta tu Centro de Detailing",
+        description: "Programa premium de formación profesional en detailing. Formación intensiva con 4 certificaciones profesionales: Detailing, Wrapping, PPF y Restauración, más módulo de negocio.",
         price: 4997,
         duration: "P30D",
-        url: "/carrera-detailing"
+        url: "/formacion-profesional-detailing"
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
-        { name: "Montar Centro Detailing", url: "/carrera-detailing" }
+        { name: "Formación Profesional Detailing", url: "/formacion-profesional-detailing" }
       ])
     ]
   },
@@ -166,8 +184,8 @@ export const seoConfig = {
   gallery: {
     title: "Galería Detailing | Trabajos Profesionales Antes y Después | Detail Park",
     description: "Portfolio de trabajos de detailing profesional. Resultados de wrapping, PPF, pulido y restauración en Ferrari, Lamborghini, Porsche y más vehículos de alta gama.",
-    keywords: "trabajos detailing profesional, fotos antes después detailing, resultados wrapping, ejemplos PPF, portfolio detailing, galería coches detailing, Ferrari detailing, Lamborghini wrapping",
-    url: "/galeria",
+    keywords: "galería detailing profesional, trabajos detailing, fotos antes después detailing, resultados wrapping, ejemplos PPF, portfolio detailing, galería coches detailing, Ferrari detailing, Lamborghini wrapping",
+    url: "/galeria-detailing",
     schema: [
       localBusinessSchema,
       {
@@ -175,11 +193,11 @@ export const seoConfig = {
         "@type": "ImageGallery",
         "name": "Galería de Trabajos de Detailing Profesional",
         "description": "Portfolio de trabajos profesionales de detailing, wrapping, PPF y restauración realizados por Detail Park Academy en vehículos de alta gama.",
-        "url": `${BASE_URL}/galeria`
+        "url": `${BASE_URL}/galeria-detailing`
       },
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
-        { name: "Galería Detailing", url: "/galeria" }
+        { name: "Galería Detailing", url: "/galeria-detailing" }
       ])
     ]
   },
@@ -213,53 +231,56 @@ export const seoConfig = {
     duration: string;
     faqs: { question: string; answer: string }[];
   }) => {
+    // Normalize the slug to handle both old and new formats
+    const normalizedSlug = normalizeSlug(slug);
+    
     const formationKeywords: Record<string, string> = {
-      detailing: "curso detailing profesional, aprender detailing, curso detailing desde cero, formación pulido profesional, curso pulido coche certificado, corrección pintura, protección cerámica curso",
-      wrapping: "curso car wrapping, curso vinilado vehículos, rotulación coches formación, forrado vehículos curso, wrap coche profesional, cambio color coche, instalador vinilo certificado",
-      ppf: "curso PPF, curso lámina protectora coche, PPF instalador certificado España, proteger pintura coche curso, film transparente formación, paint protection film curso",
-      restauracion: "curso restauración vehículos, restaurar coches clásicos curso, curso chapa y pintura, reparar pintura coche formación, restauración coches dañados"
+      'curso-detailing-profesional': "curso detailing profesional, aprender detailing, curso detailing desde cero, formación pulido profesional, curso pulido coche certificado, corrección pintura, protección cerámica curso",
+      'curso-vinilado-vehiculos': "curso vinilado vehículos, curso car wrapping, rotulación coches formación, forrado vehículos curso, wrap coche profesional, cambio color coche, instalador vinilo certificado",
+      'curso-ppf-proteccion-pintura': "curso PPF, curso protección pintura, PPF instalador certificado España, proteger pintura coche curso, film transparente formación, paint protection film curso",
+      'curso-restauracion-vehiculos': "curso restauración vehículos, restaurar coches clásicos curso, curso chapa y pintura, reparar pintura coche formación, restauración coches dañados"
     };
 
     const formationTitles: Record<string, string> = {
-      detailing: "Curso Detailing Profesional | Aprende Pulido y Corrección de Pintura",
-      wrapping: "Curso Car Wrapping | Formación Vinilado Vehículos Certificada",
-      ppf: "Curso PPF | Paint Protection Film Certificado España",
-      restauracion: "Curso Restauración Vehículos | Coches Clásicos y Dañados"
+      'curso-detailing-profesional': "Curso Detailing Profesional | Aprende Pulido y Corrección de Pintura",
+      'curso-vinilado-vehiculos': "Curso Vinilado Vehículos | Formación Car Wrapping Certificada",
+      'curso-ppf-proteccion-pintura': "Curso PPF Protección Pintura | Paint Protection Film Certificado",
+      'curso-restauracion-vehiculos': "Curso Restauración Vehículos | Coches Clásicos y Dañados"
     };
 
     const formationDescriptions: Record<string, string> = {
-      detailing: "Curso de detailing profesional 100% práctico. Aprende detailing desde cero: lavado, descontaminación, pulido y protección cerámica. Certificado oficial.",
-      wrapping: "Curso de car wrapping profesional. Aprende instalación de vinilo, rotulación vehículos y cambio de color. Formación práctica con certificado.",
-      ppf: "Curso de PPF (Paint Protection Film) profesional. Aprende instalación de lámina protectora en vehículos de alta gama. Certificación oficial España.",
-      restauracion: "Curso de restauración de vehículos profesional. Aprende a restaurar coches clásicos y dañados. Técnicas de chapa, pintura y acabado. Certificado."
+      'curso-detailing-profesional': "Curso de detailing profesional 100% práctico. Aprende detailing desde cero: lavado, descontaminación, pulido y protección cerámica. Certificado oficial.",
+      'curso-vinilado-vehiculos': "Curso de vinilado de vehículos profesional. Aprende instalación de vinilo, rotulación vehículos y cambio de color. Formación práctica con certificado.",
+      'curso-ppf-proteccion-pintura': "Curso de PPF (Paint Protection Film) profesional. Aprende instalación de lámina de protección de pintura en vehículos de alta gama. Certificación oficial España.",
+      'curso-restauracion-vehiculos': "Curso de restauración de vehículos profesional. Aprende a restaurar coches clásicos y dañados. Técnicas de chapa, pintura y acabado. Certificado."
     };
 
     const formationNames: Record<string, string> = {
-      detailing: "Curso Detailing Profesional",
-      wrapping: "Curso Car Wrapping",
-      ppf: "Curso PPF",
-      restauracion: "Curso Restauración Vehículos"
+      'curso-detailing-profesional': "Curso Detailing Profesional",
+      'curso-vinilado-vehiculos': "Curso Vinilado Vehículos",
+      'curso-ppf-proteccion-pintura': "Curso PPF Protección Pintura",
+      'curso-restauracion-vehiculos': "Curso Restauración Vehículos"
     };
 
     return {
-      title: `${formationTitles[slug] || formation.title} | Detail Park`,
-      description: formationDescriptions[slug] || formation.description.substring(0, 155) + "...",
-      keywords: formationKeywords[slug] || "curso detailing profesional, formación automotriz",
-      url: `/formacion/${slug}`,
+      title: `${formationTitles[normalizedSlug] || formation.title} | Detail Park`,
+      description: formationDescriptions[normalizedSlug] || formation.description.substring(0, 155) + "...",
+      keywords: formationKeywords[normalizedSlug] || "curso detailing profesional, formación automotriz",
+      url: `/${normalizedSlug}`,
       schema: [
         localBusinessSchema,
         generateCourseSchema({
-          name: formationNames[slug] || formation.title,
-          description: formationDescriptions[slug] || formation.description,
+          name: formationNames[normalizedSlug] || formation.title,
+          description: formationDescriptions[normalizedSlug] || formation.description,
           price: formation.price,
           duration: formation.duration,
-          url: `/formacion/${slug}`
+          url: `/${normalizedSlug}`
         }),
         generateFAQSchema(formation.faqs.slice(0, 5)),
         generateBreadcrumbSchema([
           { name: "Inicio", url: "/" },
           { name: "Formaciones", url: "/#formaciones" },
-          { name: formationNames[slug] || formation.title, url: `/formacion/${slug}` }
+          { name: formationNames[normalizedSlug] || formation.title, url: `/${normalizedSlug}` }
         ])
       ]
     };

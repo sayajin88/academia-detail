@@ -5,18 +5,18 @@ import { Button } from '@/components/ui/button';
 import logo from '@/assets/detail-park-logo-white.png';
 
 const formationLinks = [
-  { name: 'Detailing', href: '/formacion/detailing', icon: Sparkles, description: 'Técnicas profesionales' },
-  { name: 'Car Wrapping', href: '/formacion/wrapping', icon: Palette, description: 'Vinilado de vehículos' },
-  { name: 'Paint Protection Film', href: '/formacion/ppf', icon: Shield, description: 'Protección de pintura' },
-  { name: 'Restauración', href: '/formacion/restauracion', icon: Wrench, description: 'Recuperación integral' },
-  { name: 'Carrera Detailing', href: '/carrera-detailing', highlight: true, icon: Crown, description: 'Programa completo' },
+  { name: 'Detailing', href: '/curso-detailing-profesional', icon: Sparkles, description: 'Técnicas profesionales' },
+  { name: 'Car Wrapping', href: '/curso-vinilado-vehiculos', icon: Palette, description: 'Vinilado de vehículos' },
+  { name: 'Paint Protection Film', href: '/curso-ppf-proteccion-pintura', icon: Shield, description: 'Protección de pintura' },
+  { name: 'Restauración', href: '/curso-restauracion-vehiculos', icon: Wrench, description: 'Recuperación integral' },
+  { name: 'Carrera Detailing', href: '/formacion-profesional-detailing', highlight: true, icon: Crown, description: 'Programa completo' },
 ];
 
 const navLinks = [
   { name: 'Inicio', href: '/', icon: Home },
-  { name: 'Galería', href: '/galeria', icon: Image },
+  { name: 'Galería', href: '/galeria-detailing', icon: Image },
   { name: 'Contacto', href: '/contacto', icon: Mail },
-  { name: 'Soy nuevo', href: '/jornada-cero', icon: HelpCircle },
+  { name: 'Soy nuevo', href: '/curso-detailing-iniciacion', icon: HelpCircle },
 ];
 
 export function Navbar() {
@@ -79,7 +79,7 @@ export function Navbar() {
   };
 
   const isFormationsActive = formationLinks.some(link => location.pathname === link.href) || 
-                             location.pathname.includes('/formacion');
+                             location.pathname.includes('/curso-');
 
   return (
     <>
@@ -243,7 +243,7 @@ export function Navbar() {
 
             {/* Desktop CTA Button */}
             <div className={`hidden lg:flex items-center gap-4 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`} style={{ transitionDelay: '450ms' }}>
-              <Link to="/carrera-detailing">
+              <Link to="/formacion-profesional-detailing">
                 <Button 
                   size="sm"
                   className="relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-4 py-2 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
@@ -392,7 +392,7 @@ export function Navbar() {
               </div>
             </div>
 
-            {/* Other Links */}
+            {/* Rest of nav links */}
             {navLinks.slice(1).map((link, index) => (
               <Link
                 key={link.href}
@@ -410,33 +410,21 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* Mobile CTA */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-background/80 backdrop-blur-xl">
-            <Link to="/carrera-detailing" onClick={() => setIsMobileMenuOpen(false)}>
+            <Link to="/formacion-profesional-detailing" className="block">
               <Button 
-                className="w-full relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold py-6 rounded-xl shadow-lg shadow-primary/20"
+                className="w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold py-6 rounded-xl shadow-lg"
               >
                 <Crown className="h-5 w-5 mr-2" />
-                Carrera Detailing
-                <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded-full">
-                  €9.997
-                </span>
-                {/* Shimmer */}
-                <div 
-                  className="absolute inset-0 opacity-30"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
-                    backgroundSize: '200% 100%',
-                    animation: 'shimmer-border 2s linear infinite',
-                  }}
-                />
+                Descubre Carrera Detailing
               </Button>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Global styles for animations */}
+      {/* CSS Animation */}
       <style>{`
         @keyframes shimmer-border {
           0% { background-position: 200% 0; }

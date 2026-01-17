@@ -4,10 +4,13 @@
 # Reglas generales para todos los bots
 User-agent: *
 Allow: /
-Allow: /formacion/
-Allow: /carrera-detailing
-Allow: /jornada-cero
-Allow: /galeria
+Allow: /curso-detailing-iniciacion
+Allow: /formacion-profesional-detailing
+Allow: /curso-detailing-profesional
+Allow: /curso-vinilado-vehiculos
+Allow: /curso-ppf-proteccion-pintura
+Allow: /curso-restauracion-vehiculos
+Allow: /galeria-detailing
 Allow: /contacto
 
 # Bloquear recursos del sistema y archivos innecesarios
@@ -18,6 +21,12 @@ Disallow: /*.json$
 Disallow: /*.map$
 Disallow: /src/
 Disallow: /assets/*.js$
+
+# Bloquear URLs antiguas (redirigidas)
+Disallow: /jornada-cero
+Disallow: /carrera-detailing
+Disallow: /formacion/
+Disallow: /galeria
 
 # Sitemap
 Sitemap: https://detailing-ignition-landing.lovable.app/sitemap.xml
