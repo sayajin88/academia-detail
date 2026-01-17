@@ -107,14 +107,19 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                <a
+                  href="https://maps.google.com/?q=Calle+Metalurgias+13+03008+Alicante+España"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
                   <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
                   <span>
-                    Calle Ejemplo 123
+                    Calle Metalurgias, 13
                     <br />
-                    28001 Madrid, España
+                    03008 Alicante, España
                   </span>
-                </div>
+                </a>
               </li>
             </ul>
           </div>
