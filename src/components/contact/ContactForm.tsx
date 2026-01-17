@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Send, Loader2 } from "lucide-react";
+import { Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const contactSchema = z.object({
   name: z
@@ -75,26 +76,51 @@ const ContactForm = () => {
     },
   });
 
+  const getSubjectLabel = (subjectValue: string): string => {
+    return subjects.find(s => s.value === subjectValue)?.label || subjectValue;
+  };
+
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const { data: response, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: data.name,
+          email: data.email,
+          phone: data.phone || undefined,
+          subject: data.subject,
+          subjectLabel: getSubjectLabel(data.subject),
+          message: data.message,
+        },
+      });
 
-    console.log("Contact form submitted:", {
-      name: data.name,
-      subject: data.subject,
-      // Not logging sensitive data like email, phone, message
-    });
+      if (error) {
+        console.error("Error sending contact email:", error);
+        toast({
+          variant: "destructive",
+          title: "Error al enviar",
+          description: "No se pudo enviar tu mensaje. Por favor, inténtalo de nuevo o contáctanos por teléfono.",
+        });
+        return;
+      }
 
-    toast({
-      title: "¡Mensaje enviado!",
-      description:
-        "Gracias por contactarnos. Te responderemos lo antes posible.",
-    });
+      toast({
+        title: "¡Mensaje enviado! ✨",
+        description: "Gracias por contactarnos. Te hemos enviado una confirmación por email y te responderemos en menos de 24 horas.",
+      });
 
-    reset();
-    setIsSubmitting(false);
+      reset();
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      toast({
+        variant: "destructive",
+        title: "Error inesperado",
+        description: "Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
