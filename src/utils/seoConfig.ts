@@ -1,4 +1,4 @@
-import { organizationSchema } from '@/components/SEO';
+import { localBusinessSchema } from '@/components/SEO';
 
 const BASE_URL = 'https://detailing-ignition-landing.lovable.app';
 
@@ -90,7 +90,7 @@ export const seoConfig = {
     keywords: "cursos detailing España, formación detailing, academia detailing, curso pulido coches, car wrapping curso, PPF formación, restauración vehículos, detailing profesional",
     url: "/",
     schema: [
-      organizationSchema,
+      localBusinessSchema,
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -111,7 +111,7 @@ export const seoConfig = {
     keywords: "evento detailing, jornada detailing, taller detailing 1 día, curso intensivo detailing, iniciación detailing, La Jornada Cero, formación detailing práctica",
     url: "/jornada-cero",
     schema: [
-      organizationSchema,
+      localBusinessSchema,
       generateEventSchema({
         name: "La Jornada Cero - Evento Intensivo de Detailing",
         description: "Jornada intensiva de detailing profesional. Aprende técnicas de lavado, descontaminación y pulido en 1 día con práctica real en taller.",
@@ -129,7 +129,7 @@ export const seoConfig = {
     keywords: "carrera detailing, formación completa detailing, programa profesional detailing, certificación detailing España, máster detailing, emprender detailing",
     url: "/carrera-detailing",
     schema: [
-      organizationSchema,
+      localBusinessSchema,
       generateCourseSchema({
         name: "Carrera Detailing - Programa Completo",
         description: "Programa premium de formación intensiva con 4 certificaciones profesionales. Incluye formación en detailing, wrapping, PPF y restauración más módulo de negocio.",
@@ -146,7 +146,7 @@ export const seoConfig = {
     keywords: "portfolio detailing, galería coches detailing, trabajos wrapping, antes después detailing, fotos detailing profesional, Ferrari detailing, Lamborghini wrapping",
     url: "/galeria",
     schema: [
-      organizationSchema,
+      localBusinessSchema,
       {
         "@context": "https://schema.org",
         "@type": "ImageGallery",
@@ -163,7 +163,7 @@ export const seoConfig = {
     keywords: "contacto detail park, academia detailing contacto, cursos detailing información, reservar curso detailing, teléfono detail park",
     url: "/contacto",
     schema: [
-      organizationSchema,
+      localBusinessSchema,
       {
         "@context": "https://schema.org",
         "@type": "ContactPage",
@@ -195,7 +195,7 @@ export const seoConfig = {
       keywords: formationKeywords[slug] || "curso detailing profesional, formación automotriz",
       url: `/formacion/${slug}`,
       schema: [
-        organizationSchema,
+        localBusinessSchema,
         generateCourseSchema({
           name: formation.title,
           description: formation.description,
