@@ -9,7 +9,7 @@ const formationLinks = [
   { name: 'Car Wrapping', href: '/formacion/wrapping' },
   { name: 'Paint Protection Film', href: '/formacion/ppf' },
   { name: 'Restauración', href: '/formacion/restauracion' },
-  { name: 'Carrera Negocio', href: '/carrera-negocio', highlight: true },
+  { name: 'Carrera Detailing', href: '/carrera-detailing', highlight: true },
 ];
 
 const navLinks = [
