@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import CarreraHero from '@/components/carrera/CarreraHero';
+import CarreraVideoIntro from '@/components/carrera/CarreraVideoIntro';
 import CarreraFormaciones from '@/components/carrera/CarreraFormaciones';
 import CarreraModuloNegocio from '@/components/carrera/CarreraModuloNegocio';
 import CarreraExperienciaReal from '@/components/carrera/CarreraExperienciaReal';
@@ -100,6 +101,7 @@ const CarreraDetailing = () => {
         `}</style>
         
         <CarreraHero onCTAClick={handleCTAClick} />
+        <CarreraVideoIntro />
         <CarreraFormaciones />
         <CarreraModuloNegocio />
         <CarreraExperienciaReal />
