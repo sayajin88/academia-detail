@@ -93,20 +93,53 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
+				},
+				'border-spin': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
+				},
+				'price-reveal': {
+					'0%': { opacity: '0', transform: 'scale(0.8) rotateX(-10deg)' },
+					'100%': { opacity: '1', transform: 'scale(1) rotateX(0deg)' }
+				},
+				'check-pop': {
+					'0%': { transform: 'scale(0)', opacity: '0' },
+					'50%': { transform: 'scale(1.3)' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
+				},
+				'float-gentle': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-8px)' }
+				},
+				'shimmer': {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' }
+				},
+				'ripple': {
+					'0%': { transform: 'scale(1)', opacity: '0.5' },
+					'100%': { transform: 'scale(2.5)', opacity: '0' }
+				},
+				'card-float': {
+					'0%, 100%': { transform: 'translateY(0) scale(1)' },
+					'50%': { transform: 'translateY(-5px) scale(1.01)' }
+				},
+				'glow-border': {
+					'0%, 100%': { 
+						boxShadow: '0 0 20px hsl(var(--primary) / 0.3), inset 0 0 20px hsl(var(--primary) / 0.05)'
 					},
-					to: {
-						height: '0'
+					'50%': { 
+						boxShadow: '0 0 40px hsl(var(--primary) / 0.6), inset 0 0 30px hsl(var(--primary) / 0.1)'
 					}
+				},
+				'badge-pulse': {
+					'0%, 100%': { transform: 'scale(1)', opacity: '1' },
+					'50%': { transform: 'scale(1.05)', opacity: '0.9' }
 				}
 			},
 			animation: {
@@ -119,7 +152,16 @@ export default {
 				'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
 				'slide-in-right': 'slide-in-right 0.8s ease-out',
 				'bounce-in': 'bounce-in 0.8s ease-out',
-				'gradient-shift': 'gradient-shift 10s ease infinite'
+				'gradient-shift': 'gradient-shift 10s ease infinite',
+				'border-spin': 'border-spin 3s linear infinite',
+				'price-reveal': 'price-reveal 0.6s ease-out forwards',
+				'check-pop': 'check-pop 0.4s ease-out forwards',
+				'float-gentle': 'float-gentle 4s ease-in-out infinite',
+				'shimmer': 'shimmer 2.5s linear infinite',
+				'ripple': 'ripple 1s ease-out forwards',
+				'card-float': 'card-float 6s ease-in-out infinite',
+				'glow-border': 'glow-border 2s ease-in-out infinite',
+				'badge-pulse': 'badge-pulse 2s ease-in-out infinite'
 			}
 		}
 	},

@@ -477,3 +477,239 @@ img {
 .overflow-x-auto::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--primary-glow));
 }
+
+/* ============================================
+   PRICING TABLE PREMIUM EFFECTS
+   ============================================ */
+
+/* Spotlight effect that follows cursor */
+.pricing-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    hsl(var(--primary) / 0.15),
+    transparent 40%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pricing-spotlight:hover::before {
+  opacity: 1;
+}
+
+/* Animated gradient border */
+.gradient-border-animated {
+  position: relative;
+  background: hsl(var(--card));
+  border-radius: 1rem;
+}
+
+.gradient-border-animated::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(
+    from 0deg,
+    hsl(var(--primary)),
+    hsl(var(--primary-glow)),
+    hsl(var(--primary)),
+    hsl(var(--primary-glow)),
+    hsl(var(--primary))
+  );
+  border-radius: inherit;
+  animation: border-spin 3s linear infinite;
+  z-index: -1;
+}
+
+.gradient-border-animated::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: hsl(var(--card));
+  border-radius: calc(1rem - 2px);
+  z-index: -1;
+}
+
+@keyframes border-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Popular card floating effect */
+.popular-card {
+  animation: card-float 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* Shimmer effect for badges */
+.shimmer-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Price counter animation */
+.price-animate {
+  animation: price-reveal 0.6s ease-out forwards;
+}
+
+/* Feature check animation */
+.feature-check {
+  opacity: 0;
+  animation: check-pop 0.4s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+.stagger-7 { animation-delay: 0.7s; }
+.stagger-8 { animation-delay: 0.8s; }
+
+/* Ripple button effect */
+.ripple-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-button::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.ripple-button:hover::after {
+  transform: translate(-50%, -50%) scale(2);
+  opacity: 1;
+}
+
+/* Value item reveal animation */
+.value-item {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: value-slide 0.5s ease-out forwards;
+}
+
+@keyframes value-slide {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Glow pulse for urgent elements */
+.urgent-glow {
+  animation: glow-border 2s ease-in-out infinite;
+}
+
+/* Progress bar fill animation */
+.progress-fill {
+  animation: progress-grow 1.5s ease-out forwards;
+  transform-origin: left;
+}
+
+@keyframes progress-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Confetti-like celebration dots */
+.celebration-dots {
+  position: relative;
+}
+
+.celebration-dots::before,
+.celebration-dots::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  animation: celebration 1s ease-out forwards;
+}
+
+.celebration-dots::before {
+  top: -10px;
+  left: 20%;
+  animation-delay: 0.1s;
+}
+
+.celebration-dots::after {
+  top: -15px;
+  right: 20%;
+  animation-delay: 0.2s;
+}
+
+@keyframes celebration {
+  0% { transform: translateY(0) scale(0); opacity: 1; }
+  100% { transform: translateY(-30px) scale(1.5); opacity: 0; }
+}
+
+/* Card entrance animations */
+.card-entrance {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+}
+
+.card-entrance.visible {
+  animation: card-enter 0.6s ease-out forwards;
+}
+
+@keyframes card-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Discount badge 3D effect */
+.discount-badge-3d {
+  transform-style: preserve-3d;
+  perspective: 500px;
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+.discount-badge-3d:hover {
+  animation: none;
+  transform: rotateY(10deg) scale(1.1);
+}
