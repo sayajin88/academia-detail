@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, Award, Users, CheckCircle } from "lucide-react";
-import danielLopezInstructor from "@/assets/daniel-lopez-instructor.webp";
+import instructorDaniel from "@/assets/instructor-daniel-principal.png";
 
 export function InstructorProfile() {
   return (
@@ -21,11 +21,11 @@ export function InstructorProfile() {
             <CardContent className="p-0">
               <div className="grid lg:grid-cols-2 gap-0">
                 {/* Imagen del Instructor */}
-                <div className="relative">
+                <div className="relative bg-gradient-to-b from-black/20 to-black/40">
                   <img 
-                    src={danielLopezInstructor} 
+                    src={instructorDaniel} 
                     alt="Daniel López - Instructor Experto en Detailing"
-                    className="w-full h-full object-cover min-h-[500px]"
+                    className="w-full h-full object-contain min-h-[500px]"
                   />
                   <div className="absolute top-6 left-6">
                     <Badge className="bg-primary text-white font-bold px-4 py-2">

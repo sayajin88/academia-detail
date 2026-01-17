@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { Wrench, Car, Crown, Target, Clock, ArrowRight } from 'lucide-react';
+import { Wrench, Car, Crown, Target, Clock } from 'lucide-react';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
+import eventoInstructorExplicando from '@/assets/evento-instructor-explicando.jpg';
+import eventoPracticaPulidoraReal from '@/assets/evento-practica-pulidora-real.jpg';
 
 const experiences = [
   {
@@ -64,6 +66,34 @@ const CarreraExperienciaReal = () => {
             trabajando con clientes reales y tomando decisiones de negocio reales.
           </p>
         </AnimatedSection>
+
+        {/* Visual Gallery */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          <div className="relative rounded-2xl overflow-hidden group">
+            <img 
+              src={eventoInstructorExplicando} 
+              alt="Instructor explicando técnicas de detailing"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+            <div className="absolute bottom-4 left-4 text-white">
+              <p className="font-bold">Formación Práctica</p>
+              <p className="text-sm text-white/80">Aprende con profesionales reales</p>
+            </div>
+          </div>
+          <div className="relative rounded-2xl overflow-hidden group">
+            <img 
+              src={eventoPracticaPulidoraReal} 
+              alt="Práctica real con pulidora profesional"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+            <div className="absolute bottom-4 left-4 text-white">
+              <p className="font-bold">Práctica Real</p>
+              <p className="text-sm text-white/80">Manos a la obra desde el primer día</p>
+            </div>
+          </div>
+        </div>
 
         {/* Experience Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">

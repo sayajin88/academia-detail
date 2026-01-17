@@ -2,7 +2,7 @@ import detailingHero from '@/assets/heroes/hero-detailing.jpg';
 import wrappingHero from '@/assets/heroes/hero-wrapping.jpg';
 import ppfHero from '@/assets/heroes/hero-ppf.jpg';
 import restauracionHero from '@/assets/heroes/hero-restauracion.jpg';
-import instructorGerardo from '@/assets/daniel-lopez-instructor.webp';
+import instructorDaniel from '@/assets/instructor-daniel-principal.png';
 import certificadoImg from '@/assets/certificado-detailing.png';
 
 export interface FormationModule {
@@ -114,7 +114,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     instructor: {
       name: 'Daniel Lopez',
       role: 'CEO de Detail Park',
-      image: instructorGerardo,
+      image: instructorDaniel,
       description: '¡Hola! Mi nombre es Daniel, soy Detailer desde que tengo uso de la razón. He tenido la gran suerte de cumplir mi sueño y sigo haciendo lo mismo que cuando era pequeño. Ahora, soy el CEO de Detail Park. He tenido la gran oportunidad de tratar miles de coches en estos últimos 15 años y eso me ha otorgado una gran experiencia.',
       quote: 'Nuestro objetivo es proporcionar una formación personalizada y con un número reducido de personas. Nos importa más la calidad, que la cantidad.',
     },
@@ -293,7 +293,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     instructor: {
       name: 'Gerardo',
       role: 'Experto en Car Wrapping y PPF',
-      image: instructorGerardo,
+      image: instructorDaniel,
       description: 'Soy Detailer desde que tengo uso de la razón y experto en Car Wrapping y PPF. He tenido la gran suerte de formar parte del equipo de Detail Park. Ahora soy el responsable de Detail Park en Alicante con más de 10 años de experiencia tratando miles de coches.',
       quote: 'Nuestro objetivo es proporcionar una formación personalizada y con un número reducido de personas. Nos importa más la calidad, que la cantidad.',
     },
@@ -468,7 +468,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     instructor: {
       name: 'Gerardo',
       role: 'Experto en Car Wrapping y PPF',
-      image: instructorGerardo,
+      image: instructorDaniel,
       description: 'Soy Detailer desde que tengo uso de la razón y experto en Car Wrapping y PPF. He tenido la gran suerte de formar parte del equipo de Detail Park. Ahora soy el responsable de Detail Park en Alicante con más de 10 años de experiencia tratando miles de coches.',
       quote: 'Nuestro objetivo es proporcionar una formación personalizada y con un número reducido de personas. Nos importa más la calidad, que la cantidad.',
     },

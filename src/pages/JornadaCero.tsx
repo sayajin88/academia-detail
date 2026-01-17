@@ -63,7 +63,7 @@ import eventoAlumnosAtentos from "@/assets/evento-alumnos-atentos.jpg";
 import eventoPracticaPulidora from "@/assets/evento-practica-pulidora.jpg";
 import certificadoAlumno from "@/assets/certificado-alumno.png";
 import certificadoAlumnoFeliz from "@/assets/certificado-alumno-feliz.jpg";
-import eventoGrupoDetailing from "@/assets/evento-grupo-detailing.jpg";
+import eventoGrupoReal from "@/assets/evento-grupo-coche-rojo.jpg";
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -226,7 +226,7 @@ const Index = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black z-10 pointer-events-none"></div>
               <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80 z-10 pointer-events-none"></div>
               <img 
-                src={eventoGrupoDetailing} 
+                src={eventoGrupoReal} 
                 alt="Equipo Detail Park Academy en acción" 
                 className="w-full h-auto object-cover"
               />
