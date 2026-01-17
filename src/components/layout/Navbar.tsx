@@ -24,9 +24,16 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isFormationsOpen, setIsFormationsOpen] = useState(false);
   const [mobileFormationsOpen, setMobileFormationsOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const location = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
+
+  // Trigger entrance animation on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,7 +71,7 @@ export function Navbar() {
     updatePill();
     window.addEventListener('resize', updatePill);
     return () => window.removeEventListener('resize', updatePill);
-  }, [location.pathname]);
+  }, [location.pathname, isLoaded]);
 
   const isActive = (href: string) => {
     if (href === '/') return location.pathname === '/';
@@ -79,7 +86,8 @@ export function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled ? 'py-2' : 'py-3 md:py-4'
-        }`}
+        } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+        style={{ transitionProperty: 'opacity, transform, padding' }}
       >
         <div className="container mx-auto px-3 md:px-4">
           {/* Glass Container */}
@@ -91,7 +99,7 @@ export function Navbar() {
             }`}
           >
             {/* Animated border gradient */}
-            <div className="absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden pointer-events-none">
+            <div className={`absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden pointer-events-none transition-opacity duration-1000 delay-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
               <div 
                 className="absolute inset-0 opacity-30"
                 style={{
@@ -105,7 +113,7 @@ export function Navbar() {
             {/* Logo */}
             <Link 
               to="/" 
-              className="flex items-center relative z-10 group"
+              className={`flex items-center relative z-10 group transition-all duration-500 delay-100 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
             >
               <div className="relative">
                 <img 
@@ -125,29 +133,31 @@ export function Navbar() {
             >
               {/* Animated pill indicator */}
               <div
-                className="absolute bottom-0 h-0.5 bg-gradient-to-r from-primary via-primary to-primary-foreground/50 rounded-full transition-all duration-300 ease-out"
+                className={`absolute bottom-0 h-0.5 bg-gradient-to-r from-primary via-primary to-primary-foreground/50 rounded-full transition-all duration-300 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
                 style={{
                   left: pillStyle.left,
                   width: pillStyle.width,
-                  opacity: pillStyle.opacity,
+                  opacity: isLoaded ? pillStyle.opacity : 0,
                 }}
               />
 
               <Link
                 to="/"
                 data-active={location.pathname === '/'}
-                className={`relative px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
+                className={`relative px-4 py-2 text-sm font-medium transition-all duration-500 rounded-lg ${
                   location.pathname === '/' 
                     ? 'text-primary' 
                     : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
-                }`}
+                } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+                style={{ transitionDelay: '200ms' }}
               >
                 Inicio
               </Link>
 
               {/* Formaciones Dropdown */}
               <div
-                className="relative"
+                className={`relative transition-all duration-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+                style={{ transitionDelay: '250ms' }}
                 onMouseEnter={() => setIsFormationsOpen(true)}
                 onMouseLeave={() => setIsFormationsOpen(false)}
               >
@@ -214,16 +224,17 @@ export function Navbar() {
                 </div>
               </div>
 
-              {navLinks.slice(1).map((link) => (
+              {navLinks.slice(1).map((link, index) => (
                 <Link
                   key={link.href}
                   to={link.href}
                   data-active={isActive(link.href)}
-                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
+                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-500 rounded-lg ${
                     isActive(link.href)
                       ? 'text-primary'
                       : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
-                  }`}
+                  } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+                  style={{ transitionDelay: `${300 + index * 50}ms` }}
                 >
                   {link.name}
                 </Link>
@@ -231,7 +242,7 @@ export function Navbar() {
             </div>
 
             {/* Desktop CTA Button */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className={`hidden lg:flex items-center gap-4 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`} style={{ transitionDelay: '450ms' }}>
               <Link to="/carrera-detailing">
                 <Button 
                   size="sm"
