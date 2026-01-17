@@ -58,9 +58,9 @@ export interface FormationDetail {
 }
 
 export const formationDetails: Record<string, FormationDetail> = {
-  detailing: {
-    id: 'detailing',
-    slug: 'detailing',
+  'curso-detailing-profesional': {
+    id: 'curso-detailing-profesional',
+    slug: 'curso-detailing-profesional',
     title: 'Curso Detailing Profesional: Aprende desde Cero',
     subtitle: 'Formación Práctica en Pulido, Corrección y Protección Cerámica',
     description: 'Curso de detailing profesional 100% práctico. Aprende detailing desde cero: lavado, descontaminación, pulido y protección cerámica. Formación con certificado oficial basada en experiencia real en taller.',
@@ -237,9 +237,9 @@ export const formationDetails: Record<string, FormationDetail> = {
       },
     ],
   },
-  wrapping: {
-    id: 'wrapping',
-    slug: 'wrapping',
+  'curso-vinilado-vehiculos': {
+    id: 'curso-vinilado-vehiculos',
+    slug: 'curso-vinilado-vehiculos',
     title: 'Curso Car Wrapping: Instalación de Vinilo Profesional',
     subtitle: 'Formación en Rotulación y Cambio de Color de Vehículos',
     description: 'Curso de car wrapping profesional. Aprende instalación de vinilo, rotulación vehículos y cambio de color. Formación 100% práctica con certificado oficial.',
@@ -412,9 +412,9 @@ export const formationDetails: Record<string, FormationDetail> = {
       },
     ],
   },
-  ppf: {
-    id: 'ppf',
-    slug: 'ppf',
+  'curso-ppf-proteccion-pintura': {
+    id: 'curso-ppf-proteccion-pintura',
+    slug: 'curso-ppf-proteccion-pintura',
     title: 'Curso PPF: Paint Protection Film Certificado',
     subtitle: 'Formación en Instalación de Lámina Protectora para Vehículos',
     description: 'Curso de PPF (Paint Protection Film) profesional. Aprende instalación de lámina protectora en vehículos de alta gama. Formación 100% práctica con certificación oficial.',
@@ -587,9 +587,9 @@ export const formationDetails: Record<string, FormationDetail> = {
       },
     ],
   },
-  restauracion: {
-    id: 'restauracion',
-    slug: 'restauracion',
+  'curso-restauracion-vehiculos': {
+    id: 'curso-restauracion-vehiculos',
+    slug: 'curso-restauracion-vehiculos',
     title: 'Curso Restauración Vehículos: Clásicos y Dañados',
     subtitle: 'Formación en Chapa, Pintura y Recuperación de Vehículos',
     description: 'Curso de restauración de vehículos profesional. Aprende a restaurar coches clásicos y dañados. Técnicas de chapa, pintura y acabado con certificado oficial.',

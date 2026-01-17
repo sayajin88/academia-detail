@@ -18,13 +18,13 @@ export interface Formation {
 
 export const formations: Formation[] = [
   {
-    id: 'detailing',
+    id: 'curso-detailing-profesional',
     title: 'Detailing Profesional',
     shortTitle: 'Detailing',
     description: 'Aprende las técnicas profesionales de limpieza profunda, descontaminación, pulido y protección de vehículos. Desde corrección de pintura hasta tratamientos cerámicos.',
     duration: '1-2 días',
     image: detailingHero,
-    href: '/formacion/detailing',
+    href: '/curso-detailing-profesional',
     icon: 'sparkles',
     highlights: [
       'Corrección de pintura y pulido',
@@ -34,13 +34,13 @@ export const formations: Formation[] = [
     ]
   },
   {
-    id: 'wrapping',
+    id: 'curso-vinilado-vehiculos',
     title: 'Car Wrapping',
     shortTitle: 'Wrapping',
     description: 'Domina el arte del vinilado integral, cambio de color y personalización profesional de vehículos. Técnicas de instalación en superficies complejas.',
     duration: '2-3 días',
     image: wrappingHero,
-    href: '/formacion/wrapping',
+    href: '/curso-vinilado-vehiculos',
     icon: 'palette',
     highlights: [
       'Vinilado integral de vehículos',
@@ -50,13 +50,13 @@ export const formations: Formation[] = [
     ]
   },
   {
-    id: 'ppf',
+    id: 'curso-ppf-proteccion-pintura',
     title: 'Paint Protection Film',
     shortTitle: 'PPF',
     description: 'Especialízate en la instalación de film de protección de pintura para vehículos de alta gama. Protección invisible contra impactos y rayones.',
     duration: '2-3 días',
     image: ppfHero,
-    href: '/formacion/ppf',
+    href: '/curso-ppf-proteccion-pintura',
     icon: 'shield',
     highlights: [
       'Instalación de PPF profesional',
@@ -66,13 +66,13 @@ export const formations: Formation[] = [
     ]
   },
   {
-    id: 'restauracion',
+    id: 'curso-restauracion-vehiculos',
     title: 'Restauración de Vehículos',
     shortTitle: 'Restauración',
     description: 'Recupera vehículos dañados y clásicos con técnicas avanzadas de restauración profesional. Devuelve el esplendor original a cualquier vehículo.',
     duration: '2-3 días',
     image: restauracionHero,
-    href: '/formacion/restauracion',
+    href: '/curso-restauracion-vehiculos',
     icon: 'wrench',
     highlights: [
       'Restauración de pintura oxidada',
@@ -84,13 +84,13 @@ export const formations: Formation[] = [
 ];
 
 export const carreraNegocio = {
-  id: 'carrera-negocio',
+  id: 'formacion-profesional-detailing',
   title: 'Carrera Negocio',
   subtitle: 'El Programa Más Completo del Sector',
   description: 'Conviértete en un profesional completo del detailing con acceso a todas las formaciones, prácticas reales en nuestras instalaciones y formación exclusiva en gestión empresarial.',
   duration: '3-6 meses',
   image: carreraHero,
-  href: '/carrera-detailing',
+  href: '/formacion-profesional-detailing',
   includes: [
     {
       title: 'Todas las Formaciones',

@@ -3,11 +3,11 @@ import { Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import logo from '@/assets/detail-park-logo-white.png';
 
 const formationLinks = [
-  { name: 'Detailing', href: '/formacion/detailing' },
-  { name: 'Car Wrapping', href: '/formacion/wrapping' },
-  { name: 'Paint Protection Film', href: '/formacion/ppf' },
-  { name: 'Restauración', href: '/formacion/restauracion' },
-  { name: 'Carrera Detailing', href: '/carrera-detailing' },
+  { name: 'Detailing', href: '/curso-detailing-profesional' },
+  { name: 'Car Wrapping', href: '/curso-vinilado-vehiculos' },
+  { name: 'Paint Protection Film', href: '/curso-ppf-proteccion-pintura' },
+  { name: 'Restauración', href: '/curso-restauracion-vehiculos' },
+  { name: 'Carrera Detailing', href: '/formacion-profesional-detailing' },
 ];
 
 const legalLinks = [
