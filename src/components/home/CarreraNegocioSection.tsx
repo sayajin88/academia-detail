@@ -52,7 +52,7 @@ export function CarreraNegocioSection() {
             {carreraNegocio.subtitle}
           </p>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            {carreraNegocio.description}
+            Programa premium para aprender detailing profesional y montar tu propio centro de detailing. Incluye 4 formaciones + módulo de negocio para emprender con éxito.
           </p>
         </div>
 

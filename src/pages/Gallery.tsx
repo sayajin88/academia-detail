@@ -50,9 +50,9 @@ export default function Gallery() {
 
           <div className="container relative z-10">
             <SectionHeading
-              badge="Portfolio"
-              title="Nuestra Galería de Trabajos"
-              subtitle="Explora los proyectos realizados por nuestros alumnos y el equipo de Detail Park. Cada vehículo cuenta una historia de transformación y excelencia."
+              badge="Portfolio Profesional"
+              title="Galería: Trabajos de Detailing Profesional"
+              subtitle="Resultados reales de nuestros cursos: detailing, wrapping, PPF y restauración en vehículos de alta gama. Ferrari, Lamborghini, Porsche y más."
             />
           </div>
         </section>

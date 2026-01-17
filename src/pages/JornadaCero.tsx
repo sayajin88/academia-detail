@@ -154,10 +154,10 @@ const Index = () => {
         <div className="relative z-10 container mx-auto px-4">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
-              ¿Quieres vivir del detailing pero <span className="gradient-text">no sabes por dónde empezar</span>?
+              Curso de Detailing de 1 Día: <span className="gradient-text">Tu Primera Experiencia Profesional</span>
             </h2>
             <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto">
-              Entendemos las dudas de quien está considerando entrar al mundo del detailing profesional.
+              Aprende detailing profesional en una jornada intensiva. Ideal para probar antes de invertir en formación completa.
             </p>
           </div>
           {/* Cards - Hidden on mobile */}
