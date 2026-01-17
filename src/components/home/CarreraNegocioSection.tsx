@@ -1,126 +1,154 @@
 import { Link } from 'react-router-dom';
 import { 
-  Crown, 
   GraduationCap, 
   Wrench, 
-  TrendingUp, 
-  Users, 
-  Network, 
-  Award,
+  Award, 
+  Building2,
   ArrowRight,
-  Sparkles
+  Clock,
+  Users,
+  BookOpen
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { carreraNegocio } from '@/data/formations';
+import { cn } from '@/lib/utils';
 
-const iconMap: Record<string, React.ElementType> = {
-  'Todas las Formaciones': GraduationCap,
-  'Prácticas Reales': Wrench,
-  'Gestión de Negocio': TrendingUp,
-  'Mentoría Personalizada': Users,
-  'Red de Profesionales': Network,
-  'Certificación Completa': Award,
-};
+const journeySteps = [
+  {
+    icon: BookOpen,
+    title: 'Aprende',
+    description: '4 formaciones completas',
+    color: 'from-blue-500 to-blue-600'
+  },
+  {
+    icon: Wrench,
+    title: 'Practica',
+    description: 'Proyectos reales',
+    color: 'from-amber-500 to-orange-500'
+  },
+  {
+    icon: Award,
+    title: 'Certifica',
+    description: 'Diploma acreditado',
+    color: 'from-emerald-500 to-green-600'
+  },
+  {
+    icon: Building2,
+    title: 'Emprende',
+    description: 'Tu propio negocio',
+    color: 'from-primary to-primary-glow'
+  }
+];
+
+const stats = [
+  { value: '4', label: 'Cursos', icon: GraduationCap },
+  { value: '+100', label: 'Horas', icon: Clock },
+  { value: '1:1', label: 'Mentoría', icon: Users },
+  { value: '3-6', label: 'Meses', icon: Award },
+];
 
 export function CarreraNegocioSection() {
   return (
     <section className="py-20 md:py-28 relative overflow-hidden">
-      {/* Premium Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-card to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-primary-glow/10 via-transparent to-transparent" />
-
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-background to-background" />
+      
       {/* Decorative Elements */}
-      <div className="absolute top-20 right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-20 w-80 h-80 bg-primary-glow/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/4 -left-32 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-primary-glow/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-primary-glow/20 border border-primary/30 mb-6">
-            <Crown className="h-4 w-4 text-primary" />
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-              Programa Premium
-            </span>
-            <Sparkles className="h-4 w-4 text-primary-glow" />
-          </div>
-
+        <div className="text-center max-w-4xl mx-auto mb-16">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6">
+            <Award className="h-4 w-4" />
+            Programa Premium Exclusivo
+          </span>
+          
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
-            {carreraNegocio.title}
+            De Principiante a{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-glow">
+              Empresario
+            </span>
           </h2>
-          <p className="text-xl md:text-2xl text-primary font-semibold mb-4">
-            {carreraNegocio.subtitle}
-          </p>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Programa premium para aprender detailing profesional y montar tu propio centro de detailing. Incluye 4 formaciones + módulo de negocio para emprender con éxito.
+          
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            El programa completo para dominar todas las disciplinas del detailing 
+            y lanzar tu propio centro de éxito
           </p>
         </div>
 
-        {/* Main Card */}
-        <div className="max-w-5xl mx-auto">
-          <div className="relative rounded-3xl overflow-hidden">
-            {/* Golden Border Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-glow to-primary rounded-3xl" />
+        {/* Journey Timeline */}
+        <div className="max-w-4xl mx-auto mb-16">
+          <div className="relative">
+            {/* Connection Line - Desktop */}
+            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-amber-500 via-emerald-500 to-primary -translate-y-1/2 z-0" />
             
-            <div className="relative m-[2px] bg-card rounded-[22px] p-8 md:p-12">
-              {/* Image & Content Grid */}
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-10">
-                {/* Image */}
-                <div className="relative">
-                  <div
-                    className="aspect-[4/3] rounded-2xl bg-cover bg-center"
-                    style={{ backgroundImage: `url(${carreraNegocio.image})` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl" />
-                  
-                  {/* Duration Badge */}
-                  <div className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-primary text-primary-foreground font-bold text-sm">
-                    {carreraNegocio.duration}
+            {/* Steps */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
+              {journeySteps.map((step, index) => (
+                <div key={step.title} className="relative z-10 flex flex-col items-center">
+                  {/* Icon Circle */}
+                  <div 
+                    className={cn(
+                      "w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mb-4 shadow-lg",
+                      "bg-gradient-to-br",
+                      step.color
+                    )}
+                  >
+                    <step.icon className="h-8 w-8 md:h-10 md:w-10 text-white" />
                   </div>
+                  
+                  {/* Arrow - Desktop only, not on last item */}
+                  {index < journeySteps.length - 1 && (
+                    <div className="hidden md:block absolute top-10 left-[calc(100%_-_1rem)] z-20">
+                      <ArrowRight className="h-5 w-5 text-muted-foreground/50" />
+                    </div>
+                  )}
+                  
+                  {/* Text */}
+                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-1">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground text-center">
+                    {step.description}
+                  </p>
                 </div>
-
-                {/* Benefits Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {carreraNegocio.includes.map((item) => {
-                    const Icon = iconMap[item.title] || GraduationCap;
-                    return (
-                      <div
-                        key={item.title}
-                        className="p-4 rounded-xl bg-muted/50 border border-border hover:border-primary/50 transition-colors group"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                            <Icon className="h-5 w-5" />
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-foreground text-sm mb-0.5">
-                              {item.title}
-                            </h4>
-                            <p className="text-xs text-muted-foreground">
-                              {item.description}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* CTA */}
-              <div className="text-center">
-                <Button asChild variant="hero" size="xl" className="group">
-                  <Link to="/carrera-detailing">
-                    Descubre el Programa Completo
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Button>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  Plazas limitadas • Próxima edición en Febrero 2025
-                </p>
-              </div>
+              ))}
             </div>
           </div>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="max-w-3xl mx-auto mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {stats.map((stat) => (
+              <div 
+                key={stat.label}
+                className="bg-card border border-border rounded-2xl p-6 text-center hover:border-primary/50 transition-colors"
+              >
+                <stat.icon className="h-6 w-6 text-primary mx-auto mb-2" />
+                <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="text-center">
+          <Button asChild variant="hero" size="xl" className="group">
+            <Link to="/carrera-detailing">
+              Descubre Cómo Emprender
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Button>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Plazas limitadas • Próxima edición en Febrero 2025
+          </p>
         </div>
       </div>
     </section>
