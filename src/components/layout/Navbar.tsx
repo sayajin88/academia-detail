@@ -1,28 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Crown, Sparkles, GraduationCap, Palette, Shield, Wrench, Home, Image, Mail, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import logo from '@/assets/detail-park-logo-white.png';
 
 const formationLinks = [
-  { name: 'Detailing', href: '/formacion/detailing' },
-  { name: 'Car Wrapping', href: '/formacion/wrapping' },
-  { name: 'Paint Protection Film', href: '/formacion/ppf' },
-  { name: 'Restauración', href: '/formacion/restauracion' },
-  { name: 'Carrera Detailing', href: '/carrera-detailing', highlight: true },
+  { name: 'Detailing', href: '/formacion/detailing', icon: Sparkles, description: 'Técnicas profesionales' },
+  { name: 'Car Wrapping', href: '/formacion/wrapping', icon: Palette, description: 'Vinilado de vehículos' },
+  { name: 'Paint Protection Film', href: '/formacion/ppf', icon: Shield, description: 'Protección de pintura' },
+  { name: 'Restauración', href: '/formacion/restauracion', icon: Wrench, description: 'Recuperación integral' },
+  { name: 'Carrera Detailing', href: '/carrera-detailing', highlight: true, icon: Crown, description: 'Programa completo' },
 ];
 
 const navLinks = [
-  { name: 'Inicio', href: '/' },
-  { name: 'Galería', href: '/galeria' },
-  { name: 'Contacto', href: '/contacto' },
+  { name: 'Inicio', href: '/', icon: Home },
+  { name: 'Galería', href: '/galeria', icon: Image },
+  { name: 'Contacto', href: '/contacto', icon: Mail },
+  { name: 'Soy nuevo', href: '/jornada-cero', icon: HelpCircle },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isFormationsOpen, setIsFormationsOpen] = useState(false);
+  const [mobileFormationsOpen, setMobileFormationsOpen] = useState(false);
   const location = useLocation();
+  const navRef = useRef<HTMLDivElement>(null);
+  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,167 +39,399 @@ export function Navbar() {
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsFormationsOpen(false);
+    setMobileFormationsOpen(false);
   }, [location.pathname]);
 
-  return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg'
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <img src={logo} alt="Detail Park" className="h-10 md:h-12 w-auto" />
-          </Link>
+  // Update pill position based on active link
+  useEffect(() => {
+    const updatePill = () => {
+      if (!navRef.current) return;
+      
+      const activeLink = navRef.current.querySelector('[data-active="true"]') as HTMLElement;
+      if (activeLink) {
+        const navRect = navRef.current.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        setPillStyle({
+          left: linkRect.left - navRect.left,
+          width: linkRect.width,
+          opacity: 1,
+        });
+      } else {
+        setPillStyle(prev => ({ ...prev, opacity: 0 }));
+      }
+    };
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link
-              to="/"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === '/' ? 'text-primary' : 'text-foreground/80'
-              }`}
+    updatePill();
+    window.addEventListener('resize', updatePill);
+    return () => window.removeEventListener('resize', updatePill);
+  }, [location.pathname]);
+
+  const isActive = (href: string) => {
+    if (href === '/') return location.pathname === '/';
+    return location.pathname.startsWith(href);
+  };
+
+  const isFormationsActive = formationLinks.some(link => location.pathname === link.href) || 
+                             location.pathname.includes('/formacion');
+
+  return (
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled ? 'py-2' : 'py-3 md:py-4'
+        }`}
+      >
+        <div className="container mx-auto px-3 md:px-4">
+          {/* Glass Container */}
+          <div
+            className={`relative flex items-center justify-between transition-all duration-500 ${
+              isScrolled
+                ? 'bg-background/80 backdrop-blur-2xl rounded-xl md:rounded-2xl border border-white/10 shadow-2xl shadow-black/20 px-4 md:px-6 py-2 md:py-3'
+                : 'bg-background/40 backdrop-blur-xl rounded-xl md:rounded-2xl border border-white/5 px-4 md:px-6 py-3 md:py-4'
+            }`}
+          >
+            {/* Animated border gradient */}
+            <div className="absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden pointer-events-none">
+              <div 
+                className="absolute inset-0 opacity-30"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent)',
+                  backgroundSize: '200% 100%',
+                  animation: 'shimmer-border 3s linear infinite',
+                }}
+              />
+            </div>
+
+            {/* Logo */}
+            <Link 
+              to="/" 
+              className="flex items-center relative z-10 group"
             >
-              Inicio
+              <div className="relative">
+                <img 
+                  src={logo} 
+                  alt="Detail Park" 
+                  className="h-8 md:h-10 w-auto transition-transform duration-300 group-hover:scale-105" 
+                />
+                {/* Logo glow on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-primary/30" />
+              </div>
             </Link>
 
-            {/* Formaciones Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setIsFormationsOpen(true)}
-              onMouseLeave={() => setIsFormationsOpen(false)}
+            {/* Desktop Navigation - Centered */}
+            <div 
+              ref={navRef}
+              className="hidden lg:flex items-center gap-1 relative"
             >
-              <button
-                className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
-                  location.pathname.includes('/formacion') || location.pathname === '/carrera-negocio'
-                    ? 'text-primary'
-                    : 'text-foreground/80'
+              {/* Animated pill indicator */}
+              <div
+                className="absolute bottom-0 h-0.5 bg-gradient-to-r from-primary via-primary to-primary-foreground/50 rounded-full transition-all duration-300 ease-out"
+                style={{
+                  left: pillStyle.left,
+                  width: pillStyle.width,
+                  opacity: pillStyle.opacity,
+                }}
+              />
+
+              <Link
+                to="/"
+                data-active={location.pathname === '/'}
+                className={`relative px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
+                  location.pathname === '/' 
+                    ? 'text-primary' 
+                    : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
                 }`}
               >
-                Formaciones
-                <ChevronDown
-                  className={`h-4 w-4 transition-transform ${isFormationsOpen ? 'rotate-180' : ''}`}
+                Inicio
+              </Link>
+
+              {/* Formaciones Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsFormationsOpen(true)}
+                onMouseLeave={() => setIsFormationsOpen(false)}
+              >
+                <button
+                  data-active={isFormationsActive}
+                  className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
+                    isFormationsActive
+                      ? 'text-primary'
+                      : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
+                  }`}
+                >
+                  Formaciones
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform duration-300 ${isFormationsOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+
+                {/* Dropdown Menu */}
+                <div 
+                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-300 ${
+                    isFormationsOpen 
+                      ? 'opacity-100 translate-y-0 pointer-events-auto' 
+                      : 'opacity-0 -translate-y-2 pointer-events-none'
+                  }`}
+                >
+                  <div className="relative bg-background/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl shadow-black/30 p-3 min-w-[280px]">
+                    {/* Dropdown glow */}
+                    <div className="absolute -inset-px bg-gradient-to-b from-primary/20 to-transparent rounded-2xl pointer-events-none" />
+                    
+                    <div className="relative space-y-1">
+                      {formationLinks.map((link, index) => (
+                        <Link
+                          key={link.href}
+                          to={link.href}
+                          className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group ${
+                            link.highlight
+                              ? 'bg-gradient-to-r from-primary/20 via-primary/10 to-transparent border border-primary/30 hover:border-primary/50'
+                              : 'hover:bg-white/5'
+                          }`}
+                          style={{ animationDelay: `${index * 50}ms` }}
+                        >
+                          <div className={`p-2 rounded-lg transition-colors duration-200 ${
+                            link.highlight 
+                              ? 'bg-primary/20 text-primary' 
+                              : 'bg-white/5 text-foreground/60 group-hover:bg-white/10 group-hover:text-foreground'
+                          }`}>
+                            <link.icon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <p className={`font-medium ${link.highlight ? 'text-primary' : 'text-foreground'}`}>
+                              {link.name}
+                              {link.highlight && (
+                                <span className="ml-2 text-[10px] bg-primary/30 text-primary px-2 py-0.5 rounded-full uppercase tracking-wider">
+                                  Pro
+                                </span>
+                              )}
+                            </p>
+                            <p className="text-xs text-muted-foreground">{link.description}</p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {navLinks.slice(1).map((link) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  data-active={isActive(link.href)}
+                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
+                    isActive(link.href)
+                      ? 'text-primary'
+                      : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+
+            {/* Desktop CTA Button */}
+            <div className="hidden lg:flex items-center gap-4">
+              <Link to="/carrera-detailing">
+                <Button 
+                  size="sm"
+                  className="relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-4 py-2 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
+                >
+                  <Crown className="h-4 w-4 mr-2" />
+                  Carrera Detailing
+                  {/* Shimmer effect */}
+                  <div 
+                    className="absolute inset-0 opacity-30"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+                      backgroundSize: '200% 100%',
+                      animation: 'shimmer-border 2s linear infinite',
+                    }}
+                  />
+                </Button>
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="lg:hidden relative z-10 p-2 text-foreground transition-colors hover:text-primary"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            >
+              <div className="relative w-6 h-6">
+                <span 
+                  className={`absolute left-0 w-6 h-0.5 bg-current transition-all duration-300 ${
+                    isMobileMenuOpen ? 'top-3 rotate-45' : 'top-1'
+                  }`} 
+                />
+                <span 
+                  className={`absolute left-0 top-3 w-6 h-0.5 bg-current transition-all duration-300 ${
+                    isMobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
+                  }`} 
+                />
+                <span 
+                  className={`absolute left-0 w-6 h-0.5 bg-current transition-all duration-300 ${
+                    isMobileMenuOpen ? 'top-3 -rotate-45' : 'top-5'
+                  }`} 
+                />
+              </div>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${
+          isMobileMenuOpen 
+            ? 'opacity-100 pointer-events-auto' 
+            : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        {/* Backdrop */}
+        <div 
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+        
+        {/* Menu Panel */}
+        <div 
+          className={`absolute top-0 right-0 h-full w-full max-w-sm bg-background/95 backdrop-blur-2xl border-l border-white/10 shadow-2xl transition-transform duration-500 ease-out ${
+            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b border-white/10">
+            <img src={logo} alt="Detail Park" className="h-8 w-auto" />
+            <button
+              className="p-2 text-foreground hover:text-primary transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-180px)]">
+            {/* Main Links */}
+            <Link
+              to="/"
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                location.pathname === '/' 
+                  ? 'bg-primary/10 text-primary' 
+                  : 'text-foreground hover:bg-white/5'
+              }`}
+              style={{ animationDelay: '100ms' }}
+            >
+              <Home className="h-5 w-5" />
+              <span className="font-medium">Inicio</span>
+            </Link>
+
+            {/* Formaciones Accordion */}
+            <div className="space-y-1">
+              <button
+                onClick={() => setMobileFormationsOpen(!mobileFormationsOpen)}
+                className={`flex items-center justify-between w-full px-4 py-3 rounded-xl transition-all duration-200 ${
+                  isFormationsActive 
+                    ? 'bg-primary/10 text-primary' 
+                    : 'text-foreground hover:bg-white/5'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <GraduationCap className="h-5 w-5" />
+                  <span className="font-medium">Formaciones</span>
+                </div>
+                <ChevronDown 
+                  className={`h-5 w-5 transition-transform duration-300 ${
+                    mobileFormationsOpen ? 'rotate-180' : ''
+                  }`} 
                 />
               </button>
 
-              {isFormationsOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
-                  <div className="bg-card/95 backdrop-blur-xl border border-border rounded-xl shadow-2xl p-2 min-w-[220px]">
-                    {formationLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        to={link.href}
-                        className={`block px-4 py-2.5 rounded-lg text-sm transition-colors ${
-                          link.highlight
-                            ? 'bg-gradient-to-r from-primary/20 to-primary-glow/20 text-primary font-semibold border border-primary/30'
-                            : 'hover:bg-muted text-foreground/80 hover:text-foreground'
-                        }`}
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-                  </div>
+              {/* Sub-links */}
+              <div 
+                className={`overflow-hidden transition-all duration-300 ${
+                  mobileFormationsOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className="pl-4 space-y-1 pt-1">
+                  {formationLinks.map((link, index) => (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
+                        link.highlight
+                          ? 'bg-gradient-to-r from-primary/20 to-transparent text-primary border-l-2 border-primary'
+                          : location.pathname === link.href
+                            ? 'bg-white/5 text-foreground'
+                            : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
+                      }`}
+                      style={{ animationDelay: `${(index + 2) * 50}ms` }}
+                    >
+                      <link.icon className="h-4 w-4" />
+                      <span>{link.name}</span>
+                      {link.highlight && (
+                        <span className="ml-auto text-[10px] bg-primary/30 text-primary px-2 py-0.5 rounded-full">
+                          PRO
+                        </span>
+                      )}
+                    </Link>
+                  ))}
                 </div>
-              )}
-            </div>
-
-            <Link
-              to="/galeria"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === '/galeria' ? 'text-primary' : 'text-foreground/80'
-              }`}
-            >
-              Galería
-            </Link>
-
-            <Link
-              to="/contacto"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === '/contacto' ? 'text-primary' : 'text-foreground/80'
-              }`}
-            >
-              Contacto
-            </Link>
-
-            <Link
-              to="/jornada-cero"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === '/jornada-cero' ? 'text-primary' : 'text-foreground/80'
-              }`}
-            >
-              Soy nuevo
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-foreground"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl border-t border-border">
-          <div className="container mx-auto px-4 py-4 space-y-2">
-            <Link
-              to="/"
-              className="block px-4 py-3 rounded-lg text-foreground hover:bg-muted transition-colors"
-            >
-              Inicio
-            </Link>
-
-            <div className="px-4 py-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                Formaciones
-              </p>
-              <div className="space-y-1 pl-2">
-                {formationLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    to={link.href}
-                    className={`block px-3 py-2 rounded-lg text-sm transition-colors ${
-                      link.highlight
-                        ? 'bg-primary/10 text-primary font-medium'
-                        : 'text-foreground/80 hover:bg-muted'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
               </div>
             </div>
 
-            <Link
-              to="/galeria"
-              className="block px-4 py-3 rounded-lg text-foreground hover:bg-muted transition-colors"
-            >
-              Galería
-            </Link>
+            {/* Other Links */}
+            {navLinks.slice(1).map((link, index) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                  isActive(link.href)
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-foreground hover:bg-white/5'
+                }`}
+                style={{ animationDelay: `${(index + 6) * 50}ms` }}
+              >
+                <link.icon className="h-5 w-5" />
+                <span className="font-medium">{link.name}</span>
+              </Link>
+            ))}
+          </div>
 
-            <Link
-              to="/contacto"
-              className="block px-4 py-3 rounded-lg text-foreground hover:bg-muted transition-colors"
-            >
-              Contacto
-            </Link>
-
-            <Link
-              to="/jornada-cero"
-              className="block px-4 py-3 rounded-lg text-foreground hover:bg-muted transition-colors"
-            >
-              Soy nuevo
+          {/* CTA Button */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-background/80 backdrop-blur-xl">
+            <Link to="/carrera-detailing" onClick={() => setIsMobileMenuOpen(false)}>
+              <Button 
+                className="w-full relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold py-6 rounded-xl shadow-lg shadow-primary/20"
+              >
+                <Crown className="h-5 w-5 mr-2" />
+                Carrera Detailing
+                <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded-full">
+                  €9.997
+                </span>
+                {/* Shimmer */}
+                <div 
+                  className="absolute inset-0 opacity-30"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+                    backgroundSize: '200% 100%',
+                    animation: 'shimmer-border 2s linear infinite',
+                  }}
+                />
+              </Button>
             </Link>
           </div>
         </div>
-      )}
-    </nav>
+      </div>
+
+      {/* Global styles for animations */}
+      <style>{`
+        @keyframes shimmer-border {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
+    </>
   );
 }
