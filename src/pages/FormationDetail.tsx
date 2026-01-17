@@ -13,6 +13,7 @@ import { FormationIncludes } from '@/components/formation/FormationIncludes';
 import { FormationFAQ } from '@/components/formation/FormationFAQ';
 import { FormationROICalculator } from '@/components/formation/FormationROICalculator';
 import { FormationCTA } from '@/components/formation/FormationCTA';
+import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { getFormationBySlug } from '@/data/formationDetails';
 import { useToast } from '@/hooks/use-toast';
 import { SEO } from '@/components/SEO';
@@ -26,6 +27,21 @@ const pathToSlugMap: Record<string, string> = {
   '/curso-restauracion-vehiculos': 'curso-restauracion-vehiculos',
 };
 
+// Video testimonials by formation slug
+const videoTestimonialsBySlug: Record<string, { id: string; title: string; name?: string; role?: string }[]> = {
+  'curso-detailing-profesional': [
+    { id: 'GWda5NH90YM', title: 'Mi experiencia en el curso de Detailing', name: 'Alumno Graduado', role: 'Detailer Profesional' },
+    { id: 'iJjIZ4Ja7RA', title: 'Por qué elegí Detail Park para formarme', name: 'Alumno Graduado', role: 'Emprendedor' },
+    { id: 'U1qm6XXaQaE', title: 'Lo que aprendí en la formación de Detailing', name: 'Alumno Graduado', role: 'Técnico Especializado' },
+  ],
+  'curso-ppf-proteccion-pintura': [
+    { id: 'xvfLq467Mis', title: 'Mi experiencia en el curso de PPF', name: 'Alumno Graduado', role: 'Especialista PPF' },
+  ],
+  'curso-vinilado-vehiculos': [
+    { id: '0b8VwDTfxe8', title: 'Mi experiencia en el curso de Car Wrapping', name: 'Alumno Graduado', role: 'Especialista Vinilado' },
+  ],
+};
+
 export default function FormationDetailPage() {
   const { slug: paramSlug } = useParams<{ slug: string }>();
   const location = useLocation();
@@ -35,6 +51,7 @@ export default function FormationDetailPage() {
   const slug = pathToSlugMap[location.pathname] || paramSlug;
   
   const formation = slug ? getFormationBySlug(slug) : undefined;
+  const videoTestimonials = slug ? videoTestimonialsBySlug[slug] : undefined;
 
   if (!formation) {
     return <Navigate to="/" replace />;
@@ -69,6 +86,13 @@ export default function FormationDetailPage() {
         <FormationCurriculum formation={formation} />
         <FormationReglada formation={formation} />
         <FormationCertification formation={formation} />
+        {videoTestimonials && videoTestimonials.length > 0 && (
+          <FormationVideoTestimonials 
+            videos={videoTestimonials}
+            title="Testimonios de Nuestros Alumnos"
+            subtitle="Descubre las experiencias reales de quienes ya se han formado con nosotros"
+          />
+        )}
         <FormationIncludes formation={formation} />
         <FormationFAQ formation={formation} />
         <FormationROICalculator formation={formation} onCTAClick={handleCTAClick} />

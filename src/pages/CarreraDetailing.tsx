@@ -10,9 +10,16 @@ import CarreraTimeline from '@/components/carrera/CarreraTimeline';
 import CarreraBenefits from '@/components/carrera/CarreraBenefits';
 import CarreraPricing from '@/components/carrera/CarreraPricing';
 import CarreraFAQ from '@/components/carrera/CarreraFAQ';
+import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { RegistrationModal } from '@/components/RegistrationModal';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
+
+const carreraVideoTestimonials = [
+  { id: 'GWda5NH90YM', title: 'Mi experiencia en la Carrera de Detailing', name: 'Alumno Graduado', role: 'Empresario Detailing' },
+  { id: 'iJjIZ4Ja7RA', title: 'Cómo monté mi negocio tras la formación', name: 'Alumno Graduado', role: 'Emprendedor' },
+  { id: 'U1qm6XXaQaE', title: 'La formación que cambió mi carrera', name: 'Alumno Graduado', role: 'Profesional Independiente' },
+];
 
 const CarreraDetailing = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -105,6 +112,11 @@ const CarreraDetailing = () => {
         <CarreraFormaciones />
         <CarreraModuloNegocio />
         <CarreraExperienciaReal />
+        <FormationVideoTestimonials 
+          videos={carreraVideoTestimonials}
+          title="Lo Que Dicen Nuestros Alumnos"
+          subtitle="Testimonios reales de profesionales que han transformado su carrera con nuestra formación"
+        />
         <CarreraTimeline />
         <CarreraBenefits />
         <CarreraROICalculator onCtaClick={handleCTAClick} />
