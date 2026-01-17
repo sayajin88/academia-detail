@@ -6,10 +6,12 @@ import { FormationLevels } from '@/components/formation/FormationLevels';
 import { FormationContent } from '@/components/formation/FormationContent';
 import { FormationInstructor } from '@/components/formation/FormationInstructor';
 import { FormationModules } from '@/components/formation/FormationModules';
+import { FormationCurriculum } from '@/components/formation/FormationCurriculum';
 import { FormationReglada } from '@/components/formation/FormationReglada';
 import { FormationCertification } from '@/components/formation/FormationCertification';
 import { FormationIncludes } from '@/components/formation/FormationIncludes';
 import { FormationFAQ } from '@/components/formation/FormationFAQ';
+import { FormationROICalculator } from '@/components/formation/FormationROICalculator';
 import { FormationCTA } from '@/components/formation/FormationCTA';
 import { getFormationBySlug } from '@/data/formationDetails';
 import { useToast } from '@/hooks/use-toast';
@@ -64,10 +66,12 @@ export default function FormationDetailPage() {
         <FormationContent formation={formation} />
         <FormationInstructor formation={formation} />
         <FormationModules formation={formation} />
+        <FormationCurriculum formation={formation} />
         <FormationReglada formation={formation} />
         <FormationCertification formation={formation} />
         <FormationIncludes formation={formation} />
         <FormationFAQ formation={formation} />
+        <FormationROICalculator formation={formation} onCTAClick={handleCTAClick} />
         <FormationCTA formation={formation} onCTAClick={handleCTAClick} />
       </MainLayout>
     </>

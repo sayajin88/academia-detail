@@ -144,11 +144,12 @@ export function FormationHero({ formation, onCTAClick }: FormationHeroProps) {
                     </span>
                   </div>
                   <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-6xl font-extrabold gradient-text price-animate tracking-tight">
-                      €{priceCount}
+                    <span className="text-5xl font-extrabold gradient-text price-animate tracking-tight">
+                      €{priceCount.toLocaleString()}
                     </span>
+                    <span className="text-lg text-muted-foreground">+ IVA</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">Pago único • Sin cuotas</p>
+                  <p className="text-sm text-muted-foreground mt-2">Pago único • Financiación disponible</p>
                 </div>
 
                 {/* Benefits list */}
