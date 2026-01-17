@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Clock, Users, Award, ArrowLeft, Sparkles, Zap } from 'lucide-react';
+import { Clock, Users, Award, ArrowLeft, Sparkles, Zap, Check, Calendar, GraduationCap, BookOpen, Coffee, HeadphonesIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FormationDetail } from '@/data/formationDetails';
@@ -109,53 +109,109 @@ export function FormationHero({ formation, onCTAClick }: FormationHeroProps) {
           >
             <div 
               ref={priceCardRef}
-              className="pricing-spotlight gradient-border-animated bg-card/95 backdrop-blur-xl rounded-2xl p-8 max-w-sm ml-auto popular-card"
+              className="pricing-spotlight relative bg-gradient-to-br from-card via-card to-card/95 backdrop-blur-xl rounded-3xl overflow-hidden max-w-md ml-auto shadow-2xl shadow-black/40 border border-white/10"
             >
-              {/* Discount badge */}
-              <div className="absolute -top-3 -right-3">
-                <div className="discount-badge-3d bg-gradient-to-r from-primary to-primary-glow text-white px-4 py-2 rounded-full font-bold shadow-lg shadow-primary/30">
-                  <Zap className="w-4 h-4 inline mr-1" />
-                  -{discount}%
+              {/* Animated border glow */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/20 via-primary-glow/20 to-primary/20 opacity-50 blur-sm animate-pulse" />
+              
+              {/* Header with special offer badge */}
+              <div className="relative bg-gradient-to-r from-primary via-primary-glow to-primary p-4 text-center">
+                <div className="absolute inset-0 bg-[linear-gradient(110deg,transparent_25%,rgba(255,255,255,0.2)_50%,transparent_75%)] bg-[length:200%_100%] animate-shimmer" />
+                <div className="flex items-center justify-center gap-2 text-white font-bold tracking-wide">
+                  <Sparkles className="w-5 h-5 animate-pulse" />
+                  <span className="text-sm uppercase">Oferta Especial</span>
+                  <Sparkles className="w-5 h-5 animate-pulse" />
                 </div>
               </div>
 
-              <div className="mb-6" ref={priceRef}>
-                <span className="text-sm text-muted-foreground line-through">
-                  €{formation.originalPrice}
-                </span>
-                <div className="flex items-end gap-2">
-                  <span className="text-5xl font-bold gradient-text price-animate">
-                    €{priceCount}
-                  </span>
+              <div className="relative p-6 pt-8">
+                {/* Discount badge */}
+                <div className="absolute -top-4 right-6">
+                  <div className="discount-badge-3d bg-gradient-to-br from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full font-bold shadow-lg shadow-green-500/30 flex items-center gap-1">
+                    <Zap className="w-4 h-4" />
+                    <span>-{discount}%</span>
+                  </div>
+                </div>
+
+                {/* Price section */}
+                <div className="text-center mb-6 pb-6 border-b border-white/10" ref={priceRef}>
+                  <div className="flex items-center justify-center gap-3 mb-2">
+                    <span className="text-xl text-muted-foreground/70 line-through decoration-red-500 decoration-2">
+                      €{formation.originalPrice}
+                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded">
+                      Precio normal
+                    </span>
+                  </div>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="text-6xl font-extrabold gradient-text price-animate tracking-tight">
+                      €{priceCount}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Pago único • Sin cuotas</p>
+                </div>
+
+                {/* Benefits list */}
+                <ul className="space-y-3 mb-6">
+                  {[
+                    { icon: GraduationCap, text: "Certificado oficial incluido" },
+                    { icon: BookOpen, text: "Material didáctico completo" },
+                    { icon: Users, text: "Grupos reducidos (máx. 8)" },
+                    { icon: HeadphonesIcon, text: "Soporte post-formación" },
+                    { icon: Coffee, text: "Coffee break incluido" },
+                    { icon: Award, text: "Acceso a comunidad privada" },
+                  ].map((benefit, i) => (
+                    <li 
+                      key={i} 
+                      className={`flex items-center gap-3 text-sm feature-check stagger-${i + 1} group`}
+                    >
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                        <Check className="w-4 h-4 text-primary" />
+                      </div>
+                      <span className="text-foreground/80 group-hover:text-foreground transition-colors">
+                        {benefit.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Next date */}
+                <div className="bg-muted/30 rounded-xl p-4 mb-6 flex items-center gap-3 border border-white/5">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Calendar className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Próxima convocatoria</p>
+                    <p className="text-sm font-semibold text-foreground">Febrero 2026 • Consultar fechas</p>
+                  </div>
+                </div>
+
+                {/* CTA Button */}
+                <Button
+                  variant="hero"
+                  size="lg"
+                  className="w-full ripple-button group shadow-xl shadow-primary/40 hover:shadow-2xl hover:shadow-primary/50 transition-all text-base py-6 font-bold"
+                  onClick={onCTAClick}
+                >
+                  <Sparkles className="w-5 h-5 mr-2 group-hover:animate-pulse" />
+                  Reservar Mi Plaza Ahora
+                </Button>
+
+                {/* Urgency & Social proof */}
+                <div className="mt-5 space-y-3">
+                  <div className="flex items-center justify-center gap-2 text-sm">
+                    <span className="relative flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    <span className="text-green-400 font-medium">Solo quedan 3 plazas disponibles</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                    <GraduationCap className="w-4 h-4 text-primary" />
+                    <span>+500 alumnos ya formados con nosotros</span>
+                  </div>
                 </div>
               </div>
-
-              <ul className="space-y-3 mb-6">
-                {formation.includes.slice(0, 4).map((item, i) => (
-                  <li 
-                    key={i} 
-                    className={`flex items-center gap-2 text-sm text-muted-foreground feature-check stagger-${i + 1} group hover:text-foreground transition-colors`}
-                  >
-                    <div className="w-2 h-2 rounded-full bg-primary group-hover:scale-125 transition-transform" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <Button
-                variant="hero"
-                size="lg"
-                className="w-full ripple-button group shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all"
-                onClick={onCTAClick}
-              >
-                <Sparkles className="w-4 h-4 mr-2 group-hover:animate-pulse" />
-                Reservar Ahora
-              </Button>
-
-              <p className="text-center text-xs text-muted-foreground mt-4 flex items-center justify-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                Plazas limitadas • Próximas fechas disponibles
-              </p>
             </div>
           </div>
         </div>
