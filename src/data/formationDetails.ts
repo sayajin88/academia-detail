@@ -61,27 +61,93 @@ export const formationDetails: Record<string, FormationDetail> = {
   detailing: {
     id: 'detailing',
     slug: 'detailing',
-    title: 'Formación en Detailing',
-    subtitle: 'Domina el arte de la limpieza y protección profesional',
-    description: 'Aprende las técnicas profesionales de limpieza profunda, descontaminación, pulido y protección de vehículos de alta gama.',
-    duration: '2 días intensivos',
+    title: 'Conviértete en un Verdadero Detailer',
+    subtitle: 'Cursos 100% Prácticos en Taller Real',
+    description: 'Los cursos de detailing de coches en Detail Park están construidos para satisfacer las necesidades tanto de los detallistas entusiastas como profesionales. Basados en experiencia real de trabajo en nuestro taller.',
+    duration: '1-5 días según nivel',
     price: 399,
     originalPrice: 599,
     image: detailingHero,
-    heroDescription: 'Formación práctica donde aprenderás desde la preparación del vehículo hasta las técnicas más avanzadas de corrección de pintura y protección cerámica.',
+    heroDescription: 'Formación 100% práctica donde aprenderás desde la preparación del vehículo hasta las técnicas más avanzadas de corrección de pintura y protección cerámica. Basado en experiencia real de trabajo en nuestro taller.',
+    advantages: [
+      { icon: 'Award', title: 'Certificado de reconocimiento del sector' },
+      { icon: 'HeadphonesIcon', title: 'Asistencia posterior personalizada' },
+      { icon: 'UserCheck', title: 'Cursos adaptados y 100% personalizados' },
+      { icon: 'Building', title: 'Cursos con experiencia real en taller' },
+      { icon: 'Briefcase', title: 'Posibilidad de entrar en bolsa de empleo' },
+    ],
+    levels: [
+      {
+        title: 'Para Aficionados',
+        subtitle: 'Iniciación al mundo del detailing',
+        duration: '1-2 días',
+        features: [
+          'Aprender detailing de forma práctica',
+          'Conocimiento del producto y herramientas',
+          'Técnica y aplicación de la teoría',
+          'Cursos adaptados entre semana o fines de semana',
+        ],
+      },
+      {
+        title: 'Para Profesionales',
+        subtitle: 'Nivel avanzado para el sector',
+        duration: '3-5 días',
+        features: [
+          'Conocimientos prácticos y teóricos completos',
+          'Nivel profesional para dar calidad al cliente',
+          'Para entusiastas que quieren nivel Pro',
+          'Para profesionales que quieren mejorar',
+        ],
+        highlighted: true,
+      },
+      {
+        title: 'Monta tu Negocio',
+        subtitle: 'Emprende en el sector',
+        features: [
+          'Modelo de franquicia basado en experiencia real',
+          'Monta tu lavadero profesional',
+          'Sé tu propio jefe',
+          'Acceso a dossier de franquicia',
+        ],
+      },
+    ],
+    instructor: {
+      name: 'Daniel Lopez',
+      role: 'CEO de Detail Park',
+      image: instructorGerardo,
+      description: '¡Hola! Mi nombre es Daniel, soy Detailer desde que tengo uso de la razón. He tenido la gran suerte de cumplir mi sueño y sigo haciendo lo mismo que cuando era pequeño. Ahora, soy el CEO de Detail Park. He tenido la gran oportunidad de tratar miles de coches en estos últimos 15 años y eso me ha otorgado una gran experiencia.',
+      quote: 'Nuestro objetivo es proporcionar una formación personalizada y con un número reducido de personas. Nos importa más la calidad, que la cantidad.',
+    },
+    formacionRegladaItems: [
+      {
+        title: 'Formación Reglada',
+        description: 'Curso estructurado como una carrera universitaria. Preparación y seguridad imprescindibles para los nuevos retos.',
+      },
+      {
+        title: 'Detailing en el País',
+        description: 'Unificamos los estándares en todo el sector de detailing con el objetivo de un marco nacional de calificación reconocido.',
+      },
+      {
+        title: 'Calidad Identificable',
+        description: 'Una insignia que te identifica como especialista de referencia. Excelencia con estándares de calidad europeos.',
+      },
+    ],
+    certificationTitle: 'Certificación y Bolsa de Empleo',
+    certificationText: 'Gracias a nuestra certificación otorgada por Detail Park, no solo tendrás un diploma que avale tus conocimientos, sino que te servirá para añadir valor a tu currículum y dar confianza a tus futuros clientes. Además, tendrás acceso a nuestra bolsa de empleo para conectar con centros de Detail en toda España.',
+    certificationImage: certificadoImg,
     forWho: [
-      'Entusiastas del detailing que quieren profesionalizarse',
-      'Propietarios de lavaderos que quieren ampliar servicios',
-      'Mecánicos que desean diversificar su negocio',
-      'Emprendedores del sector automotriz',
+      'Entusiastas del detailing que quieren aprender de forma práctica',
+      'Profesionales del sector que quieren mejorar su calidad de servicio',
+      'Emprendedores que quieren montar su lavadero profesional o centro de detailing',
+      'Cualquier persona con pasión por el cuidado de vehículos',
     ],
     whatYouLearn: [
-      'Identificar tipos de pintura y defectos',
+      'Conocimiento del producto y herramientas profesionales',
       'Técnicas de lavado seguro y descontaminación',
       'Pulido de corrección en múltiples pasos',
       'Aplicación de ceras, sellantes y cerámicos',
       'Tratamiento de interiores profesional',
-      'Gestión de clientes y presupuestos',
+      'Preparación para el mundo laboral',
     ],
     modules: [
       {
@@ -124,29 +190,50 @@ export const formationDetails: Record<string, FormationDetail> = {
       },
     ],
     includes: [
-      'Material didáctico completo',
-      'Productos y herramientas durante la formación',
+      'Comida incluida durante todos los días',
+      'Material de práctica con marcas punteras',
+      'Herramientas profesionales del sector',
       'Certificado oficial Detail Park',
-      'Acceso a comunidad privada',
-      'Descuentos en productos profesionales',
-      'Soporte post-formación 30 días',
+      'Acceso a bolsa de empleo nacional',
+      'Asistencia post-formación personalizada',
+      'Gestión de alojamiento (alumnos de fuera)',
     ],
     faqs: [
       {
+        question: '¿Es necesario contar con experiencia previa?',
+        answer: 'En absoluto. Estos cursos son 100% prácticos y te darán toda la información necesaria para poder trabajar el detailing en un coche.',
+      },
+      {
+        question: 'Si soy de fuera, ¿Gestionáis el alojamiento?',
+        answer: '¡Por supuesto! Vengas de donde vengas, podemos gestionarte el alojamiento para que te despreocupes totalmente.',
+      },
+      {
+        question: '¿Está incluido las dietas?',
+        answer: 'Tendrás incluida la comida durante los días del curso en cualquiera de sus opciones.',
+      },
+      {
+        question: '¿Necesito llevar material del curso?',
+        answer: 'No necesitas llevar nada. Te proporcionaremos todo el material con las marcas más punteras y mejores herramientas del sector.',
+      },
+      {
+        question: '¿Cuánto tiempo dura el curso?',
+        answer: 'Normalmente jornadas de 8 horas, con 1 hora para comer. La duración varía según el tipo de curso elegido.',
+      },
+      {
+        question: '¿Saldré con una buena base de conocimiento?',
+        answer: 'Saldrás preparado para poder trabajar el detailing profesionalmente gracias a la experiencia real en taller.',
+      },
+      {
+        question: '¿Podré preguntar dudas después del curso?',
+        answer: 'Por supuesto, tendrás asesoramiento personalizado por un Detailer experto. ¡Nos tendrás siempre a tu disposición!',
+      },
+      {
+        question: '¿Hay algún tipo de certificado?',
+        answer: 'Sí, al finalizar se entrega un certificado de asistencia con reconocimiento otorgado por Detail Park.',
+      },
+      {
         question: '¿Necesito traer mi propio coche?',
         answer: 'No, trabajaremos con vehículos que proporcionamos nosotros para la práctica.',
-      },
-      {
-        question: '¿Qué nivel de experiencia necesito?',
-        answer: 'Ninguno. La formación está diseñada para empezar desde cero.',
-      },
-      {
-        question: '¿Hay parking disponible?',
-        answer: 'Sí, disponemos de parking gratuito para todos los alumnos.',
-      },
-      {
-        question: '¿Incluye comida?',
-        answer: 'Incluimos café y snacks. Hay restaurantes cerca para el almuerzo.',
       },
     ],
   },
