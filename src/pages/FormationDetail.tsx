@@ -13,6 +13,8 @@ import { FormationFAQ } from '@/components/formation/FormationFAQ';
 import { FormationCTA } from '@/components/formation/FormationCTA';
 import { getFormationBySlug } from '@/data/formationDetails';
 import { useToast } from '@/hooks/use-toast';
+import { SEO } from '@/components/SEO';
+import { seoConfig } from '@/utils/seoConfig';
 
 export default function FormationDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -24,6 +26,15 @@ export default function FormationDetailPage() {
     return <Navigate to="/" replace />;
   }
 
+  // Generate SEO config for this specific formation
+  const formationSEO = seoConfig.getFormationSEO(slug!, {
+    title: formation.title,
+    description: formation.description,
+    price: formation.price,
+    duration: formation.duration,
+    faqs: formation.faqs,
+  });
+
   const handleCTAClick = () => {
     toast({
       title: "¡Próximamente!",
@@ -32,18 +43,21 @@ export default function FormationDetailPage() {
   };
 
   return (
-    <MainLayout>
-      <FormationHero formation={formation} onCTAClick={handleCTAClick} />
-      <FormationAdvantages formation={formation} />
-      <FormationLevels formation={formation} />
-      <FormationContent formation={formation} />
-      <FormationInstructor formation={formation} />
-      <FormationModules formation={formation} />
-      <FormationReglada formation={formation} />
-      <FormationCertification formation={formation} />
-      <FormationIncludes formation={formation} />
-      <FormationFAQ formation={formation} />
-      <FormationCTA formation={formation} onCTAClick={handleCTAClick} />
-    </MainLayout>
+    <>
+      <SEO {...formationSEO} />
+      <MainLayout>
+        <FormationHero formation={formation} onCTAClick={handleCTAClick} />
+        <FormationAdvantages formation={formation} />
+        <FormationLevels formation={formation} />
+        <FormationContent formation={formation} />
+        <FormationInstructor formation={formation} />
+        <FormationModules formation={formation} />
+        <FormationReglada formation={formation} />
+        <FormationCertification formation={formation} />
+        <FormationIncludes formation={formation} />
+        <FormationFAQ formation={formation} />
+        <FormationCTA formation={formation} onCTAClick={handleCTAClick} />
+      </MainLayout>
+    </>
   );
 }

@@ -1,3 +1,20 @@
+# Detail Park Academy - Robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://detailing-ignition-landing.lovable.app/sitemap.xml
+
+# Bloquear recursos innecesarios
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /src/
+
+# Crawl-delay para ser amigable con los servidores
+Crawl-delay: 1
+
+# Bots específicos
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +27,5 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
