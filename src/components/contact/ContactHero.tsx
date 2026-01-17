@@ -1,10 +1,17 @@
 import { MapPin } from "lucide-react";
+import heroImage from '@/assets/heroes/hero-contacto.jpg';
 
 const ContactHero = () => {
   return (
     <section className="relative py-20 md:py-28 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
+      
+      {/* Decorative Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent opacity-60" />
       
       <div className="container relative z-10">

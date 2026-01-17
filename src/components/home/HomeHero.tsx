@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ChevronDown, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import heroImage from '@/assets/hero-detailing.jpg';
-
+import heroImage from '@/assets/heroes/hero-home.jpg';
 export function HomeHero() {
   const scrollToFormations = () => {
     document.getElementById('formaciones')?.scrollIntoView({ behavior: 'smooth' });

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
+import heroImage from '@/assets/heroes/hero-galeria.jpg';
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState<GalleryCategory>('all');
@@ -36,7 +37,12 @@ export default function Gallery() {
       <MainLayout>
         {/* Hero Section */}
         <section className="relative pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/30" />
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${heroImage})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background" />
           
           {/* Decorative elements */}
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />

@@ -51,7 +51,7 @@ import { seoConfig } from "@/utils/seoConfig";
 // Import images
 import detailParkLogo from "@/assets/detail-park-logo.webp";
 import detailParkLogoWhite from "@/assets/detail-park-logo-white.png";
-import heroDetailing from "@/assets/hero-detailing.jpg";
+import heroJornadaCero from "@/assets/heroes/hero-jornada-cero.jpg";
 import beforeAfterDetailing from "@/assets/before-after-detailing.jpg";
 import detailingTools from "@/assets/detailing-tools.jpg";
 import danielLopezInstructor from "@/assets/daniel-lopez-instructor.webp";
@@ -63,7 +63,6 @@ import eventoAlumnosAtentos from "@/assets/evento-alumnos-atentos.jpg";
 import eventoPracticaPulidora from "@/assets/evento-practica-pulidora.jpg";
 import certificadoAlumno from "@/assets/certificado-alumno.png";
 import certificadoAlumnoFeliz from "@/assets/certificado-alumno-feliz.jpg";
-import mobileHeroBg from "@/assets/mobile-hero-bg.jpg";
 import eventoGrupoDetailing from "@/assets/evento-grupo-detailing.jpg";
 
 const Index = () => {
@@ -131,7 +130,7 @@ const Index = () => {
         {/* Background image for mobile */}
         <div className="absolute inset-0 md:hidden">
           <img 
-            src={mobileHeroBg} 
+            src={heroJornadaCero} 
             alt="Detail Park Background" 
             className="w-full h-full object-cover"
           />
