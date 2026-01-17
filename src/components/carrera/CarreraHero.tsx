@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Crown, Clock, Users, Award, ArrowRight, Sparkles, ChevronDown, Euro } from 'lucide-react';
 import { carreraDetailingData } from '@/data/carreraDetailingData';
 import { useCountUp } from '@/hooks/useCountUp';
-import heroImage from '@/assets/hero-detailing.jpg';
+import heroImage from '@/assets/heroes/hero-carrera.jpg';
 
 interface CarreraHeroProps {
   onCTAClick: () => void;

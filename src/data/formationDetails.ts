@@ -1,7 +1,7 @@
-import detailingHero from '@/assets/hero-detailing.jpg';
-import wrappingHero from '@/assets/portfolio-lamborghini-huracan.png';
-import ppfHero from '@/assets/portfolio-ferrari-458.png';
-import restauracionHero from '@/assets/portfolio-porsche.png';
+import detailingHero from '@/assets/heroes/hero-detailing.jpg';
+import wrappingHero from '@/assets/heroes/hero-wrapping.jpg';
+import ppfHero from '@/assets/heroes/hero-ppf.jpg';
+import restauracionHero from '@/assets/heroes/hero-restauracion.jpg';
 import instructorGerardo from '@/assets/daniel-lopez-instructor.webp';
 import certificadoImg from '@/assets/certificado-detailing.png';
 
