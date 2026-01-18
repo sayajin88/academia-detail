@@ -163,7 +163,18 @@
 @keyframes fade-in-up {
   from { 
     opacity: 0; 
-    transform: translateY(40px);
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-up-mobile {
+  from { 
+    opacity: 0; 
+    transform: translateY(16px);
   }
   to { 
     opacity: 1; 
@@ -174,7 +185,7 @@
 @keyframes scale-in {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
@@ -194,7 +205,18 @@
 @keyframes slide-in-right {
   from {
     opacity: 0;
-    transform: translateX(100px);
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
   }
   to {
     opacity: 1;
@@ -212,11 +234,36 @@
     transform: scale(1.05);
   }
   70% {
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes blur-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+/* Staggered entrance animations */
+@keyframes stagger-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -229,11 +276,11 @@
 }
 
 .animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out;
+  animation: fade-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .animate-scale-in {
-  animation: scale-in 0.6s ease-out;
+  animation: scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .animate-glow-pulse {
@@ -241,11 +288,63 @@
 }
 
 .animate-slide-in-right {
-  animation: slide-in-right 0.8s ease-out;
+  animation: slide-in-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .animate-bounce-in {
-  animation: bounce-in 0.8s ease-out;
+  animation: bounce-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-blur-in {
+  animation: blur-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Staggered children animation utility */
+.stagger-children > * {
+  opacity: 0;
+  animation: stagger-fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 250ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 350ms; }
+
+/* Mobile-optimized animations - faster and less distance */
+@media (max-width: 768px) {
+  .animate-fade-in-up {
+    animation: fade-in-up-mobile 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  
+  .animate-slide-in-right,
+  .animate-slide-in-left {
+    animation-duration: 0.4s;
+  }
+  
+  .animate-bounce-in {
+    animation-duration: 0.5s;
+  }
+  
+  .stagger-children > * {
+    animation-duration: 0.3s;
+  }
+  
+  .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger-children > *:nth-child(2) { animation-delay: 30ms; }
+  .stagger-children > *:nth-child(3) { animation-delay: 60ms; }
+  .stagger-children > *:nth-child(4) { animation-delay: 90ms; }
+  .stagger-children > *:nth-child(5) { animation-delay: 120ms; }
+  .stagger-children > *:nth-child(6) { animation-delay: 150ms; }
+  .stagger-children > *:nth-child(7) { animation-delay: 180ms; }
+  .stagger-children > *:nth-child(8) { animation-delay: 210ms; }
 }
 
 /* Enhanced animations */
@@ -254,7 +353,7 @@
   50% { opacity: 0.8; }
 }
 
-@keyframes glow-pulse {
+@keyframes text-glow-pulse {
   0%, 100% { 
     text-shadow: 0 0 5px hsl(var(--primary)),
                  0 0 10px hsl(var(--primary)),
@@ -271,8 +370,8 @@
   animation: pulse-subtle 3s ease-in-out infinite;
 }
 
-.animate-glow-pulse {
-  animation: glow-pulse 2s ease-in-out infinite;
+.animate-text-glow-pulse {
+  animation: text-glow-pulse 2s ease-in-out infinite;
 }
 
 /* Enhanced responsive utilities & performance optimization */
