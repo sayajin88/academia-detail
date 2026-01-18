@@ -2,10 +2,9 @@ import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { useCountUp } from '@/hooks/useCountUp';
 
 const stats = [
-  { value: 7, suffix: '+', label: 'Años de experiencia' },
+  { value: 9, suffix: '+', label: 'Años de experiencia' },
   { value: 500, suffix: '+', label: 'Vehículos tratados' },
   { value: 200, suffix: '+', label: 'Alumnos formados' },
-  { value: 2, suffix: '', label: 'Centros activos' },
 ];
 
 function StatItem({ value, suffix, label, delay }: { value: number; suffix: string; label: string; delay: number }) {
@@ -38,7 +37,7 @@ export function AboutStats() {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+        <div className="grid grid-cols-3 gap-8 md:gap-12 max-w-3xl mx-auto">
           {stats.map((stat, index) => (
             <StatItem 
               key={stat.label}
