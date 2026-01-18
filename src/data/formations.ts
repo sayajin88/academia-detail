@@ -1,8 +1,8 @@
-import detailingHero from '@/assets/hero-detailing.jpg';
-import wrappingHero from '@/assets/portfolio-lamborghini-huracan.png';
-import ppfHero from '@/assets/portfolio-ferrari-458.png';
-import restauracionHero from '@/assets/portfolio-porsche.png';
-import carreraHero from '@/assets/professional-detailing.jpg';
+import detailingHero from '@/assets/evento-practica-pulidora-real.jpg';
+import wrappingHero from '@/assets/evento-grupo-coche-rojo.jpg';
+import ppfHero from '@/assets/formacion-detailing-juan-daniel.jpg';
+import restauracionHero from '@/assets/evento-limpieza-interior.jpg';
+import carreraHero from '@/assets/evento-clase-completa.jpg';
 
 export interface Formation {
   id: string;
