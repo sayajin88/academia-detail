@@ -17,9 +17,9 @@ export default function Home() {
       <SEO {...seoConfig.home} />
       <MainLayout>
         <HomeHero />
+        <FormationsGrid />
         <CompetitiveComparison />
         <BusinessSkillsSection />
-        <FormationsGrid />
         <CarreraNegocioSection />
         <GalleryPreview />
         <TestimonialsSection />
