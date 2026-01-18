@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -100,8 +100,8 @@ const formacionOptions = [
 
 const ContactForm = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [wasSubmitting, setWasSubmitting] = useState(false);
   const [formspreeState, handleFormspreeSubmit] = useFormspree("maqqevbn");
+  const hasShownModal = useRef(false);
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -119,14 +119,14 @@ const ContactForm = () => {
     },
   });
 
-  // Detectar cuando pasa de "submitting" a "no submitting" con éxito
+  // Detectar éxito de Formspree y mostrar modal solo una vez
   useEffect(() => {
-    if (wasSubmitting && !formspreeState.submitting && formspreeState.succeeded) {
+    if (formspreeState.succeeded && !hasShownModal.current) {
+      hasShownModal.current = true;
       setShowSuccessModal(true);
       form.reset();
     }
-    setWasSubmitting(formspreeState.submitting);
-  }, [formspreeState.submitting, formspreeState.succeeded, form, wasSubmitting]);
+  }, [formspreeState.succeeded, form]);
 
   const onSubmit = async (data: ContactFormData) => {
     // Mapear valores a etiquetas legibles para el email
@@ -440,7 +440,10 @@ const ContactForm = () => {
       {/* Modal de éxito */}
       <ContactSuccessModal
         open={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
+        onClose={() => {
+          setShowSuccessModal(false);
+          hasShownModal.current = false; // Permitir mostrar de nuevo en futuros envíos
+        }}
       />
     </>
   );
