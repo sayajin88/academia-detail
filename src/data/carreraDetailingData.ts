@@ -32,7 +32,7 @@ export const carreraDetailingData = {
   tagline: "El programa más completo del sector: técnica + negocio + experiencia real",
   duration: "1 mes intensivo",
   price: 9997,
-  originalValue: 15000,
+  originalValue: 18992,
   spots: 4,
   nextEdition: "Marzo 2026",
   
@@ -46,26 +46,26 @@ export const carreraDetailingData = {
   includedFormations: [
     {
       name: "Detailing Profesional",
-      value: 599,
-      duration: "5 días",
+      value: 3497,
+      duration: "4 días",
       highlights: ["Pulido de pintura", "Descontaminación", "Protección cerámica"]
     },
     {
       name: "Car Wrapping",
-      value: 599,
-      duration: "5 días", 
+      value: 2499,
+      duration: "2-4 días", 
       highlights: ["Vinilado completo", "PPF parcial", "Técnicas avanzadas"]
     },
     {
       name: "PPF Avanzado",
-      value: 799,
-      duration: "5 días",
+      value: 2897,
+      duration: "2 días",
       highlights: ["Instalación completa", "Patrones digitales", "Certificación"]
     },
     {
       name: "Restauración Integral",
-      value: 599,
-      duration: "5 días",
+      value: 699,
+      duration: "2 días",
       highlights: ["Faros", "Interiores", "Plásticos", "Tapicería"]
     }
   ] as IncludedFormation[],
@@ -191,10 +191,10 @@ export const carreraDetailingData = {
   ] as CarreraBenefit[],
 
   valueBreakdown: [
-    { item: "Curso Detailing Profesional", value: 599 },
-    { item: "Curso Car Wrapping", value: 599 },
-    { item: "Curso PPF Avanzado", value: 799 },
-    { item: "Curso Restauración Integral", value: 599 },
+    { item: "Curso Detailing Profesional", value: 3497 },
+    { item: "Curso Car Wrapping", value: 2499 },
+    { item: "Curso PPF Avanzado", value: 2897 },
+    { item: "Curso Restauración Integral", value: 699 },
     { item: "Módulo de Negocio Exclusivo", value: 2500 },
     { item: "1 Mes de Práctica en Taller", value: 3500 },
     { item: "Mentoría 6 Meses", value: 1500 },
