@@ -15,20 +15,25 @@ export function FormationLevels({ formation, onCTAClick }: FormationLevelsProps)
   if (!formation.levels) return null;
 
   const hasPrice = formation.levels.some(level => level.price);
-  const gridCols = formation.levels.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3';
+  const isSingleLevel = formation.levels.length === 1;
+  const gridCols = isSingleLevel 
+    ? 'md:grid-cols-1' 
+    : formation.levels.length === 2 
+      ? 'md:grid-cols-2' 
+      : 'md:grid-cols-3';
 
   return (
     <section className="py-20 bg-card">
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionHeading
-            badge="Niveles"
-            title="Elige tu formación"
-            subtitle="Cursos adaptados a tu experiencia y objetivos"
+            badge={isSingleLevel ? "Formación" : "Niveles"}
+            title={isSingleLevel ? "Curso Completo" : "Elige tu formación"}
+            subtitle={isSingleLevel ? "Todo lo que necesitas para dominar esta especialidad" : "Cursos adaptados a tu experiencia y objetivos"}
           />
         </AnimatedSection>
 
-        <div className={`grid ${gridCols} gap-8 max-w-4xl mx-auto`}>
+        <div className={`grid ${gridCols} gap-8 ${isSingleLevel ? 'max-w-lg' : 'max-w-4xl'} mx-auto`}>
           {formation.levels.map((level, index) => (
             <AnimatedSection key={index} delay={index * 150}>
               <Card
