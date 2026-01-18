@@ -4,6 +4,7 @@ import { AboutHistory } from '@/components/about/AboutHistory';
 import { AboutPhilosophy } from '@/components/about/AboutPhilosophy';
 import { AboutStats } from '@/components/about/AboutStats';
 import { AboutGallerySection } from '@/components/about/AboutGallerySection';
+import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -15,6 +16,11 @@ export default function AboutUs() {
     <>
       <SEO {...seoConfig.aboutUs} />
       <MainLayout>
+        {/* Breadcrumbs */}
+        <div className="container mx-auto px-4">
+          <PageBreadcrumbs items={[{ label: "Quiénes Somos" }]} />
+        </div>
+        
         {/* Hero Section */}
         <AboutHero />
 

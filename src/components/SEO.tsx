@@ -67,7 +67,8 @@ export const localBusinessSchema = {
     "geoRadius": "50000"
   },
   "sameAs": [
-    "https://www.instagram.com/detailpark/",
+    "https://www.instagram.com/detailparkoficial/",
+    "https://www.instagram.com/danidetailoficial/",
     "https://www.youtube.com/@detailpark"
   ],
   "aggregateRating": {

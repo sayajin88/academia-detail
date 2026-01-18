@@ -45,11 +45,18 @@ export function FormationHero({ formation, onCTAClick }: FormationHeroProps) {
 
   return (
     <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-      {/* Background */}
-      <div
-        className={`absolute inset-0 bg-cover bg-center ${isComingSoon ? 'grayscale-[20%]' : ''}`}
-        style={{ backgroundImage: `url(${formation.image})` }}
-      />
+      {/* Background with aspect-ratio container to prevent CLS */}
+      <div className="absolute inset-0">
+        <div className={`absolute inset-0 bg-muted`} /> {/* Placeholder color */}
+        <img
+          src={formation.image}
+          alt={formation.title}
+          className={`absolute inset-0 w-full h-full object-cover ${isComingSoon ? 'grayscale-[20%]' : ''}`}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40" />
 
       {/* Content */}
@@ -111,7 +118,7 @@ export function FormationHero({ formation, onCTAClick }: FormationHeroProps) {
             {/* CTA */}
             <Button 
               variant={isComingSoon ? "outline" : "hero"} 
-              size="xl" 
+              size="touch" 
               onClick={onCTAClick} 
               className={`ripple-button group ${isComingSoon ? 'border-amber-500/50 text-amber-400 hover:bg-amber-500/10' : ''}`}
             >
