@@ -100,6 +100,7 @@ const formacionOptions = [
 
 const ContactForm = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [wasSubmitting, setWasSubmitting] = useState(false);
   const [formspreeState, handleFormspreeSubmit] = useFormspree("maqqevbn");
 
   const form = useForm<ContactFormData>({
@@ -118,13 +119,14 @@ const ContactForm = () => {
     },
   });
 
-  // Manejar éxito de Formspree
+  // Detectar cuando pasa de "submitting" a "no submitting" con éxito
   useEffect(() => {
-    if (formspreeState.succeeded) {
+    if (wasSubmitting && !formspreeState.submitting && formspreeState.succeeded) {
       setShowSuccessModal(true);
       form.reset();
     }
-  }, [formspreeState.succeeded, form]);
+    setWasSubmitting(formspreeState.submitting);
+  }, [formspreeState.submitting, formspreeState.succeeded, form, wasSubmitting]);
 
   const onSubmit = async (data: ContactFormData) => {
     // Mapear valores a etiquetas legibles para el email
