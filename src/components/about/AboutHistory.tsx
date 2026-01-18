@@ -23,7 +23,7 @@ const timelineEvents = [
   {
     year: 'Hoy',
     title: 'Centro de Referencia',
-    description: 'Con centros en Alicante y Marbella, somos el único centro de formación donde vivimos del Detailing. Más de 200 alumnos formados y contando.',
+    description: 'Somos el único centro de formación donde vivimos del Detailing. Más de 200 alumnos formados y un taller activo que demuestra cada día que nuestro modelo funciona.',
     icon: Award,
   },
 ];
@@ -41,7 +41,7 @@ export function AboutHistory() {
               De la Pasión al Referente del Sector
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Un recorrido de más de 7 años construyendo el negocio de detailing 
+              Un recorrido de más de 9 años construyendo el negocio de detailing 
               más sólido y formando a la próxima generación de profesionales.
             </p>
           </div>
@@ -97,7 +97,7 @@ export function AboutHistory() {
                 dignamente del detailing. Hemos visto cerrar decenas de centros por falta de 
                 gestión empresarial, no por falta de habilidad técnica. Por eso nació Academia Detail: 
                 para transmitir no solo el oficio, sino el modelo de negocio que nos ha mantenido 
-                activos y rentables durante más de 7 años."
+                activos y rentables durante más de 9 años."
               </p>
               <footer className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
