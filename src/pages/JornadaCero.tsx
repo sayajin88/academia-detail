@@ -182,36 +182,41 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70 md:via-black/40 md:to-black/70"></div>
 
         <div className="relative z-10 container mx-auto px-4">
-          {/* Badge Workshop */}
+          {/* Badge - Low Cost High Value */}
           <div className="text-center mb-6">
-            <Badge className="bg-primary/20 text-primary border border-primary/30 px-4 py-1.5 text-sm font-semibold">
-              <Zap className="w-4 h-4 mr-2 inline" />
-              WORKSHOP DE 1 DÍA • TOMA DE CONTACTO
+            <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 px-4 py-1.5 text-sm font-semibold">
+              🚀 EXPERIENCIA DE INMERSIÓN • BAJO RIESGO, ALTO VALOR
             </Badge>
           </div>
           
           <div className="text-center mb-8 md:mb-12">
             <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
-              Jornada Zero: <span className="gradient-text">Tu Primera Toma de Contacto</span> con el Detailing
+              Jornada Zero: <span className="gradient-text">Tu Primera Inmersión</span> en el Detailing Profesional
             </h1>
             <p className="text-base md:text-lg text-white/90 max-w-3xl mx-auto mb-6">
-              <strong>No es un curso, es una experiencia práctica de 1 día</strong> para descubrir si el detailing profesional es tu camino. Prueba antes de invertir en formación completa.
+              <strong className="text-primary">No arriesgues miles de euros sin saber si es para ti.</strong> Por solo €97 + IVA, accede a un taller 100% real, usa herramientas profesionales y descubre si tienes mentalidad de empresario.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-white/70">
-              <span className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-primary" />
-                Solo 1 día
-              </span>
-              <span className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-primary" />
-                Precio reducido
-              </span>
-              <span className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-primary" />
-                Sin compromiso
-              </span>
+            
+            {/* Three Key Points */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mt-8">
+              <div className="glass-card p-4 rounded-xl border border-green-500/30">
+                <div className="text-2xl mb-2">💰</div>
+                <h3 className="font-bold text-white mb-1">Inversión Mínima</h3>
+                <p className="text-sm text-white/70">Solo €97 + IVA - El curso más accesible del sector</p>
+              </div>
+              <div className="glass-card p-4 rounded-xl border border-primary/30">
+                <div className="text-2xl mb-2">🔧</div>
+                <h3 className="font-bold text-white mb-1">Acceso Total</h3>
+                <p className="text-sm text-white/70">Usa las mismas pulidoras y químicos que los profesionales</p>
+              </div>
+              <div className="glass-card p-4 rounded-xl border border-amber-500/30">
+                <div className="text-2xl mb-2">🧠</div>
+                <h3 className="font-bold text-white mb-1">Mentalidad Business</h3>
+                <p className="text-sm text-white/70">Te enseñamos qué material comprar primero para no tirar el dinero</p>
+              </div>
             </div>
           </div>
+          
           {/* Cards - Hidden on mobile */}
           <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
             {[
@@ -500,21 +505,70 @@ const Index = () => {
               </div>
             </div>
 
-            {/* CTA Final */}
+            {/* CTA Final - Featured Price Card */}
             <div className="text-center mt-16">
-              <div className="glass-intense rounded-2xl p-8 border border-primary/30">
-                <h3 className="text-2xl font-bold text-white mb-4">
-                  ¿Listo para probar el detailing profesional sin compromiso?
-                </h3>
-                <p className="text-white/80 mb-6">
-                  Workshop limitado a 12 participantes para garantizar atención personalizada
-                </p>
-                <Button variant="hero" size="xl" onClick={openModal} className="animate-pulse-glow">
-                  🎯 Probar la Jornada Zero - €199 + IVA
-                </Button>
-                <p className="text-sm text-white/60 mt-4">
-                  Toma de contacto sin compromiso • Descontable de cursos completos
-                </p>
+              <div className="relative max-w-lg mx-auto">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                  <Badge className="bg-green-500 text-white px-4 py-1 font-bold">
+                    💰 EL CURSO MÁS ACCESIBLE DEL SECTOR
+                  </Badge>
+                </div>
+                
+                <div className="glass-intense rounded-2xl p-8 border-2 border-primary text-center">
+                  <div className="text-white/60 line-through text-xl mb-2">€199</div>
+                  <div className="text-5xl font-black text-primary mb-2">€97</div>
+                  <div className="text-white/80 text-sm mb-6">+ IVA • Oferta limitada</div>
+                  
+                  <div className="space-y-3 text-left mb-6">
+                    <div className="flex items-center gap-2 text-white/90">
+                      <CheckCircle className="text-green-400 w-5 h-5" />
+                      <span>8 horas de práctica en taller real</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white/90">
+                      <CheckCircle className="text-green-400 w-5 h-5" />
+                      <span>Herramientas profesionales incluidas</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white/90">
+                      <CheckCircle className="text-green-400 w-5 h-5" />
+                      <span>Certificado de asistencia</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white/90">
+                      <CheckCircle className="text-green-400 w-5 h-5" />
+                      <span>Descontable de cursos completos</span>
+                    </div>
+                  </div>
+                  
+                  <Button variant="hero" size="xl" onClick={openModal} className="w-full animate-pulse-glow">
+                    RESERVAR MI PLAZA - €97 + IVA
+                  </Button>
+                  
+                  <p className="text-xs text-white/60 mt-4">
+                    ⚡ Solo 10 plazas por edición • Sin compromiso
+                  </p>
+                </div>
+              </div>
+              
+              {/* Urgency Indicators */}
+              <div className="flex flex-wrap justify-center gap-6 mt-8">
+                <div className="glass-intense rounded-2xl px-6 py-4 border border-primary/30">
+                  <div className="flex items-center gap-3">
+                    <Clock className="text-primary w-6 h-6" />
+                    <div className="text-left">
+                      <div className="text-white/70 text-sm">Próxima Convocatoria</div>
+                      <div className="text-white font-bold">Sábado 17 Enero 2026</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="glass-intense rounded-2xl px-6 py-4 border border-orange-500/30">
+                  <div className="flex items-center gap-3">
+                    <Users className="text-orange-400 w-6 h-6" />
+                    <div className="text-left">
+                      <div className="text-white/70 text-sm">Plazas Disponibles</div>
+                      <div className="text-orange-400 font-bold animate-pulse">Solo 4 de 10</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

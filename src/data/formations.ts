@@ -22,55 +22,55 @@ export const formations: Formation[] = [
     id: 'curso-detailing-profesional',
     title: 'Detailing Profesional',
     shortTitle: 'Detailing',
-    description: 'Aprende las técnicas profesionales de limpieza profunda, descontaminación, pulido y protección de vehículos. Desde corrección de pintura hasta tratamientos cerámicos.',
+    description: 'Domina las técnicas de pulido, corrección y protección cerámica en un taller 100% real. Aprende a presupuestar servicios y gestionar clientes de alta gama.',
     duration: '1-2 días',
     image: detailingHero,
     href: '/curso-detailing-profesional',
     icon: 'sparkles',
     highlights: [
-      'Corrección de pintura y pulido',
+      'Corrección de pintura en vehículos reales',
       'Tratamientos cerámicos profesionales',
-      'Limpieza interior profunda',
-      'Descontaminación química y física'
+      'Presupuestación y gestión de clientes',
+      'Visión de negocio rentable'
     ]
   },
   {
     id: 'curso-vinilado-vehiculos',
     title: 'Car Wrapping',
     shortTitle: 'Wrapping',
-    description: 'Domina el arte del vinilado integral, cambio de color y personalización profesional de vehículos. Técnicas de instalación en superficies complejas.',
+    description: 'Aprende vinilado integral y cambio de color con clientes reales de alta gama. Te enseñamos técnica Y cómo captar clientes VIP para este servicio premium.',
     duration: '2-3 días',
     image: wrappingHero,
     href: '/curso-vinilado-vehiculos',
     icon: 'palette',
     highlights: [
-      'Vinilado integral de vehículos',
+      'Vinilado con vehículos de clientes',
       'Cambio de color completo',
-      'Técnicas de corte profesional',
-      'Instalación en superficies complejas'
+      'Captación de clientes premium',
+      'Márgenes de beneficio elevados'
     ]
   },
   {
     id: 'curso-ppf-proteccion-pintura',
     title: 'Paint Protection Film',
     shortTitle: 'PPF',
-    description: 'Especialízate en la instalación de film de protección de pintura para vehículos de alta gama. Protección invisible contra impactos y rayones.',
+    description: 'Especialízate en PPF para vehículos de alta gama en nuestro taller operativo. Aprende a presupuestar y escalar este servicio de alto margen.',
     duration: '2-3 días',
     image: ppfHero,
     href: '/curso-ppf-proteccion-pintura',
     icon: 'shield',
     highlights: [
-      'Instalación de PPF profesional',
+      'Instalación PPF en vehículos de clientes',
       'Corte digitalizado y manual',
-      'Protección de zonas críticas',
-      'Técnicas de autorreparación'
+      'Presupuestación de alto valor',
+      'Servicio premium de alta rentabilidad'
     ]
   },
   {
     id: 'curso-restauracion-vehiculos',
     title: 'Restauración de Vehículos',
     shortTitle: 'Restauración',
-    description: 'Recupera vehículos dañados y clásicos con técnicas avanzadas de restauración profesional. Devuelve el esplendor original a cualquier vehículo.',
+    description: 'Recupera vehículos dañados y clásicos con técnicas avanzadas. Un nicho de mercado con poca competencia y clientes dispuestos a pagar por resultados.',
     duration: '2-3 días',
     image: restauracionHero,
     href: '/curso-restauracion-vehiculos',
@@ -78,8 +78,8 @@ export const formations: Formation[] = [
     highlights: [
       'Restauración de pintura oxidada',
       'Recuperación de interiores',
-      'Tratamiento de plásticos',
-      'Técnicas de rejuvenecimiento'
+      'Nicho con poca competencia',
+      'Clientes que valoran calidad'
     ],
     comingSoon: true
   }
@@ -88,9 +88,9 @@ export const formations: Formation[] = [
 export const carreraNegocio = {
   id: 'formacion-profesional-detailing',
   title: 'Carrera Negocio',
-  subtitle: 'El Programa Más Completo del Sector',
-  description: 'Conviértete en un profesional completo del detailing con acceso a todas las formaciones, prácticas reales en nuestras instalaciones y formación exclusiva en gestión empresarial.',
-  duration: '3-6 meses',
+  subtitle: 'Técnica + Negocio = Empresario Exitoso',
+  description: 'El programa más completo del sector: domina todas las técnicas Y aprende a montar un negocio rentable. No saldrás siendo un técnico, saldrás siendo un empresario.',
+  duration: '1 mes intensivo',
   image: carreraHero,
   href: '/formacion-profesional-detailing',
   includes: [
@@ -99,24 +99,24 @@ export const carreraNegocio = {
       description: 'Detailing, Wrapping, PPF y Restauración'
     },
     {
-      title: 'Prácticas Reales',
-      description: 'Trabaja en proyectos reales en Detail Park'
+      title: 'Prácticas en Taller Real',
+      description: 'Trabaja con clientes reales en Detail Park'
     },
     {
-      title: 'Gestión de Negocio',
-      description: 'Aprende a montar y gestionar tu propio taller'
+      title: 'Módulo de Negocio Exclusivo',
+      description: 'Márgenes, captación y escalado'
     },
     {
-      title: 'Mentoría Personalizada',
-      description: 'Acompañamiento 1:1 con profesionales'
+      title: 'Mentoría Empresarial',
+      description: 'Acompañamiento 6 meses post-formación'
     },
     {
-      title: 'Red de Profesionales',
-      description: 'Acceso a nuestra comunidad exclusiva'
+      title: 'Red de Empresarios',
+      description: 'Acceso a comunidad de alumni exitosos'
     },
     {
-      title: 'Certificación Completa',
-      description: 'Diploma acreditado en todas las especialidades'
+      title: '4 Certificaciones',
+      description: 'Diploma acreditado en cada especialidad'
     }
   ]
 };

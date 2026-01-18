@@ -1,5 +1,7 @@
 import { MainLayout } from '@/components/layout/MainLayout';
 import { HomeHero } from '@/components/home/HomeHero';
+import { CompetitiveComparison } from '@/components/home/CompetitiveComparison';
+import { BusinessSkillsSection } from '@/components/home/BusinessSkillsSection';
 import { FormationsGrid } from '@/components/home/FormationsGrid';
 import { CarreraNegocioSection } from '@/components/home/CarreraNegocioSection';
 import { GalleryPreview } from '@/components/home/GalleryPreview';
@@ -15,6 +17,8 @@ export default function Home() {
       <SEO {...seoConfig.home} />
       <MainLayout>
         <HomeHero />
+        <CompetitiveComparison />
+        <BusinessSkillsSection />
         <FormationsGrid />
         <CarreraNegocioSection />
         <GalleryPreview />
