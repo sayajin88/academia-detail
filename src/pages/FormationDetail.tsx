@@ -94,8 +94,17 @@ export default function FormationDetailPage() {
             subtitle="Descubre las experiencias reales de quienes ya se han formado con nosotros"
           />
         )}
+        {slug === 'curso-detailing-profesional' && (
+          <FormationGallery 
+            galleryType="detailing"
+            title="Así es Nuestra Formación"
+            subtitle="Imágenes reales de nuestros cursos de Detailing Profesional"
+            badge="Galería"
+          />
+        )}
         {slug === 'curso-vinilado-vehiculos' && (
           <FormationGallery 
+            galleryType="wrapping"
             title="Trabajos de Nuestros Alumnos"
             subtitle="Resultados reales de proyectos de Car Wrapping realizados durante y después de la formación"
             badge="Galería"
