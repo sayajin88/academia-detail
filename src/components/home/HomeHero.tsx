@@ -1,27 +1,24 @@
-import { Link } from 'react-router-dom';
-import { ChevronDown, Play, Wrench } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useIsMobile } from '@/hooks/use-mobile';
-import heroImage from '@/assets/heroes/hero-home.jpg';
+import { Link } from "react-router-dom";
+import { ChevronDown, Play, Wrench } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
+import heroImage from "@/assets/heroes/hero-home.jpg";
 
 export function HomeHero() {
   const isMobile = useIsMobile();
-  
+
   const scrollToFormations = () => {
-    document.getElementById('formaciones')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("formaciones")?.scrollIntoView({ behavior: "smooth" });
   };
 
   // YouTube video ID for background
-  const videoId = '1JS81ZxslpI';
+  const videoId = "1JS81ZxslpI";
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Video Background for Desktop / Image for Mobile */}
       {isMobile ? (
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroImage})` }} />
       ) : (
         <div className="absolute inset-0 overflow-hidden">
           <iframe
@@ -29,11 +26,11 @@ export function HomeHero() {
             title="Video de fondo Detail Park - Taller 100% Real"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            style={{ border: 'none' }}
+            style={{ border: "none" }}
           />
         </div>
       )}
-      
+
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-background" />
 
@@ -47,14 +44,12 @@ export function HomeHero() {
           {/* Badge - Emphasizing Real Workshop */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 mb-6">
             <Wrench className="w-4 h-4 text-primary" />
-            <span className="text-white/90 text-sm font-medium">
-              🔧 El ÚNICO Centro con Taller 100% Real
-            </span>
+            <span className="text-white/90 text-sm font-medium">🔧 El ÚNICO Centro con Taller 100% Real</span>
           </div>
 
           {/* Main Title - New Differentiation Message */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            No Enseñamos a Lavar Coches,{' '}
+            No Enseñamos a Lavar Coches,{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-glow">
               Formamos Empresarios del Detailing
             </span>
@@ -62,9 +57,9 @@ export function HomeHero() {
 
           {/* Subtitle - Emphasizing Real Practice */}
           <p className="text-base md:text-lg lg:text-xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Olvida las aulas vacías y la teoría sin práctica. Aprende en un{' '}
-            <strong className="text-white">taller operativo con clientes reales</strong>,{' '}
-            vehículos de alta gama y <strong className="text-primary">mentalidad de negocio desde el día 1</strong>.
+            Olvida las aulas vacías y la teoría sin práctica. Aprende en un{" "}
+            <strong className="text-white">taller operativo con clientes reales</strong>, vehículos de alta gama y{" "}
+            <strong className="text-primary">mentalidad de negocio desde el día 1</strong>.
           </p>
 
           {/* CTA Buttons */}
@@ -72,14 +67,10 @@ export function HomeHero() {
             <Button asChild variant="hero" size="xl">
               <Link to="/curso-detailing-iniciacion">
                 <Play className="h-5 w-5 mr-2" />
-                Probar por €97 (Jornada Zero)
+                Probar por €199 (Jornada Zero)
               </Link>
             </Button>
-            <Button
-              variant="glass"
-              size="xl"
-              onClick={scrollToFormations}
-            >
+            <Button variant="glass" size="xl" onClick={scrollToFormations}>
               Ver Formaciones Completas
             </Button>
           </div>
@@ -87,14 +78,12 @@ export function HomeHero() {
           {/* Stats - Updated with Business Focus */}
           <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-2xl mx-auto">
             {[
-              { value: '500+', label: 'Empresarios Formados' },
-              { value: '100%', label: 'Taller Real' },
-              { value: '€3.5K', label: 'Facturación Media/Mes' },
+              { value: "500+", label: "Empresarios Formados" },
+              { value: "100%", label: "Taller Real" },
+              { value: "€3.5K", label: "Facturación Media/Mes" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-2xl md:text-4xl font-bold text-primary mb-1">
-                  {stat.value}
-                </div>
+                <div className="text-2xl md:text-4xl font-bold text-primary mb-1">{stat.value}</div>
                 <div className="text-xs md:text-sm text-white/60">{stat.label}</div>
               </div>
             ))}
