@@ -18,6 +18,15 @@ import porscheCayenne from '@/assets/portfolio-porsche-cayenne.png';
 import rangeRoverVelar from '@/assets/portfolio-range-rover-velar.png';
 import toyotaSupra from '@/assets/portfolio-toyota-supra.png';
 
+// Import detailing formation images
+import formacionDetailing1 from '@/assets/formacion-detailing-1.jpg';
+import alumnosFormacion3 from '@/assets/alumnos-formacion-3.jpg';
+import alumnosFormacion from '@/assets/alumnos-formacion.jpg';
+import formacionDetailing3 from '@/assets/formacion-detailing-3.jpg';
+import formacionDetailing4 from '@/assets/formacion-detailing-4.jpg';
+import formacionDetailing2 from '@/assets/formacion-detailing-2.jpg';
+import formacionDetailingJuanDaniel from '@/assets/formacion-detailing-juan-daniel.jpg';
+
 interface GalleryItem {
   image: string;
   title: string;
@@ -28,6 +37,7 @@ interface FormationGalleryProps {
   title?: string;
   subtitle?: string;
   badge?: string;
+  galleryType?: 'wrapping' | 'detailing';
 }
 
 const wrappingGalleryItems: GalleryItem[] = [
@@ -45,25 +55,38 @@ const wrappingGalleryItems: GalleryItem[] = [
   { image: audiR8, title: 'Audi R8', description: 'Cambio de color completo' },
 ];
 
+const detailingGalleryItems: GalleryItem[] = [
+  { image: formacionDetailing1, title: 'Formación en Taller', description: 'Daniel López explicando técnicas a los alumnos' },
+  { image: alumnosFormacion3, title: 'Clase Teórica', description: 'Alumnos tomando apuntes durante la formación' },
+  { image: alumnosFormacion, title: 'Atención al Detalle', description: 'Grupo completo en sesión de teoría' },
+  { image: formacionDetailing3, title: 'Práctica con Pulidora', description: 'Aprendizaje práctico en grupo reducido' },
+  { image: formacionDetailing4, title: 'Formación 1 a 1', description: 'Instructor guiando técnica de pulido' },
+  { image: formacionDetailing2, title: 'Sesión de Formación', description: 'Daniel en el aula explicando conceptos' },
+  { image: formacionDetailingJuanDaniel, title: 'Práctica Real', description: 'Alumno practicando en vehículo real' },
+];
+
 export function FormationGallery({ 
   title = "Trabajos de Nuestros Alumnos",
   subtitle = "Resultados reales de proyectos realizados durante y después de la formación",
-  badge = "Galería"
+  badge = "Galería",
+  galleryType = 'wrapping'
 }: FormationGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  
+  const galleryItems = galleryType === 'detailing' ? detailingGalleryItems : wrappingGalleryItems;
 
   const openLightbox = (index: number) => setSelectedIndex(index);
   const closeLightbox = () => setSelectedIndex(null);
   
   const goToPrevious = () => {
     if (selectedIndex !== null) {
-      setSelectedIndex(selectedIndex === 0 ? wrappingGalleryItems.length - 1 : selectedIndex - 1);
+      setSelectedIndex(selectedIndex === 0 ? galleryItems.length - 1 : selectedIndex - 1);
     }
   };
   
   const goToNext = () => {
     if (selectedIndex !== null) {
-      setSelectedIndex(selectedIndex === wrappingGalleryItems.length - 1 ? 0 : selectedIndex + 1);
+      setSelectedIndex(selectedIndex === galleryItems.length - 1 ? 0 : selectedIndex + 1);
     }
   };
 
@@ -80,7 +103,7 @@ export function FormationGallery({
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
-          {wrappingGalleryItems.map((item, index) => (
+          {galleryItems.map((item, index) => (
             <AnimatedSection key={index} delay={index * 50}>
               <div 
                 className="group relative aspect-square overflow-hidden rounded-xl cursor-pointer"
@@ -135,17 +158,17 @@ export function FormationGallery({
                 
                 {/* Image */}
                 <img 
-                  src={wrappingGalleryItems[selectedIndex].image}
-                  alt={wrappingGalleryItems[selectedIndex].title}
+                  src={galleryItems[selectedIndex].image}
+                  alt={galleryItems[selectedIndex].title}
                   className="w-full h-auto max-h-[80vh] object-contain"
                 />
                 
                 {/* Caption */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
-                  <h3 className="text-white text-xl font-bold">{wrappingGalleryItems[selectedIndex].title}</h3>
-                  <p className="text-white/70">{wrappingGalleryItems[selectedIndex].description}</p>
+                  <h3 className="text-white text-xl font-bold">{galleryItems[selectedIndex].title}</h3>
+                  <p className="text-white/70">{galleryItems[selectedIndex].description}</p>
                   <p className="text-primary text-sm mt-2">
-                    {selectedIndex + 1} / {wrappingGalleryItems.length}
+                    {selectedIndex + 1} / {galleryItems.length}
                   </p>
                 </div>
               </div>
