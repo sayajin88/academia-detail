@@ -181,23 +181,40 @@ export const seoConfig = {
     ]
   },
 
-  gallery: {
-    title: "Galería Detailing | Trabajos Profesionales Antes y Después | Detail Park",
-    description: "Portfolio de trabajos de detailing profesional. Resultados de wrapping, PPF, pulido y restauración en Ferrari, Lamborghini, Porsche y más vehículos de alta gama.",
-    keywords: "galería detailing profesional, trabajos detailing, fotos antes después detailing, resultados wrapping, ejemplos PPF, portfolio detailing, galería coches detailing, Ferrari detailing, Lamborghini wrapping",
-    url: "/galeria-detailing",
+  aboutUs: {
+    title: "Quiénes Somos | Academia Detail by Detail Park | Desde 2017",
+    description: "Conoce la historia de Detail Park y Academia Detail. Fundada en 2017 por Juan Daniel, somos el único centro de formación en detailing que vive del taller, no de la formación. +7 años de experiencia real.",
+    keywords: "quienes somos detail park, academia detail historia, juan daniel fundador, centro formacion detailing españa, escuela detailing alicante, curso detailing profesional, detail park historia",
+    url: "/quienes-somos",
     schema: [
       localBusinessSchema,
       {
         "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "Quiénes Somos - Academia Detail by Detail Park",
+        "description": "Historia y filosofía de Detail Park y Academia Detail. Fundada en 2017, somos el único centro de formación donde vivimos del detailing profesional.",
+        "url": `${BASE_URL}/quienes-somos`,
+        "mainEntity": {
+          "@type": "Organization",
+          "name": "Detail Park Academy",
+          "foundingDate": "2017",
+          "founder": {
+            "@type": "Person",
+            "name": "Juan Daniel"
+          },
+          "description": "Centro de formación en detailing profesional potenciado por un taller activo de detailing de alta gama."
+        }
+      },
+      {
+        "@context": "https://schema.org",
         "@type": "ImageGallery",
         "name": "Galería de Trabajos de Detailing Profesional",
-        "description": "Portfolio de trabajos profesionales de detailing, wrapping, PPF y restauración realizados por Detail Park Academy en vehículos de alta gama.",
-        "url": `${BASE_URL}/galeria-detailing`
+        "description": "Portfolio de trabajos profesionales de detailing, wrapping, PPF y restauración realizados por Detail Park en vehículos de alta gama.",
+        "url": `${BASE_URL}/quienes-somos`
       },
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
-        { name: "Galería Detailing", url: "/galeria-detailing" }
+        { name: "Quiénes Somos", url: "/quienes-somos" }
       ])
     ]
   },
