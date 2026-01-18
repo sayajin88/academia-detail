@@ -1,5 +1,5 @@
-# Detail Park Academy - Robots.txt
-# https://detailing-ignition-landing.lovable.app
+# Academia Detailing - Robots.txt
+# https://academiadetail.com
 
 # Reglas generales para todos los bots
 User-agent: *
@@ -10,7 +10,7 @@ Allow: /curso-detailing-profesional
 Allow: /curso-vinilado-vehiculos
 Allow: /curso-ppf-proteccion-pintura
 Allow: /curso-restauracion-vehiculos
-Allow: /galeria-detailing
+Allow: /quienes-somos
 Allow: /contacto
 
 # Bloquear recursos del sistema y archivos innecesarios
@@ -29,7 +29,7 @@ Disallow: /formacion/
 Disallow: /galeria
 
 # Sitemap
-Sitemap: https://detailing-ignition-landing.lovable.app/sitemap.xml
+Sitemap: https://academiadetail.com/sitemap.xml
 
 # Google
 User-agent: Googlebot
@@ -67,14 +67,12 @@ Allow: /
 
 User-agent: AhrefsBot
 Allow: /
+Crawl-delay: 10
 
 User-agent: SemrushBot
 Allow: /
 
 # Bloquear bots maliciosos conocidos
-User-agent: AhrefsBot
-Crawl-delay: 10
-
 User-agent: MJ12bot
 Disallow: /
 
