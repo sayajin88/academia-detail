@@ -252,7 +252,7 @@ const Index = () => {
                 ¿No estás seguro de invertir en formación completa?
               </h3>
               <p className="text-white/80 mb-4">
-                La Jornada Zero te permite <strong className="text-primary">probar antes de comprometerte</strong>. Por solo €199 + IVA, vive un día en nuestro taller, practica con vehículos reales y decide con conocimiento de causa.
+                La Jornada Zero te permite <strong className="text-primary">probar antes de comprometerte</strong>. Por solo €97 + IVA, vive un día en nuestro taller, practica con vehículos reales y decide con conocimiento de causa.
               </p>
               <p className="text-sm text-primary font-semibold">
                 ✨ Si después quieres continuar, este importe se descuenta de cualquier curso completo.
@@ -898,11 +898,11 @@ const Index = () => {
               Derechos reservados para Detail Park S.L. 2024
               <span className="hidden md:inline"> | </span>
               <br className="md:hidden" />
-              <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block mt-2 md:mt-0">Aviso Legal</a>
+              <Link to="/privacidad" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block mt-2 md:mt-0">Aviso Legal</Link>
               <span className="mx-1">•</span>
-              <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Privacidad</a>
+              <Link to="/privacidad" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Privacidad</Link>
               <span className="mx-1">•</span>
-              <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Condiciones</a>
+              <Link to="/terminos" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Condiciones</Link>
             </p>
           </div>
         </div>

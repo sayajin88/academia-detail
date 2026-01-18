@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import {
@@ -37,40 +38,62 @@ const faqs = [
   },
 ];
 
+// Schema.org FAQ structured data for SEO
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+
 export function HomeFAQ() {
   return (
-    <section className="py-20 md:py-28 bg-card">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
-          <SectionHeading
-            badge="FAQ"
-            title="Preguntas Frecuentes"
-            subtitle="Resolvemos tus dudas más comunes"
-          />
+    <>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      </Helmet>
+      
+      <section className="py-20 md:py-28 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <SectionHeading
+              badge="FAQ"
+              title="Preguntas Frecuentes"
+              subtitle="Resolvemos tus dudas más comunes"
+            />
 
-          <Accordion type="single" collapsible className="mb-10">
-            {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-left text-foreground hover:text-primary">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+            <Accordion type="single" collapsible className="mb-10">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-left text-foreground hover:text-primary">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
 
-          <div className="text-center">
-            <Button asChild variant="outline" size="lg" className="group">
-              <Link to="/contacto">
-                ¿Tienes más preguntas? Contáctanos
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
+            <div className="text-center">
+              <Button asChild variant="outline" size="lg" className="group">
+                <Link to="/contacto">
+                  ¿Tienes más preguntas? Contáctanos
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
