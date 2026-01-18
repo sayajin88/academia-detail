@@ -1,5 +1,5 @@
 import detailingHero from '@/assets/evento-practica-pulidora-real.jpg';
-import wrappingHero from '@/assets/evento-grupo-coche-rojo.jpg';
+import wrappingHero from '@/assets/curso-wrapping.jpg';
 import ppfHero from '@/assets/formacion-detailing-juan-daniel.jpg';
 import restauracionHero from '@/assets/evento-limpieza-interior.jpg';
 import carreraHero from '@/assets/evento-clase-completa.jpg';
