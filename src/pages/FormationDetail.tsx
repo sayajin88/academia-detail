@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useParams, Navigate, useLocation } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { FormationHero } from '@/components/formation/FormationHero';
@@ -16,6 +17,7 @@ import { FormationROICalculator } from '@/components/formation/FormationROICalcu
 import { FormationCTA } from '@/components/formation/FormationCTA';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { FormationGallery } from '@/components/formation/FormationGallery';
+import { ComingSoonModal } from '@/components/ComingSoonModal';
 import { getFormationBySlug } from '@/data/formationDetails';
 import { useToast } from '@/hooks/use-toast';
 import { SEO } from '@/components/SEO';
@@ -60,12 +62,24 @@ export default function FormationDetailPage() {
   const { slug: paramSlug } = useParams<{ slug: string }>();
   const location = useLocation();
   const { toast } = useToast();
+  const [showComingSoonModal, setShowComingSoonModal] = useState(false);
   
   // Determine slug from either URL path or route param
   const slug = pathToSlugMap[location.pathname] || paramSlug;
   
   const formation = slug ? getFormationBySlug(slug) : undefined;
   const videoTestimonials = slug ? videoTestimonialsBySlug[slug] : undefined;
+
+  // Show coming soon modal on mount if formation is coming soon
+  useEffect(() => {
+    if (formation?.comingSoon) {
+      // Small delay for better UX
+      const timer = setTimeout(() => {
+        setShowComingSoonModal(true);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [formation?.comingSoon]);
 
   if (!formation) {
     return <Navigate to="/" replace />;
@@ -81,10 +95,14 @@ export default function FormationDetailPage() {
   });
 
   const handleCTAClick = () => {
-    toast({
-      title: "¡Próximamente!",
-      description: "El formulario de reserva estará disponible pronto. Mientras tanto, contacta con nosotros por teléfono o email.",
-    });
+    if (formation.comingSoon) {
+      setShowComingSoonModal(true);
+    } else {
+      toast({
+        title: "¡Próximamente!",
+        description: "El formulario de reserva estará disponible pronto. Mientras tanto, contacta con nosotros por teléfono o email.",
+      });
+    }
   };
 
   return (
@@ -138,6 +156,14 @@ export default function FormationDetailPage() {
         <FormationROICalculator formation={formation} onCTAClick={handleCTAClick} />
         <FormationCTA formation={formation} onCTAClick={handleCTAClick} />
       </MainLayout>
+
+      {/* Coming Soon Modal */}
+      <ComingSoonModal
+        open={showComingSoonModal}
+        onOpenChange={setShowComingSoonModal}
+        formationTitle={formation.title}
+        formationSlug={formation.slug}
+      />
     </>
   );
 }

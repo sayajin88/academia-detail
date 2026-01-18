@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Phone, Mail, Sparkles, Zap, Users } from 'lucide-react';
+import { ArrowRight, Phone, Mail, Sparkles, Zap, Users, Construction, Bell, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FormationDetail } from '@/data/formationDetails';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
@@ -15,11 +15,13 @@ export function FormationCTA({ formation, onCTAClick }: FormationCTAProps) {
   const [spotsLeft] = useState(Math.floor(Math.random() * 5) + 3);
   const sectionRef = useRef<HTMLDivElement>(null);
   const priceCardRef = useRef<HTMLDivElement>(null);
-  const { count: priceCount, ref: priceRef } = useCountUp(formation.price, 1500);
+  const { count: priceCount, ref: priceRef } = useCountUp(formation.comingSoon ? 0 : formation.price, 1500);
   
   const discount = Math.round(
     ((formation.originalPrice - formation.price) / formation.originalPrice) * 100
   );
+
+  const isComingSoon = formation.comingSoon;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,7 +60,7 @@ export function FormationCTA({ formation, onCTAClick }: FormationCTAProps) {
   return (
     <section ref={sectionRef} className="relative py-24 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary-glow" />
+      <div className={`absolute inset-0 ${isComingSoon ? 'bg-gradient-to-br from-amber-600 via-amber-500 to-amber-600' : 'bg-gradient-to-br from-primary via-primary to-primary-glow'}`} />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 to-transparent" />
       
       {/* Animated background decorations */}
@@ -74,18 +76,31 @@ export function FormationCTA({ formation, onCTAClick }: FormationCTAProps) {
             <AnimatedSection>
               <div className="text-center md:text-left">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-6">
-                  <Users className="w-4 h-4 text-white" />
-                  <span className="text-white/90 text-sm font-medium">
-                    Solo <span className="font-bold">{spotsLeft}</span> plazas disponibles
-                  </span>
+                  {isComingSoon ? (
+                    <>
+                      <Construction className="w-4 h-4 text-white" />
+                      <span className="text-white/90 text-sm font-medium">
+                        Formación en desarrollo
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <Users className="w-4 h-4 text-white" />
+                      <span className="text-white/90 text-sm font-medium">
+                        Solo <span className="font-bold">{spotsLeft}</span> plazas disponibles
+                      </span>
+                    </>
+                  )}
                 </div>
                 
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                  Reserva tu Plaza Ahora
+                  {isComingSoon ? '¿Te interesa esta formación?' : 'Reserva tu Plaza Ahora'}
                 </h2>
                 <p className="text-white/80 mb-8 text-lg">
-                  Las plazas son limitadas para garantizar una formación personalizada. 
-                  No pierdas la oportunidad de aprender con los mejores.
+                  {isComingSoon 
+                    ? 'Déjanos tus datos y te avisaremos en cuanto esté disponible. Serás de los primeros en enterarte.'
+                    : 'Las plazas son limitadas para garantizar una formación personalizada. No pierdas la oportunidad de aprender con los mejores.'
+                  }
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 items-center md:items-start">
@@ -113,59 +128,98 @@ export function FormationCTA({ formation, onCTAClick }: FormationCTAProps) {
                 ref={priceCardRef}
                 className={`pricing-spotlight bg-white rounded-2xl p-8 text-center relative overflow-hidden transition-all duration-500 ${isVisible ? 'popular-card shadow-2xl' : ''}`}
               >
-                {/* Discount badge */}
-                <div className="absolute -top-1 -right-1">
-                  <div className="discount-badge-3d bg-gradient-to-r from-primary to-primary-glow text-white px-4 py-2 rounded-bl-2xl rounded-tr-2xl font-bold shadow-lg">
-                    <Zap className="w-4 h-4 inline mr-1" />
-                    -{discount}%
+                {/* Badge */}
+                {!isComingSoon && (
+                  <div className="absolute -top-1 -right-1">
+                    <div className="discount-badge-3d bg-gradient-to-r from-primary to-primary-glow text-white px-4 py-2 rounded-bl-2xl rounded-tr-2xl font-bold shadow-lg">
+                      <Zap className="w-4 h-4 inline mr-1" />
+                      -{discount}%
+                    </div>
                   </div>
-                </div>
+                )}
+
+                {isComingSoon && (
+                  <div className="absolute -top-1 -right-1">
+                    <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-bl-2xl rounded-tr-2xl font-bold shadow-lg">
+                      <Construction className="w-4 h-4 inline mr-1" />
+                      Próximamente
+                    </div>
+                  </div>
+                )}
 
                 <div ref={priceRef}>
-                  <span className="text-sm text-muted-foreground line-through">
-                    €{formation.originalPrice}
-                  </span>
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <span className="text-6xl font-bold text-foreground price-animate">
-                      €{priceCount}
-                    </span>
-                  </div>
+                  {isComingSoon ? (
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <span className="text-4xl font-bold text-amber-600">
+                        Próximamente
+                      </span>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="text-sm text-muted-foreground line-through">
+                        €{formation.originalPrice}
+                      </span>
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        <span className="text-6xl font-bold text-foreground price-animate">
+                          €{priceCount}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
                 
                 <p className="text-muted-foreground mb-6 flex items-center justify-center gap-2">
                   <Clock className="w-4 h-4" />
-                  {formation.duration} de formación intensiva
+                  {isComingSoon ? 'Formación en preparación' : `${formation.duration} de formación intensiva`}
                 </p>
 
                 <Button
-                  variant="hero"
+                  variant={isComingSoon ? "outline" : "hero"}
                   size="xl"
-                  className="w-full group ripple-button shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02] transition-all duration-300"
+                  className={`w-full group ripple-button transition-all duration-300 ${
+                    isComingSoon 
+                      ? 'border-amber-500 text-amber-600 hover:bg-amber-50 hover:scale-[1.02]' 
+                      : 'shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02]'
+                  }`}
                   onClick={onCTAClick}
                 >
-                  <Sparkles className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-                  Reservar Plaza
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  {isComingSoon ? (
+                    <>
+                      <Bell className="w-5 h-5 mr-2 group-hover:animate-pulse" />
+                      Avisarme cuando esté lista
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-5 h-5 mr-2 group-hover:animate-pulse" />
+                      Reservar Plaza
+                      <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    </>
+                  )}
                 </Button>
 
                 <p className="text-xs text-muted-foreground mt-4 flex items-center justify-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  Reserva ahora y paga después • Consulta fechas disponibles
+                  <span className={`w-2 h-2 rounded-full animate-pulse ${isComingSoon ? 'bg-amber-500' : 'bg-green-500'}`} />
+                  {isComingSoon 
+                    ? 'Te notificaremos por email cuando esté disponible'
+                    : 'Reserva ahora y paga después • Consulta fechas disponibles'
+                  }
                 </p>
                 
-                {/* Urgency bar */}
-                <div className="mt-6 pt-4 border-t border-border">
-                  <div className="flex items-center justify-between text-sm mb-2">
-                    <span className="text-muted-foreground">Plazas ocupadas</span>
-                    <span className="text-primary font-bold">{8 - spotsLeft}/8</span>
+                {/* Urgency bar - only show if not coming soon */}
+                {!isComingSoon && (
+                  <div className="mt-6 pt-4 border-t border-border">
+                    <div className="flex items-center justify-between text-sm mb-2">
+                      <span className="text-muted-foreground">Plazas ocupadas</span>
+                      <span className="text-primary font-bold">{8 - spotsLeft}/8</span>
+                    </div>
+                    <div className="h-2 bg-muted rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-primary to-primary-glow rounded-full progress-fill"
+                        style={{ width: `${((8 - spotsLeft) / 8) * 100}%` }}
+                      />
+                    </div>
                   </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-primary to-primary-glow rounded-full progress-fill"
-                      style={{ width: `${((8 - spotsLeft) / 8) * 100}%` }}
-                    />
-                  </div>
-                </div>
+                )}
               </div>
             </AnimatedSection>
           </div>
@@ -174,6 +228,3 @@ export function FormationCTA({ formation, onCTAClick }: FormationCTAProps) {
     </section>
   );
 }
-
-// Import Clock for the duration display
-import { Clock } from 'lucide-react';

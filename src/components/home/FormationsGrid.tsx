@@ -7,7 +7,8 @@ import {
   Shield, 
   Wrench, 
   ArrowRight, 
-  Clock
+  Clock,
+  Construction
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ElementType> = {
@@ -35,6 +36,7 @@ export function FormationsGrid() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 max-w-7xl mx-auto">
           {formations.map((formation) => {
             const Icon = iconMap[formation.icon] || Sparkles;
+            const isComingSoon = formation.comingSoon;
             
             return (
               <Link 
@@ -44,12 +46,22 @@ export function FormationsGrid() {
               >
                 {/* Background Image */}
                 <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  className={`absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 ${isComingSoon ? 'grayscale-[30%]' : ''}`}
                   style={{ backgroundImage: `url(${formation.image})` }}
                 />
                 
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20 group-hover:via-black/50 transition-all duration-300" />
+                {/* Gradient Overlay - slightly darker for coming soon */}
+                <div className={`absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20 group-hover:via-black/50 transition-all duration-300 ${isComingSoon ? 'via-black/70' : ''}`} />
+                
+                {/* Coming Soon Badge */}
+                {isComingSoon && (
+                  <div className="absolute top-4 right-4 z-10">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/90 text-black text-xs font-bold border border-amber-400 shadow-lg animate-pulse">
+                      <Construction className="h-3.5 w-3.5" />
+                      Próximamente
+                    </span>
+                  </div>
+                )}
                 
                 {/* Duration Badge */}
                 <div className="absolute top-4 left-4">
@@ -63,7 +75,7 @@ export function FormationsGrid() {
                 <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
                   {/* Icon */}
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2.5 rounded-xl bg-primary/20 backdrop-blur-sm text-primary border border-primary/20">
+                    <div className={`p-2.5 rounded-xl backdrop-blur-sm border ${isComingSoon ? 'bg-amber-500/20 text-amber-400 border-amber-500/20' : 'bg-primary/20 text-primary border-primary/20'}`}>
                       <Icon className="h-5 w-5" />
                     </div>
                   </div>
@@ -79,14 +91,14 @@ export function FormationsGrid() {
                   </p>
                   
                   {/* CTA */}
-                  <span className="inline-flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all duration-300">
-                    Ver Programa
+                  <span className={`inline-flex items-center gap-2 font-semibold text-sm group-hover:gap-3 transition-all duration-300 ${isComingSoon ? 'text-amber-400' : 'text-primary'}`}>
+                    {isComingSoon ? 'Más Información' : 'Ver Programa'}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </div>
 
                 {/* Hover border effect */}
-                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary/30 transition-all duration-300 pointer-events-none" />
+                <div className={`absolute inset-0 rounded-2xl border-2 border-transparent transition-all duration-300 pointer-events-none ${isComingSoon ? 'group-hover:border-amber-500/30' : 'group-hover:border-primary/30'}`} />
               </Link>
             );
           })}
