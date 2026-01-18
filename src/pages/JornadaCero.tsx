@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -21,7 +22,10 @@ import {
   Mail,
   MapPin,
   X,
-  Menu
+  Menu,
+  ArrowLeft,
+  GraduationCap,
+  ChevronRight
 } from "lucide-react";
 
 // Import new optimized components
@@ -125,6 +129,32 @@ const Index = () => {
         </div>
       </div>
 
+      {/* Navigation Bar */}
+      <nav className="bg-black/40 backdrop-blur-md border-b border-white/10 py-3 sticky top-[60px] z-30">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors">
+              <ArrowLeft className="w-4 h-4" />
+              <span className="text-sm font-medium">Volver a Inicio</span>
+            </Link>
+            <div className="hidden md:flex items-center gap-6">
+              <Link to="/curso-detailing-profesional" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors text-sm">
+                <GraduationCap className="w-4 h-4" />
+                Cursos Completos
+              </Link>
+              <Link to="/formacion-profesional-detailing" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors text-sm">
+                <Trophy className="w-4 h-4" />
+                Carrera Detailing
+              </Link>
+              <Link to="/contacto" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors text-sm">
+                <Mail className="w-4 h-4" />
+                Contacto
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Problems Section with background video */}
       <section className="relative py-16 md:py-24 overflow-hidden min-h-[50vh] md:min-h-[60vh]">
         {/* Background image for mobile */}
@@ -152,13 +182,35 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70 md:via-black/40 md:to-black/70"></div>
 
         <div className="relative z-10 container mx-auto px-4">
+          {/* Badge Workshop */}
+          <div className="text-center mb-6">
+            <Badge className="bg-primary/20 text-primary border border-primary/30 px-4 py-1.5 text-sm font-semibold">
+              <Zap className="w-4 h-4 mr-2 inline" />
+              WORKSHOP DE 1 DÍA • TOMA DE CONTACTO
+            </Badge>
+          </div>
+          
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
-              Curso de Detailing de 1 Día: <span className="gradient-text">Tu Primera Experiencia Profesional</span>
-            </h2>
-            <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto">
-              Aprende detailing profesional en una jornada intensiva. Ideal para probar antes de invertir en formación completa.
+            <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
+              Jornada Zero: <span className="gradient-text">Tu Primera Toma de Contacto</span> con el Detailing
+            </h1>
+            <p className="text-base md:text-lg text-white/90 max-w-3xl mx-auto mb-6">
+              <strong>No es un curso, es una experiencia práctica de 1 día</strong> para descubrir si el detailing profesional es tu camino. Prueba antes de invertir en formación completa.
             </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-white/70">
+              <span className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-primary" />
+                Solo 1 día
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-primary" />
+                Precio reducido
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-primary" />
+                Sin compromiso
+              </span>
+            </div>
           </div>
           {/* Cards - Hidden on mobile */}
           <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
@@ -188,22 +240,36 @@ const Index = () => {
       {/* Solution Section - Mobile Optimized */}
       <section className="py-12 md:py-16 bg-black/30">
         <div className="container mx-auto px-4">
+          {/* Value Proposition Box */}
+          <div className="max-w-4xl mx-auto mb-12 glass-intense rounded-2xl p-6 md:p-8 border border-primary/30">
+            <div className="text-center">
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
+                ¿No estás seguro de invertir en formación completa?
+              </h3>
+              <p className="text-white/80 mb-4">
+                La Jornada Zero te permite <strong className="text-primary">probar antes de comprometerte</strong>. Por solo €199 + IVA, vive un día en nuestro taller, practica con vehículos reales y decide con conocimiento de causa.
+              </p>
+              <p className="text-sm text-primary font-semibold">
+                ✨ Si después quieres continuar, este importe se descuenta de cualquier curso completo.
+              </p>
+            </div>
+          </div>
+
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
-              La Jornada Cero: Tu <span className="gradient-text">primer paso</span> al éxito
+              Jornada Zero: <span className="gradient-text">Prueba Antes de Comprometerte</span>
             </h2>
             <p className="text-base md:text-lg text-white/80 max-w-3xl mx-auto px-2">
-              Un día intensivo diseñado para iniciados que quieren descubrir 
-              si el detailing profesional es su futuro.
+              No es una formación, es un <strong>workshop práctico de 1 día a precio reducido</strong> para que decidas si quieres continuar con nuestros cursos completos.
             </p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
             {[
-              { step: "1", title: "Reserva", description: "Tu plaza en La Jornada Cero" },
-              { step: "2", title: "Experimenta", description: "Práctica real 1 día" },
-              { step: "3", title: "Aprende", description: "Técnicas principales" },
-              { step: "4", title: "Decide", description: "Si es tu camino" }
+              { step: "1", title: "Reserva", description: "Tu plaza en el workshop" },
+              { step: "2", title: "Experimenta", description: "1 día de práctica real" },
+              { step: "3", title: "Descubre", description: "Si es para ti" },
+              { step: "4", title: "Decide", description: "Sin compromiso" }
             ].map((step, index) => (
               <div key={index} className="text-center">
                 <div className="glass-card rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-3 md:mb-4">
@@ -213,6 +279,25 @@ const Index = () => {
                 <p className="text-xs md:text-sm text-white/70">{step.description}</p>
               </div>
             ))}
+          </div>
+
+          {/* CTA to other courses */}
+          <div className="text-center mt-10">
+            <p className="text-white/70 text-sm mb-4">¿Prefieres empezar directamente con formación completa?</p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link to="/curso-detailing-profesional">
+                <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+                  Ver Cursos Completos
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </Link>
+              <Link to="/formacion-profesional-detailing">
+                <Button variant="outline" size="sm" className="border-primary/30 text-primary hover:bg-primary/10">
+                  Carrera Detailing Completa
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -252,13 +337,13 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-block glass-card px-8 py-3 rounded-full mb-8">
-              <span className="gradient-text font-bold uppercase tracking-wide">Tu Día en La Jornada Cero</span>
+              <span className="gradient-text font-bold uppercase tracking-wide">Workshop de 1 Día</span>
             </div>
             <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
-              Itinerario Completo de la <span className="gradient-text">Jornada Intensiva</span>
+              Itinerario del <span className="gradient-text">Workshop Jornada Zero</span>
             </h2>
             <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
-              8 horas de inmersión total en el mundo del detailing profesional
+              8 horas de experiencia práctica para descubrir el detailing profesional
             </p>
             
             {/* Fecha y Horario Destacado */}
@@ -419,14 +504,17 @@ const Index = () => {
             <div className="text-center mt-16">
               <div className="glass-intense rounded-2xl p-8 border border-primary/30">
                 <h3 className="text-2xl font-bold text-white mb-4">
-                  ¿Listo para tu primera experiencia en detailing profesional?
+                  ¿Listo para probar el detailing profesional sin compromiso?
                 </h3>
                 <p className="text-white/80 mb-6">
-                  Plazas limitadas: Solo 12 participantes para garantizar atención personalizada
+                  Workshop limitado a 12 participantes para garantizar atención personalizada
                 </p>
                 <Button variant="hero" size="xl" onClick={openModal} className="animate-pulse-glow">
-                  🎯 Reservar Mi Plaza - €199 + IVA
+                  🎯 Probar la Jornada Zero - €199 + IVA
                 </Button>
+                <p className="text-sm text-white/60 mt-4">
+                  Toma de contacto sin compromiso • Descontable de cursos completos
+                </p>
               </div>
             </div>
           </div>
@@ -715,18 +803,54 @@ const Index = () => {
 
       {/* Footer - Mobile Optimized */}
       <footer className="bg-black py-12 md:py-16">
-        <div className="container mx-auto px-4 text-center">
-          <img src={detailParkLogo} alt="Detail Park" className="h-10 md:h-12 mx-auto mb-6 md:mb-8 filter brightness-0 invert" />
-          <p className="text-white/60 text-xs md:text-sm mb-6 md:mb-8 leading-relaxed">
-            Derechos reservados para Detail Park S.L. 2024
-            <span className="hidden md:inline"> | </span>
-            <br className="md:hidden" />
-            <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block mt-2 md:mt-0">Aviso Legal</a>
-            <span className="mx-1">•</span>
-            <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Privacidad</a>
-            <span className="mx-1">•</span>
-            <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Condiciones</a>
-          </p>
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            {/* Logo and description */}
+            <div className="text-center md:text-left">
+              <img src={detailParkLogo} alt="Detail Park" className="h-10 md:h-12 mx-auto md:mx-0 mb-4 filter brightness-0 invert" />
+              <p className="text-white/60 text-sm">
+                Centro de formación profesional en detailing y estética del automóvil.
+              </p>
+            </div>
+            
+            {/* Navigation links */}
+            <div className="text-center">
+              <h4 className="text-white font-semibold mb-4">Explora</h4>
+              <div className="flex flex-col gap-2">
+                <Link to="/" className="text-white/60 hover:text-primary transition-colors text-sm">Inicio</Link>
+                <Link to="/curso-detailing-profesional" className="text-white/60 hover:text-primary transition-colors text-sm">Cursos de Detailing</Link>
+                <Link to="/formacion-profesional-detailing" className="text-white/60 hover:text-primary transition-colors text-sm">Carrera Detailing Completa</Link>
+                <Link to="/quienes-somos" className="text-white/60 hover:text-primary transition-colors text-sm">Quiénes Somos</Link>
+                <Link to="/contacto" className="text-white/60 hover:text-primary transition-colors text-sm">Contacto</Link>
+              </div>
+            </div>
+            
+            {/* CTA */}
+            <div className="text-center md:text-right">
+              <h4 className="text-white font-semibold mb-4">¿Quieres más formación?</h4>
+              <p className="text-white/60 text-sm mb-4">
+                Descubre nuestros cursos completos y la Carrera Detailing.
+              </p>
+              <Link to="/formacion-profesional-detailing">
+                <Button variant="outline" size="sm" className="border-primary/30 text-primary hover:bg-primary/10">
+                  Ver Programa Completo
+                </Button>
+              </Link>
+            </div>
+          </div>
+          
+          <div className="border-t border-white/10 pt-6">
+            <p className="text-white/60 text-xs md:text-sm text-center leading-relaxed">
+              Derechos reservados para Detail Park S.L. 2024
+              <span className="hidden md:inline"> | </span>
+              <br className="md:hidden" />
+              <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block mt-2 md:mt-0">Aviso Legal</a>
+              <span className="mx-1">•</span>
+              <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Privacidad</a>
+              <span className="mx-1">•</span>
+              <a href="#" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Condiciones</a>
+            </p>
+          </div>
         </div>
       </footer>
 

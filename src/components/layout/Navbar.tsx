@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Crown, Sparkles, GraduationCap, Palette, Shield, Wrench, Home, Image, Mail, HelpCircle } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap, Sparkles, GraduationCap, Palette, Shield, Wrench, Home, Image, Mail, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import logo from '@/assets/detail-park-logo-white.png';
 
@@ -9,14 +9,13 @@ const formationLinks = [
   { name: 'Car Wrapping', href: '/curso-vinilado-vehiculos', icon: Palette, description: 'Vinilado de vehículos' },
   { name: 'Paint Protection Film', href: '/curso-ppf-proteccion-pintura', icon: Shield, description: 'Protección de pintura' },
   { name: 'Restauración', href: '/curso-restauracion-vehiculos', icon: Wrench, description: 'Recuperación integral' },
-  { name: 'Carrera Detailing', href: '/formacion-profesional-detailing', highlight: true, icon: Crown, description: 'Programa completo' },
+  { name: 'Carrera Detailing', href: '/formacion-profesional-detailing', icon: Crown, description: 'Programa completo' },
 ];
 
 const navLinks = [
   { name: 'Inicio', href: '/', icon: Home },
   { name: 'Quiénes Somos', href: '/quienes-somos', icon: Image },
   { name: 'Contacto', href: '/contacto', icon: Mail },
-  { name: 'Soy nuevo', href: '/curso-detailing-iniciacion', icon: HelpCircle },
 ];
 
 export function Navbar() {
@@ -192,28 +191,15 @@ export function Navbar() {
                         <Link
                           key={link.href}
                           to={link.href}
-                          className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group ${
-                            link.highlight
-                              ? 'bg-gradient-to-r from-primary/20 via-primary/10 to-transparent border border-primary/30 hover:border-primary/50'
-                              : 'hover:bg-white/5'
-                          }`}
+                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group hover:bg-white/5"
                           style={{ animationDelay: `${index * 50}ms` }}
                         >
-                          <div className={`p-2 rounded-lg transition-colors duration-200 ${
-                            link.highlight 
-                              ? 'bg-primary/20 text-primary' 
-                              : 'bg-white/5 text-foreground/60 group-hover:bg-white/10 group-hover:text-foreground'
-                          }`}>
+                          <div className="p-2 rounded-lg transition-colors duration-200 bg-white/5 text-foreground/60 group-hover:bg-white/10 group-hover:text-foreground">
                             <link.icon className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className={`font-medium ${link.highlight ? 'text-primary' : 'text-foreground'}`}>
+                            <p className="font-medium text-foreground">
                               {link.name}
-                              {link.highlight && (
-                                <span className="ml-2 text-[10px] bg-primary/30 text-primary px-2 py-0.5 rounded-full uppercase tracking-wider">
-                                  Pro
-                                </span>
-                              )}
                             </p>
                             <p className="text-xs text-muted-foreground">{link.description}</p>
                           </div>
@@ -243,13 +229,13 @@ export function Navbar() {
 
             {/* Desktop CTA Button */}
             <div className={`hidden lg:flex items-center gap-4 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`} style={{ transitionDelay: '450ms' }}>
-              <Link to="/formacion-profesional-detailing">
+              <Link to="/curso-detailing-iniciacion">
                 <Button 
                   size="sm"
                   className="relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-4 py-2 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
                 >
-                  <Crown className="h-4 w-4 mr-2" />
-                  Carrera Detailing
+                  <Zap className="h-4 w-4 mr-2" />
+                  Jornada Zero
                   {/* Shimmer effect */}
                   <div 
                     className="absolute inset-0 opacity-30"
@@ -371,21 +357,14 @@ export function Navbar() {
                       key={link.href}
                       to={link.href}
                       className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
-                        link.highlight
-                          ? 'bg-gradient-to-r from-primary/20 to-transparent text-primary border-l-2 border-primary'
-                          : location.pathname === link.href
-                            ? 'bg-white/5 text-foreground'
-                            : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
+                        location.pathname === link.href
+                          ? 'bg-white/5 text-foreground'
+                          : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
                       }`}
                       style={{ animationDelay: `${(index + 2) * 50}ms` }}
                     >
                       <link.icon className="h-4 w-4" />
                       <span>{link.name}</span>
-                      {link.highlight && (
-                        <span className="ml-auto text-[10px] bg-primary/30 text-primary px-2 py-0.5 rounded-full">
-                          PRO
-                        </span>
-                      )}
                     </Link>
                   ))}
                 </div>
@@ -412,12 +391,12 @@ export function Navbar() {
 
           {/* Mobile CTA */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-background/80 backdrop-blur-xl">
-            <Link to="/formacion-profesional-detailing" className="block">
+            <Link to="/curso-detailing-iniciacion" className="block">
               <Button 
                 className="w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold py-6 rounded-xl shadow-lg"
               >
-                <Crown className="h-5 w-5 mr-2" />
-                Descubre Carrera Detailing
+                <Zap className="h-5 w-5 mr-2" />
+                Jornada Zero
               </Button>
             </Link>
           </div>
