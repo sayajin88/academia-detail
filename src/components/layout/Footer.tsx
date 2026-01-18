@@ -17,8 +17,9 @@ const legalLinks = [
 ];
 
 const socialLinks = [
-  { name: 'Instagram', href: 'https://instagram.com/detailpark', icon: Instagram },
-  { name: 'YouTube', href: 'https://youtube.com/@detailpark', icon: Youtube },
+  { name: 'Instagram Academia', href: 'https://www.instagram.com/detailparkoficial/', icon: Instagram },
+  { name: 'Instagram Daniel', href: 'https://www.instagram.com/danidetailoficial/', icon: Instagram },
+  { name: 'YouTube', href: 'https://www.youtube.com/@detailpark', icon: Youtube },
 ];
 
 export function Footer() {

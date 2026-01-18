@@ -175,7 +175,7 @@ export function FormationCTA({ formation, onCTAClick }: FormationCTAProps) {
 
                 <Button
                   variant={isComingSoon ? "outline" : "hero"}
-                  size="xl"
+                  size="touch"
                   className={`w-full group ripple-button transition-all duration-300 ${
                     isComingSoon 
                       ? 'border-amber-500 text-amber-600 hover:bg-amber-50 hover:scale-[1.02]' 

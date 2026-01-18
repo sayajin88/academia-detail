@@ -1,11 +1,104 @@
+import { Helmet } from "react-helmet-async";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Award, Users, CheckCircle } from "lucide-react";
+import { Star, Award, Users, CheckCircle, Instagram, Youtube, ExternalLink } from "lucide-react";
 import instructorDaniel from "@/assets/instructor-daniel-principal.png";
+
+// Schema.org Person structured data for SEO (E-E-A-T)
+const instructorSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Daniel López",
+  "alternateName": "Dani Detail",
+  "jobTitle": "Instructor Principal de Detailing Profesional",
+  "description": "Experto en detailing automotriz con más de 15 años de experiencia. Certificado por IDA (International Detailing Association) y formador oficial de marcas premium como Meguiar's, Chemical Guys y Gyeon.",
+  "image": "https://academiadetail.com/assets/instructor-daniel-principal.png",
+  "url": "https://academiadetail.com",
+  "sameAs": [
+    "https://www.instagram.com/danidetailoficial/",
+    "https://www.instagram.com/detailparkoficial/",
+    "https://www.youtube.com/@detailpark"
+  ],
+  "worksFor": {
+    "@type": "EducationalOrganization",
+    "name": "Academia Detailing - Detail Park",
+    "url": "https://academiadetail.com"
+  },
+  "knowsAbout": [
+    "Detailing Automotriz",
+    "Corrección de Pintura",
+    "Protección Cerámica",
+    "PPF - Paint Protection Film",
+    "Car Wrapping",
+    "Restauración de Vehículos",
+    "Lavado Profesional",
+    "Descontaminación de Pintura"
+  ],
+  "hasCredential": [
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "Certificación IDA",
+      "credentialCategory": "International Detailing Association"
+    }
+  ],
+  "award": [
+    "Formador Oficial Meguiar's",
+    "Formador Oficial Chemical Guys",
+    "Formador Oficial Gyeon"
+  ]
+};
+
+// Social links for the instructor
+const instructorSocials = [
+  {
+    icon: Instagram,
+    label: "@danidetailoficial",
+    href: "https://www.instagram.com/danidetailoficial/",
+    color: "hover:text-pink-500 hover:border-pink-500/50"
+  },
+  {
+    icon: Instagram,
+    label: "@detailparkoficial",
+    href: "https://www.instagram.com/detailparkoficial/",
+    color: "hover:text-pink-500 hover:border-pink-500/50"
+  },
+  {
+    icon: Youtube,
+    label: "YouTube",
+    href: "https://www.youtube.com/@detailpark",
+    color: "hover:text-red-500 hover:border-red-500/50"
+  }
+];
+
+// Testimonials about the instructor
+const instructorTestimonials = [
+  {
+    text: "Increíble experiencia. En un solo día aprendí más que en meses viendo videos. La práctica real marca toda la diferencia.",
+    author: "Carlos M.",
+    role: "Asistente La Jornada Cero Madrid"
+  },
+  {
+    text: "El ambiente, los instructores y la calidad son TOP. Volví con ganas de especializarme en detailing profesional.",
+    author: "Ana R.",
+    role: "Asistente La Jornada Cero Barcelona"
+  },
+  {
+    text: "Totalmente recomendado. Pequeño grupo, mucha práctica y conexiones valiosas con otros apasionados del sector.",
+    author: "Miguel S.",
+    role: "Asistente La Jornada Cero Valencia"
+  }
+];
 
 export function InstructorProfile() {
   return (
-    <section className="py-24 bg-black/30">
+    <section className="py-24 bg-black/30" itemScope itemType="https://schema.org/Person">
+      {/* Schema.org JSON-LD for SEO */}
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(instructorSchema)}
+        </script>
+      </Helmet>
+
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <div className="inline-block glass-card px-8 py-3 rounded-full mb-8">
@@ -24,8 +117,10 @@ export function InstructorProfile() {
                 <div className="relative bg-gradient-to-b from-black/20 to-black/40">
                   <img 
                     src={instructorDaniel} 
-                    alt="Daniel López - Instructor Experto en Detailing"
+                    alt="Daniel López - Instructor Experto en Detailing Profesional"
                     className="w-full h-full object-contain min-h-[500px]"
+                    itemProp="image"
+                    loading="lazy"
                   />
                   <div className="absolute top-6 left-6">
                     <Badge className="bg-primary text-white font-bold px-4 py-2">
@@ -35,9 +130,9 @@ export function InstructorProfile() {
                   <div className="absolute bottom-6 right-6">
                     <div className="glass-card p-4 rounded-lg">
                       <div className="flex items-center gap-2">
-                        <div className="flex">
+                        <div className="flex" aria-label="Valoración 4.9 de 5 estrellas">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                            <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" aria-hidden="true" />
                           ))}
                         </div>
                         <span className="text-white font-bold">4.9/5</span>
@@ -48,20 +143,39 @@ export function InstructorProfile() {
                 </div>
 
                 {/* Contenido del Perfil */}
-                <div className="p-12 flex flex-col justify-center">
-                  <h3 className="text-4xl font-black text-white mb-4">
+                <div className="p-8 lg:p-12 flex flex-col justify-center">
+                  <h3 className="text-4xl font-black text-white mb-2" itemProp="name">
                     Daniel López
                   </h3>
-                  <p className="text-xl gradient-text font-bold mb-6">
+                  <p className="text-xl gradient-text font-bold mb-4" itemProp="jobTitle">
                     Instructor Principal La Jornada Cero
                   </p>
+
+                  {/* Social Media Links */}
+                  <div className="flex flex-wrap gap-3 mb-8">
+                    {instructorSocials.map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 ${social.color}`}
+                        aria-label={`Seguir a Daniel en ${social.label}`}
+                        itemProp="sameAs"
+                      >
+                        <social.icon className="w-4 h-4" />
+                        <span className="text-sm font-medium text-white">{social.label}</span>
+                        <ExternalLink className="w-3 h-3 text-white/60" />
+                      </a>
+                    ))}
+                  </div>
 
                   <div className="space-y-6 mb-8">
                     <div className="flex items-start gap-3">
                       <Award className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                       <div>
                         <h4 className="text-lg font-bold text-white mb-2">+15 Años de Experiencia</h4>
-                        <p className="text-white/80">
+                        <p className="text-white/80" itemProp="description">
                           Experto en transmitir conocimiento práctico en formato acelerado. Ha impartido más de 50 eventos 
                           intensivos con 100% de satisfacción entre los participantes.
                         </p>
@@ -117,23 +231,27 @@ export function InstructorProfile() {
               Lo que dicen sus estudiantes sobre Daniel
             </h3>
             <div className="grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  text: "Increíble experiencia. En un solo día aprendí más que en meses viendo videos. La práctica real marca toda la diferencia.",
-                  author: "Carlos M., Asistente La Jornada Cero Madrid"
-                },
-                {
-                  text: "El ambiente, los instructores y la calidad son TOP. Volví con ganas de especializarme en detailing profesional.",
-                  author: "Ana R., Asistente La Jornada Cero Barcelona"
-                },
-                {
-                  text: "Totalmente recomendado. Pequeño grupo, mucha práctica y conexiones valiosas con otros apasionados del sector.",
-                  author: "Miguel S., Asistente La Jornada Cero Valencia"
-                }
-              ].map((testimonial, index) => (
-                <div key={index} className="glass-card p-6 rounded-2xl">
-                  <p className="text-white/90 mb-4 italic">"{testimonial.text}"</p>
-                  <p className="text-primary font-semibold">{testimonial.author}</p>
+              {instructorTestimonials.map((testimonial, index) => (
+                <div 
+                  key={index} 
+                  className="glass-card p-6 rounded-2xl"
+                  itemScope 
+                  itemType="https://schema.org/Review"
+                >
+                  <p className="text-white/90 mb-4 italic" itemProp="reviewBody">
+                    "{testimonial.text}"
+                  </p>
+                  <div itemProp="author" itemScope itemType="https://schema.org/Person">
+                    <p className="text-primary font-semibold" itemProp="name">
+                      {testimonial.author}
+                    </p>
+                    <p className="text-white/60 text-sm">{testimonial.role}</p>
+                  </div>
+                  <meta itemProp="datePublished" content="2025-01-01" />
+                  <div itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
+                    <meta itemProp="ratingValue" content="5" />
+                    <meta itemProp="bestRating" content="5" />
+                  </div>
                 </div>
               ))}
             </div>

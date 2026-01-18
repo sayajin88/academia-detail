@@ -33,8 +33,8 @@ export function HomeCTA() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
             <Button 
               asChild 
-              size="xl" 
-              className="bg-white text-primary hover:bg-white/90 shadow-xl group"
+              size="touch" 
+              className="bg-white text-primary hover:bg-white/90 shadow-xl group w-full sm:w-auto"
             >
               <Link to="/jornada-cero">
                 Reserva tu Plaza Ahora
@@ -44,8 +44,8 @@ export function HomeCTA() {
             <Button 
               asChild 
               variant="outline" 
-              size="xl"
-              className="border-white/30 text-white hover:bg-white/10"
+              size="touch"
+              className="border-white/30 text-white hover:bg-white/10 w-full sm:w-auto"
             >
               <Link to="/contacto">
                 Solicitar Información
