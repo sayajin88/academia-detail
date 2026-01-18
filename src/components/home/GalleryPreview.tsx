@@ -3,25 +3,25 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 
-// Import portfolio images
-import portfolio1 from '@/assets/portfolio-ferrari-458.png';
-import portfolio2 from '@/assets/portfolio-lamborghini-huracan.png';
-import portfolio3 from '@/assets/portfolio-porsche.png';
-import portfolio4 from '@/assets/portfolio-audi-r8.png';
-import portfolio5 from '@/assets/portfolio-mclaren.png';
-import portfolio6 from '@/assets/portfolio-bmw-m2.png';
-import portfolio7 from '@/assets/portfolio-mercedes.png';
-import portfolio8 from '@/assets/portfolio-bentley-continental.png';
+// Import training/course images
+import training1 from '@/assets/evento-clase-completa.jpg';
+import training2 from '@/assets/evento-grupo-formacion.jpg';
+import training3 from '@/assets/evento-practica-pulidora.jpg';
+import training4 from '@/assets/evento-instructor-explicando.jpg';
+import training5 from '@/assets/formacion-detailing-1.jpg';
+import training6 from '@/assets/evento-alumnos-atentos.jpg';
+import training7 from '@/assets/certificado-alumno-feliz.jpg';
+import training8 from '@/assets/alumnos-formacion-3.jpg';
 
 const galleryImages = [
-  { src: portfolio1, alt: 'Ferrari 458' },
-  { src: portfolio2, alt: 'Lamborghini Huracán' },
-  { src: portfolio3, alt: 'Porsche' },
-  { src: portfolio4, alt: 'Audi R8' },
-  { src: portfolio5, alt: 'McLaren' },
-  { src: portfolio6, alt: 'BMW M2' },
-  { src: portfolio7, alt: 'Mercedes' },
-  { src: portfolio8, alt: 'Bentley Continental' },
+  { src: training1, alt: 'Clase completa de detailing' },
+  { src: training2, alt: 'Grupo de alumnos en formación' },
+  { src: training3, alt: 'Práctica con pulidora' },
+  { src: training4, alt: 'Instructor explicando técnicas' },
+  { src: training5, alt: 'Formación práctica' },
+  { src: training6, alt: 'Alumnos en clase teórica' },
+  { src: training7, alt: 'Alumno con certificado' },
+  { src: training8, alt: 'Ambiente de formación' },
 ];
 
 export function GalleryPreview() {
@@ -29,9 +29,9 @@ export function GalleryPreview() {
     <section className="py-20 md:py-28 bg-card">
       <div className="container mx-auto px-4">
         <SectionHeading
-          badge="Portfolio"
-          title="Nuestros Trabajos"
-          subtitle="Trabajamos con los vehículos más exclusivos. Esto es lo que aprenderás a hacer."
+          badge="Nuestra Formación"
+          title="Aprende en un Entorno Real"
+          subtitle="Formamos profesionales en nuestras instalaciones con vehículos reales y las mejores herramientas del sector."
         />
 
         {/* Gallery Grid */}
@@ -62,8 +62,8 @@ export function GalleryPreview() {
         {/* CTA */}
         <div className="text-center">
           <Button asChild variant="outline" size="lg" className="group">
-            <Link to="/galeria">
-              Ver Galería Completa
+            <Link to="/quienes-somos">
+              Conoce Nuestras Instalaciones
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
