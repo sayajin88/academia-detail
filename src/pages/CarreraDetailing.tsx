@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import CarreraHero from '@/components/carrera/CarreraHero';
 import CarreraVideoIntro from '@/components/carrera/CarreraVideoIntro';
@@ -11,7 +11,7 @@ import CarreraBenefits from '@/components/carrera/CarreraBenefits';
 import CarreraPricing from '@/components/carrera/CarreraPricing';
 import CarreraFAQ from '@/components/carrera/CarreraFAQ';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
-import { RegistrationModal } from '@/components/RegistrationModal';
+
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 
@@ -22,10 +22,10 @@ const carreraVideoTestimonials = [
 ];
 
 const CarreraDetailing = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleCTAClick = () => {
-    setIsModalOpen(true);
+    navigate('/contacto');
   };
 
   return (
@@ -123,10 +123,6 @@ const CarreraDetailing = () => {
         <CarreraPricing onCTAClick={handleCTAClick} />
         <CarreraFAQ />
 
-        <RegistrationModal 
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
       </MainLayout>
     </>
   );

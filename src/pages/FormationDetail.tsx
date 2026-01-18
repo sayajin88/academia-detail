@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Navigate, useLocation } from 'react-router-dom';
+import { useParams, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { FormationHero } from '@/components/formation/FormationHero';
 import { FormationAdvantages } from '@/components/formation/FormationAdvantages';
@@ -19,7 +19,7 @@ import { FormationVideoTestimonials } from '@/components/formation/FormationVide
 import { FormationGallery } from '@/components/formation/FormationGallery';
 import { ComingSoonModal } from '@/components/ComingSoonModal';
 import { getFormationBySlug } from '@/data/formationDetails';
-import { useToast } from '@/hooks/use-toast';
+
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 
@@ -61,7 +61,7 @@ const videoTestimonialsBySlug: Record<string, { id: string; title: string; name?
 export default function FormationDetailPage() {
   const { slug: paramSlug } = useParams<{ slug: string }>();
   const location = useLocation();
-  const { toast } = useToast();
+  const navigate = useNavigate();
   const [showComingSoonModal, setShowComingSoonModal] = useState(false);
   
   // Determine slug from either URL path or route param
@@ -98,10 +98,7 @@ export default function FormationDetailPage() {
     if (formation.comingSoon) {
       setShowComingSoonModal(true);
     } else {
-      toast({
-        title: "¡Próximamente!",
-        description: "El formulario de reserva estará disponible pronto. Mientras tanto, contacta con nosotros por teléfono o email.",
-      });
+      navigate('/contacto');
     }
   };
 
