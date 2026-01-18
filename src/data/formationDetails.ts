@@ -19,6 +19,8 @@ export interface FormationLevel {
   title: string;
   subtitle: string;
   duration?: string;
+  price?: number;
+  note?: string;
   features: string[];
   highlighted?: boolean;
 }
@@ -265,9 +267,9 @@ export const formationDetails: Record<string, FormationDetail> = {
     title: 'Curso Car Wrapping: Instalación de Vinilo Profesional',
     subtitle: 'Formación en Rotulación y Cambio de Color de Vehículos',
     description: 'Curso de car wrapping profesional. Aprende instalación de vinilo, rotulación vehículos y cambio de color. Formación 100% práctica con certificado oficial.',
-    duration: '1-5 días según nivel',
-    price: 599,
-    originalPrice: 899,
+    duration: '2-4 Días de Formación',
+    price: 1999,
+    originalPrice: 2499,
     image: wrappingHero,
     heroDescription: 'Formación 100% práctica en instalación de vinilo para cambio de color. Aprende con experiencia real en taller, desde las técnicas básicas hasta los acabados más complejos en superficies curvas.',
     advantages: [
@@ -279,37 +281,34 @@ export const formationDetails: Record<string, FormationDetail> = {
     ],
     levels: [
       {
-        title: 'Para Aficionados',
-        subtitle: 'Iniciación al mundo del vinilado',
-        duration: '1-2 días',
+        title: 'Curso Nivel Principiante',
+        subtitle: 'Fundamentos completos de Car Wrapping',
+        duration: '2 Días de Formación',
+        price: 1999,
         features: [
-          'Conocimiento del producto y herramientas',
-          'Técnica y aplicación de la teoría',
-          'Cursos adaptados entre semana o fines de semana',
-          'Material de práctica incluido',
+          '¿Qué es el Car Wrapping?',
+          'Tipos de Vinilo',
+          'Calidades y Materiales',
+          'Tipos de Instalación',
+          'Instalación Práctica',
+          'Metodología de Corte',
+          'Marcas y Distribuidores',
+          'Cómo Explicar al cliente',
         ],
       },
       {
-        title: 'Para Profesionales',
-        subtitle: 'Nivel avanzado para el sector',
-        duration: '3-5 días',
+        title: 'Curso Nivel Avanzado',
+        subtitle: 'Técnicas avanzadas para profesionales',
+        duration: '2 Días de Formación',
+        price: 1999,
         features: [
-          'Conocimientos prácticos y teóricos completos',
-          'Nivel profesional para dar calidad al cliente',
-          'Formación avanzada en técnicas complejas',
-          'Trabajo en superficies difíciles',
+          'Instalación Práctica avanzada',
+          'Instalación de cromados',
+          'Interiores de puerta',
+          'Técnicas de nivel avanzado',
         ],
+        note: 'Se recomienda Curso Principiante si no se tiene experiencia',
         highlighted: true,
-      },
-      {
-        title: 'Monta tu Negocio',
-        subtitle: 'Emprende en el sector',
-        features: [
-          'Modelo de franquicia basado en experiencia real',
-          'Información para montar tu centro de detailing',
-          'Acceso al dossier de franquicia',
-          'Asesoramiento empresarial incluido',
-        ],
       },
     ],
     instructor: {
