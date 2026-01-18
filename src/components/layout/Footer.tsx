@@ -99,11 +99,11 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="tel:+34600000000"
+                  href="tel:+34622773555"
                   className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Phone className="h-4 w-4 flex-shrink-0" />
-                  +34 600 000 000
+                  +34 622 773 555
                 </a>
               </li>
               <li>

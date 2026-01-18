@@ -230,10 +230,10 @@ const generateClientEmail = (data: ContactRequest): string => {
                       ¿Necesitas respuesta urgente?
                     </p>
                     <p style="margin: 0 0 8px; color: #D1D5DB; font-size: 14px;">
-                      📞 Llámanos: <a href="tel:+34644440851" style="color: #8B5CF6; text-decoration: none; font-weight: 500;">+34 644 440 851</a>
+                      📞 Llámanos: <a href="tel:+34622773555" style="color: #8B5CF6; text-decoration: none; font-weight: 500;">+34 622 773 555</a>
                     </p>
                     <p style="margin: 0; color: #D1D5DB; font-size: 14px;">
-                      📱 WhatsApp: <a href="https://wa.me/34644440851" style="color: #8B5CF6; text-decoration: none; font-weight: 500;">+34 644 440 851</a>
+                      📱 WhatsApp: <a href="https://wa.me/34622773555" style="color: #8B5CF6; text-decoration: none; font-weight: 500;">+34 622 773 555</a>
                     </p>
                   </td>
                 </tr>

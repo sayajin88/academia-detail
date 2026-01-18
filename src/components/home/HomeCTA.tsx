@@ -56,11 +56,11 @@ export function HomeCTA() {
           {/* Contact Info */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-white/80">
             <a 
-              href="tel:+34600000000" 
+              href="tel:+34622773555" 
               className="flex items-center gap-2 hover:text-white transition-colors"
             >
               <Phone className="h-4 w-4" />
-              +34 600 000 000
+              +34 622 773 555
             </a>
             <span className="hidden sm:block w-1 h-1 rounded-full bg-white/40" />
             <a 

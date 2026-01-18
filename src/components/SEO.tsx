@@ -23,7 +23,7 @@ export const localBusinessSchema = {
   "url": BASE_URL,
   "logo": DEFAULT_IMAGE,
   "image": DEFAULT_IMAGE,
-  "telephone": "+34 965 123 456",
+  "telephone": "+34 622 773 555",
   "email": "info@detailpark.es",
   "priceRange": "€€",
   "currenciesAccepted": "EUR",
