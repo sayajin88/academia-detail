@@ -1,5 +1,104 @@
+import { useState, useEffect, useRef } from 'react';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
-import { Calendar, TrendingUp, GraduationCap, Award } from 'lucide-react';
+import { Calendar, TrendingUp, GraduationCap, Award, Play } from 'lucide-react';
+
+// Founder Video Component with lazy loading
+function FounderVideo() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Lazy load when visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const vimeoVideoId = '994692869';
+  const thumbnailUrl = `https://vumbnail.com/${vimeoVideoId}.jpg`;
+
+  return (
+    <div ref={containerRef} className="order-2 lg:order-1 flex flex-col items-center">
+      {/* Title */}
+      <div className="text-center mb-4">
+        <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-medium mb-2">
+          📹 VÍDEO EXCLUSIVO
+        </span>
+        <h3 className="text-xl md:text-2xl font-bold">
+          La historia detrás de Detail Park
+        </h3>
+        <p className="text-sm text-muted-foreground mt-1">
+          Juan Daniel te cuenta por qué nació Academia Detail
+        </p>
+      </div>
+      
+      {/* Video Container - 9:16 aspect ratio */}
+      <div className="relative w-full max-w-[280px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl shadow-primary/20 border border-primary/30">
+        {!isPlaying ? (
+          // Thumbnail with play button
+          <button
+            onClick={() => setIsPlaying(true)}
+            className="absolute inset-0 group cursor-pointer"
+            aria-label="Reproducir vídeo"
+          >
+            {shouldLoad ? (
+              <img
+                src={thumbnailUrl}
+                alt="Juan Daniel - Fundador de Detail Park"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-primary/30 to-background" />
+            )}
+            
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/30 group-hover:from-background/60 transition-all duration-300" />
+            
+            {/* Play button */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/90 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-xl">
+                <Play className="w-7 h-7 md:w-9 md:h-9 text-primary-foreground fill-current ml-1" />
+              </div>
+            </div>
+            
+            {/* Duration badge */}
+            <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+              <span className="text-xs font-medium text-white/90 bg-black/50 px-2 py-1 rounded">
+                2:30
+              </span>
+              <span className="text-xs font-medium text-white/90 bg-primary/80 px-2 py-1 rounded">
+                ▶ Ver ahora
+              </span>
+            </div>
+          </button>
+        ) : (
+          // Vimeo iframe
+          <iframe
+            src={`https://player.vimeo.com/video/${vimeoVideoId}?autoplay=1&title=0&byline=0&portrait=0`}
+            className="absolute inset-0 w-full h-full"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            title="Juan Daniel - La historia de Detail Park"
+          />
+        )}
+      </div>
+    </div>
+  );
+}
 
 const timelineEvents = [
   {
@@ -86,29 +185,35 @@ export function AboutHistory() {
           </div>
         </div>
 
-        {/* Story Block */}
-        <AnimatedSection delay={0.6} className="mt-16 max-w-4xl mx-auto">
-          <div className="relative bg-gradient-to-br from-primary/10 via-card to-card border border-primary/20 rounded-3xl p-8 md:p-12">
+        {/* Founder Video + Quote Block */}
+        <AnimatedSection delay={0.6} className="mt-16 max-w-5xl mx-auto">
+          <div className="relative bg-gradient-to-br from-primary/10 via-card to-card border border-primary/20 rounded-3xl p-6 md:p-10 overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
             
-            <blockquote className="relative z-10">
-              <p className="text-lg md:text-xl leading-relaxed text-foreground/90 mb-6">
-                "En 2017 fundé Detail Park con una visión clara: demostrar que se puede vivir 
-                dignamente del detailing. Hemos visto cerrar decenas de centros por falta de 
-                gestión empresarial, no por falta de habilidad técnica. Por eso nació Academia Detail: 
-                para transmitir no solo el oficio, sino el modelo de negocio que nos ha mantenido 
-                activos y rentables durante más de 9 años."
-              </p>
-              <footer className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-xl font-bold text-primary">JD</span>
-                </div>
-                <div>
-                  <p className="font-semibold">Juan Daniel</p>
-                  <p className="text-sm text-muted-foreground">Fundador de Detail Park</p>
-                </div>
-              </footer>
-            </blockquote>
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              {/* Video Column */}
+              <FounderVideo />
+              
+              {/* Quote Column */}
+              <blockquote className="order-1 lg:order-2">
+                <p className="text-lg md:text-xl leading-relaxed text-foreground/90 mb-6">
+                  "En 2017 fundé Detail Park con una visión clara: demostrar que se puede vivir 
+                  dignamente del detailing. Hemos visto cerrar decenas de centros por falta de 
+                  gestión empresarial, no por falta de habilidad técnica. Por eso nació Academia Detail: 
+                  para transmitir no solo el oficio, sino el modelo de negocio que nos ha mantenido 
+                  activos y rentables durante más de 9 años."
+                </p>
+                <footer className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                    <span className="text-xl font-bold text-primary">JD</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Juan Daniel</p>
+                    <p className="text-sm text-muted-foreground">Fundador de Detail Park</p>
+                  </div>
+                </footer>
+              </blockquote>
+            </div>
           </div>
         </AnimatedSection>
       </div>
