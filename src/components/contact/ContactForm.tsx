@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { useForm as useFormspree } from "@formspree/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -14,231 +14,433 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Send, Loader2 } from "lucide-react";
+import ContactSuccessModal from "./ContactSuccessModal";
 
+// Schema de validación
 const contactSchema = z.object({
-  name: z
+  nombre: z
     .string()
     .trim()
     .min(1, "El nombre es obligatorio")
-    .max(100, "El nombre no puede superar los 100 caracteres"),
+    .max(50, "Máximo 50 caracteres"),
+  apellidos: z
+    .string()
+    .trim()
+    .min(1, "Los apellidos son obligatorios")
+    .max(100, "Máximo 100 caracteres"),
   email: z
     .string()
     .trim()
-    .min(1, "El email es obligatorio")
     .email("Introduce un email válido")
-    .max(255, "El email no puede superar los 255 caracteres"),
-  phone: z
+    .max(255, "Máximo 255 caracteres"),
+  telefono: z
     .string()
     .trim()
-    .max(20, "El teléfono no puede superar los 20 caracteres")
-    .optional()
-    .or(z.literal("")),
-  subject: z.string().min(1, "Selecciona un asunto"),
-  message: z
-    .string()
-    .trim()
-    .min(1, "El mensaje es obligatorio")
-    .max(1000, "El mensaje no puede superar los 1000 caracteres"),
+    .min(9, "Introduce un teléfono válido")
+    .max(20, "Máximo 20 caracteres"),
+  experiencia: z.string({
+    required_error: "Selecciona tu nivel de experiencia",
+  }),
+  centro_propio: z.string({
+    required_error: "Indica si tienes centro propio",
+  }),
+  inversion: z.string({
+    required_error: "Selecciona tu presupuesto de inversión",
+  }),
+  tipo_formacion: z.string({
+    required_error: "Selecciona el tipo de formación",
+  }),
+  mensaje: z.string().trim().max(1000, "Máximo 1000 caracteres").optional(),
+  acepto_privacidad: z.boolean().refine((val) => val === true, {
+    message: "Debes aceptar la política de privacidad",
+  }),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-const subjects = [
-  { value: "general", label: "Información general" },
-  { value: "detailing", label: "Formación Detailing" },
-  { value: "wrapping", label: "Formación Car Wrapping" },
-  { value: "ppf", label: "Formación PPF" },
-  { value: "restauracion", label: "Formación Restauración" },
-  { value: "negocio", label: "Carrera Negocio" },
-  { value: "otro", label: "Otro" },
+// Opciones para los selects
+const experienciaOptions = [
+  { value: "sin_experiencia", label: "No, soy nuevo" },
+  { value: "con_experiencia", label: "Sí, tengo experiencia" },
+];
+
+const centroOptions = [
+  { value: "si", label: "Sí" },
+  { value: "no", label: "No" },
+];
+
+const inversionOptions = [
+  { value: "hasta_500", label: "Hasta 500 euros" },
+  { value: "500_2000", label: "Entre 500 y 2.000 euros" },
+  { value: "2000_5000", label: "Entre 2.000 y 5.000 euros" },
+  { value: "mas_5000", label: "Más de 5.000 euros" },
+];
+
+const formacionOptions = [
+  { value: "detailing", label: "Detailing" },
+  { value: "wrapping", label: "Car Wrapping" },
+  { value: "ppf", label: "Paint Protection Film" },
+  { value: "restauracion", label: "Restauración" },
+  { value: "negocio", label: "Negocio" },
+  {
+    value: "carrera_completa",
+    label: "Quiero hacer una carrera completa de todos los cursos",
+  },
 ];
 
 const ContactForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [formspreeState, handleFormspreeSubmit] = useFormspree("maqqevbn");
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    formState: { errors },
-  } = useForm<ContactFormData>({
+  const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      name: "",
+      nombre: "",
+      apellidos: "",
       email: "",
-      phone: "",
-      subject: "",
-      message: "",
+      telefono: "",
+      experiencia: "",
+      centro_propio: "",
+      inversion: "",
+      tipo_formacion: "",
+      mensaje: "",
+      acepto_privacidad: false,
     },
   });
 
-  const getSubjectLabel = (subjectValue: string): string => {
-    return subjects.find(s => s.value === subjectValue)?.label || subjectValue;
-  };
+  // Manejar éxito de Formspree
+  useEffect(() => {
+    if (formspreeState.succeeded) {
+      setShowSuccessModal(true);
+      form.reset();
+    }
+  }, [formspreeState.succeeded, form]);
 
   const onSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true);
+    // Mapear valores a etiquetas legibles para el email
+    const experienciaLabel =
+      experienciaOptions.find((o) => o.value === data.experiencia)?.label || "";
+    const centroLabel =
+      centroOptions.find((o) => o.value === data.centro_propio)?.label || "";
+    const inversionLabel =
+      inversionOptions.find((o) => o.value === data.inversion)?.label || "";
+    const formacionLabel =
+      formacionOptions.find((o) => o.value === data.tipo_formacion)?.label ||
+      "";
 
-    try {
-      const { data: response, error } = await supabase.functions.invoke('send-contact-email', {
-        body: {
-          name: data.name,
-          email: data.email,
-          phone: data.phone || undefined,
-          subject: data.subject,
-          subjectLabel: getSubjectLabel(data.subject),
-          message: data.message,
-        },
-      });
+    // Crear objeto con datos formateados para Formspree
+    const formData = {
+      Nombre: data.nombre,
+      Apellidos: data.apellidos,
+      Email: data.email,
+      Teléfono: data.telefono,
+      "Experiencia en Detailing": experienciaLabel,
+      "Centro Propio": centroLabel,
+      "Inversión en Formación": inversionLabel,
+      "Tipo de Formación": formacionLabel,
+      Mensaje: data.mensaje || "Sin mensaje",
+    };
 
-      if (error) {
-        console.error("Error sending contact email:", error);
-        toast({
-          variant: "destructive",
-          title: "Error al enviar",
-          description: "No se pudo enviar tu mensaje. Por favor, inténtalo de nuevo o contáctanos por teléfono.",
-        });
-        return;
-      }
-
-      toast({
-        title: "¡Mensaje enviado! ✨",
-        description: "Gracias por contactarnos. Te hemos enviado una confirmación por email y te responderemos en menos de 24 horas.",
-      });
-
-      reset();
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      toast({
-        variant: "destructive",
-        title: "Error inesperado",
-        description: "Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    await handleFormspreeSubmit(formData);
   };
 
   return (
-    <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6 md:p-8">
-      <h2 className="text-2xl font-bold mb-6">Envíanos un mensaje</h2>
+    <>
+      <Card className="h-fit">
+        <CardHeader>
+          <CardTitle className="text-xl md:text-2xl">
+            Solicita Información
+          </CardTitle>
+          <p className="text-muted-foreground text-sm">
+            Completa el formulario y te contactaremos en menos de 24 horas
+          </p>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              {/* Nombre y Apellidos */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="nombre"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nombre *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Tu nombre" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="apellidos"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Apellidos *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Tus apellidos" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        {/* Name */}
-        <div className="space-y-2">
-          <Label htmlFor="name">
-            Nombre <span className="text-destructive">*</span>
-          </Label>
-          <Input
-            id="name"
-            placeholder="Tu nombre completo"
-            {...register("name")}
-            className={errors.name ? "border-destructive" : ""}
-          />
-          {errors.name && (
-            <p className="text-sm text-destructive">{errors.name.message}</p>
-          )}
-        </div>
+              {/* Email y Teléfono */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-mail *</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="tu@email.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="telefono"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Teléfono *</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          placeholder="622 77 35 55"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-        {/* Email */}
-        <div className="space-y-2">
-          <Label htmlFor="email">
-            Email <span className="text-destructive">*</span>
-          </Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="tu@email.com"
-            {...register("email")}
-            className={errors.email ? "border-destructive" : ""}
-          />
-          {errors.email && (
-            <p className="text-sm text-destructive">{errors.email.message}</p>
-          )}
-        </div>
+              {/* Experiencia en Detailing */}
+              <FormField
+                control={form.control}
+                name="experiencia"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>¿Tienes experiencia en Detailing? *</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona una opción" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {experienciaOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        {/* Phone */}
-        <div className="space-y-2">
-          <Label htmlFor="phone">Teléfono</Label>
-          <Input
-            id="phone"
-            type="tel"
-            placeholder="+34 600 000 000"
-            {...register("phone")}
-            className={errors.phone ? "border-destructive" : ""}
-          />
-          {errors.phone && (
-            <p className="text-sm text-destructive">{errors.phone.message}</p>
-          )}
-        </div>
+              {/* Centro Propio */}
+              <FormField
+                control={form.control}
+                name="centro_propio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>¿Tienes centro propio? *</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona una opción" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {centroOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        {/* Subject */}
-        <div className="space-y-2">
-          <Label htmlFor="subject">
-            Asunto <span className="text-destructive">*</span>
-          </Label>
-          <Select onValueChange={(value) => setValue("subject", value)}>
-            <SelectTrigger
-              className={errors.subject ? "border-destructive" : ""}
-            >
-              <SelectValue placeholder="Selecciona un asunto" />
-            </SelectTrigger>
-            <SelectContent>
-              {subjects.map((subject) => (
-                <SelectItem key={subject.value} value={subject.value}>
-                  {subject.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.subject && (
-            <p className="text-sm text-destructive">{errors.subject.message}</p>
-          )}
-        </div>
+              {/* Inversión en Formación */}
+              <FormField
+                control={form.control}
+                name="inversion"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      ¿Cuánto estás dispuesto a invertir en formación? *
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona tu presupuesto" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {inversionOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        {/* Message */}
-        <div className="space-y-2">
-          <Label htmlFor="message">
-            Mensaje <span className="text-destructive">*</span>
-          </Label>
-          <Textarea
-            id="message"
-            placeholder="Escribe tu mensaje aquí..."
-            rows={5}
-            {...register("message")}
-            className={errors.message ? "border-destructive" : ""}
-          />
-          {errors.message && (
-            <p className="text-sm text-destructive">{errors.message.message}</p>
-          )}
-        </div>
+              {/* Tipo de Formación */}
+              <FormField
+                control={form.control}
+                name="tipo_formacion"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tipo de formación que deseas realizar *</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona el tipo de formación" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {formacionOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        {/* Submit Button */}
-        <Button
-          type="submit"
-          variant="hero"
-          size="lg"
-          className="w-full"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              Enviando...
-            </>
-          ) : (
-            <>
-              <Send className="w-5 h-5" />
-              Enviar mensaje
-            </>
-          )}
-        </Button>
-      </form>
-    </div>
+              {/* Mensaje */}
+              <FormField
+                control={form.control}
+                name="mensaje"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Mensaje (opcional)</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Cuéntanos más sobre tus objetivos o cualquier duda que tengas..."
+                        className="min-h-[100px] resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Checkbox RGPD */}
+              <FormField
+                control={form.control}
+                name="acepto_privacidad"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 bg-muted/30">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel className="text-sm font-normal text-muted-foreground leading-relaxed cursor-pointer">
+                        He leído y acepto la{" "}
+                        <a
+                          href="/politica-privacidad"
+                          target="_blank"
+                          className="text-primary underline hover:text-primary/80"
+                        >
+                          Política de Privacidad
+                        </a>
+                        . Autorizo a Academia Detail a tratar mis datos
+                        personales conforme al RGPD (UE) 2016/679 y la LOPDGDD
+                        3/2018 para gestionar mi solicitud y enviarme
+                        información comercial sobre formaciones. Puedo ejercer
+                        mis derechos de acceso, rectificación, supresión,
+                        portabilidad, limitación y oposición en{" "}
+                        <a
+                          href="mailto:info@detailpark.com"
+                          className="text-primary underline hover:text-primary/80"
+                        >
+                          info@detailpark.com
+                        </a>
+                        .
+                      </FormLabel>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              {/* Mostrar errores de Formspree */}
+              {formspreeState.errors && Object.keys(formspreeState.errors).length > 0 && (
+                <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
+                  Ha ocurrido un error al enviar el formulario. Por favor,
+                  inténtalo de nuevo.
+                </div>
+              )}
+
+              {/* Botón de envío */}
+              <Button
+                type="submit"
+                className="w-full"
+                size="lg"
+                disabled={formspreeState.submitting}
+              >
+                {formspreeState.submitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-4 w-4" />
+                    Enviar solicitud
+                  </>
+                )}
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+
+      {/* Modal de éxito */}
+      <ContactSuccessModal
+        open={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+      />
+    </>
   );
 };
 
