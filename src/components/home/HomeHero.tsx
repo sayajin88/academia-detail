@@ -21,6 +21,11 @@ export function HomeHero() {
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroImage})` }} />
       ) : (
         <div className="absolute inset-0 overflow-hidden">
+          {/* Fallback image behind video */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center" 
+            style={{ backgroundImage: `url(${heroImage})` }} 
+          />
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=17&enablejsapi=1&origin=${window.location.origin}`}
             title="Video de fondo Detail Park - Taller 100% Real"
@@ -67,7 +72,7 @@ export function HomeHero() {
             <Button asChild variant="hero" size="xl">
               <Link to="/curso-detailing-iniciacion">
                 <Play className="h-5 w-5 mr-2" />
-                Probar por €199 (Jornada Zero)
+                Probar por €97 + IVA (Jornada Zero)
               </Link>
             </Button>
             <Button variant="glass" size="xl" onClick={scrollToFormations}>

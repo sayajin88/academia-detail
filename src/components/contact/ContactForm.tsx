@@ -392,10 +392,10 @@ const ContactForm = () => {
                         mis derechos de acceso, rectificación, supresión,
                         portabilidad, limitación y oposición en{" "}
                         <a
-                          href="mailto:info@detailpark.com"
+                          href="mailto:info@detailpark.es"
                           className="text-primary underline hover:text-primary/80"
                         >
-                          info@detailpark.com
+                          info@detailpark.es
                         </a>
                         .
                       </FormLabel>
