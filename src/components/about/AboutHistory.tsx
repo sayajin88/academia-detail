@@ -1,0 +1,117 @@
+import { AnimatedSection } from '@/components/shared/AnimatedSection';
+import { Calendar, TrendingUp, GraduationCap, Award } from 'lucide-react';
+
+const timelineEvents = [
+  {
+    year: '2017',
+    title: 'Nace Detail Park',
+    description: 'Juan Daniel funda Detail Park en Alicante con una visión clara: convertir su pasión por el cuidado automotriz en un negocio sostenible y profesional.',
+    icon: Calendar,
+  },
+  {
+    year: '2019',
+    title: 'Crecimiento y Consolidación',
+    description: 'Detail Park se consolida como referente en la Comunidad Valenciana, trabajando con vehículos de alta gama: Ferrari, Lamborghini, Porsche y más.',
+    icon: TrendingUp,
+  },
+  {
+    year: '2021',
+    title: 'Nace Academia Detail',
+    description: 'Lanzamos nuestra academia para transmitir no solo el oficio, sino el modelo de negocio que nos ha mantenido activos y rentables durante años.',
+    icon: GraduationCap,
+  },
+  {
+    year: 'Hoy',
+    title: 'Centro de Referencia',
+    description: 'Con centros en Alicante y Marbella, somos el único centro de formación donde vivimos del Detailing. Más de 200 alumnos formados y contando.',
+    icon: Award,
+  },
+];
+
+export function AboutHistory() {
+  return (
+    <section className="py-16 md:py-24 bg-gradient-to-b from-background to-muted/20">
+      <div className="container">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              Nuestra Historia
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              De la Pasión al Referente del Sector
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Un recorrido de más de 7 años construyendo el negocio de detailing 
+              más sólido y formando a la próxima generación de profesionales.
+            </p>
+          </div>
+        </AnimatedSection>
+
+        {/* Timeline */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Línea central */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-primary/30 to-transparent hidden md:block" />
+
+          <div className="space-y-8 md:space-y-0">
+            {timelineEvents.map((event, index) => (
+              <AnimatedSection 
+                key={event.year} 
+                delay={index * 0.15}
+                className={`relative flex flex-col md:flex-row items-center gap-4 md:gap-8 ${
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                }`}
+              >
+                {/* Content Card */}
+                <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                  <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300">
+                    <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-sm font-bold mb-3">
+                      {event.year}
+                    </span>
+                    <h3 className="text-xl font-bold mb-2">{event.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {event.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Icon Center */}
+                <div className="relative z-10 flex items-center justify-center w-14 h-14 rounded-full bg-primary/20 border-2 border-primary shadow-lg shadow-primary/20">
+                  <event.icon className="w-6 h-6 text-primary" />
+                </div>
+
+                {/* Spacer for alignment */}
+                <div className="flex-1 hidden md:block" />
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+
+        {/* Story Block */}
+        <AnimatedSection delay={0.6} className="mt-16 max-w-4xl mx-auto">
+          <div className="relative bg-gradient-to-br from-primary/10 via-card to-card border border-primary/20 rounded-3xl p-8 md:p-12">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
+            
+            <blockquote className="relative z-10">
+              <p className="text-lg md:text-xl leading-relaxed text-foreground/90 mb-6">
+                "En 2017 fundé Detail Park con una visión clara: demostrar que se puede vivir 
+                dignamente del detailing. Hemos visto cerrar decenas de centros por falta de 
+                gestión empresarial, no por falta de habilidad técnica. Por eso nació Academia Detail: 
+                para transmitir no solo el oficio, sino el modelo de negocio que nos ha mantenido 
+                activos y rentables durante más de 7 años."
+              </p>
+              <footer className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                  <span className="text-xl font-bold text-primary">JD</span>
+                </div>
+                <div>
+                  <p className="font-semibold">Juan Daniel</p>
+                  <p className="text-sm text-muted-foreground">Fundador de Detail Park</p>
+                </div>
+              </footer>
+            </blockquote>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}

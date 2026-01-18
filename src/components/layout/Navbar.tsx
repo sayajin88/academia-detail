@@ -14,7 +14,7 @@ const formationLinks = [
 
 const navLinks = [
   { name: 'Inicio', href: '/', icon: Home },
-  { name: 'Galería', href: '/galeria-detailing', icon: Image },
+  { name: 'Quiénes Somos', href: '/quienes-somos', icon: Image },
   { name: 'Contacto', href: '/contacto', icon: Mail },
   { name: 'Soy nuevo', href: '/curso-detailing-iniciacion', icon: HelpCircle },
 ];

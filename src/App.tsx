@@ -7,7 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
 import JornadaCero from "./pages/JornadaCero";
 import FormationDetail from "./pages/FormationDetail";
-import Gallery from "./pages/Gallery";
+import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import CarreraDetailing from "./pages/CarreraDetailing";
 import NotFound from "./pages/NotFound";
@@ -30,7 +30,7 @@ const App = () => (
             <Route path="/curso-vinilado-vehiculos" element={<FormationDetail />} />
             <Route path="/curso-ppf-proteccion-pintura" element={<FormationDetail />} />
             <Route path="/curso-restauracion-vehiculos" element={<FormationDetail />} />
-            <Route path="/galeria-detailing" element={<Gallery />} />
+            <Route path="/quienes-somos" element={<AboutUs />} />
             <Route path="/contacto" element={<Contact />} />
             
             {/* 301 Redirects - Old URLs to new SEO-optimized URLs */}
@@ -40,7 +40,8 @@ const App = () => (
             <Route path="/formacion/wrapping" element={<Navigate to="/curso-vinilado-vehiculos" replace />} />
             <Route path="/formacion/ppf" element={<Navigate to="/curso-ppf-proteccion-pintura" replace />} />
             <Route path="/formacion/restauracion" element={<Navigate to="/curso-restauracion-vehiculos" replace />} />
-            <Route path="/galeria" element={<Navigate to="/galeria-detailing" replace />} />
+            <Route path="/galeria" element={<Navigate to="/quienes-somos" replace />} />
+            <Route path="/galeria-detailing" element={<Navigate to="/quienes-somos" replace />} />
             
             {/* Catch-all for old /formacion/:slug pattern */}
             <Route path="/formacion/:slug" element={<FormationDetail />} />
