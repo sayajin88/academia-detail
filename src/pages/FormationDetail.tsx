@@ -21,8 +21,17 @@ import { useToast } from '@/hooks/use-toast';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 
-// Video asset for detailing course
+// Video assets for detailing course (vertical 9:16 format)
 import detailCursoVideo from '@/assets/detail-curso-v2.webm';
+import reelFiltro from '@/assets/reel-filtro.webm';
+import reelCursoDetail from '@/assets/reel-curso-detail.webm';
+
+// Detailing course videos array
+const detailingVideos = [
+  { src: detailCursoVideo },
+  { src: reelFiltro },
+  { src: reelCursoDetail },
+];
 
 // Map URL paths to formation slugs
 const pathToSlugMap: Record<string, string> = {
@@ -86,7 +95,7 @@ export default function FormationDetailPage() {
         <FormationAdvantages formation={formation} />
         {slug === 'curso-detailing-profesional' && (
           <FormationVideoShowcase
-            videoSrc={detailCursoVideo}
+            videos={detailingVideos}
             badge="Mira lo que aprenderás"
             title="Domina las Técnicas Profesionales"
             subtitle="de Detailing Automotriz"
