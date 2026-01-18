@@ -19,8 +19,8 @@ const ContactInfo = () => {
     {
       icon: Phone,
       label: "Teléfono",
-      value: "+34 965 123 456",
-      href: "tel:+34965123456",
+      value: "+34 622 773 555",
+      href: "tel:+34622773555",
     },
   ];
 
