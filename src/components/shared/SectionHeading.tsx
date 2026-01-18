@@ -4,6 +4,8 @@ interface SectionHeadingProps {
   subtitle?: string;
   centered?: boolean;
   light?: boolean;
+  /** Control heading level: 'h1' for page titles, 'h2' for sections (default) */
+  titleAs?: 'h1' | 'h2';
 }
 
 export function SectionHeading({
@@ -12,7 +14,10 @@ export function SectionHeading({
   subtitle,
   centered = true,
   light = false,
+  titleAs = 'h2',
 }: SectionHeadingProps) {
+  const HeadingTag = titleAs;
+  
   return (
     <div className={`mb-10 md:mb-14 ${centered ? 'text-center' : ''}`}>
       {badge && (
@@ -26,13 +31,13 @@ export function SectionHeading({
           {badge}
         </span>
       )}
-      <h2
+      <HeadingTag
         className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${
           light ? 'text-white' : 'text-foreground'
         }`}
       >
         {title}
-      </h2>
+      </HeadingTag>
       {subtitle && (
         <p
           className={`text-lg md:text-xl max-w-3xl ${centered ? 'mx-auto' : ''} ${
