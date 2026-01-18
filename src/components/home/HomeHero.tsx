@@ -67,29 +67,33 @@ export function HomeHero() {
             <strong className="text-primary">mentalidad de negocio desde el día 1</strong>.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <Button asChild variant="hero" size="xl">
+          {/* CTA Buttons - Improved mobile layout */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 md:mb-12 px-2">
+            <Button asChild variant="hero" size="xl" className="w-full sm:w-auto text-sm sm:text-base min-h-[52px]">
               <Link to="/curso-detailing-iniciacion">
-                <Play className="h-5 w-5 mr-2" />
-                Probar por €97 + IVA (Jornada Zero)
+                <Play className="h-5 w-5 mr-2 flex-shrink-0" />
+                <span className="sm:hidden">Probar por €97 + IVA</span>
+                <span className="hidden sm:inline">Probar por €97 + IVA (Jornada Zero)</span>
               </Link>
             </Button>
-            <Button variant="glass" size="xl" onClick={scrollToFormations}>
-              Ver Formaciones Completas
+            <Button variant="glass" size="lg" onClick={scrollToFormations} className="w-full sm:w-auto min-h-[48px]">
+              Ver Formaciones
             </Button>
           </div>
 
-          {/* Stats - Updated with Business Focus */}
-          <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-2xl mx-auto">
+          {/* Stats - Improved mobile layout */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8 max-w-2xl mx-auto px-2">
             {[
-              { value: "500+", label: "Empresarios Formados" },
-              { value: "100%", label: "Taller Real" },
-              { value: "€3.5K", label: "Facturación Media/Mes" },
+              { value: "500+", label: "Empresarios", sublabel: "Formados" },
+              { value: "100%", label: "Taller", sublabel: "Real" },
+              { value: "€3.5K", label: "Facturación", sublabel: "Media/Mes" },
             ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-2xl md:text-4xl font-bold text-primary mb-1">{stat.value}</div>
-                <div className="text-xs md:text-sm text-white/60">{stat.label}</div>
+              <div key={stat.label} className="text-center p-2 sm:p-0">
+                <div className="text-xl sm:text-2xl md:text-4xl font-bold text-primary mb-0.5 sm:mb-1">{stat.value}</div>
+                <div className="text-[10px] sm:text-xs md:text-sm text-white/60 leading-tight">
+                  <span className="sm:hidden">{stat.label}</span>
+                  <span className="hidden sm:inline">{stat.label} {stat.sublabel}</span>
+                </div>
               </div>
             ))}
           </div>

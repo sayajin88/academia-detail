@@ -42,10 +42,10 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary transition-colors"
+                  className="p-3 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center"
                   aria-label={social.name}
                 >
-                  <social.icon className="h-5 w-5" />
+                  <social.icon className="h-5 w-5 md:h-6 md:w-6" />
                 </a>
               ))}
             </div>

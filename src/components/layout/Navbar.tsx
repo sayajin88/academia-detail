@@ -93,17 +93,17 @@ export function Navbar() {
         role="navigation"
         aria-label="Navegación principal"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'py-2' : 'py-3 md:py-4'
+          isScrolled ? 'py-1.5 md:py-2' : 'py-2 md:py-4'
         } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
-        style={{ transitionProperty: 'opacity, transform, padding' }}
+        style={{ transitionProperty: 'opacity, transform, padding', paddingTop: 'max(env(safe-area-inset-top), 0.375rem)' }}
       >
-        <div className="container mx-auto px-3 md:px-4">
+        <div className="container mx-auto px-2 md:px-4">
           {/* Glass Container */}
           <div
             className={`relative flex items-center justify-between transition-all duration-500 ${
               isScrolled
-                ? 'bg-background/80 backdrop-blur-2xl rounded-xl md:rounded-2xl border border-white/10 shadow-2xl shadow-black/20 px-4 md:px-6 py-2 md:py-3'
-                : 'bg-background/40 backdrop-blur-xl rounded-xl md:rounded-2xl border border-white/5 px-4 md:px-6 py-3 md:py-4'
+                ? 'bg-background/80 backdrop-blur-2xl rounded-xl md:rounded-2xl border border-white/10 shadow-2xl shadow-black/20 px-3 md:px-6 py-1.5 md:py-3'
+                : 'bg-background/40 backdrop-blur-xl rounded-xl md:rounded-2xl border border-white/5 px-3 md:px-6 py-2 md:py-4'
             }`}
           >
             {/* Animated border gradient */}
@@ -127,7 +127,7 @@ export function Navbar() {
                 <img 
                   src={logo} 
                   alt="Detail Park" 
-                  className="h-8 md:h-10 w-auto transition-transform duration-300 group-hover:scale-105" 
+                  className="h-7 md:h-10 w-auto transition-transform duration-300 group-hover:scale-105"
                 />
                 {/* Logo glow on hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-primary/30" />
@@ -335,11 +335,11 @@ export function Navbar() {
           </div>
 
           {/* Navigation Links */}
-          <div className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-180px)]">
+          <div className="p-4 space-y-1 overflow-y-auto max-h-[calc(100vh-180px)]" style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)' }}>
             {/* Main Links */}
             <Link
               to="/"
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+              className={`flex items-center gap-3 px-4 py-4 rounded-xl transition-all duration-200 min-h-[52px] ${
                 location.pathname === '/' 
                   ? 'bg-primary/10 text-primary' 
                   : 'text-foreground hover:bg-white/5'
@@ -354,7 +354,7 @@ export function Navbar() {
             <div className="space-y-1">
               <button
                 onClick={() => setMobileFormationsOpen(!mobileFormationsOpen)}
-                className={`flex items-center justify-between w-full px-4 py-3 rounded-xl transition-all duration-200 ${
+                className={`flex items-center justify-between w-full px-4 py-4 rounded-xl transition-all duration-200 min-h-[52px] ${
                   isFormationsActive 
                     ? 'bg-primary/10 text-primary' 
                     : 'text-foreground hover:bg-white/5'

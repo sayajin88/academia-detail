@@ -108,25 +108,25 @@ const CarreraHero = ({ onCTAClick }: CarreraHeroProps) => {
           {carreraDetailingData.tagline}
         </p>
 
-        {/* Stats Bar - Horizontal on Desktop, 2x2 Grid on Mobile */}
+        {/* Stats Bar - 2x2 Grid on Mobile, Horizontal on Desktop */}
         <div 
-          className={`flex flex-wrap justify-center gap-3 sm:gap-4 mb-10 transition-all duration-1000 delay-600 ${
+          className={`grid grid-cols-2 lg:flex lg:flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 mb-8 sm:mb-10 max-w-lg lg:max-w-none mx-auto transition-all duration-1000 delay-600 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
           {stats.map((stat, index) => (
             <div 
               key={index}
-              className="group relative flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-card/60 backdrop-blur-md rounded-xl border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:scale-105"
+              className="group relative flex items-center gap-2 sm:gap-3 px-3 sm:px-4 lg:px-6 py-2.5 sm:py-3 lg:py-4 bg-card/60 backdrop-blur-md rounded-lg sm:rounded-xl border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:scale-105"
             >
-              <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center group-hover:bg-gold/30 transition-colors">
-                <stat.icon className="w-5 h-5 text-gold" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gold/20 flex items-center justify-center group-hover:bg-gold/30 transition-colors flex-shrink-0">
+                <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-gold" />
               </div>
-              <div className="text-left">
-                <span className="block text-xl sm:text-2xl font-monument text-foreground leading-none">
+              <div className="text-left min-w-0">
+                <span className="block text-base sm:text-xl lg:text-2xl font-monument text-foreground leading-none truncate">
                   {stat.label}
                 </span>
-                <span className="text-xs sm:text-sm text-gold/80 uppercase tracking-wider">
+                <span className="text-[10px] sm:text-xs lg:text-sm text-gold/80 uppercase tracking-wider">
                   {stat.sublabel}
                 </span>
               </div>

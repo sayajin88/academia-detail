@@ -106,23 +106,7 @@ export const MobileOptimization = ({ isOpen, onToggle, onCtaClick }: MobileMenuP
         </div>
       )}
 
-      {/* Sticky Mobile CTA - Optimized */}
-      {showStickyCTA && (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-white/10 p-3 z-50 shadow-2xl animate-slide-in-right">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex-1 min-w-0">
-              <p className="text-white font-bold text-xs truncate">La Jornada Cero</p>
-              <div className="flex items-center gap-2">
-                <p className="text-primary text-base font-black">€199 + IVA</p>
-                <span className="text-xs text-white/60 line-through">€599</span>
-              </div>
-            </div>
-            <Button variant="hero" size="sm" className="shrink-0 mobile-touch-target" onClick={onCtaClick}>
-              RESERVAR
-            </Button>
-          </div>
-        </div>
-      )}
+      {/* Sticky Mobile CTA - Now handled by StickyFloatingCTA component */}
     </>
   );
 };
