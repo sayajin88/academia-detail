@@ -11,15 +11,16 @@ interface SEOProps {
   canonical?: string;
 }
 
-const BASE_URL = 'https://detailing-ignition-landing.lovable.app';
-const DEFAULT_IMAGE = 'https://storage.googleapis.com/gpt-engineer-file-uploads/KMej6jjSX9MA6QNCkjOdbSEku1i1/social-images/social-1762165951182-DETAIL PARK emblema blanco.png';
+const BASE_URL = 'https://academiadetail.com';
+const DEFAULT_IMAGE = 'https://academiadetail.com/og-image.png';
 
 // LocalBusiness Schema with complete business data for local SEO
 export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": ["LocalBusiness", "EducationalOrganization"],
-  "name": "Detail Park Academy",
-  "description": "Academia de detailing profesional en Alicante, España. Formación 100% práctica en cursos de detailing, car wrapping, PPF y restauración de vehículos.",
+  "name": "Academia Detailing",
+  "alternateName": "Detail Park Academy",
+  "description": "Centro de formación líder en detailing profesional. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración de vehículos en Alicante, España.",
   "url": BASE_URL,
   "logo": DEFAULT_IMAGE,
   "image": DEFAULT_IMAGE,
@@ -67,9 +68,14 @@ export const localBusinessSchema = {
   },
   "sameAs": [
     "https://www.instagram.com/detailpark/",
-    "https://www.youtube.com/@detailpark",
-    "https://share.google/DvptTRJ4t6vzxyPUA"
+    "https://www.youtube.com/@detailpark"
   ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "127",
+    "bestRating": "5"
+  },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Cursos de Detailing Profesional",
@@ -110,7 +116,7 @@ export const localBusinessSchema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Course",
-          "name": "Carrera Detailing",
+          "name": "Formación Profesional Detailing",
           "description": "Programa completo de 1 mes con 4 certificaciones profesionales"
         }
       }

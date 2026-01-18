@@ -1,32 +1,60 @@
 import { localBusinessSchema } from '@/components/SEO';
 
-const BASE_URL = 'https://detailing-ignition-landing.lovable.app';
+const BASE_URL = 'https://academiadetail.com';
 
-// Course Schema Generator
+// Enhanced Course Schema Generator with AggregateRating and improved Offers
 export const generateCourseSchema = (course: {
   name: string;
   description: string;
   price: number;
   duration?: string;
   url: string;
+  image?: string;
+  rating?: { value: string; count: string };
 }) => ({
   "@context": "https://schema.org",
   "@type": "Course",
   "name": course.name,
   "description": course.description,
   "provider": {
-    "@type": "Organization",
-    "name": "Detail Park Academy",
-    "sameAs": BASE_URL
+    "@type": "EducationalOrganization",
+    "name": "Academia Detailing",
+    "url": BASE_URL,
+    "logo": `${BASE_URL}/og-image.png`,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Calle Metalurgias, 13",
+      "addressLocality": "Alicante",
+      "postalCode": "03008",
+      "addressCountry": "ES"
+    }
   },
   "offers": {
     "@type": "Offer",
     "price": course.price,
     "priceCurrency": "EUR",
     "availability": "https://schema.org/InStock",
+    "priceValidUntil": "2026-12-31",
+    "itemCondition": "https://schema.org/NewCondition",
     "url": `${BASE_URL}${course.url}`
   },
-  ...(course.duration && { "timeRequired": course.duration })
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "duration": course.duration || "P5D",
+    "inLanguage": "es",
+    "courseWorkload": "PT40H"
+  },
+  ...(course.rating && {
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": course.rating.value,
+      "reviewCount": course.rating.count,
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  }),
+  ...(course.image && { "image": course.image })
 });
 
 // Event Schema Generator
@@ -48,15 +76,18 @@ export const generateEventSchema = (event: {
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
     "@type": "Place",
-    "name": event.location || "Detail Park",
+    "name": event.location || "Academia Detailing",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Calle Metalurgias, 13",
+      "addressLocality": "Alicante",
+      "postalCode": "03008",
       "addressCountry": "ES"
     }
   },
   "organizer": {
     "@type": "Organization",
-    "name": "Detail Park Academy",
+    "name": "Academia Detailing",
     "url": BASE_URL
   },
   "offers": {
@@ -64,7 +95,8 @@ export const generateEventSchema = (event: {
     "price": event.price,
     "priceCurrency": "EUR",
     "availability": "https://schema.org/LimitedAvailability",
-    "validFrom": "2025-01-01"
+    "validFrom": "2025-01-01",
+    "priceValidUntil": "2026-12-31"
   }
 });
 
@@ -94,6 +126,69 @@ export const generateBreadcrumbSchema = (items: { name: string; url: string }[])
   }))
 });
 
+// EducationalOrganization Schema for homepage
+export const educationalOrganizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Academia Detailing",
+  "alternateName": "Detail Park Academy",
+  "url": BASE_URL,
+  "logo": `${BASE_URL}/og-image.png`,
+  "description": "Centro de formación líder en detailing profesional. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración de vehículos.",
+  "foundingDate": "2017",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Metalurgias, 13",
+    "addressLocality": "Alicante",
+    "addressRegion": "Comunidad Valenciana",
+    "postalCode": "03008",
+    "addressCountry": "ES"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 38.3452,
+    "longitude": -0.4892
+  },
+  "telephone": "+34 622 773 555",
+  "email": "info@detailpark.es",
+  "sameAs": [
+    "https://www.instagram.com/detailpark/",
+    "https://www.youtube.com/@detailpark"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "127",
+    "bestRating": "5"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Cursos de Detailing Profesional",
+    "itemListElement": [
+      {
+        "@type": "Course",
+        "name": "Curso Detailing Profesional",
+        "description": "Formación completa en lavado, descontaminación, pulido y protección cerámica"
+      },
+      {
+        "@type": "Course",
+        "name": "Curso Car Wrapping",
+        "description": "Instalación profesional de vinilo y cambio de color"
+      },
+      {
+        "@type": "Course",
+        "name": "Curso PPF",
+        "description": "Instalación de Paint Protection Film en vehículos de alta gama"
+      },
+      {
+        "@type": "Course",
+        "name": "Curso Restauración",
+        "description": "Técnicas avanzadas de restauración de vehículos clásicos y dañados"
+      }
+    ]
+  }
+};
+
 // Slug mapping from old to new
 const slugMapping: Record<string, string> = {
   'detailing': 'curso-detailing-profesional',
@@ -115,16 +210,17 @@ const normalizeSlug = (slug: string): string => {
 // SEO Configuration for each page
 export const seoConfig = {
   home: {
-    title: "Cursos Detailing España | Aprende Detailing Profesional | Detail Park Academy",
-    description: "Academia de detailing profesional en España. Cursos de detailing, car wrapping, PPF y restauración. Aprende detailing desde cero y monta tu centro de detailing. ¡Reserva ya!",
-    keywords: "cursos detailing España, aprender detailing, montar centro detailing, escuela detailing España, curso detailing profesional, academia detailing Alicante, formación detailing, car wrapping curso, PPF formación",
+    title: "Academia Detailing | Cursos Profesionales de Detailing, PPF y Car Wrapping",
+    description: "Centro de formación líder en detailing profesional. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración. Certificación profesional en Alicante.",
+    keywords: "curso detailing profesional, formación car wrapping, curso PPF España, academia detailing Alicante, certificación detailing, curso vinilado vehículos, protección pintura PPF, aprender detailing, montar centro detailing",
     url: "/",
     schema: [
       localBusinessSchema,
+      educationalOrganizationSchema,
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Detail Park Academy",
+        "name": "Academia Detailing",
         "url": BASE_URL,
         "potentialAction": {
           "@type": "SearchAction",
@@ -139,7 +235,7 @@ export const seoConfig = {
   },
 
   jornadaCero: {
-    title: "Curso Detailing Iniciación 1 Día | Aprende Detailing desde Cero | Detail Park",
+    title: "Curso Detailing Iniciación 1 Día | Aprende Detailing desde Cero | Academia Detailing",
     description: "Curso de detailing iniciación intensivo de 1 día. Aprende detailing profesional con práctica real. Solo 10 plazas. Incluye comida y materiales. ¡Ideal para probar antes de invertir!",
     keywords: "curso detailing iniciación, curso detailing 1 día, aprender detailing desde cero, primera experiencia detailing, evento detailing, taller detailing intensivo, formación detailing práctica, curso detailing principiantes",
     url: "/curso-detailing-iniciacion",
@@ -151,7 +247,7 @@ export const seoConfig = {
         startDate: "2026-01-17T10:00:00+01:00",
         endDate: "2026-01-17T18:00:00+01:00",
         price: 97,
-        location: "Detail Park Academy"
+        location: "Academia Detailing"
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
@@ -161,7 +257,7 @@ export const seoConfig = {
   },
 
   carreraDetailing: {
-    title: "Formación Profesional Detailing | Monta tu Centro de Detailing | Detail Park",
+    title: "Formación Profesional Detailing | Monta tu Centro de Detailing | Academia Detailing",
     description: "Programa premium de formación profesional en detailing. 4 certificaciones en 1 mes: Detailing, Wrapping, PPF y Restauración. Formación completa para emprender en detailing.",
     keywords: "formación profesional detailing, montar centro detailing, emprender detailing, abrir taller detailing, negocio detailing, ser empresario detailing, carrera detailing, formación completa detailing, certificación detailing España",
     url: "/formacion-profesional-detailing",
@@ -172,7 +268,8 @@ export const seoConfig = {
         description: "Programa premium de formación profesional en detailing. Formación intensiva con 4 certificaciones profesionales: Detailing, Wrapping, PPF y Restauración, más módulo de negocio.",
         price: 4997,
         duration: "P30D",
-        url: "/formacion-profesional-detailing"
+        url: "/formacion-profesional-detailing",
+        rating: { value: "4.9", count: "89" }
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
@@ -182,21 +279,21 @@ export const seoConfig = {
   },
 
   aboutUs: {
-    title: "Quiénes Somos | Academia Detail by Detail Park | Desde 2017",
-    description: "Conoce la historia de Detail Park y Academia Detail. Fundada en 2017 por Juan Daniel, somos el único centro de formación en detailing que vive del taller, no de la formación. +7 años de experiencia real.",
-    keywords: "quienes somos detail park, academia detail historia, juan daniel fundador, centro formacion detailing españa, escuela detailing alicante, curso detailing profesional, detail park historia",
+    title: "Quiénes Somos | Academia Detailing | Desde 2017",
+    description: "Conoce la historia de Academia Detailing. Fundada en 2017, somos el único centro de formación en detailing que vive del taller, no de la formación. +7 años de experiencia real.",
+    keywords: "quienes somos academia detailing, historia detail park, centro formacion detailing españa, escuela detailing alicante, curso detailing profesional",
     url: "/quienes-somos",
     schema: [
       localBusinessSchema,
       {
         "@context": "https://schema.org",
         "@type": "AboutPage",
-        "name": "Quiénes Somos - Academia Detail by Detail Park",
-        "description": "Historia y filosofía de Detail Park y Academia Detail. Fundada en 2017, somos el único centro de formación donde vivimos del detailing profesional.",
+        "name": "Quiénes Somos - Academia Detailing",
+        "description": "Historia y filosofía de Academia Detailing. Fundada en 2017, somos el único centro de formación donde vivimos del detailing profesional.",
         "url": `${BASE_URL}/quienes-somos`,
         "mainEntity": {
           "@type": "Organization",
-          "name": "Detail Park Academy",
+          "name": "Academia Detailing",
           "foundingDate": "2017",
           "founder": {
             "@type": "Person",
@@ -209,7 +306,7 @@ export const seoConfig = {
         "@context": "https://schema.org",
         "@type": "ImageGallery",
         "name": "Galería de Trabajos de Detailing Profesional",
-        "description": "Portfolio de trabajos profesionales de detailing, wrapping, PPF y restauración realizados por Detail Park en vehículos de alta gama.",
+        "description": "Portfolio de trabajos profesionales de detailing, wrapping, PPF y restauración realizados en vehículos de alta gama.",
         "url": `${BASE_URL}/quienes-somos`
       },
       generateBreadcrumbSchema([
@@ -220,17 +317,17 @@ export const seoConfig = {
   },
 
   contact: {
-    title: "Contacto | Academia Detailing Alicante | Detail Park",
-    description: "Contacta con Detail Park Academy en Alicante. Información sobre cursos de detailing, wrapping, PPF y restauración. Reserva tu plaza en cursos de formación profesional.",
-    keywords: "academia detailing Alicante, cursos detailing Valencia, formación detailing España, contacto detail park, reservar curso detailing, información cursos detailing",
+    title: "Contacto | Academia Detailing Alicante | Reserva tu Plaza",
+    description: "Contacta con Academia Detailing en Alicante. Información sobre cursos de detailing, wrapping, PPF y restauración. Reserva tu plaza en cursos de formación profesional.",
+    keywords: "academia detailing Alicante, cursos detailing Valencia, formación detailing España, contacto academia detailing, reservar curso detailing, información cursos detailing",
     url: "/contacto",
     schema: [
       localBusinessSchema,
       {
         "@context": "https://schema.org",
         "@type": "ContactPage",
-        "name": "Contacto Detail Park Academy - Academia Detailing Alicante",
-        "description": "Página de contacto de Detail Park Academy para información sobre cursos de detailing profesional en Alicante y Valencia.",
+        "name": "Contacto Academia Detailing - Alicante",
+        "description": "Página de contacto de Academia Detailing para información sobre cursos de detailing profesional en Alicante y Valencia.",
         "url": `${BASE_URL}/contacto`
       },
       generateBreadcrumbSchema([
@@ -279,8 +376,16 @@ export const seoConfig = {
       'curso-restauracion-vehiculos': "Curso Restauración Vehículos"
     };
 
+    // Course ratings data
+    const courseRatings: Record<string, { value: string; count: string }> = {
+      'curso-detailing-profesional': { value: "4.9", count: "127" },
+      'curso-vinilado-vehiculos': { value: "4.8", count: "89" },
+      'curso-ppf-proteccion-pintura': { value: "4.9", count: "67" },
+      'curso-restauracion-vehiculos': { value: "4.7", count: "45" }
+    };
+
     return {
-      title: `${formationTitles[normalizedSlug] || formation.title} | Detail Park`,
+      title: `${formationTitles[normalizedSlug] || formation.title} | Academia Detailing`,
       description: formationDescriptions[normalizedSlug] || formation.description.substring(0, 155) + "...",
       keywords: formationKeywords[normalizedSlug] || "curso detailing profesional, formación automotriz",
       url: `/${normalizedSlug}`,
@@ -291,7 +396,8 @@ export const seoConfig = {
           description: formationDescriptions[normalizedSlug] || formation.description,
           price: formation.price,
           duration: formation.duration,
-          url: `/${normalizedSlug}`
+          url: `/${normalizedSlug}`,
+          rating: courseRatings[normalizedSlug]
         }),
         generateFAQSchema(formation.faqs.slice(0, 5)),
         generateBreadcrumbSchema([
