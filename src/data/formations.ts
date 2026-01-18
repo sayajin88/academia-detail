@@ -1,4 +1,4 @@
-import detailingHero from '@/assets/evento-practica-pulidora-real.jpg';
+import detailingHero from '@/assets/formacion-detailing-juan-daniel.jpg';
 import wrappingHero from '@/assets/curso-wrapping.jpg';
 import ppfHero from '@/assets/curso-ppf.jpg';
 import restauracionHero from '@/assets/evento-limpieza-interior.jpg';
