@@ -79,7 +79,7 @@ export default function FormationDetailPage() {
       <MainLayout>
         <FormationHero formation={formation} onCTAClick={handleCTAClick} />
         <FormationAdvantages formation={formation} />
-        <FormationLevels formation={formation} />
+        <FormationLevels formation={formation} onCTAClick={handleCTAClick} />
         <FormationContent formation={formation} />
         <FormationInstructor formation={formation} />
         <FormationModules formation={formation} />
