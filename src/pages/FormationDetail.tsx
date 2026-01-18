@@ -2,6 +2,7 @@ import { useParams, Navigate, useLocation } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { FormationHero } from '@/components/formation/FormationHero';
 import { FormationAdvantages } from '@/components/formation/FormationAdvantages';
+import { FormationVideoShowcase } from '@/components/formation/FormationVideoShowcase';
 import { FormationLevels } from '@/components/formation/FormationLevels';
 import { FormationContent } from '@/components/formation/FormationContent';
 import { FormationInstructor } from '@/components/formation/FormationInstructor';
@@ -19,6 +20,9 @@ import { getFormationBySlug } from '@/data/formationDetails';
 import { useToast } from '@/hooks/use-toast';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
+
+// Video asset for detailing course
+import detailCursoVideo from '@/assets/detail-curso-v2.webm';
 
 // Map URL paths to formation slugs
 const pathToSlugMap: Record<string, string> = {
@@ -80,6 +84,16 @@ export default function FormationDetailPage() {
       <MainLayout>
         <FormationHero formation={formation} onCTAClick={handleCTAClick} />
         <FormationAdvantages formation={formation} />
+        {slug === 'curso-detailing-profesional' && (
+          <FormationVideoShowcase
+            videoSrc={detailCursoVideo}
+            badge="Mira lo que aprenderás"
+            title="Domina las Técnicas Profesionales"
+            subtitle="de Detailing Automotriz"
+            ctaText="Quiero Aprender Esto"
+            onCTAClick={handleCTAClick}
+          />
+        )}
         <FormationLevels formation={formation} onCTAClick={handleCTAClick} />
         <FormationContent formation={formation} />
         <FormationInstructor formation={formation} />
