@@ -13,8 +13,8 @@ const CarreraPricing = ({ onCTAClick }: CarreraPricingProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const priceCount = useCountUp(carreraDetailingData.price, 2000, isVisible);
-  const valueCount = useCountUp(
+  const { count: priceCount } = useCountUp(carreraDetailingData.price, 2000, isVisible);
+  const { count: valueCount } = useCountUp(
     carreraDetailingData.valueBreakdown.reduce((acc, item) => acc + item.value, 0),
     2000,
     isVisible
@@ -132,7 +132,7 @@ const CarreraPricing = ({ onCTAClick }: CarreraPricingProps) => {
                     €{priceCount.toLocaleString()}
                   </p>
                   <p className="text-gold text-sm md:text-lg">
-                    Ahorras €{(Number(valueCount) - carreraDetailingData.price).toLocaleString()}
+                    Ahorras €{(valueCount - carreraDetailingData.price).toLocaleString()}
                   </p>
                 </div>
               </div>
