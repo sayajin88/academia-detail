@@ -1,6 +1,6 @@
 import detailingHero from '@/assets/formacion-detailing-juan-daniel.jpg';
-import wrappingHero from '@/assets/curso-wrapping-new.jpg';
-import ppfHero from '@/assets/curso-ppf-new.jpg';
+import wrappingHero from '@/assets/curso-wrapping-formacion.jpg';
+import ppfHero from '@/assets/curso-ppf-formacion.jpg';
 import restauracionHero from '@/assets/evento-limpieza-interior.jpg';
 import carreraHero from '@/assets/evento-clase-completa.jpg';
 
