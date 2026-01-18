@@ -14,13 +14,14 @@ interface SEOProps {
 const BASE_URL = 'https://academiadetail.com';
 const DEFAULT_IMAGE = 'https://academiadetail.com/og-image.png';
 
-// LocalBusiness Schema with complete business data for local SEO
+// LocalBusiness Schema with complete business data for local SEO - Emphasizing REAL WORKSHOP
 export const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "EducationalOrganization"],
-  "name": "Academia Detailing",
-  "alternateName": "Detail Park Academy",
-  "description": "Centro de formación líder en detailing profesional. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración de vehículos en Alicante, España.",
+  "@type": ["LocalBusiness", "EducationalOrganization", "AutoRepair"],
+  "name": "Academia Detail",
+  "alternateName": "Detail Park - Taller y Academia",
+  "slogan": "No enseñamos a lavar coches, formamos empresarios del Detailing",
+  "description": "El ÚNICO centro de formación en detailing que opera en un taller 100% real con clientes de alta gama. Aprende técnica Y negocio desde el día 1. Sin aulas vacías, solo práctica real.",
   "url": BASE_URL,
   "logo": DEFAULT_IMAGE,
   "image": DEFAULT_IMAGE,
@@ -77,16 +78,36 @@ export const localBusinessSchema = {
     "reviewCount": "127",
     "bestRating": "5"
   },
+  "knowsAbout": [
+    "Detailing Profesional",
+    "Gestión de Negocio Detailing",
+    "PPF Installation",
+    "Car Wrapping",
+    "Presupuestación de Servicios",
+    "Captación de Clientes VIP",
+    "Cálculo de Márgenes de Beneficio",
+    "Escalado de Negocios de Detailing",
+    "Formación Práctica en Taller Real",
+    "Mentoría Empresarial Detailing"
+  ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Cursos de Detailing Profesional",
+    "name": "Cursos de Detailing Profesional en Taller Real",
     "itemListElement": [
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Course",
+          "name": "Jornada Zero - Experiencia de Inmersión",
+          "description": "Tu primer contacto con el detailing profesional por solo €97. Prueba antes de invertir."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Course",
           "name": "Curso de Detailing Profesional",
-          "description": "Formación completa en lavado, descontaminación, pulido y protección cerámica"
+          "description": "Formación completa en lavado, descontaminación, pulido y protección cerámica + visión de negocio"
         }
       },
       {
@@ -94,7 +115,7 @@ export const localBusinessSchema = {
         "itemOffered": {
           "@type": "Course",
           "name": "Curso de Car Wrapping",
-          "description": "Instalación profesional de vinilo y cambio de color"
+          "description": "Instalación profesional de vinilo y cambio de color + gestión de clientes VIP"
         }
       },
       {
@@ -102,7 +123,7 @@ export const localBusinessSchema = {
         "itemOffered": {
           "@type": "Course",
           "name": "Curso de PPF",
-          "description": "Instalación de Paint Protection Film en vehículos de alta gama"
+          "description": "Instalación de Paint Protection Film en vehículos de alta gama + presupuestación"
         }
       },
       {
@@ -118,7 +139,7 @@ export const localBusinessSchema = {
         "itemOffered": {
           "@type": "Course",
           "name": "Formación Profesional Detailing",
-          "description": "Programa completo de 1 mes con 4 certificaciones profesionales"
+          "description": "Programa completo de 1 mes con 4 certificaciones profesionales + módulo de negocio exclusivo"
         }
       }
     ]
@@ -159,7 +180,7 @@ export const SEO = ({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:locale" content="es_ES" />
-      <meta property="og:site_name" content="Detail Park Academy" />
+      <meta property="og:site_name" content="Academia Detail - Taller Real" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -170,9 +191,9 @@ export const SEO = ({
 
       {/* Additional SEO Tags */}
       <meta name="robots" content="index, follow" />
-      <meta name="author" content="Detail Park Academy" />
+      <meta name="author" content="Academia Detail - Taller Real" />
       <meta name="geo.region" content="ES" />
-      <meta name="geo.placename" content="España" />
+      <meta name="geo.placename" content="Alicante, España" />
 
       {/* Schema.org JSON-LD */}
       {schemaArray.map((schemaItem, index) => (
