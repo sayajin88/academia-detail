@@ -14,6 +14,7 @@ import { FormationFAQ } from '@/components/formation/FormationFAQ';
 import { FormationROICalculator } from '@/components/formation/FormationROICalculator';
 import { FormationCTA } from '@/components/formation/FormationCTA';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
+import { FormationGallery } from '@/components/formation/FormationGallery';
 import { getFormationBySlug } from '@/data/formationDetails';
 import { useToast } from '@/hooks/use-toast';
 import { SEO } from '@/components/SEO';
@@ -91,6 +92,13 @@ export default function FormationDetailPage() {
             videos={videoTestimonials}
             title="Testimonios de Nuestros Alumnos"
             subtitle="Descubre las experiencias reales de quienes ya se han formado con nosotros"
+          />
+        )}
+        {slug === 'curso-vinilado-vehiculos' && (
+          <FormationGallery 
+            title="Trabajos de Nuestros Alumnos"
+            subtitle="Resultados reales de proyectos de Car Wrapping realizados durante y después de la formación"
+            badge="Galería"
           />
         )}
         <FormationIncludes formation={formation} />
