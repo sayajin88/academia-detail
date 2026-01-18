@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      coming_soon_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          formation_slug: string
+          id: string
+          name: string | null
+          notified: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          formation_slug: string
+          id?: string
+          name?: string | null
+          notified?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          formation_slug?: string
+          id?: string
+          name?: string | null
+          notified?: boolean | null
+        }
+        Relationships: []
+      }
       registrations: {
         Row: {
           accept_marketing: boolean

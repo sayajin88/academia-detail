@@ -57,6 +57,7 @@ export interface FormationDetail {
   certificationText?: string;
   certificationImage?: string;
   formacionRegladaItems?: { title: string; description: string }[];
+  comingSoon?: boolean;
 }
 
 export const formationDetails: Record<string, FormationDetail> = {
@@ -603,6 +604,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     originalPrice: 699,
     image: restauracionHero,
     heroDescription: 'Aprende a recuperar pinturas oxidadas, faros opacos, interiores deteriorados y plásticos dañados con técnicas profesionales.',
+    comingSoon: true,
     forWho: [
       'Profesionales del detailing que quieren especializarse',
       'Talleres de chapa y pintura',

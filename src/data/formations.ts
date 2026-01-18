@@ -14,6 +14,7 @@ export interface Formation {
   href: string;
   icon: string;
   highlights: string[];
+  comingSoon?: boolean;
 }
 
 export const formations: Formation[] = [
@@ -79,7 +80,8 @@ export const formations: Formation[] = [
       'Recuperación de interiores',
       'Tratamiento de plásticos',
       'Técnicas de rejuvenecimiento'
-    ]
+    ],
+    comingSoon: true
   }
 ];
 
