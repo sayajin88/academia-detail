@@ -70,13 +70,13 @@ export function HomeFAQ() {
               subtitle="Resolvemos tus dudas más comunes"
             />
 
-            <Accordion type="single" collapsible className="mb-10">
+            <Accordion type="single" collapsible className="mb-10 md:mb-12">
               {faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left text-foreground hover:text-primary">
+                  <AccordionTrigger className="text-left text-foreground hover:text-primary py-5 min-h-[56px]">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
+                  <AccordionContent className="text-muted-foreground px-1 pb-4">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>

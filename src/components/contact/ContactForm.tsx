@@ -170,7 +170,7 @@ const ContactForm = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              {/* Nombre y Apellidos */}
+              {/* Nombre y Apellidos - Stack on mobile */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -179,7 +179,11 @@ const ContactForm = () => {
                     <FormItem>
                       <FormLabel>Nombre *</FormLabel>
                       <FormControl>
-                        <Input placeholder="Tu nombre" {...field} />
+                        <Input 
+                          placeholder="Tu nombre" 
+                          {...field} 
+                          className="h-12 text-base"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -192,7 +196,11 @@ const ContactForm = () => {
                     <FormItem>
                       <FormLabel>Apellidos *</FormLabel>
                       <FormControl>
-                        <Input placeholder="Tus apellidos" {...field} />
+                        <Input 
+                          placeholder="Tus apellidos" 
+                          {...field}
+                          className="h-12 text-base"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -200,7 +208,7 @@ const ContactForm = () => {
                 />
               </div>
 
-              {/* Email y Teléfono */}
+              {/* Email y Teléfono - Stack on mobile */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -213,6 +221,7 @@ const ContactForm = () => {
                           type="email"
                           placeholder="tu@email.com"
                           {...field}
+                          className="h-12 text-base"
                         />
                       </FormControl>
                       <FormMessage />
@@ -230,6 +239,7 @@ const ContactForm = () => {
                           type="tel"
                           placeholder="622 77 35 55"
                           {...field}
+                          className="h-12 text-base"
                         />
                       </FormControl>
                       <FormMessage />
@@ -247,13 +257,13 @@ const ContactForm = () => {
                     <FormLabel>¿Tienes experiencia en Detailing? *</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Selecciona una opción" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {experienciaOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
+                          <SelectItem key={option.value} value={option.value} className="py-3">
                             {option.label}
                           </SelectItem>
                         ))}
@@ -273,13 +283,13 @@ const ContactForm = () => {
                     <FormLabel>¿Tienes centro propio? *</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Selecciona una opción" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {centroOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
+                          <SelectItem key={option.value} value={option.value} className="py-3">
                             {option.label}
                           </SelectItem>
                         ))}
@@ -301,13 +311,13 @@ const ContactForm = () => {
                     </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Selecciona tu presupuesto" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {inversionOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
+                          <SelectItem key={option.value} value={option.value} className="py-3">
                             {option.label}
                           </SelectItem>
                         ))}
@@ -327,13 +337,13 @@ const ContactForm = () => {
                     <FormLabel>Tipo de formación que deseas realizar *</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Selecciona el tipo de formación" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {formacionOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
+                          <SelectItem key={option.value} value={option.value} className="py-3">
                             {option.label}
                           </SelectItem>
                         ))}
@@ -363,7 +373,7 @@ const ContactForm = () => {
                 )}
               />
 
-              {/* Checkbox RGPD */}
+              {/* Checkbox RGPD - Better mobile touch target */}
               <FormField
                 control={form.control}
                 name="acepto_privacidad"
@@ -373,9 +383,10 @@ const ContactForm = () => {
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
+                        className="mt-1 h-5 w-5"
                       />
                     </FormControl>
-                    <div className="space-y-1 leading-none">
+                    <div className="space-y-1 leading-none flex-1">
                       <FormLabel className="text-sm font-normal text-muted-foreground leading-relaxed cursor-pointer">
                         He leído y acepto la{" "}
                         <a
@@ -413,21 +424,21 @@ const ContactForm = () => {
                 </div>
               )}
 
-              {/* Botón de envío */}
+              {/* Botón de envío - Larger touch target */}
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full min-h-[52px] text-base"
                 size="lg"
                 disabled={formspreeState.submitting}
               >
                 {formspreeState.submitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                     Enviando...
                   </>
                 ) : (
                   <>
-                    <Send className="mr-2 h-4 w-4" />
+                    <Send className="mr-2 h-5 w-5" />
                     Enviar solicitud
                   </>
                 )}
