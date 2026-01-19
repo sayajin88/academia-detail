@@ -10,14 +10,17 @@ interface FormationCertificationProps {
 export function FormationCertification({ formation }: FormationCertificationProps) {
   if (!formation.certificationText) return null;
 
+  // Use formation-specific certification title or default with SEO keywords
+  const certTitle = formation.certificationTitle || 'Certificación con Reconocimiento Nacional';
+
   return (
     <section className="py-20 bg-card">
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionHeading
             badge="Certificación"
-            title={formation.certificationTitle || 'Certificación Oficial'}
-            subtitle="Tu inversión en formación reconocida por el sector"
+            title={certTitle}
+            subtitle="Tu inversión en formación reconocida por el sector profesional"
           />
         </AnimatedSection>
 

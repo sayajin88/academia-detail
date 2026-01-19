@@ -64,8 +64,8 @@ export const formationDetails: Record<string, FormationDetail> = {
   'curso-detailing-profesional': {
     id: 'curso-detailing-profesional',
     slug: 'curso-detailing-profesional',
-    title: 'Curso Detailing Profesional: Aprende desde Cero',
-    subtitle: 'Formación Práctica en Pulido, Corrección y Protección Cerámica',
+    title: 'Curso de Detailing Profesional: Certificación y Carrera de Especialista',
+    subtitle: 'Formación Intensiva en Corrección de Pintura y Protección Cerámica',
     description: 'Curso de detailing profesional 100% práctico de 4 días. Aprende detailing desde cero: lavado, descontaminación, pulido con rotativa y roto-orbital, tratamiento cerámico y detallado interior. Formación con certificado oficial basada en experiencia real en taller.',
     duration: '4 Días de Formación Intensiva',
     price: 2997,
@@ -135,7 +135,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         description: 'Una insignia que te identifica como especialista de referencia. Excelencia con estándares de calidad europeos.',
       },
     ],
-    certificationTitle: 'Certificación y Bolsa de Empleo',
+    certificationTitle: 'Certificación con Reconocimiento Nacional',
     certificationText: 'Gracias a nuestra certificación otorgada por Detail Park, no solo tendrás un diploma que avale tus conocimientos, sino que te servirá para añadir valor a tu currículum y dar confianza a tus futuros clientes. Además, tendrás acceso a nuestra bolsa de empleo para conectar con centros de Detail en toda España.',
     certificationImage: certificadoImg,
     forWho: [
@@ -154,7 +154,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     ],
     modules: [
       {
-        title: 'Fundamentos y Aficionado',
+        title: 'Fundamentos de Corrección de Pintura',
         topics: [
           'Curso de Aficionado completo',
           'Identificación de defectos de pintura',
@@ -164,7 +164,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         ],
       },
       {
-        title: 'Pulidoras y Técnicas',
+        title: 'Técnicas Profesionales de Pulido',
         topics: [
           'Tipos de pulidora profesional',
           'Cómo usar la pulidora correctamente',
@@ -174,7 +174,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         ],
       },
       {
-        title: 'Sistema de Fases y Corrección',
+        title: 'Sistema de Fases y Corrección Avanzada',
         topics: [
           'Sistema de fases de pulido',
           'Técnicas de lijado profesional',
@@ -184,7 +184,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         ],
       },
       {
-        title: 'Sellado y Protección',
+        title: 'Sellado y Protección Profesional',
         topics: [
           'Tipos de sellado profesional',
           'Ceras de Carnauba',
@@ -194,7 +194,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         ],
       },
       {
-        title: 'Tratamiento Cerámico',
+        title: 'Tratamiento Cerámico Avanzado',
         topics: [
           'Introducción al tratamiento cerámico',
           'Cómo aplicar tratamiento cerámico',
@@ -204,7 +204,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         ],
       },
       {
-        title: 'Interior de Vehículo',
+        title: 'Módulos de Detallado Interior Avanzado',
         topics: [
           'Detallado completo de interior',
           'Extracción de asientos',

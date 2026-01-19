@@ -225,6 +225,22 @@ const normalizeSlug = (slug: string): string => {
   return slugMapping[slug] || slug;
 };
 
+// Primary Image Object Schema Generator for Search Results
+export const generateImageObjectSchema = (image: {
+  url: string;
+  name: string;
+  description: string;
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "contentUrl": image.url,
+  "name": image.name,
+  "description": image.description,
+  "representativeOfPage": true,
+  "license": "https://academiadetail.com/licencia",
+  "acquireLicensePage": "https://academiadetail.com/contacto"
+});
+
 // SEO Configuration for each page
 export const seoConfig = {
   home: {
@@ -404,17 +420,25 @@ export const seoConfig = {
     };
 
     const formationTitles: Record<string, string> = {
-      'curso-detailing-profesional': "Detailing Profesional 【 Taller Real 】 Academia Detail",
-      'curso-vinilado-vehiculos': "Car Wrapping Profesional 【 Taller Real 】 Academia Detail",
-      'curso-ppf-proteccion-pintura': "PPF Protección Pintura 【 Taller Real 】 Academia Detail",
-      'curso-restauracion-vehiculos': "Restauración Vehículos 【 Taller Real 】 Academia Detail"
+      'curso-detailing-profesional': "Certificación Profesional de Detailing | Curso Intensivo en España",
+      'curso-vinilado-vehiculos': "Certificación Car Wrapping Profesional | Curso Intensivo en España",
+      'curso-ppf-proteccion-pintura': "Certificación PPF Profesional | Curso Instalador España",
+      'curso-restauracion-vehiculos': "Certificación Restauración Vehículos | Curso Profesional España"
     };
 
     const formationDescriptions: Record<string, string> = {
-      'curso-detailing-profesional': "🚀 Especialízate en Detailing Profesional. No solo técnica: aprende a presupuestar, gestionar clientes y escalar tu negocio. ➤ Prácticas reales en taller operativo.",
-      'curso-vinilado-vehiculos': "🚀 Especialízate en Car Wrapping. No solo técnica: aprende a presupuestar, gestionar clientes y escalar tu negocio. ➤ Prácticas reales en taller operativo.",
-      'curso-ppf-proteccion-pintura': "🚀 Especialízate en PPF (Paint Protection Film). No solo técnica: aprende a presupuestar, gestionar clientes y escalar tu negocio. ➤ Prácticas reales.",
-      'curso-restauracion-vehiculos': "🚀 Especialízate en Restauración de Vehículos. No solo técnica: aprende a presupuestar, gestionar clientes y escalar tu negocio. ➤ Prácticas reales."
+      'curso-detailing-profesional': "Domina el detallado profesional con nuestra formación de 4 días. Técnicas avanzadas de pulido, cerámicos e interiores. ¡Accede a nuestra bolsa de empleo!",
+      'curso-vinilado-vehiculos': "Domina el car wrapping profesional con nuestra formación intensiva. Técnicas de instalación de vinilo y cambio de color. ¡Certificación oficial!",
+      'curso-ppf-proteccion-pintura': "Domina la instalación de PPF con nuestra formación profesional. Técnicas avanzadas en vehículos de alta gama. ¡Certificación oficial!",
+      'curso-restauracion-vehiculos': "Domina la restauración de vehículos con nuestra formación profesional. Técnicas avanzadas de chapa y pintura. ¡Certificación oficial!"
+    };
+
+    // Primary images for each course (for search result snippets)
+    const formationImages: Record<string, string> = {
+      'curso-detailing-profesional': `${BASE_URL}/og-detailing-profesional.jpg`,
+      'curso-vinilado-vehiculos': `${BASE_URL}/og-image.png`,
+      'curso-ppf-proteccion-pintura': `${BASE_URL}/og-image.png`,
+      'curso-restauracion-vehiculos': `${BASE_URL}/og-image.png`
     };
 
     const formationNames: Record<string, string> = {
@@ -432,11 +456,15 @@ export const seoConfig = {
       'curso-restauracion-vehiculos': { value: "4.7", count: "45" }
     };
 
+    const imageUrl = formationImages[normalizedSlug] || `${BASE_URL}/og-image.png`;
+
     return {
-      title: formationTitles[normalizedSlug] || `${formation.title} Profesional 【 Taller Real 】 Academia Detail`,
-      description: formationDescriptions[normalizedSlug] || `🚀 Especialízate en ${formation.title}. No solo técnica: aprende a presupuestar, gestionar clientes y escalar tu negocio. ➤ Prácticas reales.`,
-      keywords: formationKeywords[normalizedSlug] || "curso detailing profesional taller real, formación automotriz con negocio",
+      title: formationTitles[normalizedSlug] || `${formation.title} Profesional | Curso Intensivo en España`,
+      description: formationDescriptions[normalizedSlug] || `Domina ${formation.title} con nuestra formación profesional. Técnicas avanzadas y certificación oficial. ¡Accede a nuestra bolsa de empleo!`,
+      keywords: formationKeywords[normalizedSlug] || "curso detailing profesional españa, formación automotriz certificada, bolsa empleo detailing",
       url: `/${normalizedSlug}`,
+      image: imageUrl,
+      type: 'website' as const,
       schema: [
         localBusinessSchema,
         generateCourseSchema({
@@ -445,14 +473,22 @@ export const seoConfig = {
           price: formation.price,
           duration: formation.duration,
           url: `/${normalizedSlug}`,
+          image: imageUrl,
           rating: courseRatings[normalizedSlug]
         }),
-        generateFAQSchema(formation.faqs.slice(0, 5)),
+        // Include ALL FAQs for maximum SERP space
+        generateFAQSchema(formation.faqs),
         generateBreadcrumbSchema([
           { name: "Inicio", url: "/" },
           { name: "Formaciones", url: "/#formaciones" },
           { name: formationNames[normalizedSlug] || formation.title, url: `/${normalizedSlug}` }
-        ])
+        ]),
+        // Primary Image Object for search results
+        generateImageObjectSchema({
+          url: imageUrl,
+          name: `Práctica profesional - ${formationNames[normalizedSlug] || formation.title}`,
+          description: `Alumno practicando técnicas profesionales en el curso de ${formationNames[normalizedSlug] || formation.title} en Academia Detail`
+        })
       ]
     };
   }
