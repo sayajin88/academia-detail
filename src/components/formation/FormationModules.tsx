@@ -13,14 +13,20 @@ interface FormationModulesProps {
 }
 
 export function FormationModules({ formation }: FormationModulesProps) {
+  // Dynamic title based on formation type
+  const isDetailing = formation.slug === 'curso-detailing-profesional';
+  const sectionTitle = isDetailing 
+    ? "Programa de Formación en Corrección de Pintura" 
+    : "Programa Completo de Formación";
+
   return (
     <section className="py-20 bg-card">
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionHeading
             badge="Temario"
-            title="Programa Completo"
-            subtitle="Todo lo que cubriremos durante la formación"
+            title={sectionTitle}
+            subtitle="Todo lo que cubriremos durante la formación profesional"
           />
         </AnimatedSection>
 

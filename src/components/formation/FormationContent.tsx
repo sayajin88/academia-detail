@@ -7,6 +7,12 @@ interface FormationContentProps {
 }
 
 export function FormationContent({ formation }: FormationContentProps) {
+  // Dynamic titles based on formation type for SEO
+  const isDetailing = formation.slug === 'curso-detailing-profesional';
+  const learnTitle = isDetailing 
+    ? "Módulos de Detallado Interior Avanzado" 
+    : "¿Qué aprenderás?";
+
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -44,7 +50,7 @@ export function FormationContent({ formation }: FormationContentProps) {
                   <BookOpen className="h-6 w-6" />
                 </div>
                 <h2 className="text-2xl font-bold text-foreground">
-                  ¿Qué aprenderás?
+                  {learnTitle}
                 </h2>
               </div>
 

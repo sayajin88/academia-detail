@@ -12,6 +12,7 @@ import { FormationCurriculum } from '@/components/formation/FormationCurriculum'
 import { FormationReglada } from '@/components/formation/FormationReglada';
 import { FormationCertification } from '@/components/formation/FormationCertification';
 import { FormationIncludes } from '@/components/formation/FormationIncludes';
+import { FormationLogistics } from '@/components/formation/FormationLogistics';
 import { FormationFAQ } from '@/components/formation/FormationFAQ';
 import { FormationROICalculator } from '@/components/formation/FormationROICalculator';
 import { FormationCTA } from '@/components/formation/FormationCTA';
@@ -160,6 +161,8 @@ export default function FormationDetailPage() {
           />
         )}
         <FormationIncludes formation={formation} />
+        {/* Logistics section for national/international students */}
+        <FormationLogistics showForSlug={slug} />
         <FormationFAQ formation={formation} />
         <FormationROICalculator formation={formation} onCTAClick={handleCTAClick} />
         <FormationCTA formation={formation} onCTAClick={handleCTAClick} />
