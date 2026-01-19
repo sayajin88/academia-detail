@@ -3,7 +3,6 @@ import ContactHero from "@/components/contact/ContactHero";
 import ContactForm from "@/components/contact/ContactForm";
 import ContactInfo from "@/components/contact/ContactInfo";
 import ContactSchedule from "@/components/contact/ContactSchedule";
-import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 
@@ -12,11 +11,6 @@ const Contact = () => {
     <>
       <SEO {...seoConfig.contact} />
       <MainLayout>
-        {/* Breadcrumbs */}
-        <div className="container mx-auto px-4">
-          <PageBreadcrumbs items={[{ label: "Contacto" }]} />
-        </div>
-        
         <ContactHero />
 
         {/* Main Content */}

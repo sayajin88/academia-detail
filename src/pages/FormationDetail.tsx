@@ -19,7 +19,6 @@ import { FormationCTA } from '@/components/formation/FormationCTA';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { FormationGallery } from '@/components/formation/FormationGallery';
 import { ComingSoonModal } from '@/components/ComingSoonModal';
-import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { getFormationBySlug } from '@/data/formationDetails';
 
 import { SEO } from '@/components/SEO';
@@ -108,16 +107,6 @@ export default function FormationDetailPage() {
     <>
       <SEO {...formationSEO} />
       <MainLayout>
-        {/* Breadcrumbs */}
-        <div className="container mx-auto px-4">
-          <PageBreadcrumbs 
-            items={[
-              { label: "Formaciones", href: "/#formaciones" },
-              { label: formation.title }
-            ]} 
-          />
-        </div>
-        
         <FormationHero formation={formation} onCTAClick={handleCTAClick} />
         <FormationAdvantages formation={formation} />
         {slug === 'curso-detailing-profesional' && (
