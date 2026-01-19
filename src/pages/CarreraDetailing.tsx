@@ -11,8 +11,6 @@ import CarreraBenefits from '@/components/carrera/CarreraBenefits';
 import CarreraPricing from '@/components/carrera/CarreraPricing';
 import CarreraFAQ from '@/components/carrera/CarreraFAQ';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
-import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
-
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 
@@ -107,13 +105,6 @@ const CarreraDetailing = () => {
             100% { background-position: -200% 0; }
           }
         `}</style>
-        
-        {/* Breadcrumbs */}
-        <div className="container mx-auto px-4">
-          <PageBreadcrumbs 
-            items={[{ label: "Formación Profesional Detailing" }]} 
-          />
-        </div>
         
         <CarreraHero onCTAClick={handleCTAClick} />
         <CarreraVideoIntro />
