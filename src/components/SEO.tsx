@@ -9,10 +9,23 @@ interface SEOProps {
   type?: 'website' | 'article' | 'product';
   schema?: object | object[];
   canonical?: string;
+  disableHreflang?: boolean;
 }
 
 const BASE_URL = 'https://academiadetail.com';
 const DEFAULT_IMAGE = 'https://academiadetail.com/og-image.png';
+
+// Hreflang configuration for international SEO
+const HREFLANG_REGIONS = [
+  { lang: 'es-ES', label: 'España' },
+  { lang: 'es-MX', label: 'México' },
+  { lang: 'es-AR', label: 'Argentina' },
+  { lang: 'es-CO', label: 'Colombia' },
+  { lang: 'es-CL', label: 'Chile' },
+  { lang: 'es-PE', label: 'Perú' },
+  { lang: 'es', label: 'Spanish (General)' },
+  { lang: 'x-default', label: 'Default' },
+];
 
 // LocalBusiness Schema with complete business data for local SEO - Emphasizing REAL WORKSHOP
 export const localBusinessSchema = {
@@ -155,6 +168,7 @@ export const SEO = ({
   type = 'website',
   schema,
   canonical,
+  disableHreflang = false,
 }: SEOProps) => {
   const fullUrl = url ? `${BASE_URL}${url}` : BASE_URL;
   const canonicalUrl = canonical ? `${BASE_URL}${canonical}` : fullUrl;
@@ -173,7 +187,28 @@ export const SEO = ({
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
 
+      {/* Hreflang Tags for International SEO */}
+      {!disableHreflang && HREFLANG_REGIONS.map(({ lang }) => (
+        <link 
+          key={lang}
+          rel="alternate" 
+          hrefLang={lang} 
+          href={canonicalUrl} 
+        />
+      ))}
+
       {/* Open Graph / Facebook */}
+      <meta property="og:type" content={type} />
+      <meta property="og:url" content={fullUrl} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
+      <meta property="og:locale" content="es_ES" />
+      <meta property="og:locale:alternate" content="es_MX" />
+      <meta property="og:locale:alternate" content="es_AR" />
+      <meta property="og:locale:alternate" content="es_CO" />
+      <meta property="og:locale:alternate" content="es_CL" />
+      <meta property="og:site_name" content="Academia Detail - Formación Detailing España" />
       <meta property="og:type" content={type} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:title" content={title} />
@@ -190,10 +225,16 @@ export const SEO = ({
       <meta name="twitter:image" content={image} />
 
       {/* Additional SEO Tags */}
-      <meta name="robots" content="index, follow" />
-      <meta name="author" content="Academia Detail - Taller Real" />
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="author" content="Academia Detail - Formación Detailing España" />
       <meta name="geo.region" content="ES" />
       <meta name="geo.placename" content="Alicante, España" />
+      <meta name="content-language" content="es" />
+      
+      {/* International targeting */}
+      <meta name="distribution" content="global" />
+      <meta name="coverage" content="Worldwide" />
+      <meta name="target" content="all" />
 
       {/* Schema.org JSON-LD */}
       {schemaArray.map((schemaItem, index) => (
