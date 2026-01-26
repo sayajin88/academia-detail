@@ -4,6 +4,7 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { FormationHero } from '@/components/formation/FormationHero';
 import { FormationAdvantages } from '@/components/formation/FormationAdvantages';
 import { FormationVideoShowcase } from '@/components/formation/FormationVideoShowcase';
+import { FormationPricing } from '@/components/formation/FormationPricing';
 import { FormationLevels } from '@/components/formation/FormationLevels';
 import { FormationContent } from '@/components/formation/FormationContent';
 import { FormationInstructor } from '@/components/formation/FormationInstructor';
@@ -119,6 +120,7 @@ export default function FormationDetailPage() {
             onCTAClick={handleCTAClick}
           />
         )}
+        <FormationPricing formation={formation} onCTAClick={handleCTAClick} />
         <FormationLevels formation={formation} onCTAClick={handleCTAClick} />
         <FormationContent formation={formation} />
         <FormationInstructor formation={formation} />
