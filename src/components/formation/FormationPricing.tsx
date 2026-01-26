@@ -73,7 +73,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
   const benefits = [
     { icon: GraduationCap, text: "Certificado oficial incluido", description: "Acredita tu formación profesional" },
     { icon: BookOpen, text: "Material didáctico completo", description: "Guías, manuales y recursos digitales" },
-    { icon: Users, text: "Grupos reducidos (máx. 8)", description: "Atención personalizada garantizada" },
+    { icon: Users, text: "Grupos personalizados (máx. 3)", description: "Atención 100% individualizada" },
     { icon: HeadphonesIcon, text: "Soporte post-formación", description: "Resolvemos tus dudas después del curso" },
     { icon: Coffee, text: "Coffee break incluido", description: "Descansos con refrigerios incluidos" },
     { icon: Award, text: "Acceso a comunidad privada", description: "Red de profesionales del sector" },
@@ -83,12 +83,11 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
   return (
     <section 
       ref={sectionRef}
-      className="py-16 md:py-24 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden"
+      className="py-16 md:py-24 bg-background relative overflow-hidden"
     >
-      {/* Background decorations */}
+      {/* Background decorations - subtle red glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/3 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -117,17 +116,17 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
               Lo Que Incluye
             </h3>
             
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {benefits.map((benefit, i) => (
                 <li 
                   key={i}
-                  className={`flex items-start gap-4 p-4 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 hover:bg-card transition-all duration-300 group ${
+                  className={`flex items-start gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-300 group ${
                     isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-5'
                   }`}
                   style={{ transitionDelay: `${300 + i * 100}ms` }}
                 >
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <benefit.icon className="w-6 h-6 text-primary" />
+                  <div className="flex-shrink-0 w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <benefit.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">{benefit.text}</p>
@@ -144,10 +143,10 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
           >
             <div 
               ref={priceCardRef}
-              className="pricing-spotlight relative bg-gradient-to-br from-card via-card to-card/95 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl shadow-black/20 border border-white/10 sticky top-24"
+              className="pricing-spotlight relative bg-card backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border border-border sticky top-24"
             >
               {/* Animated border glow */}
-              <div className={`absolute inset-0 rounded-3xl opacity-50 blur-sm animate-pulse ${isComingSoon ? 'bg-gradient-to-r from-amber-500/20 via-amber-400/20 to-amber-500/20' : 'bg-gradient-to-r from-primary/20 via-primary-glow/20 to-primary/20'}`} />
+              <div className={`absolute inset-0 rounded-2xl opacity-40 blur-sm animate-pulse ${isComingSoon ? 'bg-gradient-to-r from-amber-500/20 via-amber-400/20 to-amber-500/20' : 'bg-gradient-to-r from-primary/30 via-primary/10 to-primary/30'}`} />
               
               {/* Header with special offer badge */}
               <div className={`relative p-4 text-center ${isComingSoon ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600' : 'bg-gradient-to-r from-primary via-primary-glow to-primary'}`}>
@@ -269,22 +268,22 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs text-muted-foreground">
                           <span>Plazas ocupadas</span>
-                          <span className="text-primary font-medium">5 de 8</span>
+                          <span className="text-primary font-medium">2 de 3</span>
                         </div>
-                        <div className="h-2 bg-muted/50 rounded-full overflow-hidden">
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
                           <div 
                             className="h-full bg-gradient-to-r from-primary to-primary-glow rounded-full transition-all duration-1000"
-                            style={{ width: isVisible ? '62.5%' : '0%' }}
+                            style={{ width: isVisible ? '66%' : '0%' }}
                           />
                         </div>
                       </div>
                       
                       <div className="flex items-center justify-center gap-2 text-sm">
                         <span className="relative flex h-3 w-3">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
                         </span>
-                        <span className="text-green-400 font-medium">Solo quedan 3 plazas disponibles</span>
+                        <span className="text-primary font-medium">¡Solo queda 1 plaza disponible!</span>
                       </div>
                       <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                         <GraduationCap className="w-4 h-4 text-primary" />
