@@ -8,7 +8,8 @@ import {
   Wrench, 
   ArrowRight, 
   Clock,
-  Construction
+  Construction,
+  GraduationCap
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ElementType> = {
@@ -66,6 +67,16 @@ export function FormationsGrid() {
                     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/90 text-black text-xs font-bold border border-amber-400 shadow-lg animate-pulse">
                       <Construction className="h-3.5 w-3.5" />
                       Próximamente
+                    </span>
+                  </div>
+                )}
+                
+                {/* Alumnos Certificados Badge */}
+                {formation.alumnosCertificados && !isComingSoon && (
+                  <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-10">
+                    <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-primary/90 text-white text-[10px] sm:text-xs font-bold border border-primary shadow-lg">
+                      <GraduationCap className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                      +{formation.alumnosCertificados}
                     </span>
                   </div>
                 )}

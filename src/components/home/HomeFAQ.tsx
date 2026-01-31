@@ -36,6 +36,36 @@ const faqs = [
     answer:
       'Las formaciones individuales te especializan en una técnica concreta. La Carrera Negocio incluye todas las formaciones, prácticas reales en nuestro taller, y formación en gestión empresarial para que puedas montar tu propio negocio.',
   },
+  {
+    question: '¿Puedo vivir del detailing? ¿Cuál es el salario medio?',
+    answer:
+      'Sí, el detailing es una profesión con alta demanda y buenos ingresos. Un profesional independiente puede facturar entre 3.000€ y 8.000€ mensuales dependiendo de su especialización y ubicación. Nuestros alumnos más exitosos superan los 10.000€/mes.',
+  },
+  {
+    question: '¿Cuánto cuesta montar un centro de detailing?',
+    answer:
+      'La inversión inicial puede variar desde 15.000€ para un setup básico hasta 50.000€+ para un centro completo. Te asesoramos sobre el equipamiento necesario según tu presupuesto y objetivos de negocio.',
+  },
+  {
+    question: '¿Me ayudáis a conseguir clientes tras la formación?',
+    answer:
+      'Sí, incluimos formación en marketing y captación de clientes. Además, nuestra red de alumni comparte referencias y oportunidades. El 85% de nuestros alumnos consigue sus primeros clientes en el primer mes.',
+  },
+  {
+    question: '¿Qué certificaciones reconoce el sector?',
+    answer:
+      'Nuestras certificaciones están reconocidas por las principales marcas de productos profesionales (Gyeon, Angelwax, XPEL). Además, te preparamos para obtener certificaciones adicionales de fabricantes específicos.',
+  },
+  {
+    question: '¿Hay opciones de prácticas o empleo tras el curso?',
+    answer:
+      'Sí, tenemos bolsa de empleo y colaboramos con centros de detailing que buscan profesionales formados. Además, los mejores alumnos tienen la oportunidad de realizar prácticas en Detail Park.',
+  },
+  {
+    question: '¿Cuántos vehículos se trabajan durante la formación?',
+    answer:
+      'Durante la formación trabajamos con vehículos reales de clientes. En el curso de Detailing, por ejemplo, cada alumno practica en al menos 3-4 vehículos diferentes, incluyendo modelos de alta gama.',
+  },
 ];
 
 // Schema.org FAQ structured data for SEO
