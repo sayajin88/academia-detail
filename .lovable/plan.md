@@ -1,180 +1,250 @@
 
-## Plan: Separar Pricing del Hero y Crear Nueva Sección de Precios
 
-### RESUMEN DEL CAMBIO
+## Analisis Competitivo: Escuela Detailing vs Academia Detail
 
-Actualmente, el Hero de `/curso-detailing-profesional` incluye una tarjeta de pricing en desktop (columna derecha). El objetivo es:
+### RESUMEN EJECUTIVO
 
-1. **Simplificar el Hero** - Eliminar la tarjeta de precio para que sea más limpio y responsive
-2. **Crear nueva sección de pricing** - Ubicarla después de "Domina las Técnicas Profesionales" (FormationVideoShowcase)
-3. **Diseño visual potente** - Similar al estilo de CarreraPricing pero adaptado para cursos individuales
+Tras analizar escueladetailing.com en profundidad, he identificado fortalezas y debilidades de su propuesta que podemos usar para mejorar tu sitio web significativamente.
 
 ---
 
-### ESTRUCTURA ACTUAL
+### ANALISIS DEL COMPETIDOR
+
+#### Fortalezas de Escuela Detailing
+
+| Aspecto | Lo que hacen bien |
+|---------|-------------------|
+| **Estadisticas visibles** | 77% alumnos de fuera Barcelona, 92% practica/teoria, 90% empiezan negocios |
+| **Social proof robusto** | +460 alumnos certificados, +130 centros montados, logos de emprendedores |
+| **Servicio adicional** | "Montamos tu centro de detailing" - servicio de consultoria post-formacion |
+| **Variedad de cursos** | 9 formaciones diferentes con duraciones de 1-5 dias |
+| **Alumnos certificados por curso** | Muestran numeros especificos (+170, +180, +280, etc.) |
+| **Testimonios con nombre** | Testimonios reales con nombre, negocio y foto |
+| **Perfil del formador** | Jaime Mellado con cifras concretas: 75.000 vehiculos, 3.200 pulidos, 20 anos |
+| **Blog de contenido** | Seccion de blog para SEO y autoridad |
+| **Formulario de contacto integrado** | Formulario visible en la pagina principal |
+| **Canal YouTube con subs** | 8.7K suscriptores, video de presentacion en hero |
+
+#### Debilidades de Escuela Detailing
+
+| Aspecto | Oportunidad para ti |
+|---------|---------------------|
+| **Diseno anticuado** | Tu diseno dark premium es mucho mas moderno y atractivo |
+| **No diferenciacion clara** | No tienen el mensaje "Taller 100% Real" que te diferencia |
+| **Grupos mas grandes** | Maximo 3 alumnos (tu tienes grupos de 3 personalizados - igual o mejor) |
+| **Sin video de fondo** | Tu hero con video de YouTube es mas impactante |
+| **Sin programa integral** | No tienen un equivalente a tu "Carrera Negocio" completa |
+| **Precios no visibles** | Esconden precios, tu los muestras con transparencia |
+| **Sin comparacion competitiva** | Tu seccion "vs Competencia" es diferenciadora |
+
+---
+
+### CAMBIOS PROPUESTOS PARA TU WEB
+
+#### 1. NUEVA SECCION: Logos de Emprendedores Exitosos
+
+**Inspiracion:** Escuela Detailing muestra 15+ logos de negocios que han ayudado a montar.
+
+**Implementacion propuesta:**
+- Crear seccion "Emprendedores que hemos formado" despues de TestimonialsSection
+- Grid de logos de negocios reales de alumnos
+- Texto: "Mas de 50 empresarios han lanzado su negocio tras formarse con nosotros"
+- Animacion de carrusel infinito como el competidor
+
+**Archivo:** Crear `src/components/home/SuccessStoriesLogos.tsx`
+
+---
+
+#### 2. MEJORAR ESTADISTICAS DEL HERO
+
+**Problema actual:** Stats genericos (500+, 100%, 3.5K)
+
+**Inspiracion:** Escuela Detailing usa porcentajes especificos y llamativos
+
+**Cambios propuestos:**
 
 ```text
-FormationHero (con pricing card en desktop)
-    |
-FormationAdvantages
-    |
-FormationVideoShowcase ("Domina las Técnicas Profesionales")
-    |
-FormationLevels
-    |
-... resto de secciones ...
+Antes:                          Despues:
+500+ Empresarios Formados  ->   92% Practica Real (Solo 8% Teoria)
+100% Taller Real           ->   85% Lanzan su Negocio
+3.5K Facturacion Media     ->   +50 Centros Montados
 ```
 
-### ESTRUCTURA PROPUESTA
+O mejor aun, anadir una fila adicional con stats mas especificos:
 
 ```text
-FormationHero (SIN pricing card - solo contenido + CTA simple)
-    |
-FormationAdvantages
-    |
-FormationVideoShowcase ("Domina las Técnicas Profesionales")
-    |
-[NUEVA] FormationPricing (sección dedicada de pricing)
-    |
-FormationLevels
-    |
-... resto de secciones ...
+Fila 1: 500+ Alumnos | 100% Presencial | 3 Max Alumnos
+Fila 2: 92% Practica | 85% Emprenden | +50 Negocios
 ```
 
----
-
-### CAMBIOS DETALLADOS
-
-#### 1. Modificar FormationHero.tsx
-
-**Objetivo:** Eliminar la tarjeta de precio del hero y simplificar para mejor UX mobile/desktop.
-
-**Cambios:**
-- Eliminar toda la columna derecha con la price card (líneas 139-306)
-- Cambiar grid de 2 columnas a layout centrado/full-width
-- Mantener: badge de duración, título H1, subtítulo, descripción, stats, CTA
-- El Hero quedará más limpio y enfocado en el mensaje principal
-
-**Diseño resultante del Hero:**
-```text
-+--------------------------------------------------+
-|  [4 Días de Formación Intensiva] <- badge        |
-|                                                  |
-|  Curso de Detailing Profesional:                 |
-|  Certificación y Carrera de Especialista   (H1)  |
-|                                                  |
-|  Formación Intensiva en Corrección...            |
-|                                                  |
-|  Descripción del curso...                        |
-|                                                  |
-|  [4 Días] [Grupos Reducidos] [Certificado]       |
-|                                                  |
-|  [Reservar Plaza] <- CTA principal               |
-+--------------------------------------------------+
-```
+**Archivo:** Modificar `src/components/home/HomeHero.tsx`
 
 ---
 
-#### 2. Crear Nuevo Componente: FormationPricing.tsx
+#### 3. NUEVA SECCION: Consultoria "Montamos Tu Centro"
 
-**Ubicación:** `src/components/formation/FormationPricing.tsx`
+**Inspiracion:** Es su servicio estrella y genera leads cualificados
 
-**Diseño:** Sección visual con dos columnas (mobile: stack vertical)
+**Implementacion propuesta:**
+- Nueva seccion destacada despues de CarreraNegocioSection
+- Titulo: "Te Ayudamos a Montar Tu Centro de Detailing"
+- Timeline de 5 pasos: Evaluacion, Formacion, Equipamiento, Lanzamiento, Marketing
+- CTA a formulario de contacto especifico
+- Badge: "Sin franquicias - Tu eres el dueno"
 
-**Columna Izquierda - "Lo Que Incluye":**
-- Lista de beneficios con iconos y checks animados
-- Certificado oficial incluido
-- Material didáctico completo
-- Grupos reducidos (max 8)
-- Soporte post-formacion
-- Coffee break incluido
-- Acceso a comunidad privada
-- Bolsa de empleo
-
-**Columna Derecha - "Tarjeta de Precio":**
-- Badge "Oferta Especial" con descuento animado
-- Precio original tachado: 3.497 euros
-- Precio actual grande: 2.997 euros (con animacion countUp)
-- Porcentaje de descuento: -14%
-- Duracion: 4 dias de formacion intensiva
-- Proxima convocatoria: Febrero 2026
-- CTA principal: "Reservar Mi Plaza Ahora"
-- Indicador de urgencia: "Solo quedan 3 plazas"
-- Social proof: "+500 alumnos formados"
-- Barra de progreso de plazas ocupadas
-
-**Efectos visuales:**
-- Spotlight effect (seguimiento del mouse)
-- Animaciones de entrada staggered
-- Gradientes y bordes premium
-- Shimmer en badge de oferta
+**Archivo:** Crear `src/components/home/MontamosTuCentro.tsx`
 
 ---
 
-#### 3. Integrar en FormationDetail.tsx
+#### 4. MEJORAR PERFIL DEL INSTRUCTOR
 
-**Cambio en el orden de componentes:**
+**Problema actual:** No hay una seccion dedicada al instructor Daniel en la Home
 
-```tsx
-// Antes
-<FormationVideoShowcase ... />
-<FormationLevels formation={formation} onCTAClick={handleCTAClick} />
+**Inspiracion:** Escuela Detailing tiene seccion completa de Jaime Mellado con cifras
 
-// Despues
-<FormationVideoShowcase ... />
-<FormationPricing formation={formation} onCTAClick={handleCTAClick} />
-<FormationLevels formation={formation} onCTAClick={handleCTAClick} />
-```
+**Implementacion propuesta:**
+- Nueva seccion con foto grande de Daniel
+- Estadisticas del instructor: Anos de experiencia, vehiculos trabajados, alumnos formados
+- Bio breve enfocada en credibilidad
+- Links a redes sociales
+
+**Archivo:** Crear `src/components/home/InstructorSection.tsx`
 
 ---
 
-### ARCHIVOS A MODIFICAR/CREAR
+#### 5. ANADIR NUMERO DE ALUMNOS POR CURSO
+
+**Inspiracion:** Cada curso de ED muestra "+170 Alumnos certificados"
+
+**Implementacion propuesta:**
+- Anadir campo `alumnosCertificados` en `formations.ts`
+- Mostrar badge en cada tarjeta de formacion: "+XX Certificados"
+- Genera confianza y urgencia social
+
+**Archivo:** Modificar `src/data/formations.ts` y `src/components/home/FormationsGrid.tsx`
+
+---
+
+#### 6. MEJORAR TESTIMONIOS CON MAS DATOS
+
+**Problema actual:** 3 testimonios genericos con nombres ficticios
+
+**Inspiracion:** ED tiene testimonios con nombre real, negocio y ubicacion
+
+**Implementacion propuesta:**
+- Aumentar a 6-9 testimonios
+- Incluir: nombre, negocio, ciudad, foto real
+- Anadir video-testimonios si es posible
+- Mostrar "antes/despues" de la carrera profesional
+
+**Archivo:** Modificar `src/components/home/TestimonialsSection.tsx`
+
+---
+
+#### 7. NUEVA SECCION: Blog/Recursos
+
+**Inspiracion:** ED tiene blog con articulos de valor
+
+**Implementacion propuesta:**
+- Crear pagina de blog `/blog`
+- Mostrar preview de 3 articulos en Home
+- Articulos enfocados en SEO: "Como iniciar negocio detailing", "Cuanto gana detailer", etc.
+- Mejora autoridad y posicionamiento organico
+
+**Archivos:** 
+- Crear `src/pages/Blog.tsx`
+- Crear `src/components/home/BlogPreview.tsx`
+
+---
+
+#### 8. FORMULARIO DE CONTACTO EN HOME
+
+**Inspiracion:** ED tiene formulario integrado en la pagina principal
+
+**Implementacion propuesta:**
+- Anadir formulario compacto en seccion HomeCTA o nueva seccion
+- Campos: Nombre, Email, Telefono, Interes (dropdown)
+- Reduce friccion para leads calientes
+
+**Archivo:** Modificar `src/components/home/HomeCTA.tsx`
+
+---
+
+#### 9. MEJORAR FAQ CON MAS PREGUNTAS
+
+**Problema actual:** 5 preguntas basicas
+
+**Inspiracion:** ED cubre dudas especificas de negocio
+
+**Preguntas a anadir:**
+- Puedo vivir del detailing? Cual es el salario medio?
+- Cuanto cuesta montar un centro de detailing?
+- Ayudais a conseguir clientes tras la formacion?
+- Que certificaciones reconoce el sector?
+- Hay opciones de practicas o empleo tras el curso?
+- Cuantos vehiculos se trabajan durante la formacion?
+
+**Archivo:** Modificar `src/components/home/HomeFAQ.tsx`
+
+---
+
+#### 10. CONTADOR DE PLAZAS EN TIEMPO REAL
+
+**Inspiracion:** ED muestra "Proxima convocatoria" y "Max X Alumnos"
+
+**Implementacion propuesta:**
+- Anadir a cada formacion: "Proxima fecha: Febrero 2026"
+- Mostrar: "Solo quedan X plazas"
+- Crear urgencia real con datos de base de datos
+
+**Archivo:** Modificar `src/data/formations.ts` y `FormationsGrid.tsx`
+
+---
+
+### ORDEN DE IMPLEMENTACION RECOMENDADO
+
+| Prioridad | Cambio | Impacto | Esfuerzo |
+|-----------|--------|---------|----------|
+| 1 | Estadisticas mejoradas en Hero | Alto | Bajo |
+| 2 | Numero de alumnos por curso | Alto | Bajo |
+| 3 | Seccion Instructor Daniel | Alto | Medio |
+| 4 | Logos de emprendedores | Alto | Medio |
+| 5 | FAQ ampliado | Medio | Bajo |
+| 6 | Seccion "Montamos Tu Centro" | Alto | Alto |
+| 7 | Formulario en HomeCTA | Medio | Bajo |
+| 8 | Mas testimonios reales | Alto | Medio |
+| 9 | Blog/Recursos | Alto (SEO) | Alto |
+| 10 | Contador plazas tiempo real | Medio | Alto |
+
+---
+
+### ARCHIVOS A CREAR O MODIFICAR
 
 | Archivo | Accion |
 |---------|--------|
-| `src/components/formation/FormationHero.tsx` | Modificar - Eliminar price card, simplificar layout |
-| `src/components/formation/FormationPricing.tsx` | **Crear** - Nueva seccion de pricing dedicada |
-| `src/pages/FormationDetail.tsx` | Modificar - Importar e integrar FormationPricing |
+| `src/components/home/HomeHero.tsx` | Modificar - Nuevas estadisticas |
+| `src/components/home/SuccessStoriesLogos.tsx` | **Crear** - Logos de emprendedores |
+| `src/components/home/MontamosTuCentro.tsx` | **Crear** - Servicio consultoria |
+| `src/components/home/InstructorSection.tsx` | **Crear** - Perfil Daniel |
+| `src/components/home/BlogPreview.tsx` | **Crear** - Preview blog |
+| `src/components/home/HomeFAQ.tsx` | Modificar - Mas preguntas |
+| `src/components/home/HomeCTA.tsx` | Modificar - Anadir formulario |
+| `src/components/home/TestimonialsSection.tsx` | Modificar - Mas testimonios |
+| `src/components/home/FormationsGrid.tsx` | Modificar - Badge alumnos |
+| `src/data/formations.ts` | Modificar - Nuevos campos |
+| `src/pages/Home.tsx` | Modificar - Integrar nuevas secciones |
+| `src/pages/Blog.tsx` | **Crear** - Nueva pagina |
 
 ---
 
-### ESPECIFICACIONES TECNICAS
+### RESULTADO ESPERADO
 
-#### FormationPricing.tsx - Props
+Con estos cambios, tu web tendra:
 
-```typescript
-interface FormationPricingProps {
-  formation: FormationDetail;
-  onCTAClick: () => void;
-}
-```
+1. **Mejor social proof** - Numeros concretos y logos de exito
+2. **Mas credibilidad** - Perfil detallado del instructor
+3. **Servicio adicional** - Consultoria de negocio como upsell
+4. **Mejor SEO** - Blog y mas contenido indexable
+5. **Mas conversiones** - Formularios accesibles y urgencia real
+6. **Diferenciacion clara** - Mantienes tus ventajas y adoptas las suyas
 
-#### Animaciones a incluir:
-
-1. **Intersection Observer** - Activar animaciones cuando la seccion es visible
-2. **useCountUp hook** - Animar el precio de 0 a 2997
-3. **Staggered animations** - Entrada secuencial de beneficios
-4. **Spotlight effect** - Iluminacion que sigue el mouse en la tarjeta
-5. **Shimmer badge** - Efecto brillante en el badge de oferta
-
-#### Responsive Design:
-
-- **Mobile:** Stack vertical, padding reducido, fuentes mas pequenas
-- **Tablet:** 2 columnas con gaps menores
-- **Desktop:** 2 columnas con efectos hover completos
-
----
-
-### RESULTADO VISUAL ESPERADO
-
-**Hero simplificado:**
-- Mas limpio y enfocado en el mensaje
-- Mejor experiencia mobile (sin scroll horizontal)
-- CTA visible sin competir con la tarjeta de precio
-
-**Nueva seccion de Pricing:**
-- Posicion estrategica despues de mostrar los videos de practica
-- Usuario ya esta "calentado" al ver las tecnicas
-- Presentacion visual del valor antes de pedir la reserva
-- Incluye todos los beneficios de forma clara
-- Urgencia y social proof para conversion
