@@ -78,6 +78,7 @@ export const formationDetails: Record<string, FormationDetail> = {
       { icon: 'UserCheck', title: 'Cursos adaptados y 100% personalizados' },
       { icon: 'Building', title: 'Cursos con experiencia real en taller' },
       { icon: 'Briefcase', title: 'Posibilidad de entrar en bolsa de empleo' },
+      { icon: 'Scale', title: 'Centro 100% neutral: Sin ataduras a marcas' },
     ],
     levels: [
       {
@@ -260,6 +261,10 @@ export const formationDetails: Record<string, FormationDetail> = {
         question: '¿Necesito traer mi propio coche?',
         answer: 'No, trabajaremos con vehículos que proporcionamos nosotros para la práctica.',
       },
+      {
+        question: '¿Trabajáis con alguna marca específica?',
+        answer: 'No. Somos un centro 100% independiente y neutral. No tenemos ataduras comerciales con ninguna marca, lo que nos permite enseñarte a elegir los mejores productos del mercado según cada situación. Trabajamos con marcas líderes como Koch Chemie, Gyeon, Sonax, Meguiar\'s, 3M y muchas más, siempre eligiendo lo que realmente funciona.',
+      },
     ],
   },
   'curso-vinilado-vehiculos': {
@@ -279,6 +284,7 @@ export const formationDetails: Record<string, FormationDetail> = {
       { icon: 'UserCheck', title: 'Cursos adaptados y 100% personalizados' },
       { icon: 'Building', title: 'Cursos con experiencia real en taller' },
       { icon: 'Briefcase', title: 'Posibilidad de entrar en bolsa de empleo' },
+      { icon: 'Scale', title: 'Centro 100% neutral: Sin ataduras a marcas' },
     ],
     levels: [
       {
@@ -432,6 +438,10 @@ export const formationDetails: Record<string, FormationDetail> = {
         question: '¿Hay algún tipo de certificado?',
         answer: 'Sí, al finalizar se entrega un certificado de asistencia con reconocimiento otorgado por Detail Park.',
       },
+      {
+        question: '¿Trabajáis con alguna marca de vinilo específica?',
+        answer: 'No. Somos un centro 100% independiente y neutral. No tenemos ataduras comerciales con ninguna marca, lo que nos permite enseñarte a elegir los mejores vinilos del mercado según cada situación. Trabajamos con marcas líderes como 3M, Avery Dennison, Hexis, Oracal y muchas más, siempre eligiendo lo que realmente funciona.',
+      },
     ],
   },
   'curso-ppf-proteccion-pintura': {
@@ -451,6 +461,7 @@ export const formationDetails: Record<string, FormationDetail> = {
       { icon: 'UserCheck', title: 'Cursos adaptados y 100% personalizados' },
       { icon: 'Building', title: 'Cursos con experiencia real en taller' },
       { icon: 'Briefcase', title: 'Posibilidad de entrar en bolsa de empleo' },
+      { icon: 'Scale', title: 'Centro 100% neutral: Sin ataduras a marcas' },
     ],
     levels: [
       {
@@ -591,6 +602,10 @@ export const formationDetails: Record<string, FormationDetail> = {
         question: '¿Hay algún tipo de certificado?',
         answer: 'Sí, al finalizar se entrega un certificado de asistencia con reconocimiento otorgado por Detail Park.',
       },
+      {
+        question: '¿Trabajáis con alguna marca de PPF específica?',
+        answer: 'No. Somos un centro 100% independiente y neutral. No tenemos ataduras comerciales con ninguna marca, lo que nos permite enseñarte a elegir los mejores productos del mercado según cada situación. Trabajamos con marcas líderes como XPEL, SunTek, 3M, Llumar y muchas más, siempre eligiendo lo que realmente funciona.',
+      },
     ],
   },
   'curso-restauracion-vehiculos': {
@@ -682,6 +697,10 @@ export const formationDetails: Record<string, FormationDetail> = {
       {
         question: '¿Es rentable ofrecer servicios de restauración?',
         answer: 'Muy rentable. Los márgenes son altos y la demanda está creciendo.',
+      },
+      {
+        question: '¿Trabajáis con alguna marca específica?',
+        answer: 'No. Somos un centro 100% independiente y neutral. No tenemos ataduras comerciales con ninguna marca, lo que nos permite enseñarte a elegir los mejores productos del mercado según cada situación. Trabajamos con marcas líderes como Koch Chemie, Gyeon, Sonax, Meguiar\'s, 3M y muchas más, siempre eligiendo lo que realmente funciona.',
       },
     ],
   },

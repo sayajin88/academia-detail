@@ -1,4 +1,4 @@
-import { Building, Car, Brain, User, Target, Users, X, Check, Trophy } from 'lucide-react';
+import { Building, Car, Brain, User, Target, Users, X, Check, Trophy, Scale } from 'lucide-react';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 
 const comparisonData = [
@@ -19,6 +19,12 @@ const comparisonData = [
     competition: "Solo técnica y productos",
     academiaDetail: "Técnica + Negocio + Mentalidad Empresario",
     icon: Brain
+  },
+  {
+    aspect: "Productos",
+    competition: "Patrocinados por marcas específicas",
+    academiaDetail: "100% neutral: Elegimos lo que funciona",
+    icon: Scale
   },
   {
     aspect: "Instructor",

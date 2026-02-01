@@ -12,7 +12,8 @@ import {
   Award,
   Briefcase,
   Construction,
-  Bell
+  Bell,
+  Scale
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FormationDetail } from '@/data/formationDetails';
@@ -74,6 +75,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
     { icon: GraduationCap, text: "Certificado oficial incluido", description: "Acredita tu formación profesional" },
     { icon: BookOpen, text: "Material didáctico completo", description: "Guías, manuales y recursos digitales" },
     { icon: Users, text: "Grupos personalizados (máx. 3)", description: "Atención 100% individualizada" },
+    { icon: Scale, text: "Formación 100% neutral", description: "Sin ataduras a marcas: Aprende a elegir lo mejor" },
     { icon: HeadphonesIcon, text: "Soporte post-formación", description: "Resolvemos tus dudas después del curso" },
     { icon: Coffee, text: "Coffee break incluido", description: "Descansos con refrigerios incluidos" },
     { icon: Award, text: "Acceso a comunidad privada", description: "Red de profesionales del sector" },
