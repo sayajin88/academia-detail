@@ -22,6 +22,11 @@ const faqs = [
       'Todas nuestras formaciones incluyen materiales, herramientas durante el curso, certificación oficial, acceso a nuestra comunidad de profesionales y soporte post-formación.',
   },
   {
+    question: '¿Estáis asociados a alguna marca de productos?',
+    answer:
+      'No, somos 100% independientes. No representamos a ninguna marca comercial, lo que nos permite elegir siempre los mejores productos para cada situación sin compromisos. Trabajamos con las marcas líderes del sector (Koch Chemie, Gyeon, 3M, XPEL, Sonax, Meguiar\'s, etc.) pero nuestra formación es completamente neutral y objetiva.',
+  },
+  {
     question: '¿Puedo financiar la formación?',
     answer:
       'Sí, ofrecemos opciones de financiación flexibles. Contacta con nosotros para conocer las condiciones y encontrar la mejor opción para ti.',

@@ -40,9 +40,13 @@ export function FormationIncludes({ formation }: FormationIncludesProps) {
                 <Gift className="h-6 w-6 text-primary" />
                 <h3 className="text-lg font-bold text-foreground">Bonus Exclusivo</h3>
               </div>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mb-3">
                 Al finalizar la formación, recibirás acceso a nuestra comunidad privada de profesionales 
                 donde podrás resolver dudas, compartir experiencias y hacer networking con otros detailers.
+              </p>
+              <p className="text-muted-foreground text-sm">
+                Además, al ser un <span className="text-primary font-medium">centro 100% independiente</span>, 
+                aprenderás a evaluar productos de forma objetiva, sin sesgos comerciales.
               </p>
             </div>
           </AnimatedSection>

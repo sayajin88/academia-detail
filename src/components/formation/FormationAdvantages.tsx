@@ -1,7 +1,7 @@
 import { FormationDetail } from '@/data/formationDetails';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
-import { Award, Headphones, UserCheck, Building, Briefcase } from 'lucide-react';
+import { Award, Headphones, UserCheck, Building, Briefcase, Scale } from 'lucide-react';
 
 interface FormationAdvantagesProps {
   formation: FormationDetail;
@@ -13,6 +13,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   UserCheck,
   Building,
   Briefcase,
+  Scale,
 };
 
 export function FormationAdvantages({ formation }: FormationAdvantagesProps) {
