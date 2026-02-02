@@ -1,176 +1,351 @@
 
 
-## Plan: Añadir Mensaje de Centro 100% Neutral e Independiente
+## Plan: Optimización SEO con Palabras Clave de Alto Volumen
 
 ### RESUMEN
 
-El objetivo es comunicar que Detail Park Academy es un centro **100% neutral** que trabaja con todo tipo de marcas sin compromisos comerciales, permitiendo elegir siempre la mejor combinación de productos para cada situación.
+Integrar de forma sutil y natural las siguientes palabras clave de alto volumen de búsqueda en toda la web:
+
+**Keywords Principales:**
+- Curso de pulido
+- Curso de tratamiento cerámico
+- Cómo montar negocio de detailing
+- Cómo montar lavadero de coches
+- Curso de pulido de coches
+- Formación en detailing
+- Escuela de detailing
+- Curso de ceramica para coches
+
+**Keywords Secundarias (alto volumen):**
+- Cómo abrir un lavadero de coches
+- Montar centro de detailing
+- Cuánto cuesta montar un lavadero
+- Curso de corrección de pintura
+- Certificación detailing España
+- Aprender detailing desde cero
+- Negocio de lavado de coches rentable
 
 ---
 
-### COPY PROPUESTO
+### AUDITORÍA DE ENCABEZADOS H1/H2/H3 Y CORRECCIONES
 
-**Mensaje principal:**
-> "Centro 100% Independiente: No representamos a ninguna marca. Trabajamos con los mejores productos del mercado sin ataduras comerciales, eligiendo siempre lo que realmente funciona."
+#### Home Page (src/components/home/)
 
-**Variaciones para diferentes contextos:**
-
-| Contexto | Copy |
-|----------|------|
-| Ventaja corta | "Centro 100% neutral y sin ataduras" |
-| FAQ | "¿Trabajáis con alguna marca en concreto?" → "No. Somos un centro 100% independiente..." |
-| Beneficio | "Aprende sin sesgos comerciales" |
-| Comparativa | "La competencia: Formadores patrocinados por marcas" vs "Academia Detail: Centro neutral, elegimos lo mejor" |
+| Componente | Actual | Propuesto (con keyword) |
+|------------|--------|-------------------------|
+| **HomeHero.tsx** H1 | "No Enseñamos a Lavar Coches, Formamos Empresarios del Detailing" | "Cursos de Detailing Profesional: De Principiante a Empresario" *(H1 con keyword principal)* |
+| **FormationsGrid** H2 | "ELIGE TU FORMACIÓN" | "Cursos de Detailing, Pulido y Tratamiento Cerámico" |
+| **CompetitiveComparison** H2 | "Por qué los profesionales eligen Academia Detail" | "Por Qué Elegir Nuestra Escuela de Detailing" |
+| **BusinessSkillsSection** H2 | "Mentalidad de Empresario" | "Cómo Montar un Negocio de Detailing Rentable" |
+| **CarreraNegocioSection** H2 | "De Principiante a Empresario" | "Formación Completa: De Cero a Montar Tu Centro de Detailing" |
+| **MontamosTuCentro** H2 | "Te Ayudamos a Montar Tu Centro" | "Te Ayudamos a Montar Tu Lavadero de Coches Profesional" |
+| **InstructorSection** H2 | "Tu Formador" | "Aprende Detailing con Profesionales en Activo" |
+| **HomeFAQ** H2 | "Preguntas Frecuentes" | "Preguntas Frecuentes sobre Cursos de Detailing" |
 
 ---
 
-### CAMBIOS DETALLADOS
+### CAMBIOS POR ARCHIVO
 
-#### 1. Nuevo Icono y Ventaja en formationDetails.ts
+#### 1. src/components/home/HomeHero.tsx
 
-**Ubicación:** Array `advantages` de cada formación (detailing, wrapping, ppf, restauración)
+**Cambios en H1 y copy:**
 
-**Nuevo item:**
-```typescript
-{ icon: 'ScaleIcon', title: 'Centro 100% neutral: Sin ataduras a marcas' }
+```tsx
+// Antes:
+<h1>No Enseñamos a Lavar Coches, Formamos Empresarios del Detailing</h1>
+
+// Después:
+<h1>Cursos de Detailing, Pulido y Tratamiento Cerámico en España</h1>
 ```
 
-**Archivos:** `src/data/formationDetails.ts` - Añadir a las 4 formaciones
+**Subtítulo optimizado:**
+```tsx
+// Antes:
+"Olvida las aulas vacías y la teoría sin práctica..."
 
----
-
-#### 2. Actualizar FormationAdvantages.tsx
-
-**Cambio:** Añadir el icono `Scale` al iconMap para representar neutralidad/balance
-
-**Archivo:** `src/components/formation/FormationAdvantages.tsx`
-
----
-
-#### 3. Nuevo Beneficio en FormationPricing.tsx
-
-**Ubicación:** Array `benefits` (lista de lo que incluye)
-
-**Nuevo item:**
-```typescript
-{ 
-  icon: Scale, 
-  text: "Formación 100% neutral", 
-  description: "Sin ataduras a marcas: Aprende a elegir lo mejor" 
-}
+// Después:
+"Aprende detailing desde cero en un taller 100% real. Domina el pulido de coches, tratamiento cerámico y monta tu propio negocio de detailing con mentalidad empresarial."
 ```
 
-**Archivo:** `src/components/formation/FormationPricing.tsx`
+---
+
+#### 2. src/components/home/FormationsGrid.tsx
+
+**Cambios en SectionHeading:**
+
+```tsx
+// Antes:
+title="ELIGE TU FORMACIÓN"
+subtitle="Cursos intensivos y 100% prácticos..."
+
+// Después:
+title="Cursos de Detailing, Pulido y Protección Cerámica"
+subtitle="Formación profesional para aprender detailing desde cero: curso de pulido de coches, tratamiento cerámico, vinilado y PPF"
+```
 
 ---
 
-#### 4. Nueva Fila en CompetitiveComparison.tsx
+#### 3. src/components/home/CompetitiveComparison.tsx
 
-**Ubicación:** Array `comparisonData`
+**Cambios en SectionHeading:**
 
-**Nueva comparación:**
-```typescript
+```tsx
+// Antes:
+title="Por qué los profesionales eligen Academia Detail"
+
+// Después:
+title="La Mejor Escuela de Detailing en España"
+subtitle="Comparativa: Por qué elegir nuestra formación en detailing frente a otras academias"
+```
+
+---
+
+#### 4. src/components/home/BusinessSkillsSection.tsx
+
+**Cambios en H2:**
+
+```tsx
+// Antes:
+<h2>Mentalidad de Empresario</h2>
+
+// Después:
+<h2>Cómo Montar un Negocio de Detailing Rentable</h2>
+```
+
+**Nuevo párrafo en descripción:**
+```tsx
+"Te enseñamos todo lo que necesitas saber para montar tu lavadero de coches profesional: cálculo de márgenes, captación de clientes VIP y escalado del negocio."
+```
+
+---
+
+#### 5. src/components/home/CarreraNegocioSection.tsx
+
+**Cambios en H2:**
+
+```tsx
+// Antes:
+<h2>De Principiante a Empresario</h2>
+
+// Después:
+<h2>Formación Completa para Montar Tu Centro de Detailing</h2>
+```
+
+**Descripción optimizada:**
+```tsx
+"El programa más completo de España para aprender detailing desde cero y montar tu propio lavadero de coches profesional. Incluye curso de pulido, tratamiento cerámico, wrapping y PPF."
+```
+
+---
+
+#### 6. src/components/home/MontamosTuCentro.tsx
+
+**Cambios en SectionHeading:**
+
+```tsx
+// Antes:
+title="Te Ayudamos a Montar Tu Centro"
+subtitle="De alumno a empresario: acompañamiento completo..."
+
+// Después:
+title="Cómo Montar un Lavadero de Coches Profesional"
+subtitle="Te acompañamos en todo el proceso: desde aprender detailing hasta abrir tu centro y conseguir tus primeros clientes"
+```
+
+---
+
+#### 7. src/components/home/InstructorSection.tsx
+
+**Cambios en SectionHeading:**
+
+```tsx
+// Antes:
+title="Tu Formador"
+
+// Después:
+title="Aprende Detailing con Profesionales en Activo"
+subtitle="Formadores que viven del detailing, no solo de enseñar"
+```
+
+---
+
+#### 8. src/components/home/HomeFAQ.tsx
+
+**Cambios en SectionHeading:**
+
+```tsx
+// Antes:
+title="Preguntas Frecuentes"
+
+// Después:
+title="Preguntas Frecuentes sobre Cursos de Detailing"
+subtitle="Todo lo que necesitas saber antes de formarte en pulido, tratamiento cerámico y negocio de detailing"
+```
+
+**Nuevas FAQs con keywords:**
+
+```tsx
 {
-  aspect: "Productos",
-  competition: "Patrocinados por marcas específicas",
-  academiaDetail: "100% neutral: Elegimos lo que funciona",
-  icon: Scale
-}
-```
-
-**Archivo:** `src/components/home/CompetitiveComparison.tsx`
-
----
-
-#### 5. Nueva FAQ en formationDetails.ts
-
-**Ubicación:** Array `faqs` de cada formación
-
-**Nueva pregunta:**
-```typescript
+  question: "¿Qué incluye el curso de pulido de coches?",
+  answer: "Nuestro curso de pulido de coches cubre todas las técnicas: pulido con rotativa, roto-orbital, corrección de pintura en múltiples pasos, identificación de defectos y selección de pads y compounds. Aprenderás a conseguir acabados de concurso."
+},
 {
-  question: "¿Trabajáis con alguna marca específica?",
-  answer: "No. Somos un centro 100% independiente y neutral. No tenemos ataduras comerciales con ninguna marca, lo que nos permite enseñarte a elegir los mejores productos del mercado según cada situación. Trabajamos con marcas líderes como Koch Chemie, Gyeon, Sonax, Meguiar's, 3M, XPEL y muchas más, siempre eligiendo lo que realmente funciona."
-}
-```
-
-**Archivo:** `src/data/formationDetails.ts` - Añadir a las 4 formaciones
-
----
-
-#### 6. Nuevo Texto en FormationIncludes Bonus
-
-**Ubicación:** Sección Bonus Exclusivo
-
-**Añadir párrafo:**
-```typescript
-"Además, al ser un centro 100% independiente, aprenderás a evaluar productos de forma objetiva, sin sesgos comerciales."
-```
-
-**Archivo:** `src/components/formation/FormationIncludes.tsx`
-
----
-
-#### 7. Mención en HomeFAQ.tsx
-
-**Ubicación:** Array de FAQs de la home
-
-**Nueva pregunta:**
-```typescript
+  question: "¿Qué es un curso de tratamiento cerámico?",
+  answer: "El curso de tratamiento cerámico te enseña a aplicar protecciones cerámicas profesionales: preparación de superficie, técnicas de aplicación, tiempos de curado y mantenimiento. Es uno de los servicios más rentables del sector."
+},
 {
-  question: "¿Estáis asociados a alguna marca de productos?",
-  answer: "No, somos 100% independientes. No representamos a ninguna marca comercial, lo que nos permite elegir siempre los mejores productos para cada situación sin compromisos. Trabajamos con las marcas líderes del sector (Koch Chemie, Gyeon, 3M, XPEL, etc.) pero nuestra formación es completamente neutral y objetiva."
+  question: "¿Es rentable montar un lavadero de coches?",
+  answer: "Sí, montar un lavadero de coches profesional puede ser muy rentable. La inversión inicial varía entre 15.000€ y 50.000€, y nuestros alumnos facturan entre 3.000€ y 8.000€ mensuales. Te enseñamos cómo montar un negocio de detailing paso a paso."
 }
 ```
 
-**Archivo:** `src/components/home/HomeFAQ.tsx`
-
 ---
 
-### ARCHIVOS A MODIFICAR
+#### 9. src/data/formationDetails.ts (Curso Detailing)
 
-| Archivo | Cambio |
-|---------|--------|
-| `src/data/formationDetails.ts` | Añadir ventaja y FAQ de neutralidad a las 4 formaciones |
-| `src/components/formation/FormationAdvantages.tsx` | Añadir icono Scale al iconMap |
-| `src/components/formation/FormationPricing.tsx` | Añadir beneficio de neutralidad |
-| `src/components/home/CompetitiveComparison.tsx` | Añadir fila de comparación sobre productos |
-| `src/components/formation/FormationIncludes.tsx` | Ampliar texto del Bonus |
-| `src/components/home/HomeFAQ.tsx` | Añadir pregunta sobre independencia |
+**Cambios en título y descripción:**
 
----
+```tsx
+// Antes:
+title: 'Curso de Detailing Profesional: Certificación y Carrera de Especialista'
+description: 'Curso de detailing profesional 100% práctico de 4 días...'
 
-### RESULTADO VISUAL
-
-**En FormationAdvantages (iconos):**
-```
-[Certificado] [Soporte] [Personalizado] [Taller Real] [Empleo] [100% Neutral]
+// Después:
+title: 'Curso de Pulido y Tratamiento Cerámico: Certificación Profesional'
+description: 'Curso de pulido de coches y tratamiento cerámico profesional de 4 días. Aprende corrección de pintura, protección cerámica y detallado interior. La mejor escuela de detailing en España con formación 100% práctica en taller real.'
 ```
 
-**En Competitive Comparison (nueva fila):**
-```
-❌ Patrocinados por marcas  |  [Scale] Productos  |  ✓ 100% neutral: Elegimos lo mejor
-```
-
-**En FormationPricing (nuevo beneficio):**
-```
-✓ Formación 100% neutral
-  Sin ataduras a marcas: Aprende a elegir lo mejor
-```
-
-**En FAQs:**
-```
-P: ¿Trabajáis con alguna marca específica?
-R: No. Somos un centro 100% independiente...
+**Nuevo campo heroDescription:**
+```tsx
+heroDescription: 'Formación intensiva en pulido de coches y tratamiento cerámico. Domina las técnicas de corrección de pintura, aplicación de cerámicos y detallado profesional. Aprende detailing desde cero y prepárate para montar tu negocio.'
 ```
 
 ---
 
-### BENEFICIOS DE ESTA IMPLEMENTACIÓN
+#### 10. src/utils/seoConfig.ts
 
-1. **Diferenciación clara** - La mayoría de academias están patrocinadas
-2. **Confianza del alumno** - Sabe que aprenderá de forma objetiva
-3. **Valor añadido** - Aprende a elegir productos por mérito, no por marketing
-4. **SEO** - Nuevas keywords: "formación detailing independiente", "curso sin marcas"
-5. **Consistencia** - Mensaje presente en toda la web de forma natural
+**Keywords actualizados por página:**
+
+```tsx
+home: {
+  keywords: "curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso corrección pintura",
+  title: "Cursos de Detailing y Pulido de Coches | Escuela de Detailing España",
+  description: "✅ Cursos de pulido de coches y tratamiento cerámico 100% prácticos. Aprende detailing desde cero y monta tu propio lavadero de coches. ⭐ La mejor escuela de detailing en España."
+}
+
+carreraDetailing: {
+  keywords: "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, curso completo detailing, emprender lavadero rentable",
+  title: "Cómo Montar un Lavadero de Coches | Formación Completa Detailing",
+  description: "🔥 Aprende a montar tu lavadero de coches profesional. Formación completa en detailing + módulo de negocio. Curso de pulido, tratamiento cerámico, PPF y wrapping."
+}
+```
+
+---
+
+#### 11. src/components/formation/FormationHero.tsx
+
+**Añadir H2 semántico:**
+
+```tsx
+// Después del H1 del título del curso, añadir:
+<h2 className="sr-only">
+  {formation.slug === 'curso-detailing-profesional' 
+    ? 'Curso de pulido de coches y tratamiento cerámico profesional'
+    : formation.subtitle}
+</h2>
+```
+
+---
+
+#### 12. src/components/carrera/CarreraHero.tsx
+
+**Cambios en H1:**
+
+```tsx
+// Antes:
+<h1>CARRERA DETAILING</h1>
+
+// Después:
+<h1>
+  <span>CARRERA</span>
+  <span>DETAILING</span>
+</h1>
+<h2 className="sr-only">Cómo montar un lavadero de coches profesional - Formación completa</h2>
+```
+
+---
+
+### RESUMEN DE ARCHIVOS A MODIFICAR
+
+| Archivo | Tipo de Cambio |
+|---------|----------------|
+| `src/components/home/HomeHero.tsx` | H1 + copy |
+| `src/components/home/FormationsGrid.tsx` | H2 + subtítulo |
+| `src/components/home/CompetitiveComparison.tsx` | H2 + subtítulo |
+| `src/components/home/BusinessSkillsSection.tsx` | H2 + descripción |
+| `src/components/home/CarreraNegocioSection.tsx` | H2 + descripción |
+| `src/components/home/MontamosTuCentro.tsx` | H2 + subtítulo |
+| `src/components/home/InstructorSection.tsx` | H2 + subtítulo |
+| `src/components/home/HomeFAQ.tsx` | H2 + 3 nuevas FAQs |
+| `src/components/shared/SectionHeading.tsx` | Verificar H2 semántico |
+| `src/data/formationDetails.ts` | Títulos y descripciones |
+| `src/utils/seoConfig.ts` | Keywords y meta descriptions |
+| `src/components/formation/FormationHero.tsx` | H2 semántico |
+| `src/components/carrera/CarreraHero.tsx` | H2 semántico |
+
+---
+
+### ESTRUCTURA DE HEADINGS CORREGIDA
+
+```text
+HOME PAGE:
+├── H1: "Cursos de Detailing, Pulido y Tratamiento Cerámico en España"
+├── H2: "Cursos de Detailing, Pulido y Protección Cerámica"
+├── H2: "La Mejor Escuela de Detailing en España"
+├── H2: "Cómo Montar un Negocio de Detailing Rentable"
+├── H2: "Formación Completa para Montar Tu Centro de Detailing"
+├── H2: "Cómo Montar un Lavadero de Coches Profesional"
+├── H2: "Aprende Detailing con Profesionales en Activo"
+├── H2: "Preguntas Frecuentes sobre Cursos de Detailing"
+└── H2: "Reserva Tu Plaza"
+
+CURSO DETAILING PAGE:
+├── H1: "Curso de Pulido y Tratamiento Cerámico: Certificación Profesional"
+├── H2: "Ventajas de Nuestra Formación"
+├── H2: "Qué Aprenderás"
+├── H2: "Programa del Curso"
+├── H2: "Preguntas Frecuentes"
+└── H2: "Reserva Tu Plaza"
+
+CARRERA DETAILING PAGE:
+├── H1: "CARRERA DETAILING"
+├── H2 (sr-only): "Cómo montar un lavadero de coches profesional"
+├── H2: "Módulo de Negocio"
+├── H2: "Timeline de Formación"
+├── H2: "Tu Inversión"
+└── H2: "Preguntas Frecuentes"
+```
+
+---
+
+### DENSIDAD DE KEYWORDS OBJETIVO
+
+| Keyword | Páginas donde aparecerá | Densidad |
+|---------|------------------------|----------|
+| "curso de pulido" | Home, Detailing, SEO | 3-5 veces |
+| "tratamiento cerámico" | Home, Detailing, SEO | 3-5 veces |
+| "montar negocio detailing" | Home, Carrera, Business | 2-4 veces |
+| "montar lavadero de coches" | Home, Carrera, MontamosTuCentro | 2-4 veces |
+| "escuela de detailing" | Home, Comparison, SEO | 2-3 veces |
+| "aprender detailing" | Home, Hero, FAQs | 3-4 veces |
+
+---
+
+### RESULTADO ESPERADO
+
+1. **Mejor posicionamiento orgánico** para keywords de alto volumen
+2. **Estructura de headings correcta** para SEO on-page
+3. **Copy natural y persuasivo** sin keyword stuffing
+4. **Meta descriptions optimizadas** para CTR en SERPs
+5. **FAQs enriquecidas** con keywords long-tail
 
