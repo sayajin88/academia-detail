@@ -14,7 +14,22 @@ const faqs = [
   {
     question: '¿Necesito experiencia previa para apuntarme a una formación?',
     answer:
-      'No, nuestras formaciones están diseñadas para todos los niveles. Empezamos desde los conceptos básicos y avanzamos progresivamente hasta las técnicas más avanzadas.',
+      'No, nuestras formaciones están diseñadas para todos los niveles. Puedes aprender detailing desde cero. Empezamos desde los conceptos básicos y avanzamos progresivamente hasta las técnicas más avanzadas.',
+  },
+  {
+    question: '¿Qué incluye el curso de pulido de coches?',
+    answer:
+      'Nuestro curso de pulido de coches cubre todas las técnicas: pulido con rotativa, roto-orbital, corrección de pintura en múltiples pasos, identificación de defectos y selección de pads y compounds. Aprenderás a conseguir acabados de concurso.',
+  },
+  {
+    question: '¿Qué es un curso de tratamiento cerámico?',
+    answer:
+      'El curso de tratamiento cerámico te enseña a aplicar protecciones cerámicas profesionales: preparación de superficie, técnicas de aplicación, tiempos de curado y mantenimiento. Es uno de los servicios más rentables del sector.',
+  },
+  {
+    question: '¿Es rentable montar un lavadero de coches?',
+    answer:
+      'Sí, montar un lavadero de coches profesional puede ser muy rentable. La inversión inicial varía entre 15.000€ y 50.000€, y nuestros alumnos facturan entre 3.000€ y 8.000€ mensuales. Te enseñamos cómo montar un negocio de detailing paso a paso.',
   },
   {
     question: '¿Qué incluye el precio de las formaciones?',
@@ -34,12 +49,12 @@ const faqs = [
   {
     question: '¿Las formaciones son presenciales u online?',
     answer:
-      'Todas nuestras formaciones son 100% presenciales en nuestras instalaciones de Detail Park. Creemos que la práctica real es fundamental para dominar estas técnicas.',
+      'Todas nuestras formaciones son 100% presenciales en nuestras instalaciones de Detail Park. Creemos que la práctica real es fundamental para dominar estas técnicas de pulido y tratamiento cerámico.',
   },
   {
     question: '¿Qué diferencia hay entre las formaciones individuales y la Carrera Negocio?',
     answer:
-      'Las formaciones individuales te especializan en una técnica concreta. La Carrera Negocio incluye todas las formaciones, prácticas reales en nuestro taller, y formación en gestión empresarial para que puedas montar tu propio negocio.',
+      'Las formaciones individuales te especializan en una técnica concreta (pulido, cerámicos, wrapping). La Carrera Negocio incluye todas las formaciones, prácticas reales en nuestro taller, y formación en gestión empresarial para que puedas montar tu propio lavadero de coches profesional.',
   },
   {
     question: '¿Puedo vivir del detailing? ¿Cuál es el salario medio?',
@@ -101,8 +116,8 @@ export function HomeFAQ() {
           <div className="max-w-3xl mx-auto">
             <SectionHeading
               badge="FAQ"
-              title="Preguntas Frecuentes"
-              subtitle="Resolvemos tus dudas más comunes"
+              title="Preguntas Frecuentes sobre Cursos de Detailing"
+              subtitle="Todo lo que necesitas saber antes de formarte en pulido, tratamiento cerámico y negocio de detailing"
             />
 
             <Accordion type="single" collapsible className="mb-10 md:mb-12">

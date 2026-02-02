@@ -66,12 +66,12 @@ export function CompetitiveComparison() {
               <span className="text-primary font-medium text-sm">Por qué somos diferentes</span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              La Competencia{' '}
-              <span className="text-muted-foreground/50">vs</span>{' '}
-              <span className="text-primary">Academia Detail</span>
+              La Mejor{' '}
+              <span className="text-primary">Escuela de Detailing</span>{' '}
+              en España
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              No todas las academias de detailing son iguales. Descubre qué nos hace únicos.
+              Comparativa: Por qué elegir nuestra formación en detailing frente a otras academias
             </p>
           </div>
         </AnimatedSection>

@@ -66,6 +66,11 @@ export function FormationHero({ formation, onCTAClick }: FormationHeroProps) {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
             {formation.title}
           </h1>
+          <h2 className="sr-only">
+            {formation.slug === 'curso-detailing-profesional' 
+              ? 'Curso de pulido de coches y tratamiento cerámico profesional en España'
+              : formation.subtitle}
+          </h2>
           <p className="text-xl md:text-2xl text-white/70 mb-6">
             {formation.subtitle}
           </p>

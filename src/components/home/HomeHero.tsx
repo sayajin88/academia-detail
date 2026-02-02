@@ -52,19 +52,19 @@ export function HomeHero() {
             <span className="text-white/90 text-sm font-medium">🔧 El ÚNICO Centro con Taller 100% Real</span>
           </div>
 
-          {/* Main Title - New Differentiation Message */}
+          {/* Main Title - SEO Optimized H1 */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            No Enseñamos a Lavar Coches,{" "}
+            Cursos de Detailing, Pulido y{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-glow">
-              Formamos Empresarios del Detailing
+              Tratamiento Cerámico en España
             </span>
           </h1>
 
-          {/* Subtitle - Emphasizing Real Practice */}
+          {/* Subtitle - Keyword Rich */}
           <p className="text-base md:text-lg lg:text-xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Olvida las aulas vacías y la teoría sin práctica. Aprende en un{" "}
-            <strong className="text-white">taller operativo con clientes reales</strong>, vehículos de alta gama y{" "}
-            <strong className="text-primary">mentalidad de negocio desde el día 1</strong>.
+            Aprende detailing desde cero en un{" "}
+            <strong className="text-white">taller 100% real</strong>. Domina el{" "}
+            <strong className="text-primary">pulido de coches, tratamiento cerámico</strong> y monta tu propio negocio de detailing con mentalidad empresarial.
           </p>
 
           {/* CTA Buttons - Improved mobile layout */}
