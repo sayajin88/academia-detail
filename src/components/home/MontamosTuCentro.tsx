@@ -49,8 +49,8 @@ export function MontamosTuCentro() {
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
           badge="Servicio Exclusivo"
-          title="Te Ayudamos a Montar Tu Centro"
-          subtitle="De alumno a empresario: acompañamiento completo para lanzar tu negocio de detailing"
+          title="Cómo Montar un Lavadero de Coches Profesional"
+          subtitle="Te acompañamos en todo el proceso: desde aprender detailing hasta abrir tu centro y conseguir tus primeros clientes"
         />
 
         {/* Main Content Grid */}

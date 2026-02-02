@@ -89,6 +89,7 @@ const CarreraHero = ({ onCTAClick }: CarreraHeroProps) => {
               DETAILING
             </span>
           </h1>
+          <h2 className="sr-only">Cómo montar un lavadero de coches profesional - Formación completa en detailing</h2>
         </div>
 
         {/* Subtitle */}

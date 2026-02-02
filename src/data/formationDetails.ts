@@ -64,14 +64,14 @@ export const formationDetails: Record<string, FormationDetail> = {
   'curso-detailing-profesional': {
     id: 'curso-detailing-profesional',
     slug: 'curso-detailing-profesional',
-    title: 'Curso de Detailing Profesional: Certificación y Carrera de Especialista',
+    title: 'Curso de Pulido y Tratamiento Cerámico: Certificación Profesional',
     subtitle: 'Formación Intensiva en Corrección de Pintura y Protección Cerámica',
-    description: 'Curso de detailing profesional 100% práctico de 4 días. Aprende detailing desde cero: lavado, descontaminación, pulido con rotativa y roto-orbital, tratamiento cerámico y detallado interior. Formación con certificado oficial basada en experiencia real en taller.',
+    description: 'Curso de pulido de coches y tratamiento cerámico profesional de 4 días. Aprende corrección de pintura, protección cerámica y detallado interior. La mejor escuela de detailing en España con formación 100% práctica en taller real.',
     duration: '4 Días de Formación Intensiva',
     price: 2997,
     originalPrice: 3497,
     image: detailingHero,
-    heroDescription: 'Formación 100% práctica de 4 días donde aprenderás desde los fundamentos hasta las técnicas más avanzadas de corrección de pintura, tratamiento cerámico y detallado de interiores. Basado en experiencia real de trabajo en nuestro taller.',
+    heroDescription: 'Formación intensiva en pulido de coches y tratamiento cerámico. Domina las técnicas de corrección de pintura, aplicación de cerámicos y detallado profesional. Aprende detailing desde cero y prepárate para montar tu negocio.',
     advantages: [
       { icon: 'Award', title: 'Certificado de reconocimiento del sector' },
       { icon: 'HeadphonesIcon', title: 'Asistencia posterior personalizada' },

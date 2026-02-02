@@ -21,8 +21,8 @@ export function InstructorSection() {
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
           badge="Tu Instructor"
-          title="Aprende del Mejor"
-          subtitle="Conoce a quien te formará en el arte del detailing profesional"
+          title="Aprende Detailing con Profesionales en Activo"
+          subtitle="Formadores que viven del detailing, no solo de enseñar"
         />
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center max-w-6xl mx-auto">

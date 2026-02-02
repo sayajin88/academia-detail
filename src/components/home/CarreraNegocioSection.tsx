@@ -65,15 +65,14 @@ export function CarreraNegocioSection() {
           </span>
           
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
-            De Principiante a{' '}
+            Formación Completa para{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-glow">
-              Empresario
+              Montar Tu Centro de Detailing
             </span>
           </h2>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            El programa completo para dominar todas las disciplinas del detailing 
-            y lanzar tu propio centro de éxito
+            El programa más completo de España para aprender detailing desde cero y montar tu propio lavadero de coches profesional. Incluye curso de pulido, tratamiento cerámico, wrapping y PPF.
           </p>
         </div>
 

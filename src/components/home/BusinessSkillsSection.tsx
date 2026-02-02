@@ -44,11 +44,12 @@ export function BusinessSkillsSection() {
               <span className="text-primary font-medium text-sm">Lo que NO te enseñan en otras academias</span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              Mentalidad de{' '}
-              <span className="text-primary">Empresario</span>
+              Cómo Montar un{' '}
+              <span className="text-primary">Negocio de Detailing</span>{' '}
+              Rentable
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              La técnica sin negocio no genera ingresos. Te enseñamos a convertir tu habilidad en un negocio rentable.
+              Te enseñamos todo lo que necesitas saber para montar tu lavadero de coches profesional: cálculo de márgenes, captación de clientes VIP y escalado del negocio.
             </p>
           </div>
         </AnimatedSection>

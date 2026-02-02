@@ -244,9 +244,9 @@ export const generateImageObjectSchema = (image: {
 // SEO Configuration for each page
 export const seoConfig = {
   home: {
-    title: "Academia Detail ▷ Único Centro con Taller Real y Mente de Empresario",
-    description: "✅ Olvida las aulas vacías. Aprende Detailing y Gestión de Negocio en un taller 100% operativo. ⭐ Domina el pulido, PPF y Wrapping con visión de rentabilidad.",
-    keywords: "curso detailing taller real, formación detailing empresario, academia detailing profesional, aprender detailing con clientes reales, montar negocio detailing, taller operativo detailing, centro formación detailing España",
+    title: "Cursos de Detailing y Pulido de Coches | Escuela de Detailing España",
+    description: "✅ Cursos de pulido de coches y tratamiento cerámico 100% prácticos. Aprende detailing desde cero y monta tu propio lavadero de coches. ⭐ La mejor escuela de detailing en España.",
+    keywords: "curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso corrección pintura",
     url: "/",
     schema: [
       localBusinessSchema,
@@ -321,9 +321,9 @@ export const seoConfig = {
   },
 
   carreraDetailing: {
-    title: "Formación Profesional Detailing ▷ Taller Real + Mentalidad Empresario",
-    description: "🔥 El único programa donde aprendes técnica Y negocio. 4 certificaciones + módulo empresarial en taller 100% operativo. ➤ Clientes reales desde el día 1.",
-    keywords: "formación profesional detailing, montar centro detailing, emprender detailing, abrir taller detailing, negocio detailing rentable, ser empresario detailing, carrera detailing completa, formación completa detailing con negocio",
+    title: "Cómo Montar un Lavadero de Coches | Formación Completa Detailing",
+    description: "🔥 Aprende a montar tu lavadero de coches profesional. Formación completa en detailing + módulo de negocio. Curso de pulido, tratamiento cerámico, PPF y wrapping.",
+    keywords: "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, curso completo detailing, emprender lavadero rentable, aprender detailing desde cero",
     url: "/formacion-profesional-detailing",
     schema: [
       localBusinessSchema,

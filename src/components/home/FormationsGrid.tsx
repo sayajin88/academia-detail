@@ -29,8 +29,8 @@ export function FormationsGrid() {
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
           badge="Formaciones Profesionales"
-          title="ELIGE TU FORMACIÓN"
-          subtitle="Cursos intensivos y 100% prácticos para dominar cada disciplina del detailing profesional"
+          title="Cursos de Detailing, Pulido y Protección Cerámica"
+          subtitle="Formación profesional para aprender detailing desde cero: curso de pulido de coches, tratamiento cerámico, vinilado y PPF"
         />
 
         {/* Grid de Formaciones - Better mobile layout */}
