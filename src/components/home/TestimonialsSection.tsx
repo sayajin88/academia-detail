@@ -86,40 +86,44 @@ const testimonials = [
 // Calculate aggregate rating
 const averageRating = (testimonials.reduce((acc, t) => acc + t.rating, 0) / testimonials.length).toFixed(1);
 
-// Schema.org Review structured data for rich snippets
-const reviewsSchema = {
-  "@context": "https://schema.org",
+// Objeto reutilizable para itemReviewed - resuelve errores de Google Search Console
+const itemReviewed = {
   "@type": "EducationalOrganization",
-  "name": "Academia Detailing - Detail Park",
+  "name": "Academia Detail",
   "url": "https://academiadetail.com",
+  "image": "https://academiadetail.com/og-image.png",
   "sameAs": [
     "https://www.instagram.com/detailparkoficial/",
     "https://www.instagram.com/danidetailoficial/",
     "https://www.youtube.com/@detailpark"
   ],
-  "review": testimonials.map((t) => ({
-    "@type": "Review",
-    "author": {
-      "@type": "Person",
-      "name": t.name
-    },
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": t.rating,
-      "bestRating": 5,
-      "worstRating": 1
-    },
-    "reviewBody": t.text,
-    "datePublished": t.date
-  })),
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": averageRating,
-    "reviewCount": testimonials.length,
+    "reviewCount": String(testimonials.length),
     "bestRating": "5",
     "worstRating": "1"
   }
 };
+
+// Array de Reviews individuales, cada una con itemReviewed completo
+const reviewsSchema = testimonials.map((t) => ({
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "itemReviewed": itemReviewed,
+  "author": {
+    "@type": "Person",
+    "name": t.name
+  },
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": t.rating,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "reviewBody": t.text,
+  "datePublished": t.date
+}));
 
 export function TestimonialsSection() {
   return (
@@ -128,11 +132,13 @@ export function TestimonialsSection() {
       itemScope 
       itemType="https://schema.org/EducationalOrganization"
     >
-      {/* Schema.org JSON-LD for Review rich snippets */}
+      {/* Schema.org JSON-LD for Review rich snippets - cada Review con itemReviewed */}
       <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(reviewsSchema)}
-        </script>
+        {reviewsSchema.map((review, index) => (
+          <script key={index} type="application/ld+json">
+            {JSON.stringify(review)}
+          </script>
+        ))}
       </Helmet>
 
       <div className="container mx-auto px-4">
