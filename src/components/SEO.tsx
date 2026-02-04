@@ -10,6 +10,7 @@ interface SEOProps {
   schema?: object | object[];
   canonical?: string;
   disableHreflang?: boolean;
+  price?: string;
 }
 
 const BASE_URL = 'https://academiadetail.com';
@@ -27,6 +28,47 @@ const HREFLANG_REGIONS = [
   { lang: 'x-default', label: 'Default' },
 ];
 
+// URL to readable name mapping for auto-breadcrumbs
+const URL_NAME_MAP: Record<string, string> = {
+  'curso-detailing-profesional': 'Curso Detailing',
+  'curso-vinilado-vehiculos': 'Curso Wrapping',
+  'curso-ppf-proteccion-pintura': 'Curso PPF',
+  'curso-restauracion-vehiculos': 'Curso Restauración',
+  'formacion-profesional-detailing': 'Carrera Detailing',
+  'curso-detailing-iniciacion': 'Jornada Zero',
+  'quienes-somos': 'Quiénes Somos',
+  'contacto': 'Contacto',
+  'galeria': 'Galería',
+};
+
+// Auto-generate breadcrumb schema from URL
+const generateAutoBreadcrumbs = (url: string, title: string) => {
+  const segments = url.split('/').filter(Boolean);
+  const items = [{ name: "Inicio", item: BASE_URL }];
+  
+  if (segments.length > 0) {
+    let path = '';
+    segments.forEach((segment) => {
+      path += `/${segment}`;
+      items.push({
+        name: URL_NAME_MAP[segment] || title,
+        item: `${BASE_URL}${path}`
+      });
+    });
+  }
+  
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": item.name,
+      "item": item.item
+    }))
+  };
+};
+
 // LocalBusiness Schema with complete business data for local SEO - Emphasizing REAL WORKSHOP
 export const localBusinessSchema = {
   "@context": "https://schema.org",
@@ -36,7 +78,12 @@ export const localBusinessSchema = {
   "slogan": "No enseñamos a lavar coches, formamos empresarios del Detailing",
   "description": "El ÚNICO centro de formación en detailing que opera en un taller 100% real con clientes de alta gama. Aprende técnica Y negocio desde el día 1. Sin aulas vacías, solo práctica real.",
   "url": BASE_URL,
-  "logo": DEFAULT_IMAGE,
+  "logo": {
+    "@type": "ImageObject",
+    "url": DEFAULT_IMAGE,
+    "width": 1200,
+    "height": 630
+  },
   "image": DEFAULT_IMAGE,
   "telephone": "+34 622 773 555",
   "email": "info@detailpark.es",
@@ -83,13 +130,16 @@ export const localBusinessSchema = {
   "sameAs": [
     "https://www.instagram.com/detailparkoficial/",
     "https://www.instagram.com/danidetailoficial/",
-    "https://www.youtube.com/@detailpark"
+    "https://www.youtube.com/@detailpark",
+    "https://www.facebook.com/detailpark",
+    "https://www.tiktok.com/@detailpark"
   ],
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.9",
-    "reviewCount": "127",
-    "bestRating": "5"
+    "reviewCount": "170",
+    "bestRating": "5",
+    "worstRating": "1"
   },
   "knowsAbout": [
     "Detailing Profesional",
@@ -169,12 +219,30 @@ export const SEO = ({
   schema,
   canonical,
   disableHreflang = false,
+  price,
 }: SEOProps) => {
   const fullUrl = url ? `${BASE_URL}${url}` : BASE_URL;
   const canonicalUrl = canonical ? `${BASE_URL}${canonical}` : fullUrl;
 
   // Handle both single schema object and array of schema objects
   const schemaArray = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+  
+  // Auto-generate breadcrumbs if not already in schema
+  const hasBreadcrumbs = schemaArray.some(s => 
+    s && typeof s === 'object' && '@type' in s && s['@type'] === 'BreadcrumbList'
+  );
+  
+  const finalSchemas = hasBreadcrumbs 
+    ? schemaArray 
+    : [...schemaArray, generateAutoBreadcrumbs(url || '/', title)];
+
+  // Determine image type from URL
+  const getImageType = (imageUrl: string) => {
+    if (imageUrl.endsWith('.jpg') || imageUrl.endsWith('.jpeg')) return 'image/jpeg';
+    if (imageUrl.endsWith('.png')) return 'image/png';
+    if (imageUrl.endsWith('.webp')) return 'image/webp';
+    return 'image/png';
+  };
 
   return (
     <Helmet>
@@ -197,25 +265,33 @@ export const SEO = ({
         />
       ))}
 
-      {/* Open Graph / Facebook */}
+      {/* Open Graph / Facebook - Enhanced with dimensions */}
       <meta property="og:type" content={type} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content={getImageType(image)} />
+      <meta property="og:image:alt" content={`${title} - Academia Detail`} />
       <meta property="og:locale" content="es_ES" />
       <meta property="og:locale:alternate" content="es_MX" />
       <meta property="og:locale:alternate" content="es_AR" />
       <meta property="og:locale:alternate" content="es_CO" />
       <meta property="og:locale:alternate" content="es_CL" />
       <meta property="og:site_name" content="Academia Detail - Formación Detailing España" />
-      <meta property="og:type" content={type} />
-      <meta property="og:url" content={fullUrl} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:locale" content="es_ES" />
-      <meta property="og:site_name" content="Academia Detail - Taller Real" />
+
+      {/* Product meta tags for courses (helps with rich snippets) */}
+      {type === 'product' && price && (
+        <>
+          <meta property="product:price:amount" content={price} />
+          <meta property="product:price:currency" content="EUR" />
+          <meta property="product:availability" content="in stock" />
+          <meta property="product:condition" content="new" />
+          <meta property="product:retailer_item_id" content={url?.replace(/\//g, '-') || 'course'} />
+        </>
+      )}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -223,6 +299,7 @@ export const SEO = ({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={`${title} - Academia Detail`} />
 
       {/* Additional SEO Tags */}
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -237,7 +314,7 @@ export const SEO = ({
       <meta name="target" content="all" />
 
       {/* Schema.org JSON-LD */}
-      {schemaArray.map((schemaItem, index) => (
+      {finalSchemas.map((schemaItem, index) => (
         <script key={index} type="application/ld+json">
           {JSON.stringify(schemaItem)}
         </script>
