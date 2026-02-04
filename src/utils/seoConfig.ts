@@ -2,8 +2,98 @@ import { localBusinessSchema } from '@/components/SEO';
 
 const BASE_URL = 'https://academiadetail.com';
 
-// Enhanced Course Schema Generator with AggregateRating and improved Offers
-export const generateCourseSchema = (course: {
+// ============================================
+// ORGANIZATION SCHEMA COMPLETO CON SAMEAS
+// ============================================
+export const organizationSchemaComplete = {
+  "@context": "https://schema.org",
+  "@type": ["Organization", "EducationalOrganization", "LocalBusiness"],
+  "name": "Academia Detail",
+  "alternateName": ["Detail Park", "Academia Detailing", "Detail Park Academy"],
+  "url": BASE_URL,
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${BASE_URL}/og-image.png`,
+    "width": 1200,
+    "height": 630
+  },
+  "image": `${BASE_URL}/og-image.png`,
+  "description": "El ÚNICO centro de formación en detailing que opera en un taller 100% real con clientes de alta gama. Aprende técnica Y negocio desde el día 1.",
+  "slogan": "No enseñamos a lavar coches, formamos empresarios del Detailing",
+  "foundingDate": "2017",
+  "telephone": "+34 622 773 555",
+  "email": "info@detailpark.es",
+  "priceRange": "€€",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Efectivo, Tarjeta de Crédito, Transferencia Bancaria",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Metalurgias, 13",
+    "addressLocality": "Alicante",
+    "addressRegion": "Comunidad Valenciana",
+    "postalCode": "03008",
+    "addressCountry": "ES"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 38.3452,
+    "longitude": -0.4892
+  },
+  "sameAs": [
+    "https://www.instagram.com/detailparkoficial/",
+    "https://www.instagram.com/danidetailoficial/",
+    "https://www.youtube.com/@detailpark",
+    "https://www.facebook.com/detailpark",
+    "https://www.tiktok.com/@detailpark"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "170",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    }
+  ],
+  "areaServed": {
+    "@type": "Country",
+    "name": "Spain"
+  },
+  "knowsAbout": [
+    "Detailing Profesional",
+    "Gestión de Negocio Detailing",
+    "PPF Installation",
+    "Car Wrapping",
+    "Presupuestación de Servicios",
+    "Captación de Clientes VIP"
+  ]
+};
+
+// ============================================
+// INSTRUCTOR SCHEMA REUTILIZABLE
+// ============================================
+export const instructorSchema = {
+  "@type": "Person",
+  "name": "Daniel López",
+  "jobTitle": "CEO y Formador Principal",
+  "description": "Detailer profesional con más de 15 años de experiencia en vehículos de alta gama",
+  "image": `${BASE_URL}/daniel-lopez-instructor.webp`,
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Academia Detail"
+  }
+};
+
+// ============================================
+// ENHANCED COURSE SCHEMA WITH OFFERS & INSTRUCTOR
+// ============================================
+export const generateCourseSchemaEnhanced = (course: {
   name: string;
   description: string;
   price: number;
@@ -19,32 +109,47 @@ export const generateCourseSchema = (course: {
   "provider": {
     "@type": "EducationalOrganization",
     "name": "Academia Detail",
-    "description": "Formación en taller 100% real con visión empresarial",
     "url": BASE_URL,
     "logo": `${BASE_URL}/og-image.png`,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Calle Metalurgias, 13",
-      "addressLocality": "Alicante",
-      "postalCode": "03008",
-      "addressCountry": "ES"
-    }
+    "sameAs": organizationSchemaComplete.sameAs
   },
   "offers": {
     "@type": "Offer",
     "price": course.price,
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
+    "availability": "https://schema.org/LimitedAvailability",
+    "validFrom": "2025-01-01",
     "priceValidUntil": "2026-12-31",
+    "url": `${BASE_URL}${course.url}`,
     "itemCondition": "https://schema.org/NewCondition",
-    "url": `${BASE_URL}${course.url}`
+    "seller": {
+      "@type": "Organization",
+      "name": "Academia Detail"
+    }
   },
   "hasCourseInstance": {
     "@type": "CourseInstance",
     "courseMode": "onsite",
+    "courseSchedule": {
+      "@type": "Schedule",
+      "repeatFrequency": "P1M",
+      "repeatCount": 12
+    },
     "duration": course.duration || "P5D",
     "inLanguage": "es",
-    "courseWorkload": "PT40H"
+    "courseWorkload": "PT40H",
+    "location": {
+      "@type": "Place",
+      "name": "Academia Detail - Taller 100% Real",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Metalurgias, 13",
+        "addressLocality": "Alicante",
+        "postalCode": "03008",
+        "addressCountry": "ES"
+      }
+    },
+    "instructor": instructorSchema
   },
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -54,7 +159,12 @@ export const generateCourseSchema = (course: {
     "worstRating": "1"
   },
   "coursePrerequisites": "Sin experiencia previa necesaria",
-  "educationalCredentialAwarded": "Certificado Academia Detail",
+  "educationalCredentialAwarded": "Certificado Profesional Academia Detail",
+  "occupationalCredentialAwarded": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "certificate",
+    "name": "Certificado de Detailing Profesional"
+  },
   "teaches": [
     `Técnicas profesionales de ${course.name}`,
     "Gestión de clientes y presupuestos",
@@ -63,7 +173,12 @@ export const generateCourseSchema = (course: {
   ...(course.image && { "image": course.image })
 });
 
-// Event Schema Generator
+// Legacy alias for backwards compatibility
+export const generateCourseSchema = generateCourseSchemaEnhanced;
+
+// ============================================
+// EVENT SCHEMA GENERATOR
+// ============================================
 export const generateEventSchema = (event: {
   name: string;
   description: string;
@@ -103,10 +218,13 @@ export const generateEventSchema = (event: {
     "availability": "https://schema.org/LimitedAvailability",
     "validFrom": "2025-01-01",
     "priceValidUntil": "2026-12-31"
-  }
+  },
+  "performer": instructorSchema
 });
 
-// FAQ Schema Generator
+// ============================================
+// FAQ SCHEMA GENERATOR
+// ============================================
 export const generateFAQSchema = (faqs: { question: string; answer: string }[]) => ({
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -120,7 +238,9 @@ export const generateFAQSchema = (faqs: { question: string; answer: string }[]) 
   }))
 });
 
-// BreadcrumbList Schema Generator
+// ============================================
+// BREADCRUMB SCHEMA GENERATOR
+// ============================================
 export const generateBreadcrumbSchema = (items: { name: string; url: string }[]) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -132,100 +252,37 @@ export const generateBreadcrumbSchema = (items: { name: string; url: string }[])
   }))
 });
 
-// EducationalOrganization Schema for homepage
-export const educationalOrganizationSchema = {
+// ============================================
+// WEBPAGE SCHEMA WITH SPEAKABLE (VOICE SEARCH)
+// ============================================
+export const generateWebPageSchema = (page: {
+  name: string;
+  description: string;
+  url: string;
+}) => ({
   "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  "name": "Academia Detail",
-  "alternateName": "Detail Park - Taller y Academia",
-  "slogan": "No enseñamos a lavar coches, formamos empresarios del Detailing",
-  "url": BASE_URL,
-  "logo": `${BASE_URL}/og-image.png`,
-  "description": "El ÚNICO centro de formación en detailing que opera en un taller 100% real con clientes de alta gama. Aprende técnica Y negocio desde el día 1.",
-  "foundingDate": "2017",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Calle Metalurgias, 13",
-    "addressLocality": "Alicante",
-    "addressRegion": "Comunidad Valenciana",
-    "postalCode": "03008",
-    "addressCountry": "ES"
+  "@type": "WebPage",
+  "name": page.name,
+  "description": page.description,
+  "url": `${BASE_URL}${page.url}`,
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Academia Detail",
+    "url": BASE_URL
   },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 38.3452,
-    "longitude": -0.4892
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["h1", ".hero-description", ".section-heading"]
   },
-  "telephone": "+34 622 773 555",
-  "email": "info@detailpark.es",
-  "sameAs": [
-    "https://www.instagram.com/detailparkoficial/",
-    "https://www.instagram.com/danidetailoficial/",
-    "https://www.youtube.com/@detailpark"
-  ],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "127",
-    "bestRating": "5"
-  },
-  "knowsAbout": [
-    "Detailing Profesional",
-    "Gestión de Negocio Detailing",
-    "PPF Installation",
-    "Car Wrapping",
-    "Presupuestación de Servicios",
-    "Captación de Clientes VIP",
-    "Cálculo de Márgenes",
-    "Escalado de Negocios"
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Cursos de Detailing Profesional",
-    "itemListElement": [
-      {
-        "@type": "Course",
-        "name": "Curso Detailing Profesional",
-        "description": "Formación completa en lavado, descontaminación, pulido y protección cerámica"
-      },
-      {
-        "@type": "Course",
-        "name": "Curso Car Wrapping",
-        "description": "Instalación profesional de vinilo y cambio de color"
-      },
-      {
-        "@type": "Course",
-        "name": "Curso PPF",
-        "description": "Instalación de Paint Protection Film en vehículos de alta gama"
-      },
-      {
-        "@type": "Course",
-        "name": "Curso Restauración",
-        "description": "Técnicas avanzadas de restauración de vehículos clásicos y dañados"
-      }
-    ]
+  "mainEntity": {
+    "@type": "EducationalOrganization",
+    "name": "Academia Detail"
   }
-};
+});
 
-// Slug mapping from old to new
-const slugMapping: Record<string, string> = {
-  'detailing': 'curso-detailing-profesional',
-  'wrapping': 'curso-vinilado-vehiculos',
-  'ppf': 'curso-ppf-proteccion-pintura',
-  'restauracion': 'curso-restauracion-vehiculos',
-  // New slugs map to themselves
-  'curso-detailing-profesional': 'curso-detailing-profesional',
-  'curso-vinilado-vehiculos': 'curso-vinilado-vehiculos',
-  'curso-ppf-proteccion-pintura': 'curso-ppf-proteccion-pintura',
-  'curso-restauracion-vehiculos': 'curso-restauracion-vehiculos',
-};
-
-// Normalize slug (handles both old and new formats)
-const normalizeSlug = (slug: string): string => {
-  return slugMapping[slug] || slug;
-};
-
-// Primary Image Object Schema Generator for Search Results
+// ============================================
+// IMAGE OBJECT SCHEMA
+// ============================================
 export const generateImageObjectSchema = (image: {
   url: string;
   name: string;
@@ -241,20 +298,47 @@ export const generateImageObjectSchema = (image: {
   "acquireLicensePage": "https://academiadetail.com/contacto"
 });
 
-// SEO Configuration for each page
+// ============================================
+// EDUCATIONAL ORGANIZATION SCHEMA (LEGACY)
+// ============================================
+export const educationalOrganizationSchema = organizationSchemaComplete;
+
+// ============================================
+// SLUG MAPPING
+// ============================================
+const slugMapping: Record<string, string> = {
+  'detailing': 'curso-detailing-profesional',
+  'wrapping': 'curso-vinilado-vehiculos',
+  'ppf': 'curso-ppf-proteccion-pintura',
+  'restauracion': 'curso-restauracion-vehiculos',
+  'curso-detailing-profesional': 'curso-detailing-profesional',
+  'curso-vinilado-vehiculos': 'curso-vinilado-vehiculos',
+  'curso-ppf-proteccion-pintura': 'curso-ppf-proteccion-pintura',
+  'curso-restauracion-vehiculos': 'curso-restauracion-vehiculos',
+};
+
+const normalizeSlug = (slug: string): string => {
+  return slugMapping[slug] || slug;
+};
+
+// ============================================
+// SEO CONFIG POR PÁGINA
+// ============================================
 export const seoConfig = {
   home: {
-    title: "Cursos de Detailing y Pulido de Coches | Escuela de Detailing España",
-    description: "✅ Cursos de pulido de coches y tratamiento cerámico 100% prácticos. Aprende detailing desde cero y monta tu propio lavadero de coches. ⭐ La mejor escuela de detailing en España.",
+    title: "Cursos de Detailing Profesional 2026 | 100% Práctico en Alicante | ★4.9",
+    description: "✅ Cursos de detailing 100% prácticos en taller real de Alicante. Pulido, tratamiento cerámico, PPF y wrapping. ⭐ +170 alumnos certificados. ➤ Reserva tu plaza ahora - Grupos de máx 3 personas.",
     keywords: "curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso corrección pintura",
     url: "/",
+    price: "2997",
     schema: [
       localBusinessSchema,
-      educationalOrganizationSchema,
+      organizationSchemaComplete,
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Academia Detail",
+        "alternateName": "Detail Park Academy",
         "url": BASE_URL,
         "potentialAction": {
           "@type": "SearchAction",
@@ -262,6 +346,11 @@ export const seoConfig = {
           "query-input": "required name=search_term_string"
         }
       },
+      generateWebPageSchema({
+        name: "Cursos de Detailing Profesional en España",
+        description: "Formación 100% práctica en taller real con visión de negocio",
+        url: "/"
+      }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" }
       ])
@@ -269,42 +358,21 @@ export const seoConfig = {
   },
 
   jornadaCero: {
-    title: "Jornada Zero Detailing ▷ Prueba el Oficio en un Taller Real",
-    description: "🚀 Tu primer contacto con el detailing profesional por muy poco. Accede a herramientas de élite, toca máquinas reales y descubre si tienes mente de empresario. 🛠️",
+    title: "Jornada Zero Detailing [97€] | Prueba Antes de Invertir | Solo 10 Plazas",
+    description: "🚀 Tu primer contacto con el detailing profesional por solo 97€. Accede a herramientas de élite, toca máquinas reales y descubre si tienes mente de empresario. ➤ ¡Plazas limitadas!",
     keywords: "jornada zero detailing, probar detailing barato, experiencia detailing inmersión, curso detailing económico, primer contacto detailing profesional, prueba antes de invertir detailing",
     url: "/curso-detailing-iniciacion",
+    price: "97",
     schema: [
       localBusinessSchema,
-      {
-        "@context": "https://schema.org",
-        "@type": "Course",
-        "name": "Jornada Zero - Experiencia de Inmersión Detailing",
-        "description": "Tu primer contacto con el detailing profesional en un taller 100% real. 1 día de experiencia práctica para descubrir si tienes mentalidad de empresario.",
-        "provider": {
-          "@type": "EducationalOrganization",
-          "name": "Academia Detail",
-          "url": BASE_URL
-        },
-        "offers": {
-          "@type": "Offer",
-          "price": "97",
-          "priceCurrency": "EUR",
-          "availability": "https://schema.org/LimitedAvailability",
-          "priceValidUntil": "2026-12-31"
-        },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "50",
-          "bestRating": "5"
-        },
-        "hasCourseInstance": {
-          "@type": "CourseInstance",
-          "courseMode": "onsite",
-          "duration": "P1D",
-          "inLanguage": "es"
-        }
-      },
+      generateCourseSchemaEnhanced({
+        name: "Jornada Zero - Experiencia de Inmersión Detailing",
+        description: "Tu primer contacto con el detailing profesional en un taller 100% real. 1 día de experiencia práctica para descubrir si tienes mentalidad de empresario.",
+        price: 97,
+        duration: "P1D",
+        url: "/curso-detailing-iniciacion",
+        rating: { value: "4.9", count: "50" }
+      }),
       generateEventSchema({
         name: "Jornada Zero - Experiencia de Inmersión Detailing",
         description: "Tu primer contacto con el detailing profesional. 1 día de experiencia práctica en taller real con herramientas profesionales.",
@@ -312,6 +380,11 @@ export const seoConfig = {
         endDate: "2026-01-17T18:00:00+01:00",
         price: 97,
         location: "Academia Detail - Taller 100% Real"
+      }),
+      generateWebPageSchema({
+        name: "Jornada Zero Detailing",
+        description: "Experiencia de inmersión de 1 día para probar el detailing profesional",
+        url: "/curso-detailing-iniciacion"
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
@@ -321,19 +394,25 @@ export const seoConfig = {
   },
 
   carreraDetailing: {
-    title: "Cómo Montar un Lavadero de Coches | Formación Completa Detailing",
-    description: "🔥 Aprende a montar tu lavadero de coches profesional. Formación completa en detailing + módulo de negocio. Curso de pulido, tratamiento cerámico, PPF y wrapping.",
+    title: "Monta Tu Centro de Detailing | Formación Completa 1 Mes | Desde 9.997€",
+    description: "🔥 Programa completo para montar tu lavadero de coches: 4 certificaciones + módulo de negocio exclusivo. ✅ Detailing, Wrapping, PPF y Restauración. ➤ Solicita info sin compromiso.",
     keywords: "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, curso completo detailing, emprender lavadero rentable, aprender detailing desde cero",
     url: "/formacion-profesional-detailing",
+    price: "9997",
     schema: [
       localBusinessSchema,
-      generateCourseSchema({
+      generateCourseSchemaEnhanced({
         name: "Formación Profesional Detailing - Monta tu Centro de Detailing",
         description: "Programa premium de formación profesional en detailing. Formación intensiva con 4 certificaciones profesionales: Detailing, Wrapping, PPF y Restauración, más módulo de negocio exclusivo.",
         price: 9997,
         duration: "P30D",
         url: "/formacion-profesional-detailing",
         rating: { value: "4.9", count: "89" }
+      }),
+      generateWebPageSchema({
+        name: "Carrera Profesional de Detailing",
+        description: "Formación completa de 1 mes para montar tu centro de detailing",
+        url: "/formacion-profesional-detailing"
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
@@ -343,36 +422,26 @@ export const seoConfig = {
   },
 
   aboutUs: {
-    title: "Quiénes Somos | Academia Detail | Taller Real desde 2017",
-    description: "✅ Conoce la historia de Academia Detail. Fundada en 2017, somos el único centro de formación en detailing que vive del taller, no de la formación. +7 años de experiencia real.",
+    title: "Quiénes Somos | Academia Detail | Taller Real desde 2017 | ★4.9",
+    description: "✅ Conoce la historia de Academia Detail. Fundada en 2017, somos el único centro de formación en detailing que vive del taller, no de la formación. ⭐ +7 años de experiencia real.",
     keywords: "quienes somos academia detailing, historia detail park, centro formacion detailing españa, escuela detailing alicante, curso detailing profesional taller real",
     url: "/quienes-somos",
     schema: [
       localBusinessSchema,
+      organizationSchemaComplete,
       {
         "@context": "https://schema.org",
         "@type": "AboutPage",
         "name": "Quiénes Somos - Academia Detail",
         "description": "Historia y filosofía de Academia Detail. Fundada en 2017, somos el único centro de formación donde vivimos del detailing profesional.",
         "url": `${BASE_URL}/quienes-somos`,
-        "mainEntity": {
-          "@type": "Organization",
-          "name": "Academia Detail",
-          "foundingDate": "2017",
-          "founder": {
-            "@type": "Person",
-            "name": "Juan Daniel"
-          },
-          "description": "Centro de formación en detailing profesional potenciado por un taller activo de detailing de alta gama."
-        }
+        "mainEntity": organizationSchemaComplete
       },
-      {
-        "@context": "https://schema.org",
-        "@type": "ImageGallery",
-        "name": "Galería de Trabajos de Detailing Profesional",
-        "description": "Portfolio de trabajos profesionales de detailing, wrapping, PPF y restauración realizados en vehículos de alta gama.",
-        "url": `${BASE_URL}/quienes-somos`
-      },
+      generateWebPageSchema({
+        name: "Quiénes Somos - Academia Detail",
+        description: "Historia y filosofía de la academia de detailing líder en España",
+        url: "/quienes-somos"
+      }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
         { name: "Quiénes Somos", url: "/quienes-somos" }
@@ -381,8 +450,8 @@ export const seoConfig = {
   },
 
   contact: {
-    title: "Contacto | Academia Detail Alicante | Reserva tu Plaza",
-    description: "✅ Contacta con Academia Detail en Alicante. Información sobre cursos de detailing en taller real, wrapping, PPF y restauración. ➤ Reserva tu plaza ahora.",
+    title: "Contacto | Academia Detail Alicante | Reserva tu Plaza ★4.9",
+    description: "✅ Contacta con Academia Detail en Alicante. Información sobre cursos de detailing en taller real, wrapping, PPF y restauración. ➤ Reserva tu plaza ahora - Respuesta en 24h.",
     keywords: "academia detailing Alicante, cursos detailing Valencia, formación detailing España, contacto academia detailing, reservar curso detailing taller real",
     url: "/contacto",
     schema: [
@@ -392,8 +461,26 @@ export const seoConfig = {
         "@type": "ContactPage",
         "name": "Contacto Academia Detail - Alicante",
         "description": "Página de contacto de Academia Detail para información sobre cursos de detailing profesional en Alicante y Valencia.",
-        "url": `${BASE_URL}/contacto`
+        "url": `${BASE_URL}/contacto`,
+        "mainEntity": {
+          "@type": "Organization",
+          "name": "Academia Detail",
+          "telephone": "+34 622 773 555",
+          "email": "info@detailpark.es",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Calle Metalurgias, 13",
+            "addressLocality": "Alicante",
+            "postalCode": "03008",
+            "addressCountry": "ES"
+          }
+        }
       },
+      generateWebPageSchema({
+        name: "Contacto Academia Detail",
+        description: "Contacta con nosotros para reservar tu plaza en los cursos de detailing",
+        url: "/contacto"
+      }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
         { name: "Contacto", url: "/contacto" }
@@ -409,7 +496,6 @@ export const seoConfig = {
     duration: string;
     faqs: { question: string; answer: string }[];
   }) => {
-    // Normalize the slug to handle both old and new formats
     const normalizedSlug = normalizeSlug(slug);
     
     const formationKeywords: Record<string, string> = {
@@ -420,20 +506,19 @@ export const seoConfig = {
     };
 
     const formationTitles: Record<string, string> = {
-      'curso-detailing-profesional': "Certificación Profesional de Detailing | Curso Intensivo en España",
-      'curso-vinilado-vehiculos': "Certificación Car Wrapping Profesional | Curso Intensivo en España",
-      'curso-ppf-proteccion-pintura': "Certificación PPF Profesional | Curso Instalador España",
-      'curso-restauracion-vehiculos': "Certificación Restauración Vehículos | Curso Profesional España"
+      'curso-detailing-profesional': "Curso de Pulido y Cerámico [4 Días] | Certificación + Bolsa Empleo | ★4.9",
+      'curso-vinilado-vehiculos': "Curso Car Wrapping Profesional [5 Días] | Certificación Oficial | ★4.8",
+      'curso-ppf-proteccion-pintura': "Curso PPF Instalador [5 Días] | Certificación Profesional | ★4.9",
+      'curso-restauracion-vehiculos': "Curso Restauración Vehículos [5 Días] | Certificación Oficial | ★4.7"
     };
 
     const formationDescriptions: Record<string, string> = {
-      'curso-detailing-profesional': "Domina el detallado profesional con nuestra formación de 4 días. Técnicas avanzadas de pulido, cerámicos e interiores. ¡Accede a nuestra bolsa de empleo!",
-      'curso-vinilado-vehiculos': "Domina el car wrapping profesional con nuestra formación intensiva. Técnicas de instalación de vinilo y cambio de color. ¡Certificación oficial!",
-      'curso-ppf-proteccion-pintura': "Domina la instalación de PPF con nuestra formación profesional. Técnicas avanzadas en vehículos de alta gama. ¡Certificación oficial!",
-      'curso-restauracion-vehiculos': "Domina la restauración de vehículos con nuestra formación profesional. Técnicas avanzadas de chapa y pintura. ¡Certificación oficial!"
+      'curso-detailing-profesional': "Domina el pulido profesional y tratamiento cerámico en 4 días intensivos. ✅ Certificación oficial + Bolsa de empleo. ⭐ Valoración 4.9/5. ➤ ¡Solo 3 plazas por curso!",
+      'curso-vinilado-vehiculos': "Domina el car wrapping profesional en 5 días intensivos. ✅ Técnicas de instalación de vinilo y cambio de color. ⭐ Valoración 4.8/5. ➤ ¡Certificación oficial!",
+      'curso-ppf-proteccion-pintura': "Domina la instalación de PPF en 5 días intensivos. ✅ Técnicas avanzadas en vehículos de alta gama. ⭐ Valoración 4.9/5. ➤ ¡Certificación oficial!",
+      'curso-restauracion-vehiculos': "Domina la restauración de vehículos en 5 días intensivos. ✅ Técnicas avanzadas de chapa y pintura. ⭐ Valoración 4.7/5. ➤ ¡Certificación oficial!"
     };
 
-    // Primary images for each course (for search result snippets)
     const formationImages: Record<string, string> = {
       'curso-detailing-profesional': `${BASE_URL}/og-detailing-profesional.jpg`,
       'curso-vinilado-vehiculos': `${BASE_URL}/og-image.png`,
@@ -448,12 +533,18 @@ export const seoConfig = {
       'curso-restauracion-vehiculos': "Curso Restauración Vehículos"
     };
 
-    // Course ratings data
     const courseRatings: Record<string, { value: string; count: string }> = {
       'curso-detailing-profesional': { value: "4.9", count: "127" },
       'curso-vinilado-vehiculos': { value: "4.8", count: "89" },
       'curso-ppf-proteccion-pintura': { value: "4.9", count: "67" },
       'curso-restauracion-vehiculos': { value: "4.7", count: "45" }
+    };
+
+    const coursePrices: Record<string, string> = {
+      'curso-detailing-profesional': "2997",
+      'curso-vinilado-vehiculos': "2997",
+      'curso-ppf-proteccion-pintura': "2997",
+      'curso-restauracion-vehiculos': "2997"
     };
 
     const imageUrl = formationImages[normalizedSlug] || `${BASE_URL}/og-image.png`;
@@ -464,10 +555,11 @@ export const seoConfig = {
       keywords: formationKeywords[normalizedSlug] || "curso detailing profesional españa, formación automotriz certificada, bolsa empleo detailing",
       url: `/${normalizedSlug}`,
       image: imageUrl,
-      type: 'website' as const,
+      type: 'product' as const,
+      price: coursePrices[normalizedSlug] || String(formation.price),
       schema: [
         localBusinessSchema,
-        generateCourseSchema({
+        generateCourseSchemaEnhanced({
           name: formationNames[normalizedSlug] || formation.title,
           description: formationDescriptions[normalizedSlug] || formation.description,
           price: formation.price,
@@ -476,14 +568,17 @@ export const seoConfig = {
           image: imageUrl,
           rating: courseRatings[normalizedSlug]
         }),
-        // Include ALL FAQs for maximum SERP space
         generateFAQSchema(formation.faqs),
+        generateWebPageSchema({
+          name: formationNames[normalizedSlug] || formation.title,
+          description: formationDescriptions[normalizedSlug] || formation.description,
+          url: `/${normalizedSlug}`
+        }),
         generateBreadcrumbSchema([
           { name: "Inicio", url: "/" },
           { name: "Formaciones", url: "/#formaciones" },
           { name: formationNames[normalizedSlug] || formation.title, url: `/${normalizedSlug}` }
         ]),
-        // Primary Image Object for search results
         generateImageObjectSchema({
           url: imageUrl,
           name: `Práctica profesional - ${formationNames[normalizedSlug] || formation.title}`,
