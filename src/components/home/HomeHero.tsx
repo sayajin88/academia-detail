@@ -2,30 +2,45 @@ import { Link } from "react-router-dom";
 import { ChevronDown, Play, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import heroImage from "@/assets/heroes/hero-home.jpg";
 
 export function HomeHero() {
   const isMobile = useIsMobile();
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoInteracted, setVideoInteracted] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
 
-  // Diferir carga del video de YouTube para mejorar LCP
+  // YouTube video ID for background
+  const videoId = "1JS81ZxslpI";
+  const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+
+  // Cargar video solo después de scroll o interacción del usuario (facade pattern)
   useEffect(() => {
-    if (!isMobile) {
-      const timer = setTimeout(() => setVideoLoaded(true), 2500);
-      return () => clearTimeout(timer);
-    }
+    if (isMobile) return;
+
+    // Cargar video automáticamente después de 8s si el usuario no interactúa
+    const timer = setTimeout(() => setVideoInteracted(true), 8000);
+
+    // O cargar inmediatamente si el usuario hace scroll
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setVideoInteracted(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [isMobile]);
 
   const scrollToFormations = () => {
     document.getElementById("formaciones")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // YouTube video ID for background
-  const videoId = "1JS81ZxslpI";
-
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Hero Background Image - LCP optimizado con imagen responsiva */}
       <picture>
         {/* Móvil: imagen pequeña optimizada */}
@@ -48,8 +63,8 @@ export function HomeHero() {
         />
       </picture>
 
-      {/* Video Background for Desktop - Carga diferida */}
-      {!isMobile && videoLoaded && (
+      {/* Video Background for Desktop - YouTube Facade Pattern */}
+      {!isMobile && videoInteracted && (
         <div className="absolute inset-0 overflow-hidden">
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=17&enablejsapi=1&origin=${window.location.origin}`}
