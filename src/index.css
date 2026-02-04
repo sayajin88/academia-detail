@@ -19,7 +19,7 @@
     --secondary-foreground: 0 0% 100%;
     
     --muted: 214 4% 34%; /* Gris oscuro #53565A - Menús, títulos secundarios */
-    --muted-foreground: 210 3% 60%;
+    --muted-foreground: 210 3% 70%;
     
     --accent: 10 93% 46%; /* Vivid Red - Acentos y llamadas a la acción */
     --accent-foreground: 0 0% 100%;
@@ -100,7 +100,7 @@
     --secondary-foreground: 0 0% 100%;
 
     --muted: 214 4% 34%;
-    --muted-foreground: 210 3% 60%;
+    --muted-foreground: 210 3% 70%;
 
     --accent: 10 93% 46%;
     --accent-foreground: 0 0% 100%;

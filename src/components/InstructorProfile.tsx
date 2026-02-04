@@ -130,7 +130,7 @@ export function InstructorProfile() {
                   <div className="absolute bottom-6 right-6">
                     <div className="glass-card p-4 rounded-lg">
                       <div className="flex items-center gap-2">
-                        <div className="flex" aria-label="Valoración 4.9 de 5 estrellas">
+                        <div className="flex" role="img" aria-label="Valoración 4.9 de 5 estrellas">
                           {[...Array(5)].map((_, i) => (
                             <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" aria-hidden="true" />
                           ))}

@@ -53,12 +53,12 @@ export function SuccessStoriesLogos() {
                       <Building2 className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-foreground truncate">{story.name}</h4>
+                      <p className="font-semibold text-foreground truncate">{story.name}</p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
                         <MapPin className="h-3 w-3" />
                         {story.city}
                       </p>
-                      <p className="text-xs text-primary mt-1">{story.type}</p>
+                      <p className="text-xs text-[#ff5533] mt-1">{story.type}</p>
                     </div>
                   </div>
                 </div>
@@ -79,12 +79,12 @@ export function SuccessStoriesLogos() {
                       <Building2 className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-foreground truncate">{story.name}</h4>
+                      <p className="font-semibold text-foreground truncate">{story.name}</p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
                         <MapPin className="h-3 w-3" />
                         {story.city}
                       </p>
-                      <p className="text-xs text-primary mt-1">{story.type}</p>
+                      <p className="text-xs text-[#ff5533] mt-1">{story.type}</p>
                     </div>
                   </div>
                 </div>
