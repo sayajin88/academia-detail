@@ -2,10 +2,20 @@ import { Link } from "react-router-dom";
 import { ChevronDown, Play, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useState, useEffect } from "react";
 import heroImage from "@/assets/heroes/hero-home.jpg";
 
 export function HomeHero() {
   const isMobile = useIsMobile();
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
+  // Diferir carga del video de YouTube para mejorar LCP
+  useEffect(() => {
+    if (!isMobile) {
+      const timer = setTimeout(() => setVideoLoaded(true), 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobile]);
 
   const scrollToFormations = () => {
     document.getElementById("formaciones")?.scrollIntoView({ behavior: "smooth" });
@@ -16,22 +26,26 @@ export function HomeHero() {
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Video Background for Desktop / Image for Mobile */}
-      {isMobile ? (
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroImage})` }} />
-      ) : (
+      {/* Hero Background Image - LCP optimizado */}
+      <img 
+        src={heroImage}
+        alt="Detail Park - Centro de formación de detailing profesional"
+        className="absolute inset-0 w-full h-full object-cover"
+        fetchPriority="high"
+        loading="eager"
+        decoding="async"
+      />
+
+      {/* Video Background for Desktop - Carga diferida */}
+      {!isMobile && videoLoaded && (
         <div className="absolute inset-0 overflow-hidden">
-          {/* Fallback image behind video */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center" 
-            style={{ backgroundImage: `url(${heroImage})` }} 
-          />
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=17&enablejsapi=1&origin=${window.location.origin}`}
             title="Video de fondo Detail Park - Taller 100% Real"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             style={{ border: "none" }}
+            loading="lazy"
           />
         </div>
       )}
