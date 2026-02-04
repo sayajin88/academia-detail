@@ -1,332 +1,265 @@
 
+## Plan: Optimizacion de PageSpeed Insights
 
-## Plan: Mejora Integral de Rich Snippets y Presencia en Google
+### PROBLEMAS IDENTIFICADOS (de la captura)
 
-### ANALISIS DEL ESTADO ACTUAL
+| Metrica | Valor Actual | Objetivo | Problema |
+|---------|-------------|----------|----------|
+| LCP | 2.7s (rojo) | <2.5s | Imagen hero sin preload |
+| FCP | 1.1s (naranja) | <1.0s | Google Fonts bloqueando |
+| Speed Index | 2.1s (naranja) | <1.8s | Recursos no priorizados |
+| TBT | 130ms (verde) | OK | - |
+| CLS | 0 (verde) | OK | - |
 
-**Ya implementado:**
-- Schema Course con AggregateRating (parcialmente)
-- Schema LocalBusiness/EducationalOrganization
-- Schema FAQ en paginas de formacion
-- Schema BreadcrumbList basico
-- Open Graph y Twitter Cards basicos
-
-**Problemas detectados:**
-1. Los breadcrumbs no se muestran visualmente (memory indica que fueron removidos)
-2. Meta descriptions no tienen CTAs agresivos
-3. Falta schema Organization con sameAs para perfiles sociales en todas las paginas
-4. Open Graph images no tienen dimensiones especificadas
-5. Faltan meta tags de precios para rich snippets de productos
-
----
-
-### CAMBIOS PROPUESTOS
-
-#### 1. Mejorar Meta Titles con Power Words y CTAs
-
-| Pagina | Actual | Propuesto |
-|--------|--------|-----------|
-| Home | "Cursos de Detailing y Pulido de Coches \| Escuela de Detailing Espana" | "Cursos de Detailing Profesional 2026 \| 100% Practico en Alicante \| ★4.9" |
-| Detailing | "Certificacion Profesional de Detailing \| Curso Intensivo en Espana" | "Curso de Pulido y Ceramico [4 Dias] \| Certificacion + Bolsa Empleo \| ★4.9" |
-| Carrera | "Como Montar un Lavadero de Coches \| Formacion Completa Detailing" | "Monta Tu Centro de Detailing \| Formacion Completa 1 Mes \| Desde 9.997€" |
-| Jornada Zero | "Jornada Zero Detailing ▷ Prueba el Oficio en un Taller Real" | "Jornada Zero Detailing [97€] \| Prueba Antes de Invertir \| Solo 10 Plazas" |
+**Auditorias criticas:**
+1. Cache ineficiente: 17.290 KiB
+2. Entrega de imagenes: 4.245 KiB
+3. Solicitudes bloqueantes: 250ms
+4. Descubrimiento de LCP tardio
+5. Arbol de dependencias de red
 
 ---
 
-#### 2. Meta Descriptions con CTAs Comerciales
+### SOLUCION 1: Preload de imagen LCP (hero)
 
-**Archivo:** `src/utils/seoConfig.ts`
+El LCP es la imagen `hero-home.jpg`. Debe cargarse con maxima prioridad.
 
-```typescript
-// Ejemplo Home:
-description: "✅ Cursos de detailing 100% practicos en taller real de Alicante. Pulido, tratamiento ceramico, PPF y wrapping. ⭐ +170 alumnos certificados. ➤ Reserva tu plaza ahora - Grupos de max 3 personas."
+**Archivo:** `index.html`
 
-// Ejemplo Curso Detailing:
-description: "Domina el pulido profesional y tratamiento ceramico en 4 dias intensivos. ✅ Certificacion oficial + Bolsa de empleo. ⭐ Valoracion 4.9/5. ➤ ¡Solo 3 plazas por curso!"
-
-// Ejemplo Carrera:
-description: "🔥 Programa completo para montar tu lavadero de coches: 4 certificaciones + modulo de negocio exclusivo. Inversion desde 9.997€. ➤ Solicita info sin compromiso."
+```html
+<head>
+  <!-- CRITICO: Preload del LCP - imagen hero -->
+  <link 
+    rel="preload" 
+    as="image" 
+    href="/src/assets/heroes/hero-home.jpg" 
+    fetchpriority="high"
+  />
+  
+  <!-- Preconnect a YouTube para el video background -->
+  <link rel="preconnect" href="https://www.youtube-nocookie.com">
+  <link rel="preconnect" href="https://i.ytimg.com">
+</head>
 ```
 
 ---
 
-#### 3. Schema Organization Centralizado con sameAs
+### SOLUCION 2: Optimizar Google Fonts (eliminar bloqueo)
 
-**Archivo:** `src/utils/seoConfig.ts` - Nuevo schema consolidado
+Actualmente las fuentes bloquean el renderizado 250ms.
 
-```typescript
-export const organizationSchemaComplete = {
-  "@context": "https://schema.org",
-  "@type": ["Organization", "EducationalOrganization", "LocalBusiness"],
-  "name": "Academia Detail",
-  "alternateName": ["Detail Park", "Academia Detailing"],
-  "url": "https://academiadetail.com",
-  "logo": {
-    "@type": "ImageObject",
-    "url": "https://academiadetail.com/og-image.png",
-    "width": 1200,
-    "height": 630
-  },
-  "image": "https://academiadetail.com/og-image.png",
-  "description": "Centro de formacion en detailing profesional...",
-  "telephone": "+34 622 773 555",
-  "email": "info@detailpark.es",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Calle Metalurgias, 13",
-    "addressLocality": "Alicante",
-    "addressRegion": "Comunidad Valenciana",
-    "postalCode": "03008",
-    "addressCountry": "ES"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 38.3452,
-    "longitude": -0.4892
-  },
-  "sameAs": [
-    "https://www.instagram.com/detailparkoficial/",
-    "https://www.instagram.com/danidetailoficial/",
-    "https://www.youtube.com/@detailpark",
-    "https://www.facebook.com/detailpark",
-    "https://www.tiktok.com/@detailpark"
-  ],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "170",
-    "bestRating": "5",
-    "worstRating": "1"
-  },
-  "priceRange": "€€",
-  "openingHoursSpecification": [...],
-  "areaServed": {
-    "@type": "Country",
-    "name": "Spain"
-  }
-};
+**Archivo:** `index.html`
+
+```html
+<!-- ANTES (bloqueante): -->
+<link href="https://fonts.googleapis.com/css2?family=..." rel="stylesheet">
+
+<!-- DESPUES (no bloqueante): -->
+<link 
+  rel="preload" 
+  as="style" 
+  href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400;600;700;800&display=swap"
+  onload="this.onload=null;this.rel='stylesheet'"
+/>
+<noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</noscript>
 ```
 
 ---
 
-#### 4. Schema Course Mejorado con Offers y Instructor
+### SOLUCION 3: Lazy loading inteligente de imagenes
 
-**Archivo:** `src/utils/seoConfig.ts`
+**Archivo:** `src/components/home/HomeHero.tsx`
 
-```typescript
-export const generateCourseSchemaEnhanced = (course) => ({
-  "@context": "https://schema.org",
-  "@type": "Course",
-  "name": course.name,
-  "description": course.description,
-  "provider": organizationSchemaComplete,
-  "offers": {
-    "@type": "Offer",
-    "price": course.price,
-    "priceCurrency": "EUR",
-    "availability": "https://schema.org/LimitedAvailability",
-    "validFrom": "2025-01-01",
-    "priceValidUntil": "2026-12-31",
-    "url": course.url,
-    "itemCondition": "https://schema.org/NewCondition",
-    "seller": {
-      "@type": "Organization",
-      "name": "Academia Detail"
-    }
-  },
-  "hasCourseInstance": {
-    "@type": "CourseInstance",
-    "courseMode": "onsite",
-    "courseSchedule": {
-      "@type": "Schedule",
-      "repeatFrequency": "P1M",
-      "repeatCount": 12
-    },
-    "duration": course.duration,
-    "inLanguage": "es",
-    "location": {
-      "@type": "Place",
-      "name": "Academia Detail - Taller Real",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Calle Metalurgias, 13",
-        "addressLocality": "Alicante",
-        "postalCode": "03008",
-        "addressCountry": "ES"
-      }
-    },
-    "instructor": {
-      "@type": "Person",
-      "name": "Daniel Lopez",
-      "jobTitle": "CEO y Formador Principal",
-      "description": "Detailer profesional con mas de 15 anos de experiencia"
-    }
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": course.rating.value,
-    "reviewCount": course.rating.count,
-    "bestRating": "5",
-    "worstRating": "1"
-  },
-  "educationalCredentialAwarded": "Certificado Profesional Academia Detail",
-  "occupationalCredentialAwarded": {
-    "@type": "EducationalOccupationalCredential",
-    "credentialCategory": "certificate",
-    "name": "Certificado de Detailing Profesional"
-  }
-});
+Anadir `fetchpriority="high"` a la imagen hero:
+
+```tsx
+<div 
+  className="absolute inset-0 bg-cover bg-center" 
+  style={{ backgroundImage: `url(${heroImage})` }} 
+/>
+```
+
+Cambiar a `<img>` con atributos de rendimiento:
+
+```tsx
+<img 
+  src={heroImage}
+  alt="Hero background"
+  className="absolute inset-0 w-full h-full object-cover"
+  fetchPriority="high"
+  loading="eager"
+  decoding="async"
+/>
 ```
 
 ---
 
-#### 5. Open Graph Mejorado con Dimensiones
+### SOLUCION 4: Convertir imagenes a WebP
 
-**Archivo:** `src/components/SEO.tsx`
+Las imagenes JPG/PNG actuales no estan optimizadas. Crear versiones WebP.
 
-```typescript
-// Anadir meta tags OG con dimensiones explicitas
-<meta property="og:image" content={image} />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:type" content="image/png" />
-<meta property="og:image:alt" content={`${title} - Academia Detail`} />
+**Archivos a optimizar (ahorro estimado 4.245 KiB):**
 
-// Product meta tags para cursos (ayuda con rich snippets)
-{type === 'product' && (
-  <>
-    <meta property="product:price:amount" content={price} />
-    <meta property="product:price:currency" content="EUR" />
-    <meta property="product:availability" content="in stock" />
-  </>
+| Imagen Original | Tamano Est. | Formato Propuesto |
+|----------------|-------------|-------------------|
+| hero-home.jpg | ~800KB | hero-home.webp (~200KB) |
+| formacion-detailing-*.jpg | ~400KB c/u | WebP (~100KB c/u) |
+| portfolio-*.png | ~300KB c/u | WebP (~80KB c/u) |
+
+**Implementar fallback con `<picture>`:**
+
+```tsx
+<picture>
+  <source srcSet={heroImageWebP} type="image/webp" />
+  <img src={heroImage} alt="..." fetchPriority="high" />
+</picture>
+```
+
+---
+
+### SOLUCION 5: Diferir carga de componentes no criticos
+
+**Archivo:** `src/pages/Home.tsx`
+
+Usar `React.lazy()` para componentes below-the-fold:
+
+```tsx
+import { lazy, Suspense } from 'react';
+
+// Componentes criticos (above the fold) - carga sincrona
+import { HomeHero } from '@/components/home/HomeHero';
+import { FormationsGrid } from '@/components/home/FormationsGrid';
+
+// Componentes no criticos - carga diferida
+const CompetitiveComparison = lazy(() => import('@/components/home/CompetitiveComparison'));
+const BusinessSkillsSection = lazy(() => import('@/components/home/BusinessSkillsSection'));
+const CarreraNegocioSection = lazy(() => import('@/components/home/CarreraNegocioSection'));
+const MontamosTuCentro = lazy(() => import('@/components/home/MontamosTuCentro'));
+const InstructorSection = lazy(() => import('@/components/home/InstructorSection'));
+const GalleryPreview = lazy(() => import('@/components/home/GalleryPreview'));
+const TestimonialsSection = lazy(() => import('@/components/home/TestimonialsSection'));
+const SuccessStoriesLogos = lazy(() => import('@/components/home/SuccessStoriesLogos'));
+const HomeFAQ = lazy(() => import('@/components/home/HomeFAQ'));
+const HomeCTA = lazy(() => import('@/components/home/HomeCTA'));
+
+// En el render:
+<Suspense fallback={<div className="h-32" />}>
+  <CompetitiveComparison />
+</Suspense>
+```
+
+---
+
+### SOLUCION 6: Optimizar iframe de YouTube
+
+El video de YouTube carga recursos pesados. Diferir hasta interaccion.
+
+**Archivo:** `src/components/home/HomeHero.tsx`
+
+```tsx
+const [videoLoaded, setVideoLoaded] = useState(false);
+
+// Cargar video solo despues del LCP
+useEffect(() => {
+  const timer = setTimeout(() => setVideoLoaded(true), 2000);
+  return () => clearTimeout(timer);
+}, []);
+
+// En el render:
+{videoLoaded ? (
+  <iframe src={`https://www.youtube-nocookie.com/embed/...`} ... />
+) : (
+  <div className="absolute inset-0 bg-black" /> // Placeholder
 )}
 ```
 
 ---
 
-#### 6. Breadcrumbs Schema en TODAS las Paginas
+### SOLUCION 7: CSS critico inline
 
-Aunque los breadcrumbs visuales estan removidos, el schema debe estar presente para que Google muestre la jerarquia en SERPs.
+Mover CSS critico para above-the-fold directamente en `<head>`.
 
-**Archivo:** `src/components/SEO.tsx`
+**Archivo:** `index.html`
 
-```typescript
-// Generar BreadcrumbList automaticamente basado en la URL
-const generateAutoBreadcrumbs = (url: string, title: string) => {
-  const segments = url.split('/').filter(Boolean);
-  const items = [{ name: "Inicio", item: BASE_URL }];
-  
-  if (segments.length > 0) {
-    // Mapeo de URLs a nombres legibles
-    const nameMap = {
-      'curso-detailing-profesional': 'Curso Detailing',
-      'curso-vinilado-vehiculos': 'Curso Wrapping',
-      'formacion-profesional-detailing': 'Carrera Detailing',
-      // ...
-    };
-    
-    let path = '';
-    segments.forEach((segment, i) => {
-      path += `/${segment}`;
-      items.push({
-        name: nameMap[segment] || title,
-        item: `${BASE_URL}${path}`
-      });
-    });
+```html
+<style>
+  /* CSS critico para el primer render */
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --primary: 10 93% 46%;
   }
-  
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": items.map((item, i) => ({
-      "@type": "ListItem",
-      "position": i + 1,
-      "name": item.name,
-      "item": item.item
-    }))
-  };
-};
+  body {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+  }
+  .min-h-screen { min-height: 100vh; }
+</style>
 ```
 
 ---
 
-#### 7. WebPage Schema con speakable para Voice Search
+### SOLUCION 8: Configurar Cache Headers
 
-**Archivo:** `src/utils/seoConfig.ts`
+Agregar archivo `public/_headers` para Netlify/Vercel:
 
-```typescript
-export const generateWebPageSchema = (page: {
-  name: string;
-  description: string;
-  url: string;
-}) => ({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": page.name,
-  "description": page.description,
-  "url": `${BASE_URL}${page.url}`,
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "Academia Detail",
-    "url": BASE_URL
-  },
-  "speakable": {
-    "@type": "SpeakableSpecification",
-    "cssSelector": ["h1", ".hero-description"]
-  },
-  "mainEntity": {
-    "@type": "EducationalOrganization",
-    "name": "Academia Detail"
-  }
-});
+```
+# Cache estatico agresivo para assets
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML - cache corto
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
 ```
 
 ---
 
-### ARCHIVOS A MODIFICAR
+### RESUMEN DE ARCHIVOS A MODIFICAR
 
 | Archivo | Cambios |
 |---------|---------|
-| `src/utils/seoConfig.ts` | Meta titles/descriptions mejorados, schemas consolidados |
-| `src/components/SEO.tsx` | OG dimensions, auto-breadcrumbs, product meta tags |
-| `src/pages/Home.tsx` | Schema WebSite actualizado |
-| `src/pages/FormationDetail.tsx` | Schema Course mejorado |
-| `src/pages/CarreraDetailing.tsx` | Schema Course premium |
-| `src/pages/JornadaCero.tsx` | Schema Event + Course |
-| `src/pages/Contact.tsx` | Schema ContactPage mejorado |
-| `src/pages/AboutUs.tsx` | Schema AboutPage + Organization |
+| `index.html` | Preload LCP, fonts no bloqueantes, CSS critico |
+| `src/components/home/HomeHero.tsx` | Optimizar imagen hero, diferir video |
+| `src/pages/Home.tsx` | React.lazy() para componentes below-fold |
+| `public/_headers` | Cache headers para assets |
+| Imagenes | Convertir a WebP (hero, formaciones, portfolio) |
 
 ---
 
-### RESULTADO ESPERADO EN GOOGLE
+### RESULTADO ESPERADO
 
-**ANTES (snippet basico):**
-```
-Academia Detailing | Cursos Profesionales
-academiadetail.com
-Centro de formacion lider en detailing profesional...
-```
-
-**DESPUES (rich snippet enriquecido):**
-```
-Cursos de Detailing Profesional 2026 | 100% Practico | ★4.9
-academiadetail.com > Cursos > Detailing
-★★★★★ Valoracion: 4.9 - 170 resenas - Precio: Desde 2.997€
-✅ Cursos 100% practicos en taller real de Alicante. Pulido, tratamiento 
-ceramico, PPF y wrapping. +170 alumnos certificados. ➤ Reserva tu plaza...
-```
+| Metrica | Antes | Despues |
+|---------|-------|---------|
+| LCP | 2.7s | ~1.5s |
+| FCP | 1.1s | ~0.8s |
+| Speed Index | 2.1s | ~1.5s |
+| Cache | 17MB desperdiciado | 0 |
+| Imagenes | 4.2MB | ~1MB |
 
 ---
 
-### VALIDACION POST-IMPLEMENTACION
+### ORDEN DE IMPLEMENTACION
 
-1. Publicar los cambios
-2. Validar con Rich Results Test: https://search.google.com/test/rich-results
-3. Validar Schema: https://validator.schema.org/
-4. Solicitar reindexacion en Search Console para cada URL:
-   - https://academiadetail.com/
-   - https://academiadetail.com/curso-detailing-profesional
-   - https://academiadetail.com/formacion-profesional-detailing
-   - https://academiadetail.com/curso-detailing-iniciacion
-5. Esperar 2-7 dias para ver cambios en SERPs
-
+1. **Preload LCP** (mayor impacto inmediato)
+2. **Fonts no bloqueantes** (250ms ahorro)
+3. **Diferir video YouTube** (reduce LCP)
+4. **Lazy load componentes** (reduce bundle inicial)
+5. **Convertir imagenes WebP** (ahorro 4MB)
+6. **Cache headers** (mejora visitas recurrentes)
