@@ -4,11 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- CRÍTICO: Preload del LCP - imagen hero -->
+    <!-- CRÍTICO: Preload CONDICIONAL del LCP según dispositivo -->
+    <!-- MÓVIL (< 768px) - Imagen optimizada pequeña -->
+    <link 
+      rel="preload" 
+      as="image" 
+      href="/mobile-hero-bg.jpg" 
+      media="(max-width: 767px)"
+      fetchpriority="high"
+    />
+    <!-- DESKTOP (>= 768px) - Imagen grande -->
     <link 
       rel="preload" 
       as="image" 
       href="/src/assets/heroes/hero-home.jpg" 
+      media="(min-width: 768px)"
       fetchpriority="high"
     />
     
@@ -19,15 +29,15 @@
     <link rel="preconnect" href="https://www.youtube-nocookie.com">
     <link rel="preconnect" href="https://i.ytimg.com">
     
-    <!-- Fonts - NO BLOQUEANTE -->
+    <!-- Fonts - NO BLOQUEANTE (reducido de 5 a 3 pesos) -->
     <link 
       rel="preload" 
       as="style" 
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600;700&display=swap"
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     </noscript>
     
     <!-- CSS Crítico Inline -->

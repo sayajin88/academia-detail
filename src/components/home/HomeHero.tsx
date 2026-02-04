@@ -26,15 +26,27 @@ export function HomeHero() {
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Hero Background Image - LCP optimizado */}
-      <img 
-        src={heroImage}
-        alt="Detail Park - Centro de formación de detailing profesional"
-        className="absolute inset-0 w-full h-full object-cover"
-        fetchPriority="high"
-        loading="eager"
-        decoding="async"
-      />
+      {/* Hero Background Image - LCP optimizado con imagen responsiva */}
+      <picture>
+        {/* Móvil: imagen pequeña optimizada */}
+        <source 
+          media="(max-width: 767px)" 
+          srcSet="/mobile-hero-bg.jpg"
+        />
+        {/* Desktop: imagen grande */}
+        <source 
+          media="(min-width: 768px)" 
+          srcSet={heroImage}
+        />
+        <img 
+          src={heroImage}
+          alt="Detail Park - Centro de formación de detailing profesional"
+          className="absolute inset-0 w-full h-full object-cover"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+        />
+      </picture>
 
       {/* Video Background for Desktop - Carga diferida */}
       {!isMobile && videoLoaded && (
@@ -53,9 +65,13 @@ export function HomeHero() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-background" />
 
-      {/* Animated Gradient Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-glow/20 rounded-full blur-3xl animate-pulse delay-1000" />
+      {/* Animated Gradient Orbs - Ocultos en móvil (blur-3xl es costoso) */}
+      {!isMobile && (
+        <>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-glow/20 rounded-full blur-3xl animate-pulse delay-1000" />
+        </>
+      )}
 
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10 text-center">
