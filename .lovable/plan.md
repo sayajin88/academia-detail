@@ -1,245 +1,241 @@
 
-## Plan: Optimizacion de PageSpeed Insights
+## Plan: Optimizacion PageSpeed para Movil
 
 ### PROBLEMAS IDENTIFICADOS (de la captura)
 
-| Metrica | Valor Actual | Objetivo | Problema |
-|---------|-------------|----------|----------|
-| LCP | 2.7s (rojo) | <2.5s | Imagen hero sin preload |
-| FCP | 1.1s (naranja) | <1.0s | Google Fonts bloqueando |
-| Speed Index | 2.1s (naranja) | <1.8s | Recursos no priorizados |
-| TBT | 130ms (verde) | OK | - |
+| Metrica | Valor Actual | Objetivo | Problema Principal |
+|---------|-------------|----------|---------------------|
+| **FCP** | 5.2s (rojo) | <1.8s | Recursos bloqueantes 1900ms |
+| **LCP** | 7.9s (rojo) | <2.5s | Imagen hero de escritorio en movil |
+| Speed Index | 5.7s (naranja) | <3.4s | Imagenes sin optimizar |
+| TBT | 0ms (verde) | OK | - |
 | CLS | 0 (verde) | OK | - |
 
-**Auditorias criticas:**
-1. Cache ineficiente: 17.290 KiB
-2. Entrega de imagenes: 4.245 KiB
-3. Solicitudes bloqueantes: 250ms
-4. Descubrimiento de LCP tardio
-5. Arbol de dependencias de red
+**Auditorias criticas movil:**
+1. Cache ineficiente: 17.289 KiB
+2. Solicitudes bloqueantes: **1900ms** (vs 250ms en desktop)
+3. Entrega de imagenes: 4.238 KiB
+4. Redistribucion forzada
+5. Descubrimiento de LCP tardio
 
 ---
 
-### SOLUCION 1: Preload de imagen LCP (hero)
+### CAUSA RAIZ DEL PROBLEMA
 
-El LCP es la imagen `hero-home.jpg`. Debe cargarse con maxima prioridad.
+El principal problema es que **la misma imagen hero grande de escritorio se carga en movil**:
 
-**Archivo:** `index.html`
+```text
+ACTUAL:
++------------------+     +------------------+
+|    DESKTOP       |     |     MOVIL        |
+|  hero-home.jpg   |     |  hero-home.jpg   |  <- MISMA IMAGEN
+|   ~800KB         |     |   ~800KB         |  <- En 4G lenta = 7.9s
++------------------+     +------------------+
 
-```html
-<head>
-  <!-- CRITICO: Preload del LCP - imagen hero -->
-  <link 
-    rel="preload" 
-    as="image" 
-    href="/src/assets/heroes/hero-home.jpg" 
-    fetchpriority="high"
-  />
-  
-  <!-- Preconnect a YouTube para el video background -->
-  <link rel="preconnect" href="https://www.youtube-nocookie.com">
-  <link rel="preconnect" href="https://i.ytimg.com">
-</head>
+SOLUCION:
++------------------+     +------------------+
+|    DESKTOP       |     |     MOVIL        |
+|  hero-home.jpg   |     | mobile-hero.jpg  |  <- IMAGEN OPTIMIZADA
+|   ~300KB WebP    |     |   ~50KB WebP     |  <- En 4G lenta = ~1.5s
++------------------+     +------------------+
 ```
 
+Ademas, el hook `useIsMobile()` devuelve `false` en el primer render (antes del useEffect), causando que se cargue contenido de escritorio inicialmente.
+
 ---
 
-### SOLUCION 2: Optimizar Google Fonts (eliminar bloqueo)
-
-Actualmente las fuentes bloquean el renderizado 250ms.
+### SOLUCION 1: Preload Condicional con Media Queries
 
 **Archivo:** `index.html`
 
 ```html
-<!-- ANTES (bloqueante): -->
-<link href="https://fonts.googleapis.com/css2?family=..." rel="stylesheet">
+<!-- PRELOAD CONDICIONAL: Imagen apropiada segun dispositivo -->
 
-<!-- DESPUES (no bloqueante): -->
+<!-- Para MOVIL (< 768px) - Imagen pequena optimizada -->
 <link 
   rel="preload" 
-  as="style" 
-  href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400;600;700;800&display=swap"
-  onload="this.onload=null;this.rel='stylesheet'"
+  as="image" 
+  href="/mobile-hero-bg.webp" 
+  media="(max-width: 767px)"
+  fetchpriority="high"
 />
-<noscript>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-</noscript>
+
+<!-- Para DESKTOP (>= 768px) - Imagen grande -->
+<link 
+  rel="preload" 
+  as="image" 
+  href="/src/assets/heroes/hero-home.jpg" 
+  media="(min-width: 768px)"
+  fetchpriority="high"
+/>
 ```
 
 ---
 
-### SOLUCION 3: Lazy loading inteligente de imagenes
+### SOLUCION 2: Crear Imagen Hero Optimizada para Movil
+
+Ya existe `src/assets/mobile-hero-bg.jpg`. Se necesita:
+
+1. Copiarla a `public/mobile-hero-bg.webp` (optimizada)
+2. Dimensiones ideales para movil: **640x960px** (portrait)
+3. Compresion WebP al 75% (~50-80KB)
+
+**Archivo nuevo:** `public/mobile-hero-bg.webp`
+
+---
+
+### SOLUCION 3: Implementar Imagen Responsiva con `<picture>`
 
 **Archivo:** `src/components/home/HomeHero.tsx`
 
-Anadir `fetchpriority="high"` a la imagen hero:
-
 ```tsx
-<div 
-  className="absolute inset-0 bg-cover bg-center" 
-  style={{ backgroundImage: `url(${heroImage})` }} 
-/>
-```
+// Importar ambas imagenes
+import heroImageDesktop from "@/assets/heroes/hero-home.jpg";
+import heroImageMobile from "@/assets/mobile-hero-bg.jpg";
 
-Cambiar a `<img>` con atributos de rendimiento:
-
-```tsx
-<img 
-  src={heroImage}
-  alt="Hero background"
-  className="absolute inset-0 w-full h-full object-cover"
-  fetchPriority="high"
-  loading="eager"
-  decoding="async"
-/>
-```
-
----
-
-### SOLUCION 4: Convertir imagenes a WebP
-
-Las imagenes JPG/PNG actuales no estan optimizadas. Crear versiones WebP.
-
-**Archivos a optimizar (ahorro estimado 4.245 KiB):**
-
-| Imagen Original | Tamano Est. | Formato Propuesto |
-|----------------|-------------|-------------------|
-| hero-home.jpg | ~800KB | hero-home.webp (~200KB) |
-| formacion-detailing-*.jpg | ~400KB c/u | WebP (~100KB c/u) |
-| portfolio-*.png | ~300KB c/u | WebP (~80KB c/u) |
-
-**Implementar fallback con `<picture>`:**
-
-```tsx
+// En el render - usar <picture> para seleccion automatica
 <picture>
-  <source srcSet={heroImageWebP} type="image/webp" />
-  <img src={heroImage} alt="..." fetchPriority="high" />
+  {/* Movil: imagen pequena optimizada */}
+  <source 
+    media="(max-width: 767px)" 
+    srcSet="/mobile-hero-bg.webp"
+    type="image/webp"
+  />
+  {/* Desktop: imagen grande */}
+  <source 
+    media="(min-width: 768px)" 
+    srcSet={heroImageDesktop}
+  />
+  <img 
+    src={heroImageDesktop}
+    alt="Detail Park - Centro de formacion de detailing profesional"
+    className="absolute inset-0 w-full h-full object-cover"
+    fetchPriority="high"
+    loading="eager"
+    decoding="async"
+  />
 </picture>
 ```
 
 ---
 
-### SOLUCION 5: Diferir carga de componentes no criticos
+### SOLUCION 4: Mejorar Hook useIsMobile para SSR
 
-**Archivo:** `src/pages/Home.tsx`
-
-Usar `React.lazy()` para componentes below-the-fold:
+**Archivo:** `src/hooks/use-mobile.tsx`
 
 ```tsx
-import { lazy, Suspense } from 'react';
+export function useIsMobile() {
+  // NUEVO: Deteccion inicial basada en viewport (SSR-friendly)
+  const getInitialValue = () => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth < MOBILE_BREAKPOINT;
+  };
 
-// Componentes criticos (above the fold) - carga sincrona
-import { HomeHero } from '@/components/home/HomeHero';
-import { FormationsGrid } from '@/components/home/FormationsGrid';
+  const [isMobile, setIsMobile] = React.useState<boolean>(getInitialValue);
 
-// Componentes no criticos - carga diferida
-const CompetitiveComparison = lazy(() => import('@/components/home/CompetitiveComparison'));
-const BusinessSkillsSection = lazy(() => import('@/components/home/BusinessSkillsSection'));
-const CarreraNegocioSection = lazy(() => import('@/components/home/CarreraNegocioSection'));
-const MontamosTuCentro = lazy(() => import('@/components/home/MontamosTuCentro'));
-const InstructorSection = lazy(() => import('@/components/home/InstructorSection'));
-const GalleryPreview = lazy(() => import('@/components/home/GalleryPreview'));
-const TestimonialsSection = lazy(() => import('@/components/home/TestimonialsSection'));
-const SuccessStoriesLogos = lazy(() => import('@/components/home/SuccessStoriesLogos'));
-const HomeFAQ = lazy(() => import('@/components/home/HomeFAQ'));
-const HomeCTA = lazy(() => import('@/components/home/HomeCTA'));
+  React.useEffect(() => {
+    // ... resto igual
+  }, []);
 
-// En el render:
-<Suspense fallback={<div className="h-32" />}>
-  <CompetitiveComparison />
-</Suspense>
+  return isMobile;
+}
 ```
 
 ---
 
-### SOLUCION 6: Optimizar iframe de YouTube
+### SOLUCION 5: Reducir Fuentes para Movil
 
-El video de YouTube carga recursos pesados. Diferir hasta interaccion.
+**Archivo:** `index.html`
+
+```html
+<!-- OPTIMIZACION: Solo cargar pesos esenciales -->
+<!-- Antes: 300;400;600;700;800 (5 pesos) -->
+<!-- Despues: 400;600;700 (3 pesos) - Ahorro ~100KB -->
+
+<link 
+  rel="preload" 
+  as="style" 
+  href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600;700&display=swap"
+  onload="this.onload=null;this.rel='stylesheet'"
+/>
+```
+
+---
+
+### SOLUCION 6: Eliminar Efectos Costosos en Movil
 
 **Archivo:** `src/components/home/HomeHero.tsx`
 
+Los orbs con `blur-3xl` son costosos de renderizar en movil.
+
 ```tsx
-const [videoLoaded, setVideoLoaded] = useState(false);
-
-// Cargar video solo despues del LCP
-useEffect(() => {
-  const timer = setTimeout(() => setVideoLoaded(true), 2000);
-  return () => clearTimeout(timer);
-}, []);
-
-// En el render:
-{videoLoaded ? (
-  <iframe src={`https://www.youtube-nocookie.com/embed/...`} ... />
-) : (
-  <div className="absolute inset-0 bg-black" /> // Placeholder
+// Ocultar orbs animados en movil
+{!isMobile && (
+  <>
+    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+    <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-glow/20 rounded-full blur-3xl animate-pulse delay-1000" />
+  </>
 )}
 ```
 
 ---
 
-### SOLUCION 7: CSS critico inline
+### SOLUCION 7: Optimizar Imagenes de Galeria para Movil
 
-Mover CSS critico para above-the-fold directamente en `<head>`.
+**Archivo:** `src/components/home/GalleryPreview.tsx`
+
+Anadir lazy loading explicito y sizes para imagenes de galeria:
+
+```tsx
+<div
+  className="..."
+  style={{ 
+    backgroundImage: `url(${image.src})`,
+    // NUEVO: Reducir calidad en movil via CSS
+    imageRendering: 'auto'
+  }}
+  loading="lazy"
+/>
+
+// O mejor: usar <img> con srcset
+<img 
+  src={image.src}
+  alt={image.alt}
+  loading="lazy"
+  decoding="async"
+  className="w-full h-full object-cover"
+  sizes="(max-width: 768px) 50vw, 25vw"
+/>
+```
+
+---
+
+### SOLUCION 8: Anadir Preload para Fuente Critica
 
 **Archivo:** `index.html`
 
 ```html
-<style>
-  /* CSS critico para el primer render */
-  :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --primary: 10 93% 46%;
-  }
-  body {
-    background: hsl(var(--background));
-    color: hsl(var(--foreground));
-    font-family: 'Open Sans', sans-serif;
-    margin: 0;
-  }
-  .min-h-screen { min-height: 100vh; }
-</style>
+<!-- Preload de la fuente mas usada (Open Sans Regular) -->
+<link 
+  rel="preload" 
+  as="font" 
+  href="https://fonts.gstatic.com/s/opensans/v35/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVc.woff2" 
+  type="font/woff2" 
+  crossorigin
+/>
 ```
 
 ---
 
-### SOLUCION 8: Configurar Cache Headers
-
-Agregar archivo `public/_headers` para Netlify/Vercel:
-
-```
-# Cache estatico agresivo para assets
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.webp
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.jpg
-  Cache-Control: public, max-age=31536000, immutable
-
-# HTML - cache corto
-/*.html
-  Cache-Control: public, max-age=0, must-revalidate
-```
-
----
-
-### RESUMEN DE ARCHIVOS A MODIFICAR
+### ARCHIVOS A MODIFICAR
 
 | Archivo | Cambios |
 |---------|---------|
-| `index.html` | Preload LCP, fonts no bloqueantes, CSS critico |
-| `src/components/home/HomeHero.tsx` | Optimizar imagen hero, diferir video |
-| `src/pages/Home.tsx` | React.lazy() para componentes below-fold |
-| `public/_headers` | Cache headers para assets |
-| Imagenes | Convertir a WebP (hero, formaciones, portfolio) |
+| `index.html` | Preload condicional, fuentes reducidas, preload font |
+| `src/hooks/use-mobile.tsx` | Deteccion inicial mejorada |
+| `src/components/home/HomeHero.tsx` | `<picture>` responsivo, ocultar orbs en movil |
+| `src/components/home/GalleryPreview.tsx` | Lazy loading optimizado |
+| `public/mobile-hero-bg.webp` | Nueva imagen optimizada para movil |
 
 ---
 
@@ -247,19 +243,31 @@ Agregar archivo `public/_headers` para Netlify/Vercel:
 
 | Metrica | Antes | Despues |
 |---------|-------|---------|
-| LCP | 2.7s | ~1.5s |
-| FCP | 1.1s | ~0.8s |
-| Speed Index | 2.1s | ~1.5s |
-| Cache | 17MB desperdiciado | 0 |
-| Imagenes | 4.2MB | ~1MB |
+| **FCP** | 5.2s | ~1.5s |
+| **LCP** | 7.9s | ~2.0s |
+| Speed Index | 5.7s | ~2.5s |
+| Imagen hero movil | ~800KB | ~50KB |
+| Fuentes | 5 pesos | 3 pesos |
 
 ---
 
-### ORDEN DE IMPLEMENTACION
+### ORDEN DE IMPLEMENTACION (por impacto)
 
-1. **Preload LCP** (mayor impacto inmediato)
-2. **Fonts no bloqueantes** (250ms ahorro)
-3. **Diferir video YouTube** (reduce LCP)
-4. **Lazy load componentes** (reduce bundle inicial)
-5. **Convertir imagenes WebP** (ahorro 4MB)
-6. **Cache headers** (mejora visitas recurrentes)
+1. **Preload condicional** + imagen movil WebP (mayor impacto ~5s ahorro)
+2. **`<picture>` responsivo** en HomeHero
+3. **Reducir fuentes** a 3 pesos
+4. **Ocultar blur orbs** en movil
+5. **Mejorar useIsMobile** para SSR
+6. **Lazy loading galeria**
+
+---
+
+### VALIDACION
+
+Despues de implementar, ejecutar PageSpeed Insights en modo movil:
+- https://pagespeed.web.dev/?url=https://academiadetail.com&form_factor=mobile
+
+Objetivos:
+- FCP < 1.8s (verde)
+- LCP < 2.5s (verde)
+- Performance Score > 80
