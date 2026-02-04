@@ -34,7 +34,7 @@ export function GalleryPreview() {
           subtitle="Formamos profesionales en nuestras instalaciones con vehículos reales y las mejores herramientas del sector."
         />
 
-        {/* Gallery Grid */}
+        {/* Gallery Grid - Optimizado con lazy loading */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-10">
           {galleryImages.map((image, index) => (
             <div
@@ -46,9 +46,17 @@ export function GalleryPreview() {
               <div
                 className={`${
                   index === 0 || index === 7 ? 'aspect-square' : 'aspect-[4/3]'
-                } bg-cover bg-center transition-transform duration-500 group-hover:scale-110`}
-                style={{ backgroundImage: `url(${image.src})` }}
-              />
+                } relative overflow-hidden`}
+              >
+                <img 
+                  src={image.src}
+                  alt={image.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm font-medium border border-white/20">
