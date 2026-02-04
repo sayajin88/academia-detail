@@ -1,124 +1,63 @@
 
-## Plan: Corrección de Errores de Accesibilidad
 
-### PROBLEMAS IDENTIFICADOS
+## Plan: Rediseño de Tarjetas de Cursos
 
-| Problema | Archivo(s) | Impacto |
-|----------|------------|---------|
-| **ARIA Prohibidos** | TestimonialsSection.tsx, InstructorProfile.tsx | Impide lectura por tecnologías asistenciales |
-| **Contraste Insuficiente** | SectionHeading.tsx, MontamosTuCentro.tsx, TestimonialsSection.tsx, SuccessStoriesLogos.tsx | Textos difíciles/imposibles de leer |
-| **Encabezados Desordenados** | SuccessStoriesLogos.tsx | Rompe estructura semántica |
+### CAMBIOS SOLICITADOS
+
+1. **Renombrar títulos de cursos** - Añadir "Curso de" al principio
+2. **Nueva disposición visual** - Tarjetas más grandes y visibles
 
 ---
 
-### CORRECCIÓN 1: ARIA Prohibidos en Ratings
+### CAMBIO 1: Actualizar Nombres de Cursos
 
-El problema es que `aria-label` no es válido en elementos `<div>` con microdata. La solución es añadir `role="img"` para que `aria-label` sea válido.
+**Archivo:** `src/data/formations.ts`
 
-**Archivo:** `src/components/home/TestimonialsSection.tsx`
-
-```tsx
-// Línea 153: Añadir role="img"
-<div 
-  className="flex items-center gap-1" 
-  role="img"
-  aria-label={`Valoración media: ${averageRating} de 5 estrellas`}
->
-
-// Línea 183-188: Añadir role="img"
-<div 
-  className="flex gap-1 mb-4" 
-  itemProp="reviewRating" 
-  itemScope 
-  itemType="https://schema.org/Rating"
-  role="img"
-  aria-label={`Valoración: ${testimonial.rating} de 5 estrellas`}
->
-```
-
-**Archivo:** `src/components/InstructorProfile.tsx`
-
-```tsx
-// Línea 133: Añadir role="img"
-<div 
-  className="flex" 
-  role="img"
-  aria-label="Valoración 4.9 de 5 estrellas"
->
-```
+| Actual | Nuevo |
+|--------|-------|
+| `shortTitle: 'Detailing'` | `shortTitle: 'Curso de Detailing'` |
+| `shortTitle: 'Wrapping'` | `shortTitle: 'Curso de Wrapping'` |
+| `shortTitle: 'PPF'` | `shortTitle: 'Curso de PPF'` |
+| `shortTitle: 'Restauración'` | `shortTitle: 'Curso de Restauración'` |
 
 ---
 
-### CORRECCIÓN 2: Contraste de Color Insuficiente
+### CAMBIO 2: Nueva Disposición Visual
 
-El problema principal es `text-primary bg-primary/10` - el rojo (#E52B09) sobre fondo rojo claro tiene ratio de contraste muy bajo (~2.5:1 vs 4.5:1 requerido).
+Propongo cambiar de 4 columnas pequeñas a **2 columnas más grandes en desktop**, manteniendo 1 columna en móvil. Esto hará las tarjetas mucho más prominentes y visibles.
 
-**Solución A: Oscurecer el color de texto en badges**
+**Archivo:** `src/components/home/FormationsGrid.tsx`
 
-**Archivo:** `src/components/shared/SectionHeading.tsx`
+**Cambios principales:**
 
-```tsx
-// Cambiar de bg-primary/10 text-primary a bg-primary/15 text-primary-dark
-<span
-  className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 ${
-    light
-      ? 'bg-white/10 text-white/90 border border-white/20'
-      : 'bg-primary/15 text-[#ff5533] border border-primary/30'  // Color más claro para contraste
-  }`}
->
+```
+ANTES (actual):
++-------+-------+-------+-------+
+| Card  | Card  | Card  | Card  |
+| small | small | small | small |
++-------+-------+-------+-------+
+
+DESPUÉS (propuesto):
++---------------+---------------+
+|               |               |
+|   Card Big    |   Card Big    |
+|               |               |
++---------------+---------------+
+|               |               |
+|   Card Big    |   Card Big    |
+|               |               |
++---------------+---------------+
 ```
 
-**Archivo:** `src/components/home/MontamosTuCentro.tsx`
+**Especificaciones del nuevo diseño:**
 
-```tsx
-// Línea 69: Iconos (OK en hover porque cambia a fondo sólido)
-// Línea 80: Badges "Paso X" - Cambiar contraste
-<span className="text-xs font-bold text-[#ff5533] bg-primary/15 px-2 py-0.5 rounded-full">
-  Paso {index + 1}
-</span>
-```
-
-**Archivo:** `src/components/home/TestimonialsSection.tsx`
-
-```tsx
-// Línea 245: Badge de formación
-<span className="text-xs font-medium text-[#ff5533] bg-primary/15 px-3 py-1 rounded-full">
-  {testimonial.formation}
-</span>
-```
-
-**Archivo:** `src/components/home/SuccessStoriesLogos.tsx`
-
-```tsx
-// Líneas 61, 87: Tipo de negocio
-<p className="text-xs text-[#ff5533] mt-1">{story.type}</p>
-```
-
-**Solución B: Mejorar muted-foreground**
-
-**Archivo:** `src/index.css`
-
-```css
-/* Línea 22: Aumentar luminosidad de muted-foreground para mejor contraste */
---muted-foreground: 210 3% 70%;  /* De 60% a 70% */
-```
-
----
-
-### CORRECCIÓN 3: Orden de Encabezados
-
-El `<h4>` en SuccessStoriesLogos salta niveles (debería ser h2 > h3 > h4 pero falta h3).
-
-**Archivo:** `src/components/home/SuccessStoriesLogos.tsx`
-
-```tsx
-// Líneas 56, 82: Cambiar h4 a p con estilos equivalentes
-// Antes:
-<h4 className="font-semibold text-foreground truncate">{story.name}</h4>
-
-// Después:
-<p className="font-semibold text-foreground truncate">{story.name}</p>
-```
+1. **Grid**: `grid-cols-1 md:grid-cols-2` (1 columna móvil, 2 columnas desktop)
+2. **Aspect ratio**: `aspect-[16/10]` (más horizontal y grande)
+3. **Tamaño de imagen**: Mayor área visible de la foto
+4. **Tipografía**: Títulos más grandes (`text-2xl md:text-3xl`)
+5. **Padding**: Más espacio interno para respirar
+6. **Descripción**: Visible en todos los tamaños (actualmente oculta en móvil)
+7. **Gap**: Mayor separación entre tarjetas (`gap-6 md:gap-8`)
 
 ---
 
@@ -126,27 +65,16 @@ El `<h4>` en SuccessStoriesLogos salta niveles (debería ser h2 > h3 > h4 pero f
 
 | Archivo | Cambio |
 |---------|--------|
-| `src/components/home/TestimonialsSection.tsx` | Añadir `role="img"` a divs con aria-label, mejorar contraste badge |
-| `src/components/InstructorProfile.tsx` | Añadir `role="img"` a div con aria-label |
-| `src/components/shared/SectionHeading.tsx` | Mejorar contraste del badge |
-| `src/components/home/MontamosTuCentro.tsx` | Mejorar contraste badges "Paso X" |
-| `src/components/home/SuccessStoriesLogos.tsx` | Cambiar h4 a p, mejorar contraste tipo |
-| `src/index.css` | Aumentar luminosidad de muted-foreground |
+| `src/data/formations.ts` | Renombrar `shortTitle` de cada curso |
+| `src/components/home/FormationsGrid.tsx` | Nueva estructura de grid y tarjetas más grandes |
 
 ---
 
-### RESULTADO ESPERADO
+### RESULTADO VISUAL ESPERADO
 
-- **ARIA**: Todos los warnings de "atributos ARIA prohibidos" desaparecen
-- **Contraste**: Ratio de contraste >= 4.5:1 (WCAG AA)
-- **Encabezados**: Estructura semántica correcta sin saltos
+- **Desktop**: 2 tarjetas por fila, mucho más grandes y prominentes
+- **Tablet**: 2 tarjetas por fila con tamaño intermedio
+- **Móvil**: 1 tarjeta por fila, ocupando todo el ancho
 
----
+Las tarjetas serán aproximadamente el doble de grandes, con más espacio para mostrar la descripción y los badges de forma clara.
 
-### NOTAS TÉCNICAS
-
-1. **Color #ff5533**: Este tono de rojo más claro (saturación alta, luminosidad ~50%) sobre bg-primary/15 da un ratio de contraste de aproximadamente 5.5:1, cumpliendo WCAG AA.
-
-2. **role="img"**: Cuando un contenedor visual (como estrellas de rating) necesita aria-label pero no es semánticamente una imagen, `role="img"` es la solución correcta según ARIA 1.2.
-
-3. **muted-foreground a 70%**: Aumentar de 60% a 70% de luminosidad mejora el contraste sobre fondos oscuros sin perder la sensación de texto secundario.
