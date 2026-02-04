@@ -362,6 +362,7 @@ export const seoConfig = {
     description: "🚀 Tu primer contacto con el detailing profesional por solo 97€. Accede a herramientas de élite, toca máquinas reales y descubre si tienes mente de empresario. ➤ ¡Plazas limitadas!",
     keywords: "jornada zero detailing, probar detailing barato, experiencia detailing inmersión, curso detailing económico, primer contacto detailing profesional, prueba antes de invertir detailing",
     url: "/curso-detailing-iniciacion",
+    image: `${BASE_URL}/og-jornada-zero.jpg`,
     price: "97",
     schema: [
       localBusinessSchema,
@@ -398,6 +399,7 @@ export const seoConfig = {
     description: "🔥 Programa completo para montar tu lavadero de coches: 4 certificaciones + módulo de negocio exclusivo. ✅ Detailing, Wrapping, PPF y Restauración. ➤ Solicita info sin compromiso.",
     keywords: "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, curso completo detailing, emprender lavadero rentable, aprender detailing desde cero",
     url: "/formacion-profesional-detailing",
+    image: `${BASE_URL}/og-carrera-detailing.jpg`,
     price: "9997",
     schema: [
       localBusinessSchema,
@@ -520,10 +522,10 @@ export const seoConfig = {
     };
 
     const formationImages: Record<string, string> = {
-      'curso-detailing-profesional': `${BASE_URL}/og-detailing-profesional.jpg`,
-      'curso-vinilado-vehiculos': `${BASE_URL}/og-image.png`,
-      'curso-ppf-proteccion-pintura': `${BASE_URL}/og-image.png`,
-      'curso-restauracion-vehiculos': `${BASE_URL}/og-image.png`
+      'curso-detailing-profesional': `${BASE_URL}/og-curso-detailing.jpg`,
+      'curso-vinilado-vehiculos': `${BASE_URL}/og-curso-wrapping.jpg`,
+      'curso-ppf-proteccion-pintura': `${BASE_URL}/og-curso-ppf.jpg`,
+      'curso-restauracion-vehiculos': `${BASE_URL}/og-curso-restauracion.jpg`
     };
 
     const formationNames: Record<string, string> = {
