@@ -23,7 +23,7 @@ export const formations: Formation[] = [
   {
     id: 'curso-detailing-profesional',
     title: 'Detailing Profesional',
-    shortTitle: 'Detailing',
+    shortTitle: 'Curso de Detailing',
     description: 'Domina las técnicas de pulido, corrección y protección cerámica en un taller 100% real. Aprende a presupuestar servicios y gestionar clientes de alta gama.',
     duration: '4 días',
     image: detailingHero,
@@ -41,7 +41,7 @@ export const formations: Formation[] = [
   {
     id: 'curso-vinilado-vehiculos',
     title: 'Car Wrapping',
-    shortTitle: 'Wrapping',
+    shortTitle: 'Curso de Wrapping',
     description: 'Aprende vinilado integral y cambio de color con clientes reales de alta gama. Te enseñamos técnica Y cómo captar clientes VIP para este servicio premium.',
     duration: '2 - 4 días',
     image: wrappingHero,
@@ -59,7 +59,7 @@ export const formations: Formation[] = [
   {
     id: 'curso-ppf-proteccion-pintura',
     title: 'Paint Protection Film',
-    shortTitle: 'PPF',
+    shortTitle: 'Curso de PPF',
     description: 'Especialízate en PPF para vehículos de alta gama en nuestro taller operativo. Aprende a presupuestar y escalar este servicio de alto margen.',
     duration: '2 días',
     image: ppfHero,
@@ -77,7 +77,7 @@ export const formations: Formation[] = [
   {
     id: 'curso-restauracion-vehiculos',
     title: 'Restauración de Vehículos',
-    shortTitle: 'Restauración',
+    shortTitle: 'Curso de Restauración',
     description: 'Recupera vehículos dañados y clásicos con técnicas avanzadas. Un nicho de mercado con poca competencia y clientes dispuestos a pagar por resultados.',
     duration: '2 días',
     image: restauracionHero,
