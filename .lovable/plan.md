@@ -1,176 +1,123 @@
 
-## Plan: Optimizacion Avanzada de Velocidad Movil
+## Plan: Corrección de Errores de Accesibilidad
 
-### PROBLEMAS IDENTIFICADOS (de las capturas)
+### PROBLEMAS IDENTIFICADOS
 
-| Problema | Archivo | Peso Actual | Peso Ideal | Ahorro |
-|----------|---------|-------------|------------|--------|
-| **Imagen hero movil GIGANTE** | mobile-hero-bg.jpg | 6513 KiB | ~100 KiB | 6400 KiB |
-| Imagenes formations sobredimensionadas | curso-*.jpg, evento-*.jpg | ~7000 KiB | ~1000 KiB | 6000 KiB |
-| Logo sin width/height | detail-park-logo-white.png | 41.7 KiB | ~5 KiB | 36 KiB |
-| Sin cache en assets | Todos | 17.531 KiB | 0 | N/A |
-| CSS bloqueante | index-*.css | 22.1 KiB | - | 150ms |
-
-**Impacto total estimado: ~10 MB de ahorro + mejora de LCP**
+| Problema | Archivo(s) | Impacto |
+|----------|------------|---------|
+| **ARIA Prohibidos** | TestimonialsSection.tsx, InstructorProfile.tsx | Impide lectura por tecnologías asistenciales |
+| **Contraste Insuficiente** | SectionHeading.tsx, MontamosTuCentro.tsx, TestimonialsSection.tsx, SuccessStoriesLogos.tsx | Textos difíciles/imposibles de leer |
+| **Encabezados Desordenados** | SuccessStoriesLogos.tsx | Rompe estructura semántica |
 
 ---
 
-### SOLUCION 1: Imagen Hero Movil Optimizada (MAYOR IMPACTO)
+### CORRECCIÓN 1: ARIA Prohibidos en Ratings
 
-El archivo `public/mobile-hero-bg.jpg` pesa 6.5MB - esto es CRITICO.
+El problema es que `aria-label` no es válido en elementos `<div>` con microdata. La solución es añadir `role="img"` para que `aria-label` sea válido.
 
-**Problema**: La imagen es de 1577x2832px pero se muestra en pantallas de max 414px de ancho.
-
-**Solucion**:
-1. Redimensionar a 640x960px (suficiente para retina 2x en movil)
-2. Convertir a WebP con compresion 75%
-3. Resultado esperado: ~50-80 KiB
-
-**Archivo:** `public/mobile-hero-bg.jpg` → reemplazar con version optimizada
-
-**Nota**: Esto requiere que el usuario proporcione una imagen optimizada o que usemos un servicio externo.
-
----
-
-### SOLUCION 2: Imagenes Responsivas con srcset en FormationsGrid
-
-Las imagenes de formations son muy grandes para movil:
-- formacion-detailing-juan-daniel.jpg: 1280x1600 → se muestra en 322x483
-- curso-wrapping-formacion.jpg: 726x909 → se muestra en 384x403
-- evento-limpieza-interior.jpg: 1027x1282 → se muestra en 603x403
-
-**Archivo:** `src/components/home/FormationsGrid.tsx`
+**Archivo:** `src/components/home/TestimonialsSection.tsx`
 
 ```tsx
-<img
-  src={formation.image}
-  alt={formation.shortTitle}
-  className="..."
-  loading="lazy"
-  decoding="async"
-  // NUEVO: Dimensiones explicitas para evitar CLS
-  width={400}
-  height={533}
-  // NUEVO: srcset para servir imagenes mas pequenas en movil
-  srcSet={`${formation.image} 400w`}
-  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 400px"
-/>
+// Línea 153: Añadir role="img"
+<div 
+  className="flex items-center gap-1" 
+  role="img"
+  aria-label={`Valoración media: ${averageRating} de 5 estrellas`}
+>
+
+// Línea 183-188: Añadir role="img"
+<div 
+  className="flex gap-1 mb-4" 
+  itemProp="reviewRating" 
+  itemScope 
+  itemType="https://schema.org/Rating"
+  role="img"
+  aria-label={`Valoración: ${testimonial.rating} de 5 estrellas`}
+>
 ```
 
----
-
-### SOLUCION 3: Dimensiones Explicitas en Logo (Evitar CLS)
-
-PageSpeed reporta que el logo no tiene width/height explicitos.
-
-**Archivo:** `src/components/layout/Navbar.tsx`
+**Archivo:** `src/components/InstructorProfile.tsx`
 
 ```tsx
-// En el logo principal (linea ~127)
-<img 
-  src={logo} 
-  alt="Detail Park" 
-  className="h-7 md:h-10 w-auto transition-transform duration-300 group-hover:scale-105"
-  // NUEVO: Dimensiones explicitas
-  width={229}
-  height={70}
-/>
-
-// En el logo del menu movil (linea ~328)
-<img 
-  src={logo} 
-  alt="Detail Park" 
-  className="h-8 w-auto"
-  // NUEVO: Dimensiones explicitas
-  width={229}
-  height={70}
-/>
+// Línea 133: Añadir role="img"
+<div 
+  className="flex" 
+  role="img"
+  aria-label="Valoración 4.9 de 5 estrellas"
+>
 ```
 
 ---
 
-### SOLUCION 4: Lazy Loading Agresivo para Imagenes Below-the-Fold
+### CORRECCIÓN 2: Contraste de Color Insuficiente
 
-Las imagenes de GalleryPreview y otras secciones cargan demasiado pronto.
+El problema principal es `text-primary bg-primary/10` - el rojo (#E52B09) sobre fondo rojo claro tiene ratio de contraste muy bajo (~2.5:1 vs 4.5:1 requerido).
 
-**Archivo:** `src/components/home/GalleryPreview.tsx`
+**Solución A: Oscurecer el color de texto en badges**
 
-Ya tiene lazy loading pero podemos mejorar con `loading="lazy"` nativo del browser:
+**Archivo:** `src/components/shared/SectionHeading.tsx`
 
 ```tsx
-<img 
-  src={image.src}
-  alt={image.alt}
-  loading="lazy"
-  decoding="async"
-  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-  // NUEVO: sizes para indicar tamano real
-  sizes="(max-width: 768px) 50vw, 25vw"
-  width={400}
-  height={300}
-/>
+// Cambiar de bg-primary/10 text-primary a bg-primary/15 text-primary-dark
+<span
+  className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 ${
+    light
+      ? 'bg-white/10 text-white/90 border border-white/20'
+      : 'bg-primary/15 text-[#ff5533] border border-primary/30'  // Color más claro para contraste
+  }`}
+>
 ```
 
----
-
-### SOLUCION 5: Preload Condicional Mejorado
-
-El preload actual apunta a una imagen de 6.5MB. Debemos asegurar que solo se precargue en el dispositivo correcto.
-
-**Archivo:** `index.html`
-
-```html
-<!-- MOVIL: Solo precargar si es movil Y la imagen es pequena -->
-<link 
-  rel="preload" 
-  as="image" 
-  href="/mobile-hero-bg.jpg" 
-  media="(max-width: 767px)"
-  fetchpriority="high"
-  type="image/jpeg"
-/>
-```
-
----
-
-### SOLUCION 6: Eliminar Render-Blocking CSS (150ms)
-
-El CSS principal bloquea el renderizado 450ms.
-
-**Opciones**:
-1. Inline CSS critico en index.html (ya implementado parcialmente)
-2. Usar `media="print"` con onload hack para CSS no critico
-
-**Archivo:** `index.html`
-
-El CSS critico ya esta inline. El problema es que Vite genera un bundle CSS grande. Podemos mejorar:
-
-```html
-<!-- El CSS ya esta siendo precargado de forma no bloqueante -->
-<!-- Asegurar que el CSS critico inline cubre above-the-fold -->
-<style>
-  /* Añadir estilos del hero y navbar al CSS critico */
-  .min-h-\\[90vh\\] { min-height: 90vh; }
-  .bg-gradient-to-b { background-image: linear-gradient(to bottom, var(--tw-gradient-stops)); }
-  /* ... mas estilos criticos del hero */
-</style>
-```
-
----
-
-### SOLUCION 7: Optimizar Redistribucion Forzada (Reflows)
-
-Los reflows vienen de JavaScript accediendo a propiedades geometricas. El principal culpable es el hook `useIsMobile` y el efecto del navbar.
-
-**Archivo:** `src/hooks/use-mobile.tsx`
+**Archivo:** `src/components/home/MontamosTuCentro.tsx`
 
 ```tsx
-// Usar matchMedia en lugar de window.innerWidth para evitar reflows
-const getInitialMobileState = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  // matchMedia no causa reflow, innerWidth si
-  return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`).matches;
-};
+// Línea 69: Iconos (OK en hover porque cambia a fondo sólido)
+// Línea 80: Badges "Paso X" - Cambiar contraste
+<span className="text-xs font-bold text-[#ff5533] bg-primary/15 px-2 py-0.5 rounded-full">
+  Paso {index + 1}
+</span>
+```
+
+**Archivo:** `src/components/home/TestimonialsSection.tsx`
+
+```tsx
+// Línea 245: Badge de formación
+<span className="text-xs font-medium text-[#ff5533] bg-primary/15 px-3 py-1 rounded-full">
+  {testimonial.formation}
+</span>
+```
+
+**Archivo:** `src/components/home/SuccessStoriesLogos.tsx`
+
+```tsx
+// Líneas 61, 87: Tipo de negocio
+<p className="text-xs text-[#ff5533] mt-1">{story.type}</p>
+```
+
+**Solución B: Mejorar muted-foreground**
+
+**Archivo:** `src/index.css`
+
+```css
+/* Línea 22: Aumentar luminosidad de muted-foreground para mejor contraste */
+--muted-foreground: 210 3% 70%;  /* De 60% a 70% */
+```
+
+---
+
+### CORRECCIÓN 3: Orden de Encabezados
+
+El `<h4>` en SuccessStoriesLogos salta niveles (debería ser h2 > h3 > h4 pero falta h3).
+
+**Archivo:** `src/components/home/SuccessStoriesLogos.tsx`
+
+```tsx
+// Líneas 56, 82: Cambiar h4 a p con estilos equivalentes
+// Antes:
+<h4 className="font-semibold text-foreground truncate">{story.name}</h4>
+
+// Después:
+<p className="font-semibold text-foreground truncate">{story.name}</p>
 ```
 
 ---
@@ -179,54 +126,27 @@ const getInitialMobileState = (): boolean => {
 
 | Archivo | Cambio |
 |---------|--------|
-| `public/mobile-hero-bg.jpg` | Reemplazar con imagen optimizada (~100KB) |
-| `src/components/home/FormationsGrid.tsx` | Añadir width/height y sizes explicitos |
-| `src/components/layout/Navbar.tsx` | Añadir width/height al logo |
-| `src/components/home/GalleryPreview.tsx` | Añadir width/height y sizes |
-| `src/hooks/use-mobile.tsx` | Usar matchMedia para evitar reflows |
-| `index.html` | Expandir CSS critico inline |
+| `src/components/home/TestimonialsSection.tsx` | Añadir `role="img"` a divs con aria-label, mejorar contraste badge |
+| `src/components/InstructorProfile.tsx` | Añadir `role="img"` a div con aria-label |
+| `src/components/shared/SectionHeading.tsx` | Mejorar contraste del badge |
+| `src/components/home/MontamosTuCentro.tsx` | Mejorar contraste badges "Paso X" |
+| `src/components/home/SuccessStoriesLogos.tsx` | Cambiar h4 a p, mejorar contraste tipo |
+| `src/index.css` | Aumentar luminosidad de muted-foreground |
 
 ---
 
 ### RESULTADO ESPERADO
 
-| Metrica | Antes | Despues |
-|---------|-------|---------|
-| **Peso imagenes** | 17.4 MB | ~2 MB |
-| **LCP** | 7.9s | ~2.5s |
-| **FCP** | 5.2s | ~1.5s |
-| **CLS** | Warnings | 0 |
-| **Reflows** | 70ms | ~10ms |
+- **ARIA**: Todos los warnings de "atributos ARIA prohibidos" desaparecen
+- **Contraste**: Ratio de contraste >= 4.5:1 (WCAG AA)
+- **Encabezados**: Estructura semántica correcta sin saltos
 
 ---
 
-### ACCIONES MANUALES REQUERIDAS (Usuario)
+### NOTAS TÉCNICAS
 
-1. **CRITICO**: Comprimir `mobile-hero-bg.jpg` usando una herramienta como:
-   - https://squoosh.app (Google)
-   - https://tinypng.com
-   - Dimensiones recomendadas: 640x960px
-   - Formato: WebP o JPEG optimizado
-   - Calidad: 70-80%
-   - Peso objetivo: <100 KiB
+1. **Color #ff5533**: Este tono de rojo más claro (saturación alta, luminosidad ~50%) sobre bg-primary/15 da un ratio de contraste de aproximadamente 5.5:1, cumpliendo WCAG AA.
 
-2. **Opcional**: Crear versiones WebP de las imagenes principales:
-   - formacion-detailing-juan-daniel.webp
-   - curso-wrapping-formacion.webp
-   - curso-ppf-formacion.webp
-   - evento-limpieza-interior.webp
+2. **role="img"**: Cuando un contenedor visual (como estrellas de rating) necesita aria-label pero no es semánticamente una imagen, `role="img"` es la solución correcta según ARIA 1.2.
 
----
-
-### ORDEN DE IMPLEMENTACION
-
-1. **Dimensiones explicitas** (logo, formations, gallery) - Elimina warnings CLS
-2. **Optimizar uso de matchMedia** - Reduce reflows
-3. **Expandir CSS critico** - Reduce tiempo bloqueante
-4. **Usuario comprime imagen hero** - Mayor impacto en LCP
-
----
-
-### NOTA SOBRE CACHE
-
-Los headers de cache (`public/_headers`) estan configurados correctamente, pero Lovable usa un sistema de hosting diferente a Netlify. El cache se maneja a nivel de CDN por Lovable, por lo que no podemos controlarlo desde el codigo.
+3. **muted-foreground a 70%**: Aumentar de 60% a 70% de luminosidad mejora el contraste sobre fondos oscuros sin perder la sensación de texto secundario.
