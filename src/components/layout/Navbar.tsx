@@ -128,6 +128,8 @@ export function Navbar() {
                   src={logo} 
                   alt="Detail Park" 
                   className="h-7 md:h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+                  width={229}
+                  height={70}
                 />
                 {/* Logo glow on hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-primary/30" />
@@ -325,7 +327,7 @@ export function Navbar() {
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-white/10">
-            <img src={logo} alt="Detail Park" className="h-8 w-auto" />
+            <img src={logo} alt="Detail Park" className="h-8 w-auto" width={229} height={70} />
             <button
               className="p-2 text-foreground hover:text-primary transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
