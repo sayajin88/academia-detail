@@ -77,7 +77,7 @@ export function MontamosTuCentro() {
                   {/* Content */}
                   <div className="pb-6">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                      <span className="text-xs font-bold text-[#ff5533] bg-primary/15 px-2 py-0.5 rounded-full">
                         Paso {index + 1}
                       </span>
                     </div>

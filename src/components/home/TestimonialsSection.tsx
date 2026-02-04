@@ -150,7 +150,7 @@ export function TestimonialsSection() {
 
         {/* Aggregate Rating Display */}
         <div className="flex items-center justify-center gap-3 mb-12">
-          <div className="flex items-center gap-1" aria-label={`Valoración media: ${averageRating} de 5 estrellas`}>
+          <div className="flex items-center gap-1" role="img" aria-label={`Valoración media: ${averageRating} de 5 estrellas`}>
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
@@ -185,6 +185,7 @@ export function TestimonialsSection() {
                 itemProp="reviewRating" 
                 itemScope 
                 itemType="https://schema.org/Rating"
+                role="img"
                 aria-label={`Valoración: ${testimonial.rating} de 5 estrellas`}
               >
                 <meta itemProp="ratingValue" content={String(testimonial.rating)} />
@@ -242,7 +243,7 @@ export function TestimonialsSection() {
 
               {/* Formation Badge */}
               <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
-                <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
+                <span className="text-xs font-medium text-[#ff5533] bg-primary/15 px-3 py-1 rounded-full">
                   {testimonial.formation}
                 </span>
                 {testimonial.role.includes('Propietario') || testimonial.role.includes('Fundador') ? (
