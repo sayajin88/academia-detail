@@ -55,6 +55,8 @@ export function GalleryPreview() {
                   decoding="async"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   sizes="(max-width: 768px) 50vw, 25vw"
+                  width={400}
+                  height={300}
                 />
               </div>
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />

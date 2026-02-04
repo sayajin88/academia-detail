@@ -5,7 +5,8 @@ const MOBILE_BREAKPOINT = 768
 // Detección inicial SSR-friendly para evitar flash de contenido desktop en móvil
 const getInitialMobileState = (): boolean => {
   if (typeof window === 'undefined') return false;
-  return window.innerWidth < MOBILE_BREAKPOINT;
+  // matchMedia no causa reflow, innerWidth sí
+  return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`).matches;
 };
 
 export function useIsMobile() {
