@@ -1,171 +1,102 @@
 
 
-## Plan: Optimizacion de ALT Texts para SEO
+## Plan: Guardar Consultas del Formulario de Contacto en Base de Datos
 
-### ANALISIS COMPLETO
+### SITUACION ACTUAL
 
-He revisado todos los archivos con imagenes del proyecto y los cruzo con las palabras clave objetivo:
+El formulario de contacto (`/contacto`) envia los datos **unicamente a Formspree** (servicio externo). No guarda nada en la base de datos. La tabla `registrations` es solo para inscripciones a la Jornada Cero (con pago Stripe), por eso no aparece nada ahi.
 
-**Palabras clave principales:**
-- curso detailing / curso de detailing
-- curso de pulido de coches
-- curso tratamiento ceramico
-- escuela de detailing
-- como montar negocio detailing / como montar lavadero de coches
-- formacion detailing Espana
-- aprender detailing desde cero
-- car wrapping / curso wrapping
-- PPF / paint protection film
-- restauracion vehiculos
+```text
+FLUJO ACTUAL:
+Usuario rellena formulario --> Formspree (externo) --> Email a academiadetail@gmail.com
+                                                    (no queda registro en tu base de datos)
+```
 
 ---
 
-### PROBLEMAS DETECTADOS Y CORRECCIONES
+### SOLUCION PROPUESTA
 
-#### 1. LOGOS - Descripcion generica, sin palabras clave
+Crear una tabla `contact_submissions` y guardar cada consulta en la base de datos, **ademas** de seguir enviandola a Formspree como hasta ahora.
 
-| Archivo | Alt Actual | Alt Propuesto |
-|---------|-----------|---------------|
-| `Navbar.tsx` (linea 129) | `"Detail Park"` | `"Academia Detail - Cursos de detailing profesional en Espana"` |
-| `Navbar.tsx` (linea 330) | `"Detail Park"` | `"Academia Detail - Cursos de detailing profesional en Espana"` |
-| `Footer.tsx` (linea 33) | `"Detail Park"` | `"Academia Detail - Escuela de detailing profesional"` |
-| `OptimizedHero.tsx` (linea 37) | `"Detail Park"` | `"Academia Detail logo"` |
-| `OptimizedHero.tsx` (linea 60) | `"Detail Park Background"` | `"Taller de detailing profesional - Formacion practica en Alicante"` |
+```text
+FLUJO NUEVO:
+Usuario rellena formulario --> Formspree (externo) --> Email (como siempre)
+                           --> Base de datos (NUEVO) --> Visible en tu backend
+```
 
 ---
 
-#### 2. HERO PRINCIPAL - Bueno pero mejorable
+### PASO 1: Crear tabla `contact_submissions`
 
-| Archivo | Alt Actual | Alt Propuesto |
-|---------|-----------|---------------|
-| `HomeHero.tsx` (linea 58) | `"Detail Park - Centro de formacion de detailing profesional"` | `"Curso de detailing profesional - Formacion practica en taller real Alicante"` |
+Nueva migracion SQL para crear la tabla con todos los campos del formulario:
 
----
+| Columna | Tipo | Descripcion |
+|---------|------|-------------|
+| `id` | uuid (PK) | Identificador unico |
+| `created_at` | timestamptz | Fecha de envio |
+| `nombre` | text | Nombre del contacto |
+| `apellidos` | text | Apellidos |
+| `email` | text | Email |
+| `telefono` | text | Telefono |
+| `experiencia` | text | Nivel experiencia en detailing |
+| `centro_propio` | text | Si tiene centro propio |
+| `inversion` | text | Presupuesto de inversion |
+| `tipo_formacion` | text | Tipo de formacion que le interesa |
+| `mensaje` | text | Mensaje opcional |
+| `acepto_privacidad` | boolean | Acepto politica privacidad |
 
-#### 3. FORMACIONES GRID - Usa shortTitle, no describe la imagen
-
-| Archivo | Alt Actual | Alt Propuesto |
-|---------|-----------|---------------|
-| `FormationsGrid.tsx` (linea 52) | `{formation.shortTitle}` (ej: "Curso de Detailing") | Cambiar a usar una propiedad `imageAlt` en el dato |
-
-**Nuevos alt texts por formacion en `formations.ts`:**
-
-| Formacion | Alt Propuesto |
-|-----------|---------------|
-| Detailing | `"Curso de detailing profesional - Alumnos practicando pulido de coches en taller real"` |
-| Wrapping | `"Curso de car wrapping - Formacion practica en vinilado de vehiculos profesional"` |
-| PPF | `"Curso de PPF - Instalacion de paint protection film en vehiculo de alta gama"` |
-| Restauracion | `"Curso de restauracion de vehiculos - Limpieza y acondicionamiento interior profesional"` |
+**Politica RLS**: Permitir INSERT publico (para que cualquier visitante pueda enviar el formulario sin necesidad de login). No permitir SELECT/UPDATE/DELETE publico (los datos solo se ven desde el backend).
 
 ---
 
-#### 4. INSTRUCTOR - Bueno pero puede mejorar
+### PASO 2: Modificar `ContactForm.tsx`
 
-| Archivo | Alt Actual | Alt Propuesto |
-|---------|-----------|---------------|
-| `InstructorSection.tsx` (linea 38) | `"Daniel Lopez - Instructor Principal de Detail Park"` | `"Daniel Lopez - Instructor de cursos de detailing profesional en Academia Detail"` |
-| `InstructorProfile.tsx` (linea 120) | `"Daniel Lopez - Instructor Experto en Detailing Profesional"` | `"Daniel Lopez - Formador experto en detailing, pulido y tratamiento ceramico"` |
+Anadir una llamada a la base de datos **junto con** el envio a Formspree existente. El flujo sera:
 
----
+1. Validar datos (ya existe)
+2. **NUEVO**: Insertar en `contact_submissions` via Supabase client
+3. Enviar a Formspree (ya existe)
+4. Mostrar modal de exito (ya existe)
 
-#### 5. TESTIMONIOS - Fotos genericas sin contexto SEO
+La insercion en base de datos sera **independiente** del envio a Formspree: si una falla, la otra sigue funcionando. Asi no se pierde ninguna consulta.
 
-| Archivo | Alt Actual | Alt Propuesto |
-|---------|-----------|---------------|
-| `TestimonialsSection.tsx` (linea 227) | `` `Foto de ${testimonial.name}` `` | `` `${testimonial.name} - Alumno certificado en ${testimonial.formation} por Academia Detail` `` |
+```text
+// Pseudocodigo del cambio:
+const onSubmit = async (data) => {
+  // NUEVO: Guardar en base de datos
+  await supabase.from('contact_submissions').insert({
+    nombre: data.nombre,
+    apellidos: data.apellidos,
+    email: data.email,
+    telefono: data.telefono,
+    experiencia: data.experiencia,
+    centro_propio: data.centro_propio,
+    inversion: data.inversion,
+    tipo_formacion: data.tipo_formacion,
+    mensaje: data.mensaje,
+    acepto_privacidad: data.acepto_privacidad,
+  });
 
----
-
-#### 6. GALERIA PREVIEW (Home) - Textos correctos pero genericos
-
-| Archivo | Alt Actual | Alt Propuesto (en `GalleryPreview.tsx`) |
-|---------|-----------|---------------|
-| training1 | `"Clase completa de detailing"` | `"Clase de curso de detailing profesional - Alumnos en formacion practica"` |
-| training2 | `"Grupo de alumnos en formacion"` | `"Grupo de alumnos en curso de detailing - Formacion presencial en Alicante"` |
-| training3 | `"Practica con pulidora"` | `"Practica de pulido de coches con pulidora profesional - Curso de detailing"` |
-| training4 | `"Instructor explicando tecnicas"` | `"Instructor explicando tecnicas de detailing y tratamiento ceramico"` |
-| training5 | `"Formacion practica"` | `"Formacion practica de detailing en taller real con vehiculos de alta gama"` |
-| training6 | `"Alumnos en clase teorica"` | `"Alumnos en clase teorica de curso de detailing profesional"` |
-| training7 | `"Alumno con certificado"` | `"Alumno certificado por Academia Detail - Escuela de detailing en Espana"` |
-| training8 | `"Ambiente de formacion"` | `"Ambiente de formacion en escuela de detailing - Aprender detailing desde cero"` |
-
----
-
-#### 7. CARRERA DETAILING - Muy generico
-
-| Archivo | Alt Actual | Alt Propuesto |
-|---------|-----------|---------------|
-| `CarreraHero.tsx` (linea 34) | `"Carrera Detailing"` | `"Formacion profesional para montar tu centro de detailing - Programa completo 1 mes"` |
+  // EXISTENTE: Enviar a Formspree
+  await handleFormspreeSubmit(formData);
+};
+```
 
 ---
 
-#### 8. CERTIFICACION - Generico
+### ARCHIVOS A MODIFICAR / CREAR
 
-| Archivo | Alt Actual | Alt Propuesto |
-|---------|-----------|---------------|
-| `FormationCertification.tsx` (linea 36) | `"Certificado Detail Park"` | `"Certificado profesional de detailing - Acreditacion Academia Detail Espana"` |
-
----
-
-#### 9. FORMATION HERO - Usa solo titulo, no describe
-
-| Archivo | Alt Actual | Alt Propuesto |
-|---------|-----------|---------------|
-| `FormationHero.tsx` (linea 29) | `{formation.title}` | Usar `formation.heroDescription` o un alt especifico |
-
-Se anadira un campo `heroAlt` en `formationDetails.ts`:
-
-| Formacion | heroAlt |
-|-----------|---------|
-| Detailing | `"Curso de pulido de coches y tratamiento ceramico - Formacion intensiva presencial"` |
-| Wrapping | `"Curso de car wrapping profesional - Formacion en vinilado de vehiculos"` |
-| PPF | `"Curso de PPF paint protection film - Instalacion profesional certificada"` |
-| Restauracion | `"Curso de restauracion de vehiculos - Tecnicas avanzadas de recuperacion"` |
+| Archivo | Accion |
+|---------|--------|
+| Nueva migracion SQL | Crear tabla `contact_submissions` con RLS |
+| `src/components/contact/ContactForm.tsx` | Anadir insert a base de datos junto al envio a Formspree |
 
 ---
 
-#### 10. ABOUT HERO / HISTORY
+### RESULTADO
 
-| Archivo | Alt Actual | Alt Propuesto |
-|---------|-----------|---------------|
-| `AboutHero.tsx` (linea 37) | backgroundImage CSS (sin alt) | No tiene img tag, no aplica |
-| `AboutHistory.tsx` (linea 60) | `"Juan Daniel - Fundador de Detail Park"` | `"Juan Daniel - Fundador de Academia Detail y Detail Park, escuela de detailing"` |
-
----
-
-#### 11. EXPERTISE SHOWCASE (Portfolio) - Buenos pero repetitivos
-
-Los alt texts en `ExpertiseShowcase.tsx` y `galleryData.ts` ya estan bien optimizados con palabras clave. No requieren cambios.
-
----
-
-### ARCHIVOS A MODIFICAR
-
-| Archivo | Cambios |
-|---------|---------|
-| `src/components/layout/Navbar.tsx` | Alt del logo (2 instancias) |
-| `src/components/layout/Footer.tsx` | Alt del logo |
-| `src/components/home/HomeHero.tsx` | Alt de imagen hero |
-| `src/components/home/GalleryPreview.tsx` | Alt texts de 8 imagenes de galeria |
-| `src/components/home/TestimonialsSection.tsx` | Alt de fotos de testimonios |
-| `src/components/home/InstructorSection.tsx` | Alt de imagen instructor |
-| `src/components/InstructorProfile.tsx` | Alt de imagen instructor |
-| `src/components/OptimizedHero.tsx` | Alt de logo y background |
-| `src/components/carrera/CarreraHero.tsx` | Alt de imagen hero |
-| `src/components/formation/FormationCertification.tsx` | Alt de certificado |
-| `src/components/formation/FormationHero.tsx` | Alt de imagen hero |
-| `src/components/about/AboutHistory.tsx` | Alt de video thumbnail |
-| `src/data/formations.ts` | Anadir campo `imageAlt` por formacion |
-| `src/data/formationDetails.ts` | Anadir campo `heroAlt` por formacion |
-| `src/components/home/FormationsGrid.tsx` | Usar `formation.imageAlt` en vez de `shortTitle` |
-
----
-
-### CRITERIOS APLICADOS
-
-1. **Descriptivo**: Cada alt describe lo que realmente muestra la imagen
-2. **Palabras clave**: Incluye terminos SEO objetivo (curso detailing, pulido de coches, tratamiento ceramico, etc.)
-3. **Natural**: No keyword stuffing, lectura fluida
-4. **Unico**: No hay dos alt texts identicos
-5. **Accesible**: Util para lectores de pantalla
+- Cada consulta del formulario de contacto quedara guardada en la base de datos **y** se enviara por email via Formspree
+- Podras ver todas las consultas desde tu backend
+- Si Formspree falla, los datos seguiran en la base de datos como respaldo
+- No se requiere autenticacion para enviar el formulario (es publico)
 
