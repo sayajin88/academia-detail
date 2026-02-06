@@ -57,7 +57,7 @@ function FounderVideo() {
             {shouldLoad ? (
               <img
                 src={thumbnailUrl}
-                alt="Juan Daniel - Fundador de Detail Park"
+                alt="Juan Daniel - Fundador de Academia Detail y Detail Park, escuela de detailing"
                 className="w-full h-full object-cover"
                 loading="lazy"
               />

@@ -33,7 +33,7 @@ export function FormationCertification({ formation }: FormationCertificationProp
                   <div className="rounded-2xl overflow-hidden shadow-2xl shadow-primary/20 border border-primary/20">
                     <img
                       src={formation.certificationImage}
-                      alt="Certificado Detail Park"
+                      alt="Certificado profesional de detailing - Acreditación Academia Detail España"
                       className="w-full h-auto"
                     />
                   </div>

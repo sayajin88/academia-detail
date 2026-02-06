@@ -117,7 +117,7 @@ export function InstructorProfile() {
                 <div className="relative bg-gradient-to-b from-black/20 to-black/40">
                   <img 
                     src={instructorDaniel} 
-                    alt="Daniel López - Instructor Experto en Detailing Profesional"
+                    alt="Daniel López - Formador experto en detailing, pulido y tratamiento cerámico"
                     className="w-full h-full object-contain min-h-[500px]"
                     itemProp="image"
                     loading="lazy"

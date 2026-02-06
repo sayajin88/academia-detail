@@ -11,6 +11,7 @@ export interface Formation {
   description: string;
   duration: string;
   image: string;
+  imageAlt: string;
   href: string;
   icon: string;
   highlights: string[];
@@ -27,6 +28,7 @@ export const formations: Formation[] = [
     description: 'Domina las técnicas de pulido, corrección y protección cerámica en un taller 100% real. Aprende a presupuestar servicios y gestionar clientes de alta gama.',
     duration: '4 días',
     image: detailingHero,
+    imageAlt: 'Curso de detailing profesional - Alumnos practicando pulido de coches en taller real',
     href: '/curso-detailing-profesional',
     icon: 'sparkles',
     highlights: [
@@ -45,6 +47,7 @@ export const formations: Formation[] = [
     description: 'Aprende vinilado integral y cambio de color con clientes reales de alta gama. Te enseñamos técnica Y cómo captar clientes VIP para este servicio premium.',
     duration: '2 - 4 días',
     image: wrappingHero,
+    imageAlt: 'Curso de car wrapping - Formación práctica en vinilado de vehículos profesional',
     href: '/curso-vinilado-vehiculos',
     icon: 'palette',
     highlights: [
@@ -63,6 +66,7 @@ export const formations: Formation[] = [
     description: 'Especialízate en PPF para vehículos de alta gama en nuestro taller operativo. Aprende a presupuestar y escalar este servicio de alto margen.',
     duration: '2 días',
     image: ppfHero,
+    imageAlt: 'Curso de PPF - Instalación de paint protection film en vehículo de alta gama',
     href: '/curso-ppf-proteccion-pintura',
     icon: 'shield',
     highlights: [
@@ -81,6 +85,7 @@ export const formations: Formation[] = [
     description: 'Recupera vehículos dañados y clásicos con técnicas avanzadas. Un nicho de mercado con poca competencia y clientes dispuestos a pagar por resultados.',
     duration: '2 días',
     image: restauracionHero,
+    imageAlt: 'Curso de restauración de vehículos - Limpieza y acondicionamiento interior profesional',
     href: '/curso-restauracion-vehiculos',
     icon: 'wrench',
     highlights: [
@@ -100,6 +105,7 @@ export const carreraNegocio = {
   description: 'El programa más completo del sector: domina todas las técnicas Y aprende a montar un negocio rentable. No saldrás siendo un técnico, saldrás siendo un empresario.',
   duration: '1 mes intensivo',
   image: carreraHero,
+  imageAlt: 'Formación profesional completa en detailing - Programa Carrera Negocio para montar tu centro',
   href: '/formacion-profesional-detailing',
   includes: [
     {

@@ -49,7 +49,7 @@ export function FormationsGrid() {
                 <div className="absolute inset-0 bg-muted">
                   <img
                     src={formation.image}
-                    alt={formation.shortTitle}
+                    alt={formation.imageAlt}
                     className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${isComingSoon ? 'grayscale-[30%]' : ''}`}
                     loading="lazy"
                     decoding="async"
