@@ -333,8 +333,10 @@ export const generateImageObjectSchema = (image: {
   "name": image.name,
   "description": image.description,
   "representativeOfPage": true,
-  "license": "https://academiadetail.com/licencia",
-  "acquireLicensePage": "https://academiadetail.com/contacto"
+  "creator": {
+    "@type": "Organization",
+    "name": "Academia Detail"
+  }
 });
 
 // ============================================
@@ -372,71 +374,59 @@ export const seoConfig = {
     price: "2997",
     schema: [
       localBusinessSchema,
-      organizationSchemaComplete,
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Academia Detail",
         "alternateName": "Detail Park Academy",
-        "url": BASE_URL,
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": `${BASE_URL}/buscar?q={search_term_string}`,
-          "query-input": "required name=search_term_string"
-        }
+        "url": BASE_URL
       },
       // SiteNavigationElement - Helps Google generate sitelinks
       {
         "@context": "https://schema.org",
         "@type": "ItemList",
+        "name": "Navegación Principal - Academia Detail",
         "itemListElement": [
           {
-            "@type": "SiteNavigationElement",
+            "@type": "ListItem",
             "position": 1,
             "name": "Curso de Detailing Profesional",
-            "description": "Pulido, corrección de pintura y tratamiento cerámico en 4 días intensivos",
             "url": `${BASE_URL}/curso-detailing-profesional`
           },
           {
-            "@type": "SiteNavigationElement",
+            "@type": "ListItem",
             "position": 2,
             "name": "Curso de Car Wrapping",
-            "description": "Instalación de vinilo y cambio de color profesional",
             "url": `${BASE_URL}/curso-vinilado-vehiculos`
           },
           {
-            "@type": "SiteNavigationElement",
+            "@type": "ListItem",
             "position": 3,
             "name": "Curso PPF Protección Pintura",
-            "description": "Instalación de Paint Protection Film certificado",
             "url": `${BASE_URL}/curso-ppf-proteccion-pintura`
           },
           {
-            "@type": "SiteNavigationElement",
+            "@type": "ListItem",
             "position": 4,
             "name": "Curso Restauración Vehículos",
-            "description": "Restauración profesional de vehículos clásicos y dañados",
             "url": `${BASE_URL}/curso-restauracion-vehiculos`
           },
           {
-            "@type": "SiteNavigationElement",
+            "@type": "ListItem",
             "position": 5,
             "name": "Formación Profesional Completa",
-            "description": "Programa de 1 mes con 4 certificaciones para montar tu centro de detailing",
             "url": `${BASE_URL}/formacion-profesional-detailing`
           },
           {
-            "@type": "SiteNavigationElement",
+            "@type": "ListItem",
             "position": 6,
             "name": "Jornada Zero - Experiencia Inmersión",
-            "description": "Primer contacto con el detailing profesional por solo 97€",
             "url": `${BASE_URL}/curso-detailing-iniciacion`
           },
           {
-            "@type": "SiteNavigationElement",
+            "@type": "ListItem",
             "position": 7,
             "name": "Contacto",
-            "description": "Reserva tu plaza o solicita información sin compromiso",
             "url": `${BASE_URL}/contacto`
           }
         ]
@@ -445,6 +435,7 @@ export const seoConfig = {
       {
         "@context": "https://schema.org",
         "@type": "ItemList",
+        "name": "Cursos de Detailing Profesional",
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -467,7 +458,7 @@ export const seoConfig = {
               "url": `${BASE_URL}/curso-vinilado-vehiculos`,
               "description": "Instalación de vinilo y cambio de color. Formación práctica de 5 días.",
               "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
-              "offers": { "@type": "Offer", "price": "1999", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
+              "offers": { "@type": "Offer", "price": "2997", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
             }
           },
           {
@@ -477,9 +468,9 @@ export const seoConfig = {
               "@type": "Course",
               "name": "Curso PPF Protección Pintura",
               "url": `${BASE_URL}/curso-ppf-proteccion-pintura`,
-              "description": "Instalación de Paint Protection Film profesional. 2 días intensivos.",
+              "description": "Instalación de Paint Protection Film profesional. 5 días intensivos.",
               "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
-              "offers": { "@type": "Offer", "price": "2397", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
+              "offers": { "@type": "Offer", "price": "2997", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
             }
           },
           {
@@ -587,8 +578,6 @@ export const seoConfig = {
           "name": "4 Certificaciones Profesionales de Detailing"
         },
         "programPrerequisites": "Sin experiencia previa necesaria",
-        "numberOfCredits": { "@type": "StructuredValue", "value": 4 },
-        "educationalProgramMode": "full-time",
         "provider": {
           "@type": "EducationalOrganization",
           "name": "Academia Detail",
@@ -635,7 +624,6 @@ export const seoConfig = {
     url: "/quienes-somos",
     schema: [
       localBusinessSchema,
-      organizationSchemaComplete,
       {
         "@context": "https://schema.org",
         "@type": "AboutPage",
