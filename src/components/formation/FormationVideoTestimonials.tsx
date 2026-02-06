@@ -29,7 +29,7 @@ export function FormationVideoTestimonials({
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-background to-muted/30">
+    <section id="testimonios-video" className="py-16 md:py-24 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <div className="text-center mb-12">
@@ -110,26 +110,30 @@ export function FormationVideoTestimonials({
           ))}
         </div>
 
-        {/* JSON-LD Structured Data for Videos */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "itemListElement": videos.map((video, index) => ({
-              "@type": "ListItem",
-              "position": index + 1,
-              "item": {
-                "@type": "VideoObject",
-                "name": video.title,
-                "description": `Testimonio de ${video.name || 'alumno'} sobre su experiencia en el curso`,
-                "thumbnailUrl": getYouTubeThumbnail(video.id),
-                "uploadDate": new Date().toISOString().split('T')[0],
-                "embedUrl": `https://www.youtube.com/embed/${video.id}`,
-                "contentUrl": `https://www.youtube.com/watch?v=${video.id}`
+        {/* JSON-LD Structured Data for Videos - Individual VideoObject schemas */}
+        {videos.map((video, index) => (
+          <script key={video.id} type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "VideoObject",
+              "name": video.title,
+              "description": `Testimonio de ${video.name || 'alumno'} sobre su experiencia en el curso de Academia Detail`,
+              "thumbnailUrl": `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`,
+              "uploadDate": "2025-06-01",
+              "contentUrl": `https://www.youtube.com/watch?v=${video.id}`,
+              "embedUrl": `https://www.youtube.com/embed/${video.id}`,
+              "duration": "PT3M",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Academia Detail",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://academiadetail.com/og-image.png"
+                }
               }
-            }))
-          })}
-        </script>
+            })}
+          </script>
+        ))}
       </div>
     </section>
   );

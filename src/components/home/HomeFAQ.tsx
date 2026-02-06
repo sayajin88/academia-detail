@@ -111,7 +111,7 @@ export function HomeFAQ() {
         </script>
       </Helmet>
       
-      <section className="py-20 md:py-28 bg-card">
+      <section id="faq" className="py-20 md:py-28 bg-card">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <SectionHeading

@@ -14,7 +14,7 @@ export function FormationCertification({ formation }: FormationCertificationProp
   const certTitle = formation.certificationTitle || 'Certificación con Reconocimiento Nacional';
 
   return (
-    <section className="py-20 bg-card">
+    <section id="certificacion" className="py-20 bg-card">
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionHeading
