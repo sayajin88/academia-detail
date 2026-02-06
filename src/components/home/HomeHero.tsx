@@ -55,7 +55,7 @@ export function HomeHero() {
         />
         <img 
           src={heroImage}
-          alt="Detail Park - Centro de formación de detailing profesional"
+          alt="Curso de detailing profesional - Formación práctica en taller real Alicante"
           className="absolute inset-0 w-full h-full object-cover"
           fetchPriority="high"
           loading="eager"

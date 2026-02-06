@@ -30,7 +30,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-4">
-              <img src={logo} alt="Detail Park" className="h-10 w-auto" />
+              <img src={logo} alt="Academia Detail - Escuela de detailing profesional" className="h-10 w-auto" />
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               Centro de formación líder en detailing profesional. Aprende de los mejores y transforma tu pasión en profesión.

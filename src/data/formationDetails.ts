@@ -58,6 +58,7 @@ export interface FormationDetail {
   certificationImage?: string;
   formacionRegladaItems?: { title: string; description: string }[];
   comingSoon?: boolean;
+  heroAlt?: string;
 }
 
 export const formationDetails: Record<string, FormationDetail> = {
@@ -71,6 +72,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     price: 2997,
     originalPrice: 3497,
     image: detailingHero,
+    heroAlt: 'Curso de pulido de coches y tratamiento cerámico - Formación intensiva presencial',
     heroDescription: 'Formación intensiva en pulido de coches y tratamiento cerámico. Domina las técnicas de corrección de pintura, aplicación de cerámicos y detallado profesional. Aprende detailing desde cero y prepárate para montar tu negocio.',
     advantages: [
       { icon: 'Award', title: 'Certificado de reconocimiento del sector' },
@@ -277,6 +279,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     price: 1999,
     originalPrice: 2499,
     image: wrappingHero,
+    heroAlt: 'Curso de car wrapping profesional - Formación en vinilado de vehículos',
     heroDescription: 'Formación 100% práctica en instalación de vinilo para cambio de color. Aprende con experiencia real en taller, desde las técnicas básicas hasta los acabados más complejos en superficies curvas.',
     advantages: [
       { icon: 'Award', title: 'Certificado de reconocimiento del sector' },
@@ -454,6 +457,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     price: 2397,
     originalPrice: 2897,
     image: ppfHero,
+    heroAlt: 'Curso de PPF paint protection film - Instalación profesional certificada',
     heroDescription: 'Formación 100% práctica en instalación de Paint Protection Film. Aprende con experiencia real en taller, desde las técnicas básicas hasta las instalaciones más complejas en superficies curvas.',
     advantages: [
       { icon: 'Award', title: 'Certificado de reconocimiento del sector' },
@@ -618,6 +622,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     price: 449,
     originalPrice: 699,
     image: restauracionHero,
+    heroAlt: 'Curso de restauración de vehículos - Técnicas avanzadas de recuperación',
     heroDescription: 'Aprende a recuperar pinturas oxidadas, faros opacos, interiores deteriorados y plásticos dañados con técnicas profesionales.',
     comingSoon: true,
     forWho: [

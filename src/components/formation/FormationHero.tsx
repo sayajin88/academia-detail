@@ -26,7 +26,7 @@ export function FormationHero({ formation, onCTAClick }: FormationHeroProps) {
         <div className="absolute inset-0 bg-muted" />
         <img
           src={formation.image}
-          alt={formation.title}
+          alt={formation.heroAlt || formation.title}
           className={`absolute inset-0 w-full h-full object-cover ${isComingSoon ? 'grayscale-[20%]' : ''}`}
           loading="eager"
           fetchPriority="high"

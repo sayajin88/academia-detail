@@ -34,7 +34,7 @@ export const OptimizedHero = () => {
       {/* Floating Logo with Progress - Hidden on mobile */}
       <div className="fixed top-4 left-4 z-50 animate-float hidden lg:block">
         <div className="flex items-center gap-3 glass-intense px-4 py-2 rounded-full">
-          <img src={detailParkLogo} alt="Detail Park" className="h-8 filter brightness-0 invert" />
+          <img src={detailParkLogo} alt="Academia Detail logo" className="h-8 filter brightness-0 invert" />
           <div className="w-16 h-1 bg-white/20 rounded-full overflow-hidden">
             <div 
               className="h-full bg-primary transition-all duration-300"
@@ -57,7 +57,7 @@ export const OptimizedHero = () => {
         <div className="absolute inset-0 md:hidden">
           <img 
             src={mobileHeroBg} 
-            alt="Detail Park Background" 
+            alt="Taller de detailing profesional - Formación práctica en Alicante" 
             className="w-full h-full object-cover opacity-70"
           />
         </div>

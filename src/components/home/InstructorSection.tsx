@@ -35,7 +35,7 @@ export function InstructorSection() {
               {/* Main image */}
               <img
                 src={instructorImage}
-                alt="Daniel López - Instructor Principal de Detail Park"
+                alt="Daniel López - Instructor de cursos de detailing profesional en Academia Detail"
                 className="relative w-full h-full object-cover rounded-3xl shadow-2xl border border-border"
                 loading="lazy"
               />

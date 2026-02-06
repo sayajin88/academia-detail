@@ -14,14 +14,14 @@ import training7 from '@/assets/certificado-alumno-feliz.jpg';
 import training8 from '@/assets/alumnos-formacion-3.jpg';
 
 const galleryImages = [
-  { src: training1, alt: 'Clase completa de detailing' },
-  { src: training2, alt: 'Grupo de alumnos en formación' },
-  { src: training3, alt: 'Práctica con pulidora' },
-  { src: training4, alt: 'Instructor explicando técnicas' },
-  { src: training5, alt: 'Formación práctica' },
-  { src: training6, alt: 'Alumnos en clase teórica' },
-  { src: training7, alt: 'Alumno con certificado' },
-  { src: training8, alt: 'Ambiente de formación' },
+  { src: training1, alt: 'Clase de curso de detailing profesional - Alumnos en formación práctica' },
+  { src: training2, alt: 'Grupo de alumnos en curso de detailing - Formación presencial en Alicante' },
+  { src: training3, alt: 'Práctica de pulido de coches con pulidora profesional - Curso de detailing' },
+  { src: training4, alt: 'Instructor explicando técnicas de detailing y tratamiento cerámico' },
+  { src: training5, alt: 'Formación práctica de detailing en taller real con vehículos de alta gama' },
+  { src: training6, alt: 'Alumnos en clase teórica de curso de detailing profesional' },
+  { src: training7, alt: 'Alumno certificado por Academia Detail - Escuela de detailing en España' },
+  { src: training8, alt: 'Ambiente de formación en escuela de detailing - Aprender detailing desde cero' },
 ];
 
 export function GalleryPreview() {

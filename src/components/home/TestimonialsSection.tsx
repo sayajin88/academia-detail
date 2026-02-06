@@ -224,7 +224,7 @@ export function TestimonialsSection() {
               >
                 <img
                   src={testimonial.image}
-                  alt={`Foto de ${testimonial.name}`}
+                  alt={`${testimonial.name} - Alumno certificado en ${testimonial.formation} por Academia Detail`}
                   className="w-12 h-12 rounded-full object-cover border-2 border-primary/30"
                   loading="lazy"
                   width={48}
