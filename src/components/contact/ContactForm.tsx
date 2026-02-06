@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Send, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import ContactSuccessModal from "./ContactSuccessModal";
 
 // Schema de validación
@@ -129,6 +130,24 @@ const ContactForm = () => {
   }, [formspreeState.succeeded, form]);
 
   const onSubmit = async (data: ContactFormData) => {
+    // NUEVO: Guardar en base de datos (independiente de Formspree)
+    try {
+      await supabase.from("contact_submissions").insert({
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+        email: data.email,
+        telefono: data.telefono,
+        experiencia: data.experiencia,
+        centro_propio: data.centro_propio,
+        inversion: data.inversion,
+        tipo_formacion: data.tipo_formacion,
+        mensaje: data.mensaje || null,
+        acepto_privacidad: data.acepto_privacidad,
+      });
+    } catch {
+      // Si falla la DB, seguimos con Formspree igualmente
+    }
+
     // Mapear valores a etiquetas legibles para el email
     const experienciaLabel =
       experienciaOptions.find((o) => o.value === data.experiencia)?.label || "";

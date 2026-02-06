@@ -41,6 +41,51 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_submissions: {
+        Row: {
+          acepto_privacidad: boolean
+          apellidos: string
+          centro_propio: string
+          created_at: string
+          email: string
+          experiencia: string
+          id: string
+          inversion: string
+          mensaje: string | null
+          nombre: string
+          telefono: string
+          tipo_formacion: string
+        }
+        Insert: {
+          acepto_privacidad?: boolean
+          apellidos: string
+          centro_propio: string
+          created_at?: string
+          email: string
+          experiencia: string
+          id?: string
+          inversion: string
+          mensaje?: string | null
+          nombre: string
+          telefono: string
+          tipo_formacion: string
+        }
+        Update: {
+          acepto_privacidad?: boolean
+          apellidos?: string
+          centro_propio?: string
+          created_at?: string
+          email?: string
+          experiencia?: string
+          id?: string
+          inversion?: string
+          mensaje?: string | null
+          nombre?: string
+          telefono?: string
+          tipo_formacion?: string
+        }
+        Relationships: []
+      }
       registrations: {
         Row: {
           accept_marketing: boolean
