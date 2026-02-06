@@ -1,20 +1,10 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Instagram, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { Skeleton } from '@/components/ui/skeleton';
 
-declare global {
-  interface Window {
-    instgrm?: {
-      Embeds: {
-        process: () => void;
-      };
-    };
-  }
-}
-
-// URLs de posts/reels de @danidetailoficial — edita este array para cambiar el contenido
+// URLs de reels de @danidetailoficial — edita este array para cambiar el contenido
 const INSTAGRAM_POSTS = [
   {
     url: 'https://www.instagram.com/reel/DKJqXJKI1v2/',
@@ -54,7 +44,6 @@ function InstagramEmbedSkeleton() {
 export function InstagramFeed() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [scriptLoaded, setScriptLoaded] = useState(false);
 
   // Detectar cuando la sección entra en viewport
   useEffect(() => {
@@ -75,47 +64,6 @@ export function InstagramFeed() {
     return () => observer.disconnect();
   }, []);
 
-  // Cargar script de Instagram solo cuando la sección es visible
-  const loadScript = useCallback(() => {
-    // Si ya existe el script, solo procesar
-    if (window.instgrm) {
-      setScriptLoaded(true);
-      window.instgrm.Embeds.process();
-      return;
-    }
-
-    const existingScript = document.querySelector(
-      'script[src="https://www.instagram.com/embed.js"]'
-    );
-    if (existingScript) return;
-
-    const script = document.createElement('script');
-    script.src = 'https://www.instagram.com/embed.js';
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      setScriptLoaded(true);
-      // Pequeño delay para que Instagram procese los blockquotes
-      setTimeout(() => {
-        window.instgrm?.Embeds.process();
-      }, 100);
-    };
-    document.body.appendChild(script);
-  }, []);
-
-  useEffect(() => {
-    if (isVisible) {
-      loadScript();
-    }
-  }, [isVisible, loadScript]);
-
-  // Re-procesar embeds si el script ya estaba cargado
-  useEffect(() => {
-    if (scriptLoaded && window.instgrm) {
-      window.instgrm.Embeds.process();
-    }
-  }, [scriptLoaded]);
-
   return (
     <section ref={sectionRef} className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-4">
@@ -130,35 +78,16 @@ export function InstagramFeed() {
           {INSTAGRAM_POSTS.map((post) => (
             <div key={post.id} className="flex justify-center">
               {isVisible ? (
-                <blockquote
-                  className="instagram-media"
-                  data-instgrm-captioned
-                  data-instgrm-permalink={post.url}
-                  data-instgrm-version="14"
-                  style={{
-                    background: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '12px',
-                    maxWidth: '540px',
-                    minWidth: '280px',
-                    width: '100%',
-                    margin: '0',
-                  }}
-                >
-                  {/* Fallback mientras Instagram procesa el embed */}
-                  {!scriptLoaded && <InstagramEmbedSkeleton />}
-                  <div style={{ padding: '16px', textAlign: 'center' }}>
-                    <a
-                      href={post.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:text-primary-glow transition-colors text-sm font-medium inline-flex items-center gap-1.5"
-                    >
-                      Ver en Instagram
-                      <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
-                  </div>
-                </blockquote>
+                <iframe
+                  src={`https://www.instagram.com/reel/${post.id}/embed/`}
+                  className="w-full rounded-xl border border-border"
+                  style={{ minHeight: 580 }}
+                  frameBorder="0"
+                  scrolling="no"
+                  allow="encrypted-media"
+                  loading="lazy"
+                  title={`Reel de Instagram ${post.id}`}
+                />
               ) : (
                 <InstagramEmbedSkeleton />
               )}
