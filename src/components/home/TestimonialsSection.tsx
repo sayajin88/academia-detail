@@ -128,6 +128,7 @@ const reviewsSchema = testimonials.map((t) => ({
 export function TestimonialsSection() {
   return (
     <section 
+      id="opiniones"
       className="py-20 md:py-28 bg-background"
       itemScope 
       itemType="https://schema.org/EducationalOrganization"

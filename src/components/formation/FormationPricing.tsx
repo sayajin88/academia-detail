@@ -84,6 +84,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
 
   return (
     <section 
+      id="precios"
       ref={sectionRef}
       className="py-16 md:py-24 bg-background relative overflow-hidden"
     >

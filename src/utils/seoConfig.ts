@@ -177,6 +177,45 @@ export const generateCourseSchemaEnhanced = (course: {
 export const generateCourseSchema = generateCourseSchemaEnhanced;
 
 // ============================================
+// VIDEO OBJECT SCHEMA GENERATOR (Rich Snippets de Video)
+// ============================================
+export const generateVideoObjectSchema = (video: {
+  id: string;
+  title: string;
+  description?: string;
+  name?: string;
+  uploadDate?: string;
+  duration?: string;
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": video.title,
+  "description": video.description || `Testimonio de ${video.name || 'alumno'} sobre su experiencia en Academia Detail`,
+  "thumbnailUrl": `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`,
+  "uploadDate": video.uploadDate || "2025-06-01",
+  "contentUrl": `https://www.youtube.com/watch?v=${video.id}`,
+  "embedUrl": `https://www.youtube.com/embed/${video.id}`,
+  "duration": video.duration || "PT3M",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Academia Detail",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${BASE_URL}/og-image.png`
+    }
+  }
+});
+
+export const generateVideoObjectSchemas = (videos: {
+  id: string;
+  title: string;
+  description?: string;
+  name?: string;
+  uploadDate?: string;
+  duration?: string;
+}[]) => videos.map(video => generateVideoObjectSchema(video));
+
+// ============================================
 // EVENT SCHEMA GENERATOR
 // ============================================
 export const generateEventSchema = (event: {
@@ -346,6 +385,129 @@ export const seoConfig = {
           "query-input": "required name=search_term_string"
         }
       },
+      // SiteNavigationElement - Helps Google generate sitelinks
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "SiteNavigationElement",
+            "position": 1,
+            "name": "Curso de Detailing Profesional",
+            "description": "Pulido, corrección de pintura y tratamiento cerámico en 4 días intensivos",
+            "url": `${BASE_URL}/curso-detailing-profesional`
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 2,
+            "name": "Curso de Car Wrapping",
+            "description": "Instalación de vinilo y cambio de color profesional",
+            "url": `${BASE_URL}/curso-vinilado-vehiculos`
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 3,
+            "name": "Curso PPF Protección Pintura",
+            "description": "Instalación de Paint Protection Film certificado",
+            "url": `${BASE_URL}/curso-ppf-proteccion-pintura`
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 4,
+            "name": "Curso Restauración Vehículos",
+            "description": "Restauración profesional de vehículos clásicos y dañados",
+            "url": `${BASE_URL}/curso-restauracion-vehiculos`
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 5,
+            "name": "Formación Profesional Completa",
+            "description": "Programa de 1 mes con 4 certificaciones para montar tu centro de detailing",
+            "url": `${BASE_URL}/formacion-profesional-detailing`
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 6,
+            "name": "Jornada Zero - Experiencia Inmersión",
+            "description": "Primer contacto con el detailing profesional por solo 97€",
+            "url": `${BASE_URL}/curso-detailing-iniciacion`
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 7,
+            "name": "Contacto",
+            "description": "Reserva tu plaza o solicita información sin compromiso",
+            "url": `${BASE_URL}/contacto`
+          }
+        ]
+      },
+      // ItemList of Courses - Enables course carousel in Google
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "Course",
+              "name": "Curso de Detailing Profesional",
+              "url": `${BASE_URL}/curso-detailing-profesional`,
+              "description": "Pulido profesional y tratamiento cerámico. 4 días de formación intensiva en taller real.",
+              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
+              "offers": { "@type": "Offer", "price": "2997", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "Course",
+              "name": "Curso Car Wrapping Profesional",
+              "url": `${BASE_URL}/curso-vinilado-vehiculos`,
+              "description": "Instalación de vinilo y cambio de color. Formación práctica de 5 días.",
+              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
+              "offers": { "@type": "Offer", "price": "1999", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "Course",
+              "name": "Curso PPF Protección Pintura",
+              "url": `${BASE_URL}/curso-ppf-proteccion-pintura`,
+              "description": "Instalación de Paint Protection Film profesional. 2 días intensivos.",
+              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
+              "offers": { "@type": "Offer", "price": "2397", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "Course",
+              "name": "Formación Profesional Detailing - Monta tu Centro",
+              "url": `${BASE_URL}/formacion-profesional-detailing`,
+              "description": "Programa completo de 1 mes con 4 certificaciones y módulo de negocio exclusivo.",
+              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
+              "offers": { "@type": "Offer", "price": "9997", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "Course",
+              "name": "Jornada Zero - Experiencia Inmersión",
+              "url": `${BASE_URL}/curso-detailing-iniciacion`,
+              "description": "Tu primer contacto con el detailing profesional. 1 día de experiencia práctica por 97€.",
+              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
+              "offers": { "@type": "Offer", "price": "97", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
+            }
+          }
+        ]
+      },
       generateWebPageSchema({
         name: "Cursos de Detailing Profesional en España",
         description: "Formación 100% práctica en taller real con visión de negocio",
@@ -411,6 +573,49 @@ export const seoConfig = {
         url: "/formacion-profesional-detailing",
         rating: { value: "4.9", count: "89" }
       }),
+      // EducationalOccupationalProgram - More specific than Course for full programs
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalOccupationalProgram",
+        "name": "Formación Profesional Detailing - Monta tu Centro",
+        "description": "Programa completo de 1 mes para montar tu propio centro de detailing. Incluye 4 certificaciones profesionales (Detailing, Wrapping, PPF, Restauración) más módulo de negocio exclusivo con plan de negocio personalizado.",
+        "url": `${BASE_URL}/formacion-profesional-detailing`,
+        "timeToComplete": "P30D",
+        "occupationalCredentialAwarded": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certificate",
+          "name": "4 Certificaciones Profesionales de Detailing"
+        },
+        "programPrerequisites": "Sin experiencia previa necesaria",
+        "numberOfCredits": { "@type": "StructuredValue", "value": 4 },
+        "educationalProgramMode": "full-time",
+        "provider": {
+          "@type": "EducationalOrganization",
+          "name": "Academia Detail",
+          "url": BASE_URL,
+          "sameAs": organizationSchemaComplete.sameAs
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "9997",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/LimitedAvailability",
+          "validFrom": "2025-01-01",
+          "priceValidUntil": "2026-12-31"
+        },
+        "hasCourse": [
+          { "@type": "Course", "name": "Detailing Profesional", "url": `${BASE_URL}/curso-detailing-profesional` },
+          { "@type": "Course", "name": "Car Wrapping Profesional", "url": `${BASE_URL}/curso-vinilado-vehiculos` },
+          { "@type": "Course", "name": "PPF Protección Pintura", "url": `${BASE_URL}/curso-ppf-proteccion-pintura` },
+          { "@type": "Course", "name": "Restauración de Vehículos", "url": `${BASE_URL}/curso-restauracion-vehiculos` }
+        ]
+      },
+      // VideoObject schemas for testimonial videos on this page
+      ...generateVideoObjectSchemas([
+        { id: 'GWda5NH90YM', title: 'Testimonio Alumno - Mi experiencia en la Carrera de Detailing', name: 'Alumno Graduado', uploadDate: '2025-03-15' },
+        { id: 'iJjIZ4Ja7RA', title: 'Testimonio Alumno - Cómo monté mi negocio tras la formación', name: 'Alumno Graduado', uploadDate: '2025-04-20' },
+        { id: 'U1qm6XXaQaE', title: 'Testimonio Alumno - La formación que cambió mi carrera', name: 'Alumno Graduado', uploadDate: '2025-05-10' },
+      ]),
       generateWebPageSchema({
         name: "Carrera Profesional de Detailing",
         description: "Formación completa de 1 mes para montar tu centro de detailing",

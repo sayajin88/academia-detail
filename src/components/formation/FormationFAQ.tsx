@@ -14,7 +14,7 @@ interface FormationFAQProps {
 
 export function FormationFAQ({ formation }: FormationFAQProps) {
   return (
-    <section className="py-20 bg-card">
+    <section id="preguntas-frecuentes" className="py-20 bg-card">
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionHeading
