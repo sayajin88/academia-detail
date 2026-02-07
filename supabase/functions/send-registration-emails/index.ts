@@ -5,7 +5,8 @@ const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 interface RegistrationData {
@@ -405,23 +406,31 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Enviar email al cliente
     const clientEmailResponse = await resend.emails.send({
-      from: "Detail Park <onboarding@resend.dev>",
+      from: "Detail Park <formacion@academiadetail.com>",
       to: [registrationData.email],
-      subject: "✅ Pre-inscripción confirmada - La Jornada Cero | Detail Park",
+      subject: "Pre-inscripcion confirmada - La Jornada Cero | Detail Park",
       html: clientEmailHtml,
     });
 
-    console.log("Client email sent:", clientEmailResponse);
+    if (clientEmailResponse.error) {
+      console.error("Resend error sending client email:", JSON.stringify(clientEmailResponse.error));
+    } else {
+      console.log("Client email sent successfully. ID:", clientEmailResponse.data?.id);
+    }
 
     // Enviar email al administrador
     const adminEmailResponse = await resend.emails.send({
-      from: "Detail Park Notificaciones <onboarding@resend.dev>",
+      from: "Detail Park Notificaciones <formacion@academiadetail.com>",
       to: [adminEmail],
-      subject: `🎯 Nueva pre-inscripción: ${registrationData.firstName} ${registrationData.lastName}`,
+      subject: `Nueva pre-inscripcion: ${registrationData.firstName} ${registrationData.lastName}`,
       html: adminEmailHtml,
     });
 
-    console.log("Admin email sent:", adminEmailResponse);
+    if (adminEmailResponse.error) {
+      console.error("Resend error sending admin email:", JSON.stringify(adminEmailResponse.error));
+    } else {
+      console.log("Admin email sent successfully. ID:", adminEmailResponse.data?.id);
+    }
 
     return new Response(
       JSON.stringify({ 

@@ -2,7 +2,8 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-const adminEmail = Deno.env.get("ADMIN_EMAIL") || "academiadetail@gmail.com";
+const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@academiadetail.com";
+const backupEmail = "academiadetail@gmail.com";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -296,6 +297,7 @@ const handler = async (req: Request): Promise<Response> => {
     const adminEmailResponse = await resend.emails.send({
       from: "Detail Park Academy <formacion@academiadetail.com>",
       to: [adminEmail],
+      cc: [backupEmail],
       replyTo: email,
       subject: `Nuevo lead: ${formacionLabels[tipo_formacion] || tipo_formacion} - ${nombre} ${apellidos}`,
       html: generateAdminEmail(contactData),
