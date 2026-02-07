@@ -1,203 +1,255 @@
 
 
-# Reestructuracion Visual Completa - Academia Detail
+# Plan de Mejoras de Diseno y Visualizacion - Academia Detail
 
-## Resumen
+## Estado Actual
 
-Rediseno completo de la identidad visual del sitio web para mejorar legibilidad, sofisticacion y coherencia con el sector de automocion premium. Los tres ejes principales:
-
-1. **Paleta de colores**: Fondos gris oscuro (en vez de negro puro), rojo burdeos como acento principal
-2. **Iconografia**: Iconos mas relacionados con automocion profesional
-3. **Estructura visual**: Tarjetas, espaciados y tipografia optimizados para legibilidad
+Tras la reciente reestructuracion visual (paleta burdeos, fondos gris carbon, iconografia automotive), la web tiene una base solida. Este plan se centra en pulir los detalles restantes, mejorar la coherencia entre paginas y elevar la experiencia visual general.
 
 ---
 
-## 1. Nueva Paleta de Colores
+## 1. Coherencia de Fondos entre Secciones
 
-### Antes vs Despues
+**Problema**: Algunas paginas no alternan consistentemente entre `bg-background` y `bg-card`, lo que reduce el ritmo visual y hace que las secciones se "fusionen" unas con otras.
 
-| Elemento | Antes | Despues |
-|----------|-------|---------|
-| Fondo principal | `#000000` (negro puro) | `#1a1a1f` (gris carbon) |
-| Fondo card | `#0d0d0d` (casi negro) | `#222228` (gris oscuro calido) |
-| Fondo muted | `#53565A` | `#2a2a32` (gris medio oscuro) |
-| Color primario | `#E52B09` (rojo vivido) | `#8B2332` (burdeos/granate) |
-| Primary glow | `#E84726` | `#A63046` (burdeos claro) |
-| Primary dark | `#B72207` | `#6B1A26` (burdeos profundo) |
-| Texto muted | 70% luminosidad | 75% luminosidad (mas legible) |
-| Bordes | 34% luminosidad | 38% luminosidad (mas visibles) |
+**Solucion**: Establecer un patron claro de alternancia de fondos en todas las paginas.
 
-El resultado: fondos mas suaves que no cansan la vista, con un rojo burdeos mas elegante y profesional que transmite automocion premium.
+### Paginas afectadas:
 
-### Archivo: `src/index.css`
+**FormationDetail** (`src/pages/FormationDetail.tsx` y sus componentes):
+- `FormationAdvantages`: `bg-background` (correcto)
+- `FormationVideoShowcase`: necesita `bg-card` para contrastar
+- `FormationPricing`: `bg-background` (correcto)
+- `FormationLevels`: revisar fondo
+- `FormationContent`: revisar fondo
+- `FormationInstructor`: `bg-background` -> `bg-card` para alternar
+- `FormationModules`: `bg-card` (correcto)
+- `FormationCurriculum`: revisar fondo
+- `FormationReglada`: revisar fondo
+- `FormationCertification`: `bg-card` (correcto)
+- `FormationIncludes`: `bg-background` (correcto)
+- `FormationFAQ`: `bg-card` (correcto)
 
-Cambios en las variables CSS `:root`:
-- `--background`: de `0 0% 0%` a `240 10% 11%` (gris carbon con toque azulado frio)
-- `--card`: de `0 0% 5%` a `240 8% 14%` (gris oscuro para tarjetas)
-- `--muted`: de `214 4% 34%` a `240 6% 18%` (gris intermedio)
-- `--muted-foreground`: de `210 3% 70%` a `210 5% 75%` (texto secundario mas legible)
-- `--primary`: de `10 93% 46%` a `348 60% 34%` (rojo burdeos)
-- `--primary-glow`: a `348 55% 42%` (burdeos luminoso)
-- `--primary-dark`: a `348 65% 28%` (burdeos profundo)
-- `--border`: de `214 4% 34%` a `240 6% 22%` (bordes mas visibles)
-- `--popover` y `--sidebar`: ajustados en consonancia
-- Gradientes y sombras actualizados para reflejar el nuevo burdeos
+**AboutUs** (`src/pages/AboutUs.tsx`):
+- Logo section: usa gradiente custom -> unificar con `bg-card`
+- CTA final: usa gradiente custom -> unificar con `bg-card`
 
-Tambien se actualizaran el theme `.dark` y los gradientes/shadows para usar los nuevos valores burdeos.
+**CarreraDetailing**: Revisar que las secciones gold mantengan el patron alterno
 
----
-
-## 2. Iconografia Automotive
-
-Reemplazar iconos genericos de Lucide por otros mas representativos del sector automotriz en todos los componentes.
-
-### Cambios de iconos por componente
-
-**Navbar** (`src/components/layout/Navbar.tsx`):
-- `Sparkles` (detailing) -> `Car` (mas claro para "cursos de coches")
-- `Palette` (wrapping) -> mantener (ya es correcto)
-- `Shield` (PPF) -> `ShieldCheck` (mas profesional)
-- `Wrench` (restauracion) -> mantener
-- `Crown` (carrera) -> `GraduationCap` (ya usado en movil, unificar)
-
-**FormationsGrid** (`src/components/home/FormationsGrid.tsx`):
-- `Sparkles` -> `Car` en el iconMap para detailing
-- Mantener `Palette`, `Shield`, `Wrench`
-
-**HomeHero** (`src/components/home/HomeHero.tsx`):
-- `Wrench` badge -> `Gauge` (mas automotive/premium)
-- Emoji del badge: quitar emoji de texto, usar solo icono Lucide
-
-**BusinessSkillsSection** (`src/components/home/BusinessSkillsSection.tsx`):
-- `Briefcase` badge -> `Fuel` o `CarFront` (contexto automocion)
-- Los iconos de los modulos de negocio se mantienen (son conceptuales)
-
-**CompetitiveComparison** (`src/components/home/CompetitiveComparison.tsx`):
-- `Building` -> `Warehouse` (taller/instalaciones)
-- `Car` -> mantener
-- `Brain` -> mantener
-- `Scale` -> mantener
-- `User` -> `UserCheck`
-- `Target` -> mantener
-- `Users` -> `Handshake`
-
-**CarreraNegocioSection** (`src/components/home/CarreraNegocioSection.tsx`):
-- `BookOpen` (Aprende) -> `Car` (contexto auto)
-- `Wrench` (Practica) -> mantener
-- `Award` (Certifica) -> mantener
-- `Building2` (Emprende) -> `Store` (centro propio)
-
-**InstructorSection** (`src/components/home/InstructorSection.tsx`):
-- `Car` -> mantener
-- `Calendar` -> mantener
-- Anadir contexto de "vehiculos trabajados" con icono `CarFront`
-
-**JornadaZeroSection** (`src/components/shared/JornadaZeroSection.tsx`):
-- `Clock` -> mantener
-- `ShieldCheck` -> mantener
-- `Wrench` -> `Gauge` (instrumento automotive)
-
-**MontamosTuCentro** (`src/components/home/MontamosTuCentro.tsx`):
-- `Building` -> `Store` (mas apropiado para "centro propio")
-- `Rocket` -> `Gauge` (inicio del negocio, mas automotive)
+### Archivos a modificar:
+- `src/components/formation/FormationInstructor.tsx`
+- `src/components/formation/FormationContent.tsx`
+- `src/components/formation/FormationCurriculum.tsx`
+- `src/components/formation/FormationReglada.tsx`
+- `src/pages/AboutUs.tsx`
 
 ---
 
-## 3. Mejoras de Estructura Visual y Legibilidad
+## 2. Separadores Visuales entre Secciones
 
-### 3a. Tarjetas y contenedores
+**Problema**: Cuando dos secciones comparten el mismo fondo (o cuando el contraste entre secciones es bajo), no hay separacion visual clara.
 
-**Archivo: `src/index.css`**
-- `.glass-card`: fondo mas opaco con mejor contraste (`rgba(30, 30, 38, 0.8)` en vez de transparente oscuro)
-- `.glass-intense`: borde burdeos sutil en vez de rojo puro
-- Aumentar `border-radius` base de tarjetas de `0.5rem` a `0.75rem` para aspecto mas moderno
-- Sombras mas suaves y difusas (menos agresivas)
+**Solucion**: Anadir separadores sutiles con `border-t border-border/30` en la parte superior de secciones que sigan a otra con el mismo fondo, y/o un leve gradiente de transicion.
 
-### 3b. Tipografia
-
-**Archivo: `src/index.css`**
-- Aumentar `line-height` del body de `1.6` a `1.7` para mejor legibilidad
-- Texto de parrafos: `text-foreground/80` como minimo (no usar `/60` o `/70` directamente)
-- Los headings mantienen Bebas Neue pero con `letter-spacing: 0.04em` (ligeramente reducido para mejor legibilidad)
-
-### 3c. Seccion SectionHeading
-
-**Archivo: `src/components/shared/SectionHeading.tsx`**
-- Badge: cambiar de `bg-primary/15 text-[#ff5533]` a usar variables CSS (`text-primary` puro) para que se adapte automaticamente al nuevo burdeos
-- Subtitulo: usar `text-muted-foreground` sin opacidad extra
-
-### 3d. Espaciado entre secciones
-
-**Archivo: varias paginas**
-- Secciones alternas con fondos `bg-background` y `bg-card` para crear ritmo visual claro (ya se hace parcialmente, unificar patron)
-- Anadir separadores sutiles (`border-t border-border/50`) entre secciones cuando comparten el mismo fondo
-
-### 3e. Testimonios
-
-**Archivo: `src/components/home/TestimonialsSection.tsx`**
-- Badge de formacion: cambiar `text-[#ff5533] bg-primary/15` a `text-primary bg-primary/10` (automatico con nueva paleta)
-
-### 3f. SuccessStoriesLogos
-
-**Archivo: `src/components/home/SuccessStoriesLogos.tsx`**
-- Tipo de negocio: cambiar `text-[#ff5533]` a `text-primary` (automatico)
-
-### 3g. MontamosTuCentro
-
-**Archivo: `src/components/home/MontamosTuCentro.tsx`**
-- Badge "Paso X": cambiar `text-[#ff5533] bg-primary/15` a `text-primary bg-primary/10`
-
-### 3h. Botones
-
-**Archivo: `src/components/ui/button.tsx`**
-- Variante `hero`: reducir `hover:scale-110` a `hover:scale-105` (menos agresivo, mas elegante)
-- Variante `cta`: reducir `hover:scale-105` a `hover:scale-[1.02]`
-- Quitar `uppercase` de las variantes hero/cta/funnel (el uppercase con Bebas Neue en botones puede ser excesivo)
-
-### 3i. Formularios
-
-**Archivo: `src/components/contact/ContactForm.tsx`**
-- Los inputs ya tienen buen tamano (h-12) - solo se beneficiaran del nuevo fondo de card mas claro
-
-**Archivo: `src/components/home/HomeCTA.tsx`**
-- Inputs sobre fondo primary: se beneficiaran automaticamente del nuevo burdeos (mejor contraste)
+### Implementacion:
+- Crear una clase CSS reutilizable `.section-divider` en `src/index.css`:
+  ```css
+  .section-divider {
+    border-top: 1px solid hsl(var(--border) / 0.3);
+  }
+  ```
+- Aplicar selectivamente en secciones consecutivas con el mismo fondo
 
 ---
 
-## 4. Gradient Text y Efectos Glow
+## 3. Mejora del Footer
 
-**Archivo: `src/index.css`**
-- `.gradient-text`: actualizar `drop-shadow` al nuevo burdeos
-- Glow effects: reducir intensidad general un 30% para aspecto mas sofisticado
-- `pulse-glow`, `glow-pulse`: usar valores burdeos
-- `text-glow-pulse`: reducir intensidad del text-shadow
+**Problema**: El footer actual es funcional pero basico comparado con el nivel de diseno del resto de la web. Carece de personalidad visual y de separacion del contenido principal.
+
+**Solucion** (`src/components/layout/Footer.tsx`):
+- Anadir un gradiente sutil de fondo: de `bg-card` plano a un gradiente como `bg-gradient-to-b from-card to-background/50`
+- Anadir una linea decorativa burdeos sutil en la parte superior (similar al shimmer del navbar)
+- Mejorar los enlaces sociales: hacerlos ligeramente mas grandes en movil, y anadir un efecto hover mas visible (borde burdeos)
+- Anadir la direccion con un mini-mapa estatico o icono mas prominente
+- Unificar el copyright con un badge sutil de la marca
 
 ---
 
-## Seccion Tecnica - Resumen de Archivos
+## 4. Mejora de Cards de Formacion (FormationsGrid)
 
-| Archivo | Tipo de cambio |
-|---------|---------------|
-| `src/index.css` | **Principal**: toda la paleta de colores, gradientes, sombras, glassmorphism, gradient-text, glows |
-| `tailwind.config.ts` | Sin cambios (usa variables CSS, se adapta automaticamente) |
-| `src/components/ui/button.tsx` | Reducir scale en hover, quitar uppercase de hero/cta/funnel |
-| `src/components/shared/SectionHeading.tsx` | Cambiar color hardcodeado `#ff5533` a `text-primary` |
-| `src/components/home/HomeHero.tsx` | Icono `Wrench` -> `Gauge`, quitar emoji de texto |
-| `src/components/home/FormationsGrid.tsx` | Icono detailing `Sparkles` -> `Car` |
-| `src/components/home/CompetitiveComparison.tsx` | Iconos: `Building`->`Warehouse`, `User`->`UserCheck`, `Users`->`Handshake` |
-| `src/components/home/BusinessSkillsSection.tsx` | Icono badge `Briefcase`->`Fuel` |
-| `src/components/home/CarreraNegocioSection.tsx` | Iconos: `BookOpen`->`Car`, `Building2`->`Store` |
-| `src/components/home/MontamosTuCentro.tsx` | Iconos: `Building`->`Store`, `Rocket`->`Gauge`; color hardcodeado a `text-primary` |
-| `src/components/home/TestimonialsSection.tsx` | Color hardcodeado `#ff5533` a `text-primary` |
-| `src/components/home/SuccessStoriesLogos.tsx` | Color hardcodeado `#ff5533` a `text-primary` |
-| `src/components/shared/JornadaZeroSection.tsx` | Icono `Wrench`->`Gauge` |
-| `src/components/layout/Navbar.tsx` | Iconos: `Sparkles`->`Car`, `Crown`->`GraduationCap` |
+**Problema**: Las tarjetas de cursos se ven bien pero pueden mejorar la jerarquia visual interna y el feedback de interaccion.
+
+**Solucion** (`src/components/home/FormationsGrid.tsx`):
+- Anadir una linea de progreso sutil en la parte inferior de cada card que se rellene con un gradiente burdeos al hacer hover (efecto "loading bar")
+- El badge de duracion podria tener un icono tematizado segun el tipo de curso (no solo Clock)
+- Mejorar la sombra al hacer hover: usar `shadow-primary/20` en vez de sombra generica negra
+- Anadir una microtransicion en el icono del curso: rotacion sutil de 5 grados al hover
+
+---
+
+## 5. Mejora de la Seccion Hero del Home
+
+**Problema**: El hero actual tiene buen contenido pero los stats en dos filas pueden resultar abrumadores visualmente. El overlay oscuro reduce el impacto de la imagen/video.
+
+**Solucion** (`src/components/home/HomeHero.tsx`):
+- Reducir la opacidad del overlay de `from-black/70 via-black/50` a `from-black/60 via-black/40` para que el video/imagen tenga mas presencia
+- Unificar las dos filas de stats en una sola fila horizontal con scroll en movil (o reducir a 4 stats clave en una fila)
+- Anadir un efecto de "texto revelado" sutil al titulo (word-by-word o line-by-line con delay) - similar al que tiene CarreraHero
+- Los orbs de fondo (`bg-primary/20`) podrian ser mas sutiles: reducir a `bg-primary/10`
+
+---
+
+## 6. Seccion de Pricing - Mejoras Visuales
+
+**Problema**: La tabla de precios en las paginas de formacion es funcional pero densa visualmente. El card de precio compite con demasiados elementos.
+
+**Solucion** (`src/components/formation/FormationPricing.tsx`):
+- Separar visualmente el header del precio del resto con mas espacio
+- Dar mas peso visual al precio: aumentar tamano a `text-7xl` en desktop
+- Reducir el badge de descuento para que no compita con el precio principal
+- Hacer el progress bar de plazas mas prominente (altura de `h-2` a `h-3`, con animacion de pulso al estar casi lleno)
+- Mejorar la "urgencia" con un badge de color contrastante (ej: verde para "1 plaza libre")
+
+---
+
+## 7. Pagina de Contacto - Mejoras de UX
+
+**Problema**: El hero de contacto es demasiado simple comparado con los heroes del resto de paginas. El formulario funciona bien pero la experiencia visual es mejorable.
+
+**Solucion**:
+
+**ContactHero** (`src/components/contact/ContactHero.tsx`):
+- Usar la misma estructura de hero que las paginas de formacion: imagen a full-width con overlay, en vez de solo una imagen parcial
+- Anadir stats de contacto (ej: "Tiempo medio de respuesta: 24h", "Mas de 500 consultas resueltas")
+- Badge mas prominente con icono y texto
+
+**ContactForm** (`src/components/contact/ContactForm.tsx`):
+- Anadir indicadores de progreso visual (pasos 1/2/3) o agrupar campos por categoria con mini-headers
+- Mejorar el visual del checkbox RGPD: hacerlo mas compacto sin perder informacion legal
+- Anadir feedback visual inline (ej: icono check verde cuando un campo es valido)
+
+---
+
+## 8. Animaciones y Microinteracciones
+
+**Problema**: Las animaciones existentes son buenas pero hay oportunidades para microinteracciones que mejoren la sensacion de calidad.
+
+**Solucion**:
+
+**Nuevo en `src/index.css`**:
+- Efecto `hover-lift`: elevacion sutil (translateY -2px) + sombra para cards al hover, mas suave que `hover-glow`
+- Transicion suave en iconos de features al hover: color + scale
+- Animacion de "aparicion de texto" para headings grandes (clip-path reveal)
+
+**Accordion** (`src/components/ui/accordion.tsx`):
+- Anadir transicion suave al abrir/cerrar: icono de flecha rota por el chevron con suavidad, contenido con height transition
+
+---
+
+## 9. Tipografia y Jerarquia de Texto
+
+**Problema**: Algunos subtitulos y parrafos en paginas de formacion usan `text-muted-foreground` con opacidades adicionales que reducen legibilidad.
+
+**Solucion**:
+- Auditar y eliminar opacidades dobles (ej: `text-muted-foreground/70` -> solo `text-muted-foreground`)
+- En los modulos de cursos (`FormationModules.tsx`), el titulo del modulo podria tener mas peso visual: usar `text-xl font-bold` en vez de `text-lg font-semibold`
+- Los topics dentro de accordions podrian beneficiarse de un `text-foreground/90` en vez de `text-muted-foreground` para mejor legibilidad
+
+**Archivos afectados**:
+- `src/components/formation/FormationModules.tsx`
+- `src/components/formation/FormationFAQ.tsx`
+- `src/components/formation/FormationContent.tsx`
+
+---
+
+## 10. Carrera Detailing - Iconos de Heroes Faltantes
+
+**Problema**: El hero de Carrera Detailing usa iconos genericos como `Crown` y `Sparkles` que no se actualizaron con la nueva iconografia automotive.
+
+**Solucion** (`src/components/carrera/CarreraHero.tsx`):
+- `Crown` -> mantener (es coherente con el tema "premium/gold" de Carrera)
+- `Sparkles` (en badge y CTA) -> `Star` o `Award` (mas profesional)
+- Los iconos de stats (`Clock`, `Users`, `Award`, `Euro`) son correctos
+
+**Otros componentes de Carrera**:
+- `CarreraFormaciones.tsx`: `Sparkles` -> `Star` (coherencia gold)
+- `CarreraBenefits.tsx`: Ya tiene un buen iconMap, no necesita cambios
+- `CarreraPricing.tsx`: `Crown`, `Sparkles` -> reemplazar `Sparkles` por `Star`
+
+---
+
+## 11. Optimizacion de la Seccion "Montamos Tu Centro"
+
+**Problema**: La seccion MontamosTuCentro tiene un buen concepto pero puede mejorar su aspecto visual para transmitir mas profesionalismo.
+
+**Solucion** (`src/components/home/MontamosTuCentro.tsx`):
+- Las cards de pasos podrian tener un indicador de conexion visual entre ellas (linea punteada o flecha SVG)
+- Anadir un efecto de hover mas pronunciado: elevar la card activa y atenuar las demas
+- El numero del paso deberia ser mas destacado: fondo burdeos con numero blanco, en vez de solo texto
+
+---
+
+## 12. Mejoras de Accesibilidad Visual
+
+**Problema**: Algunos contrastes son aun insuficientes con la nueva paleta, especialmente texto secundario sobre fondos card.
+
+**Solucion**:
+- Verificar que `--muted-foreground` (75% luminosidad) tiene ratio de contraste suficiente (4.5:1 minimo) contra `--card` (14% luminosidad). Actualmente el ratio es ~5.2:1, que pasa WCAG AA pero esta justo al limite
+- Subir ligeramente `--muted-foreground` a 78% luminosidad si es necesario
+- Los textos sobre fondos con overlay (heroes con imagenes) deben mantener `text-white/80` como minimo, nunca bajar a `/60`
+
+**Archivo afectado**: `src/index.css` (si se ajusta la variable)
+
+---
+
+## 13. Efecto de Scroll Parallax Sutil
+
+**Problema**: La web se siente "plana" al hacer scroll - todas las secciones entran de la misma manera.
+
+**Solucion**: Anadir un efecto parallax muy sutil a las decoraciones de fondo (gradient orbs, background patterns) para dar profundidad sin afectar rendimiento.
+
+**Implementacion**:
+- Crear un hook `useParallax` que aplique `translateY` basado en scroll position
+- Aplicar solo a los elementos decorativos de fondo (no al contenido)
+- Desactivar en movil por rendimiento
+- Solo aplicar en Home y paginas con muchas secciones
+
+---
+
+## 14. Loading States y Skeleton Mejorados
+
+**Problema**: Los skeletons actuales en la pagina Home son genericos (gris con pulse).
+
+**Solucion** (`src/pages/Home.tsx`):
+- Mejorar el `SectionSkeleton` para que tenga la estructura correcta de cada seccion (cards skeleton, stats skeleton)
+- Usar el color de fondo apropiado para cada skeleton (alternar `bg-card` y `bg-background`)
+- Anadir un efecto shimmer en vez de pulse simple
+
+---
+
+## Seccion Tecnica - Resumen de Archivos a Modificar
+
+| Archivo | Cambios |
+|---------|---------|
+| `src/index.css` | Nueva clase `.section-divider`, efecto `.hover-lift`, posible ajuste `--muted-foreground`, shimmer skeleton |
+| `src/components/layout/Footer.tsx` | Gradiente fondo, linea decorativa top, mejorar social icons hover |
+| `src/components/home/HomeHero.tsx` | Reducir overlay, unificar stats a 1 fila, reducir orbs |
+| `src/components/home/FormationsGrid.tsx` | Hover shadow burdeos, microinteraccion icono |
+| `src/components/home/MontamosTuCentro.tsx` | Conectores entre pasos, numero mas destacado |
+| `src/components/formation/FormationPricing.tsx` | Precio mas grande, progress bar mejorado |
+| `src/components/formation/FormationModules.tsx` | Titulo modulo mas grande, topics mas legibles |
+| `src/components/formation/FormationInstructor.tsx` | Alternar fondo bg-card |
+| `src/components/contact/ContactHero.tsx` | Hero full-width con stats |
+| `src/components/carrera/CarreraHero.tsx` | Sparkles -> Star |
+| `src/components/carrera/CarreraFormaciones.tsx` | Sparkles -> Star |
+| `src/components/carrera/CarreraPricing.tsx` | Sparkles -> Star |
+| `src/pages/Home.tsx` | Skeleton mejorado |
+| `src/pages/AboutUs.tsx` | Fondos unificados |
+| Varios componentes formation | Alternancia fondos bg-background/bg-card |
 
 ### Sin cambios
-
-- **Imagenes**: No se tocan
-- **Contenidos/textos**: No se tocan
+- **Imagenes y contenidos**: No se tocan
 - **Backend/Edge Functions**: No se tocan
 - **Rutas/navegacion**: No se tocan
-- **tailwind.config.ts**: No necesita cambios (usa variables CSS)
+- **Datos (formationDetails, formations, etc.)**: No se tocan
 
