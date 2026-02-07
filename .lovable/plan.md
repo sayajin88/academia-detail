@@ -1,54 +1,51 @@
 
 
-## Plan: Reducir la puntuacion de spam en los emails de leads
+## Plan: Cambiar el email de destino de leads a info@academiadetail.com
 
-### Problema
+### Contexto
 
-El servidor de correo de `detailpark.com` rechaza los emails con el error SMTP `550 "Mensaje rechazado por ser spam"`. Esto se debe a varios factores del contenido del email que disparan los filtros antispam.
+Actualmente los leads del formulario de contacto se envian a `info@detailpark.com` (configurado en el secreto `ADMIN_EMAIL` y como fallback en el codigo). El objetivo es cambiar el destino a `info@academiadetail.com`, que ya esta registrado en tu servidor.
 
-### Cambios a realizar
+### Cambios necesarios
 
-Se modificara unicamente el archivo `supabase/functions/send-contact-email/index.ts`:
+#### 1. Actualizar el secreto ADMIN_EMAIL
 
-#### 1. Eliminar emojis de los asuntos
+Se actualizara el valor del secreto `ADMIN_EMAIL` de `info@detailpark.com` a `info@academiadetail.com`.
 
-| Elemento | Antes | Despues |
-|----------|-------|---------|
-| Asunto admin | `📬 Nuevo lead: Detailing - Juan Daniel` | `Nuevo lead: Detailing - Juan Daniel` |
-| Asunto cliente | `✨ Hemos recibido tu mensaje - Detail Park Academy` | `Hemos recibido tu mensaje - Detail Park Academy` |
+#### 2. Actualizar el fallback en el codigo
 
-#### 2. Simplificar el HTML del email del admin
+**Archivo**: `supabase/functions/send-contact-email/index.ts` (linea 5)
 
-- Eliminar gradientes CSS (`linear-gradient`) y reemplazar por colores solidos
-- Reducir la cantidad de estilos inline complejos
-- Eliminar emojis decorativos del cuerpo del email (🔔, 📍, 📊, 📝, 📧)
-- Mantener la estructura de informacion pero con un diseno mas limpio y plano
+Cambiar la direccion de fallback para que sea consistente:
 
-#### 3. Simplificar el HTML del email de confirmacion al cliente
+| Antes | Despues |
+|-------|---------|
+| `info@detailpark.com` | `info@academiadetail.com` |
 
-- Mismos cambios: colores solidos en lugar de gradientes
-- Eliminar emojis del cuerpo (✨, 📞, 📱)
-- Mantener el contenido informativo intacto
+#### 3. Redesplegar y probar
+
+- Redesplegar la Edge Function con el cambio.
+- Realizar una llamada de prueba al endpoint para verificar que el email se envia correctamente a `info@academiadetail.com`.
+- Verificar el estado de respuesta (200 OK) y los logs de la funcion.
+
+### Ventaja adicional
+
+Al usar `info@academiadetail.com`, tanto el remitente (`noreply@academiadetail.com`) como el destinatario comparten el mismo dominio `academiadetail.com`. Esto deberia eliminar los problemas de spam que habia con `detailpark.com`, ya que el dominio `academiadetail.com` ya esta verificado en Resend.
 
 ### Seccion tecnica
 
-**Archivo**: `supabase/functions/send-contact-email/index.ts`
+**Archivo a modificar**: `supabase/functions/send-contact-email/index.ts`
 
-**Lineas afectadas**:
-- Linea 303: asunto del email admin (quitar emoji 📬)
-- Linea 313: asunto del email cliente (quitar emoji ✨)
-- Funcion `generateAdminEmail` (lineas ~90-180): simplificar HTML, quitar emojis y gradientes
-- Funcion `generateClientEmail` (lineas ~185-245): simplificar HTML, quitar emojis y gradientes
+**Cambio en linea 5**:
+```typescript
+// Antes
+const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@detailpark.com";
 
-**Cambios clave en el HTML**:
-- `background: linear-gradient(135deg, #8B5CF6, #6D28D9)` se reemplaza por `background-color: #7C3AED`
-- Emojis como 🔔 📍 📊 📝 📧 ✨ 📞 📱 se eliminan o reemplazan por texto plano
-- Se mantiene la estructura de tablas HTML (compatible con clientes de correo)
-- Se conserva toda la informacion del lead (datos de contacto, cualificacion, mensaje)
+// Despues
+const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@academiadetail.com";
+```
 
-### Recomendacion adicional (accion del usuario)
+**Secreto a actualizar**: `ADMIN_EMAIL` -> `info@academiadetail.com`
 
-Estos cambios reduciran significativamente la probabilidad de rechazo. Sin embargo, tambien es recomendable que en el panel de administracion de tu proveedor de correo de `detailpark.com`:
-- Anadais `academiadetail.com` como remitente de confianza (whitelist)
-- Reviseis la configuracion del filtro antispam para permitir emails transaccionales
+**Prueba**: Llamada POST a la Edge Function con datos de prueba para confirmar entrega exitosa.
 
