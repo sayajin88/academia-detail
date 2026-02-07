@@ -294,23 +294,31 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     const adminEmailResponse = await resend.emails.send({
-      from: "Detail Park Academy <noreply@academiadetail.com>",
+      from: "Detail Park Academy <formacion@academiadetail.com>",
       to: [adminEmail],
       replyTo: email,
       subject: `Nuevo lead: ${formacionLabels[tipo_formacion] || tipo_formacion} - ${nombre} ${apellidos}`,
       html: generateAdminEmail(contactData),
     });
 
-    console.log("Admin email sent:", adminEmailResponse);
+    if (adminEmailResponse.error) {
+      console.error("Resend error sending admin email:", JSON.stringify(adminEmailResponse.error));
+    } else {
+      console.log("Admin email sent successfully. ID:", adminEmailResponse.data?.id);
+    }
 
     const clientEmailResponse = await resend.emails.send({
-      from: "Detail Park Academy <noreply@academiadetail.com>",
+      from: "Detail Park Academy <formacion@academiadetail.com>",
       to: [email],
       subject: "Hemos recibido tu mensaje - Detail Park Academy",
       html: generateClientEmail(contactData),
     });
 
-    console.log("Client confirmation email sent:", clientEmailResponse);
+    if (clientEmailResponse.error) {
+      console.error("Resend error sending client email:", JSON.stringify(clientEmailResponse.error));
+    } else {
+      console.log("Client email sent successfully. ID:", clientEmailResponse.data?.id);
+    }
 
     return new Response(
       JSON.stringify({
