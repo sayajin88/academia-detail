@@ -1,39 +1,54 @@
 
 
-## Plan: Cambiar email de destino del admin a admin@detailpark.com
+## Plan: Reducir la puntuacion de spam en los emails de leads
 
-### Cambio necesario
+### Problema
 
-Actualmente la edge function `send-contact-email` lee el email del admin desde la variable de entorno `ADMIN_EMAIL`:
+El servidor de correo de `detailpark.com` rechaza los emails con el error SMTP `550 "Mensaje rechazado por ser spam"`. Esto se debe a varios factores del contenido del email que disparan los filtros antispam.
 
-```
-const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@detailpark.es";
-```
+### Cambios a realizar
 
-Solo hay que hacer **2 cosas**:
+Se modificara unicamente el archivo `supabase/functions/send-contact-email/index.ts`:
 
----
+#### 1. Eliminar emojis de los asuntos
 
-### PASO 1: Actualizar el secreto ADMIN_EMAIL
+| Elemento | Antes | Despues |
+|----------|-------|---------|
+| Asunto admin | `📬 Nuevo lead: Detailing - Juan Daniel` | `Nuevo lead: Detailing - Juan Daniel` |
+| Asunto cliente | `✨ Hemos recibido tu mensaje - Detail Park Academy` | `Hemos recibido tu mensaje - Detail Park Academy` |
 
-Cambiar el valor de la variable de entorno `ADMIN_EMAIL` en el backend a `admin@detailpark.com`. Esto se hara usando la herramienta de secretos.
+#### 2. Simplificar el HTML del email del admin
 
-### PASO 2: Actualizar el fallback en el codigo
+- Eliminar gradientes CSS (`linear-gradient`) y reemplazar por colores solidos
+- Reducir la cantidad de estilos inline complejos
+- Eliminar emojis decorativos del cuerpo del email (🔔, 📍, 📊, 📝, 📧)
+- Mantener la estructura de informacion pero con un diseno mas limpio y plano
 
-Cambiar el fallback en la linea 5 de `supabase/functions/send-contact-email/index.ts`:
+#### 3. Simplificar el HTML del email de confirmacion al cliente
 
-| Antes | Despues |
-|-------|---------|
-| `info@detailpark.es` | `admin@detailpark.com` |
+- Mismos cambios: colores solidos en lugar de gradientes
+- Eliminar emojis del cuerpo (✨, 📞, 📱)
+- Mantener el contenido informativo intacto
 
-Asi, aunque el secreto no este configurado por alguna razon, los emails siempre llegaran a la direccion correcta.
+### Seccion tecnica
 
----
+**Archivo**: `supabase/functions/send-contact-email/index.ts`
 
-### Archivo a modificar
+**Lineas afectadas**:
+- Linea 303: asunto del email admin (quitar emoji 📬)
+- Linea 313: asunto del email cliente (quitar emoji ✨)
+- Funcion `generateAdminEmail` (lineas ~90-180): simplificar HTML, quitar emojis y gradientes
+- Funcion `generateClientEmail` (lineas ~185-245): simplificar HTML, quitar emojis y gradientes
 
-| Archivo | Cambio |
-|---------|--------|
-| `supabase/functions/send-contact-email/index.ts` | Cambiar fallback de `info@detailpark.es` a `admin@detailpark.com` (linea 5) |
-| Secreto `ADMIN_EMAIL` | Actualizar valor a `admin@detailpark.com` |
+**Cambios clave en el HTML**:
+- `background: linear-gradient(135deg, #8B5CF6, #6D28D9)` se reemplaza por `background-color: #7C3AED`
+- Emojis como 🔔 📍 📊 📝 📧 ✨ 📞 📱 se eliminan o reemplazan por texto plano
+- Se mantiene la estructura de tablas HTML (compatible con clientes de correo)
+- Se conserva toda la informacion del lead (datos de contacto, cualificacion, mensaje)
+
+### Recomendacion adicional (accion del usuario)
+
+Estos cambios reduciran significativamente la probabilidad de rechazo. Sin embargo, tambien es recomendable que en el panel de administracion de tu proveedor de correo de `detailpark.com`:
+- Anadais `academiadetail.com` como remitente de confianza (whitelist)
+- Reviseis la configuracion del filtro antispam para permitir emails transaccionales
 
