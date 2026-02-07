@@ -10,6 +10,7 @@ import { ArrowRight } from 'lucide-react';
 import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
+import detailParkLogo from '@/assets/detail-park-logo.webp';
 
 export default function AboutUs() {
   return (
@@ -18,6 +19,30 @@ export default function AboutUs() {
       <MainLayout>
         {/* Hero Section */}
         <AboutHero />
+
+        {/* Detail Park Logo Section */}
+        <section className="py-12 md:py-16 bg-gradient-to-b from-background to-muted/10">
+          <div className="container flex flex-col items-center gap-4">
+            <img
+              src={detailParkLogo}
+              alt="Detail Park - Empresa que potencia Academia Detail"
+              className="h-20 md:h-28 lg:h-36 w-auto object-contain"
+              loading="lazy"
+            />
+            <p className="text-sm md:text-base text-muted-foreground text-center max-w-md">
+              Academia Detail está potenciada por{' '}
+              <a
+                href="https://www.detailpark.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline font-medium"
+              >
+                Detail Park
+              </a>
+              , referente en Detailing profesional desde 2017.
+            </p>
+          </div>
+        </section>
 
         {/* History Timeline */}
         <AboutHistory />
