@@ -38,6 +38,11 @@ export default function Home() {
         <HomeHero />
         <FormationsGrid />
         
+        {/* Jornada Zero - justo después de formaciones */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <JornadaZeroSection />
+        </Suspense>
+
         {/* Componentes below-the-fold - carga diferida */}
         <Suspense fallback={<SectionSkeleton />}>
           <CompetitiveComparison />
@@ -62,9 +67,6 @@ export default function Home() {
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <SuccessStoriesLogos />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <JornadaZeroSection />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <HomeFAQ />
