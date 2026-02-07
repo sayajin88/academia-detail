@@ -1,66 +1,68 @@
 
 
-## Plan: Corregir la entrega de emails de leads a info@academiadetail.com
+## Plan: Solucion definitiva para emails de leads y DNS
 
-### Diagnostico
+### Problema 1: El email a info@academiadetail.com no llega
 
-El email de confirmacion al lead llega correctamente, pero el email con la informacion del lead a `info@academiadetail.com` se queda en estado "Sent" y nunca llega. Esto ocurre porque:
+**Diagnostico confirmado:** Resend envia el email correctamente (sin errores en logs). El problema ocurre DESPUES de Resend: el servidor de correo que gestiona `info@academiadetail.com` rechaza silenciosamente el email porque:
+- Llega desde servidores externos (Amazon SES / Resend)
+- Pero dice ser de `@academiadetail.com` (mismo dominio)
+- El servidor lo interpreta como suplantacion (spoofing)
 
-1. El remitente es `noreply@academiadetail.com`, que Resend marca como problematico (alerta visible en su panel)
-2. El email va del mismo dominio al mismo dominio (de `@academiadetail.com` a `@academiadetail.com`), y el servidor receptor lo interpreta como posible suplantacion al llegar desde servidores externos (Amazon SES)
+**Solucion: Cambiar el remitente del email admin**
 
-### Cambios en el codigo (Parte 1 - la hago yo)
+En vez de enviar el email al admin desde `formacion@academiadetail.com`, usaremos `onboarding@resend.dev` (el dominio por defecto de Resend, que ya esta verificado y tiene todos los registros DNS correctos). Esto elimina el conflicto de "mismo dominio" por completo.
+
+El email al **cliente** (lead) se mantiene con `formacion@academiadetail.com` porque va a un dominio externo (gmail, hotmail, etc.) y no tiene problemas.
 
 **Archivo**: `supabase/functions/send-contact-email/index.ts`
 
-| Linea | Antes | Despues |
+| Linea | Cambio |
+|-------|--------|
+| 296-302 | Cambiar `from` del admin email a `Detail Park Academy <onboarding@resend.dev>` |
+
+Esto es exactamente lo que ya usa la funcion `send-registration-emails` (que funciona correctamente).
+
+### Problema 2: La web no carga (DNS)
+
+El error de build `429 - Reduce your concurrent request rate` es **temporal** del servidor de despliegue (Cloudflare R2). No tiene que ver con tu codigo ni con DNS. Se resuelve automaticamente al reintentar el despliegue.
+
+Sin embargo, si tu **dominio personalizado** `academiadetail.com` dejo de cargar la web, es posible que al modificar registros DNS en Cloudflare para intentar arreglar el email hayas alterado algun registro necesario para la web.
+
+**Verificacion que debes hacer en Cloudflare:**
+
+1. Confirma que el registro **A** para `@` (dominio raiz) apunta a `185.158.133.1` (IP de Lovable)
+2. Confirma que el registro **A** para `www` apunta a `185.158.133.1`
+3. Confirma que existe el registro **TXT** `_lovable` con el valor de verificacion
+4. Estos registros deben tener el **proxy de Cloudflare activado o desactivado** segun como lo tenias originalmente
+
+Si no recuerdas la configuracion original, puedes ir a Settings > Domains en tu proyecto de Lovable para ver las instrucciones exactas.
+
+### Resumen de cambios
+
+| Tarea | Quien | Detalle |
 |-------|-------|---------|
-| 297 | `from: "Detail Park Academy <noreply@academiadetail.com>"` | `from: "Detail Park Academy <formacion@academiadetail.com>"` |
-| 307 | `from: "Detail Park Academy <noreply@academiadetail.com>"` | `from: "Detail Park Academy <formacion@academiadetail.com>"` |
+| Cambiar remitente admin email a `onboarding@resend.dev` | Lovable | Evita conflicto de dominio |
+| Mantener remitente cliente como `formacion@academiadetail.com` | Lovable | Sin cambios (funciona bien) |
+| Redesplegar y enviar test automatico | Lovable | Verificar entrega |
+| Verificar registros DNS A y TXT en Cloudflare | Tu | Para que el dominio personalizado cargue |
 
-Usar `formacion@` en vez de `noreply@` elimina la alerta de Resend y mejora la confianza del email.
+### Seccion tecnica
 
-Ademas, anadire logging mejorado para registrar errores especificos de Resend en caso de fallos futuros.
+**Cambio en** `supabase/functions/send-contact-email/index.ts`:
 
-### Configuracion DNS (Parte 2 - la haces tu en Cloudflare)
-
-Para que el servidor de correo de `info@academiadetail.com` acepte emails enviados desde Resend, el registro SPF del **dominio raiz** `academiadetail.com` debe autorizar a los servidores de Resend.
-
-**Pasos en Cloudflare:**
-
-1. Ve a tu panel de Cloudflare > DNS > Registros
-2. Busca si ya existe un registro **TXT** en `@` (dominio raiz) con `v=spf1...`
-3. Si **no existe**, crea uno nuevo:
-
-```text
-Tipo: TXT
-Nombre: @
-Contenido: v=spf1 include:amazonses.com ~all
+```typescript
+// Linea 296-302: Email admin
+const adminEmailResponse = await resend.emails.send({
+  from: "Detail Park Academy <onboarding@resend.dev>",  // Cambiado
+  to: [adminEmail],
+  replyTo: email,
+  subject: `Nuevo lead: ${formacionLabels[tipo_formacion] || tipo_formacion} - ${nombre} ${apellidos}`,
+  html: generateAdminEmail(contactData),
+});
 ```
 
-4. Si **ya existe** un SPF (por ejemplo para Google Workspace), anade `include:amazonses.com` dentro del registro existente. Ejemplo:
+El email al cliente (linea 310-315) se mantiene sin cambios con `formacion@academiadetail.com`.
 
-```text
-v=spf1 include:_spf.google.com include:amazonses.com ~all
-```
-
-5. Asegurate de que el **proxy de Cloudflare esta desactivado** (nube gris, solo DNS) para este registro
-
-### Despliegue y verificacion
-
-Tras aplicar ambos cambios:
-
-1. Redesplegar la Edge Function con el nuevo remitente
-2. Enviar una prueba automatica desde el endpoint
-3. Verificar en los logs que Resend devuelve un ID sin errores
-4. Confirmar contigo que el email ha llegado a `info@academiadetail.com`
-
-### Resumen
-
-| Tarea | Responsable |
-|-------|-------------|
-| Cambiar remitente de `noreply@` a `formacion@` en ambos emails | Lovable |
-| Mejorar logging de errores de Resend | Lovable |
-| Redesplegar y probar la Edge Function | Lovable |
-| Anadir `include:amazonses.com` al SPF raiz en Cloudflare | Tu |
+Tras el despliegue, enviare una prueba automatica para confirmar que el email llega a `info@academiadetail.com`.
 
