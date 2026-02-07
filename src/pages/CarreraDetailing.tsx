@@ -12,6 +12,7 @@ import CarreraPricing from '@/components/carrera/CarreraPricing';
 import CarreraFAQ from '@/components/carrera/CarreraFAQ';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { SEO } from '@/components/SEO';
+import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
 import { seoConfig } from '@/utils/seoConfig';
 
 const carreraVideoTestimonials = [
@@ -120,6 +121,7 @@ const CarreraDetailing = () => {
         <CarreraBenefits />
         <CarreraROICalculator onCtaClick={handleCTAClick} />
         <CarreraPricing onCTAClick={handleCTAClick} />
+        <JornadaZeroSection />
         <CarreraFAQ />
 
       </MainLayout>

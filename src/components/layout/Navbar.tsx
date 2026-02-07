@@ -123,7 +123,7 @@ export function Navbar() {
               to="/" 
               className={`flex items-center relative z-10 group transition-all duration-500 delay-100 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
             >
-              <div className="relative">
+              <div className="relative flex flex-col">
                 <img 
                   src={logo} 
                   alt="Academia Detail - Cursos de detailing profesional en España" 
@@ -131,6 +131,15 @@ export function Navbar() {
                   width={229}
                   height={70}
                 />
+                <a 
+                  href="https://www.detailpark.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[9px] md:text-[10px] text-muted-foreground hover:text-primary transition-colors mt-0.5 tracking-wide"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  Potenciada por <span className="font-semibold text-foreground/80">Detail Park</span>
+                </a>
                 {/* Logo glow on hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-primary/30" />
               </div>
@@ -256,25 +265,6 @@ export function Navbar() {
                 </Button>
               </a>
 
-              {/* Jornada Zero Button */}
-              <Link to="/curso-detailing-iniciacion">
-                <Button 
-                  size="sm"
-                  className="relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-4 py-2 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
-                >
-                  <Zap className="h-4 w-4 mr-2" />
-                  Jornada Zero
-                  {/* Shimmer effect */}
-                  <div 
-                    className="absolute inset-0 opacity-30"
-                    style={{
-                      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
-                      backgroundSize: '200% 100%',
-                      animation: 'shimmer-border 2s linear infinite',
-                    }}
-                  />
-                </Button>
-              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -327,7 +317,17 @@ export function Navbar() {
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-white/10">
-            <img src={logo} alt="Academia Detail - Cursos de detailing profesional en España" className="h-8 w-auto" width={229} height={70} />
+            <div className="flex flex-col">
+              <img src={logo} alt="Academia Detail - Cursos de detailing profesional en España" className="h-8 w-auto" width={229} height={70} />
+              <a 
+                href="https://www.detailpark.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[9px] text-muted-foreground hover:text-primary transition-colors mt-0.5 tracking-wide"
+              >
+                Potenciada por <span className="font-semibold text-foreground/80">Detail Park</span>
+              </a>
+            </div>
             <button
               className="p-2 text-foreground hover:text-primary transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -436,15 +436,6 @@ export function Navbar() {
                 </Button>
               </a>
               
-              {/* Jornada Zero Button */}
-              <Link to="/curso-detailing-iniciacion" className="flex-1">
-                <Button 
-                  className="w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold py-6 rounded-xl shadow-lg"
-                >
-                  <Zap className="h-5 w-5 mr-2" />
-                  Jornada Zero
-                </Button>
-              </Link>
             </div>
           </div>
         </div>

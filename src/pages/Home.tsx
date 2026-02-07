@@ -17,6 +17,7 @@ const TestimonialsSection = lazy(() => import('@/components/home/TestimonialsSec
 const SuccessStoriesLogos = lazy(() => import('@/components/home/SuccessStoriesLogos').then(m => ({ default: m.SuccessStoriesLogos })));
 const HomeFAQ = lazy(() => import('@/components/home/HomeFAQ').then(m => ({ default: m.HomeFAQ })));
 const HomeCTA = lazy(() => import('@/components/home/HomeCTA').then(m => ({ default: m.HomeCTA })));
+const JornadaZeroSection = lazy(() => import('@/components/shared/JornadaZeroSection').then(m => ({ default: m.JornadaZeroSection })));
 
 // Skeleton placeholder para lazy components
 const SectionSkeleton = () => (
@@ -61,6 +62,9 @@ export default function Home() {
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <SuccessStoriesLogos />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <JornadaZeroSection />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <HomeFAQ />

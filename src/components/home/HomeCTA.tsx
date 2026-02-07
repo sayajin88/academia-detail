@@ -110,7 +110,7 @@ export function HomeCTA() {
                 size="touch" 
                 className="bg-white text-primary hover:bg-white/90 shadow-xl group w-full sm:w-auto"
               >
-                <Link to="/jornada-cero">
+                <Link to="/contacto">
                   Reserva tu Plaza Ahora
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
@@ -128,11 +128,11 @@ export function HomeCTA() {
               </a>
               <span className="hidden sm:block w-1 h-1 rounded-full bg-white/40" />
               <a 
-                href="mailto:info@detailpark.es" 
+                href="mailto:info@academiadetail.com" 
                 className="flex items-center gap-2 hover:text-white transition-colors"
               >
                 <Mail className="h-4 w-4" />
-                info@detailpark.es
+                info@academiadetail.com
               </a>
             </div>
           </div>
@@ -143,7 +143,7 @@ export function HomeCTA() {
               Solicita Información
             </h3>
             <p className="text-white/70 text-sm mb-6">
-              Te contactamos en menos de 24 horas
+              Te contactamos en un plazo de 48 horas
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">

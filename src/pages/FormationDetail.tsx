@@ -17,6 +17,7 @@ import { FormationLogistics } from '@/components/formation/FormationLogistics';
 import { FormationFAQ } from '@/components/formation/FormationFAQ';
 import { FormationROICalculator } from '@/components/formation/FormationROICalculator';
 import { FormationCTA } from '@/components/formation/FormationCTA';
+import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { FormationGallery } from '@/components/formation/FormationGallery';
 import { ComingSoonModal } from '@/components/ComingSoonModal';
@@ -156,6 +157,7 @@ export default function FormationDetailPage() {
         <FormationLogistics showForSlug={slug} />
         <FormationFAQ formation={formation} />
         <FormationROICalculator formation={formation} onCTAClick={handleCTAClick} />
+        {slug !== 'curso-detailing-iniciacion' && <JornadaZeroSection />}
         <FormationCTA formation={formation} onCTAClick={handleCTAClick} />
       </MainLayout>
 
