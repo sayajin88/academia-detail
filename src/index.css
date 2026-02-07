@@ -6,50 +6,50 @@
 
 @layer base {
   :root {
-    /* Detail Park Brand Colors - Guía de Identidad Visual */
-    --background: 0 0% 0%; /* Negro profundo #000000 - Fondo principal */
-    --foreground: 0 0% 100%; /* Blanco puro #FFFFFF - Espacios negativos */
+    /* Detail Park Brand Colors - Identidad Visual Premium Automoción */
+    --background: 240 10% 11%; /* Gris carbón #1a1a1f - Fondo principal */
+    --foreground: 0 0% 98%; /* Blanco suave - Texto principal */
     
-    --primary: 10 93% 46%; /* Vivid Red #E52B09 - Color acento, botones, CTAs */
+    --primary: 348 60% 34%; /* Burdeos #8B2332 - Color acento premium */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 10 93% 56%;
-    --primary-dark: 10 93% 36%;
+    --primary-glow: 348 55% 42%; /* Burdeos luminoso #A63046 */
+    --primary-dark: 348 65% 28%; /* Burdeos profundo #6B1A26 */
     
-    --secondary: 210 3% 60%; /* Gris neutro #97999B - Fondos secundarios, detalles elegantes */
+    --secondary: 210 5% 58%; /* Gris neutro - Fondos secundarios */
     --secondary-foreground: 0 0% 100%;
     
-    --muted: 214 4% 34%; /* Gris oscuro #53565A - Menús, títulos secundarios */
-    --muted-foreground: 210 3% 70%;
+    --muted: 240 6% 18%; /* Gris medio oscuro - Menús, títulos secundarios */
+    --muted-foreground: 210 5% 75%; /* Texto secundario más legible */
     
-    --accent: 10 93% 46%; /* Vivid Red - Acentos y llamadas a la acción */
+    --accent: 348 60% 34%; /* Burdeos - Acentos y llamadas a la acción */
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 214 4% 34%;
-    --input: 214 4% 34%;
-    --ring: 10 93% 46%;
+    --border: 240 6% 22%; /* Bordes más visibles */
+    --input: 240 6% 22%;
+    --ring: 348 60% 34%;
     
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
+    --card: 240 8% 14%; /* Gris oscuro para tarjetas */
+    --card-foreground: 0 0% 98%;
     
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 240 8% 14%;
+    --popover-foreground: 0 0% 98%;
     
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     
-    /* Brand Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(10 93% 46%), hsl(10 93% 56%));
-    --gradient-background: linear-gradient(180deg, hsl(0 0% 0%), hsl(0 0% 5%));
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(10 93% 46% / 0.2) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 5% / 0.8), hsl(0 0% 8% / 0.6));
+    /* Brand Gradients - Burdeos premium */
+    --gradient-primary: linear-gradient(135deg, hsl(348 60% 34%), hsl(348 55% 42%));
+    --gradient-background: linear-gradient(180deg, hsl(240 10% 11%), hsl(240 8% 14%));
+    --gradient-hero: linear-gradient(135deg, hsl(240 10% 11%) 0%, hsl(348 60% 34% / 0.15) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(240 8% 14% / 0.9), hsl(240 8% 16% / 0.7));
     
-    /* Red Glow Shadows */
-    --shadow-glow-subtle: 0 0 20px hsl(10 93% 46% / 0.3);
-    --shadow-glow-intense: 0 0 40px hsl(10 93% 46% / 0.6);
-    --shadow-primary: 0 10px 30px -10px hsl(10 93% 46% / 0.5);
-    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.5);
+    /* Burgundy Glow Shadows - Más suaves y sofisticados */
+    --shadow-glow-subtle: 0 0 20px hsl(348 60% 34% / 0.2);
+    --shadow-glow-intense: 0 0 30px hsl(348 60% 34% / 0.4);
+    --shadow-primary: 0 10px 30px -10px hsl(348 60% 34% / 0.35);
+    --shadow-card: 0 4px 20px hsl(240 10% 5% / 0.4);
     
     /* Gold Premium Colors */
     --gold: 45 93% 47%;
@@ -72,53 +72,53 @@
     --transition-glow: all 0.4s ease-in-out;
     
     /* Sidebar */
-    --sidebar-background: 0 0% 3%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 10 93% 46%;
+    --sidebar-background: 240 10% 9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 348 60% 34%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 214 4% 34%;
+    --sidebar-accent: 240 6% 18%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 214 4% 34%;
-    --sidebar-ring: 10 93% 46%;
+    --sidebar-border: 240 6% 22%;
+    --sidebar-ring: 348 60% 34%;
   }
 
   .dark {
     /* Dark theme matching brand identity */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    --background: 240 10% 11%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
+    --card: 240 8% 14%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 240 8% 14%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 10 93% 46%;
+    --primary: 348 60% 34%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 3% 60%;
+    --secondary: 210 5% 58%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 214 4% 34%;
-    --muted-foreground: 210 3% 70%;
+    --muted: 240 6% 18%;
+    --muted-foreground: 210 5% 75%;
 
-    --accent: 10 93% 46%;
+    --accent: 348 60% 34%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 4% 34%;
-    --input: 214 4% 34%;
-    --ring: 10 93% 46%;
-    --sidebar-background: 0 0% 3%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 10 93% 46%;
+    --border: 240 6% 22%;
+    --input: 240 6% 22%;
+    --ring: 348 60% 34%;
+    --sidebar-background: 240 10% 9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 348 60% 34%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 214 4% 34%;
+    --sidebar-accent: 240 6% 18%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 214 4% 34%;
-    --sidebar-ring: 10 93% 46%;
+    --sidebar-border: 240 6% 22%;
+    --sidebar-ring: 348 60% 34%;
   }
 }
 
@@ -129,10 +129,11 @@
 
   body {
     @apply bg-background text-foreground;
-    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(0 0% 5%) 100%);
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(240 8% 14%) 100%);
     font-family: 'Open Sans', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden;
+    line-height: 1.7;
   }
 
   html {
@@ -144,7 +145,7 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Bebas Neue', sans-serif;
     font-weight: 400;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 }
@@ -195,10 +196,10 @@
 
 @keyframes glow-pulse {
   0%, 100% { 
-    filter: drop-shadow(0 0 20px hsl(10 93% 46% / 0.4));
+    filter: drop-shadow(0 0 15px hsl(348 60% 34% / 0.3));
   }
   50% { 
-    filter: drop-shadow(0 0 40px hsl(10 93% 46% / 0.8));
+    filter: drop-shadow(0 0 25px hsl(348 60% 34% / 0.5));
   }
 }
 
@@ -355,14 +356,12 @@
 
 @keyframes text-glow-pulse {
   0%, 100% { 
-    text-shadow: 0 0 5px hsl(var(--primary)),
-                 0 0 10px hsl(var(--primary)),
-                 0 0 15px hsl(var(--primary));
+    text-shadow: 0 0 5px hsl(var(--primary) / 0.6),
+                 0 0 10px hsl(var(--primary) / 0.3);
   }
   50% { 
-    text-shadow: 0 0 10px hsl(var(--primary)),
-                 0 0 20px hsl(var(--primary)),
-                 0 0 30px hsl(var(--primary));
+    text-shadow: 0 0 8px hsl(var(--primary) / 0.8),
+                 0 0 15px hsl(var(--primary) / 0.4);
   }
 }
 
@@ -532,22 +531,22 @@ img {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 20px hsl(10 93% 46% / 0.3));
+  filter: drop-shadow(0 0 15px hsl(348 60% 34% / 0.2));
 }
 
 /* Enhanced glassmorphism effects */
 .glass-card {
-  background: var(--gradient-card);
+  background: rgba(30, 30, 38, 0.85);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow-card);
 }
 
 .glass-intense {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(26, 26, 31, 0.6);
   backdrop-filter: blur(30px);
-  border: 2px solid rgba(255, 0, 0, 0.2);
-  box-shadow: var(--shadow-glow-intense);
+  border: 2px solid hsl(348 60% 34% / 0.25);
+  box-shadow: var(--shadow-glow-subtle);
 }
 
 /* Detail Park hover effects */

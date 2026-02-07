@@ -58,7 +58,7 @@ export function SuccessStoriesLogos() {
                         <MapPin className="h-3 w-3" />
                         {story.city}
                       </p>
-                      <p className="text-xs text-[#ff5533] mt-1">{story.type}</p>
+                      <p className="text-xs text-primary mt-1">{story.type}</p>
                     </div>
                   </div>
                 </div>
@@ -84,7 +84,7 @@ export function SuccessStoriesLogos() {
                         <MapPin className="h-3 w-3" />
                         {story.city}
                       </p>
-                      <p className="text-xs text-[#ff5533] mt-1">{story.type}</p>
+                      <p className="text-xs text-primary mt-1">{story.type}</p>
                     </div>
                   </div>
                 </div>

@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Clock, ShieldCheck, Wrench, ArrowRight } from 'lucide-react';
+import { Clock, ShieldCheck, Gauge, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import practicaImage from '@/assets/evento-practica-pulidora-real.jpg';
 
 const highlights = [
   { icon: Clock, label: '1 Día Intensivo', description: 'Formación completa en una jornada' },
   { icon: ShieldCheck, label: 'Sin Compromiso', description: 'Prueba antes de decidirte' },
-  { icon: Wrench, label: 'Taller 100% Real', description: 'Práctica desde el primer minuto' },
+  { icon: Gauge, label: 'Taller 100% Real', description: 'Práctica desde el primer minuto' },
 ];
 
 export function JornadaZeroSection() {
@@ -38,7 +38,7 @@ export function JornadaZeroSection() {
             {/* Content Column */}
             <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center">
               {/* Badge */}
-              <span className="inline-flex items-center self-start px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/15 text-[hsl(var(--primary))] border border-primary/30 mb-4">
+              <span className="inline-flex items-center self-start px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/10 text-primary border border-primary/30 mb-4">
                 ¿Nuevo en el Detailing?
               </span>
 

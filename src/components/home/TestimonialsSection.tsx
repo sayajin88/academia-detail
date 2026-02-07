@@ -244,7 +244,7 @@ export function TestimonialsSection() {
 
               {/* Formation Badge */}
               <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
-                <span className="text-xs font-medium text-[#ff5533] bg-primary/15 px-3 py-1 rounded-full">
+                <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
                   {testimonial.formation}
                 </span>
                 {testimonial.role.includes('Propietario') || testimonial.role.includes('Fundador') ? (

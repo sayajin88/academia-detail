@@ -25,7 +25,7 @@ export function SectionHeading({
           className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 ${
             light
               ? 'bg-white/10 text-white/90 border border-white/20'
-              : 'bg-primary/15 text-[#ff5533] border border-primary/30'
+              : 'bg-primary/10 text-primary border border-primary/30'
           }`}
         >
           {badge}

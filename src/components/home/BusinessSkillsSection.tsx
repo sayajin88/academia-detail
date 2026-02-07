@@ -1,4 +1,4 @@
-import { Calculator, Crown, Settings, TrendingUp, Euro, Users, Target, Briefcase } from 'lucide-react';
+import { Calculator, Crown, Settings, TrendingUp, Euro, Users, Target, Fuel } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 
@@ -40,7 +40,7 @@ export function BusinessSkillsSection() {
         <AnimatedSection>
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
-              <Briefcase className="w-4 h-4 text-primary" />
+              <Fuel className="w-4 h-4 text-primary" />
               <span className="text-primary font-medium text-sm">Lo que NO te enseñan en otras academias</span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">

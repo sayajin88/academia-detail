@@ -3,18 +3,18 @@ import {
   GraduationCap, 
   Wrench, 
   Award, 
-  Building2,
+  Store,
   ArrowRight,
   Clock,
   Users,
-  BookOpen
+  Car
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const journeySteps = [
   {
-    icon: BookOpen,
+    icon: Car,
     title: 'Aprende',
     description: '4 formaciones completas',
     color: 'from-blue-500 to-blue-600'
@@ -32,7 +32,7 @@ const journeySteps = [
     color: 'from-emerald-500 to-green-600'
   },
   {
-    icon: Building2,
+    icon: Store,
     title: 'Emprende',
     description: 'Tu propio negocio',
     color: 'from-primary to-primary-glow'
