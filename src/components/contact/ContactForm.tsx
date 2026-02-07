@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useForm as useFormspree } from "@formspree/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,6 +25,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Send, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import ContactSuccessModal from "./ContactSuccessModal";
+import { toast } from "sonner";
 
 // Schema de validación
 const contactSchema = z.object({
@@ -101,8 +101,8 @@ const formacionOptions = [
 
 const ContactForm = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [formspreeState, handleFormspreeSubmit] = useFormspree("maqqevbn");
-  const hasShownModal = useRef(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -120,19 +120,13 @@ const ContactForm = () => {
     },
   });
 
-  // Detectar éxito de Formspree y mostrar modal solo una vez
-  useEffect(() => {
-    if (formspreeState.succeeded && !hasShownModal.current) {
-      hasShownModal.current = true;
-      setShowSuccessModal(true);
-      form.reset();
-    }
-  }, [formspreeState.succeeded, form]);
-
   const onSubmit = async (data: ContactFormData) => {
-    // NUEVO: Guardar en base de datos (independiente de Formspree)
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    // 1. Save to database
     try {
-      await supabase.from("contact_submissions").insert({
+      const { error: dbError } = await supabase.from("contact_submissions").insert({
         nombre: data.nombre,
         apellidos: data.apellidos,
         email: data.email,
@@ -144,35 +138,43 @@ const ContactForm = () => {
         mensaje: data.mensaje || null,
         acepto_privacidad: data.acepto_privacidad,
       });
-    } catch {
-      // Si falla la DB, seguimos con Formspree igualmente
+
+      if (dbError) {
+        console.error("DB save error:", dbError);
+      }
+    } catch (err) {
+      console.error("DB save exception:", err);
     }
 
-    // Mapear valores a etiquetas legibles para el email
-    const experienciaLabel =
-      experienciaOptions.find((o) => o.value === data.experiencia)?.label || "";
-    const centroLabel =
-      centroOptions.find((o) => o.value === data.centro_propio)?.label || "";
-    const inversionLabel =
-      inversionOptions.find((o) => o.value === data.inversion)?.label || "";
-    const formacionLabel =
-      formacionOptions.find((o) => o.value === data.tipo_formacion)?.label ||
-      "";
+    // 2. Send emails via edge function
+    try {
+      const { error: fnError } = await supabase.functions.invoke("send-contact-email", {
+        body: {
+          nombre: data.nombre,
+          apellidos: data.apellidos,
+          email: data.email,
+          telefono: data.telefono,
+          experiencia: data.experiencia,
+          centro_propio: data.centro_propio,
+          inversion: data.inversion,
+          tipo_formacion: data.tipo_formacion,
+          mensaje: data.mensaje || "",
+          source: "contact_page",
+        },
+      });
 
-    // Crear objeto con datos formateados para Formspree
-    const formData = {
-      Nombre: data.nombre,
-      Apellidos: data.apellidos,
-      Email: data.email,
-      Teléfono: data.telefono,
-      "Experiencia en Detailing": experienciaLabel,
-      "Centro Propio": centroLabel,
-      "Inversión en Formación": inversionLabel,
-      "Tipo de Formación": formacionLabel,
-      Mensaje: data.mensaje || "Sin mensaje",
-    };
+      if (fnError) {
+        console.error("Edge function error:", fnError);
+        // Still show success since DB save likely worked
+        toast.error("Tu solicitud se guardó pero hubo un problema al enviar el email de confirmación.");
+      }
+    } catch (err) {
+      console.error("Edge function exception:", err);
+    }
 
-    await handleFormspreeSubmit(formData);
+    setIsSubmitting(false);
+    setShowSuccessModal(true);
+    form.reset();
   };
 
   return (
@@ -189,7 +191,7 @@ const ContactForm = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              {/* Nombre y Apellidos - Stack on mobile */}
+              {/* Nombre y Apellidos */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -227,7 +229,7 @@ const ContactForm = () => {
                 />
               </div>
 
-              {/* Email y Teléfono - Stack on mobile */}
+              {/* Email y Teléfono */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -392,7 +394,7 @@ const ContactForm = () => {
                 )}
               />
 
-              {/* Checkbox RGPD - Better mobile touch target */}
+              {/* Checkbox RGPD */}
               <FormField
                 control={form.control}
                 name="acepto_privacidad"
@@ -435,22 +437,21 @@ const ContactForm = () => {
                 )}
               />
 
-              {/* Mostrar errores de Formspree */}
-              {formspreeState.errors && Object.keys(formspreeState.errors).length > 0 && (
+              {/* Error message */}
+              {submitError && (
                 <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
-                  Ha ocurrido un error al enviar el formulario. Por favor,
-                  inténtalo de nuevo.
+                  {submitError}
                 </div>
               )}
 
-              {/* Botón de envío - Larger touch target */}
+              {/* Botón de envío */}
               <Button
                 type="submit"
                 className="w-full min-h-[52px] text-base"
                 size="lg"
-                disabled={formspreeState.submitting}
+                disabled={isSubmitting}
               >
-                {formspreeState.submitting ? (
+                {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                     Enviando...
@@ -470,10 +471,7 @@ const ContactForm = () => {
       {/* Modal de éxito */}
       <ContactSuccessModal
         open={showSuccessModal}
-        onClose={() => {
-          setShowSuccessModal(false);
-          hasShownModal.current = false; // Permitir mostrar de nuevo en futuros envíos
-        }}
+        onClose={() => setShowSuccessModal(false)}
       />
     </>
   );

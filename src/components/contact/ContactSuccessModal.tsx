@@ -60,9 +60,9 @@ const ContactSuccessModal = ({ open, onClose }: ContactSuccessModalProps) => {
               className="gap-2"
               asChild
             >
-              <a href="mailto:info@detailpark.com">
+              <a href="mailto:info@detailpark.es">
                 <Mail className="w-5 h-5" />
-                info@detailpark.com
+                info@detailpark.es
               </a>
             </Button>
           </div>
