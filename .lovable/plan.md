@@ -1,51 +1,66 @@
 
 
-## Plan: Cambiar el email de destino de leads a info@academiadetail.com
+## Plan: Corregir la entrega de emails de leads a info@academiadetail.com
 
-### Contexto
+### Diagnostico
 
-Actualmente los leads del formulario de contacto se envian a `info@detailpark.com` (configurado en el secreto `ADMIN_EMAIL` y como fallback en el codigo). El objetivo es cambiar el destino a `info@academiadetail.com`, que ya esta registrado en tu servidor.
+El email de confirmacion al lead llega correctamente, pero el email con la informacion del lead a `info@academiadetail.com` se queda en estado "Sent" y nunca llega. Esto ocurre porque:
 
-### Cambios necesarios
+1. El remitente es `noreply@academiadetail.com`, que Resend marca como problematico (alerta visible en su panel)
+2. El email va del mismo dominio al mismo dominio (de `@academiadetail.com` a `@academiadetail.com`), y el servidor receptor lo interpreta como posible suplantacion al llegar desde servidores externos (Amazon SES)
 
-#### 1. Actualizar el secreto ADMIN_EMAIL
+### Cambios en el codigo (Parte 1 - la hago yo)
 
-Se actualizara el valor del secreto `ADMIN_EMAIL` de `info@detailpark.com` a `info@academiadetail.com`.
+**Archivo**: `supabase/functions/send-contact-email/index.ts`
 
-#### 2. Actualizar el fallback en el codigo
+| Linea | Antes | Despues |
+|-------|-------|---------|
+| 297 | `from: "Detail Park Academy <noreply@academiadetail.com>"` | `from: "Detail Park Academy <formacion@academiadetail.com>"` |
+| 307 | `from: "Detail Park Academy <noreply@academiadetail.com>"` | `from: "Detail Park Academy <formacion@academiadetail.com>"` |
 
-**Archivo**: `supabase/functions/send-contact-email/index.ts` (linea 5)
+Usar `formacion@` en vez de `noreply@` elimina la alerta de Resend y mejora la confianza del email.
 
-Cambiar la direccion de fallback para que sea consistente:
+Ademas, anadire logging mejorado para registrar errores especificos de Resend en caso de fallos futuros.
 
-| Antes | Despues |
-|-------|---------|
-| `info@detailpark.com` | `info@academiadetail.com` |
+### Configuracion DNS (Parte 2 - la haces tu en Cloudflare)
 
-#### 3. Redesplegar y probar
+Para que el servidor de correo de `info@academiadetail.com` acepte emails enviados desde Resend, el registro SPF del **dominio raiz** `academiadetail.com` debe autorizar a los servidores de Resend.
 
-- Redesplegar la Edge Function con el cambio.
-- Realizar una llamada de prueba al endpoint para verificar que el email se envia correctamente a `info@academiadetail.com`.
-- Verificar el estado de respuesta (200 OK) y los logs de la funcion.
+**Pasos en Cloudflare:**
 
-### Ventaja adicional
+1. Ve a tu panel de Cloudflare > DNS > Registros
+2. Busca si ya existe un registro **TXT** en `@` (dominio raiz) con `v=spf1...`
+3. Si **no existe**, crea uno nuevo:
 
-Al usar `info@academiadetail.com`, tanto el remitente (`noreply@academiadetail.com`) como el destinatario comparten el mismo dominio `academiadetail.com`. Esto deberia eliminar los problemas de spam que habia con `detailpark.com`, ya que el dominio `academiadetail.com` ya esta verificado en Resend.
-
-### Seccion tecnica
-
-**Archivo a modificar**: `supabase/functions/send-contact-email/index.ts`
-
-**Cambio en linea 5**:
-```typescript
-// Antes
-const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@detailpark.com";
-
-// Despues
-const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@academiadetail.com";
+```text
+Tipo: TXT
+Nombre: @
+Contenido: v=spf1 include:amazonses.com ~all
 ```
 
-**Secreto a actualizar**: `ADMIN_EMAIL` -> `info@academiadetail.com`
+4. Si **ya existe** un SPF (por ejemplo para Google Workspace), anade `include:amazonses.com` dentro del registro existente. Ejemplo:
 
-**Prueba**: Llamada POST a la Edge Function con datos de prueba para confirmar entrega exitosa.
+```text
+v=spf1 include:_spf.google.com include:amazonses.com ~all
+```
+
+5. Asegurate de que el **proxy de Cloudflare esta desactivado** (nube gris, solo DNS) para este registro
+
+### Despliegue y verificacion
+
+Tras aplicar ambos cambios:
+
+1. Redesplegar la Edge Function con el nuevo remitente
+2. Enviar una prueba automatica desde el endpoint
+3. Verificar en los logs que Resend devuelve un ID sin errores
+4. Confirmar contigo que el email ha llegado a `info@academiadetail.com`
+
+### Resumen
+
+| Tarea | Responsable |
+|-------|-------------|
+| Cambiar remitente de `noreply@` a `formacion@` en ambos emails | Lovable |
+| Mejorar logging de errores de Resend | Lovable |
+| Redesplegar y probar la Edge Function | Lovable |
+| Anadir `include:amazonses.com` al SPF raiz en Cloudflare | Tu |
 
