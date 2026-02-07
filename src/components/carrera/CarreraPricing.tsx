@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Crown, Check, Calendar, Users, Award, ArrowRight, Sparkles } from 'lucide-react';
+import { Crown, Check, Calendar, Users, Award, ArrowRight, Star } from 'lucide-react';
 import { carreraDetailingData } from '@/data/carreraDetailingData';
 import { useCountUp } from '@/hooks/useCountUp';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
@@ -75,7 +75,7 @@ const CarreraPricing = ({ onCTAClick }: CarreraPricingProps) => {
           <AnimatedSection delay={0.2}>
             <div className="p-4 md:p-6 rounded-xl md:rounded-2xl bg-card border border-gold/20">
               <h3 className="text-xl md:text-2xl font-monument text-foreground mb-4 md:mb-6 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-gold" />
+                <Star className="w-5 h-5 md:w-6 md:h-6 text-gold" />
                 Desglose del Valor
               </h3>
               

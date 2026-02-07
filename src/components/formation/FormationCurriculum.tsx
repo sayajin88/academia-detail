@@ -59,7 +59,7 @@ export function FormationCurriculum({ formation }: FormationCurriculumProps) {
   const totalTopics = formation.modules.reduce((acc, mod) => acc + mod.topics.length, 0);
 
   return (
-    <section className="py-20 bg-gradient-to-b from-muted/50 via-background to-muted/30 relative overflow-hidden">
+    <section className="py-20 bg-card relative overflow-hidden section-divider">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />

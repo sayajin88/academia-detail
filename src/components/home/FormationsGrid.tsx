@@ -43,7 +43,7 @@ export function FormationsGrid() {
               <Link 
                 to={formation.href}
                 key={formation.id}
-                className="group relative overflow-hidden rounded-2xl md:rounded-3xl aspect-[16/10] shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02]"
+                className="group relative overflow-hidden rounded-2xl md:rounded-3xl aspect-[16/10] shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:scale-[1.02]"
               >
                 {/* Background Image */}
                 <div className="absolute inset-0 bg-muted">
@@ -94,7 +94,7 @@ export function FormationsGrid() {
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                   {/* Icon */}
                   <div className="flex items-center gap-3 mb-3 md:mb-4">
-                    <div className={`p-3 rounded-xl backdrop-blur-sm border ${isComingSoon ? 'bg-amber-500/20 text-amber-400 border-amber-500/20' : 'bg-primary/20 text-primary border-primary/20'}`}>
+                    <div className={`p-3 rounded-xl backdrop-blur-sm border transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${isComingSoon ? 'bg-amber-500/20 text-amber-400 border-amber-500/20' : 'bg-primary/20 text-primary border-primary/20'}`}>
                       <Icon className="h-6 w-6" />
                     </div>
                   </div>
@@ -118,6 +118,9 @@ export function FormationsGrid() {
 
                 {/* Hover border effect */}
                 <div className={`absolute inset-0 rounded-2xl md:rounded-3xl border-2 border-transparent transition-all duration-300 pointer-events-none ${isComingSoon ? 'group-hover:border-amber-500/30' : 'group-hover:border-primary/30'}`} />
+                
+                {/* Bottom loading bar on hover */}
+                <div className={`absolute bottom-0 left-0 right-0 h-1 transition-all duration-500 pointer-events-none ${isComingSoon ? 'bg-amber-500/0 group-hover:bg-gradient-to-r group-hover:from-amber-500/60 group-hover:via-amber-400/80 group-hover:to-amber-500/60' : 'bg-primary/0 group-hover:bg-gradient-to-r group-hover:from-primary/60 group-hover:via-primary-glow/80 group-hover:to-primary/60'}`} />
               </Link>
             );
           })}

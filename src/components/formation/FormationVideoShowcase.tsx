@@ -117,7 +117,7 @@ export function FormationVideoShowcase({
   if (!videos || videos.length === 0) return null;
 
   return (
-    <section ref={containerRef} className="py-12 md:py-20 bg-background">
+    <section ref={containerRef} className="py-12 md:py-20 bg-card section-divider">
       <div className="container mx-auto px-4">
         {/* Badge */}
         <div className="flex justify-center mb-6">

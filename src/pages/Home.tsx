@@ -20,11 +20,16 @@ const HomeCTA = lazy(() => import('@/components/home/HomeCTA').then(m => ({ defa
 const JornadaZeroSection = lazy(() => import('@/components/shared/JornadaZeroSection').then(m => ({ default: m.JornadaZeroSection })));
 
 // Skeleton placeholder para lazy components
-const SectionSkeleton = () => (
-  <div className="py-16 md:py-24 animate-pulse">
+const SectionSkeleton = ({ variant = 'default' }: { variant?: 'default' | 'card' }) => (
+  <div className={`py-16 md:py-24 ${variant === 'card' ? 'bg-card' : 'bg-background'}`}>
     <div className="container mx-auto px-4">
-      <div className="h-8 bg-muted/30 rounded w-1/3 mx-auto mb-4" />
-      <div className="h-4 bg-muted/20 rounded w-1/2 mx-auto" />
+      <div className="h-8 skeleton-shimmer rounded w-1/3 mx-auto mb-4" />
+      <div className="h-4 skeleton-shimmer rounded w-1/2 mx-auto mb-8" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="h-48 skeleton-shimmer rounded-xl" />
+        ))}
+      </div>
     </div>
   </div>
 );

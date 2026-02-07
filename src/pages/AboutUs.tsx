@@ -21,7 +21,7 @@ export default function AboutUs() {
         <AboutHero />
 
         {/* Detail Park Logo Section */}
-        <section className="py-12 md:py-16 bg-gradient-to-b from-background to-muted/10">
+        <section className="py-12 md:py-16 bg-card section-divider">
           <div className="container flex flex-col items-center gap-4">
             <img
               src={detailParkLogo}
@@ -60,7 +60,7 @@ export default function AboutUs() {
         <JornadaZeroSection />
 
         {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-b from-muted/30 to-background">
+        <section className="py-16 md:py-24 bg-card section-divider">
           <div className="container text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
               ¿Listo para Aprender de los que Viven del Detailing?
