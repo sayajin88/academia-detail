@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChevronDown, Mail, Wrench } from "lucide-react";
+import { ChevronDown, Mail, Gauge } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState, useEffect, useRef } from "react";
@@ -93,8 +93,8 @@ export function HomeHero() {
         <div className="max-w-4xl mx-auto">
           {/* Badge - Emphasizing Real Workshop */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 mb-6">
-            <Wrench className="w-4 h-4 text-primary" />
-            <span className="text-white/90 text-sm font-medium">🔧 El ÚNICO Centro con Taller 100% Real</span>
+            <Gauge className="w-4 h-4 text-primary" />
+            <span className="text-white/90 text-sm font-medium">El ÚNICO Centro con Taller 100% Real</span>
           </div>
 
           {/* Main Title - SEO Optimized H1 */}

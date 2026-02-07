@@ -1,4 +1,4 @@
-import { Building, Car, Brain, User, Target, Users, X, Check, Trophy, Scale } from 'lucide-react';
+import { Warehouse, Car, Brain, UserCheck, Target, Handshake, X, Check, Trophy, Scale } from 'lucide-react';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 
 const comparisonData = [
@@ -6,7 +6,7 @@ const comparisonData = [
     aspect: "Instalaciones",
     competition: "Aulas y espacios de formación",
     academiaDetail: "Taller 100% operativo con clientes reales",
-    icon: Building
+    icon: Warehouse
   },
   {
     aspect: "Práctica",
@@ -30,7 +30,7 @@ const comparisonData = [
     aspect: "Instructor",
     competition: "Profesores de formación",
     academiaDetail: "Empresario activo que vive del taller",
-    icon: User
+    icon: UserCheck
   },
   {
     aspect: "Objetivo",
@@ -42,7 +42,7 @@ const comparisonData = [
     aspect: "Post-formación",
     competition: "Diploma y adiós",
     academiaDetail: "Mentoría continua + Red de contactos",
-    icon: Users
+    icon: Handshake
   }
 ];
 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Building, GraduationCap, Wrench, Rocket, TrendingUp, Shield, CheckCircle } from 'lucide-react';
+import { ArrowRight, Store, GraduationCap, Wrench, Gauge, TrendingUp, Shield, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 
@@ -10,7 +10,7 @@ const steps = [
     description: 'Domina todas las técnicas con nuestra Carrera Negocio',
   },
   {
-    icon: Building,
+    icon: Store,
     title: 'Plan de Negocio',
     description: 'Te ayudamos a definir tu modelo de negocio rentable',
   },
@@ -20,7 +20,7 @@ const steps = [
     description: 'Asesoramiento en herramientas y productos profesionales',
   },
   {
-    icon: Rocket,
+    icon: Gauge,
     title: 'Lanzamiento',
     description: 'Apertura de tu centro con todo preparado',
   },
@@ -77,7 +77,7 @@ export function MontamosTuCentro() {
                   {/* Content */}
                   <div className="pb-6">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-bold text-[#ff5533] bg-primary/15 px-2 py-0.5 rounded-full">
+                      <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
                         Paso {index + 1}
                       </span>
                     </div>

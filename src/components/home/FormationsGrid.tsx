@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { formations } from '@/data/formations';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { 
-  Sparkles, 
+  Car, 
   Palette, 
   Shield, 
   Wrench, 
@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ElementType> = {
-  sparkles: Sparkles,
+  sparkles: Car,
   palette: Palette,
   shield: Shield,
   wrench: Wrench,
@@ -36,7 +36,7 @@ export function FormationsGrid() {
         {/* Grid de Formaciones - 2 columnas grandes */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
           {formations.map((formation) => {
-            const Icon = iconMap[formation.icon] || Sparkles;
+            const Icon = iconMap[formation.icon] || Car;
             const isComingSoon = formation.comingSoon;
             
             return (

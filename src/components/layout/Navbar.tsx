@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Zap, Sparkles, GraduationCap, Palette, Shield, Wrench, Home, Image, Mail, Crown } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import logo from '@/assets/detail-park-logo-white.png';
 
@@ -12,11 +12,11 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 );
 
 const formationLinks = [
-  { name: 'Detailing', href: '/curso-detailing-profesional', icon: Sparkles, description: 'Técnicas profesionales' },
+  { name: 'Detailing', href: '/curso-detailing-profesional', icon: Car, description: 'Técnicas profesionales' },
   { name: 'Car Wrapping', href: '/curso-vinilado-vehiculos', icon: Palette, description: 'Vinilado de vehículos' },
-  { name: 'Paint Protection Film', href: '/curso-ppf-proteccion-pintura', icon: Shield, description: 'Protección de pintura' },
+  { name: 'Paint Protection Film', href: '/curso-ppf-proteccion-pintura', icon: ShieldCheck, description: 'Protección de pintura' },
   { name: 'Restauración', href: '/curso-restauracion-vehiculos', icon: Wrench, description: 'Recuperación integral' },
-  { name: 'Carrera Detailing', href: '/formacion-profesional-detailing', icon: Crown, description: 'Programa completo' },
+  { name: 'Carrera Detailing', href: '/formacion-profesional-detailing', icon: GraduationCap, description: 'Programa completo' },
 ];
 
 const navLinks = [
