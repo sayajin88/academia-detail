@@ -22,7 +22,7 @@ const formationLinks = [
 const navLinks = [
   { name: 'Inicio', href: '/', icon: Home },
   { name: 'Quiénes Somos', href: '/quienes-somos', icon: Image },
-  { name: 'Contacto', href: '/contacto', icon: Mail },
+  { name: 'Inscribirse', href: '/contacto', icon: Mail },
 ];
 
 export function Navbar() {
