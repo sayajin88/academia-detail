@@ -1,195 +1,112 @@
 
 
-## Plan: SERPs Enriquecidas para academiadetail.com
+## Plan: Sincronizar Resend con el Formulario de Contacto
 
-### QUE TIENE LA COMPETENCIA
+### PROBLEMAS DETECTADOS
 
-En la captura del competidor (Instituto Detailing) se ven **sitelinks** bajo el resultado principal:
-- "Curso de Detailing en Madrid" (enlace a subpagina)
-- "Ver valoracion en video" (enlace a seccion de video)
-- "Ver presentacion en video" (enlace a seccion de video)
-- "5 Estrellas en Google" (enlace a resenas)
+Tras auditar todo el flujo de contacto, he encontrado **5 problemas criticos**:
 
-Estos sitelinks los genera Google automaticamente, pero se pueden influenciar con Schema.org y estructura web correcta.
+1. **La edge function `send-contact-email` existe pero NUNCA se llama** - No hay ninguna referencia a ella en el codigo frontend. Tiene 0 logs de ejecucion.
 
-### QUE TIENE YA academiadetail.com
+2. **El formulario de contacto usa Formspree en vez de Resend** - `ContactForm.tsx` envia los datos via Formspree (ID: maqqevbn), no a traves de la edge function con Resend.
 
-La web ya implementa un buen conjunto de schemas:
-- LocalBusiness + EducationalOrganization
-- Course con Offers (precio, disponibilidad)
-- FAQPage en paginas de cursos y home
-- Review individuales con itemReviewed
-- BreadcrumbList auto-generado
-- WebSite con SearchAction
-- WebPage con Speakable
-- Open Graph completo
-- Hreflang multi-region
+3. **El formulario de HomeCTA es falso** - El mini-formulario de la Home (`HomeCTA.tsx`) simula un envio con `setTimeout` pero no envia nada a ningun backend. Los leads se pierden.
 
-### QUE FALTA PARA CONSEGUIR SERPs ENRIQUECIDAS COMO LA COMPETENCIA
+4. **Desajuste de datos entre formulario y edge function** - El formulario envia campos de cualificacion de leads (experiencia, centro_propio, inversion, tipo_formacion) pero la edge function espera campos simples (name, email, phone, subject, message).
 
----
+5. **Email incorrecto en 2 componentes** - `ContactSuccessModal.tsx` y `PsychologicalTriggers.tsx` usan `info@detailpark.com` en vez de `info@detailpark.es`.
 
-### PASO 1: Schema SiteNavigationElement (Sitelinks)
+6. **Resend usa dominio de pruebas** - El "from" es `onboarding@resend.dev` que solo puede enviar emails a la cuenta del propietario de Resend, no a clientes reales.
 
-Los sitelinks del competidor aparecen porque Google entiende la estructura de navegacion. Necesitamos anadir un schema `SiteNavigationElement` en la pagina principal.
-
-**Archivo:** `src/utils/seoConfig.ts`
-
-Anadir un nuevo schema al array de la home:
+### FLUJO ACTUAL vs FLUJO DESEADO
 
 ```text
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "itemListElement": [
-    {
-      "@type": "SiteNavigationElement",
-      "position": 1,
-      "name": "Curso de Detailing Profesional",
-      "description": "Pulido, correccion y ceramicos en 4 dias",
-      "url": "https://academiadetail.com/curso-detailing-profesional"
-    },
-    {
-      "@type": "SiteNavigationElement",
-      "position": 2,
-      "name": "Curso de Car Wrapping",
-      "description": "Vinilado profesional de vehiculos",
-      "url": "https://academiadetail.com/curso-vinilado-vehiculos"
-    },
-    ...mas enlaces
-  ]
-}
-```
+ACTUAL (roto):
+ContactForm --> Formspree (email) + Supabase DB (backup)
+HomeCTA     --> Nada (simulado)
+Edge Fn     --> Resend (nunca se llama)
 
-Esto indica explicitamente a Google cuales son las subpaginas mas importantes del sitio.
-
----
-
-### PASO 2: Schema VideoObject (Rich Snippets de Video)
-
-El competidor tiene "Ver valoracion en video" y "Ver presentacion en video" como sitelinks. Esto se logra con schemas `VideoObject` en las paginas que contienen testimonios en video.
-
-**Archivos a modificar:**
-- `src/components/formation/FormationVideoTestimonials.tsx`
-- `src/pages/JornadaCero.tsx`
-- `src/pages/CarreraDetailing.tsx`
-
-Para cada video de YouTube incrustado, anadir:
-
-```text
-{
-  "@context": "https://schema.org",
-  "@type": "VideoObject",
-  "name": "Testimonio alumno - Curso Detailing",
-  "description": "Experiencia real de un alumno graduado",
-  "thumbnailUrl": "https://i.ytimg.com/vi/{VIDEO_ID}/maxresdefault.jpg",
-  "uploadDate": "2025-06-01",
-  "contentUrl": "https://www.youtube.com/watch?v={VIDEO_ID}",
-  "embedUrl": "https://www.youtube.com/embed/{VIDEO_ID}",
-  "duration": "PT3M",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Academia Detail"
-  }
-}
-```
-
-Esto permite que Google muestre miniaturas de video junto al resultado y puede generar sitelinks tipo "Ver testimonio en video".
-
----
-
-### PASO 3: Schema ItemList para Cursos (Carrusel en Google)
-
-Anadir un `ItemList` de cursos en la Home para que Google pueda mostrar un carrusel de cursos directamente en los resultados de busqueda.
-
-**Archivo:** `src/utils/seoConfig.ts` (schema de la home)
-
-```text
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "item": {
-        "@type": "Course",
-        "name": "Curso de Detailing Profesional",
-        "url": "https://academiadetail.com/curso-detailing-profesional",
-        "description": "...",
-        "provider": { "@type": "Organization", "name": "Academia Detail" },
-        "offers": { "@type": "Offer", "price": "2997", "priceCurrency": "EUR" }
-      }
-    },
-    ... mas cursos
-  ]
-}
+DESEADO (sincronizado):
+ContactForm --> Supabase DB + Edge Function (Resend: admin + cliente)
+HomeCTA     --> Supabase DB + Edge Function (Resend: admin + cliente)
 ```
 
 ---
 
-### PASO 4: Secciones con Anclajes Nombrados (Anchor Links)
+### PASO 1: Reescribir la Edge Function `send-contact-email`
 
-Google genera sitelinks como "Ver valoracion en video" cuando detecta secciones claramente identificables dentro de una pagina. Necesitamos anadir `id` a las secciones clave.
+Actualizar para aceptar los campos completos de cualificacion de leads:
 
-**Archivos a modificar:**
-- `src/components/formation/FormationVideoTestimonials.tsx` - anadir `id="testimonios-video"`
-- `src/components/formation/FormationPricing.tsx` - anadir `id="precios"`
-- `src/components/formation/FormationFAQ.tsx` - anadir `id="preguntas-frecuentes"`
-- `src/components/formation/FormationCertification.tsx` - anadir `id="certificacion"`
-- `src/components/home/TestimonialsSection.tsx` - anadir `id="opiniones"`
-- `src/components/home/HomeFAQ.tsx` - anadir `id="faq"`
+**Datos que recibira:**
 
-Tambien necesitamos anadir links internos (anclas) en la pagina que apunten a estas secciones. Esto ayuda a Google a identificarlas como "secciones de interes" y mostrarlas como sitelinks.
+| Campo | Tipo | Requerido |
+|-------|------|-----------|
+| nombre | string | Si |
+| apellidos | string | Si |
+| email | string | Si |
+| telefono | string | Si |
+| experiencia | string | Si |
+| centro_propio | string | Si |
+| inversion | string | Si |
+| tipo_formacion | string | Si |
+| mensaje | string | No |
+| source | string | Si ("contact_page" o "home_cta") |
 
----
-
-### PASO 5: Schema AggregateRating Mejorado (Estrellas en SERP)
-
-El competidor muestra "5 Estrellas en Google" como sitelink, lo que sugiere que tiene reviews de Google My Business vinculadas. Nosotros ya tenemos `AggregateRating` en los schemas, pero podemos mejorarlo:
-
-**Archivo:** `src/utils/seoConfig.ts`
-
-Asegurarnos de que el schema `Course` en cada pagina de formacion incluye un `aggregateRating` con datos completos y que el `LocalBusiness` tambien lo tiene. Ya esta implementado, pero verificaremos que todos los valores sean consistentes y reales.
-
-Ademas, mover las reviews reales (actualmente solo como texto en el componente) a un schema `Review` en las paginas de cursos individuales, no solo en la home.
-
----
-
-### PASO 6: Schema EducationalOccupationalProgram (Para Carrera Detailing)
-
-Para la pagina de "Carrera Detailing" (programa completo de 1 mes), anadir un schema mas especifico que `Course`:
-
-**Archivo:** `src/utils/seoConfig.ts` (config de carreraDetailing)
-
-```text
-{
-  "@context": "https://schema.org",
-  "@type": "EducationalOccupationalProgram",
-  "name": "Formacion Profesional Detailing",
-  "description": "Programa completo de 1 mes...",
-  "timeToComplete": "P30D",
-  "occupationalCredentialAwarded": {
-    "@type": "EducationalOccupationalCredential",
-    "credentialCategory": "certificate",
-    "name": "4 Certificaciones Profesionales"
-  },
-  "programPrerequisites": "Sin experiencia previa necesaria",
-  "numberOfCredits": { "@type": "StructuredValue", "value": 4 },
-  "offers": { ... },
-  "provider": { ... }
-}
-```
+**Cambios en la funcion:**
+- Adaptar la interfaz `ContactRequest` a los nuevos campos
+- Actualizar las validaciones del servidor
+- Reescribir el HTML del email al admin para incluir todos los campos de cualificacion (experiencia, centro, inversion, tipo de formacion) con badges de colores
+- Reescribir el email de confirmacion al cliente
+- Cambiar el `from` a un dominio verificado o mantener `onboarding@resend.dev` con nota de advertencia
+- Cambiar `info@detailpark.com` a `info@detailpark.es` en el fallback de ADMIN_EMAIL
 
 ---
 
-### PASO 7: Mejorar el Sitemap con Fechas Reales
+### PASO 2: Actualizar `ContactForm.tsx`
 
-El sitemap actual tiene `lastmod: 2026-01-18` para todas las paginas. Google valora los sitemaps con fechas de modificacion reales y diferenciadas.
+Reemplazar Formspree por la edge function de Resend:
 
-**Archivo:** `public/sitemap.xml`
+- Eliminar la importacion de `@formspree/react`
+- Eliminar `useFormspree("maqqevbn")` y toda la logica de `formspreeState`
+- Crear estado propio para `isSubmitting` y manejo de errores
+- En `onSubmit`:
+  1. Guardar en `contact_submissions` (mantener)
+  2. Llamar a la edge function `send-contact-email` via `supabase.functions.invoke()`
+  3. Mostrar el modal de exito si ambas operaciones van bien
+  4. Mostrar error si falla el envio de email
 
-Actualizar con fechas mas recientes y diferenciadas, anadir la pagina de galeria (ahora quienes-somos) si no esta.
+---
+
+### PASO 3: Conectar `HomeCTA.tsx` al Backend
+
+Reemplazar el `setTimeout` simulado por envio real:
+
+- Importar `supabase` client
+- En `handleSubmit`:
+  1. Guardar en `contact_submissions` con valores por defecto para los campos de cualificacion que no tiene el mini-formulario (experiencia: "sin_especificar", etc.)
+  2. Llamar a la edge function `send-contact-email` con `source: "home_cta"`
+  3. Mantener el toast de exito
+  4. Mostrar toast de error si falla
+
+---
+
+### PASO 4: Corregir Emails Incorrectos
+
+| Archivo | Cambio |
+|---------|--------|
+| `src/components/contact/ContactSuccessModal.tsx` | `info@detailpark.com` a `info@detailpark.es` (2 ocurrencias) |
+| `src/components/PsychologicalTriggers.tsx` | `garantia@detailpark.com` a `garantia@detailpark.es` |
+| `supabase/functions/send-contact-email/index.ts` | Fallback `info@detailpark.com` a `info@detailpark.es` |
+
+---
+
+### PASO 5: Nota sobre Dominio de Resend
+
+Actualmente el "from" usa `onboarding@resend.dev` que es el dominio de pruebas de Resend. Esto tiene limitaciones:
+- Solo puede enviar emails a la direccion del propietario de la cuenta Resend
+- Los emails de confirmacion al cliente NO se entregaran a direcciones externas
+
+Para solucionarlo en el futuro, necesitaras verificar tu dominio propio en Resend (por ejemplo `noreply@detailpark.es`). Por ahora, la implementacion funcionara para recibir los leads en el email del admin, pero el email de confirmacion al cliente solo funcionara si verificas el dominio.
 
 ---
 
@@ -197,23 +114,9 @@ Actualizar con fechas mas recientes y diferenciadas, anadir la pagina de galeria
 
 | Archivo | Cambio |
 |---------|--------|
-| `src/utils/seoConfig.ts` | Anadir SiteNavigationElement, ItemList de cursos, VideoObject generator, EducationalOccupationalProgram |
-| `src/components/formation/FormationVideoTestimonials.tsx` | Anadir schema VideoObject para cada video + id="testimonios-video" |
-| `src/components/formation/FormationPricing.tsx` | Anadir id="precios" al section |
-| `src/components/formation/FormationFAQ.tsx` | Anadir id="preguntas-frecuentes" al section |
-| `src/components/formation/FormationCertification.tsx` | Anadir id="certificacion" al section |
-| `src/components/home/TestimonialsSection.tsx` | Anadir id="opiniones" al section + reviews schema en cursos |
-| `src/components/home/HomeFAQ.tsx` | Anadir id="faq" al section |
-| `src/pages/CarreraDetailing.tsx` | Incluir VideoObject schemas |
-| `public/sitemap.xml` | Actualizar fechas lastmod |
-
-### NOTA IMPORTANTE
-
-Los sitelinks de Google son **algoritmicos**: no se pueden forzar, solo influenciar. Los cambios propuestos maximizan las probabilidades de que Google los muestre, pero el resultado depende de:
-1. La autoridad del dominio (backlinks, antiguedad)
-2. El trafico real al sitio
-3. El CTR en los resultados de busqueda
-4. La indexacion correcta de todas las paginas
-
-Tras implementar los cambios, hay que esperar entre 2 y 6 semanas para ver resultados en Google Search Console.
+| `supabase/functions/send-contact-email/index.ts` | Reescribir para aceptar datos completos de cualificacion, corregir email fallback |
+| `src/components/contact/ContactForm.tsx` | Reemplazar Formspree por edge function Resend, mantener guardado en DB |
+| `src/components/home/HomeCTA.tsx` | Conectar al backend real (DB + edge function) |
+| `src/components/contact/ContactSuccessModal.tsx` | Corregir email `detailpark.com` a `detailpark.es` |
+| `src/components/PsychologicalTriggers.tsx` | Corregir email `detailpark.com` a `detailpark.es` |
 
