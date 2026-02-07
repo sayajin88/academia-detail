@@ -1,109 +1,96 @@
 
 
-## Plan: Emails de leads a info@academiadetail.com + Auditoría completa de Resend
+# Mejoras en la pagina de Contacto
 
-### Por que no llegan los emails a info@academiadetail.com
+## Resumen de cambios
 
-El problema es exclusivamente de **tu servidor de correo**, no de Resend ni del codigo. Lo que ocurre:
+Se van a actualizar 5 componentes de la pagina de contacto para reflejar la informacion correcta, mejorar el modal de exito y cambiar la imagen del hero.
 
-1. Resend envia el email correctamente (confirmado en logs: IDs validos, sin errores)
-2. El email llega al servidor que gestiona `info@academiadetail.com`
-3. El servidor ve que el email dice venir de `@academiadetail.com` (mismo dominio)
-4. Pero llega desde los servidores de Amazon SES (que usa Resend)
-5. El servidor lo rechaza silenciosamente porque no reconoce a Amazon SES como remitente autorizado del dominio raiz
+---
 
-**Lo que necesitas configurar en tu proveedor de correo / DNS:**
+## 1. ContactInfo.tsx - Email y seccion de ubicacion
 
-Debes ir a tu panel de Cloudflare y anadir o modificar el registro **TXT SPF** del dominio raiz `academiadetail.com` (`@`):
+**Cambios en la informacion de contacto:**
+- Cambiar el email de `info@detailpark.es` a `info@academiadetail.com`
 
-- Si NO existe un registro SPF en el raiz, crea uno:
-  `v=spf1 include:amazonses.com ~all`
+**Cambios en la seccion "Nuestra ubicacion":**
+- Actualizar el texto descriptivo para indicar que la academia esta dentro de las instalaciones de Detail Park
+- Anadir un enlace visible a `www.detailpark.com`
+- Incluir el logo de Detail Park (`detail-park-logo-white.png`) junto al enlace, dentro de una tarjeta/banner que destaque la relacion con Detail Park
 
-- Si YA existe uno (por ejemplo para Google Workspace), anade `include:amazonses.com` dentro:
-  `v=spf1 include:_spf.google.com include:amazonses.com ~all`
+---
 
-- El registro debe tener el **proxy de Cloudflare desactivado** (nube gris)
+## 2. ContactSchedule.tsx - Horario y tiempo de respuesta
 
-Ademas, si tu proveedor de correo tiene filtros antispam (ej: cPanel, Hostinger), busca una opcion para **permitir/whitelist** emails de `formacion@academiadetail.com` o del dominio `amazonses.com`.
+**Cambios en el horario:**
+- Lunes - Viernes: `07:00 - 17:30`
+- Sabados - Domingos: `Cerrado`
+- Eliminar la fila de "Sabados: Previa cita" y "Domingos: Cerrado" y dejarlas en una sola linea "Sabados y Domingos: Cerrado"
 
-### Cambios en el codigo (los hago yo)
+**Cambios en el tiempo de respuesta:**
+- Cambiar de "menos de 24 horas" a "un plazo de 48 horas"
 
-#### 1. Destino del email admin: volver a info@academiadetail.com con backup a Gmail
+**Cambios en redes sociales:**
+- Actualizar enlace de Instagram a `https://www.instagram.com/detailparkoficial/` (coherente con el footer)
+- Anadir segundo enlace de Instagram para `@danidetailoficial`
 
-Para que no pierdas ningun lead mientras configuras el DNS, implementare un **envio dual**: el email de notificacion se enviara tanto a `info@academiadetail.com` como a `academiadetail@gmail.com`. Cuando confirmes que los emails llegan a info@, eliminaremos el backup.
+---
 
-**Archivo**: `supabase/functions/send-contact-email/index.ts`
+## 3. ContactSuccessModal.tsx - Rediseno completo del modal de exito
 
-- Linea 5: Cambiar el fallback de `academiadetail@gmail.com` a `info@academiadetail.com`
-- Anadir envio de copia de seguridad a `academiadetail@gmail.com`
+**Rediseno visual impactante:**
+- Icono de exito mas grande con animacion de entrada (scale + fade)
+- Fondo con gradiente decorativo y efecto de confeti/particulas visual
+- Titulo mas grande y llamativo: "Solicitud Enviada con Exito"
+- Mensaje claro: "En las proximas 48 horas nos pondremos en contacto contigo"
 
-#### 2. Auditoría completa de Resend - Hallazgos y correcciones
+**Contenido del modal:**
+- Boton de WhatsApp prominente con enlace a `https://wa.me/34622773555` para contacto directo
+- Seccion de redes sociales con enlaces a `@detailparkoficial` y `@danidetailoficial`
+- Enlace a `www.detailpark.com` para visitar la pagina de Detail Park
+- Eliminar el enlace de email `info@detailpark.es` del modal (se reemplaza con los nuevos elementos)
+- Boton de cerrar al final
 
-| Funcion | Hallazgo | Accion |
-|---------|----------|--------|
-| `send-contact-email` | Remitente `formacion@academiadetail.com` (correcto, dominio verificado) | Sin cambios |
-| `send-contact-email` | Logging de errores mejorado (ya aplicado) | Sin cambios |
-| `send-contact-email` | CORS headers completos | Sin cambios |
-| `send-contact-email` | Validacion de campos robusta | Sin cambios |
-| `send-registration-emails` | Usa `onboarding@resend.dev` como remitente | Cambiar a `formacion@academiadetail.com` para mejor marca |
-| `send-registration-emails` | CORS headers incompletos (faltan headers de Supabase client) | Actualizar headers |
-| `send-registration-emails` | No verifica errores de Resend en la respuesta | Anadir verificacion |
-| `send-registration-emails` | Email admin usa `onboarding@resend.dev` | Mantener (va a Gmail, funciona) |
-| Secrets | `RESEND_API_KEY` configurado | OK |
-| Secrets | `ADMIN_EMAIL` configurado | OK |
-| Secrets | `Stripe` configurado | OK |
-| Config | Todas las funciones con `verify_jwt = false` | Correcto para endpoints publicos |
+---
 
-### Resumen de tareas
+## 4. ContactHero.tsx - Cambio de imagen de fondo
 
-| Tarea | Quien |
-|-------|-------|
-| Cambiar destino admin email a `info@academiadetail.com` + backup Gmail | Lovable |
-| Actualizar CORS headers en `send-registration-emails` | Lovable |
-| Anadir verificacion de errores Resend en `send-registration-emails` | Lovable |
-| Cambiar remitente cliente en `send-registration-emails` a dominio verificado | Lovable |
-| Redesplegar y enviar test automatico | Lovable |
-| Anadir `include:amazonses.com` al SPF raiz en Cloudflare | Tu |
-| Verificar que el email llega a info@academiadetail.com | Tu |
+- Cambiar la imagen de `hero-contacto.jpg` a una de las fotos de formacion/eventos disponibles (por ejemplo `evento-grupo-formacion.jpg` o `formacion-detailing-1.jpg`, que muestran el ambiente de la academia)
 
-### Seccion tecnica
+---
 
-**Cambio 1** - `supabase/functions/send-contact-email/index.ts`:
+## 5. ContactForm.tsx - Actualizacion de textos
 
-```typescript
-// Linea 5: Destino principal
-const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@academiadetail.com";
-const backupEmail = "academiadetail@gmail.com";
+- Cambiar "te contactaremos en menos de 24 horas" a "te contactaremos en un plazo de 48 horas" en la descripcion del formulario
 
-// Linea 296-302: Envio al admin (destino principal + backup)
-const adminEmailResponse = await resend.emails.send({
-  from: "Detail Park Academy <formacion@academiadetail.com>",
-  to: [adminEmail],
-  cc: [backupEmail],  // Backup para no perder leads
-  replyTo: email,
-  subject: `Nuevo lead: ${formacionLabels[tipo_formacion] || tipo_formacion} - ${nombre} ${apellidos}`,
-  html: generateAdminEmail(contactData),
-});
-```
+---
 
-**Cambio 2** - `supabase/functions/send-registration-emails/index.ts`:
+## 6. Verificacion mobile
 
-```typescript
-// CORS headers actualizados
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+Todos los cambios se implementaran con clases responsive de Tailwind:
+- El modal de exito usara `sm:max-w-lg` y botones apilados en movil
+- Los botones de redes sociales tendran tamano minimo de toque de 48px
+- La tarjeta de Detail Park en la ubicacion se adaptara a pantallas pequenas
+- Los textos del modal usaran tamano responsive
 
-// Remitente cliente: dominio verificado
-from: "Detail Park <formacion@academiadetail.com>",
+---
 
-// Verificacion de errores Resend
-if (clientEmailResponse.error) {
-  console.error("Resend error sending client email:", JSON.stringify(clientEmailResponse.error));
-} else {
-  console.log("Client email sent successfully. ID:", clientEmailResponse.data?.id);
-}
-```
+## Seccion tecnica
+
+### Archivos a modificar
+
+| Archivo | Cambios principales |
+|---------|-------------------|
+| `src/components/contact/ContactInfo.tsx` | Email a `info@academiadetail.com`, seccion Detail Park con logo y enlace |
+| `src/components/contact/ContactSchedule.tsx` | Horario 07:00-17:30, sabados/domingos cerrado, respuesta 48h, redes actualizadas |
+| `src/components/contact/ContactSuccessModal.tsx` | Rediseno completo: mas impactante, WhatsApp, redes sociales, enlace detailpark.com |
+| `src/components/contact/ContactHero.tsx` | Cambiar imagen de fondo a foto de formacion/evento |
+| `src/components/contact/ContactForm.tsx` | Texto "48 horas" en descripcion del formulario |
+
+### Assets utilizados
+- `src/assets/detail-park-logo-white.png` - Logo de Detail Park para la seccion de ubicacion
+- `src/assets/evento-grupo-formacion.jpg` (o similar) - Nueva imagen para el hero
+
+### Sin cambios en backend
+No se requieren cambios en las Edge Functions ni en la base de datos. Solo cambios de interfaz.
 
