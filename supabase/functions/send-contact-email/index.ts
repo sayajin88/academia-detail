@@ -297,7 +297,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Detail Park Academy <onboarding@resend.dev>",
+      from: "Detail Park Academy <noreply@academiadetail.com>",
       to: [adminEmail],
       replyTo: email,
       subject: `📬 Nuevo lead: ${formacionLabels[tipo_formacion] || tipo_formacion} - ${nombre} ${apellidos}`,
@@ -308,7 +308,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation to client
     const clientEmailResponse = await resend.emails.send({
-      from: "Detail Park Academy <onboarding@resend.dev>",
+      from: "Detail Park Academy <noreply@academiadetail.com>",
       to: [email],
       subject: "✨ Hemos recibido tu mensaje - Detail Park Academy",
       html: generateClientEmail(contactData),
