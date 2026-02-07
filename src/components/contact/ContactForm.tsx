@@ -185,7 +185,7 @@ const ContactForm = () => {
             Solicita Información
           </CardTitle>
           <p className="text-muted-foreground text-sm">
-            Completa el formulario y te contactaremos en menos de 24 horas
+            Completa el formulario y te contactaremos en un plazo de 48 horas
           </p>
         </CardHeader>
         <CardContent>
@@ -424,10 +424,10 @@ const ContactForm = () => {
                         mis derechos de acceso, rectificación, supresión,
                         portabilidad, limitación y oposición en{" "}
                         <a
-                          href="mailto:info@detailpark.es"
+                          href="mailto:info@academiadetail.com"
                           className="text-primary underline hover:text-primary/80"
                         >
-                          info@detailpark.es
+                          info@academiadetail.com
                         </a>
                         .
                       </FormLabel>

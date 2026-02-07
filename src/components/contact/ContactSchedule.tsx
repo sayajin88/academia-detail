@@ -2,16 +2,21 @@ import { Clock, Instagram, Youtube, MessageCircle } from "lucide-react";
 
 const ContactSchedule = () => {
   const schedule = [
-    { day: "Lunes - Viernes", hours: "9:00 - 18:00" },
-    { day: "Sábados", hours: "Previa cita" },
-    { day: "Domingos", hours: "Cerrado" },
+    { day: "Lunes - Viernes", hours: "07:00 - 17:30" },
+    { day: "Sábados y Domingos", hours: "Cerrado" },
   ];
 
   const socialLinks = [
     {
       icon: Instagram,
-      label: "Instagram",
-      href: "https://www.instagram.com/detailpark/",
+      label: "@detailparkoficial",
+      href: "https://www.instagram.com/detailparkoficial/",
+      color: "hover:text-pink-500",
+    },
+    {
+      icon: Instagram,
+      label: "@danidetailoficial",
+      href: "https://www.instagram.com/danidetailoficial/",
       color: "hover:text-pink-500",
     },
     {
@@ -64,17 +69,18 @@ const ContactSchedule = () => {
                   siguiéndonos en redes sociales.
                 </p>
 
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-3">
                   {socialLinks.map((link) => (
                     <a
                       key={link.label}
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`w-12 h-12 rounded-full bg-muted/50 flex items-center justify-center transition-colors ${link.color}`}
+                      className={`inline-flex items-center gap-2 px-4 py-3 min-h-[48px] rounded-full bg-muted/50 transition-colors ${link.color} hover:bg-muted`}
                       aria-label={link.label}
                     >
                       <link.icon className="w-5 h-5" />
+                      <span className="text-sm font-medium">{link.label}</span>
                     </a>
                   ))}
                 </div>
@@ -84,7 +90,7 @@ const ContactSchedule = () => {
                     <span className="font-medium text-foreground">
                       Tiempo de respuesta:
                     </span>{" "}
-                    Normalmente respondemos en menos de 24 horas laborables.
+                    Normalmente respondemos en un plazo de 48 horas laborables.
                   </p>
                 </div>
               </div>
