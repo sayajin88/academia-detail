@@ -1,5 +1,5 @@
 import { MapPin } from "lucide-react";
-import heroImage from '@/assets/heroes/hero-contacto.jpg';
+import heroImage from '@/assets/evento-grupo-formacion.jpg';
 
 const ContactHero = () => {
   return (

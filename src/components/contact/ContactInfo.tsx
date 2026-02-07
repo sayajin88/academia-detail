@@ -1,4 +1,5 @@
 import { MapPin, Mail, Phone, ExternalLink } from "lucide-react";
+import detailParkLogo from "@/assets/detail-park-logo-white.png";
 
 const ContactInfo = () => {
   const contactDetails = [
@@ -13,8 +14,8 @@ const ContactInfo = () => {
     {
       icon: Mail,
       label: "Email",
-      value: "info@detailpark.es",
-      href: "mailto:info@detailpark.es",
+      value: "info@academiadetail.com",
+      href: "mailto:info@academiadetail.com",
     },
     {
       icon: Phone,
@@ -65,8 +66,30 @@ const ContactInfo = () => {
       <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6 md:p-8">
         <h2 className="text-2xl font-bold mb-4">Nuestra ubicación</h2>
         <p className="text-muted-foreground mb-4">
-          Visítanos en nuestras instalaciones de Detail Park en Alicante
+          La academia se encuentra dentro de las instalaciones de{" "}
+          <strong className="text-foreground">Detail Park</strong>, en Alicante.
         </p>
+
+        {/* Detail Park Banner */}
+        <a
+          href="https://www.detailpark.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 hover:border-primary/40 transition-all group mb-6"
+        >
+          <img
+            src={detailParkLogo}
+            alt="Detail Park"
+            className="h-10 w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity"
+          />
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+              Visita Detail Park
+            </p>
+            <p className="text-xs text-muted-foreground">www.detailpark.com</p>
+          </div>
+          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+        </a>
 
         <div className="rounded-xl overflow-hidden border border-border">
           <iframe
