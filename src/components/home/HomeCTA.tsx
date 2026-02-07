@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Phone, Mail, Send } from 'lucide-react';
+import { ArrowRight, Phone, Mail, Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 export function HomeCTA() {
   const [formData, setFormData] = useState({
@@ -15,11 +16,60 @@ export function HomeCTA() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.phone) {
+      toast.error('Por favor, completa todos los campos.');
+      return;
+    }
+
     setIsSubmitting(true);
-    
-    // Simulate form submission - in production, connect to your backend
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
+    // 1. Save to database with default values for qualification fields
+    try {
+      const { error: dbError } = await supabase.from("contact_submissions").insert({
+        nombre: formData.name,
+        apellidos: "-",
+        email: formData.email,
+        telefono: formData.phone,
+        experiencia: "sin_especificar",
+        centro_propio: "sin_especificar",
+        inversion: "sin_especificar",
+        tipo_formacion: "general",
+        mensaje: null,
+        acepto_privacidad: true,
+      });
+
+      if (dbError) {
+        console.error("HomeCTA DB save error:", dbError);
+      }
+    } catch (err) {
+      console.error("HomeCTA DB exception:", err);
+    }
+
+    // 2. Send emails via edge function
+    try {
+      const { error: fnError } = await supabase.functions.invoke("send-contact-email", {
+        body: {
+          nombre: formData.name,
+          apellidos: "-",
+          email: formData.email,
+          telefono: formData.phone,
+          experiencia: "sin_especificar",
+          centro_propio: "sin_especificar",
+          inversion: "sin_especificar",
+          tipo_formacion: "general",
+          mensaje: "",
+          source: "home_cta",
+        },
+      });
+
+      if (fnError) {
+        console.error("HomeCTA edge function error:", fnError);
+      }
+    } catch (err) {
+      console.error("HomeCTA edge function exception:", err);
+    }
+
     toast.success('¡Gracias por tu interés! Te contactaremos pronto.');
     setFormData({ name: '', email: '', phone: '' });
     setIsSubmitting(false);
@@ -127,7 +177,10 @@ export function HomeCTA() {
                 className="w-full bg-white text-primary hover:bg-white/90 font-semibold"
               >
                 {isSubmitting ? (
-                  'Enviando...'
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Enviando...
+                  </>
                 ) : (
                   <>
                     <Send className="h-4 w-4 mr-2" />
