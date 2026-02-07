@@ -7,6 +7,7 @@ import { AboutGallerySection } from '@/components/about/AboutGallerySection';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 
@@ -29,6 +30,9 @@ export default function AboutUs() {
 
         {/* Gallery Section */}
         <AboutGallerySection />
+
+        {/* Jornada Zero Section */}
+        <JornadaZeroSection />
 
         {/* CTA Section */}
         <section className="py-16 md:py-24 bg-gradient-to-b from-muted/30 to-background">

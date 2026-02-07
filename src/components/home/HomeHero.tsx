@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChevronDown, Play, Wrench } from "lucide-react";
+import { ChevronDown, Mail, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState, useEffect, useRef } from "react";
@@ -115,10 +115,9 @@ export function HomeHero() {
           {/* CTA Buttons - Improved mobile layout */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 md:mb-12 px-2">
             <Button asChild variant="hero" size="xl" className="w-full sm:w-auto text-sm sm:text-base min-h-[52px]">
-              <Link to="/curso-detailing-iniciacion">
-                <Play className="h-5 w-5 mr-2 flex-shrink-0" />
-                <span className="sm:hidden">Probar por €97 + IVA</span>
-                <span className="hidden sm:inline">Probar por €97 + IVA (Jornada Zero)</span>
+              <Link to="/contacto">
+                <Mail className="h-5 w-5 mr-2 flex-shrink-0" />
+                Solicitar Información
               </Link>
             </Button>
             <Button variant="glass" size="lg" onClick={scrollToFormations} className="w-full sm:w-auto min-h-[48px]">

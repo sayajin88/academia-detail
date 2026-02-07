@@ -29,11 +29,19 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link to="/" className="inline-block mb-4">
+            <Link to="/" className="inline-block mb-2">
               <img src={logo} alt="Academia Detail - Escuela de detailing profesional" className="h-10 w-auto" />
             </Link>
+            <a 
+              href="https://www.detailpark.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-block text-xs text-muted-foreground hover:text-primary transition-colors mb-4 tracking-wide"
+            >
+              Potenciada por <span className="font-semibold text-foreground/80">Detail Park</span> ↗
+            </a>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Centro de formación líder en detailing profesional. Aprende de los mejores y transforma tu pasión en profesión.
+              Centro de formación líder en detailing profesional, dentro de las instalaciones de Detail Park en Alicante. Aprende de los mejores y transforma tu pasión en profesión.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -91,11 +99,11 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="mailto:info@detailpark.es"
+                  href="mailto:info@academiadetail.com"
                   className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Mail className="h-4 w-4 flex-shrink-0" />
-                  info@detailpark.es
+                  info@academiadetail.com
                 </a>
               </li>
               <li>
