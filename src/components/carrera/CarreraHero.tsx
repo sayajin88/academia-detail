@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Crown, Clock, Users, Award, ArrowRight, Sparkles, ChevronDown, Euro } from 'lucide-react';
+import { Crown, Clock, Users, Award, ArrowRight, Star, ChevronDown, Euro } from 'lucide-react';
 import { carreraDetailingData } from '@/data/carreraDetailingData';
 import { useCountUp } from '@/hooks/useCountUp';
 import heroImage from '@/assets/formacion-detailing-juan-daniel.jpg';
@@ -78,7 +78,7 @@ const CarreraHero = ({ onCTAClick }: CarreraHeroProps) => {
           <span className="text-gold font-semibold text-sm tracking-[0.2em] uppercase shimmer-badge-gold">
             Programa Exclusivo
           </span>
-          <Sparkles className="w-4 h-4 text-gold animate-pulse" />
+          <Star className="w-4 h-4 text-gold animate-pulse" />
         </div>
 
         {/* Main Title with Reveal Effect */}

@@ -19,7 +19,7 @@
     --secondary-foreground: 0 0% 100%;
     
     --muted: 240 6% 18%; /* Gris medio oscuro - Menús, títulos secundarios */
-    --muted-foreground: 210 5% 75%; /* Texto secundario más legible */
+    --muted-foreground: 210 5% 78%; /* Texto secundario más legible - WCAG AA compliant */
     
     --accent: 348 60% 34%; /* Burdeos - Acentos y llamadas a la acción */
     --accent-foreground: 0 0% 100%;
@@ -100,7 +100,7 @@
     --secondary-foreground: 0 0% 100%;
 
     --muted: 240 6% 18%;
-    --muted-foreground: 210 5% 75%;
+    --muted-foreground: 210 5% 78%;
 
     --accent: 348 60% 34%;
     --accent-foreground: 0 0% 100%;
@@ -556,7 +556,39 @@ img {
 
 .hover-glow:hover {
   box-shadow: var(--shadow-glow-intense);
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+}
+
+/* Hover lift - subtle elevation for cards */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -8px hsl(var(--primary) / 0.2), var(--shadow-card);
+}
+
+/* Section divider */
+.section-divider {
+  border-top: 1px solid hsl(var(--border) / 0.3);
+}
+
+/* Shimmer skeleton animation */
+@keyframes shimmer-skeleton {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted) / 0.3) 25%,
+    hsl(var(--muted) / 0.5) 50%,
+    hsl(var(--muted) / 0.3) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-skeleton 1.5s ease-in-out infinite;
 }
 
 /* Animated backgrounds */

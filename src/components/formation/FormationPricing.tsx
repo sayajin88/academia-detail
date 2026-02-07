@@ -99,6 +99,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
             <Sparkles className="h-4 w-4 text-primary" />
             <span className="text-primary font-semibold text-sm">Inversión en tu Futuro</span>
+            <span className="text-primary font-semibold text-sm">Inversión en tu Futuro</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             Tu Formación Profesional
@@ -206,7 +207,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                         </span>
                       </div>
                       <div className="flex items-baseline justify-center gap-1">
-                        <span className="text-5xl md:text-6xl font-extrabold gradient-text price-animate tracking-tight">
+                        <span className="text-5xl md:text-7xl font-extrabold gradient-text price-animate tracking-tight">
                           €{priceCount.toLocaleString()}
                         </span>
                         <span className="text-lg text-muted-foreground">+ IVA</span>
@@ -267,26 +268,26 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                     </div>
                   ) : (
                     <>
-                      {/* Progress bar for spots */}
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>Plazas ocupadas</span>
-                          <span className="text-primary font-medium">2 de 3</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-gradient-to-r from-primary to-primary-glow rounded-full transition-all duration-1000"
-                            style={{ width: isVisible ? '66%' : '0%' }}
-                          />
-                        </div>
-                      </div>
+                       {/* Progress bar for spots */}
+                       <div className="space-y-2">
+                         <div className="flex justify-between text-xs text-muted-foreground">
+                           <span>Plazas ocupadas</span>
+                           <span className="text-primary font-bold">2 de 3</span>
+                         </div>
+                         <div className="h-3 bg-muted rounded-full overflow-hidden">
+                           <div 
+                             className={`h-full bg-gradient-to-r from-primary to-primary-glow rounded-full transition-all duration-1000 ${isVisible ? 'animate-pulse' : ''}`}
+                             style={{ width: isVisible ? '66%' : '0%' }}
+                           />
+                         </div>
+                       </div>
                       
-                      <div className="flex items-center justify-center gap-2 text-sm">
-                        <span className="relative flex h-3 w-3">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
-                        </span>
-                        <span className="text-primary font-medium">¡Solo queda 1 plaza disponible!</span>
+                       <div className="flex items-center justify-center gap-2 text-sm">
+                         <span className="relative flex h-3 w-3">
+                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                           <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                         </span>
+                         <span className="text-green-400 font-bold">¡Solo queda 1 plaza disponible!</span>
                       </div>
                       <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                         <GraduationCap className="w-4 h-4 text-primary" />

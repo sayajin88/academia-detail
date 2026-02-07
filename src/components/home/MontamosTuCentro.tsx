@@ -61,27 +61,25 @@ export function MontamosTuCentro() {
               Tu Camino al Éxito en 5 Pasos
             </h3>
             
-            <div className="space-y-6">
+            <div className="space-y-0">
               {steps.map((step, index) => (
                 <div key={step.title} className="flex gap-4 group">
                   {/* Timeline line */}
                   <div className="relative flex flex-col items-center">
-                    <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors z-10">
-                      <step.icon className="h-5 w-5" />
+                    <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm z-10 group-hover:scale-110 transition-transform shadow-lg shadow-primary/30">
+                      {index + 1}
                     </div>
                     {index < steps.length - 1 && (
-                      <div className="w-0.5 h-full bg-border group-hover:bg-primary/30 transition-colors absolute top-12" />
+                      <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-border min-h-[40px]" />
                     )}
                   </div>
                   
                   {/* Content */}
-                  <div className="pb-6">
+                  <div className="pb-8">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                        Paso {index + 1}
-                      </span>
+                      <step.icon className="h-4 w-4 text-primary" />
+                      <h4 className="font-semibold text-foreground">{step.title}</h4>
                     </div>
-                    <h4 className="font-semibold text-foreground mb-1">{step.title}</h4>
                     <p className="text-sm text-muted-foreground">{step.description}</p>
                   </div>
                 </div>

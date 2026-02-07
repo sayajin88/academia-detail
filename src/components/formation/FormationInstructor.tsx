@@ -13,7 +13,7 @@ export function FormationInstructor({ formation }: FormationInstructorProps) {
   const { instructor } = formation;
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-card section-divider">
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionHeading

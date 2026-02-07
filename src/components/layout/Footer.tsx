@@ -24,8 +24,10 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer role="contentinfo" className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 py-12 md:py-16">
+    <footer role="contentinfo" className="bg-gradient-to-b from-card to-background/80 border-t border-border relative">
+      {/* Decorative burgundy top line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      <div className="container mx-auto px-4 py-12 md:py-16 pt-14 md:pt-18">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
@@ -50,7 +52,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center"
+                  className="p-3 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary hover:border-primary/30 border border-transparent transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center"
                   aria-label={social.name}
                 >
                   <social.icon className="h-5 w-5 md:h-6 md:w-6" />

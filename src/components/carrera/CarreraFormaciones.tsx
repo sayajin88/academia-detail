@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Check, Sparkles } from 'lucide-react';
+import { Check, Star } from 'lucide-react';
 import { carreraDetailingData } from '@/data/carreraDetailingData';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 
@@ -31,7 +31,7 @@ const CarreraFormaciones = () => {
       <div className="container mx-auto px-4">
         <AnimatedSection className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/5 mb-6">
-            <Sparkles className="w-4 h-4 text-gold" />
+            <Star className="w-4 h-4 text-gold" />
             <span className="text-gold text-sm font-semibold uppercase tracking-wider">
               Todo en uno
             </span>

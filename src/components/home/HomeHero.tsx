@@ -78,13 +78,13 @@ export function HomeHero() {
       )}
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background" />
 
       {/* Animated Gradient Orbs - Ocultos en móvil (blur-3xl es costoso) */}
       {!isMobile && (
         <>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-glow/20 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-glow/10 rounded-full blur-3xl animate-pulse delay-1000" />
         </>
       )}
 
@@ -125,35 +125,20 @@ export function HomeHero() {
             </Button>
           </div>
 
-          {/* Stats - Two rows for maximum impact */}
-          <div className="max-w-3xl mx-auto px-2 space-y-4 sm:space-y-6">
-            {/* Row 1: Volume stats */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8">
+          {/* Stats - Single row for clean impact */}
+          <div className="max-w-4xl mx-auto px-2">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-4 md:gap-6">
               {[
                 { value: "500+", label: "Alumnos", sublabel: "Certificados" },
                 { value: "100%", label: "Presencial", sublabel: "y Práctico" },
                 { value: "3", label: "Máx Alumnos", sublabel: "por Grupo" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center p-2 sm:p-0">
-                  <div className="text-xl sm:text-2xl md:text-4xl font-bold text-primary mb-0.5 sm:mb-1">{stat.value}</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-white/60 leading-tight">
-                    <span className="sm:hidden">{stat.label}</span>
-                    <span className="hidden sm:inline">{stat.label} {stat.sublabel}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Row 2: Impact stats - key differentiators */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8 pt-2 sm:pt-4 border-t border-white/10">
-              {[
                 { value: "92%", label: "Práctica", sublabel: "Real" },
                 { value: "85%", label: "Lanzan", sublabel: "su Negocio" },
                 { value: "+50", label: "Centros", sublabel: "Montados" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center p-2 sm:p-0">
-                  <div className="text-xl sm:text-2xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1">{stat.value}</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-white/60 leading-tight">
+              ].map((stat, index) => (
+                <div key={stat.label} className={`text-center p-2 sm:p-3 rounded-lg bg-white/5 backdrop-blur-sm ${index >= 3 ? 'hidden sm:block' : ''}`}>
+                  <div className={`text-xl sm:text-2xl md:text-3xl font-bold mb-0.5 sm:mb-1 ${index < 3 ? 'text-primary' : 'text-white'}`}>{stat.value}</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-white/70 leading-tight">
                     <span className="sm:hidden">{stat.label}</span>
                     <span className="hidden sm:inline">{stat.label} {stat.sublabel}</span>
                   </div>

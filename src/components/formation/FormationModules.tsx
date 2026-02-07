@@ -40,7 +40,7 @@ export function FormationModules({ formation }: FormationModulesProps) {
                       <span className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center">
                         {index + 1}
                       </span>
-                      <span className="text-lg font-semibold text-foreground">
+                      <span className="text-xl font-bold text-foreground">
                         {module.title}
                       </span>
                     </div>
@@ -50,7 +50,7 @@ export function FormationModules({ formation }: FormationModulesProps) {
                       {module.topics.map((topic, topicIndex) => (
                         <li
                           key={topicIndex}
-                          className="flex items-center gap-2 text-muted-foreground"
+                          className="flex items-center gap-2 text-foreground/85"
                         >
                           <div className="w-1.5 h-1.5 rounded-full bg-primary/50" />
                           {topic}
