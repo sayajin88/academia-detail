@@ -6,7 +6,7 @@ import eventoAlumnosAtencion from '@/assets/evento-alumnos-atencion.jpg';
 import eventoGrupoFormacion from '@/assets/evento-grupo-formacion.jpg';
 import eventoGrupoDetailing from '@/assets/evento-grupo-detailing.jpg';
 import eventoClaseCompleta from '@/assets/evento-clase-completa.jpg';
-import eventoPracticaPulidora from '@/assets/evento-practica-pulidora.jpg';
+import certificadosGrupal from '@/assets/certificados-grupal-curso-detailing.jpg';
 
 const testimonials = [
   {
@@ -73,7 +73,7 @@ const testimonials = [
     name: 'Javier Hernández',
     role: 'Propietario de JH Premium Cars',
     city: 'Málaga',
-    image: eventoPracticaPulidora,
+    image: certificadosGrupal,
     text: 'La red de contactos que haces en la formación es invaluable. Mis primeros 5 clientes vinieron por recomendaciones de compañeros.',
     rating: 5,
     formation: 'Carrera Negocio',
