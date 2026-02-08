@@ -1,56 +1,67 @@
 
 
-## Nuevo logo y barra de navegacion clara
+## Menu oscuro con logo blanco
+
+### Resumen
+Se revertira el navbar al tema oscuro que usa el resto de la web (fondo carbon/oscuro con texto blanco) y se usara el logo blanco horizontal que subiste anteriormente (`logo_detail-academy_solid-white.png`).
 
 ### Cambios principales
 
-**1. Nuevo logo de Academia Detail**
-- Se guardara el nuevo logo subido (`Academia_Detail_-_Logo_Pequeño.png`) en `src/assets/academia-detail-logo-light.png`
-- Se reemplazara el logo actual en el navbar (desktop y movil) por el nuevo
-- Se eliminaran los filtros CSS `brightness-[10] invert` ya que el nuevo logo tiene texto oscuro sobre fondo claro y se mostrara tal cual
+**1. Logo blanco**
+- Se guardara el logo blanco subido como `src/assets/academia-detail-logo-white.png`
+- Se reemplazara el import actual (`academia-detail-logo-light.png`) por el nuevo logo blanco
+- El logo se mostrara sin filtros CSS, ya que es blanco nativo y se vera directamente sobre fondo oscuro
 
-**2. Barra de navegacion con fondo claro**
-- Se cambiara el fondo del glass container del navbar de oscuro/transparente (`bg-background/80`, `bg-background/40`) a un fondo blanco/crema claro (`bg-white/95`, `bg-white/80`) que contraste con el contenido oscuro de la pagina
-- Se ajustaran los bordes de `border-white/10` a `border-gray-200` para que sean sutiles sobre fondo claro
-- Se cambiara el color del texto de los enlaces de `text-foreground/70` (blanco) a `text-gray-700` / `text-gray-900` para legibilidad sobre fondo claro
-- Los enlaces activos mantendran el color primario (burdeos)
-- Los hovers pasaran de `hover:bg-white/5` a `hover:bg-gray-100`
-- El efecto shimmer del borde se adaptara a tonos claros
-- La sombra se ajustara de `shadow-black/20` a `shadow-gray-300/40` para un efecto mas suave
+**2. Glass container del navbar - tema oscuro**
+- Fondo: de `bg-white/95` y `bg-white/80` a `bg-background/90` y `bg-background/70` (carbon oscuro semi-transparente)
+- Bordes: de `border-gray-200/80` a `border-white/10` (sutil sobre fondo oscuro)
+- Sombra: de `shadow-gray-300/50` a `shadow-black/20`
+- Backdrop blur se mantiene para el efecto glassmorphism
 
-**3. Dropdown de formaciones (desktop)**
-- Se cambiara el fondo del dropdown de `bg-background/95` (oscuro) a `bg-white/98` (claro)
-- Los bordes e iconos se adaptaran a la paleta clara
-- El texto sera oscuro (`text-gray-900`) con descripciones en gris medio
+**3. Texto de navegacion (desktop)**
+- Enlaces normales: de `text-gray-600` a `text-foreground/70` (blanco semi-transparente)
+- Enlaces activos: mantienen `text-primary` (burdeos)
+- Hover: de `hover:bg-gray-100` a `hover:bg-white/5` (sutil sobre oscuro)
+- Hover texto: de `hover:text-gray-900` a `hover:text-foreground`
 
-**4. Menu movil**
-- El panel lateral se cambiara de `bg-background/95` (oscuro) a `bg-white/98` (claro)
-- Todos los textos, iconos y bordes se adaptaran al tema claro
-- Los estados activos mantendran el acento burdeos pero sobre fondo claro
-- El boton de hamburguesa cambiara a color oscuro (`text-gray-800`)
+**4. Dropdown de formaciones (desktop)**
+- Fondo: de `bg-white border-gray-200` a `bg-background/95 border-white/10`
+- Sombra: de `shadow-gray-200/60` a `shadow-black/40`
+- Iconos: de `bg-gray-100 text-gray-500` a `bg-white/5 text-foreground/50`
+- Texto: de `text-gray-900` a `text-foreground`, descripciones de `text-gray-500` a `text-foreground/50`
+- Hover fondo: de `hover:bg-gray-50` a `hover:bg-white/5`
 
-**5. Boton de hamburguesa y CTA**
-- El icono de hamburguesa (las 3 lineas) se cambiara de `text-foreground` (blanco) a `text-gray-800`
-- El boton de WhatsApp mantendra su color verde
+**5. Menu movil**
+- Panel: de `bg-white border-gray-200` a `bg-background/95 border-white/10`
+- Header: bordes y fondos adaptados al tema oscuro
+- Enlaces: texto blanco con estados activos en burdeos sobre `bg-primary/10`
+- Boton cerrar (X): de `text-gray-600` a `text-foreground/60`
+- CTA inferior: de `bg-white/90 border-gray-200` a `bg-background/90 border-white/10`
+
+**6. Boton hamburguesa**
+- De `text-gray-800` a `text-foreground` (blanco)
+
+**7. Shimmer border**
+- Se ajustara la opacidad del gradiente para que sea visible sobre fondo oscuro (`hsl(var(--primary) / 0.3)` en vez de `0.15`)
 
 ### Seccion tecnica
 
 Archivos modificados:
-- `src/assets/academia-detail-logo-light.png` - nuevo archivo (copia del logo subido)
-- `src/components/layout/Navbar.tsx` - cambios de estilos y logo
+- `src/assets/academia-detail-logo-white.png` - nuevo archivo (logo blanco subido por el usuario)
+- `src/components/layout/Navbar.tsx` - reversion completa al tema oscuro + nuevo logo
 
-Clases CSS principales que se reemplazaran:
-
-| Elemento | Actual (oscuro) | Nuevo (claro) |
+| Elemento | Actual (claro) | Nuevo (oscuro) |
 |---|---|---|
-| Glass container | `bg-background/80` | `bg-white/95` |
-| Bordes | `border-white/10` | `border-gray-200/80` |
-| Texto enlaces | `text-foreground/70` | `text-gray-600` |
+| Logo import | `academia-detail-logo-light.png` | `academia-detail-logo-white.png` |
+| Glass container | `bg-white/95` | `bg-background/90` |
+| Bordes | `border-gray-200/80` | `border-white/10` |
+| Texto enlaces | `text-gray-600` | `text-foreground/70` |
 | Texto activo | `text-primary` | `text-primary` (sin cambio) |
-| Hover fondo | `hover:bg-white/5` | `hover:bg-gray-100` |
-| Sombra | `shadow-black/20` | `shadow-gray-300/50` |
-| Logo filtros | `brightness-[10] invert` | (sin filtros) |
-| Dropdown fondo | `bg-background/95` | `bg-white border-gray-200` |
-| Mobile panel | `bg-background/95` | `bg-white` |
-| Hamburguesa | `text-foreground` | `text-gray-800` |
+| Hover fondo | `hover:bg-gray-100` | `hover:bg-white/5` |
+| Hover texto | `hover:text-gray-900` | `hover:text-foreground` |
+| Sombra | `shadow-gray-300/50` | `shadow-black/20` |
+| Dropdown fondo | `bg-white` | `bg-background/95` |
+| Mobile panel | `bg-white` | `bg-background/95` |
+| Hamburguesa | `text-gray-800` | `text-foreground` |
+| Shimmer | `primary / 0.15` | `primary / 0.3` |
 
