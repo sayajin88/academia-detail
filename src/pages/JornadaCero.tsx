@@ -134,11 +134,16 @@ const Index = () => {
       <nav className="bg-black/40 backdrop-blur-md border-b border-white/10 py-3 sticky top-[60px] z-30">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors">
+            <Link to="/curso-detailing-iniciacion" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors">
               <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm font-medium">Volver a Inicio</span>
+              <span className="text-sm font-medium">Ver todas las Jornadas</span>
             </Link>
             <div className="hidden md:flex items-center gap-6">
+              <Link to="/up-detail-evento" className="flex items-center gap-2 text-amber-400/80 hover:text-amber-400 transition-colors text-sm">
+                <Users className="w-4 h-4" />
+                Up Detail
+                <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-[10px] py-0 px-1.5">Nuevo</Badge>
+              </Link>
               <Link to="/curso-detailing-profesional" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors text-sm">
                 <GraduationCap className="w-4 h-4" />
                 Cursos Completos

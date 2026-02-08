@@ -130,10 +130,10 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
             <DialogHeader className="text-center space-y-2 sm:space-y-4">
               <div className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
                 <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/30 text-xs">
-                  🔥 EVENTO EXCLUSIVO
+                  🔥 JORNADA ZERO
                 </Badge>
                 <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                  40% OFF
+                  PLAZAS LIMITADAS
                 </Badge>
               </div>
               
@@ -142,18 +142,17 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
               </DialogTitle>
               
               <DialogDescription className="text-white/70 text-xs sm:text-sm">
-                Completa el formulario para reservar tu plaza
+                Completa el formulario para reservar tu plaza en la Jornada Zero
               </DialogDescription>
               
               <div className="bg-gradient-primary/20 rounded-lg sm:rounded-xl p-2.5 sm:p-4 border border-primary/30">
                 <div className="text-center">
-                  <div className="text-xs sm:text-sm md:text-base text-white/90 mb-1.5 sm:mb-2">Jornada 1 Día</div>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-4">
-                    <span className="text-base sm:text-lg md:text-xl text-white/60 line-through">€999</span>
-                    <span className="text-xl sm:text-2xl md:text-3xl font-bold gradient-text">€199 + IVA</span>
+                  <div className="text-xs sm:text-sm md:text-base text-white/90 mb-1.5 sm:mb-2">Jornada Zero — 1 Día Intensivo</div>
+                  <div className="flex items-center justify-center">
+                    <span className="text-xl sm:text-2xl md:text-3xl font-bold gradient-text">€97 + IVA</span>
                   </div>
                   <div className="text-xs text-white/70 mt-1.5 sm:mt-2">
-                    Ahorras €800 (80% dto.)
+                    Descontable de cualquier curso completo
                   </div>
                 </div>
               </div>
@@ -297,7 +296,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     Procesando...
                   </>
                 ) : (
-                  <>🚀 RESERVAR - €199 + IVA</>
+                  <>🚀 RESERVAR - €97 + IVA</>
                 )}
               </Button>
 
@@ -344,13 +343,13 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     <span className="text-white/70">Email:</span>
                     <span className="font-medium text-white">{formData.email}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                   <div className="flex justify-between text-sm">
                     <span className="text-white/70">Evento:</span>
                     <span className="font-medium text-white">17 de Enero, 2026</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-white/70">Precio:</span>
-                    <span className="font-medium text-primary">€199 + IVA (80% dto.)</span>
+                    <span className="font-medium text-primary">€97 + IVA</span>
                   </div>
                 </div>
               </div>
@@ -404,8 +403,8 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                 <p className="text-sm font-semibold text-center text-white">Información Importante</p>
                 <ul className="text-xs text-white/80 space-y-1">
                   <li>• Tu plaza está reservada por 7 días</li>
-                  <li>• Plazas limitadas a 12 personas</li>
-                  <li>• Precio con 67% de descuento: €199 + IVA</li>
+                  <li>• Plazas limitadas a 10 personas</li>
+                  <li>• Precio: €97 + IVA</li>
                   <li>• Fecha: Sábado 17 de Enero, 2026</li>
                   <li>• Horario: 10:00 AM - 18:00 PM</li>
                 </ul>

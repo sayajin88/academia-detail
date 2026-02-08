@@ -514,7 +514,7 @@ export const seoConfig = {
     title: "Jornada Zero Detailing [97€] | Prueba Antes de Invertir | Solo 10 Plazas",
     description: "🚀 Tu primer contacto con el detailing profesional por solo 97€. Accede a herramientas de élite, toca máquinas reales y descubre si tienes mente de empresario. ➤ ¡Plazas limitadas!",
     keywords: "jornada zero detailing, probar detailing barato, experiencia detailing inmersión, curso detailing económico, primer contacto detailing profesional, prueba antes de invertir detailing",
-    url: "/curso-detailing-iniciacion",
+    url: "/jornada-zero-detailing",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
     price: "97",
     schema: [
@@ -524,7 +524,7 @@ export const seoConfig = {
         description: "Tu primer contacto con el detailing profesional en un taller 100% real. 1 día de experiencia práctica para descubrir si tienes mentalidad de empresario.",
         price: 97,
         duration: "P1D",
-        url: "/curso-detailing-iniciacion",
+        url: "/jornada-zero-detailing",
         rating: { value: "4.9", count: "50" }
       }),
       generateEventSchema({
@@ -538,14 +538,89 @@ export const seoConfig = {
       generateWebPageSchema({
         name: "Jornada Zero Detailing",
         description: "Experiencia de inmersión de 1 día para probar el detailing profesional",
+        url: "/jornada-zero-detailing"
+      }),
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" },
+        { name: "Jornadas Intensivas", url: "/curso-detailing-iniciacion" },
+        { name: "Jornada Zero", url: "/jornada-zero-detailing" }
+      ])
+    ]
+  },
+
+  jornadasHub: {
+    title: "Jornadas Intensivas de Detailing 2026 | Jornada Zero y Up Detail | Academia Detail",
+    description: "🚀 Descubre el detailing en 1 día: Jornada Zero o Up Detail. Dos formatos, múltiples expertos, desde 97€ + IVA. ✅ Certificado incluido. ➤ Elige tu jornada.",
+    keywords: "jornada detailing, curso detailing 1 dia, iniciacion detailing, experiencia detailing, up detail, jornada zero, formacion detailing barata",
+    url: "/curso-detailing-iniciacion",
+    image: `${BASE_URL}/og-jornada-zero.jpg`,
+    price: "97",
+    schema: [
+      localBusinessSchema,
+      generateWebPageSchema({
+        name: "Jornadas Intensivas de Detailing",
+        description: "Dos formatos de jornada intensiva para descubrir el detailing profesional",
         url: "/curso-detailing-iniciacion"
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
-        { name: "Jornada Zero Detailing", url: "/curso-detailing-iniciacion" }
+        { name: "Jornadas Intensivas", url: "/curso-detailing-iniciacion" }
       ])
     ]
   },
+
+  upDetail: {
+    title: "Up Detail - Jornada con Expertos de Detailing | Próximamente | Academia Detail",
+    description: "🌟 Up Detail reúne a los mejores formadores de detailing del país en una jornada intensiva. 97€ + IVA. ✅ Múltiples expertos, certificado oficial. ➤ Reserva tu aviso.",
+    keywords: "up detail, jornada detailing expertos, formacion detailing colaborativa, masterclass detailing, evento detailing profesional, formadores detailing españa",
+    url: "/up-detail-evento",
+    image: `${BASE_URL}/og-jornada-zero.jpg`,
+    price: "97",
+    schema: [
+      localBusinessSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationEvent",
+        "name": "Up Detail - Jornada con Expertos de Detailing",
+        "description": "Jornada intensiva de detailing con múltiples expertos reconocidos a nivel nacional e internacional.",
+        "eventStatus": "https://schema.org/EventPostponed",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "Academia Detail - Taller 100% Real",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Calle Metalurgias, 13",
+            "addressLocality": "Alicante",
+            "postalCode": "03008",
+            "addressCountry": "ES"
+          }
+        },
+        "organizer": {
+          "@type": "Organization",
+          "name": "Academia Detail",
+          "url": BASE_URL
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "97",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/PreOrder"
+        }
+      },
+      generateWebPageSchema({
+        name: "Up Detail - Jornada con Expertos",
+        description: "Jornada intensiva de detailing con múltiples expertos reconocidos",
+        url: "/up-detail-evento"
+      }),
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" },
+        { name: "Jornadas Intensivas", url: "/curso-detailing-iniciacion" },
+        { name: "Up Detail", url: "/up-detail-evento" }
+      ])
+    ]
+  },
+
 
   carreraDetailing: {
     title: "Monta Tu Centro de Detailing | Formación Completa 1 Mes | Desde 9.997€",
