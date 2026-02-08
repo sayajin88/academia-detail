@@ -1,94 +1,111 @@
 
 
-# Mejoras del Glosario: Secciones Educativas, Hero, Tarjetas y Verificacion
+# Enlace Interno Blog - Glosario: Estrategia SEO
 
-## Resumen
+## Objetivo
 
-Se aplicaran tres mejoras principales a la pagina del glosario:
+Insertar enlaces internos estrategicos desde los articulos del blog hacia la pagina del glosario (`/glosario-detailing`) para mejorar la autoridad SEO interna, aumentar el tiempo de permanencia del usuario y facilitar la comprension de terminos tecnicos.
 
-1. **Secciones educativas colapsables** extraidas del documento original (6 secciones tematicas)
-2. **Rediseno de las tarjetas de terminos** para mayor legibilidad y aspecto moderno
-3. **Generacion de imagen hero profesional** para la cabecera de la pagina
+## Sistema de enlace existente
 
-La verificacion funcional (buscador, filtros, navegacion alfabetica) ya se ha realizado y todo funciona correctamente.
+El blog ya utiliza un sistema de marcadores `[[texto]]` que se mapean a un array `links` en cada seccion del articulo. Se reutilizara este mismo patron para insertar los nuevos enlaces al glosario.
 
----
+## Estrategia de seleccion
 
-## 1. Secciones Educativas Colapsables
+Se han seleccionado los articulos mas tecnicos donde los terminos del glosario aparecen de forma natural. Las reglas aplicadas son:
 
-Se anadiran 6 secciones educativas extraidas del prologo del documento, colocadas entre el hero/filtros y el grid de terminos. Cada seccion sera un acordeon colapsable con contenido resumido.
+- Maximo 2-3 enlaces al glosario por articulo (evitar sobrecarga)
+- Solo en la primera mencion relevante del termino dentro del articulo
+- Priorizando terminos que el lector podria no conocer (valor educativo)
+- Sin repetir enlaces al glosario dentro del mismo articulo
+- Sin duplicar enlaces que ya existen (ej. si una seccion ya enlaza a otro sitio, no sobrecargar)
 
-### Contenido de las secciones:
+## Mapa de enlaces por articulo
 
-| Seccion | Titulo | Contenido clave |
-|---------|--------|-----------------|
-| 1 | Morfologia de la Pintura Moderna | Capas del acabado automotriz: imprimacion (10-20 micras), base coat (15-25 micras), barniz/clear coat (35-50 micras). El barniz es la capa sobre la que trabaja el detallador. |
-| 2 | Quimica de Superficies: pH y Tensioactivos | Tabla de pH (acido fuerte 1-4, acido debil 5-6, neutro 7, alcalino debil 8-11, alcalino fuerte 12-14) y su relacion con la limpieza de diferentes contaminantes. |
-| 3 | Descontaminacion: Quimica y Mecanica | Dos fases: quimica (eliminadores de hierro, disolventes de alquitran) y mecanica (clay bar con lubricacion adecuada). |
-| 4 | Ingenieria de la Correccion de Pintura | Tres etapas: corte (compound), pulido (polish) y refinado (jewelling). Tipos de pulidoras: rotativa, DA, rotacion forzada. |
-| 5 | Nanotecnologia en Proteccion | Comparativa: cera carnauba (1-3 meses), sellador sintetico (6-9 meses), coating ceramico (2-5+ anos). Innovacion del grafeno. |
-| 6 | Detallado de Interiores y Sanitizacion | Tratamiento de ozono, limpiadores enzimaticos, gestion de olores y microbiologia del habitaculo. |
+### Archivo: `src/data/blogPosts.ts`
 
-### Implementacion:
+**Articulo 2: "Guia Completa de Pulido de Coches Profesional"**
+- Seccion `que-es-pulido-profesional`: Insertar `[[swirl marks]]` en la primera mencion de "marcas de lavado (swirl marks)"
+  - Link: `{ text: 'swirl marks', href: '/glosario-detailing#letra-S', rel: 'follow' }`
+- Seccion `proceso-paso-a-paso`: Insertar `[[clay bar]]` en la mencion de "descontaminacion con clay bar"
+  - Link: `{ text: 'clay bar', href: '/glosario-detailing#letra-C', rel: 'follow' }`
 
-**Nuevo componente: `src/components/glossary/GlossaryEducationalSections.tsx`**
-- Utiliza el componente `Accordion` de Radix UI ya existente en el proyecto
-- Cada seccion tendra un icono tematico (Layers, FlaskConical, Sparkles, Wrench, Shield, Armchair)
-- Diseno: fondo `bg-card/50` con borde sutil, estilo coherente con el tema oscuro
-- Incluye tablas de datos donde aplique (tabla de pH, tabla comparativa de protecciones, tabla de capas de pintura)
+**Articulo 3: "PPF vs Ceramico"**
+- Seccion `que-son`: Insertar `[[dioxido de silicio (SiO2)]]` en la mencion del componente quimico
+  - Link: `{ text: 'dióxido de silicio (SiO2)', href: '/glosario-detailing#letra-S', rel: 'follow' }`
 
-**Modificar: `src/pages/Glossary.tsx`**
-- Insertar el componente entre la seccion de filtros y el contenido principal del grid
-- Envuelto en una seccion con titulo "Fundamentos del Detailing" y subtitulo breve
+**Articulo 5: "5 Errores que Cometen los Detailers Principiantes"**
+- Seccion `error-2-productos-baratos`: Insertar `[[hologramas]]` en la mencion de defectos
+  - Link: `{ text: 'hologramas', href: '/glosario-detailing#letra-H', rel: 'follow' }`
 
----
+### Archivo: `src/data/blogPostsNew.ts`
 
-## 2. Rediseno de Tarjetas de Terminos
+**Articulo 9: "Tecnicas de Pulido en 3 Pasos"**
+- Seccion `fundamentos-pulido`: Insertar `[[pulidora rotativa]]` en la primera mencion
+  - Link: `{ text: 'pulidora rotativa', href: '/glosario-detailing#letra-R', rel: 'follow' }`
+- Seccion `proteccion-post-pulido`: Insertar `[[coating ceramico]]` en la primera mencion de las opciones de proteccion
+  - Link: `{ text: 'coating cerámico', href: '/glosario-detailing#letra-C', rel: 'follow' }`
 
-### Problemas actuales:
-- La fuente del titulo del termino (`text-base font-bold`) se ve pequena y poco destacada
-- Las tarjetas son funcionales pero planas, con poco contraste visual
+**Articulo 12: "Limpieza y Restauracion de Cuero y Alcantara"**
+- Seccion `cuero-vs-alcantara`: Insertar `[[Alcantara]]` en la primera mencion del material
+  - Link: `{ text: 'Alcantara', href: '/glosario-detailing#letra-A', rel: 'follow' }`
+- Seccion `limpieza-profunda-cuero`: Insertar `[[pH neutro]]` en la mencion de limpiador de pH neutro
+  - Link: `{ text: 'pH neutro', href: '/glosario-detailing#letra-P', rel: 'follow' }`
 
-### Cambios en `GlossaryTermCard.tsx`:
-- Titulo del termino: cambiar a `text-lg font-monument` (Bebas Neue) para mayor impacto visual y diferenciacion tipografica, con `tracking-wide`
-- Anadir una linea decorativa sutil (borde izquierdo con color de la categoria) para guiar el ojo
-- Aumentar el padding interno de `p-5` a `p-6`
-- Mejorar la definicion con `text-sm leading-relaxed` a `text-[15px] leading-relaxed` para mejor legibilidad
-- Anadir efecto de hover mas pronunciado: `hover:translate-y-[-2px]` y sombra mas visible
-- El badge de categoria se mantiene pero se redondea mas (`rounded-full` en lugar de `rounded-md`)
+**Articulo 13: "Tratamiento Ceramico (Ceramic Coating): Guia"**
+- Seccion `que-es-ceramico`: Insertar `[[SiO2]]` en la primera mencion
+  - Link: `{ text: 'SiO2', href: '/glosario-detailing#letra-S', rel: 'follow' }`
+- Seccion `preparacion-aplicacion`: Insertar `[[clay bar]]` y `[[IPA]]` en las menciones del proceso
+  - Links: `{ text: 'clay bar', href: '/glosario-detailing#letra-C', rel: 'follow' }`, `{ text: 'IPA', href: '/glosario-detailing#letra-I', rel: 'follow' }`
 
-### Cambios en `GlossaryGrid.tsx`:
-- Aumentar el gap entre tarjetas de `gap-3` a `gap-4`
+**Articulo 14: "Los 7 Errores que todo Detailer principiante comete"**
+- Seccion `error-pulir-sin-medir`: Insertar `[[barniz]]` en la mencion de "capa de barniz"
+  - Link: `{ text: 'barniz', href: '/glosario-detailing#letra-C', rel: 'follow' }` (apunta a Clear Coat / Barniz)
 
----
+### Archivo: `src/data/blogPostsBusiness.ts`
 
-## 3. Imagen Hero Profesional
+**Articulo 22: "Montar un Lavadero Ecologico"**
+- Seccion `detailing-sin-agua`: Insertar `[[GSM]]` en la mencion de "minimo 400 GSM"
+  - Link: `{ text: 'GSM', href: '/glosario-detailing#letra-G', rel: 'follow' }`
 
-Se generara una imagen hero usando el modelo de IA de generacion de imagenes disponible. La imagen representara:
-- Estetica de taller de detailing premium
-- Tonos oscuros coherentes con la paleta de la web (charcoal/burgundy)
-- Elementos visuales: herramientas de pulido, superficies brillantes, ambiente profesional
+**Articulo 23: "Por que el PPF es el servicio mas rentable de 2026"**
+- Seccion `margenes-ppf`: Insertar enlace a `[[PPF]]` en el glosario en la primera mencion tecnica
+  - Link: `{ text: 'PPF', href: '/glosario-detailing#letra-P', rel: 'follow' }`
 
-La imagen se integrara como fondo del hero section en `Glossary.tsx` con un overlay degradado para mantener la legibilidad del texto.
+## Resumen de cambios por archivo
 
----
+| Archivo | Articulos modificados | Total enlaces nuevos |
+|---------|----------------------|---------------------|
+| `src/data/blogPosts.ts` | 3 articulos (ids 2, 3, 5) | 4 enlaces |
+| `src/data/blogPostsNew.ts` | 4 articulos (ids 9, 12, 13, 14) | 7 enlaces |
+| `src/data/blogPostsBusiness.ts` | 2 articulos (ids 22, 23) | 2 enlaces |
+| **Total** | **9 articulos** | **13 enlaces al glosario** |
 
-## Archivos afectados
+## Detalle tecnico de implementacion
 
-| Archivo | Tipo | Cambio |
-|---------|------|--------|
-| `src/components/glossary/GlossaryEducationalSections.tsx` | Nuevo | 6 secciones educativas en acordeon |
-| `src/components/glossary/GlossaryTermCard.tsx` | Modificar | Rediseno tipografico y visual de las tarjetas |
-| `src/components/glossary/GlossaryGrid.tsx` | Modificar | Aumentar gap entre tarjetas |
-| `src/pages/Glossary.tsx` | Modificar | Insertar secciones educativas + imagen hero de fondo |
+Cada enlace se implementara de la misma manera que los enlaces existentes:
 
-## Resultado de la verificacion funcional
+1. Se inserta un marcador `[[texto del termino]]` dentro del string `content` de la seccion correspondiente
+2. Se anade una entrada al array `links` de esa seccion con:
 
-Se ha verificado en el navegador que:
-- El buscador filtra correctamente en tiempo real (probado con "PPF")
-- Los filtros por categoria funcionan (probado con "Herramientas")
-- La navegacion alfabetica lateral hace scroll correcto a cada letra (probado con letra "P")
-- El boton de limpiar busqueda funciona
-- Las letras no disponibles aparecen deshabilitadas
-- Todo el layout es responsivo
+```text
+{
+  text: 'texto del termino',
+  href: '/glosario-detailing#letra-X',
+  rel: 'follow'
+}
+```
+
+3. Si la seccion ya tiene un array `links` con enlaces existentes, se anade al final
+4. Si la seccion no tiene array `links`, se crea uno nuevo
+
+Los anchors `#letra-X` ya existen en la pagina del glosario (generados por `GlossaryGrid.tsx`), lo que asegura que el usuario llegue a la seccion correcta de la letra del termino.
+
+## Resultado esperado
+
+- 13 nuevos enlaces internos que conectan el blog con el glosario
+- Mejora del flujo de navegacion interna (el usuario descubre el glosario desde los articulos)
+- Senales SEO de autoridad tematica al interconectar contenido educativo
+- Mayor tiempo de permanencia en el sitio (el lector consulta definiciones mientras lee)
+- Los terminos tecnicos en los articulos se convierten en enlaces utiles para lectores principiantes
 
