@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { BlogHero } from '@/components/blog/BlogHero';
+import { BlogBentoHero } from '@/components/blog/BlogBentoHero';
 import { BlogGrid } from '@/components/blog/BlogGrid';
 import { BlogSearch } from '@/components/blog/BlogSearch';
 import { BlogCategories } from '@/components/blog/BlogCategories';
@@ -10,7 +10,7 @@ import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { blogPosts, getFeaturedPost, BlogCategory } from '@/data/blogPosts';
 
 const BASE_URL = 'https://academiadetail.com';
-const POSTS_PER_PAGE = 6;
+const POSTS_PER_PAGE = 8;
 
 export default function Blog() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -100,40 +100,38 @@ export default function Blog() {
 
       <div className="pt-24 md:pt-28 pb-16 md:pb-24">
         <div className="container mx-auto px-4">
-          {/* Page header */}
-          <AnimatedSection animation="fade-up" duration="fast">
-            <header className="mb-8 md:mb-12">
-              <h1
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-              >
-                Blog de Detailing Profesional
-              </h1>
-              <p className="text-muted-foreground text-base md:text-lg max-w-2xl">
-                Guías, consejos y tendencias del sector escritas por profesionales con más de 12 años de experiencia.
-              </p>
-            </header>
-          </AnimatedSection>
-
-          {/* Featured post */}
+          {/* Bento Hero */}
           {featuredPost && !searchQuery && !activeCategory && (
-            <AnimatedSection animation="fade-up" delay={100}>
+            <AnimatedSection animation="fade-up" duration="fast">
               <div className="mb-10 md:mb-14">
-                <BlogHero post={featuredPost} />
+                <BlogBentoHero featuredPost={featuredPost} />
               </div>
             </AnimatedSection>
           )}
 
-          {/* Filters */}
-          <AnimatedSection animation="fade-up" delay={150}>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-              <BlogCategories activeCategory={activeCategory} onCategoryChange={handleCategoryChange} />
-              <BlogSearch onSearch={handleSearch} />
-            </div>
-          </AnimatedSection>
-
-          {/* Grid */}
+          {/* Section heading + filters */}
           <div ref={gridRef} className="scroll-mt-24">
+            <AnimatedSection animation="fade-up" delay={100}>
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                <div>
+                  <span className="inline-block px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-primary/10 text-primary border border-primary/30 mb-3">
+                    Knowledge Base
+                  </span>
+                  <h2
+                    className="text-2xl md:text-3xl font-bold text-foreground"
+                    style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                  >
+                    Últimos Artículos
+                  </h2>
+                </div>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                  <BlogCategories activeCategory={activeCategory} onCategoryChange={handleCategoryChange} />
+                  <BlogSearch onSearch={handleSearch} />
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Grid */}
             <BlogGrid posts={paginatedPosts} />
           </div>
 
