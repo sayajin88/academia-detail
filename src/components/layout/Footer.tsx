@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import logo from '@/assets/detail-park-logo-white.png';
+import logoCarcarePassion from '@/assets/brands/carcare-passion.png';
 
 const formationLinks = [
   { name: 'Detailing', href: '/curso-detailing-profesional' },
@@ -50,7 +51,7 @@ export function Footer() {
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               Centro de formación líder en detailing profesional, dentro de las instalaciones de Detail Park en Alicante. Aprende de los mejores y transforma tu pasión en profesión.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 mb-6">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
@@ -63,6 +64,16 @@ export function Footer() {
                   <social.icon className="h-5 w-5 md:h-6 md:w-6" />
                 </a>
               ))}
+            </div>
+            {/* Car Care Passion - Partner oficial */}
+            <div className="flex items-center gap-2.5">
+              <img
+                src={logoCarcarePassion}
+                alt="Car Care Passion - Partner oficial de productos de detailing"
+                className="h-5 w-auto brightness-0 invert opacity-60"
+                loading="lazy"
+              />
+              <span className="text-xs text-muted-foreground/70">Partner oficial de productos</span>
             </div>
           </div>
 
