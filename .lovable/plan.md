@@ -1,63 +1,62 @@
 
 
-## Seccion "Nuestro Equipo" en la pagina Quienes Somos
+## Añadir a Daniel Lopez al equipo con fondo editado
 
 ### Resumen
-Se creara una nueva seccion de equipo en la pagina `/quienes-somos` que presente a Sergio Felipe y Gerardo Espinosa como miembros del equipo e instructores de Detail Park. La seccion se ubicara entre la filosofia (`AboutPhilosophy`) y las estadisticas (`AboutStats`), ya que encaja naturalmente despues de explicar "lo que nos hace diferentes" y antes de los numeros.
+Se añadira a Daniel Lopez (fundador, instructor principal y gerente de Detail Park) como tercer miembro del equipo en la seccion "Nuestro Equipo" de la pagina Quienes Somos. Ademas, se editara su foto usando la IA de generacion de imagenes para añadirle el fondo de la fachada de Detail Park que comparten Sergio y Gerardo.
 
-### Estructura visual
+### Edicion de la imagen
 
-La seccion mostrara dos tarjetas de perfil en un grid de 2 columnas (desktop) o apiladas (movil). Cada tarjeta incluira:
-- Foto del miembro con aspect ratio vertical (4:5) y bordes redondeados
-- Nombre y rol/titulo
-- Descripcion de su experiencia y especialidad
-- 2-3 tags/badges con sus areas de expertis
-- Sutil borde con hover en burdeos, siguiendo el patron de las tarjetas de la seccion de filosofia
+La foto subida tiene fondo blanco. Se usara la API de IA de imagenes (modelo de edicion) para:
+- Tomar la foto original de Daniel con fondo blanco
+- Añadirle un fondo que simule la fachada del centro Detail Park (tonos oscuros/grisaceos con el exterior de un local profesional), similar al que comparten Sergio Felipe y Gerardo Espinosa
+- El resultado se guardara como `src/assets/daniel-lopez-team.jpg`
 
-### Contenido de cada perfil
+Si el resultado de la IA no es satisfactorio, como alternativa se usara la foto tal cual con un fondo CSS oscuro via gradiente para que encaje visualmente con la estetica de la seccion.
 
-**Sergio Felipe** - Instructor & Gestor de Centro
-- Experto en detailing con amplia experiencia practica
-- Especialista en metodologia y gestion de centros de detailing
-- Expertis en atencion al cliente y operaciones de negocio
-- Tags: Detailing, Gestion de Centro, Atencion al Cliente
+### Cambios en el layout
 
-**Gerardo Espinosa** - Especialista en Wrapping & PPF
-- Referente en rotulacion, wrapping y PPF (Paint Protection Film)
-- Reconocido como uno de los profesionales con mas expertis del sector
-- Apasionado del detalle y la perfeccion en cada instalacion
-- Tags: Wrapping, PPF, Rotulacion
+Actualmente la seccion muestra 2 tarjetas en grid `md:grid-cols-2` con `max-w-4xl`. Al añadir un tercer miembro:
+- Se cambiara a `lg:grid-cols-3` con `max-w-6xl` para acomodar 3 tarjetas
+- En tablet (`md`), se mantendra `md:grid-cols-2` con la tercera tarjeta debajo
+- En movil, las 3 tarjetas se apilaran verticalmente
+- Daniel aparecera como la primera tarjeta (posicion de liderazgo)
+
+### Contenido del perfil de Daniel
+
+- **Nombre**: Daniel Lopez
+- **Rol**: Fundador & Instructor Principal
+- **Descripcion**: Fundador de Detail Park y Academia Detail, Daniel combina mas de 12 anos de experiencia en detailing profesional con una vision empresarial unica. Ha trabajado con marcas como Ferrari, Lamborghini y Porsche. Su metodologia une la perfeccion tecnica con la mentalidad de negocio rentable.
+- **Tags**: Detailing, Gestion de Negocio, Instructor Principal
+- **Alt SEO**: "Daniel Lopez - Fundador e instructor principal de Academia Detail y Detail Park"
 
 ### Seccion tecnica
 
 **Archivos nuevos:**
-- `src/assets/sergio-felipe.jpg` - foto de Sergio (copiada desde upload)
-- `src/assets/gerardo-espinosa.jpg` - foto de Gerardo (copiada desde upload)
-- `src/components/about/AboutTeam.tsx` - nuevo componente de la seccion de equipo
+- `src/assets/daniel-lopez-team.jpg` - foto de Daniel con fondo editado (generada por IA)
 
 **Archivos modificados:**
-- `src/pages/AboutUs.tsx` - importar y colocar `<AboutTeam />` entre `<AboutPhilosophy />` y `<AboutStats />`
+- `src/components/about/AboutTeam.tsx`:
+  - Nuevo import de `danielImg` desde `@/assets/daniel-lopez-team.jpg`
+  - Nuevo objeto en el array `teamMembers` en primera posicion (antes de Sergio)
+  - Grid: de `md:grid-cols-2 max-w-4xl` a `md:grid-cols-2 lg:grid-cols-3 max-w-6xl`
 
-**Patron de diseno del componente `AboutTeam.tsx`:**
-- Usara `SectionHeading` con badge "Nuestro Equipo", titulo "Los Profesionales que Te Forman" y subtitulo descriptivo
-- Grid `md:grid-cols-2` con gap de 8
-- Cada tarjeta: `bg-card border border-border/50 rounded-2xl` con hover `hover:border-primary/30`
-- Imagenes con `aspect-[4/5] rounded-xl object-cover`
-- Tags/badges con `bg-primary/10 text-primary rounded-full px-3 py-1 text-xs`
-- Animaciones con `AnimatedSection` (delay escalonado)
-- Alt texts optimizados para SEO: "Sergio Felipe - Instructor de detailing y gestion de centros en Academia Detail" y "Gerardo Espinosa - Especialista en wrapping y PPF en Academia Detail"
+**Proceso de edicion de imagen:**
+1. Crear una funcion backend temporal (`edit-team-photo`) que use la API de IA de imagenes para editar el fondo de la foto de Daniel
+2. Enviar la imagen original junto con la instruccion de añadir un fondo de fachada de local profesional de detailing (similar a Detail Park)
+3. Guardar el resultado como `src/assets/daniel-lopez-team.jpg`
+4. Eliminar la funcion temporal despues de usarla
 
-**Posicion en la pagina (AboutUs.tsx):**
+**Alternativa si la edicion por IA no da buen resultado:**
+- Usar la foto original tal cual (`Yo_sin_fondo-2.png`)
+- Añadir un fondo CSS oscuro con gradiente al contenedor de la imagen (`.bg-gradient-to-b from-[#2a2a30] to-[#1a1a1f]`) para que el fondo blanco no desentone con el tema oscuro de la web
+
+**Orden final de los miembros:**
 
 ```text
-AboutHero
-Detail Park Logo
-AboutHistory
-AboutPhilosophy
---> AboutTeam (NUEVA SECCION) <--
-AboutStats
-AboutGallerySection
-JornadaZeroSection
-CTA Section
+[Daniel Lopez]  [Sergio Felipe]  [Gerardo Espinosa]
+ Fundador &      Instructor &     Especialista en
+ Instructor      Gestor de        Wrapping & PPF
+ Principal       Centro
 ```
 
