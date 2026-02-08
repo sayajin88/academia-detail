@@ -1,190 +1,234 @@
 
-## Implementacion de 10 Nuevos Articulos + Sistema de Enlaces y Generacion de Imagenes IA
+
+## Implementacion de 10 Nuevos Articulos de Negocio + Generacion de Imagenes IA
 
 ### Resumen
 
-Se anadiran 10 nuevos articulos optimizados para SEO al blog existente, se ampliara la interfaz `BlogPost` con soporte para enlaces internos/externos con atributos `rel` configurables, se generaran imagenes con IA para los articulos, y se mejorara el renderizador de contenido (`BlogArticleContent`) para soportar enlaces y HTML enriquecido dentro de los parrafos.
-
-### Cambios en la Arquitectura de Datos
-
-La interfaz `BlogSection` actual solo soporta texto plano en el campo `content`. Para habilitar enlaces internos y externos, se ampliara el sistema de la siguiente manera:
-
-**Nueva interfaz `BlogLink`:**
-```text
-BlogLink {
-  text: string        // Texto del enlace visible
-  href: string        // URL del enlace (interna o externa)
-  rel?: 'follow' | 'nofollow'  // Atributo rel del enlace (default: follow)
-  external?: boolean  // Si abre en nueva pestana (default: false)
-}
-```
-
-**Ampliacion de `BlogSection`:**
-```text
-BlogSection {
-  id: string
-  title: string
-  content: string
-  links?: BlogLink[]  // Array de enlaces que se aplican dentro del content
-}
-```
-
-**Mecanismo de insercion de enlaces:** El campo `content` contendra marcadores de texto delimitados con doble corchete, por ejemplo: `[[curso de detailing]]`. El renderizador (`BlogArticleContent`) buscara coincidencias con el array `links` por el campo `text` y los reemplazara por elementos `<a>` con los atributos correspondientes (`rel`, `target`).
-
-### Estrategia de Enlazado
-
-Cada articulo incluira:
-- **Enlaces internos** a las paginas de cursos de academiadetail.com (rel="follow"):
-  - `/curso-detailing-profesional`
-  - `/curso-vinilado-vehiculos`
-  - `/curso-ppf-proteccion-pintura`
-  - `/curso-restauracion-vehiculos`
-  - `/formacion-profesional-detailing`
-  - `/curso-detailing-iniciacion`
-  - `/contacto`
-
-- **Enlaces externos de autoridad** hacia `www.detailpark.com` (rel="follow"):
-  - `https://www.detailpark.es` como enlace principal
-
-- **Enlaces nofollow** para fuentes externas genericas cuando se referencien marcas o recursos de terceros
+Se anadiran 10 nuevos articulos enfocados en la vertical de **Negocio y Emprendimiento** al blog existente, continuando la numeracion (IDs 17-26). Se generaran 10 imagenes realistas con IA para cada articulo. Los articulos usaran el sistema de enlaces `[[marcador]]` ya implementado en `BlogArticleContent.tsx`, con enlaces internos a cursos y enlaces de autoridad a Detail Park.
 
 ### Listado de los 10 Articulos Nuevos
 
-Los articulos se numeraran del 7 al 16 (continuando los 6 existentes):
-
-| # | Slug | Titulo SEO (H1) | Categoria | Lectura |
-|---|------|-----------------|-----------|---------|
-| 7 | `como-ser-detailer-profesional-guia-formacion` | Como ser Detailer Profesional: Guia Completa de Formacion y Salida Laboral | detailing | 15 min |
-| 8 | `que-es-ppf-paint-protection-film` | Que es el PPF (Paint Protection Film) y por que es el futuro de la proteccion automotriz | ppf | 12 min |
-| 9 | `tecnicas-pulido-principiante-experto` | Tecnicas de Pulido en 3 Pasos: De Principiante a Detallador Experto | detailing | 10 min |
-| 10 | `car-wrapping-vs-pintura-mejor-opcion` | Car Wrapping o Pintar el Coche: Cual es la mejor opcion en 2026 | wrapping | 9 min |
-| 11 | `como-montar-centro-detailing-inversion` | Como montar un centro de Detailing: Inversion, Herramientas y Rentabilidad | negocios | 14 min |
-| 12 | `limpieza-restauracion-cuero-alcantara` | Limpieza y Restauracion de Cuero y Alcantara: Secretos del Detailing de Interior | detailing | 11 min |
-| 13 | `tratamiento-ceramico-ceramic-coating-guia` | Tratamiento Ceramico (Ceramic Coating): Guia de Aplicacion y Mantenimiento | detailing | 12 min |
-| 14 | `errores-detailer-principiante-como-evitarlos` | Los 7 errores que todo Detailer principiante comete (y como evitarlos) | detailing | 8 min |
-| 15 | `kit-esencial-detailing-herramientas` | Kit esencial de Detailing: Las mejores herramientas para empezar con exito | detailing | 10 min |
-| 16 | `salida-laboral-car-wrapping-sueldo` | Salida laboral en Car Wrapping: Cuanto gana un instalador profesional | wrapping | 9 min |
-
-Nota: Los slugs estan limpios (sin preposiciones innecesarias, sin caracteres especiales, sin tildes).
-
-### Generacion de Imagenes con IA
-
-Se generaran 10 imagenes unicas usando la API de IA de imagenes (modelo `google/gemini-2.5-flash-image`) a traves de una funcion backend temporal. Las imagenes seran realistas y mostraran:
-
-1. **Articulo 7** (Guia Formacion): Taller limpio con alumno recibiendo certificado
-2. **Articulo 8** (PPF): Primer plano de instalacion PPF en capo de coche de lujo
-3. **Articulo 9** (Pulido): Pulidora en accion sobre carroceria negra con reflejo perfecto
-4. **Articulo 10** (Wrapping vs Pintura): Coche a medio vinilar mostrando dos colores
-5. **Articulo 11** (Montar Centro): Vista panoramica de un taller de detailing moderno
-6. **Articulo 12** (Cuero/Alcantara): Primer plano de restauracion de asiento de cuero
-7. **Articulo 13** (Ceramico): Aplicacion de coating ceramico con efecto hidrofobico
-8. **Articulo 14** (Errores): Herramientas de detailing con x roja sobre las incorrectas
-9. **Articulo 15** (Kit Herramientas): Organizacion profesional de kit de detailing
-10. **Articulo 16** (Wrapping Salida Laboral): Instalador profesional de vinilo trabajando
-
-Las imagenes se guardaran como archivos en `src/assets/blog/` con nombres descriptivos.
-
-**Proceso:**
-1. Crear funcion edge temporal `generate-blog-images`
-2. Generar cada imagen con prompt detallado y guardarla como base64
-3. Convertir a archivo y guardarlo en el proyecto
-4. Eliminar la funcion temporal
-
-**Alternativa de fallback:** Si las imagenes IA no son suficientemente buenas, se reutilizaran las imagenes existentes del portfolio y formacion que mejor encajen con cada articulo.
+| # | ID | Slug | Titulo SEO (H1) | Categoria | Lectura |
+|---|-----|------|-----------------|-----------|---------|
+| 1 | 17 | `plan-negocio-centro-detailing-2026` | Plan de Negocio para un Centro de Detailing en 2026: Guia paso a paso | negocios | 14 min |
+| 2 | 18 | `detailing-movil-vs-taller-fisico` | Detailing a domicilio o Taller Fisico: Que modelo de negocio es mas rentable | negocios | 10 min |
+| 3 | 19 | `cuanto-cuesta-montar-taller-detailing` | Cuanto cuesta montar un taller de detailing profesional: Inversion minima y equipo | negocios | 12 min |
+| 4 | 20 | `como-calcular-tarifas-detailing` | Como calcular tus tarifas de Detailing: No regales tu trabajo | negocios | 9 min |
+| 5 | 21 | `marketing-clientes-vip-detailing` | Como conseguir clientes VIP para tu centro de Detailing y Car Wrapping | negocios | 11 min |
+| 6 | 22 | `lavadero-ecologico-detailing-sin-agua` | Montar un Lavadero Ecologico: El futuro del Detailing sin agua | negocios | 10 min |
+| 7 | 23 | `ppf-servicio-mas-rentable-2026` | Por que el PPF (Paint Protection Film) es el servicio mas rentable de 2026 | ppf | 9 min |
+| 8 | 24 | `licencias-permisos-taller-estetica-automotriz` | Licencias y permisos necesarios para abrir un taller de estetica automotriz | negocios | 12 min |
+| 9 | 25 | `como-montar-estudio-car-wrapping` | Como montar un estudio de Car Wrapping desde cero: Herramientas y espacio | wrapping | 11 min |
+| 10 | 26 | `software-gestion-taller-detailing` | Las mejores Apps y Software para gestionar tu taller de Detailing | negocios | 8 min |
 
 ### Meta-descripciones SEO (max 155 caracteres)
 
-Cada articulo tendra una meta-description optimizada con emojis y power words, siguiendo el patron del proyecto:
+1. "Plan de negocio completo para montar un centro de detailing en 2026. Costes fijos, variables y punto de equilibrio. Guia paso a paso."
+2. "Detailing a domicilio o taller fisico: analisis de rentabilidad, inversion y ventajas de cada modelo. Descubre cual te conviene mas."
+3. "Desglose real de inversion para montar un taller de detailing. Pulidoras, elevadores, iluminacion y presupuesto minimo actualizado a 2026."
+4. "Aprende a calcular tus tarifas de detailing. No regales tu trabajo: vende valor, no tiempo. Guia de pricing profesional."
+5. "Estrategias de marketing para atraer clientes VIP a tu centro de detailing. Redes sociales, SEO local y casos de exito reales."
+6. "Monta un lavadero ecologico: normativa 2026, detailing sin agua y sostenibilidad. El futuro del sector automotriz responsable."
+7. "El PPF es el servicio mas rentable del detailing en 2026. Margenes, precios y por que formarte como instalador ahora."
+8. "Licencias y permisos para abrir un taller de estetica automotriz en Espana. Guia legal completa actualizada a 2026."
+9. "Como montar un estudio de car wrapping desde cero. Herramientas, espacio y presupuesto para empezar a personalizar coches."
+10. "Las mejores apps y software para gestionar tu taller de detailing. CRM, agenda y facturacion para un negocio profesional."
 
-1. "Descubre como convertirte en detailer profesional. Formacion, salida laboral y certificacion. La guia mas completa de 2026."
-2. "Que es el PPF y por que es el futuro de la proteccion automotriz. Tecnologia, costes y formacion profesional. Descubrelo ahora."
-3. "Aprende tecnicas de pulido profesional en 3 pasos. De principiante a experto con las mejores pulidoras y productos del mercado."
-4. "Car Wrapping vs Pintura: ventajas, costes y durabilidad. Descubre cual es la mejor opcion para cambiar el color de tu coche en 2026."
-5. "Guia completa para montar un centro de detailing. Inversion, herramientas, rentabilidad y plan de negocio desde cero."
-6. "Secretos de la limpieza y restauracion de cuero y alcantara. Tecnicas profesionales para interiores premium de vehiculos."
-7. "Guia completa sobre tratamiento ceramico. Aplicacion, mantenimiento y por que necesitas formacion para hacerlo bien."
-8. "Los 7 errores fatales de los detailers principiantes y como evitarlos. Aprende de los fallos mas comunes del sector."
-9. "Kit esencial de detailing: pulidoras, productos y herramientas para empezar. Guia de compra profesional actualizada a 2026."
-10. "Cuanto gana un instalador de car wrapping. Salida laboral, sueldos y como formarte profesionalmente."
+### Estrategia de Enlazado por Articulo
+
+Cada articulo incluira entre 3 y 5 enlaces usando el sistema de marcadores `[[texto]]`:
+
+**Enlaces internos (rel="follow"):**
+- `/formacion-profesional-detailing` - Formacion profesional
+- `/curso-detailing-profesional` - Curso de detailing
+- `/curso-ppf-proteccion-pintura` - Curso de PPF
+- `/curso-vinilado-vehiculos` - Curso de wrapping
+- `/curso-detailing-iniciacion` - Jornada Zero
+- `/contacto` - Contacto
+
+**Enlaces externos de autoridad (rel="follow", external=true):**
+- `https://www.detailpark.es` - Detail Park (al menos 1 por articulo)
+
+### Generacion de Imagenes IA
+
+Se generaran 10 imagenes (1200x672px) con el modelo `google/gemini-2.5-flash-image`:
+
+1. **Art. 17** (Plan de Negocio): Escritorio con plan de negocio, graficos financieros y llaves de taller de detailing
+2. **Art. 18** (Movil vs Fisico): Composicion dividida: furgoneta de detailing movil a la izquierda y taller profesional a la derecha
+3. **Art. 19** (Inversion Maquinaria): Taller de detailing con pulidoras, elevador y sistema de iluminacion profesional
+4. **Art. 20** (Tarifas/Pricing): Profesional calculando presupuesto con tablet junto a un coche de lujo
+5. **Art. 21** (Marketing VIP): Coche de lujo recien detallado con acabado perfecto en taller premium, smartphone mostrando Instagram
+6. **Art. 22** (Eco/Sostenibilidad): Lavado ecologico de vehiculo sin agua con productos biodegradables y plantas
+7. **Art. 23** (PPF Rentabilidad): Primer plano de instalacion PPF en vehiculo de lujo con herramientas profesionales
+8. **Art. 24** (Licencias): Oficina moderna con documentos legales, licencias enmarcadas y llaves de taller
+9. **Art. 25** (Estudio Wrapping): Estudio de car wrapping amplio y limpio con coche a medio vinilar
+10. **Art. 26** (Software): Pantalla de ordenador con dashboard de gestion de taller, citas y facturacion
+
+Las imagenes se guardaran en `src/assets/blog/` con prefijo `blog-` y nombres descriptivos.
 
 ### Contenido de los Articulos
 
-Cada articulo tendra entre 4 y 7 secciones (H2) con contenido profesional, tecnico y actualizado a 2026. El articulo 7 (Guia Maestra) sera el mas extenso con 7 secciones y sera marcado como `featured: false` (el actual destacado de negocios se mantiene).
+Cada articulo tendra entre 4 y 6 secciones (H2) con contenido profesional, tecnico y actualizado a 2026. Todos los articulos seguiran la misma estructura e interfaces ya definidas (`BlogPost`, `BlogSection`, `BlogLink`).
 
-Todos los articulos incluiran:
-- Menciones naturales a los cursos de Academia Detail con enlaces internos
-- Al menos 1 enlace externo a `www.detailpark.es`
-- Tags SEO relevantes
-- `relatedSlugs` cruzados con los articulos existentes y nuevos
-- `imageAlt` optimizado con keywords
+**Estructura de contenido por articulo:**
+
+**Art. 17 - Plan de Negocio:**
+- H2: Por que necesitas un plan de negocio antes de abrir
+- H2: Analisis de mercado: la demanda de detailing en 2026
+- H2: Costes fijos y variables desglosados
+- H2: Punto de equilibrio y proyeccion de ingresos
+- H2: Plan de accion mes a mes para el primer ano
+- H2: Financiacion y ayudas para emprendedores
+
+**Art. 18 - Movil vs Fisico:**
+- H2: El modelo de detailing a domicilio: ventajas y limitaciones
+- H2: El taller fisico: autoridad, espacio y capacidad de crecimiento
+- H2: Comparativa de inversion inicial
+- H2: Analisis de rentabilidad a 12 meses
+- H2: El modelo hibrido: la mejor estrategia para empezar
+
+**Art. 19 - Inversion y Maquinaria:**
+- H2: Equipamiento basico imprescindible
+- H2: Herramientas de pulido y correccion profesional
+- H2: Iluminacion, extraccion y sistemas complementarios
+- H2: Desglose de inversion por niveles (basico, medio, premium)
+- H2: Como amortizar la inversion en los primeros meses
+
+**Art. 20 - Tarifas/Pricing:**
+- H2: El error mas comun: cobrar por tiempo en vez de por valor
+- H2: Como calcular tu coste por hora real
+- H2: Estrategia de precios por servicio: detailing, PPF y wrapping
+- H2: Paquetes y servicios premium: aumentar el ticket medio
+- H2: Comunicar valor al cliente: scripts y tecnicas de venta
+
+**Art. 21 - Marketing VIP:**
+- H2: Tu Instagram como escaparate visual: antes y despues que venden
+- H2: Google My Business y SEO local: que te encuentren primero
+- H2: Alianzas estrategicas con concesionarios y talleres
+- H2: Contenido que convierte: Reels, TikTok y YouTube Shorts
+- H2: Los trabajos de Detail Park como referencia de excelencia
+
+**Art. 22 - Eco/Sostenibilidad:**
+- H2: La normativa medioambiental que afecta a los talleres en 2026
+- H2: Detailing sin agua: productos y tecnicas
+- H2: Sistemas de reciclaje y gestion de residuos
+- H2: Certificaciones ecologicas que aportan valor al negocio
+- H2: El perfil del cliente eco-consciente y como captarlo
+
+**Art. 23 - PPF Rentabilidad:**
+- H2: Los margenes del PPF vs otros servicios de detailing
+- H2: Un solo trabajo de PPF equivale a 10 lavados integrales
+- H2: El coste real de formarse en PPF y su retorno
+- H2: Equipamiento necesario para ofrecer PPF profesional
+- H2: Como posicionarte como instalador de PPF en tu zona
+
+**Art. 24 - Licencias y Permisos:**
+- H2: Tipos de licencias necesarias segun tu actividad
+- H2: Licencia de apertura y actividad: proceso paso a paso
+- H2: Normativa medioambiental para talleres con agua
+- H2: Seguros obligatorios y recomendados
+- H2: Altas fiscales y forma juridica: autonomo vs SL
+- H2: Checklist legal completo antes de abrir
+
+**Art. 25 - Estudio Wrapping:**
+- H2: Requisitos de espacio para un estudio de wrapping
+- H2: Herramientas esenciales del instalador de vinilo
+- H2: Control de temperatura y humedad: el factor critico
+- H2: Proveedores de vinilo: marcas y distribuidores recomendados
+- H2: Plan de lanzamiento para un estudio de wrapping
+
+**Art. 26 - Software Gestion:**
+- H2: Por que digitalizar la gestion de tu taller
+- H2: CRM para detailers: gestionar clientes y seguimiento
+- H2: Agenda y citas online: herramientas recomendadas
+- H2: Facturacion y contabilidad para talleres
+- H2: Redes sociales automatizadas: programar contenido profesional
 
 ### Seccion Tecnica
 
 **Archivos nuevos (11 archivos):**
 
-- `src/assets/blog/` (directorio) - 10 imagenes generadas por IA, una por articulo
-- `supabase/functions/generate-blog-images/index.ts` - Funcion temporal para generar imagenes con IA (se eliminara despues de usarla)
+- `src/assets/blog/blog-plan-negocio-detailing.jpg` - Imagen IA generada
+- `src/assets/blog/blog-detailing-movil-vs-fisico.jpg` - Imagen IA generada
+- `src/assets/blog/blog-inversion-maquinaria-taller.jpg` - Imagen IA generada
+- `src/assets/blog/blog-tarifas-pricing-detailing.jpg` - Imagen IA generada
+- `src/assets/blog/blog-marketing-clientes-vip.jpg` - Imagen IA generada
+- `src/assets/blog/blog-lavadero-ecologico.jpg` - Imagen IA generada
+- `src/assets/blog/blog-ppf-rentabilidad.jpg` - Imagen IA generada
+- `src/assets/blog/blog-licencias-permisos-taller.jpg` - Imagen IA generada
+- `src/assets/blog/blog-estudio-car-wrapping.jpg` - Imagen IA generada
+- `src/assets/blog/blog-software-gestion-taller.jpg` - Imagen IA generada
+- `src/data/blogPostsBusiness.ts` - Nuevo archivo con los 10 articulos de negocio (mismo patron que `blogPostsNew.ts`)
 
-**Archivos modificados (2 archivos):**
+**Archivos modificados (1 archivo):**
 
 - `src/data/blogPosts.ts`:
-  - Ampliar la interfaz `BlogSection` con campo opcional `links?: BlogLink[]`
-  - Anadir nueva interfaz `BlogLink` con campos `text`, `href`, `rel`, `external`
-  - Anadir los 10 nuevos articulos al array `blogPosts` con contenido completo
-  - Importar las 10 nuevas imagenes desde `@/assets/blog/`
-  - Actualizar `relatedSlugs` de los articulos existentes para cruzarlos con los nuevos
+  - Importar `blogPostsBusiness` desde `./blogPostsBusiness`
+  - Anadir las imagenes importadas al merge de posts con `defaultAuthor`
+  - Actualizar `relatedSlugs` de articulos existentes para enlazar a los nuevos (especialmente los de categoria `negocios`)
 
-- `src/components/blog/BlogArticleContent.tsx`:
-  - Modificar el renderizador de parrafos para detectar marcadores `[[texto]]` en el content
-  - Reemplazar los marcadores por componentes `<a>` o `<Link>` (segun sea interno o externo) con los atributos `rel` y `target` configurados desde el array `links`
-  - Los enlaces internos usaran `<Link>` de react-router-dom para navegacion SPA
-  - Los enlaces externos usaran `<a>` con `target="_blank"` y `rel="noopener noreferrer nofollow"` o `rel="noopener noreferrer"` segun la configuracion
-  - Los enlaces tendran estilo visual: `text-primary underline decoration-primary/30 hover:decoration-primary`
-
-**Estructura de cada articulo nuevo (ejemplo Articulo 7):**
+**Patron de datos (ejemplo Articulo 17):**
 
 ```text
 {
-  id: '7',
-  slug: 'como-ser-detailer-profesional-guia-formacion',
-  title: 'Como ser Detailer Profesional: Guia Completa de Formacion y Salida Laboral',
-  excerpt: 'Descubre como convertirte en detailer...',
-  category: 'detailing',
+  id: '17',
+  slug: 'plan-negocio-centro-detailing-2026',
+  title: 'Plan de Negocio para un Centro de Detailing en 2026: Guia paso a paso',
+  excerpt: 'Plan de negocio completo para montar un centro de detailing...',
+  category: 'negocios',
   author: defaultAuthor,
-  publishedAt: '2026-02-05',
-  readingTime: '15 min',
-  image: blogGuiaFormacion, // importado desde @/assets/blog/
-  imageAlt: 'Formacion profesional de detailing...',
+  publishedAt: '2026-02-07',
+  readingTime: '14 min',
+  image: blogPlanNegocio,
+  imageAlt: 'Plan de negocio para centro de detailing con graficos de rentabilidad',
   featured: false,
-  tags: ['formacion', 'salida laboral', 'certificacion', 'carrera'],
+  tags: ['plan de negocio', 'emprender', 'centro detailing', 'inversion'],
   sections: [
     {
-      id: 'que-hace-detailer-profesional',
-      title: 'Que hace un Detailer Profesional',
-      content: 'Un detailer profesional es mucho mas que... En [[Academia Detail]] formamos...',
+      id: 'por-que-plan-negocio',
+      title: 'Por que necesitas un plan de negocio antes de abrir',
+      content: 'Abrir un centro de detailing sin plan... [[formacion profesional]]...',
       links: [
-        { text: 'Academia Detail', href: '/curso-detailing-profesional', rel: 'follow' },
-        { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true }
+        { text: 'formacion profesional', href: '/formacion-profesional-detailing', rel: 'follow' }
       ]
     },
     // ... mas secciones
   ],
-  relatedSlugs: ['guia-completa-pulido-coches-profesional', 'cuanto-gana-detailer-profesional-espana']
+  relatedSlugs: ['como-montar-negocio-detailing-rentable', 'cuanto-cuesta-montar-taller-detailing', ...]
 }
 ```
 
+**Referencias cruzadas (relatedSlugs):**
+
+Los 10 nuevos articulos se enlazaran entre si y con los existentes relevantes:
+- Art. 17 (Plan Negocio) enlazara con: Art. 1, Art. 19, Art. 11
+- Art. 18 (Movil vs Fisico) enlazara con: Art. 17, Art. 19, Art. 1
+- Art. 19 (Inversion) enlazara con: Art. 17, Art. 15, Art. 11
+- Art. 20 (Tarifas) enlazara con: Art. 17, Art. 6, Art. 21
+- Art. 21 (Marketing) enlazara con: Art. 20, Art. 17, Art. 1
+- Art. 22 (Eco) enlazara con: Art. 17, Art. 24, Art. 19
+- Art. 23 (PPF Rentabilidad) enlazara con: Art. 8, Art. 3, Art. 17
+- Art. 24 (Licencias) enlazara con: Art. 17, Art. 22, Art. 19
+- Art. 25 (Estudio Wrapping) enlazara con: Art. 16, Art. 10, Art. 17
+- Art. 26 (Software) enlazara con: Art. 17, Art. 21, Art. 20
+
+Se actualizaran los `relatedSlugs` de los articulos existentes (Art. 1, Art. 6, Art. 11) para incluir los nuevos articulos de negocio.
+
 **Orden de implementacion:**
 
-1. Crear funcion edge `generate-blog-images` para generar las 10 imagenes con IA
-2. Ejecutar la generacion y guardar las imagenes en `src/assets/blog/`
+1. Generar las 10 imagenes IA con una funcion edge temporal `generate-blog-images-business`
+2. Guardar las imagenes en `src/assets/blog/`
 3. Eliminar la funcion temporal
-4. Ampliar las interfaces `BlogSection` y anadir `BlogLink` en `blogPosts.ts`
-5. Modificar `BlogArticleContent.tsx` para renderizar enlaces con marcadores `[[]]`
-6. Anadir los 10 articulos al array `blogPosts` con contenido completo, enlaces y referencias cruzadas
-7. Actualizar `relatedSlugs` de los 6 articulos existentes para enlazar a los nuevos
-8. Verificar paginacion (16 articulos = 3 paginas con POSTS_PER_PAGE = 6, descontando el featured)
+4. Crear `src/data/blogPostsBusiness.ts` con los 10 articulos completos
+5. Modificar `src/data/blogPosts.ts` para importar y fusionar los nuevos posts
+6. Actualizar `relatedSlugs` cruzados en articulos existentes
+7. Verificar paginacion (26 articulos = ~4 paginas con POSTS_PER_PAGE = 6, descontando el featured)
 
-**Nota sobre Core Web Vitals:**
-- Las imagenes se cargaran con `loading="lazy"` (ya implementado en BlogCard)
-- Las imagenes del hero usaran dimensiones optimizadas
-- No se anaden dependencias nuevas - todo se implementa con React, react-router-dom y las herramientas existentes
+**Nota sobre paginacion:**
+Con 26 articulos totales (1 featured + 25 en grid), la paginacion mostrara:
+- Pagina 1: 6 posts
+- Pagina 2: 6 posts
+- Pagina 3: 6 posts
+- Pagina 4: 6 posts
+- Pagina 5: 1 post
+
