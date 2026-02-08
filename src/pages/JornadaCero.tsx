@@ -899,14 +899,12 @@ const Index = () => {
           
           <div className="border-t border-white/10 pt-6">
             <p className="text-white/60 text-xs md:text-sm text-center leading-relaxed">
-              Derechos reservados para Detail Park S.L. 2024
+              © {new Date().getFullYear()} Detail Park S.L. Todos los derechos reservados.
               <span className="hidden md:inline"> | </span>
               <br className="md:hidden" />
-              <Link to="/privacidad" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block mt-2 md:mt-0">Aviso Legal</Link>
+              <Link to="/politica-privacidad" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block mt-2 md:mt-0">Política de Privacidad</Link>
               <span className="mx-1">•</span>
-              <Link to="/privacidad" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Privacidad</Link>
-              <span className="mx-1">•</span>
-              <Link to="/terminos" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Condiciones</Link>
+              <Link to="/politica-privacidad" className="text-white/80 hover:text-white mx-1 md:mx-2 inline-block">Aviso Legal</Link>
             </p>
           </div>
         </div>

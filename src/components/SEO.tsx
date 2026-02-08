@@ -86,7 +86,7 @@ export const localBusinessSchema = {
   },
   "image": DEFAULT_IMAGE,
   "telephone": "+34 622 773 555",
-  "email": "info@detailpark.es",
+  "email": "info@academiadetail.com",
   "priceRange": "€€",
   "currenciesAccepted": "EUR",
   "paymentAccepted": "Efectivo, Tarjeta de Crédito, Transferencia Bancaria",

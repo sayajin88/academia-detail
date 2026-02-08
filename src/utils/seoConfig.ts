@@ -22,7 +22,7 @@ export const organizationSchemaComplete = {
   "slogan": "No enseñamos a lavar coches, formamos empresarios del Detailing",
   "foundingDate": "2017",
   "telephone": "+34 622 773 555",
-  "email": "info@detailpark.es",
+  "email": "info@academiadetail.com",
   "priceRange": "€€",
   "currenciesAccepted": "EUR",
   "paymentAccepted": "Efectivo, Tarjeta de Crédito, Transferencia Bancaria",

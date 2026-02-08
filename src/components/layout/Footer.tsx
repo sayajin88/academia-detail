@@ -17,9 +17,8 @@ const quickLinks = [
 ];
 
 const legalLinks = [
-  { name: 'Política de Privacidad', href: '/privacidad' },
-  { name: 'Términos y Condiciones', href: '/terminos' },
-  { name: 'Política de Cookies', href: '/cookies' },
+  { name: 'Política de Privacidad', href: '/politica-privacidad' },
+  { name: 'Aviso Legal', href: '/politica-privacidad' },
 ];
 
 const socialLinks = [
