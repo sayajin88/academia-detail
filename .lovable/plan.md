@@ -1,78 +1,92 @@
 
 
-# Plan: Integrar fotos reales en la web para mayor autenticidad
+# Plan: Seccion de Resenas de Google de Detail Park
 
 ## Objetivo
-Reemplazar imagenes generadas por IA en articulos del blog y secciones de formacion por las 9 fotos reales subidas, mejorando la autenticidad y confianza de la web.
+Crear un componente reutilizable de resenas de Google para Detail Park, adaptado al estilo visual premium de la web (fondo oscuro, tarjetas glass, acentos burdeos), e insertarlo en todas las paginas de cursos, la carrera detailing, la jornada zero y la pagina de inicio.
 
-## Imagenes subidas y su uso propuesto
+## Diseno del componente
 
-| Foto | Contenido | Destino |
-|------|-----------|---------|
-| `Daniel_Curso_Detailing_1.jpg` | Daniel ensenando a alumna a pulir (1 a 1) | Blog: "Guia formacion detailer" (sustituye `blog-guia-formacion-detailer.jpg`) |
-| `Daniel_Curso_Detailing_2.jpg` | Daniel guiando alumno con pulidora DeWalt | Blog: "Tecnicas de pulido" (sustituye `blog-tecnicas-pulido.jpg`) |
-| `Daniel_Curso_Detailing_3.jpg` | Daniel explicando a grupo de alumnos | Blog: "Errores detailer principiante" (sustituye `blog-errores-detailer.jpg`) |
-| `Almna_Curso_Detailing.jpg` | Alumna con pulidora, primer plano | Blog: "Kit esencial detailing herramientas" (sustituye `blog-kit-herramientas.jpg`) |
-| `Alumnos_Curso_detailing_2.jpg` | Alumnos sentados en clase teorica | Blog: "Montar centro detailing" (sustituye `blog-montar-centro-detailing.jpg`) |
-| `Alumnos_Instalacone_Curso_detailing.jpg` | Grupo grande en instalaciones Detail Park | Galeria de formacion detailing en `FormationGallery.tsx` (nueva imagen adicional) |
-| `Alumnos_prácticas_Detailing.jpg` | Grupo alrededor de un descapotable | Galeria de formacion detailing en `FormationGallery.tsx` (nueva imagen adicional) |
-| `Certificados_Grupal_Curso_Detailing.jpg` | Foto grupal con certificados | Seccion de testimonios `TestimonialsSection.tsx` -- nueva imagen para uno de los testimonios; y Blog: "Salida laboral car wrapping" (sustituye `blog-salida-laboral-wrapping.jpg`) |
-| `Curso_detailing_4.jpg` | Detalle manos con pad de lana | Blog: "Restauracion cuero alcantara" (sustituye `blog-restauracion-cuero.jpg`) |
+El componente original tiene un estilo claro (bg-slate-50, tarjetas blancas) que no encaja con la identidad visual actual. Se rediseñara para:
 
-## Pasos de implementacion
+- Fondo oscuro coherente con el resto del sitio (bg-background o bg-card)
+- Tarjetas con estilo `glass-card` y bordes `border-white/10`
+- Estrellas en color `primary` (burdeos) en vez de amarillo
+- Icono de Google junto a la puntuacion agregada
+- Boton CTA adaptado al sistema de botones existente (variant `glass` o `outline`)
+- Animaciones de entrada usando el componente `AnimatedSection` existente
+- Titulo con `SectionHeading` para mantener consistencia
 
-### Paso 1: Copiar las 9 imagenes al proyecto
-Copiar todas las fotos a `src/assets/` con nombres descriptivos:
-- `daniel-curso-detailing-1.jpg`
-- `daniel-curso-detailing-2.jpg`
-- `daniel-curso-detailing-3.jpg`
-- `alumna-curso-detailing.jpg`
-- `alumnos-curso-detailing-2.jpg`
-- `alumnos-instalaciones-curso-detailing.jpg`
-- `alumnos-practicas-detailing.jpg`
-- `certificados-grupal-curso-detailing.jpg`
-- `curso-detailing-4.jpg`
+### Datos de las resenas
+Se conservaran exactamente los 3 testimonios proporcionados, la puntuacion 4.8, las 218 resenas y la direccion. El enlace externo a Google tambien se mantiene.
 
-### Paso 2: Actualizar imagenes del blog (6 articulos)
-Modificar `src/data/blogPostsNew.ts`:
-- Articulo 7 (`como-ser-detailer-profesional-guia-formacion`): cambiar imagen a `daniel-curso-detailing-1.jpg` y actualizar imageAlt
-- Articulo 9 (`tecnicas-pulido-principiante-experto`): cambiar imagen a `daniel-curso-detailing-2.jpg`
-- Articulo 14 (`errores-detailer-principiante-como-evitarlos`): cambiar imagen a `daniel-curso-detailing-3.jpg`
-- Articulo 15 (`kit-esencial-detailing-herramientas`): cambiar imagen a `alumna-curso-detailing.jpg`
-- Articulo 12 (`limpieza-restauracion-cuero-alcantara`): cambiar imagen a `curso-detailing-4.jpg`
-- Articulo 16 (`salida-laboral-car-wrapping-sueldo`): cambiar imagen a `certificados-grupal-curso-detailing.jpg`
+## Ubicacion en las paginas
 
-Modificar `src/data/blogPostsNew.ts` (imports y asignaciones):
-- Reemplazar imports de las imagenes AI por los nuevos imports
-- Actualizar los campos `imageAlt` con descripciones SEO-friendly de las fotos reales
+La seccion se insertara justo antes del FAQ en cada pagina, ya que funciona como prueba social que refuerza la decision antes de las preguntas frecuentes:
 
-Modificar `src/data/blogPosts.ts`:
-- Articulo 11 (`como-montar-centro-detailing-inversion`): cambiar imagen a `alumnos-curso-detailing-2.jpg`
-
-### Paso 3: Anadir fotos a la galeria de formacion detailing
-Modificar `src/components/formation/FormationGallery.tsx`:
-- Importar las 2 nuevas imagenes (`alumnos-instalaciones-curso-detailing.jpg` y `alumnos-practicas-detailing.jpg`)
-- Anadir 2 nuevas entradas al array `detailingGalleryItems` con titulos y descripciones apropiadas
-
-### Paso 4: Actualizar alt-texts SEO
-Todos los nuevos `imageAlt` seguiran el patron existente con keywords estrategicas:
-- Incluir "curso detailing", "formacion profesional", "Academia Detail"
-- Ser descriptivos del contenido real de la foto
-- Mantener el formato consistente con el resto del sitio
+| Pagina | Archivo | Posicion |
+|--------|---------|----------|
+| Home | `src/pages/Home.tsx` | Antes de `HomeFAQ`, despues de `SuccessStoriesLogos` |
+| Curso Detailing / PPF / Wrapping / Restauracion | `src/pages/FormationDetail.tsx` | Antes de `FormationFAQ` |
+| Carrera Detailing | `src/pages/CarreraDetailing.tsx` | Antes de `CarreraFAQ` |
+| Jornada Zero | `src/pages/JornadaCero.tsx` | Antes de la seccion de FAQ existente |
 
 ## Detalle tecnico
 
-### Archivos a modificar
-1. `src/data/blogPostsNew.ts` -- 6 cambios de imagen + imports
-2. `src/data/blogPosts.ts` -- 1 cambio de imagen (articulo montar-centro, usa import de blogPostsNew reexportado, se cambiara en blogPostsNew)
-3. `src/components/formation/FormationGallery.tsx` -- 2 nuevas imagenes en galeria detailing
+### Archivos a crear
+1. **`src/components/shared/GoogleReviews.tsx`** -- Componente reutilizable
 
-### Nota sobre el archivo .heic
-El archivo `Certificados_Grupal_Curso_Detailing_2.heic` no se puede usar directamente en web (formato de Apple). Solo se usara la version `.jpg` del mismo grupo de fotos.
+   Caracteristicas:
+   - Usa `SectionHeading` con badge "Resenas Google" y titulo "Lo Que Opinan de Detail Park"
+   - Grid de 3 columnas (1 en movil) con tarjetas glass
+   - Cabecera con puntuacion 4.8, icono de Google (SVG inline o texto), 5 estrellas, y contador "(218 resenas)"
+   - Direccion con icono `MapPin`
+   - Boton "Ver todas las resenas en Google" con enlace externo
+   - Animaciones con `AnimatedSection` y `StaggeredContainer`
+   - Estrellas usando el componente `Star` de lucide-react
+   - Totalmente responsive
+
+### Archivos a modificar
+2. **`src/pages/Home.tsx`** -- Anadir lazy import y `<GoogleReviews />` antes de `HomeFAQ`
+3. **`src/pages/FormationDetail.tsx`** -- Importar y anadir `<GoogleReviews />` antes de `FormationFAQ`
+4. **`src/pages/CarreraDetailing.tsx`** -- Importar y anadir `<GoogleReviews />` antes de `CarreraFAQ`
+5. **`src/pages/JornadaCero.tsx`** -- Importar y anadir `<GoogleReviews />` antes de la seccion de FAQ
+
+### Estructura del componente
+
+```text
++------------------------------------------------------+
+|  [Badge: Resenas Google]                             |
+|  Titulo: Lo Que Opinan de Detail Park                |
+|  Subtitulo: Resenas verificadas en Google Maps       |
+|                                                      |
+|  [Google icon]  4.8  *****  (218 resenas)            |
+|  [MapPin] C. Metalurgias, 13, 03008 Alicante         |
+|                                                      |
+|  +----------------+ +----------------+ +------------+|
+|  | *****          | | *****          | | *****      ||
+|  | "Increible..." | | "El mejor..."  | | "Trato..." ||
+|  | Alejandro M.   | | Beatriz S.     | | Carlos T.  ||
+|  | Hace 1 semana  | | Hace 1 mes     | | Hace 2 m.  ||
+|  +----------------+ +----------------+ +------------+|
+|                                                      |
+|  [Ver todas las resenas en Google ->]                |
++------------------------------------------------------+
+```
+
+### Estilos aplicados
+- Seccion: `py-20 md:py-28 bg-background`
+- Tarjetas: `bg-card border border-border hover:border-primary/30 rounded-2xl p-6`
+- Estrellas: `fill-primary text-primary` (burdeos, coherente con TestimonialsSection)
+- Boton: variant `outline` con borde `border-primary/30` y texto `text-primary`
+- Texto de resena: `text-foreground/80 italic`
+- Autor: `font-semibold text-foreground`
+- Fecha: `text-xs text-muted-foreground`
 
 ### Resultado esperado
-- 7 articulos del blog mostraran fotos reales de la academia en lugar de imagenes generadas
-- La galeria de formacion detailing tendra 9 fotos en lugar de 7
-- Mayor autenticidad y confianza en toda la web
-- SEO mejorado con alt-texts que describen contenido real
+- Componente reutilizable que aparece en 4+ paginas
+- Diseno coherente con la identidad visual premium del sitio
+- Prueba social adicional con resenas reales de Google
+- Enlace externo para ver mas resenas
+- Animaciones suaves al hacer scroll
 
