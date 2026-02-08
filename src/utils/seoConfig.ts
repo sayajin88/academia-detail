@@ -695,7 +695,7 @@ export const seoConfig = {
   aboutUs: {
     title: "Quiénes Somos | Academia Detail | Taller Real desde 2017 | ★4.9",
     description: "✅ Conoce la historia de Academia Detail. Fundada en 2017, somos el único centro de formación en detailing que vive del taller, no de la formación. ⭐ +7 años de experiencia real.",
-    keywords: "quienes somos academia detailing, historia detail park, centro formacion detailing españa, escuela detailing alicante, curso detailing profesional taller real",
+    keywords: "quienes somos academia detailing, historia detail park, centro formacion detailing españa, escuela detailing alicante, curso detailing profesional taller real, videos detailing profesional",
     url: "/quienes-somos",
     schema: [
       localBusinessSchema,
@@ -706,6 +706,43 @@ export const seoConfig = {
         "description": "Historia y filosofía de Academia Detail. Fundada en 2017, somos el único centro de formación donde vivimos del detailing profesional.",
         "url": `${BASE_URL}/quienes-somos`,
         "mainEntity": organizationSchemaComplete
+      },
+      // VideoObject schemas for Detail Park YouTube channel videos
+      ...generateVideoObjectSchemas([
+        { id: 'lgHS6CO2G2s', title: 'Detailing profesional en taller real - Detail Park', description: 'Proceso completo de detailing profesional realizado en el taller de Detail Park Alicante con clientes reales', uploadDate: '2024-06-01' },
+        { id: 'TtPs7WPVLzE', title: 'Proceso de pulido y corrección de pintura profesional', description: 'Técnicas avanzadas de pulido y corrección de pintura en vehículos de alta gama en Detail Park', uploadDate: '2024-07-15' },
+        { id: 'ByRhg2kYD-A', title: 'Tratamiento cerámico en vehículo de alta gama', description: 'Aplicación de tratamiento cerámico profesional para protección duradera de la pintura', uploadDate: '2024-08-01' },
+        { id: 'G3AU2913_vw', title: 'Lavado profesional y descontaminación de vehículos', description: 'Proceso completo de lavado profesional y descontaminación en el taller de Detail Park', uploadDate: '2024-09-01' },
+        { id: 'thUgGa5ULkI', title: 'Trabajo real en Detail Park Alicante', description: 'Un día de trabajo real en las instalaciones de Detail Park Alicante con clientes de alta gama', uploadDate: '2024-10-01' },
+        { id: 'kp_yZNZnUwo', title: 'Protección de pintura y acabado perfecto', description: 'Técnicas de protección de pintura para conseguir un acabado perfecto en detailing profesional', uploadDate: '2024-11-01' },
+        { id: 'zr_FFDz06Fc', title: 'Restauración y detailing de vehículos clásicos', description: 'Proceso de restauración y detailing profesional de vehículos clásicos y deportivos', uploadDate: '2024-12-01' },
+        { id: 'iMatPTngV0g', title: 'Técnicas avanzadas de detailing profesional', description: 'Demostración de técnicas avanzadas de detailing en el taller de Detail Park', uploadDate: '2025-01-15' },
+        { id: 'U3K4VsFlY8E', title: 'Interior detailing profesional completo', description: 'Proceso completo de detailing interior profesional en vehículos de alta gama', uploadDate: '2025-02-01' },
+        { id: 'L14vIkJWgKw', title: 'Resultados reales de detailing en nuestro taller', description: 'Resultados reales de trabajos de detailing profesional realizados en Detail Park', uploadDate: '2025-03-01' },
+        { id: 'eFfzwvhGNcU', title: 'Preparación de vehículos premium para entrega', description: 'Proceso de preparación y detailing de vehículos premium antes de la entrega al cliente', uploadDate: '2025-04-01' },
+        { id: 'sqK6qkTWynk', title: 'Detail Park - Trabajo diario en el taller de Alicante', description: 'El día a día en el taller de Detail Park Alicante mostrando trabajo real con clientes', uploadDate: '2025-05-01' },
+      ]),
+      // ItemList for video carousel in Google Search
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Videos de Detailing Profesional - Detail Park",
+        "description": "Colección de videos mostrando trabajo real de detailing profesional en el taller de Detail Park Alicante",
+        "numberOfItems": 12,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "url": "https://youtu.be/lgHS6CO2G2s", "name": "Detailing profesional en taller real" },
+          { "@type": "ListItem", "position": 2, "url": "https://youtu.be/TtPs7WPVLzE", "name": "Pulido y corrección de pintura" },
+          { "@type": "ListItem", "position": 3, "url": "https://youtu.be/ByRhg2kYD-A", "name": "Tratamiento cerámico alta gama" },
+          { "@type": "ListItem", "position": 4, "url": "https://youtu.be/G3AU2913_vw", "name": "Lavado profesional y descontaminación" },
+          { "@type": "ListItem", "position": 5, "url": "https://youtu.be/thUgGa5ULkI", "name": "Trabajo real en Detail Park" },
+          { "@type": "ListItem", "position": 6, "url": "https://youtu.be/kp_yZNZnUwo", "name": "Protección de pintura" },
+          { "@type": "ListItem", "position": 7, "url": "https://youtu.be/zr_FFDz06Fc", "name": "Restauración y detailing" },
+          { "@type": "ListItem", "position": 8, "url": "https://youtu.be/iMatPTngV0g", "name": "Técnicas avanzadas" },
+          { "@type": "ListItem", "position": 9, "url": "https://youtu.be/U3K4VsFlY8E", "name": "Interior detailing profesional" },
+          { "@type": "ListItem", "position": 10, "url": "https://youtu.be/L14vIkJWgKw", "name": "Resultados reales del taller" },
+          { "@type": "ListItem", "position": 11, "url": "https://youtu.be/eFfzwvhGNcU", "name": "Preparación vehículos premium" },
+          { "@type": "ListItem", "position": 12, "url": "https://youtu.be/sqK6qkTWynk", "name": "Trabajo diario en Detail Park" },
+        ]
       },
       generateWebPageSchema({
         name: "Quiénes Somos - Academia Detail",
