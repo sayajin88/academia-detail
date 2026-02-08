@@ -76,6 +76,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Calculadora de Dilución -->
+  <url>
+    <loc>https://academiadetail.com/calculadora-dilucion-detailing</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Blog índice -->
   <url>
     <loc>https://academiadetail.com/blog</loc>

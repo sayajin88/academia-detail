@@ -11,7 +11,8 @@ import { glossaryTerms, getAvailableLetters } from '@/data/glossaryData';
 import type { GlossaryCategory } from '@/data/glossaryData';
 import { BookOpen } from 'lucide-react';
 import heroGlosario from '@/assets/heroes/hero-glosario.jpg';
-import { VisualDilutionCalculator } from '@/components/glossary/VisualDilutionCalculator';
+import { Beaker, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const ALL_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -137,10 +138,27 @@ const Glossary = () => {
       {/* Educational Sections */}
       <GlossaryEducationalSections />
 
-      {/* Dilution Calculator */}
-      <section className="py-16 bg-card/30 border-y border-border/30">
+      {/* Dilution Calculator Banner */}
+      <section className="py-12 bg-card/30 border-y border-border/30">
         <div className="container mx-auto px-4">
-          <VisualDilutionCalculator />
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 p-3 rounded-lg bg-primary/10 border border-primary/20 mb-4">
+              <Beaker className="h-6 w-6 text-primary" />
+            </div>
+            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+              Calculadora de Dilución Interactiva
+            </h2>
+            <p className="text-muted-foreground mb-6 text-sm">
+              Calcula la mezcla exacta de cualquier producto de detailing con nuestra herramienta visual gratuita.
+            </p>
+            <Link
+              to="/calculadora-dilucion-detailing"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
+            >
+              Usar Calculadora
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 

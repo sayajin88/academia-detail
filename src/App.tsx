@@ -17,6 +17,7 @@ import BlogPostPage from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import Glossary from "./pages/Glossary";
+import CalculadoraDilucion from "./pages/CalculadoraDilucion";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/quienes-somos" element={<AboutUs />} />
             <Route path="/contacto" element={<Contact />} />
             <Route path="/glosario-detailing" element={<Glossary />} />
+            <Route path="/calculadora-dilucion-detailing" element={<CalculadoraDilucion />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             
