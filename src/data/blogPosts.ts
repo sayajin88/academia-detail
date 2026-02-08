@@ -6,6 +6,7 @@ import detailingTools from '@/assets/detailing-tools.jpg';
 import formacionDetailing from '@/assets/formacion-detailing-1.jpg';
 import danielLopez from '@/assets/daniel-lopez-instructor.webp';
 import { newBlogPosts } from './blogPostsNew';
+import { businessBlogPosts } from './blogPostsBusiness';
 
 export type BlogCategory = 'detailing' | 'ppf' | 'wrapping' | 'negocios';
 
@@ -305,8 +306,13 @@ const allNewPosts = newBlogPosts.map(post => ({
   author: { ...defaultAuthor }
 }));
 
+const allBusinessPosts = businessBlogPosts.map(post => ({
+  ...post,
+  author: { ...defaultAuthor }
+}));
+
 // Combine all posts
-blogPosts.push(...allNewPosts);
+blogPosts.push(...allNewPosts, ...allBusinessPosts);
 
 export const getPostBySlug = (slug: string): BlogPost | undefined => {
   return blogPosts.find(post => post.slug === slug);
