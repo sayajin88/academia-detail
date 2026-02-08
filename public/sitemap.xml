@@ -68,6 +68,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Glosario -->
+  <url>
+    <loc>https://academiadetail.com/glosario-detailing</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Blog índice -->
   <url>
     <loc>https://academiadetail.com/blog</loc>

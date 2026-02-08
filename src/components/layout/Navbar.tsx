@@ -23,6 +23,7 @@ const navLinks = [
   { name: 'Inicio', href: '/', icon: Home },
   { name: 'Quiénes Somos', href: '/quienes-somos', icon: Image },
   { name: 'Blog', href: '/blog', icon: BookOpen },
+  { name: 'Glosario', href: '/glosario-detailing', icon: BookOpen },
   { name: 'Inscribirse', href: '/contacto', icon: Mail },
 ];
 
