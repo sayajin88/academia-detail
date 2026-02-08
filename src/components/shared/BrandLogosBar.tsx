@@ -12,11 +12,15 @@ import logoHexis from '@/assets/brands/hexis.png';
 import logoMeguiars from '@/assets/brands/meguiars.png';
 import logoMenzerna from '@/assets/brands/menzerna.png';
 import logoRupes from '@/assets/brands/rupes.png';
+import logoStek from '@/assets/brands/stek-automotive.png';
+import logoCarcarePassion from '@/assets/brands/carcare-passion.png';
+
+type BrandCategory = 'detailing' | 'wrapping' | 'ppf';
 
 interface Brand {
   name: string;
   logo: string;
-  categories: ('detailing' | 'wrapping')[];
+  categories: BrandCategory[];
 }
 
 const brands: Brand[] = [
@@ -30,11 +34,13 @@ const brands: Brand[] = [
   { name: "Meguiar's", logo: logoMeguiars, categories: ['detailing'] },
   { name: 'Menzerna', logo: logoMenzerna, categories: ['detailing'] },
   { name: 'Rupes', logo: logoRupes, categories: ['detailing'] },
+  { name: 'STEK Automotive', logo: logoStek, categories: ['ppf'] },
+  { name: 'Car Care Passion', logo: logoCarcarePassion, categories: ['detailing', 'wrapping', 'ppf'] },
 ];
 
 interface BrandLogosBarProps {
   variant?: 'full' | 'compact';
-  filter?: 'all' | 'detailing' | 'wrapping';
+  filter?: 'all' | 'detailing' | 'wrapping' | 'ppf';
   className?: string;
 }
 
