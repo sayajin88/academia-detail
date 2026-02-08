@@ -1,5 +1,5 @@
 import { MapPin, Clock, MessageCircle, Users } from "lucide-react";
-import heroImage from '@/assets/evento-grupo-formacion.jpg';
+import heroImage from '@/assets/heroes/hero-contacto.jpg';
 
 const ContactHero = () => {
   return (
