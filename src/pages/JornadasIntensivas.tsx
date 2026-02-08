@@ -26,7 +26,7 @@ const hubFaqs = [
   },
   {
     question: '¿Tienen el mismo precio?',
-    answer: 'Sí, ambas jornadas tienen un precio de 97€ + IVA. Es la inversión más accesible para iniciarse en el detailing profesional.'
+    answer: 'Cada formato tiene su propio precio adaptado a la experiencia que ofrece. La Jornada Zero cuesta 97€ + IVA y Up Detail 349€ + IVA. En ambos casos, el importe se descuenta si continúas con un curso completo.'
   },
   {
     question: '¿Cuál me conviene más si soy principiante?',
@@ -148,9 +148,9 @@ export default function JornadasIntensivas() {
             </div>
 
             {/* Up Detail Card */}
-            <div className="relative group rounded-2xl border-2 border-border bg-card overflow-hidden shadow-lg hover:shadow-xl hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
+            <div className="relative group rounded-2xl border-2 border-border bg-card overflow-hidden shadow-lg hover:shadow-xl hover:border-violet-500/20 transition-all duration-300 hover:-translate-y-1">
               {/* Accent line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-600 via-purple-500 to-violet-600" />
               
               {/* Image */}
               <div className="relative h-56 md:h-64 overflow-hidden">
@@ -174,7 +174,7 @@ export default function JornadasIntensivas() {
                 </div>
                 
                 {/* Coming soon badge */}
-                <div className="absolute top-3 right-3 bg-amber-500/90 text-white px-3 py-1.5 rounded-lg font-bold text-sm shadow-lg">
+                <div className="absolute top-3 right-3 bg-violet-600/90 text-white px-3 py-1.5 rounded-lg font-bold text-sm shadow-lg">
                   Próximamente
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default function JornadasIntensivas() {
               {/* Content */}
               <div className="p-5 md:p-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <Users className="h-5 w-5 text-amber-500" />
+                  <Users className="h-5 w-5 text-violet-500" />
                   <h2 className="text-xl md:text-2xl font-bold text-foreground">Up Detail</h2>
                 </div>
                 
@@ -193,15 +193,15 @@ export default function JornadasIntensivas() {
                 {/* Details */}
                 <div className="flex flex-wrap gap-3 mb-5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    <CalendarDays className="h-3.5 w-3.5 text-amber-500" />
+                    <CalendarDays className="h-3.5 w-3.5 text-violet-500" />
                     Fecha por confirmar
                   </div>
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    97€ <span className="text-xs">+ IVA</span>
+                    349€ <span className="text-xs">+ IVA</span>
                   </div>
                 </div>
 
-                <Button asChild variant="outline" size="lg" className="w-full border-amber-500/30 text-amber-500 hover:bg-amber-500/10 hover:text-amber-400">
+                <Button asChild variant="outline" size="lg" className="w-full border-violet-500/30 text-violet-500 hover:bg-violet-500/10 hover:text-violet-400">
                   <Link to="/up-detail-evento">
                     Descubrir Up Detail
                     <ArrowRight className="ml-2 h-4 w-4" />
