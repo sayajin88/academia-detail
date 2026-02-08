@@ -3,6 +3,7 @@ import ContactHero from "@/components/contact/ContactHero";
 import ContactForm from "@/components/contact/ContactForm";
 import ContactInfo from "@/components/contact/ContactInfo";
 import ContactSchedule from "@/components/contact/ContactSchedule";
+import { GoogleReviews } from "@/components/shared/GoogleReviews";
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 
@@ -25,6 +26,9 @@ const Contact = () => {
             </div>
           </div>
         </section>
+
+        {/* Google Reviews */}
+        <GoogleReviews />
 
         {/* Schedule & Social */}
         <ContactSchedule />
