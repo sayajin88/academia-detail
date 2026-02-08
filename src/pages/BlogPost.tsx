@@ -4,11 +4,10 @@ import { Calendar, Clock, User } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { BlogArticleContent } from '@/components/blog/BlogArticleContent';
-import { BlogTableOfContents } from '@/components/blog/BlogTableOfContents';
 import { BlogSidebar } from '@/components/blog/BlogSidebar';
 import { BlogShareButtons } from '@/components/blog/BlogShareButtons';
 import { BlogRelatedPosts } from '@/components/blog/BlogRelatedPosts';
-import { BlogNewsletter } from '@/components/blog/BlogNewsletter';
+import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { getPostBySlug, getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
 
@@ -109,52 +108,70 @@ export default function BlogPostPage() {
         />
       </div>
 
-      <article ref={articleRef} className="pt-24 md:pt-28 pb-16 md:pb-24">
-        {/* Hero */}
+      <article ref={articleRef}>
+        {/* Immersive Hero */}
         <AnimatedSection animation="fade-in" duration="fast">
-          <header className="relative w-full overflow-hidden mb-8 md:mb-12">
-            <div className="absolute inset-0 h-[340px] md:h-[440px]">
-              <img src={post.image} alt={post.imageAlt} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background" />
+          <header className="relative w-full overflow-hidden">
+            {/* Background image */}
+            <div className="absolute inset-0 min-h-[420px] md:min-h-[500px]">
+              <img
+                src={post.image}
+                alt={post.imageAlt}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent" />
             </div>
-            <div className="relative container mx-auto px-4 pt-36 md:pt-52 pb-6">
-              <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full border mb-4 ${categoryColors[post.category]}`}>
-                {categoryLabels[post.category]}
-              </span>
+
+            {/* Hero content */}
+            <div className="relative container mx-auto px-4 pt-32 md:pt-44 pb-10 md:pb-14 min-h-[420px] md:min-h-[500px] flex flex-col justify-end">
+              {/* Badges */}
+              <div className="flex items-center gap-2.5 mb-5">
+                <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full border ${categoryColors[post.category]}`}>
+                  {categoryLabels[post.category]}
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-muted/60 text-foreground/80 border border-border/50 backdrop-blur-sm">
+                  <Clock className="h-3 w-3" />
+                  {post.readingTime}
+                </span>
+              </div>
+
+              {/* Title */}
               <h1
-                className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-4 max-w-3xl"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5 max-w-3xl"
                 style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}
               >
                 {post.title}
               </h1>
-              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1.5">
-                  <User className="h-4 w-4" />
-                  {post.author.name}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4" />
-                  <time dateTime={post.publishedAt}>
-                    {new Date(post.publishedAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
-                  </time>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Clock className="h-4 w-4" />
-                  {post.readingTime}
-                </span>
+
+              {/* Author info */}
+              <div className="flex items-center gap-3">
+                <img
+                  src={post.author.image}
+                  alt={post.author.name}
+                  className="w-10 h-10 md:w-11 md:h-11 rounded-full object-cover border-2 border-primary/30"
+                />
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <User className="h-3.5 w-3.5 text-primary" />
+                    <span className="text-sm font-semibold text-foreground">{post.author.name}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>{post.author.role}</span>
+                    <span>·</span>
+                    <time dateTime={post.publishedAt}>
+                      {new Date(post.publishedAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    </time>
+                  </div>
+                </div>
               </div>
             </div>
           </header>
         </AnimatedSection>
 
-        {/* Body */}
-        <div className="container mx-auto px-4">
-          <div className="flex gap-8 xl:gap-12">
-            {/* TOC - left */}
-            <div className="hidden xl:block w-56 flex-shrink-0">
-              <BlogTableOfContents sections={post.sections} />
-            </div>
-
+        {/* Body: 2-column layout */}
+        <div className="container mx-auto px-4 pt-8 md:pt-12 pb-16 md:pb-24">
+          <div className="flex gap-8 lg:gap-12">
             {/* Main content */}
             <div className="flex-1 min-w-0">
               <AnimatedSection animation="fade-up" delay={100}>
@@ -180,12 +197,8 @@ export default function BlogPostPage() {
                 <BlogShareButtons title={post.title} url={fullUrl} />
               </div>
 
-              {/* Newsletter */}
-              <AnimatedSection animation="fade-up" delay={100}>
-                <div className="mt-10">
-                  <BlogNewsletter variant="standalone" />
-                </div>
-              </AnimatedSection>
+              {/* CTA section (replaces newsletter) */}
+              <BlogPostCTA />
 
               {/* Related posts */}
               <AnimatedSection animation="fade-up" delay={150}>
@@ -193,15 +206,15 @@ export default function BlogPostPage() {
               </AnimatedSection>
             </div>
 
-            {/* Sidebar - right */}
-            <div className="hidden lg:block w-72 flex-shrink-0">
-              <BlogSidebar />
+            {/* Sidebar - right (desktop) */}
+            <div className="hidden lg:block w-80 flex-shrink-0">
+              <BlogSidebar readProgress={readProgress} readingTime={post.readingTime} />
             </div>
           </div>
 
           {/* Mobile sidebar (after content) */}
           <div className="lg:hidden mt-12">
-            <BlogSidebar />
+            <BlogSidebar readProgress={readProgress} readingTime={post.readingTime} />
           </div>
         </div>
       </article>

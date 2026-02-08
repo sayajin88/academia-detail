@@ -169,9 +169,12 @@ export function BlogArticleContent({ sections }: BlogArticleContentProps) {
             )}
 
             <h2
-              className="text-xl md:text-2xl font-bold text-foreground mb-4 scroll-mt-24"
+              className="text-xl md:text-2xl font-bold text-foreground mb-4 scroll-mt-24 flex items-baseline gap-2"
               style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}
             >
+              <span className="text-primary font-bold text-lg md:text-xl shrink-0">
+                {String(index + 1).padStart(2, '0')}.
+              </span>
               {section.title}
             </h2>
             <div className="space-y-4">
