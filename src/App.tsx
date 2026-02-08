@@ -5,7 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
+import JornadasIntensivas from "./pages/JornadasIntensivas";
 import JornadaCero from "./pages/JornadaCero";
+import UpDetail from "./pages/UpDetail";
 import FormationDetail from "./pages/FormationDetail";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
@@ -27,7 +29,9 @@ const App = () => (
           <Routes>
             {/* Main Routes - New SEO-optimized slugs */}
             <Route path="/" element={<Home />} />
-            <Route path="/curso-detailing-iniciacion" element={<JornadaCero />} />
+            <Route path="/curso-detailing-iniciacion" element={<JornadasIntensivas />} />
+            <Route path="/jornada-zero-detailing" element={<JornadaCero />} />
+            <Route path="/up-detail-evento" element={<UpDetail />} />
             <Route path="/formacion-profesional-detailing" element={<CarreraDetailing />} />
             <Route path="/curso-detailing-profesional" element={<FormationDetail />} />
             <Route path="/curso-vinilado-vehiculos" element={<FormationDetail />} />
