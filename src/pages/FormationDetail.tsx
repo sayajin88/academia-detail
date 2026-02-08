@@ -22,6 +22,7 @@ import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { FormationGallery } from '@/components/formation/FormationGallery';
 import { ComingSoonModal } from '@/components/ComingSoonModal';
+import { BrandLogosBar } from '@/components/shared/BrandLogosBar';
 import { getFormationBySlug } from '@/data/formationDetails';
 
 import { SEO } from '@/components/SEO';
@@ -154,6 +155,16 @@ export default function FormationDetailPage() {
           />
         )}
         <FormationIncludes formation={formation} />
+        <BrandLogosBar
+          variant="compact"
+          filter={
+            slug === 'curso-detailing-profesional'
+              ? 'detailing'
+              : slug === 'curso-vinilado-vehiculos'
+                ? 'wrapping'
+                : 'all'
+          }
+        />
         {/* Logistics section for national/international students */}
         <FormationLogistics showForSlug={slug} />
         <GoogleReviews />

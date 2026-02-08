@@ -7,6 +7,7 @@ import { seoConfig } from '@/utils/seoConfig';
 
 // Componentes below-the-fold - carga diferida para mejor LCP
 const CompetitiveComparison = lazy(() => import('@/components/home/CompetitiveComparison').then(m => ({ default: m.CompetitiveComparison })));
+const BrandLogosBar = lazy(() => import('@/components/shared/BrandLogosBar').then(m => ({ default: m.BrandLogosBar })));
 const BusinessSkillsSection = lazy(() => import('@/components/home/BusinessSkillsSection').then(m => ({ default: m.BusinessSkillsSection })));
 const CarreraNegocioSection = lazy(() => import('@/components/home/CarreraNegocioSection').then(m => ({ default: m.CarreraNegocioSection })));
 const MontamosTuCentro = lazy(() => import('@/components/home/MontamosTuCentro').then(m => ({ default: m.MontamosTuCentro })));
@@ -52,6 +53,9 @@ export default function Home() {
         {/* Componentes below-the-fold - carga diferida */}
         <Suspense fallback={<SectionSkeleton />}>
           <CompetitiveComparison />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <BrandLogosBar variant="full" filter="all" />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <BusinessSkillsSection />
