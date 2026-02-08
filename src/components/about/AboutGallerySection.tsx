@@ -4,6 +4,7 @@ import { GalleryFilters } from '@/components/gallery/GalleryFilters';
 import { GalleryGrid } from '@/components/gallery/GalleryGrid';
 import { ImageLightbox } from '@/components/gallery/ImageLightbox';
 import { galleryImages, GalleryCategory, GalleryImage } from '@/data/galleryData';
+import detailParkLogo from '@/assets/detail-park-logo.webp';
 
 export function AboutGallerySection() {
   const [activeCategory, setActiveCategory] = useState<GalleryCategory>('all');
@@ -32,6 +33,28 @@ export function AboutGallerySection() {
           title="La Prueba de Nuestro Trabajo Diario"
           subtitle="Estos son trabajos reales realizados en nuestro taller. No simulaciones ni prácticas de academia: clientes reales con vehículos de alta gama."
         />
+
+        {/* Detail Park — sponsor badge integrado */}
+        <div className="mt-8 mb-2 flex flex-col items-center gap-3">
+          <img
+            src={detailParkLogo}
+            alt="Detail Park - Empresa que potencia Academia Detail"
+            className="h-16 md:h-24 w-auto object-contain"
+            loading="lazy"
+          />
+          <p className="text-sm text-muted-foreground text-center max-w-md">
+            Academia Detail está potenciada por{' '}
+            <a
+              href="https://www.detailpark.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline font-medium"
+            >
+              Detail Park
+            </a>
+            , referente en Detailing profesional desde 2017.
+          </p>
+        </div>
 
         {/* Filters */}
         <div className="mt-10 mb-10">
