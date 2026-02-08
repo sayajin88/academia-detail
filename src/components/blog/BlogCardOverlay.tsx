@@ -38,8 +38,11 @@ export function BlogCardOverlay({ post, tall = false }: BlogCardOverlayProps) {
           {/* Title area at bottom */}
           <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
             <h3
-              className="text-white font-bold text-base md:text-lg leading-tight line-clamp-3"
-              style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.02em' }}
+              className="text-white font-bold text-sm md:text-base leading-snug line-clamp-3"
+              style={{
+                fontFamily: "'Open Sans', sans-serif",
+                textShadow: '0 1px 4px rgba(0,0,0,0.6)',
+              }}
             >
               {post.title}
             </h3>
