@@ -17,8 +17,8 @@ const quickLinks = [
 ];
 
 const legalLinks = [
-  { name: 'Política de Privacidad', href: '/politica-privacidad' },
-  { name: 'Aviso Legal', href: '/politica-privacidad' },
+  { name: 'Política de Privacidad', href: '/politica-privacidad', key: 'privacidad' },
+  { name: 'Aviso Legal', href: '/politica-privacidad', key: 'aviso-legal' },
 ];
 
 const socialLinks = [
@@ -74,7 +74,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
                   >
                     {link.name}
                   </Link>
@@ -91,17 +91,17 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
                   >
                     {link.name}
                   </Link>
                 </li>
               ))}
               {legalLinks.map((link) => (
-                <li key={link.href}>
+                <li key={link.key}>
                   <Link
                     to={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
                   >
                     {link.name}
                   </Link>
