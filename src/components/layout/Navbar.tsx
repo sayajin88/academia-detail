@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import logo from '@/assets/detail-park-logo-white.png';
+
 
 // WhatsApp Icon Component
 const WhatsAppIcon = ({ className }: { className?: string }) => (
@@ -124,13 +124,9 @@ export function Navbar() {
               className={`flex items-center relative z-10 group transition-all duration-500 delay-100 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
             >
               <div className="relative flex flex-col">
-                <img 
-                  src={logo} 
-                  alt="Academia Detail - Cursos de detailing profesional en España" 
-                  className="h-7 md:h-10 w-auto transition-transform duration-300 group-hover:scale-105"
-                  width={229}
-                  height={70}
-                />
+                <span className="text-lg md:text-xl font-bold tracking-tight text-foreground" style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.05em' }}>
+                  ACADEMIA <span className="text-primary">DETAIL</span>
+                </span>
                 <a 
                   href="https://www.detailpark.com" 
                   target="_blank" 
@@ -318,7 +314,9 @@ export function Navbar() {
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-white/10">
             <div className="flex flex-col">
-              <img src={logo} alt="Academia Detail - Cursos de detailing profesional en España" className="h-8 w-auto" width={229} height={70} />
+              <span className="text-lg font-bold tracking-tight text-foreground" style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.05em' }}>
+                ACADEMIA <span className="text-primary">DETAIL</span>
+              </span>
               <a 
                 href="https://www.detailpark.com" 
                 target="_blank" 
