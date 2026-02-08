@@ -127,7 +127,7 @@ export function Navbar() {
                 <img 
                   src={academiaLogo} 
                   alt="Academia Detail - Cursos de detailing profesional en España" 
-                  className="h-7 md:h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+                  className="h-9 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
                   width={229}
                   height={70}
                 />
@@ -311,7 +311,7 @@ export function Navbar() {
               <img 
                 src={academiaLogo} 
                 alt="Academia Detail - Cursos de detailing profesional en España" 
-                className="h-8 w-auto"
+                className="h-10 w-auto"
                 width={229}
                 height={70}
               />
