@@ -1,13 +1,13 @@
-import blogGuiaFormacion from '@/assets/blog/blog-guia-formacion-detailer.jpg';
+import blogGuiaFormacion from '@/assets/daniel-curso-detailing-1.jpg';
 import blogPpfInstalacion from '@/assets/blog/blog-ppf-instalacion.jpg';
-import blogTecnicasPulido from '@/assets/blog/blog-tecnicas-pulido.jpg';
+import blogTecnicasPulido from '@/assets/daniel-curso-detailing-2.jpg';
 import blogWrappingVsPintura from '@/assets/blog/blog-wrapping-vs-pintura.jpg';
-import blogMontarCentro from '@/assets/blog/blog-montar-centro-detailing.jpg';
-import blogRestauracionCuero from '@/assets/blog/blog-restauracion-cuero.jpg';
+import blogMontarCentro from '@/assets/alumnos-curso-detailing-2.jpg';
+import blogRestauracionCuero from '@/assets/curso-detailing-4.jpg';
 import blogTratamientoCeramico from '@/assets/blog/blog-tratamiento-ceramico.jpg';
-import blogErroresDetailer from '@/assets/blog/blog-errores-detailer.jpg';
-import blogKitHerramientas from '@/assets/blog/blog-kit-herramientas.jpg';
-import blogSalidaWrapping from '@/assets/blog/blog-salida-laboral-wrapping.jpg';
+import blogErroresDetailer from '@/assets/daniel-curso-detailing-3.jpg';
+import blogKitHerramientas from '@/assets/alumna-curso-detailing.jpg';
+import blogSalidaWrapping from '@/assets/certificados-grupal-curso-detailing.jpg';
 
 import type { BlogPost } from './blogPosts';
 
@@ -29,7 +29,7 @@ export const newBlogPosts: BlogPost[] = [
     publishedAt: '2026-02-05',
     readingTime: '15 min',
     image: blogGuiaFormacion,
-    imageAlt: 'Alumno recibiendo certificado de formación profesional en detailing en un taller moderno',
+    imageAlt: 'Daniel López enseñando técnicas de pulido profesional a alumna en curso de detailing de Academia Detail',
     featured: false,
     tags: ['formación', 'salida laboral', 'certificación', 'carrera profesional', 'detailer'],
     sections: [
@@ -151,7 +151,7 @@ export const newBlogPosts: BlogPost[] = [
     publishedAt: '2026-02-01',
     readingTime: '10 min',
     image: blogTecnicasPulido,
-    imageAlt: 'Pulidora de doble acción en acción sobre carrocería negra con reflejo perfecto en taller profesional',
+    imageAlt: 'Instructor Daniel López guiando a alumno con pulidora DeWalt durante formación profesional de detailing',
     featured: false,
     tags: ['pulido', 'técnicas', 'pulidora', 'corrección pintura', 'paso a paso'],
     sections: [
@@ -247,7 +247,7 @@ export const newBlogPosts: BlogPost[] = [
     publishedAt: '2026-01-25',
     readingTime: '14 min',
     image: blogMontarCentro,
-    imageAlt: 'Centro de detailing profesional moderno con varios coches de alta gama siendo intervenidos',
+    imageAlt: 'Alumnos del curso de detailing en clase teórica de Academia Detail aprendiendo a montar un centro profesional',
     featured: false,
     tags: ['negocio', 'inversión', 'herramientas', 'rentabilidad', 'emprender', 'centro detailing'],
     sections: [
@@ -300,7 +300,7 @@ export const newBlogPosts: BlogPost[] = [
     publishedAt: '2026-01-22',
     readingTime: '11 min',
     image: blogRestauracionCuero,
-    imageAlt: 'Restauración profesional de asiento de cuero de vehículo de lujo con cepillo de detailing',
+    imageAlt: 'Detalle de manos de alumno practicando con pad de lana durante curso de detailing profesional',
     featured: false,
     tags: ['cuero', 'alcantara', 'interior', 'restauración', 'limpieza profesional'],
     sections: [
@@ -398,7 +398,7 @@ export const newBlogPosts: BlogPost[] = [
     publishedAt: '2026-01-18',
     readingTime: '8 min',
     image: blogErroresDetailer,
-    imageAlt: 'Herramientas de detailing sobre mesa de trabajo con señales de error comunes en detailing profesional',
+    imageAlt: 'Daniel López explicando errores comunes a grupo de alumnos durante formación de detailing profesional',
     featured: false,
     tags: ['errores', 'principiantes', 'consejos', 'formación', 'detailing profesional'],
     sections: [
@@ -465,7 +465,7 @@ export const newBlogPosts: BlogPost[] = [
     publishedAt: '2026-01-15',
     readingTime: '10 min',
     image: blogKitHerramientas,
-    imageAlt: 'Kit profesional de herramientas de detailing organizado con pulidoras microfibras y productos',
+    imageAlt: 'Alumna practicando con pulidora profesional en primer plano durante curso de detailing de Academia Detail',
     featured: false,
     tags: ['herramientas', 'pulidoras', 'productos', 'equipamiento', 'kit detailing'],
     sections: [
@@ -516,7 +516,7 @@ export const newBlogPosts: BlogPost[] = [
     publishedAt: '2026-01-12',
     readingTime: '9 min',
     image: blogSalidaWrapping,
-    imageAlt: 'Instalador profesional de car wrapping aplicando vinilo a coche deportivo en taller con rollos de vinilo',
+    imageAlt: 'Grupo de alumnos certificados con diploma del curso de detailing profesional de Academia Detail',
     featured: false,
     tags: ['car wrapping', 'salida laboral', 'sueldo', 'instalador vinilo', 'profesión'],
     sections: [

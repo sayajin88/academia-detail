@@ -26,6 +26,8 @@ import formacionDetailing3 from '@/assets/formacion-detailing-3.jpg';
 import formacionDetailing4 from '@/assets/formacion-detailing-4.jpg';
 import formacionDetailing2 from '@/assets/formacion-detailing-2.jpg';
 import formacionDetailingJuanDaniel from '@/assets/formacion-detailing-juan-daniel.jpg';
+import alumnosInstalaciones from '@/assets/alumnos-instalaciones-curso-detailing.jpg';
+import alumnosPracticas from '@/assets/alumnos-practicas-detailing.jpg';
 
 interface GalleryItem {
   image: string;
@@ -63,6 +65,8 @@ const detailingGalleryItems: GalleryItem[] = [
   { image: formacionDetailing4, title: 'Formación 1 a 1', description: 'Instructor guiando técnica de pulido' },
   { image: formacionDetailing2, title: 'Sesión de Formación', description: 'Daniel en el aula explicando conceptos' },
   { image: formacionDetailingJuanDaniel, title: 'Práctica Real', description: 'Alumno practicando en vehículo real' },
+  { image: alumnosInstalaciones, title: 'Instalaciones Detail Park', description: 'Grupo de alumnos en las instalaciones del centro de formación' },
+  { image: alumnosPracticas, title: 'Prácticas en Grupo', description: 'Alumnos practicando detailing alrededor de un descapotable' },
 ];
 
 export function FormationGallery({ 
