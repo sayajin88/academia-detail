@@ -1,11 +1,11 @@
-import blogPlanNegocio from '@/assets/blog/blog-plan-negocio-detailing.jpg';
-import blogMovilVsFisico from '@/assets/blog/blog-detailing-movil-vs-fisico.jpg';
-import blogInversionMaquinaria from '@/assets/blog/blog-inversion-maquinaria-taller.jpg';
-import blogTarifasPricing from '@/assets/blog/blog-tarifas-pricing-detailing.jpg';
-import blogMarketingVip from '@/assets/blog/blog-marketing-clientes-vip.jpg';
+import blogPlanNegocio from '@/assets/leandro-curso-detailing-2.jpg';
+import blogMovilVsFisico from '@/assets/leandro-curso-detailing.jpg';
+import blogInversionMaquinaria from '@/assets/federica-curso-detailing-2.jpg';
+import blogTarifasPricing from '@/assets/federica-curso-detailing.jpg';
+import blogMarketingVip from '@/assets/alumna-pulido-dewalt.jpg';
 import blogLavaderoEcologico from '@/assets/blog/blog-lavadero-ecologico.jpg';
 import blogPpfRentabilidad from '@/assets/blog/blog-ppf-rentabilidad.jpg';
-import blogLicenciasPermisos from '@/assets/blog/blog-licencias-permisos-taller.jpg';
+import blogLicenciasPermisos from '@/assets/alumna-pulido-concentrada.jpg';
 import blogEstudioWrapping from '@/assets/blog/blog-estudio-car-wrapping.jpg';
 import blogSoftwareGestion from '@/assets/blog/blog-software-gestion-taller.jpg';
 
@@ -28,7 +28,7 @@ export const businessBlogPosts: BlogPost[] = [
     publishedAt: '2026-02-07',
     readingTime: '14 min',
     image: blogPlanNegocio,
-    imageAlt: 'Plan de negocio para centro de detailing con gráficos financieros y proyecciones de rentabilidad',
+    imageAlt: 'Instructor Leandro enseñando técnicas de pulido profesional a alumno en curso de detailing de Academia Detail',
     featured: false,
     tags: ['plan de negocio', 'emprender', 'centro detailing', 'inversión', 'estética automotriz'],
     sections: [
@@ -87,7 +87,7 @@ export const businessBlogPosts: BlogPost[] = [
     publishedAt: '2026-02-06',
     readingTime: '10 min',
     image: blogMovilVsFisico,
-    imageAlt: 'Comparativa de furgoneta de detailing móvil frente a taller profesional de detailing',
+    imageAlt: 'Instructor Leandro explicando técnicas de detailing a grupo de alumnos en instalaciones de Detail Park',
     featured: false,
     tags: ['detailing móvil', 'taller físico', 'modelo negocio', 'inversión', 'emprender'],
     sections: [
@@ -138,7 +138,7 @@ export const businessBlogPosts: BlogPost[] = [
     publishedAt: '2026-02-05',
     readingTime: '12 min',
     image: blogInversionMaquinaria,
-    imageAlt: 'Taller de detailing profesional con pulidoras, elevador y sistema de iluminación LED profesional',
+    imageAlt: 'Alumnas practicando pulido profesional en Range Rover durante curso de detailing en Academia Detail',
     featured: false,
     tags: ['inversión', 'maquinaria', 'herramientas', 'presupuesto', 'montar taller'],
     sections: [
@@ -191,7 +191,7 @@ export const businessBlogPosts: BlogPost[] = [
     publishedAt: '2026-02-04',
     readingTime: '9 min',
     image: blogTarifasPricing,
-    imageAlt: 'Profesional de detailing calculando presupuesto con tablet junto a un coche de lujo en taller',
+    imageAlt: 'Dos alumnas de detailing trabajando juntas en la parte trasera de un Range Rover durante formación práctica',
     featured: false,
     tags: ['tarifas', 'pricing', 'precios', 'rentabilidad', 'valor'],
     sections: [
@@ -244,7 +244,7 @@ export const businessBlogPosts: BlogPost[] = [
     publishedAt: '2026-02-03',
     readingTime: '11 min',
     image: blogMarketingVip,
-    imageAlt: 'Coche de lujo detallado en taller premium con smartphone fotografiando el resultado para redes sociales',
+    imageAlt: 'Alumna concentrada puliendo carrocería con pulidora DeWalt profesional durante formación en Detail Park',
     featured: false,
     tags: ['marketing', 'clientes VIP', 'redes sociales', 'SEO local', 'Instagram'],
     sections: [
@@ -396,7 +396,7 @@ export const businessBlogPosts: BlogPost[] = [
     publishedAt: '2026-01-31',
     readingTime: '12 min',
     image: blogLicenciasPermisos,
-    imageAlt: 'Oficina moderna con documentos legales, licencias enmarcadas y documentación para apertura de taller',
+    imageAlt: 'Alumna trabajando con doble pulidora DeWalt en sesión práctica avanzada de corrección de pintura',
     featured: false,
     tags: ['licencias', 'permisos', 'legal', 'normativa', 'apertura taller'],
     sections: [
