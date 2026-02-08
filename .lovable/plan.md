@@ -1,77 +1,56 @@
 
 
-# Sustituir Formularios "Solicita Informacion" por Banner CTA hacia Contacto + Renombrar "Contacto" a "Inscribirse"
+## Nuevo logo y barra de navegacion clara
 
-## Resumen
+### Cambios principales
 
-Dos cambios principales:
-1. **Eliminar el formulario de 3 campos** (nombre, email, telefono) que aparece en la seccion HomeCTA y sustituirlo por un banner/seccion visual atractivo que redirija directamente a la pagina de Contacto
-2. **Renombrar "Contacto" a "Inscribirse"** en el menu de navegacion (desktop y movil)
+**1. Nuevo logo de Academia Detail**
+- Se guardara el nuevo logo subido (`Academia_Detail_-_Logo_Pequeño.png`) en `src/assets/academia-detail-logo-light.png`
+- Se reemplazara el logo actual en el navbar (desktop y movil) por el nuevo
+- Se eliminaran los filtros CSS `brightness-[10] invert` ya que el nuevo logo tiene texto oscuro sobre fondo claro y se mostrara tal cual
 
----
+**2. Barra de navegacion con fondo claro**
+- Se cambiara el fondo del glass container del navbar de oscuro/transparente (`bg-background/80`, `bg-background/40`) a un fondo blanco/crema claro (`bg-white/95`, `bg-white/80`) que contraste con el contenido oscuro de la pagina
+- Se ajustaran los bordes de `border-white/10` a `border-gray-200` para que sean sutiles sobre fondo claro
+- Se cambiara el color del texto de los enlaces de `text-foreground/70` (blanco) a `text-gray-700` / `text-gray-900` para legibilidad sobre fondo claro
+- Los enlaces activos mantendran el color primario (burdeos)
+- Los hovers pasaran de `hover:bg-white/5` a `hover:bg-gray-100`
+- El efecto shimmer del borde se adaptara a tonos claros
+- La sombra se ajustara de `shadow-black/20` a `shadow-gray-300/40` para un efecto mas suave
 
-## 1. Renombrar "Contacto" a "Inscribirse" en la Navegacion
+**3. Dropdown de formaciones (desktop)**
+- Se cambiara el fondo del dropdown de `bg-background/95` (oscuro) a `bg-white/98` (claro)
+- Los bordes e iconos se adaptaran a la paleta clara
+- El texto sera oscuro (`text-gray-900`) con descripciones en gris medio
 
-### Archivo: `src/components/layout/Navbar.tsx`
+**4. Menu movil**
+- El panel lateral se cambiara de `bg-background/95` (oscuro) a `bg-white/98` (claro)
+- Todos los textos, iconos y bordes se adaptaran al tema claro
+- Los estados activos mantendran el acento burdeos pero sobre fondo claro
+- El boton de hamburguesa cambiara a color oscuro (`text-gray-800`)
 
-- Cambiar el nombre en el array `navLinks`:
-  - `{ name: 'Contacto', href: '/contacto', icon: Mail }` pasa a `{ name: 'Inscribirse', href: '/contacto', icon: Mail }`
-- Esto afecta automaticamente tanto al menu desktop como al menu movil, ya que ambos iteran sobre `navLinks`
+**5. Boton de hamburguesa y CTA**
+- El icono de hamburguesa (las 3 lineas) se cambiara de `text-foreground` (blanco) a `text-gray-800`
+- El boton de WhatsApp mantendra su color verde
 
----
+### Seccion tecnica
 
-## 2. Sustituir HomeCTA: de formulario a banner visual
+Archivos modificados:
+- `src/assets/academia-detail-logo-light.png` - nuevo archivo (copia del logo subido)
+- `src/components/layout/Navbar.tsx` - cambios de estilos y logo
 
-### Archivo: `src/components/home/HomeCTA.tsx`
+Clases CSS principales que se reemplazaran:
 
-**Eliminar**:
-- Todo el estado del formulario (`formData`, `isSubmitting`, `handleSubmit`)
-- La integracion con Supabase (insert a `contact_submissions` y llamada a edge function `send-contact-email`)
-- Los 3 campos de Input (nombre, email, telefono) y el boton de envio
-- Las importaciones de `Input`, `useState`, `toast`, `supabase`, `Loader2`, `Send`
-
-**Sustituir por**:
-- Un banner/seccion visual a pantalla completa sobre fondo burdeos (manteniendo el gradiente y decoraciones actuales)
-- Layout centrado (en vez de 2 columnas) con:
-  - Titulo llamativo: "¿Listo para Empezar tu Carrera en Detailing?" (se mantiene)
-  - Subtitulo motivacional (se mantiene)
-  - **Boton CTA principal grande** que enlaza a `/contacto` con texto "Inscribete Ahora" o "Reserva tu Plaza"
-  - Boton secundario de WhatsApp para contacto directo
-  - Informacion de contacto (telefono y email, se mantienen)
-  - Stats o puntos de confianza opcionales (ej: "+500 alumnos formados", "Respuesta en 24h", "Sin compromiso")
-- El componente sera mucho mas ligero al eliminar toda la logica de formulario
-
-### Diseno del nuevo banner:
-- Fondo: se mantiene el gradiente burdeos con las decoraciones actuales (pattern overlay, circulos decorativos)
-- Layout: centrado, una sola columna
-- Donde antes estaba el formulario (columna derecha), ahora habra una tarjeta glassmorphism con 3 puntos de confianza y el boton CTA
-- El boton principal sera blanco sobre burdeos (alto contraste) con flecha animada
-
----
-
-## 3. Paginas afectadas - Verificacion
-
-- **Home** (`HomeCTA`): Es el unico lugar con formulario de 3 campos fuera de la pagina de Contacto. Se sustituye segun el punto 2.
-- **FormationDetail** (`FormationCTA`): Ya redirige a `/contacto` con `onCTAClick` (no tiene formulario embebido). No necesita cambios.
-- **CarreraDetailing**: Todos los CTAs ya redirigen a `/contacto`. No necesita cambios.
-- **AboutUs**: El CTA ya enlaza a formaciones. No necesita cambios.
-- **JornadaCero**: Tiene su propio sistema de registro (RegistrationModal). No se toca.
-- **ContactForm** (`src/components/contact/ContactForm.tsx`): Es la pagina de destino. Se mantiene intacta con su formulario completo.
-
----
-
-## Seccion Tecnica - Resumen
-
-| Archivo | Cambio |
-|---------|--------|
-| `src/components/layout/Navbar.tsx` | Renombrar "Contacto" a "Inscribirse" en `navLinks` |
-| `src/components/home/HomeCTA.tsx` | Eliminar formulario y logica Supabase. Sustituir por banner visual con CTA que redirige a `/contacto` |
-
-### Sin cambios
-- Pagina de Contacto y su formulario
-- FormationCTA (ya redirige a contacto)
-- CarreraDetailing (ya redirige a contacto)
-- Footer (mantiene "Contacto" como titulo de seccion informativa, no es un enlace de navegacion)
-- Backend / Edge Functions
-- Rutas
+| Elemento | Actual (oscuro) | Nuevo (claro) |
+|---|---|---|
+| Glass container | `bg-background/80` | `bg-white/95` |
+| Bordes | `border-white/10` | `border-gray-200/80` |
+| Texto enlaces | `text-foreground/70` | `text-gray-600` |
+| Texto activo | `text-primary` | `text-primary` (sin cambio) |
+| Hover fondo | `hover:bg-white/5` | `hover:bg-gray-100` |
+| Sombra | `shadow-black/20` | `shadow-gray-300/50` |
+| Logo filtros | `brightness-[10] invert` | (sin filtros) |
+| Dropdown fondo | `bg-background/95` | `bg-white border-gray-200` |
+| Mobile panel | `bg-background/95` | `bg-white` |
+| Hamburguesa | `text-foreground` | `text-gray-800` |
 
