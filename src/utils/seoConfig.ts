@@ -756,6 +756,38 @@ export const seoConfig = {
     ]
   },
 
+  glossary: {
+    title: "Glosario de Detailing 2026 | +85 Términos Profesionales | Academia Detail",
+    description: "✅ Domina el vocabulario del detailing profesional. +85 términos con definiciones: PPF, coating cerámico, clay bar, swirl marks y más. ➤ Guía de referencia completa.",
+    keywords: "glosario detailing, terminología detailing, diccionario car detailing, que es PPF, que es coating cerámico, términos detailing profesional, vocabulario detailing",
+    url: "/glosario-detailing",
+    schema: [
+      localBusinessSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "DefinedTermSet",
+        "name": "Glosario de Detailing Profesional",
+        "description": "Diccionario enciclopédico con más de 85 términos técnicos de detallado automotriz profesional",
+        "url": `${BASE_URL}/glosario-detailing`,
+        "inLanguage": "es",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Academia Detail",
+          "url": BASE_URL
+        }
+      },
+      generateWebPageSchema({
+        name: "Glosario de Detailing Profesional",
+        description: "Diccionario completo de términos técnicos del detallado automotriz",
+        url: "/glosario-detailing"
+      }),
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" },
+        { name: "Glosario de Detailing", url: "/glosario-detailing" }
+      ])
+    ]
+  },
+
   contact: {
     title: "Contacto | Academia Detail Alicante | Reserva tu Plaza ★4.9",
     description: "✅ Contacta con Academia Detail en Alicante. Información sobre cursos de detailing en taller real, wrapping, PPF y restauración. ➤ Reserva tu plaza ahora - Respuesta en 24h.",

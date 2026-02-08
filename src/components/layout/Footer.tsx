@@ -13,6 +13,7 @@ const formationLinks = [
 
 const quickLinks = [
   { name: 'Blog', href: '/blog' },
+  { name: 'Glosario Detailing', href: '/glosario-detailing' },
   { name: 'Quiénes Somos', href: '/quienes-somos' },
   { name: 'Contacto', href: '/contacto' },
 ];
