@@ -1,42 +1,123 @@
 
 
-# Correccion del Logo Recortado en Mobile
+# Seccion de Marcas Colaboradoras - Logos de Detailing y Car Wrapping
 
-## Problema
+## Objetivo
 
-El logo "ACADEMIA DETAIL - By Detail Park" se ve recortado en ambos lados en pantallas moviles. La causa es la restriccion `max-w-[170px]` aplicada en el ultimo cambio, que es demasiado estrecha para contener el logo completo a una altura de `h-8` (32px). El logo tiene una proporcion natural de 229x70px, por lo que a 32px de alto necesita ~105px de ancho, pero el `max-w-[170px]` combinado con el `object-fit` por defecto esta causando un recorte visual.
+Crear una seccion visual de "Marcas con las que trabajamos" que refuerce la autoridad y el pilar de diferenciacion de neutralidad de marcas ("100% Brand Neutrality"). Se mostrara en la Home y en las paginas de formacion relevantes.
 
-En realidad, el problema es mas sutil: la imagen se renderiza con `w-auto`, por lo que a `h-8` (32px) el ancho calculado seria ~105px, que cabe en 170px. Sin embargo, el contenedor padre (la barra de navegacion glass) tiene `px-3` (12px de padding a cada lado) y el boton hamburguesa compite por el espacio, dejando poco margen.
+## Marcas a incluir (9 logos)
 
-La solucion correcta es:
+| Marca | Sector principal |
+|-------|-----------------|
+| 3M | Detailing / Wrapping / PPF |
+| Avery Dennison | Car Wrapping |
+| Chemical Guys | Detailing |
+| Flex | Herramientas / Pulidoras |
+| Gtechniq | Ceramicos / Detailing |
+| Gyeon | Ceramicos / Detailing |
+| Hexis | Car Wrapping |
+| Meguiar's | Detailing |
+| Menzerna | Pulido / Detailing |
+| Rupes | Herramientas / Pulidoras |
 
-1. **Eliminar `max-w-[170px]`** - Esta restriccion esta causando el recorte. Con `h-8 w-auto`, el logo ya se dimensiona correctamente de forma proporcional
-2. **Asegurar que el contenedor del logo no recorta** - Verificar que el wrapper del logo no tenga overflow oculto
-3. **Reducir ligeramente la altura si es necesario** - Si el logo sigue siendo demasiado ancho, reducir a `h-7` en vez de usar max-width
+## Diseno del componente
 
-## Cambio propuesto
+Se creara un componente reutilizable `BrandLogosBar` con las siguientes caracteristicas:
 
-**Archivo: `src/components/layout/Navbar.tsx` (linea 131)**
+- **Estilo visual**: Fondo oscuro (bg-card o bg-muted/30) con logos en blanco/gris (filtro `brightness-0 invert` + opacidad ~60%, subiendo a 100% en hover)
+- **Layout**: Carrusel infinito horizontal (reusando el patron de animacion `@keyframes scroll` ya existente en `SuccessStoriesLogos`)
+- **Titulo corto**: Badge "Marcas Colaboradoras" + frase tipo "Formamos con las mejores marcas del sector"
+- **Responsivo**: En desktop, los logos se ven en una fila continua con scroll infinito. En mobile, misma animacion pero con logos mas pequenos
+- **Sin interaccion**: Los logos no son clickables (no hay links externos a las marcas)
 
-Cambiar:
+## Archivos a crear
+
+### 1. Copiar los 10 logos a `src/assets/brands/`
+
+Se copiaran los 10 logos subidos al directorio `src/assets/brands/`:
+- `src/assets/brands/3m.png`
+- `src/assets/brands/avery-dennison.png`
+- `src/assets/brands/chemical-guys.png`
+- `src/assets/brands/flex.png`
+- `src/assets/brands/gtechniq.png`
+- `src/assets/brands/gyeon.png`
+- `src/assets/brands/hexis.png`
+- `src/assets/brands/meguiars.png`
+- `src/assets/brands/menzerna.png`
+- `src/assets/brands/rupes.png`
+
+### 2. Nuevo componente: `src/components/shared/BrandLogosBar.tsx`
+
+Componente reutilizable con las siguientes props:
+
+```text
+interface BrandLogosBarProps {
+  variant?: 'full' | 'compact';       // full = con titulo, compact = solo logos
+  filter?: 'all' | 'detailing' | 'wrapping';  // filtra marcas por sector
+  className?: string;
+}
 ```
-className="h-8 md:h-12 w-auto max-w-[170px] md:max-w-none transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
+
+**Estructura del componente:**
+- `SectionHeading` con badge "Marcas Colaboradoras" y titulo "Trabajamos con las Mejores Marcas"
+- Franja de logos con animacion de scroll infinito
+- Cada logo es una imagen con `brightness-0 invert opacity-50 hover:opacity-100` para integrarse con el tema oscuro
+- Fades laterales (gradiente) para efecto de desvanecimiento en los bordes
+
+**Categorias de marcas:**
+- `detailing`: 3M, Chemical Guys, Flex, Gtechniq, Gyeon, Meguiar's, Menzerna, Rupes
+- `wrapping`: 3M, Avery Dennison, Hexis
+- `all`: Todas las marcas (default)
+
+## Ubicaciones de la seccion
+
+### Home (`src/pages/Home.tsx`)
+- Insertar `BrandLogosBar` (variant="full", filter="all") **despues de** `CompetitiveComparison` y **antes de** `BusinessSkillsSection`
+- Esto refuerza visualmente el mensaje de neutralidad de marcas que se menciona en la comparativa competitiva
+- Se anadira como lazy-loaded con `Suspense` siguiendo el patron existente
+
+### Pagina de Formacion Detailing (`src/pages/FormationDetail.tsx`)
+- Insertar `BrandLogosBar` (variant="compact", filter basado en el slug) **despues de** `FormationIncludes` y **antes de** `FormationLogistics`
+- Para `curso-detailing-profesional`: filter="detailing"
+- Para `curso-vinilado-vehiculos`: filter="wrapping"
+- Para otros cursos: filter="all"
+
+## Detalles tecnicos
+
+### Animacion de scroll infinito
+Se reutilizara la keyframe `scroll` ya definida en `SuccessStoriesLogos.tsx`, pero se definira localmente en el componente via `<style>` tag (mismo patron):
+
+```text
+@keyframes brand-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 ```
 
-Por:
-```
-className="h-7 sm:h-8 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
-```
+Los logos se duplican (`[...brands, ...brands]`) para crear el efecto de loop sin cortes.
 
-Esto:
-- Elimina `max-w-[170px]` que esta causando el recorte
-- Usa `h-7` (28px) en pantallas muy pequenas (320px) y `h-8` (32px) a partir de `sm` (640px), garantizando que el logo cabe incluso en los dispositivos mas estrechos
-- Mantiene `h-12` en desktop sin cambios
-- El ancho se calcula automaticamente con `w-auto` manteniendo la proporcion
+### Filtro visual de logos
+Todos los logos se renderizan con `brightness-0 invert` para convertirlos a blanco sobre el fondo oscuro, con `opacity-50` por defecto y `hover:opacity-100` para interactividad sutil. Esto da un look cohesivo profesional sin importar el color original del logo.
 
-## Archivo afectado
+### Performance
+- Los logos se importan como assets de `src/assets/brands/` (bundled por Vite)
+- Todos con `loading="lazy"` excepto en la Home donde se usara lazy component via `React.lazy()`
+- Tamano de imagen pequeno (logos PNG, ~5-20KB cada uno)
+
+## Resumen de archivos afectados
 
 | Archivo | Cambio |
 |---------|--------|
-| `src/components/layout/Navbar.tsx` | Eliminar max-w-[170px], ajustar altura responsiva h-7/sm:h-8/md:h-12 |
+| `src/assets/brands/*.png` (10 archivos) | Copiar los logos subidos |
+| `src/components/shared/BrandLogosBar.tsx` | Nuevo componente reutilizable |
+| `src/pages/Home.tsx` | Anadir BrandLogosBar lazy-loaded despues de CompetitiveComparison |
+| `src/pages/FormationDetail.tsx` | Anadir BrandLogosBar despues de FormationIncludes |
+
+## Impacto esperado
+
+- **Confianza**: Refuerza visualmente que la academia trabaja con marcas lideres reconocidas internacionalmente
+- **Diferenciacion**: Apoya el pilar de "100% Brand Neutrality" mostrando la variedad de marcas
+- **SEO**: Los alt texts de los logos incluyen nombres de marca relevantes para busquedas
+- **Performance**: Impacto minimo (~100KB total en logos PNG, lazy-loaded)
 
