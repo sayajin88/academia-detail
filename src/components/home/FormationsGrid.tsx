@@ -1,23 +1,14 @@
 import { Link } from 'react-router-dom';
 import { formations } from '@/data/formations';
+import { formationDetails } from '@/data/formationDetails';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { 
-  Car, 
-  Palette, 
-  Shield, 
-  Wrench, 
   ArrowRight, 
   Clock,
   Construction,
-  GraduationCap
+  GraduationCap,
+  CheckCircle2
 } from 'lucide-react';
-
-const iconMap: Record<string, React.ElementType> = {
-  sparkles: Car,
-  palette: Palette,
-  shield: Shield,
-  wrench: Wrench,
-};
 
 export function FormationsGrid() {
   return (
@@ -33,95 +24,146 @@ export function FormationsGrid() {
           subtitle="Formación profesional para aprender detailing desde cero: curso de pulido de coches, tratamiento cerámico, vinilado y PPF"
         />
 
-        {/* Grid de Formaciones - 2 columnas grandes */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
-          {formations.map((formation) => {
-            const Icon = iconMap[formation.icon] || Car;
+        {/* Vertical list of alternating cards */}
+        <div className="flex flex-col gap-12 md:gap-16 max-w-6xl mx-auto">
+          {formations.map((formation, index) => {
             const isComingSoon = formation.comingSoon;
+            const isEven = index % 2 === 0;
+            const num = String(index + 1).padStart(2, '0');
+            const detail = formationDetails[formation.id];
+            const price = detail?.price;
             
+            // Get category label
+            const categoryLabels = [
+              'Módulo Principal',
+              'Especialización',
+              'Protección Avanzada',
+              'Especialista',
+            ];
+            const categoryLabel = categoryLabels[index] || 'Formación';
+
             return (
-              <Link 
-                to={formation.href}
+              <div 
                 key={formation.id}
-                className="group relative overflow-hidden rounded-2xl md:rounded-3xl aspect-[16/10] shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:scale-[1.02]"
+                className="group"
               >
-                {/* Background Image */}
-                <div className="absolute inset-0 bg-muted">
-                  <img
-                    src={formation.image}
-                    alt={formation.imageAlt}
-                    className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${isComingSoon ? 'grayscale-[30%]' : ''}`}
-                    loading="lazy"
-                    decoding="async"
-                    width={800}
-                    height={500}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                
-                {/* Gradient Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10 group-hover:via-black/40 transition-all duration-300 ${isComingSoon ? 'via-black/60' : ''}`} />
-                
-                {/* Coming Soon Badge */}
-                {isComingSoon && (
-                  <div className="absolute top-4 md:top-6 right-4 md:right-6 z-10">
-                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/90 text-black text-sm font-bold border border-amber-400 shadow-lg animate-pulse">
-                      <Construction className="h-4 w-4" />
-                      Próximamente
-                    </span>
+                <div className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} gap-0 rounded-2xl overflow-hidden border border-border/50 bg-card hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10`}>
+                  
+                  {/* Image Side */}
+                  <div className="relative w-full md:w-[45%] aspect-[16/10] md:aspect-auto md:min-h-[420px] overflow-hidden flex-shrink-0">
+                    <img
+                      src={formation.image}
+                      alt={formation.imageAlt}
+                      className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${isComingSoon ? 'grayscale-[30%]' : ''}`}
+                      loading="lazy"
+                      decoding="async"
+                      width={800}
+                      height={500}
+                      sizes="(max-width: 768px) 100vw, 45vw"
+                    />
+                    {/* Subtle gradient overlay on image */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent md:hidden" />
+                    
+                    {/* Badges on image */}
+                    {isComingSoon && (
+                      <div className="absolute top-4 left-4 z-10">
+                        <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-amber-500/90 text-black text-xs font-bold uppercase tracking-wider shadow-lg">
+                          <Construction className="h-3.5 w-3.5" />
+                          Próximamente
+                        </span>
+                      </div>
+                    )}
+                    {formation.alumnosCertificados && !isComingSoon && (
+                      <div className="absolute top-4 left-4 z-10">
+                        <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/90 text-primary-foreground text-xs font-bold uppercase tracking-wider shadow-lg">
+                          <GraduationCap className="h-3.5 w-3.5" />
+                          +{formation.alumnosCertificados} alumnos
+                        </span>
+                      </div>
+                    )}
                   </div>
-                )}
-                
-                {/* Alumnos Certificados Badge */}
-                {formation.alumnosCertificados && !isComingSoon && (
-                  <div className="absolute top-4 md:top-6 right-4 md:right-6 z-10">
-                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/90 text-white text-sm font-bold border border-primary shadow-lg">
-                      <GraduationCap className="h-4 w-4" />
-                      +{formation.alumnosCertificados} alumnos
+
+                  {/* Content Side */}
+                  <div className="flex-1 p-6 md:p-8 lg:p-10 flex flex-col justify-center relative">
+                    {/* Large decorative number */}
+                    <span className={`absolute ${isEven ? 'top-4 right-6 md:top-6 md:right-8' : 'top-4 right-6 md:top-6 md:right-8'} text-[5rem] md:text-[7rem] font-black leading-none text-foreground/[0.04] select-none pointer-events-none font-heading`}>
+                      {num}
                     </span>
-                  </div>
-                )}
-                
-                {/* Duration Badge */}
-                <div className="absolute top-4 md:top-6 left-4 md:left-6">
-                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-sm text-white text-sm font-medium border border-white/10">
-                    <Clock className="h-4 w-4" />
-                    {formation.duration}
-                  </span>
-                </div>
-                
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                  {/* Icon */}
-                  <div className="flex items-center gap-3 mb-3 md:mb-4">
-                    <div className={`p-3 rounded-xl backdrop-blur-sm border transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${isComingSoon ? 'bg-amber-500/20 text-amber-400 border-amber-500/20' : 'bg-primary/20 text-primary border-primary/20'}`}>
-                      <Icon className="h-6 w-6" />
+
+                    {/* Category badge */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className={`w-6 h-[2px] ${isComingSoon ? 'bg-amber-500' : 'bg-primary'}`} />
+                      <span className={`text-xs font-bold uppercase tracking-widest ${isComingSoon ? 'text-amber-500' : 'text-primary'}`}>
+                        {categoryLabel}
+                      </span>
+                    </div>
+                    
+                    {/* Title */}
+                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 leading-tight font-heading">
+                      {formation.shortTitle}
+                    </h3>
+                    
+                    {/* Description */}
+                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-5 max-w-lg">
+                      {formation.description}
+                    </p>
+
+                    {/* What you'll learn box */}
+                    {formation.highlights && formation.highlights.length > 0 && (
+                      <div className="border border-border/80 rounded-xl p-4 md:p-5 mb-6 bg-background/50">
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-foreground mb-3">
+                          Lo que aprenderás
+                        </h4>
+                        <ul className="space-y-2.5">
+                          {formation.highlights.map((highlight, hIdx) => (
+                            <li key={hIdx} className="flex items-start gap-2.5">
+                              <CheckCircle2 className={`h-4 w-4 mt-0.5 shrink-0 ${isComingSoon ? 'text-amber-500/70' : 'text-primary/70'}`} />
+                              <span className="text-sm text-muted-foreground">{highlight}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Price + CTA row */}
+                    <div className="flex items-end justify-between gap-4 mt-auto">
+                      <div>
+                        {isComingSoon ? (
+                          <div>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-1">Estado</span>
+                            <span className="text-xl font-bold text-amber-500">Próximamente</span>
+                          </div>
+                        ) : price ? (
+                          <div>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-1">Desde</span>
+                            <div className="flex items-baseline gap-1">
+                              <span className="text-3xl md:text-4xl font-bold text-foreground">€{price.toLocaleString('es-ES')}</span>
+                              <span className="text-sm text-muted-foreground">+ IVA</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-2 text-muted-foreground">
+                            <Clock className="h-4 w-4" />
+                            <span className="text-sm font-medium">{formation.duration}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <Link
+                        to={formation.href}
+                        className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border text-sm font-semibold transition-all duration-300 group/btn hover:gap-3 ${
+                          isComingSoon
+                            ? 'border-amber-500/50 text-amber-500 hover:bg-amber-500/10'
+                            : 'border-primary/50 text-primary hover:bg-primary/10'
+                        }`}
+                      >
+                        {isComingSoon ? 'Más Info' : 'Ver Detalles'}
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" />
+                      </Link>
                     </div>
                   </div>
-                  
-                  {/* Title */}
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3 leading-tight">
-                    {formation.shortTitle}
-                  </h3>
-                  
-                  {/* Description - Visible on all sizes */}
-                  <p className="text-white/80 text-sm md:text-base line-clamp-2 mb-4 md:mb-5 leading-relaxed max-w-lg">
-                    {formation.description}
-                  </p>
-                  
-                  {/* CTA */}
-                  <span className={`inline-flex items-center gap-2 font-semibold text-sm md:text-base group-hover:gap-4 transition-all duration-300 ${isComingSoon ? 'text-amber-400' : 'text-primary'}`}>
-                    {isComingSoon ? 'Más Información' : 'Ver Programa Completo'}
-                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </span>
                 </div>
-
-                {/* Hover border effect */}
-                <div className={`absolute inset-0 rounded-2xl md:rounded-3xl border-2 border-transparent transition-all duration-300 pointer-events-none ${isComingSoon ? 'group-hover:border-amber-500/30' : 'group-hover:border-primary/30'}`} />
-                
-                {/* Bottom loading bar on hover */}
-                <div className={`absolute bottom-0 left-0 right-0 h-1 transition-all duration-500 pointer-events-none ${isComingSoon ? 'bg-amber-500/0 group-hover:bg-gradient-to-r group-hover:from-amber-500/60 group-hover:via-amber-400/80 group-hover:to-amber-500/60' : 'bg-primary/0 group-hover:bg-gradient-to-r group-hover:from-primary/60 group-hover:via-primary-glow/80 group-hover:to-primary/60'}`} />
-              </Link>
+              </div>
             );
           })}
         </div>
