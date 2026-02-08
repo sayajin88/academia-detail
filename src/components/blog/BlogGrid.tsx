@@ -1,6 +1,6 @@
 import { BlogPost } from '@/data/blogPosts';
-import { BlogCard } from './BlogCard';
-import { BlogNewsletter } from './BlogNewsletter';
+import { BlogCardOverlay } from './BlogCardOverlay';
+import { BlogCTABanner } from './BlogCTABanner';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 
 interface BlogGridProps {
@@ -17,43 +17,43 @@ export function BlogGrid({ posts }: BlogGridProps) {
     );
   }
 
-  const firstRow = posts.slice(0, 3);
-  const restRows = posts.slice(3);
-  const showNewsletter = posts.length > 3;
+  const firstRow = posts.slice(0, 4);
+  const restRows = posts.slice(4);
+  const showCTA = posts.length > 4;
 
   return (
-    <div className="space-y-6">
-      {/* First row of cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="space-y-8">
+      {/* First row of overlay cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {firstRow.map((post, index) => (
-          <AnimatedSection key={post.id} stagger={index * 100} animation="fade-up" duration="fast">
-            <BlogCard post={post} />
+          <AnimatedSection key={post.id} stagger={index * 80} animation="fade-up" duration="fast">
+            <BlogCardOverlay post={post} />
           </AnimatedSection>
         ))}
       </div>
 
-      {/* Newsletter full-width between rows */}
-      {showNewsletter && (
+      {/* CTA Banner between rows */}
+      {showCTA && (
         <AnimatedSection animation="fade-up" delay={200}>
-          <BlogNewsletter variant="inline" />
+          <BlogCTABanner />
         </AnimatedSection>
       )}
 
       {/* Remaining cards */}
       {restRows.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {restRows.map((post, index) => (
-            <AnimatedSection key={post.id} stagger={index * 100} animation="fade-up" duration="fast">
-              <BlogCard post={post} />
+            <AnimatedSection key={post.id} stagger={index * 80} animation="fade-up" duration="fast">
+              <BlogCardOverlay post={post} />
             </AnimatedSection>
           ))}
         </div>
       )}
 
-      {/* If 3 or fewer posts, show newsletter at the end */}
-      {!showNewsletter && (
+      {/* If 4 or fewer posts, show CTA at the end */}
+      {!showCTA && (
         <AnimatedSection animation="fade-up" delay={200}>
-          <BlogNewsletter variant="inline" />
+          <BlogCTABanner />
         </AnimatedSection>
       )}
     </div>
