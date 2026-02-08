@@ -32,7 +32,7 @@ export function GlossaryGrid({ terms }: GlossaryGridProps) {
               {grouped[letter].length} {grouped[letter].length === 1 ? 'término' : 'términos'}
             </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {grouped[letter].map((term) => (
               <GlossaryTermCard key={term.term} term={term} />
             ))}

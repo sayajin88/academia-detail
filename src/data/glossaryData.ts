@@ -31,6 +31,15 @@ export const categoryColors: Record<GlossaryCategory, string> = {
   tecnicas: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
 };
 
+export const categoryBorderLeft: Record<GlossaryCategory, string> = {
+  exterior: 'border-l-blue-500/60',
+  interior: 'border-l-amber-500/60',
+  protecciones: 'border-l-emerald-500/60',
+  herramientas: 'border-l-purple-500/60',
+  quimicos: 'border-l-rose-500/60',
+  tecnicas: 'border-l-cyan-500/60',
+};
+
 export const glossaryTerms: GlossaryTerm[] = [
   // A
   {

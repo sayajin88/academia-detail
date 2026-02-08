@@ -6,9 +6,11 @@ import { GlossarySearch } from '@/components/glossary/GlossarySearch';
 import { GlossaryCategoryFilters } from '@/components/glossary/GlossaryCategoryFilters';
 import { GlossaryAlphabetNav } from '@/components/glossary/GlossaryAlphabetNav';
 import { GlossaryGrid } from '@/components/glossary/GlossaryGrid';
+import { GlossaryEducationalSections } from '@/components/glossary/GlossaryEducationalSections';
 import { glossaryTerms, getAvailableLetters } from '@/data/glossaryData';
 import type { GlossaryCategory } from '@/data/glossaryData';
 import { BookOpen } from 'lucide-react';
+import heroGlosario from '@/assets/heroes/hero-glosario.jpg';
 
 const ALL_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -95,9 +97,13 @@ const Glossary = () => {
         schema={glossarySeo.schema}
       />
 
-      {/* Hero */}
+      {/* Hero with background image */}
       <section className="relative py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroGlosario})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
@@ -126,6 +132,9 @@ const Glossary = () => {
           </div>
         </div>
       </section>
+
+      {/* Educational Sections */}
+      <GlossaryEducationalSections />
 
       {/* Main Content */}
       <section className="pb-20">
