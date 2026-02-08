@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail, BookOpen, Sparkles, FlaskConical } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail, BookOpen, Sparkles, FlaskConical, Settings2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import academiaLogo from '@/assets/academia-detail-logo-light.png';
 
@@ -19,12 +19,15 @@ const formationLinks = [
   { name: 'Carrera Detailing', href: '/formacion-profesional-detailing', icon: GraduationCap, description: 'Programa completo' },
 ];
 
+const toolLinks = [
+  { name: 'Glosario Detailing', href: '/glosario-detailing', icon: BookOpen, description: 'Más de 80 términos técnicos' },
+  { name: 'Calcular Diluciones', href: '/calculadora-dilucion-detailing', icon: FlaskConical, description: 'Ratios de mezcla exactos' },
+];
+
 const navLinks = [
   { name: 'Inicio', href: '/', icon: Home },
   { name: 'Quiénes Somos', href: '/quienes-somos', icon: Image },
   { name: 'Blog', href: '/blog', icon: BookOpen },
-  { name: 'Glosario', href: '/glosario-detailing', icon: BookOpen },
-  { name: 'Calculadora', href: '/calculadora-dilucion-detailing', icon: FlaskConical },
   { name: 'Inscribirse', href: '/contacto', icon: Mail },
 ];
 
@@ -32,7 +35,9 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isFormationsOpen, setIsFormationsOpen] = useState(false);
+  const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [mobileFormationsOpen, setMobileFormationsOpen] = useState(false);
+  const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const location = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
@@ -55,7 +60,9 @@ export function Navbar() {
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsFormationsOpen(false);
+    setIsToolsOpen(false);
     setMobileFormationsOpen(false);
+    setMobileToolsOpen(false);
   }, [location.pathname]);
 
   // Update pill position based on active link
@@ -89,6 +96,8 @@ export function Navbar() {
 
   const isFormationsActive = formationLinks.some(link => location.pathname === link.href) || 
                              location.pathname.includes('/curso-');
+
+  const isToolsActive = toolLinks.some(link => isActive(link.href));
 
   return (
     <>
@@ -224,6 +233,62 @@ export function Navbar() {
                 </div>
               </div>
 
+              {/* Herramientas Dropdown */}
+              <div
+                className={`relative transition-all duration-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+                style={{ transitionDelay: '300ms' }}
+                onMouseEnter={() => setIsToolsOpen(true)}
+                onMouseLeave={() => setIsToolsOpen(false)}
+              >
+                <button
+                  data-active={isToolsActive}
+                  className={`flex items-center gap-1.5 px-3 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg ${
+                    isToolsActive
+                      ? 'text-primary'
+                      : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
+                  }`}
+                >
+                  Herramientas
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform duration-300 ${isToolsOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+
+                {/* Dropdown Menu */}
+                <div 
+                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-300 ${
+                    isToolsOpen 
+                      ? 'opacity-100 translate-y-0 pointer-events-auto' 
+                      : 'opacity-0 -translate-y-2 pointer-events-none'
+                  }`}
+                >
+                  <div className="relative bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-3 min-w-[280px]">
+                    <div className="absolute -inset-px bg-gradient-to-b from-primary/10 to-transparent rounded-2xl pointer-events-none" />
+                    
+                    <div className="relative space-y-1">
+                      {toolLinks.map((link, index) => (
+                        <Link
+                          key={link.href}
+                          to={link.href}
+                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group hover:bg-white/5"
+                          style={{ animationDelay: `${index * 50}ms` }}
+                        >
+                          <div className="p-2 rounded-lg transition-colors duration-200 bg-white/5 text-foreground/50 group-hover:bg-primary/10 group-hover:text-primary">
+                            <link.icon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-foreground">
+                              {link.name}
+                            </p>
+                            <p className="text-xs text-foreground/50">{link.description}</p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {navLinks.slice(1).map((link, index) => (
                 <Link
                   key={link.href}
@@ -234,7 +299,7 @@ export function Navbar() {
                       ? 'text-primary'
                       : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
                   } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
-                  style={{ transitionDelay: `${300 + index * 50}ms` }}
+                  style={{ transitionDelay: `${350 + index * 50}ms` }}
                 >
                   {link.name}
                 </Link>
@@ -407,6 +472,53 @@ export function Navbar() {
               </div>
             </div>
 
+            {/* Herramientas Accordion */}
+            <div className="space-y-1">
+              <button
+                onClick={() => setMobileToolsOpen(!mobileToolsOpen)}
+                className={`flex items-center justify-between w-full px-4 py-4 rounded-xl transition-all duration-200 min-h-[52px] ${
+                  isToolsActive 
+                    ? 'bg-primary/10 text-primary' 
+                    : 'text-foreground/70 hover:bg-white/5 hover:text-foreground'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Settings2 className="h-5 w-5" />
+                  <span className="font-medium">Herramientas</span>
+                </div>
+                <ChevronDown 
+                  className={`h-5 w-5 transition-transform duration-300 ${
+                    mobileToolsOpen ? 'rotate-180' : ''
+                  }`} 
+                />
+              </button>
+
+              {/* Sub-links */}
+              <div 
+                className={`overflow-hidden transition-all duration-300 ${
+                  mobileToolsOpen ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className="pl-4 space-y-1 pt-1">
+                  {toolLinks.map((link, index) => (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
+                        location.pathname === link.href
+                          ? 'bg-white/10 text-foreground font-medium'
+                          : 'text-foreground/50 hover:text-foreground hover:bg-white/5'
+                      }`}
+                      style={{ animationDelay: `${(index + 2) * 50}ms` }}
+                    >
+                      <link.icon className="h-4 w-4" />
+                      <span>{link.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             {/* Rest of nav links */}
             {navLinks.slice(1).map((link, index) => (
               <Link
@@ -417,7 +529,7 @@ export function Navbar() {
                     ? 'bg-primary/10 text-primary'
                     : 'text-foreground/70 hover:bg-white/5 hover:text-foreground'
                 }`}
-                style={{ animationDelay: `${(index + 6) * 50}ms` }}
+                style={{ animationDelay: `${(index + 8) * 50}ms` }}
               >
                 <link.icon className="h-5 w-5" />
                 <span className="font-medium">{link.name}</span>
