@@ -872,3 +872,23 @@ img {
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
+
+/* Dilution Calculator - Bottle Animations */
+@keyframes wave {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-10px); }
+}
+
+@keyframes floatBubble {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50% { transform: translateY(-12px) scale(1.15); opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\\[wave_3s_ease-in-out_infinite\\],
+  .animate-\\[floatBubble_4s_ease-in-out_infinite\\],
+  .animate-\\[floatBubble_5s_ease-in-out_infinite_0\\.5s\\],
+  .animate-\\[floatBubble_4\\.5s_ease-in-out_infinite_1s\\] {
+    animation: none !important;
+  }
+}
