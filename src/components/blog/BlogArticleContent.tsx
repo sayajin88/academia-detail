@@ -2,6 +2,15 @@ import { Link } from 'react-router-dom';
 import { BlogSection, BlogLink } from '@/data/blogPosts';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { ReactNode } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 interface BlogArticleContentProps {
   sections: BlogSection[];
@@ -17,7 +26,6 @@ function renderContentWithLinks(content: string, links?: BlogLink[]): ReactNode[
   let keyCounter = 0;
 
   while (remaining.length > 0) {
-    // Find the earliest [[marker]] in the remaining text
     const markerStart = remaining.indexOf('[[');
     if (markerStart === -1) {
       parts.push(remaining);
@@ -30,15 +38,12 @@ function renderContentWithLinks(content: string, links?: BlogLink[]): ReactNode[
       break;
     }
 
-    // Add text before the marker
     if (markerStart > 0) {
       parts.push(remaining.substring(0, markerStart));
     }
 
-    // Extract the marker text
     const markerText = remaining.substring(markerStart + 2, markerEnd);
 
-    // Find the matching link
     const matchingLink = links.find(
       (link) => link.text.toLowerCase() === markerText.toLowerCase()
     );
@@ -77,7 +82,6 @@ function renderContentWithLinks(content: string, links?: BlogLink[]): ReactNode[
         );
       }
     } else {
-      // No matching link found, just render the text without brackets
       parts.push(markerText);
     }
 
@@ -85,6 +89,68 @@ function renderContentWithLinks(content: string, links?: BlogLink[]): ReactNode[
   }
 
   return parts;
+}
+
+function BlogDataTable({ table }: { table: NonNullable<BlogSection['table']> }) {
+  const isLastRow = (index: number) => index === table.rows.length - 1;
+  const lastRowIsTotal = table.rows.length > 0 && table.rows[table.rows.length - 1][0]?.toUpperCase().includes('TOTAL');
+
+  return (
+    <div className="my-6 rounded-lg border border-border/60 bg-muted/20 overflow-hidden">
+      <div className="overflow-x-auto">
+        <Table>
+          {table.caption && (
+            <TableCaption className="pb-3 text-xs text-muted-foreground/70">
+              {table.caption}
+            </TableCaption>
+          )}
+          <TableHeader>
+            <TableRow className="border-border/40 hover:bg-transparent">
+              {table.headers.map((header, i) => (
+                <TableHead
+                  key={i}
+                  className="text-xs md:text-sm font-semibold text-primary/90 bg-primary/5 whitespace-nowrap"
+                >
+                  {header}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {table.rows.map((row, rowIndex) => (
+              <TableRow
+                key={rowIndex}
+                className={`border-border/30 ${
+                  isLastRow(rowIndex) && lastRowIsTotal
+                    ? 'bg-primary/10 font-bold border-t-2 border-t-primary/30'
+                    : rowIndex % 2 === 0
+                      ? 'bg-transparent'
+                      : 'bg-muted/10'
+                }`}
+              >
+                {row.map((cell, cellIndex) => (
+                  <TableCell
+                    key={cellIndex}
+                    className={`text-xs md:text-sm py-3 whitespace-nowrap ${
+                      cellIndex === 0
+                        ? 'font-medium text-foreground/90'
+                        : 'text-muted-foreground'
+                    } ${
+                      isLastRow(rowIndex) && lastRowIsTotal
+                        ? 'text-foreground'
+                        : ''
+                    }`}
+                  >
+                    {cell}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
 }
 
 export function BlogArticleContent({ sections }: BlogArticleContentProps) {
@@ -121,6 +187,9 @@ export function BlogArticleContent({ sections }: BlogArticleContentProps) {
                 </p>
               ))}
             </div>
+
+            {/* Render table if present */}
+            {section.table && <BlogDataTable table={section.table} />}
           </section>
         </AnimatedSection>
       ))}

@@ -17,11 +17,18 @@ export interface BlogLink {
   external?: boolean;
 }
 
+export interface BlogTable {
+  headers: string[];
+  rows: string[][];
+  caption?: string;
+}
+
 export interface BlogSection {
   id: string;
   title: string;
   content: string;
   links?: BlogLink[];
+  table?: BlogTable;
 }
 
 export interface BlogPost {
@@ -70,40 +77,99 @@ export const blogPosts: BlogPost[] = [
     id: '1',
     slug: 'como-montar-negocio-detailing-rentable',
     title: 'Cómo Montar un Negocio de Detailing Rentable en 2026',
-    excerpt: 'Guía completa para emprender en detailing profesional: inversión, equipamiento y estrategias de rentabilidad desde el primer mes.',
+    excerpt: 'Monta tu negocio de detailing rentable en 2026. Inversión desde 15.000€, márgenes del 70% y facturación de +10.000€/mes. Guía paso a paso con tablas de inversión y rentabilidad real.',
     category: 'negocios',
     author: defaultAuthor,
     publishedAt: '2026-01-15',
-    readingTime: '12 min',
+    readingTime: '15 min',
     image: professionalDetailing,
     imageAlt: 'Taller profesional de detailing con equipamiento de alta gama para negocio rentable',
     featured: true,
-    tags: ['negocio', 'emprender', 'rentabilidad', 'inversión'],
+    tags: ['montar negocio detailing', 'emprender detailing', 'taller estética automotriz', 'inversión detailing', 'rentabilidad detailing', 'curso detailing profesional', 'plan de negocio detailing', 'negocio', 'emprender', 'rentabilidad'],
     sections: [
       {
         id: 'por-que-detailing',
-        title: '¿Por qué el detailing es un negocio rentable?',
-        content: 'El sector del detailing profesional en España ha experimentado un crecimiento del 23% en los últimos tres años. A diferencia de los lavaderos tradicionales, un centro de detailing profesional puede facturar entre 8.000€ y 25.000€ mensuales con tan solo 2-3 empleados. La clave está en posicionarse como un servicio premium, no como un lavadero más.\n\nEl margen de beneficio en servicios de detailing oscila entre el 60% y el 80%, muy por encima de otros negocios del sector automotriz. Un pulido completo que cuesta 30€ en materiales puede venderse por 300-500€. Un tratamiento cerámico con un coste de producto de 50€ genera facturas de 800-1.500€.\n\nAdemás, la fidelización del cliente en detailing es extraordinaria. Un cliente satisfecho no solo vuelve cada 6-12 meses, sino que se convierte en tu mejor embajador, recomendándote a su círculo de alto poder adquisitivo.'
+        title: '¿Por qué emprender en detailing es rentable en 2026?',
+        content: 'El sector del detailing profesional en España ha experimentado un crecimiento del 23% en los últimos tres años, consolidándose como uno de los nichos más rentables dentro de la estética automotriz. A diferencia de los lavaderos tradicionales, montar un taller de detailing profesional permite facturar entre 8.000€ y 25.000€ mensuales con tan solo 2-3 empleados, posicionándote como un servicio premium y no como un lavadero más.\n\nEl margen de beneficio en servicios de detailing oscila entre el 60% y el 80%, muy por encima de otros negocios del sector automotriz. Un pulido completo que cuesta 30€ en materiales puede venderse por 300-500€. Un tratamiento cerámico con un coste de producto de 50€ genera facturas de 800-1.500€. Estos márgenes hacen del detailing un negocio de estética automotriz con una rentabilidad difícil de igualar.\n\nAdemás, la fidelización del cliente en detailing es extraordinaria. Un cliente satisfecho no solo vuelve cada 6-12 meses, sino que se convierte en tu mejor embajador, recomendándote a su círculo de alto poder adquisitivo. Si te estás planteando emprender en detailing, 2026 es el momento ideal: la demanda crece, la competencia profesional aún es escasa, y los márgenes permiten un retorno de inversión rápido.',
+        links: [
+          { text: 'cuánto puede ganar un detailer profesional', href: '/blog/cuanto-gana-detailer-profesional-espana' }
+        ]
       },
       {
         id: 'inversion-inicial',
-        title: 'Inversión inicial: ¿cuánto necesitas realmente?',
-        content: 'Uno de los mitos más extendidos es que necesitas una gran inversión para empezar. La realidad es que puedes comenzar con una inversión de entre 15.000€ y 30.000€, dependiendo de tu ubicación y el nivel de servicio que quieras ofrecer.\n\nEl desglose típico sería: alquiler del local (depósito + 3 meses: 3.000-6.000€), equipamiento profesional (pulidoras, aspiradores, vaporizadoras: 4.000-8.000€), productos de calidad profesional (stock inicial: 2.000-4.000€), mobiliario y acondicionamiento del taller (3.000-6.000€), y marketing inicial (web, redes sociales, material gráfico: 1.500-3.000€).\n\nEl error más común es invertir demasiado en equipamiento de gama ultra-alta desde el principio. Es mejor empezar con equipos profesionales de gama media-alta y reinvertir los beneficios en mejoras progresivas.'
+        title: 'Inversión inicial: ¿cuánto necesitas para montar tu taller?',
+        content: 'Uno de los mitos más extendidos sobre emprender en detailing es que necesitas una gran inversión para empezar. La realidad es que puedes montar tu centro de detailing con una inversión de entre 15.000€ y 30.000€, dependiendo de tu ubicación y el nivel de servicio que quieras ofrecer.\n\nA continuación te mostramos el desglose detallado de la inversión inicial necesaria para abrir un taller de estética automotriz profesional:\n\nEl error más común es invertir demasiado en equipamiento de gama ultra-alta desde el principio. Es mejor empezar con equipos profesionales de gama media-alta y reinvertir los beneficios en mejoras progresivas. Si quieres saber [[cuánto puede ganar un detailer profesional]], los números justifican sobradamente esta inversión.',
+        links: [
+          { text: 'cuánto puede ganar un detailer profesional', href: '/blog/cuanto-gana-detailer-profesional-espana' }
+        ],
+        table: {
+          headers: ['Concepto', 'Rango mínimo', 'Rango máximo', 'Notas'],
+          rows: [
+            ['Alquiler local (depósito + 3 meses)', '3.000 €', '6.000 €', 'Zona industrial recomendada'],
+            ['Equipamiento profesional', '4.000 €', '8.000 €', 'Pulidoras, aspiradores, vaporizadoras'],
+            ['Stock inicial de productos', '2.000 €', '4.000 €', 'Compounds, coatings, químicos'],
+            ['Mobiliario y acondicionamiento', '3.000 €', '6.000 €', 'Iluminación, ventilación, suelo'],
+            ['Marketing inicial', '1.500 €', '3.000 €', 'Web, redes, material gráfico'],
+            ['Reserva de tesorería', '1.500 €', '3.000 €', 'Colchón primeros meses'],
+            ['TOTAL', '15.000 €', '30.000 €', '']
+          ],
+          caption: 'Desglose de inversión inicial para montar un centro de detailing profesional'
+        }
+      },
+      {
+        id: 'servicios-precios',
+        title: 'Servicios, costes de material y márgenes de beneficio',
+        content: 'Una de las grandes ventajas de montar un negocio de detailing es que los márgenes de beneficio por servicio son extraordinariamente altos. El coste de los materiales representa solo una fracción del precio de venta, lo que permite márgenes brutos de entre el 75% y el 95% según el servicio.\n\nLa siguiente tabla muestra los servicios más demandados, su coste real de material y el precio de venta habitual en el mercado español. Estos datos están basados en la experiencia de nuestros alumnos y centros colaboradores:\n\nComo puedes ver, servicios como el [[tratamiento cerámico o PPF]] ofrecen márgenes superiores al 80%. La clave para maximizar la rentabilidad de tu taller de detailing está en combinar servicios de alto margen con una buena estrategia de upselling.',
+        links: [
+          { text: 'tratamiento cerámico o PPF', href: '/blog/ppf-vs-ceramico-proteccion-vehiculo' }
+        ],
+        table: {
+          headers: ['Servicio', 'Coste material', 'Precio venta', 'Margen'],
+          rows: [
+            ['Lavado premium + descontaminación', '5-10 €', '80-150 €', '~90%'],
+            ['Pulido corrección completa', '20-35 €', '300-500 €', '~92%'],
+            ['Tratamiento cerámico', '40-60 €', '800-1.500 €', '~95%'],
+            ['PPF frontal completo', '300-500 €', '1.500-3.000 €', '~80%'],
+            ['Car wrapping full body', '800-1.200 €', '3.000-5.000 €', '~75%']
+          ],
+          caption: 'Servicios de detailing: coste de material vs precio de venta y margen bruto'
+        }
       },
       {
         id: 'ubicacion-local',
-        title: 'Elegir la ubicación perfecta',
-        content: 'La ubicación puede hacer o deshacer tu negocio. No necesitas estar en el centro de la ciudad; de hecho, las zonas industriales o las afueras suelen ser mejores por el coste del alquiler y la disponibilidad de espacio.\n\nLo que sí necesitas es: acceso fácil para vehículos, al menos 80-120m² de espacio útil, buena iluminación natural o posibilidad de instalar iluminación profesional, toma de agua con presión adecuada, y ventilación correcta para trabajar con productos químicos.\n\nUn consejo que damos siempre en Academia Detail: busca zonas donde haya concesionarios de coches premium cerca. Sus clientes son exactamente tu público objetivo.'
+        title: 'Elegir la ubicación perfecta para tu centro',
+        content: 'La ubicación puede hacer o deshacer tu negocio de detailing. No necesitas estar en el centro de la ciudad; de hecho, las zonas industriales o las afueras suelen ser mejores opciones por el coste del alquiler y la disponibilidad de espacio para montar tu taller de estética automotriz.\n\nLo que sí necesitas es: acceso fácil para vehículos, al menos 80-120m² de espacio útil, buena iluminación natural o posibilidad de instalar iluminación profesional LED, toma de agua con presión adecuada, y ventilación correcta para trabajar con productos químicos de forma segura.\n\nUn consejo que damos siempre en Academia Detail: busca zonas donde haya concesionarios de coches premium cerca. Sus clientes son exactamente tu público objetivo. Además, negocia el alquiler con carencia de los primeros meses o con opción a compra si el local te conviene a largo plazo.'
       },
       {
         id: 'captacion-clientes',
-        title: 'Estrategias de captación de clientes que funcionan',
-        content: 'El 90% de los negocios de detailing que fracasan lo hacen por falta de clientes, no por falta de habilidad técnica. Aquí es donde la formación en negocio marca la diferencia.\n\nLas estrategias que mejor funcionan son: Instagram como escaparate visual (antes/después de cada trabajo), alianzas con concesionarios y talleres mecánicos, Google My Business optimizado con fotos profesionales, boca a boca incentivado con programas de referidos, y presencia en eventos automovilísticos locales.\n\nEn Academia Detail, nuestro módulo de negocio exclusivo te enseña exactamente cómo implementar cada una de estas estrategias con plantillas, scripts y herramientas probadas por nuestros propios alumnos que ya han montado sus centros.'
+        title: 'Marketing para detailing: estrategias de captación que funcionan',
+        content: 'El 90% de los negocios de detailing que fracasan lo hacen por falta de clientes, no por falta de habilidad técnica. Aquí es donde la formación en marketing para detailing y gestión de negocio marca la diferencia entre sobrevivir y prosperar.\n\nLas estrategias de captación de clientes que mejor funcionan para un centro de detailing son: Instagram y TikTok como escaparate visual (publica el antes/después de cada trabajo con hashtags estratégicos), alianzas con concesionarios y talleres mecánicos de la zona, Google My Business optimizado con fotos profesionales y reseñas reales de clientes, boca a boca incentivado con programas de referidos (ofrece un descuento del 10% por cada cliente que te traigan), y presencia en eventos automovilísticos y concentraciones de coches locales.\n\nEl marketing digital es esencial para captar clientes de detailing en 2026. Invierte en una web profesional con SEO local, crea contenido educativo en redes sociales que demuestre tu expertise, y no subestimes el poder de las reseñas de Google: son el factor número uno de decisión para clientes que buscan un servicio de detailing profesional en su zona.\n\nEn Academia Detail, nuestro módulo de negocio exclusivo te enseña exactamente cómo implementar cada una de estas estrategias con plantillas, scripts y herramientas probadas por nuestros propios alumnos que ya han montado sus centros con éxito.'
       },
       {
         id: 'rentabilidad-primer-ano',
-        title: 'Proyección de rentabilidad el primer año',
-        content: 'Basándonos en la experiencia de más de 170 alumnos que han pasado por nuestra formación, un centro de detailing bien gestionado puede alcanzar el punto de equilibrio entre el tercer y sexto mes de operación.\n\nUn escenario conservador para el primer año sería: meses 1-3 (fase de arranque): 3.000-5.000€ de facturación mensual, meses 4-6 (consolidación): 6.000-10.000€ mensuales, meses 7-12 (crecimiento): 10.000-18.000€ mensuales.\n\nLa clave para acelerar este crecimiento es combinar servicios de detailing con servicios de PPF y wrapping, que multiplican significativamente el ticket medio. Un servicio de PPF completo puede superar los 3.000€ por vehículo.'
+        title: 'Proyección de rentabilidad: tu primer año como emprendedor',
+        content: 'Basándonos en la experiencia de más de 170 alumnos que han pasado por nuestra formación y han montado su propio negocio, un centro de detailing bien gestionado puede alcanzar el punto de equilibrio entre el tercer y sexto mes de operación.\n\nA continuación te mostramos una proyección trimestral realista de facturación, gastos fijos y beneficio neto para el primer año de tu negocio de detailing:\n\nLa clave para acelerar este crecimiento es combinar servicios de detailing con servicios de [[protección PPF y cerámico]], que multiplican significativamente el ticket medio. Un servicio de PPF completo puede superar los 3.000€ por vehículo, y un cliente que entra por un pulido de 400€ puede salir con un paquete de protección cerámica de 1.200€ si sabes hacer upselling correctamente.',
+        links: [
+          { text: 'protección PPF y cerámico', href: '/blog/ppf-vs-ceramico-proteccion-vehiculo' }
+        ],
+        table: {
+          headers: ['Periodo', 'Facturación mensual', 'Gastos fijos', 'Beneficio neto estimado'],
+          rows: [
+            ['Meses 1-3 (arranque)', '3.000-5.000 €', '2.500-3.500 €', '500-1.500 €'],
+            ['Meses 4-6 (consolidación)', '6.000-10.000 €', '3.000-4.000 €', '3.000-6.000 €'],
+            ['Meses 7-12 (crecimiento)', '10.000-18.000 €', '3.500-5.000 €', '6.500-13.000 €']
+          ],
+          caption: 'Proyección de rentabilidad trimestral para el primer año de un centro de detailing'
+        }
+      },
+      {
+        id: 'formacion-profesional',
+        title: 'Formación profesional: la base de un negocio de detailing exitoso',
+        content: 'Emprender en detailing sin formación profesional es como abrir un restaurante sin saber cocinar. La técnica se puede aprender por YouTube, pero el conocimiento real —la sensibilidad del tacto sobre la pintura, la lectura del estado del barniz, la gestión de clientes exigentes— solo se adquiere con práctica supervisada por profesionales experimentados.\n\nUna [[formación en detailing profesional]] te ahorra meses de prueba y error, te evita errores costosos (un barniz traspasado puede costar 2.000€ de repintado) y te da la confianza y el certificado que tus futuros clientes valoran. Además, una buena formación incluye módulos de negocio que te enseñan a presupuestar, captar clientes y escalar tu centro.\n\nSi estás decidido a montar tu negocio de detailing en 2026, el primer paso no es alquilar un local ni comprar equipamiento: es formarte con los mejores. [[Contacta con nosotros]] y te ayudaremos a diseñar tu plan de formación y de negocio personalizado.',
+        links: [
+          { text: 'formación en detailing profesional', href: '/formacion/detailing-profesional' },
+          { text: 'Contacta con nosotros', href: '/contacto' }
+        ]
       }
     ],
     relatedSlugs: ['cuanto-gana-detailer-profesional-espana', '5-errores-detailers-principiantes', 'como-montar-centro-detailing-inversion']
