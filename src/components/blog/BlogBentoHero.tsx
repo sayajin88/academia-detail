@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Lightbulb, GraduationCap } from 'lucide-react';
+import { ArrowRight, Sparkles, GraduationCap } from 'lucide-react';
 import { BlogPost, blogPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
 import { formations } from '@/data/formations';
 import { Button } from '@/components/ui/button';
@@ -130,20 +130,6 @@ export function BlogBentoHero({ featuredPost }: BlogBentoHeroProps) {
         </Link>
       )}
 
-      {/* Tip of the week card */}
-      <div className="relative overflow-hidden rounded-xl bg-card border border-border p-5 md:p-6 flex flex-col justify-center min-h-[180px]">
-        <div className="absolute top-3 right-3">
-          <Lightbulb className="h-5 w-5 text-primary/40" />
-        </div>
-
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-primary mb-2">
-          Tip de la Semana
-        </span>
-        <p className="text-foreground text-sm leading-relaxed italic">
-          "La diferencia entre un lavadero y un detailer profesional no es el precio, es el conocimiento. Invierte en formarte y el mercado te recompensará."
-        </p>
-        <span className="text-xs text-muted-foreground mt-3">— Daniel López, CEO Detail Park</span>
-      </div>
     </div>
   );
 }
