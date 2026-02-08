@@ -1,156 +1,147 @@
 
-# Auditoria Tecnica Completa - academiadetail.com
 
-## Resumen Ejecutivo
-Tras revisar en detalle todas las paginas, componentes, datos, SEO y configuracion del sitio, se han detectado **12 problemas** de distinta gravedad. A continuacion se detalla cada uno con su solucion concreta.
+# Plan: Diferenciar Jornada Zero y Up Detail
 
----
+## Concepto
 
-## ERRORES CRITICOS (afectan funcionalidad o SEO)
+Se crearan **3 paginas** para separar correctamente los dos formatos de jornada intensiva:
 
-### 1. Paginas legales inexistentes (404)
-**Problema:** El footer enlaza a `/privacidad`, `/terminos` y `/cookies`. El formulario de contacto enlaza a `/politica-privacidad`. La Jornada Zero enlaza a `/privacidad` y `/terminos`. Ninguna de estas rutas existe en `App.tsx`, por lo que muestran la pagina 404.
+1. **Pagina Hub** (`/curso-detailing-iniciacion`) - Pagina selector donde el visitante elige entre Jornada Zero o Up Detail
+2. **Landing Jornada Zero** (`/jornada-zero-detailing`) - Refactorizada desde la actual, enfocada en el equipo Detail Park
+3. **Landing Up Detail** (`/up-detail-evento`) - Nueva landing enfocada en la colaboracion con expertos externos
 
-**Impacto:** Viola el RGPD al no tener paginas legales accesibles. Genera errores 404 que afectan el rastreo de Google.
+```text
+               /curso-detailing-iniciacion (Hub)
+                     /              \
+                    /                \
+   /jornada-zero-detailing     /up-detail-evento
+   (Detail Park Team)         (Expertos Invitados)
+   Daniel Lopez               Leandro, Federica, etc.
+   97 euros + IVA              97 euros + IVA
+   Fecha: 17 Ene 2026         Proximamente
+```
 
-**Solucion:** Crear una pagina `/politica-privacidad` con la informacion legal basica, y anadir redirects desde `/privacidad`, `/terminos` y `/cookies` a esa pagina (o crear paginas separadas). Registrar las rutas en `App.tsx`.
+## Por que paginas separadas (y no tabs)
 
----
-
-### 2. YouTube Hero: bucle de warnings en consola
-**Problema:** En `HomeHero.tsx`, el `setInterval` en `onReady` llama a `seekTo` cada 500ms. Cuando el componente se desmonta y se vuelve a montar (por navegacion React), el player se destruye pero el intervalo puede ejecutarse antes de la limpieza, generando el warning "The YouTube player is not attached to the DOM" repetidamente (visible en los logs de consola).
-
-**Impacto:** Contamina la consola, puede causar fugas de memoria menores.
-
-**Solucion:** Guardar una referencia `isDestroyed` y verificarla antes de cada `seekTo`. Tambien verificar `playerRef.current` antes de llamar a metodos. Limpiar el intervalo antes de destruir el player en el `useEffect` cleanup.
-
----
-
-### 3. Imports sin usar en GalleryPreview.tsx
-**Problema:** Se importan `training2` (evento-grupo-formacion.jpg), `training5` (formacion-detailing-1.jpg), `training7` (certificado-alumno-feliz.jpg) y `training8` (alumnos-formacion-3.jpg) pero ya no se usan en el array `galleryImages` tras los cambios recientes. Esto anadie peso muerto al bundle.
-
-**Impacto:** Incrementa el tamano del JavaScript bundle innecesariamente (4 imagenes cargadas pero no mostradas).
-
-**Solucion:** Eliminar las 4 lineas de import no utilizados (`training2`, `training5`, `training7`, `training8`).
+- **SEO**: Cada formato ataca keywords distintas (iniciacion vs masterclass colaborativa)
+- **Mantenimiento**: El archivo actual ya tiene 920 lineas; duplicar contenido en tabs crearia un archivo inmanejable
+- **Conversion**: Cada landing tiene su propio funnel optimizado con Stripe, sin distracciones
+- **Compartibilidad**: Cada evento se puede compartir con su propia URL en redes sociales
 
 ---
 
-### 4. OG Image inconsistente en index.html
-**Problema:** En `index.html`, las meta tags `og:image` y `twitter:image` apuntan a una URL de Google Cloud Storage (`storage.googleapis.com/gpt-engineer-file-uploads/...`), mientras que el componente SEO.tsx usa `https://academiadetail.com/og-image.png`. Esto crea inconsistencia y la URL de Storage puede ser temporal.
+## Pagina 1: Hub Selector (`/curso-detailing-iniciacion`)
 
-**Impacto:** Las previsualizaciones en redes sociales pueden mostrar una imagen incorrecta o caida.
+Pagina limpia y directa que presenta ambas opciones:
 
-**Solucion:** Actualizar las meta tags de `index.html` para usar `https://academiadetail.com/og-image.png`, coherente con el resto del sitio.
+- **Hero corto** con titulo "Jornadas Intensivas de Detailing" y subtitulo explicando los dos formatos
+- **Dos tarjetas lado a lado** (vertical en movil):
+  - **Jornada Zero**: Icono, descripcion corta, precio (97 euros + IVA), fecha, CTA "Ver Jornada Zero", imagen de Daniel/equipo
+  - **Up Detail**: Icono, descripcion corta, precio (97 euros + IVA), estado "Proximamente", avatares de expertos invitados, CTA "Ver Up Detail"
+- **Seccion inferior** con FAQ breve: diferencia entre ambos formatos
+- Usa `MainLayout` (consistente con el resto del sitio)
+- Navegacion estandar, sin navbar custom
 
----
-
-## ERRORES MODERADOS (afectan UX o calidad)
-
-### 5. Copyright desactualizado en Jornada Zero
-**Problema:** El footer de la pagina Jornada Zero (linea 902) dice "Derechos reservados para Detail Park S.L. 2024", con el ano hardcodeado.
-
-**Impacto:** Transmite imagen de pagina desactualizada.
-
-**Solucion:** Reemplazar `2024` por `{new Date().getFullYear()}` como ya se hace en el Footer principal (`Footer.tsx` linea 159).
+### Archivo: `src/pages/JornadasIntensivas.tsx` (nuevo, ~200 lineas)
 
 ---
 
-### 6. Email inconsistente entre SEO schema y Footer
-**Problema:** El schema LocalBusiness en `SEO.tsx` (linea 89) y `seoConfig.ts` (linea 25) usan `info@detailpark.es` como email. El Footer y el formulario de contacto usan `info@academiadetail.com`.
+## Pagina 2: Landing Jornada Zero (`/jornada-zero-detailing`)
 
-**Impacto:** Inconsistencia que puede confundir a Google y a usuarios que consulten datos de contacto en snippets de busqueda.
+Refactorizacion de la actual `JornadaCero.tsx`:
 
-**Solucion:** Unificar a `info@academiadetail.com` en ambos schemas (`SEO.tsx` y `seoConfig.ts`), que es el email de la marca actual.
+- Se mantiene **todo el contenido actual** (hero, itinerario, pricing, testimonios, FAQ, bonuses, footer custom)
+- Se corrige la **inconsistencia de precio**: el hero dice 97 euros pero el modal de registro muestra 199 euros. Se unifica a **97 euros + IVA** en todo el flujo
+- Se anade un banner/enlace sutil al hub para que el visitante pueda descubrir el formato Up Detail
+- Misma estructura standalone (sin MainLayout), con su propia nav y footer
 
----
-
-### 7. Blog: imagen OG usa ruta local en vez de URL absoluta
-**Problema:** En `BlogPost.tsx` (linea 50 y 92), la imagen OG usa `typeof post.image === 'string' ? post.image : ...`. Las imagenes de blog son imports de Vite (objetos con URL relativa tras compilacion), no strings con URL absoluta. Esto significa que la condicion siempre dara `false` para imagenes importadas, y el OG fallback sera `/og-image.png` generico.
-
-**Impacto:** Las previsualizaciones al compartir articulos del blog en redes sociales mostraran la imagen generica en vez de la imagen especifica del articulo.
-
-**Solucion:** Eliminar la condicion `typeof` y usar directamente `post.image` (que ya es una URL valida tras el import de Vite), o construir la URL absoluta con `${BASE_URL}${post.image}`.
+### Archivo: `src/pages/JornadaCero.tsx` (modificado)
+### Archivo: `src/components/RegistrationModal.tsx` (corregido precio a 97 euros)
 
 ---
 
-### 8. BlogPostCTA: enlace a "/#formaciones" no funciona con React Router
-**Problema:** En `BlogPostCTA.tsx` (linea 38), el boton "Ver Todos los Cursos" enlaza a `/#formaciones`. Con React Router, los hash links a otras paginas no hacen scroll automatico al ancla despues de la navegacion.
+## Pagina 3: Landing Up Detail (`/up-detail-evento`)
 
-**Impacto:** El usuario llega a la home pero no se desplaza a la seccion de formaciones.
+Nueva landing page con estructura similar a Jornada Zero pero enfocada en la colaboracion:
 
-**Solucion:** Cambiar la ruta a `/` y manejar el scroll programaticamente, o simplemente enlazar a `/contacto` o directamente a `/curso-detailing-profesional`.
+### Contenido principal:
+- **Hero**: Titulo "Up Detail: Formacion con los Mejores Expertos del Pais", video/imagen de fondo, badge "Proximamente"
+- **Concepto diferenciador**: Seccion explicando que Up Detail reune a formadores reconocidos a nivel nacional e internacional en una jornada colaborativa
+- **Perfiles de Expertos Invitados**:
+  - Daniel Lopez (Detail Park) - imagen existente `daniel-lopez-instructor.webp`
+  - Leandro (Academy Pro Detailing) - imagenes existentes `leandro-curso-detailing.jpg` y `leandro-curso-detailing-2.jpg`
+  - Federica "la_detailher" - imagenes existentes `federica-curso-detailing.jpg` y `federica-curso-detailing-2.jpg`
+  - Espacio para "Mas expertos por confirmar"
+- **Que aprenderas**: Grid con los beneficios de aprender de multiples perspectivas profesionales
+- **Precio**: 97 euros + IVA (mismo que Jornada Zero)
+- **Estado**: "Proximamente - Deja tu email para ser el primero en enterarte"
+- **CTA principal**: Como la fecha no esta definida, el CTA principal sera un formulario de pre-registro (email + nombre) para notificar cuando se abra la inscripcion, en vez del checkout de Stripe
+- **Galeria**: Fotos reales de Leandro y Federica en los cursos
+- **Testimonios y trust signals**: Reutilizados de los componentes existentes
+- **Footer custom**: Similar al de Jornada Zero
 
----
-
-## ERRORES MENORES (mejoras de calidad)
-
-### 9. Blog: autor sin imagen en posts de blogPostsNew.ts y blogPostsBusiness.ts
-**Problema:** En `blogPostsNew.ts` (linea 17) y `blogPostsBusiness.ts` (linea 18), el `defaultAuthor` tiene `image: ''` (cadena vacia). Aunque se reemplaza con la imagen correcta en el merge de `blogPosts.ts` (lineas 370-378), durante la construccion del array los posts individuales tienen `image: ''`. Si algun componente accede directamente a estos arrays antes del merge, el avatar aparecera roto.
-
-**Impacto:** Bajo, pero introduce fragilidad. Si alguien importa directamente `newBlogPosts`, los avatares estaran rotos.
-
-**Solucion:** Importar `danielLopez` en ambos archivos de datos y usarlo directamente, eliminando la dependencia del merge.
-
----
-
-### 10. Sidebar del blog: reading progress no es sticky
-**Problema:** En `BlogSidebar.tsx`, el contenedor del curso card (linea 28) tiene `sticky top-24`, pero el `BlogReadingProgress` esta fuera de este contenedor sticky (linea 103-105). Esto hace que el widget de progreso no se quede fijo al hacer scroll.
-
-**Impacto:** El progreso de lectura desaparece al hacer scroll, perdiendo su utilidad.
-
-**Solucion:** Mover el `BlogReadingProgress` dentro del contenedor `sticky` existente, despues de los beneficios/cursos, para que ambos widgets permanezcan visibles.
+### Archivo: `src/pages/UpDetail.tsx` (nuevo, ~500-600 lineas)
 
 ---
 
-### 11. JornadaCero: "Aviso Legal" y "Privacidad" enlazan al mismo sitio
-**Problema:** En la Jornada Zero (linea 905-907), tanto "Aviso Legal" como "Privacidad" enlazan a `/privacidad`. Deberian ser paginas diferentes o al menos tener labels distintas.
+## Cambios en el Routing (`App.tsx`)
 
-**Impacto:** Confuso para el usuario y legalmente incorrecto (aviso legal y privacidad son documentos diferentes en la legislacion espanola).
+```text
+Rutas nuevas:
+  /curso-detailing-iniciacion  ->  JornadasIntensivas (hub)
+  /jornada-zero-detailing      ->  JornadaCero (landing actual refactorizada)
+  /up-detail-evento             ->  UpDetail (nueva landing)
 
-**Solucion:** Crear rutas separadas `/aviso-legal` y `/politica-privacidad`, o si se mantiene una sola pagina, unificar el texto del enlace.
-
----
-
-### 12. JornadaCero: no usa MainLayout (doble navbar potencial)
-**Problema:** La pagina Jornada Zero (`JornadaCero.tsx`) no usa `MainLayout`. En su lugar, tiene su propia barra de navegacion (lineas 99-157) y su propio footer (lineas 854-913). Esto crea una experiencia inconsistente respecto al resto del sitio.
-
-**Impacto:** El usuario ve un navbar y footer diferente en la Jornada Zero comparado con el resto de paginas. Esto es intencional (landing page autonoma), asi que es mas una observacion que un error. Sin embargo, el `SoyNuevoButton` global del `MainLayout` no aparece aqui (lo cual es correcto porque ya se excluye esa ruta).
-
-**Solucion:** Ninguna accion requerida si el diseno de landing page independiente es intencional. Solo documentar la decision.
+Redirects actualizados:
+  /jornada-cero  ->  /curso-detailing-iniciacion (hub) [ya existe, sin cambios]
+```
 
 ---
 
-## Resumen de prioridades
+## Cambios en Navegacion
 
-| Prioridad | Issue | Archivos afectados |
-|---|---|---|
-| Critica | 1. Paginas legales 404 | `App.tsx`, nuevo `PoliticaPrivacidad.tsx` |
-| Critica | 4. OG Image index.html | `index.html` |
-| Alta | 2. YouTube warnings | `HomeHero.tsx` |
-| Alta | 3. Imports sin usar | `GalleryPreview.tsx` |
-| Alta | 7. Blog OG image local | `BlogPost.tsx` |
-| Media | 5. Copyright 2024 | `JornadaCero.tsx` |
-| Media | 6. Email schema | `SEO.tsx`, `seoConfig.ts` |
-| Media | 8. Hash link roto | `BlogPostCTA.tsx` |
-| Baja | 9. Author image vacia | `blogPostsNew.ts`, `blogPostsBusiness.ts` |
-| Baja | 10. Progress no sticky | `BlogSidebar.tsx` |
-| Baja | 11. Links legales duplicados | `JornadaCero.tsx` |
-| Info | 12. JornadaCero sin MainLayout | Observacion, sin accion |
+- **Boton "Soy nuevo" del navbar**: Sigue apuntando a `/curso-detailing-iniciacion` (hub) -- sin cambios
+- **`JornadaZeroSection.tsx`** (componente reutilizable en Home y cursos): Actualizar el CTA para que lleve al hub `/curso-detailing-iniciacion`
+- **`SoyNuevoButton.tsx`**: Ya esta desactivado (eliminado del MainLayout), no requiere cambios
 
 ---
 
-## Plan de implementacion
+## Correccion de Inconsistencia de Precio
 
-Se propone resolver todos los problemas en una sola iteracion, empezando por los criticos:
+Actualmente el hero de Jornada Zero dice **97 euros + IVA** pero el `RegistrationModal.tsx` muestra **199 euros + IVA** con un "80% dto" sobre 999 euros. Segun la memoria del proyecto, el precio correcto es **97 euros + IVA**. Se corregira el modal para reflejar el precio real.
 
-1. Crear pagina legal basica y registrar rutas en `App.tsx`
-2. Corregir `index.html` meta OG images
-3. Arreglar `HomeHero.tsx` cleanup del YouTube player
-4. Eliminar imports no usados en `GalleryPreview.tsx`
-5. Corregir OG image en `BlogPost.tsx`
-6. Actualizar copyright en `JornadaCero.tsx`
-7. Unificar email en schemas SEO
-8. Corregir hash link en `BlogPostCTA.tsx`
-9. Anadir imagen de autor en archivos de datos del blog
-10. Mover reading progress dentro del sticky container
-11. Corregir links legales duplicados en JornadaCero
+---
+
+## Pre-registro Up Detail (base de datos)
+
+Como Up Detail no tiene fecha aun, en vez del checkout de Stripe se necesita una tabla para guardar pre-registros de interesados:
+
+- **Tabla nueva**: `up_detail_preregistrations` con campos: id, email, name, created_at
+- **RLS**: Politica de INSERT publico (sin autenticacion requerida, es un formulario de interes)
+- No requiere edge function, se inserta directamente desde el cliente
+
+---
+
+## SEO y Metadata
+
+- **Hub**: Title "Jornadas Intensivas de Detailing 2026 | Jornada Zero y Up Detail | Academia Detail"
+- **Jornada Zero**: Se mantiene el SEO actual
+- **Up Detail**: Title "Up Detail - Jornada con Expertos de Detailing | Proximamente | Academia Detail"
+- Actualizar `sitemap.xml` con las nuevas URLs
+- Anadir schema de Event para Up Detail con status "EventPostponed" hasta que haya fecha
+
+---
+
+## Resumen de archivos
+
+| Accion | Archivo |
+|---|---|
+| Nuevo | `src/pages/JornadasIntensivas.tsx` (hub selector) |
+| Nuevo | `src/pages/UpDetail.tsx` (landing Up Detail) |
+| Modificado | `src/pages/JornadaCero.tsx` (enlace al hub, banner Up Detail) |
+| Modificado | `src/components/RegistrationModal.tsx` (corregir precio a 97 euros) |
+| Modificado | `src/App.tsx` (nuevas rutas) |
+| Modificado | `src/utils/seoConfig.ts` (SEO para nuevas paginas) |
+| Modificado | `public/sitemap.xml` (nuevas URLs) |
+| DB Migration | Tabla `up_detail_preregistrations` |
+
