@@ -43,6 +43,7 @@ import { UrgencyTimer } from "@/components/UrgencyTimer";
 import { VideoTestimonials } from "@/components/VideoTestimonials";
 import { TrustSignals } from "@/components/TrustSignals";
 import { FAQ } from "@/components/FAQ";
+import { GoogleReviews } from "@/components/shared/GoogleReviews";
 import { PricingComparison } from "@/components/PricingComparison";
 import { InstructorProfile } from "@/components/InstructorProfile";
 import { RegistrationModal } from "@/components/RegistrationModal";
@@ -597,6 +598,9 @@ const Index = () => {
 
       {/* Instructor Profile */}
       <InstructorProfile />
+
+      {/* Google Reviews */}
+      <GoogleReviews />
 
       {/* FAQ Section */}
       <FAQ />

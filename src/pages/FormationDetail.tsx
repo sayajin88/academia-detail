@@ -15,6 +15,7 @@ import { FormationCertification } from '@/components/formation/FormationCertific
 import { FormationIncludes } from '@/components/formation/FormationIncludes';
 import { FormationLogistics } from '@/components/formation/FormationLogistics';
 import { FormationFAQ } from '@/components/formation/FormationFAQ';
+import { GoogleReviews } from '@/components/shared/GoogleReviews';
 import { FormationROICalculator } from '@/components/formation/FormationROICalculator';
 import { FormationCTA } from '@/components/formation/FormationCTA';
 import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
@@ -155,6 +156,7 @@ export default function FormationDetailPage() {
         <FormationIncludes formation={formation} />
         {/* Logistics section for national/international students */}
         <FormationLogistics showForSlug={slug} />
+        <GoogleReviews />
         <FormationFAQ formation={formation} />
         <FormationROICalculator formation={formation} onCTAClick={handleCTAClick} />
         {slug !== 'curso-detailing-iniciacion' && <JornadaZeroSection />}
