@@ -990,7 +990,7 @@ export const seoConfig = {
     originalPrice?: number;
     comingSoon?: boolean;
     includes?: string[];
-  }) => {
+  }, videoTestimonials?: { id: string; title: string; name?: string; role?: string }[]) => {
     const normalizedSlug = normalizeSlug(slug);
     
     const formationKeywords: Record<string, string> = {
@@ -1088,7 +1088,19 @@ export const seoConfig = {
           url: imageUrl,
           name: `Práctica profesional - ${formationNames[normalizedSlug] || formation.title}`,
           description: `Alumno practicando técnicas profesionales en el curso de ${formationNames[normalizedSlug] || formation.title} en Academia Detail`
-        })
+        }),
+        // VideoObject schemas for video testimonials on this course page
+        ...(videoTestimonials && videoTestimonials.length > 0
+          ? generateVideoObjectSchemas(videoTestimonials.map(v => ({
+              id: v.id,
+              title: `Testimonio Alumno - ${v.title}`,
+              name: v.name,
+              description: `${v.title} - Testimonio real de alumno del ${formationNames[normalizedSlug] || formation.title} en Academia Detail`,
+              uploadDate: '2025-06-01',
+              duration: 'PT3M'
+            })))
+          : []
+        )
       ]
     };
   }
