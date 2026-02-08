@@ -1,4 +1,4 @@
-import professionalDetailing from '@/assets/professional-detailing.jpg';
+import professionalDetailing from '@/assets/alumnos-instalaciones-curso-detailing.jpg';
 import beforeAfterDetailing from '@/assets/before-after-detailing.jpg';
 import cursoPpf from '@/assets/curso-ppf-new.jpg';
 import cursoWrapping from '@/assets/curso-wrapping-new.jpg';
