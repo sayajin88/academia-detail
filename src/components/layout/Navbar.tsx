@@ -156,10 +156,10 @@ export function Navbar() {
               <Link
                 to="/"
                 data-active={location.pathname === '/'}
-                className={`relative px-4 py-2 text-sm font-medium transition-all duration-500 rounded-lg ${
+                className={`relative px-4 py-2 text-[13px] font-semibold uppercase tracking-widest transition-all duration-500 rounded-lg ${
                   location.pathname === '/' 
                     ? 'text-primary' 
-                    : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
+                    : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
                 } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
                 style={{ transitionDelay: '200ms' }}
               >
@@ -175,10 +175,10 @@ export function Navbar() {
               >
                 <button
                   data-active={isFormationsActive}
-                  className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
+                  className={`flex items-center gap-1.5 px-4 py-2 text-[13px] font-semibold uppercase tracking-widest transition-all duration-200 rounded-lg ${
                     isFormationsActive
                       ? 'text-primary'
-                      : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
+                      : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
                   }`}
                 >
                   Formaciones
@@ -228,10 +228,10 @@ export function Navbar() {
                   key={link.href}
                   to={link.href}
                   data-active={isActive(link.href)}
-                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-500 rounded-lg ${
+                  className={`relative px-4 py-2 text-[13px] font-semibold uppercase tracking-widest transition-all duration-500 rounded-lg ${
                     isActive(link.href)
                       ? 'text-primary'
-                      : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
+                      : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
                   } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
                   style={{ transitionDelay: `${300 + index * 50}ms` }}
                 >
@@ -242,7 +242,25 @@ export function Navbar() {
 
             {/* Desktop CTA Buttons */}
             <div className={`hidden lg:flex items-center gap-2 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`} style={{ transitionDelay: '450ms' }}>
-              {/* WhatsApp Button - compact icon */}
+              {/* ¿Eres Nuevo? Button - animated */}
+              <Link to="/curso-detailing-iniciacion" className="group relative">
+                {/* Glow ring */}
+                <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-primary via-primary to-primary/50 opacity-50 blur-sm group-hover:opacity-80 transition-opacity duration-500 animate-pulse" />
+                <Button 
+                  size="sm"
+                  className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-4 py-2 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 gap-2"
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  ¿Eres Nuevo?
+                  {/* Live dot */}
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-foreground opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary-foreground" />
+                  </span>
+                </Button>
+              </Link>
+
+              {/* WhatsApp Button - compact icon, far right */}
               <a 
                 href="https://wa.me/34622773555"
                 target="_blank"
@@ -256,24 +274,6 @@ export function Navbar() {
                   <WhatsAppIcon className="h-4 w-4" />
                 </Button>
               </a>
-
-              {/* Soy Nuevo Button - animated */}
-              <Link to="/curso-detailing-iniciacion" className="group relative">
-                {/* Glow ring */}
-                <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-primary via-primary to-primary/50 opacity-50 blur-sm group-hover:opacity-80 transition-opacity duration-500 animate-pulse" />
-                <Button 
-                  size="sm"
-                  className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-4 py-2 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 gap-2"
-                >
-                  <Sparkles className="h-3.5 w-3.5" />
-                  Soy nuevo
-                  {/* Live dot */}
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-foreground opacity-75" />
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary-foreground" />
-                  </span>
-                </Button>
-              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -442,14 +442,14 @@ export function Navbar() {
                 </Button>
               </a>
 
-              {/* Soy Nuevo Button */}
+              {/* ¿Eres Nuevo? Button */}
               <Link to="/curso-detailing-iniciacion" className="flex-1 group relative">
                 <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-primary via-primary to-primary/50 opacity-50 blur-sm animate-pulse" />
                 <Button 
                   className="relative w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 rounded-xl shadow-lg gap-2"
                 >
                   <Sparkles className="h-5 w-5" />
-                  Soy nuevo
+                  ¿Eres Nuevo?
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-foreground opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-foreground" />
