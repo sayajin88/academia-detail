@@ -5,6 +5,7 @@ import { AboutPhilosophy } from '@/components/about/AboutPhilosophy';
 import { AboutTeam } from '@/components/about/AboutTeam';
 import { AboutStats } from '@/components/about/AboutStats';
 import { AboutGallerySection } from '@/components/about/AboutGallerySection';
+import { AboutVideoChannel } from '@/components/about/AboutVideoChannel';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -35,6 +36,9 @@ export default function AboutUs() {
 
         {/* Gallery Section */}
         <AboutGallerySection />
+
+        {/* YouTube Channel Videos */}
+        <AboutVideoChannel />
 
         {/* Jornada Zero Section */}
         <JornadaZeroSection />
