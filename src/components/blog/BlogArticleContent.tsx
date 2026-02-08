@@ -1,8 +1,90 @@
-import { BlogSection } from '@/data/blogPosts';
+import { Link } from 'react-router-dom';
+import { BlogSection, BlogLink } from '@/data/blogPosts';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
+import { ReactNode } from 'react';
 
 interface BlogArticleContentProps {
   sections: BlogSection[];
+}
+
+function renderContentWithLinks(content: string, links?: BlogLink[]): ReactNode[] {
+  if (!links || links.length === 0) {
+    return [content];
+  }
+
+  const parts: ReactNode[] = [];
+  let remaining = content;
+  let keyCounter = 0;
+
+  while (remaining.length > 0) {
+    // Find the earliest [[marker]] in the remaining text
+    const markerStart = remaining.indexOf('[[');
+    if (markerStart === -1) {
+      parts.push(remaining);
+      break;
+    }
+
+    const markerEnd = remaining.indexOf(']]', markerStart);
+    if (markerEnd === -1) {
+      parts.push(remaining);
+      break;
+    }
+
+    // Add text before the marker
+    if (markerStart > 0) {
+      parts.push(remaining.substring(0, markerStart));
+    }
+
+    // Extract the marker text
+    const markerText = remaining.substring(markerStart + 2, markerEnd);
+
+    // Find the matching link
+    const matchingLink = links.find(
+      (link) => link.text.toLowerCase() === markerText.toLowerCase()
+    );
+
+    if (matchingLink) {
+      const linkKey = `link-${keyCounter++}`;
+      const isExternal = matchingLink.external === true;
+      const relAttr = matchingLink.rel === 'nofollow'
+        ? 'noopener noreferrer nofollow'
+        : isExternal
+          ? 'noopener noreferrer'
+          : undefined;
+
+      if (isExternal) {
+        parts.push(
+          <a
+            key={linkKey}
+            href={matchingLink.href}
+            target="_blank"
+            rel={relAttr}
+            className="text-primary underline decoration-primary/30 hover:decoration-primary transition-colors font-medium"
+          >
+            {markerText}
+          </a>
+        );
+      } else {
+        parts.push(
+          <Link
+            key={linkKey}
+            to={matchingLink.href}
+            className="text-primary underline decoration-primary/30 hover:decoration-primary transition-colors font-medium"
+            {...(relAttr ? { rel: relAttr } : {})}
+          >
+            {markerText}
+          </Link>
+        );
+      }
+    } else {
+      // No matching link found, just render the text without brackets
+      parts.push(markerText);
+    }
+
+    remaining = remaining.substring(markerEnd + 2);
+  }
+
+  return parts;
 }
 
 export function BlogArticleContent({ sections }: BlogArticleContentProps) {
@@ -35,7 +117,7 @@ export function BlogArticleContent({ sections }: BlogArticleContentProps) {
                   }`}
                   style={{ fontFamily: "'Open Sans', sans-serif" }}
                 >
-                  {paragraph}
+                  {renderContentWithLinks(paragraph, section.links)}
                 </p>
               ))}
             </div>
