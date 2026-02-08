@@ -1,118 +1,134 @@
 
 
-# Seccion de Videos de YouTube en "Quienes Somos"
+# Auditoria Completa y Optimizacion de Rendimiento + Mobile
 
-## Objetivo
+## Hallazgos de la Auditoria
 
-Crear una seccion visual moderna dentro de la pagina "Quienes Somos" que muestre 12 videos del canal de YouTube de Detail Park para aumentar la autoridad de la academia. La seccion incluira un enlace al canal completo.
+### Problemas Detectados
 
----
+**1. Bug activo: Claves React duplicadas en el Footer**
+- La consola muestra un warning: `Encountered two children with the same key: /politica-privacidad`
+- Causa: En `Footer.tsx`, tanto "Politica de Privacidad" como "Aviso Legal" comparten el mismo `href` (`/politica-privacidad`), y se usa `link.href` como `key` en el `map`
 
-## Diseno Visual: "Galeria de Videos"
+**2. Clase CSS `scrollbar-hide` no definida**
+- `UpDetail.tsx` usa la clase `scrollbar-hide` en el scroll horizontal de Shorts, pero no esta definida en `index.css` ni en `tailwind.config.ts`
+- Los scrollbars visibles rompen la estetica en mobile
 
-La seccion tendra un diseno tipo **galeria multimedia dinamica** con las siguientes caracteristicas:
+**3. Clase CSS `safe-area-bottom` no definida**
+- `UpDetail.tsx` usa `safe-area-bottom` en el CTA sticky mobile, pero no existe en ningun archivo CSS
+- En iPhones con notch, el boton queda tapado por la barra del sistema
 
-### Layout principal
-- **Titulo con badge**: "Nuestro Canal de YouTube" con subtitulo orientado a autoridad ("Mas de 12 videos mostrando nuestro trabajo real en el taller")
-- **Video destacado grande**: El primer video ocupa un area prominente (16:9, ancho completo en movil, 60% en desktop)
-- **Grid de miniaturas**: Los 11 videos restantes en un grid compacto de 2 columnas en movil, 3 en tablet, 4 en desktop
-- Cada miniatura usa el componente `YouTubeEmbed` existente con facade pattern (carga perezosa)
-- **CTA al canal**: Boton "Ver mas videos en YouTube" con icono de YouTube, enlazando al canal
+**4. JornadaCero: iframe de YouTube siempre cargado en desktop**
+- En `JornadaCero.tsx` linea 177, hay un `<iframe>` de YouTube como fondo que se carga inmediatamente sin facade pattern
+- Esto anade ~800KB de JavaScript de YouTube al peso inicial de la pagina
+- Contrasta con el patron de facade (thumbnail + clic) usado en el resto de la web
 
-### Interaccion
-- Al hacer clic en cualquier miniatura, se reproduce el video in-place usando el YouTubeEmbed existente
-- Las miniaturas tendran hover con escala y overlay con icono de play (ya incluido en YouTubeEmbed)
+**5. VideoTestimonials: Sin facade pattern optimizado**
+- El componente `VideoTestimonials.tsx` usa thumbnails como fondo CSS con `background-image` en vez de `<img>` con `loading="lazy"`
+- Las thumbnails de YouTube solicitan `maxresdefault.jpg` (pesadas) en vez de `hqdefault.jpg`
+- Al reproducir, carga el iframe directamente sin el componente `YouTubeEmbed` reutilizable
 
-### Movil
-- El video destacado ocupa ancho completo
-- Las miniaturas se muestran en grid de 2 columnas para mantener buena visibilidad
-- El boton del canal es full-width y prominente
+**6. AboutUs: No usa lazy loading para secciones below-the-fold**
+- A diferencia de `Home.tsx` que usa `React.lazy()` + `Suspense` para todas las secciones, `AboutUs.tsx` importa todos los componentes de forma sincrona
+- Esto incluye `AboutVideoChannel` con 12 thumbnails de YouTube
 
----
+**7. AnimatedSection: Listener de resize sin debounce**
+- El componente `AnimatedSection.tsx` (linea 72) anade un event listener de `resize` con `window.innerWidth` en cada instancia
+- En una pagina con 20+ secciones animadas, esto causa multiples reflows en cada resize
 
-## Ubicacion en la pagina
+**8. JornadaCero: Pagina de 925 lineas sin code-splitting**
+- Toda la pagina JornadaCero es un componente monolitico de 925 lineas sin ningun lazy loading
+- Incluye multiples componentes pesados (VideoTestimonials, GoogleReviews, etc.)
 
-Se colocara **despues de la seccion de galeria de trabajos (AboutGallerySection) y antes de JornadaZeroSection**, ya que los videos refuerzan la autoridad mostrada en la galeria de trabajos y crean una transicion natural hacia el CTA de formacion.
+**9. UpDetail: Imagen hero sin `loading="eager"` ni `fetchPriority`**
+- La imagen hero de UpDetail (`evento-instructor-explicando.jpg`) no tiene atributos de prioridad
+- Al no estar en el MainLayout (no tiene Navbar global), pierde la oportunidad de preload
 
-```text
-AboutHero
-AboutHistory
-AboutPhilosophy
-AboutTeam
-AboutStats
-AboutGallerySection
->>> NUEVA: AboutVideoChannel <<<
-JornadaZeroSection
-CTA Final
-```
-
----
-
-## SEO y Autoridad
-
-### Schema VideoObject
-Se generara un array de schemas `VideoObject` para los 12 videos, con:
-- `name`: Titulo descriptivo con keywords de detailing
-- `thumbnailUrl`: Thumbnail de YouTube
-- `contentUrl`: URL del video
-- `uploadDate`: Fecha aproximada
-- `publisher`: Academia Detail / Detail Park
-
-### Schema ItemList (Carrusel de videos)
-Un schema `ItemList` que agrupe los videos para que Google pueda mostrarlos como carrusel en resultados de busqueda.
-
-### Atributos SEO en el componente
-- Heading H2 con keywords: "Videos de Detailing Profesional en Nuestro Taller"
-- Textos ALT descriptivos en cada miniatura
-- Enlaces `follow` al canal de YouTube para reforzar el sameAs del Organization schema existente
-
-### Actualizacion del SEO config
-Se anadiran los schemas VideoObject e ItemList al array de schemas de la pagina aboutUs en `seoConfig.ts`.
+**10. Footer links: touch targets insuficientes en mobile**
+- Los links del Footer en el componente global (`Footer.tsx`) no tienen `min-height: 44px`
+- Esto afecta a todas las paginas que usan MainLayout
 
 ---
 
-## Videos con titulos descriptivos para SEO
+## Plan de Optimizacion
 
-| # | Video ID | Titulo SEO propuesto |
-|---|----------|---------------------|
-| 1 | lgHS6CO2G2s | Detailing profesional en taller real |
-| 2 | TtPs7WPVLzE | Proceso de pulido y correccion de pintura |
-| 3 | ByRhg2kYD-A | Tratamiento ceramico en vehiculo de alta gama |
-| 4 | G3AU2913_vw | Lavado profesional y descontaminacion |
-| 5 | thUgGa5ULkI | Trabajo real en Detail Park Alicante |
-| 6 | kp_yZNZnUwo | Proteccion de pintura y acabado perfecto |
-| 7 | zr_FFDz06Fc | Restauracion y detailing de vehiculos |
-| 8 | iMatPTngV0g | Tecnicas avanzadas de detailing |
-| 9 | U3K4VsFlY8E | Interior detailing profesional |
-| 10 | L14vIkJWgKw | Resultados reales de nuestro taller |
-| 11 | eFfzwvhGNcU | Preparacion de vehiculos premium |
-| 12 | sqK6qkTWynk | Detail Park - Trabajo diario en el taller |
+### Fase 1: Bugs criticos y CSS faltante
+
+**Archivo: `src/components/layout/Footer.tsx`**
+- Cambiar el `key` de los legalLinks para usar `link.name` en vez de `link.href`, eliminando el warning de React
+- Anadir `min-h-[44px] flex items-center` a todos los links de navegacion para cumplir WCAG touch targets
+
+**Archivo: `src/index.css`**
+- Anadir la utilidad `.scrollbar-hide` con las propiedades:
+  - `-ms-overflow-style: none` (IE/Edge)
+  - `scrollbar-width: none` (Firefox)
+  - `::-webkit-scrollbar { display: none }` (Chrome/Safari)
+- Anadir la utilidad `.safe-area-bottom` con `padding-bottom: env(safe-area-inset-bottom)`
+
+### Fase 2: Rendimiento de carga (LCP/TTI)
+
+**Archivo: `src/pages/AboutUs.tsx`**
+- Convertir `AboutVideoChannel`, `AboutGallerySection`, `JornadaZeroSection` y el CTA final a `React.lazy()` + `Suspense`, siguiendo el mismo patron de `Home.tsx`
+- Solo `AboutHero`, `AboutHistory` y `AboutPhilosophy` quedan como carga sincrona (above-the-fold)
+
+**Archivo: `src/pages/JornadaCero.tsx`**
+- Reemplazar el iframe de YouTube background (linea 177) por el patron de YouTube IFrame API ya implementado en `HomeHero.tsx`, que solo inicializa el player tras una condicion (scroll o delay)
+- Alternativa mas simple: cargar el iframe con `loading="lazy"` y un `setTimeout` de 3 segundos para no bloquear el LCP
+
+**Archivo: `src/components/VideoTestimonials.tsx`**
+- Cambiar los thumbnails de `maxresdefault.jpg` a `hqdefault.jpg` (reduce peso de ~150KB a ~20KB por thumbnail)
+- Reemplazar `background-image` CSS por `<img loading="lazy">` para que el navegador gestione la carga diferida
+- Usar el componente `YouTubeEmbed` para la reproduccion en vez de iframes directos
+
+**Archivo: `src/pages/UpDetail.tsx`**
+- Anadir `fetchPriority="high"` y `loading="eager"` a la imagen hero
+- Las imagenes de la galeria y expertos ya tienen `loading="lazy"` (correcto)
+
+### Fase 3: Optimizacion mobile
+
+**Archivo: `src/components/shared/AnimatedSection.tsx`**
+- Reemplazar el listener de `resize` con `window.innerWidth` por `window.matchMedia`, consistente con el patron de `useIsMobile`
+- Esto elimina reflows forzados en cada resize en todas las paginas
+
+**Archivo: `src/components/layout/Footer.tsx`**
+- Asegurar que todos los links tienen touch targets de 44px minimo en mobile
+- Anadir espaciado vertical entre items del footer para mejor accesibilidad tactil
+
+**Archivo: `src/pages/UpDetail.tsx`**
+- En la seccion de Shorts mobile, ajustar el ancho de cada card a `w-[220px]` para que se vea parcialmente la siguiente card (affordance de scroll)
+- Anadir indicadores visuales de scroll (dots o fade lateral)
+
+**Archivo: `src/pages/JornadaCero.tsx`**
+- La pagina ya tiene buenas optimizaciones mobile (touch targets, tipografia responsiva)
+- Verificar que el sticky CTA de `StickyFloatingCTA` no se solape con el sticky banner superior
+
+### Fase 4: Consistencia entre paginas
+
+**Todos los archivos de pagina**
+- Verificar que todas las paginas con MainLayout tienen la estructura correcta de `pt-16 md:pt-20` para no solaparse con el Navbar
+- UpDetail y JornadaCero usan su propio layout (sin MainLayout), lo cual es correcto para landings independientes
 
 ---
 
-## Archivos afectados
+## Resumen de archivos afectados
 
-| Archivo | Accion | Detalle |
-|---------|--------|---------|
-| `src/components/about/AboutVideoChannel.tsx` | Nuevo | Componente de la seccion de videos con grid + video destacado + CTA canal |
-| `src/pages/AboutUs.tsx` | Modificado | Importar y colocar AboutVideoChannel entre AboutGallerySection y JornadaZeroSection |
-| `src/utils/seoConfig.ts` | Modificado | Anadir schemas VideoObject e ItemList al bloque aboutUs |
+| Archivo | Cambios |
+|---------|---------|
+| `src/index.css` | Anadir `.scrollbar-hide` y `.safe-area-bottom` |
+| `src/components/layout/Footer.tsx` | Fix key duplicada, touch targets 44px |
+| `src/pages/AboutUs.tsx` | Lazy loading de secciones below-the-fold |
+| `src/pages/JornadaCero.tsx` | Defer iframe YouTube background |
+| `src/components/VideoTestimonials.tsx` | Optimizar thumbnails, usar img lazy, reutilizar YouTubeEmbed |
+| `src/components/shared/AnimatedSection.tsx` | matchMedia en vez de innerWidth para evitar reflows |
+| `src/pages/UpDetail.tsx` | fetchPriority hero, mejorar scroll affordance mobile |
 
 ---
 
-## Detalles tecnicos
+## Impacto esperado
 
-### Componente `AboutVideoChannel.tsx`
-- Usa `YouTubeEmbed` existente de `@/components/shared/YouTubeEmbed`
-- Usa `AnimatedSection` y `SectionHeading` existentes
-- El primer video se muestra en un contenedor mas grande con borde y sombra
-- Grid responsive: `grid-cols-2 md:grid-cols-3 lg:grid-cols-4`
-- Boton de canal usa icono de YouTube (SVG inline o icono de lucide `ExternalLink`)
-- Fondo alternado con el patron visual existente (bg-muted/20 o bg-gradient)
-- Las animaciones usan stagger para que los videos aparezcan secuencialmente
-
-### Patron de rendimiento
-- Todos los videos usan facade pattern (thumbnail hasta click) via YouTubeEmbed
-- Las imagenes de thumbnail se cargan con `loading="lazy"`
-- No se carga ningun iframe de YouTube hasta que el usuario hace clic
+- **LCP**: Mejora significativa en JornadaCero (eliminar iframe YouTube inmediato) y AboutUs (lazy loading)
+- **TTI**: Reduccion de JavaScript inicial en todas las paginas con lazy loading
+- **CLS**: Cero regresion, las imagenes ya tienen dimensiones implicitas
+- **Mobile UX**: Touch targets correctos, scroll horizontal con affordance, safe areas en iPhone, scrollbar oculto en carruseles
+- **Bugs resueltos**: Warning de React eliminado, clases CSS faltantes anadidas
 
