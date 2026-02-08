@@ -10,6 +10,12 @@ const formationLinks = [
   { name: 'Carrera Detailing', href: '/formacion-profesional-detailing' },
 ];
 
+const quickLinks = [
+  { name: 'Blog', href: '/blog' },
+  { name: 'Quiénes Somos', href: '/quienes-somos' },
+  { name: 'Contacto', href: '/contacto' },
+];
+
 const legalLinks = [
   { name: 'Política de Privacidad', href: '/privacidad' },
   { name: 'Términos y Condiciones', href: '/terminos' },
@@ -78,10 +84,20 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Legal</h4>
+            <h4 className="font-semibold text-foreground mb-4">Navegación</h4>
             <ul className="space-y-2.5">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
               {legalLinks.map((link) => (
                 <li key={link.href}>
                   <Link
