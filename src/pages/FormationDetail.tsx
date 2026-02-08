@@ -90,14 +90,8 @@ export default function FormationDetailPage() {
     return <Navigate to="/" replace />;
   }
 
-  // Generate SEO config for this specific formation
-  const formationSEO = seoConfig.getFormationSEO(slug!, {
-    title: formation.title,
-    description: formation.description,
-    price: formation.price,
-    duration: formation.duration,
-    faqs: formation.faqs,
-  });
+  // Generate SEO config for this specific formation (pass full object for rich Schema.org)
+  const formationSEO = seoConfig.getFormationSEO(slug!, formation);
 
   const handleCTAClick = () => {
     if (formation.comingSoon) {

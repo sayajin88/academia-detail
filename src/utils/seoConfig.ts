@@ -1,3 +1,4 @@
+import type { FormationModule, FormationInstructor, FormationLevel } from '@/data/formationDetails';
 import { localBusinessSchema } from '@/components/SEO';
 
 const BASE_URL = 'https://academiadetail.com';
@@ -91,6 +92,30 @@ export const instructorSchema = {
 };
 
 // ============================================
+// HELPERS: Duration & Instructor
+// ============================================
+const parseDurationToISO = (duration: string): { iso: string; workload: string } => {
+  const match = duration.match(/(\d+)(?:\s*-\s*(\d+))?/);
+  if (!match) return { iso: 'P5D', workload: 'PT40H' };
+  const maxDays = parseInt(match[2] || match[1]);
+  return { iso: `P${maxDays}D`, workload: `PT${maxDays * 8}H` };
+};
+
+const generateInstructorSchema = (instructor?: FormationInstructor) => {
+  if (!instructor) return instructorSchema;
+  return {
+    "@type": "Person" as const,
+    "name": instructor.name,
+    "jobTitle": instructor.role,
+    "description": instructor.description,
+    "worksFor": {
+      "@type": "Organization" as const,
+      "name": "Academia Detail"
+    }
+  };
+};
+
+// ============================================
 // ENHANCED COURSE SCHEMA WITH OFFERS & INSTRUCTOR
 // ============================================
 export const generateCourseSchemaEnhanced = (course: {
@@ -101,77 +126,179 @@ export const generateCourseSchemaEnhanced = (course: {
   url: string;
   image?: string;
   rating?: { value: string; count: string };
-}) => ({
-  "@context": "https://schema.org",
-  "@type": "Course",
-  "name": course.name,
-  "description": course.description,
-  "provider": {
-    "@type": "EducationalOrganization",
-    "name": "Academia Detail",
-    "url": BASE_URL,
-    "logo": `${BASE_URL}/og-image.png`,
-    "sameAs": organizationSchemaComplete.sameAs
-  },
-  "offers": {
+  // Rich data from FormationDetail (all optional for backward compat)
+  modules?: FormationModule[];
+  whatYouLearn?: string[];
+  forWho?: string[];
+  instructor?: FormationInstructor;
+  levels?: FormationLevel[];
+  certificationTitle?: string;
+  originalPrice?: number;
+  comingSoon?: boolean;
+  includes?: string[];
+}) => {
+  const { iso: durationISO, workload } = parseDurationToISO(course.duration || '5');
+  const courseInstructor = generateInstructorSchema(course.instructor);
+
+  // Build syllabusSections from modules
+  const syllabusSections = course.modules?.map(mod => ({
+    "@type": "Syllabus",
+    "name": mod.title,
+    "description": mod.topics.join(', ')
+  }));
+
+  // Build hasPart from modules
+  const hasPart = course.modules?.map((mod, i) => ({
+    "@type": "Course",
+    "name": mod.title,
+    "description": mod.topics.join('. '),
+    "position": i + 1,
+    "provider": { "@type": "Organization", "name": "Academia Detail" }
+  }));
+
+  // Build CourseInstance per level (or single default)
+  const courseInstances = course.levels && course.levels.length > 0
+    ? course.levels.map(level => ({
+        "@type": "CourseInstance" as const,
+        "name": level.title,
+        "description": level.subtitle,
+        "courseMode": "onsite",
+        "duration": level.duration ? parseDurationToISO(level.duration).iso : durationISO,
+        "inLanguage": "es",
+        "courseWorkload": level.duration ? parseDurationToISO(level.duration).workload : workload,
+        "instructor": courseInstructor,
+        "maximumAttendeeCapacity": 3,
+        "location": {
+          "@type": "Place" as const,
+          "name": "Academia Detail - Taller 100% Real",
+          "address": {
+            "@type": "PostalAddress" as const,
+            "streetAddress": "Calle Metalurgias, 13",
+            "addressLocality": "Alicante",
+            "postalCode": "03008",
+            "addressCountry": "ES"
+          }
+        },
+        ...(level.price && {
+          "offers": {
+            "@type": "Offer" as const,
+            "price": level.price,
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/LimitedAvailability"
+          }
+        })
+      }))
+    : [{
+        "@type": "CourseInstance" as const,
+        "courseMode": "onsite",
+        "courseSchedule": {
+          "@type": "Schedule" as const,
+          "repeatFrequency": "P1M",
+          "repeatCount": 12
+        },
+        "duration": durationISO,
+        "inLanguage": "es",
+        "courseWorkload": workload,
+        "instructor": courseInstructor,
+        "maximumAttendeeCapacity": 3,
+        "location": {
+          "@type": "Place" as const,
+          "name": "Academia Detail - Taller 100% Real",
+          "address": {
+            "@type": "PostalAddress" as const,
+            "streetAddress": "Calle Metalurgias, 13",
+            "addressLocality": "Alicante",
+            "postalCode": "03008",
+            "addressCountry": "ES"
+          }
+        }
+      }];
+
+  // Build offers with priceSpecification
+  const offers: Record<string, unknown> = {
     "@type": "Offer",
     "price": course.price,
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/LimitedAvailability",
+    "availability": course.comingSoon
+      ? "https://schema.org/PreOrder"
+      : "https://schema.org/LimitedAvailability",
     "validFrom": "2025-01-01",
     "priceValidUntil": "2026-12-31",
     "url": `${BASE_URL}${course.url}`,
-    "itemCondition": "https://schema.org/NewCondition",
-    "seller": {
-      "@type": "Organization",
-      "name": "Academia Detail"
-    }
-  },
-  "hasCourseInstance": {
-    "@type": "CourseInstance",
-    "courseMode": "onsite",
-    "courseSchedule": {
-      "@type": "Schedule",
-      "repeatFrequency": "P1M",
-      "repeatCount": 12
-    },
-    "duration": course.duration || "P5D",
-    "inLanguage": "es",
-    "courseWorkload": "PT40H",
-    "location": {
-      "@type": "Place",
-      "name": "Academia Detail - Taller 100% Real",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Calle Metalurgias, 13",
-        "addressLocality": "Alicante",
-        "postalCode": "03008",
-        "addressCountry": "ES"
+    "seller": { "@type": "Organization", "name": "Academia Detail" }
+  };
+
+  if (course.originalPrice && course.originalPrice > course.price) {
+    offers.priceSpecification = [
+      {
+        "@type": "UnitPriceSpecification",
+        "priceType": "https://schema.org/SalePrice",
+        "price": course.price,
+        "priceCurrency": "EUR"
+      },
+      {
+        "@type": "UnitPriceSpecification",
+        "priceType": "https://schema.org/ListPrice",
+        "price": course.originalPrice,
+        "priceCurrency": "EUR"
       }
-    },
-    "instructor": instructorSchema
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": course.rating?.value || "4.9",
-    "reviewCount": course.rating?.count || "50",
-    "bestRating": "5",
-    "worstRating": "1"
-  },
-  "coursePrerequisites": "Sin experiencia previa necesaria",
-  "educationalCredentialAwarded": "Certificado Profesional Academia Detail",
-  "occupationalCredentialAwarded": {
+    ];
+  }
+
+  // Build teaches from real data or fallback
+  const teaches = course.whatYouLearn && course.whatYouLearn.length > 0
+    ? course.whatYouLearn
+    : [
+        `Técnicas profesionales de ${course.name}`,
+        "Gestión de clientes y presupuestos",
+        "Visión de negocio y rentabilidad"
+      ];
+
+  // Build credential
+  const credential = {
     "@type": "EducationalOccupationalCredential",
     "credentialCategory": "certificate",
-    "name": "Certificado de Detailing Profesional"
-  },
-  "teaches": [
-    `Técnicas profesionales de ${course.name}`,
-    "Gestión de clientes y presupuestos",
-    "Visión de negocio y rentabilidad"
-  ],
-  ...(course.image && { "image": course.image })
-});
+    "name": course.certificationTitle || "Certificado Profesional Academia Detail"
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": course.name,
+    "description": course.description,
+    "provider": {
+      "@type": "EducationalOrganization",
+      "name": "Academia Detail",
+      "url": BASE_URL,
+      "logo": `${BASE_URL}/og-image.png`,
+      "sameAs": organizationSchemaComplete.sameAs
+    },
+    "offers": offers,
+    "hasCourseInstance": courseInstances,
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": course.rating?.value || "4.9",
+      "reviewCount": course.rating?.count || "50",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "coursePrerequisites": "Sin experiencia previa necesaria",
+    "educationalCredentialAwarded": credential.name,
+    "occupationalCredentialAwarded": credential,
+    "teaches": teaches,
+    ...(course.forWho && course.forWho.length > 0 && {
+      "audience": {
+        "@type": "EducationalAudience",
+        "audienceType": course.forWho.join('; ')
+      }
+    }),
+    ...(hasPart && hasPart.length > 0 && { "hasPart": hasPart }),
+    ...(syllabusSections && syllabusSections.length > 0 && { "syllabusSections": syllabusSections }),
+    ...(course.image && { "image": course.image }),
+    "inLanguage": "es",
+    "isAccessibleForFree": false
+  };
+};
 
 // Legacy alias for backwards compatibility
 export const generateCourseSchema = generateCourseSchemaEnhanced;
@@ -854,6 +981,15 @@ export const seoConfig = {
     price: number;
     duration: string;
     faqs: { question: string; answer: string }[];
+    modules?: FormationModule[];
+    whatYouLearn?: string[];
+    forWho?: string[];
+    instructor?: FormationInstructor;
+    levels?: FormationLevel[];
+    certificationTitle?: string;
+    originalPrice?: number;
+    comingSoon?: boolean;
+    includes?: string[];
   }) => {
     const normalizedSlug = normalizeSlug(slug);
     
@@ -866,16 +1002,16 @@ export const seoConfig = {
 
     const formationTitles: Record<string, string> = {
       'curso-detailing-profesional': "Curso de Pulido y Cerámico [4 Días] | Certificación + Bolsa Empleo | ★4.9",
-      'curso-vinilado-vehiculos': "Curso Car Wrapping Profesional [5 Días] | Certificación Oficial | ★4.8",
-      'curso-ppf-proteccion-pintura': "Curso PPF Instalador [5 Días] | Certificación Profesional | ★4.9",
-      'curso-restauracion-vehiculos': "Curso Restauración Vehículos [5 Días] | Certificación Oficial | ★4.7"
+      'curso-vinilado-vehiculos': "Curso Car Wrapping Profesional [2-4 Días] | Certificación Oficial | ★4.8",
+      'curso-ppf-proteccion-pintura': "Curso PPF Instalador [2 Días] | Certificación Profesional | ★4.9",
+      'curso-restauracion-vehiculos': "Curso Restauración Vehículos [2 Días] | Certificación Oficial | ★4.7"
     };
 
     const formationDescriptions: Record<string, string> = {
       'curso-detailing-profesional': "Domina el pulido profesional y tratamiento cerámico en 4 días intensivos. ✅ Certificación oficial + Bolsa de empleo. ⭐ Valoración 4.9/5. ➤ ¡Solo 3 plazas por curso!",
-      'curso-vinilado-vehiculos': "Domina el car wrapping profesional en 5 días intensivos. ✅ Técnicas de instalación de vinilo y cambio de color. ⭐ Valoración 4.8/5. ➤ ¡Certificación oficial!",
-      'curso-ppf-proteccion-pintura': "Domina la instalación de PPF en 5 días intensivos. ✅ Técnicas avanzadas en vehículos de alta gama. ⭐ Valoración 4.9/5. ➤ ¡Certificación oficial!",
-      'curso-restauracion-vehiculos': "Domina la restauración de vehículos en 5 días intensivos. ✅ Técnicas avanzadas de chapa y pintura. ⭐ Valoración 4.7/5. ➤ ¡Certificación oficial!"
+      'curso-vinilado-vehiculos': "Domina el car wrapping profesional en 2-4 días intensivos. ✅ Técnicas de instalación de vinilo y cambio de color. ⭐ Valoración 4.8/5. ➤ ¡Certificación oficial!",
+      'curso-ppf-proteccion-pintura': "Domina la instalación de PPF en 2 días intensivos. ✅ Técnicas avanzadas en vehículos de alta gama. ⭐ Valoración 4.9/5. ➤ ¡Certificación oficial!",
+      'curso-restauracion-vehiculos': "Domina la restauración de vehículos en 2 días intensivos. ✅ Técnicas avanzadas de recuperación. ⭐ Valoración 4.7/5. ➤ ¡Certificación oficial!"
     };
 
     const formationImages: Record<string, string> = {
@@ -901,9 +1037,9 @@ export const seoConfig = {
 
     const coursePrices: Record<string, string> = {
       'curso-detailing-profesional': "2997",
-      'curso-vinilado-vehiculos': "2997",
-      'curso-ppf-proteccion-pintura': "2997",
-      'curso-restauracion-vehiculos': "2997"
+      'curso-vinilado-vehiculos': "1999",
+      'curso-ppf-proteccion-pintura': "2397",
+      'curso-restauracion-vehiculos': "449"
     };
 
     const imageUrl = formationImages[normalizedSlug] || `${BASE_URL}/og-image.png`;
@@ -925,7 +1061,17 @@ export const seoConfig = {
           duration: formation.duration,
           url: `/${normalizedSlug}`,
           image: imageUrl,
-          rating: courseRatings[normalizedSlug]
+          rating: courseRatings[normalizedSlug],
+          // Rich data from formation
+          modules: formation.modules,
+          whatYouLearn: formation.whatYouLearn,
+          forWho: formation.forWho,
+          instructor: formation.instructor,
+          levels: formation.levels,
+          certificationTitle: formation.certificationTitle,
+          originalPrice: formation.originalPrice,
+          comingSoon: formation.comingSoon,
+          includes: formation.includes,
         }),
         generateFAQSchema(formation.faqs),
         generateWebPageSchema({
