@@ -35,7 +35,7 @@ export function BlogPostCTA() {
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
-              <Link to="/#formaciones">
+              <Link to="/curso-detailing-profesional">
                 <Button variant="outline" className="border-border text-foreground hover:bg-muted rounded-xl px-6 py-5">
                   Ver Todos los Cursos
                 </Button>

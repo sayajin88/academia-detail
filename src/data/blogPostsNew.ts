@@ -9,12 +9,13 @@ import blogErroresDetailer from '@/assets/daniel-curso-detailing-3.jpg';
 import blogKitHerramientas from '@/assets/alumna-curso-detailing.jpg';
 import blogSalidaWrapping from '@/assets/certificados-grupal-curso-detailing.jpg';
 
+import danielLopez from '@/assets/daniel-lopez-instructor.webp';
 import type { BlogPost } from './blogPosts';
 
 const defaultAuthor = {
   name: 'Daniel López',
   role: 'CEO y Formador Principal',
-  image: '', // Uses the same as main file but imported there
+  image: danielLopez,
 };
 
 // We'll set the image in the main file import

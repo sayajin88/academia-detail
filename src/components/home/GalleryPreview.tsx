@@ -5,13 +5,9 @@ import { SectionHeading } from '@/components/shared/SectionHeading';
 
 // Import training/course images
 import training1 from '@/assets/evento-clase-completa.jpg';
-import training2 from '@/assets/evento-grupo-formacion.jpg';
 import training3 from '@/assets/evento-practica-pulidora.jpg';
 import training4 from '@/assets/evento-instructor-explicando.jpg';
-import training5 from '@/assets/formacion-detailing-1.jpg';
 import training6 from '@/assets/evento-alumnos-atentos.jpg';
-import training7 from '@/assets/certificado-alumno-feliz.jpg';
-import training8 from '@/assets/alumnos-formacion-3.jpg';
 import training9 from '@/assets/practicas-alumnos-detailing-1.jpg';
 import training10 from '@/assets/practicas-alumnos-detailing-3.jpg';
 import training11 from '@/assets/material-curso-detailing.jpg';

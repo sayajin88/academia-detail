@@ -9,12 +9,13 @@ import blogLicenciasPermisos from '@/assets/alumna-pulido-concentrada.jpg';
 import blogEstudioWrapping from '@/assets/blog/blog-estudio-car-wrapping.jpg';
 import blogSoftwareGestion from '@/assets/blog/blog-software-gestion-taller.jpg';
 
+import danielLopez from '@/assets/daniel-lopez-instructor.webp';
 import type { BlogPost } from './blogPosts';
 
 const defaultAuthor = {
   name: 'Daniel López',
   role: 'CEO y Formador Principal',
-  image: '',
+  image: danielLopez,
 };
 
 export const businessBlogPosts: BlogPost[] = [

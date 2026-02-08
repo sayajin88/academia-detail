@@ -47,7 +47,7 @@ export default function BlogPostPage() {
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt,
-    "image": typeof post.image === 'string' ? post.image : `${BASE_URL}/og-image.png`,
+    "image": post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`,
     "datePublished": post.publishedAt,
     "dateModified": post.publishedAt,
     "author": {
@@ -89,7 +89,7 @@ export default function BlogPostPage() {
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:url" content={`${BASE_URL}${fullUrl}`} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content={typeof post.image === 'string' ? post.image : `${BASE_URL}/og-image.png`} />
+        <meta property="og:image" content={post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`} />
         <meta property="article:published_time" content={post.publishedAt} />
         <meta property="article:author" content={post.author.name} />
         <meta property="article:section" content={categoryLabels[post.category]} />

@@ -13,6 +13,7 @@ import CarreraDetailing from "./pages/CarreraDetailing";
 import Blog from "./pages/Blog";
 import BlogPostPage from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
+import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,15 @@ const App = () => (
             <Route path="/contacto" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
+            
+            {/* Legal Pages */}
+            <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+            
+            {/* Redirects for legal pages */}
+            <Route path="/privacidad" element={<Navigate to="/politica-privacidad" replace />} />
+            <Route path="/terminos" element={<Navigate to="/politica-privacidad" replace />} />
+            <Route path="/cookies" element={<Navigate to="/politica-privacidad" replace />} />
+            <Route path="/aviso-legal" element={<Navigate to="/politica-privacidad" replace />} />
             
             {/* 301 Redirects - Old URLs to new SEO-optimized URLs */}
             <Route path="/jornada-cero" element={<Navigate to="/curso-detailing-iniciacion" replace />} />

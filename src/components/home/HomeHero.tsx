@@ -24,8 +24,10 @@ export function HomeHero() {
   const START_SEC = 2;
   const END_OFFSET = 3; // segundos antes de terminar
 
+  const isDestroyedRef = useRef(false);
+
   const initPlayer = useCallback(() => {
-    if (playerRef.current) return;
+    if (playerRef.current || isDestroyedRef.current) return;
 
     playerRef.current = new window.YT.Player('hero-yt-player', {
       videoId,
@@ -45,6 +47,7 @@ export function HomeHero() {
       },
       events: {
         onReady: (e: any) => {
+          if (isDestroyedRef.current) return;
           e.target.playVideo();
           setVideoReady(true);
 
@@ -52,16 +55,30 @@ export function HomeHero() {
           const endTime = duration - END_OFFSET;
 
           intervalRef.current = setInterval(() => {
-            const current = e.target.getCurrentTime?.();
-            if (current >= endTime) {
-              e.target.seekTo(START_SEC, true);
+            if (isDestroyedRef.current || !playerRef.current) {
+              if (intervalRef.current) clearInterval(intervalRef.current);
+              return;
+            }
+            try {
+              const current = playerRef.current.getCurrentTime?.();
+              if (current >= endTime) {
+                playerRef.current.seekTo(START_SEC, true);
+              }
+            } catch {
+              // Player destroyed, clear interval
+              if (intervalRef.current) clearInterval(intervalRef.current);
             }
           }, 500);
         },
         onStateChange: (e: any) => {
+          if (isDestroyedRef.current) return;
           if (e.data === window.YT.PlayerState.ENDED) {
-            e.target.seekTo(START_SEC, true);
-            e.target.playVideo();
+            try {
+              e.target.seekTo(START_SEC, true);
+              e.target.playVideo();
+            } catch {
+              // Player no longer available
+            }
           }
         },
       },
@@ -85,8 +102,13 @@ export function HomeHero() {
     window.onYouTubeIframeAPIReady = () => initPlayer();
 
     return () => {
+      isDestroyedRef.current = true;
       if (intervalRef.current) clearInterval(intervalRef.current);
-      if (playerRef.current?.destroy) playerRef.current.destroy();
+      try {
+        if (playerRef.current?.destroy) playerRef.current.destroy();
+      } catch {
+        // Ignore errors during cleanup
+      }
       playerRef.current = null;
     };
   }, [isMobile, initPlayer]);
