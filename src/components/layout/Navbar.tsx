@@ -98,20 +98,20 @@ export function Navbar() {
         style={{ transitionProperty: 'opacity, transform, padding', paddingTop: 'max(env(safe-area-inset-top), 0.375rem)' }}
       >
         <div className="container mx-auto px-2 md:px-4">
-          {/* Glass Container - Light theme */}
+          {/* Glass Container - Dark theme */}
           <div
             className={`relative flex items-center justify-between transition-all duration-500 ${
               isScrolled
-                ? 'bg-white/95 backdrop-blur-2xl rounded-xl md:rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-300/50 px-3 md:px-6 py-1.5 md:py-3'
-                : 'bg-white/80 backdrop-blur-xl rounded-xl md:rounded-2xl border border-gray-200/60 px-3 md:px-6 py-2 md:py-4'
+                ? 'bg-background/90 backdrop-blur-2xl rounded-xl md:rounded-2xl border border-white/10 shadow-lg shadow-black/20 px-3 md:px-6 py-1.5 md:py-3'
+                : 'bg-background/70 backdrop-blur-xl rounded-xl md:rounded-2xl border border-white/10 px-3 md:px-6 py-2 md:py-4'
             }`}
           >
-            {/* Animated border gradient - adapted for light theme */}
+            {/* Animated border gradient */}
             <div className={`absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden pointer-events-none transition-opacity duration-1000 delay-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
               <div 
-                className="absolute inset-0 opacity-20"
+                className="absolute inset-0 opacity-30"
                 style={{
-                  background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.15), transparent)',
+                  background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent)',
                   backgroundSize: '200% 100%',
                   animation: 'shimmer-border 3s linear infinite',
                 }}
@@ -127,7 +127,7 @@ export function Navbar() {
                 <img 
                   src={academiaLogo} 
                   alt="Academia Detail - Cursos de detailing profesional en España" 
-                  className="h-9 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+                  className="h-9 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
                   width={229}
                   height={70}
                 />
@@ -157,7 +157,7 @@ export function Navbar() {
                 className={`relative px-4 py-2 text-sm font-medium transition-all duration-500 rounded-lg ${
                   location.pathname === '/' 
                     ? 'text-primary' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
                 } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
                 style={{ transitionDelay: '200ms' }}
               >
@@ -176,7 +176,7 @@ export function Navbar() {
                   className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
                     isFormationsActive
                       ? 'text-primary'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
                   }`}
                 >
                   Formaciones
@@ -185,7 +185,7 @@ export function Navbar() {
                   />
                 </button>
 
-                {/* Dropdown Menu - Light theme */}
+                {/* Dropdown Menu - Dark theme */}
                 <div 
                   className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-300 ${
                     isFormationsOpen 
@@ -193,7 +193,7 @@ export function Navbar() {
                       : 'opacity-0 -translate-y-2 pointer-events-none'
                   }`}
                 >
-                  <div className="relative bg-white border border-gray-200 rounded-2xl shadow-xl shadow-gray-200/60 p-3 min-w-[280px]">
+                  <div className="relative bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-3 min-w-[280px]">
                     {/* Dropdown accent */}
                     <div className="absolute -inset-px bg-gradient-to-b from-primary/10 to-transparent rounded-2xl pointer-events-none" />
                     
@@ -202,17 +202,17 @@ export function Navbar() {
                         <Link
                           key={link.href}
                           to={link.href}
-                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group hover:bg-gray-50"
+                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group hover:bg-white/5"
                           style={{ animationDelay: `${index * 50}ms` }}
                         >
-                          <div className="p-2 rounded-lg transition-colors duration-200 bg-gray-100 text-gray-500 group-hover:bg-primary/10 group-hover:text-primary">
+                          <div className="p-2 rounded-lg transition-colors duration-200 bg-white/5 text-foreground/50 group-hover:bg-primary/10 group-hover:text-primary">
                             <link.icon className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="font-medium text-gray-900">
+                            <p className="font-medium text-foreground">
                               {link.name}
                             </p>
-                            <p className="text-xs text-gray-500">{link.description}</p>
+                            <p className="text-xs text-foreground/50">{link.description}</p>
                           </div>
                         </Link>
                       ))}
@@ -229,7 +229,7 @@ export function Navbar() {
                   className={`relative px-4 py-2 text-sm font-medium transition-all duration-500 rounded-lg ${
                     isActive(link.href)
                       ? 'text-primary'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      : 'text-foreground/70 hover:text-foreground hover:bg-white/5'
                   } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
                   style={{ transitionDelay: `${300 + index * 50}ms` }}
                 >
@@ -259,7 +259,7 @@ export function Navbar() {
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden relative z-10 p-2 text-gray-800 transition-colors hover:text-primary"
+              className="lg:hidden relative z-10 p-2 text-foreground transition-colors hover:text-primary"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
             >
@@ -299,25 +299,25 @@ export function Navbar() {
           onClick={() => setIsMobileMenuOpen(false)}
         />
         
-        {/* Menu Panel - Light theme */}
+        {/* Menu Panel - Dark theme */}
         <div 
-          className={`absolute top-0 right-0 h-full w-full max-w-sm bg-white border-l border-gray-200 shadow-2xl transition-transform duration-500 ease-out ${
+          className={`absolute top-0 right-0 h-full w-full max-w-sm bg-background/95 backdrop-blur-xl border-l border-white/10 shadow-2xl transition-transform duration-500 ease-out ${
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <div className="flex items-center justify-between p-4 border-b border-white/10">
             <div className="flex flex-col">
               <img 
                 src={academiaLogo} 
                 alt="Academia Detail - Cursos de detailing profesional en España" 
-                className="h-10 w-auto"
+                className="h-10 w-auto brightness-0 invert"
                 width={229}
                 height={70}
               />
             </div>
             <button
-              className="p-2 text-gray-600 hover:text-primary transition-colors"
+              className="p-2 text-foreground/60 hover:text-primary transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <X className="h-6 w-6" />
@@ -332,7 +332,7 @@ export function Navbar() {
               className={`flex items-center gap-3 px-4 py-4 rounded-xl transition-all duration-200 min-h-[52px] ${
                 location.pathname === '/' 
                   ? 'bg-primary/10 text-primary' 
-                  : 'text-gray-700 hover:bg-gray-50'
+                  : 'text-foreground/70 hover:bg-white/5 hover:text-foreground'
               }`}
               style={{ animationDelay: '100ms' }}
             >
@@ -347,7 +347,7 @@ export function Navbar() {
                 className={`flex items-center justify-between w-full px-4 py-4 rounded-xl transition-all duration-200 min-h-[52px] ${
                   isFormationsActive 
                     ? 'bg-primary/10 text-primary' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-foreground/70 hover:bg-white/5 hover:text-foreground'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -374,8 +374,8 @@ export function Navbar() {
                       to={link.href}
                       className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
                         location.pathname === link.href
-                          ? 'bg-gray-100 text-gray-900 font-medium'
-                          : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                          ? 'bg-white/10 text-foreground font-medium'
+                          : 'text-foreground/50 hover:text-foreground hover:bg-white/5'
                       }`}
                       style={{ animationDelay: `${(index + 2) * 50}ms` }}
                     >
@@ -395,7 +395,7 @@ export function Navbar() {
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                   isActive(link.href)
                     ? 'bg-primary/10 text-primary'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-foreground/70 hover:bg-white/5 hover:text-foreground'
                 }`}
                 style={{ animationDelay: `${(index + 6) * 50}ms` }}
               >
@@ -406,7 +406,7 @@ export function Navbar() {
           </div>
 
           {/* Mobile CTA */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white/90 backdrop-blur-xl">
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-background/90 backdrop-blur-xl">
             <div className="flex gap-3">
               {/* WhatsApp Button */}
               <a 
