@@ -5,13 +5,22 @@ import cursoWrapping from '@/assets/curso-wrapping-new.jpg';
 import detailingTools from '@/assets/detailing-tools.jpg';
 import formacionDetailing from '@/assets/formacion-detailing-1.jpg';
 import danielLopez from '@/assets/daniel-lopez-instructor.webp';
+import { newBlogPosts } from './blogPostsNew';
 
 export type BlogCategory = 'detailing' | 'ppf' | 'wrapping' | 'negocios';
+
+export interface BlogLink {
+  text: string;
+  href: string;
+  rel?: 'follow' | 'nofollow';
+  external?: boolean;
+}
 
 export interface BlogSection {
   id: string;
   title: string;
   content: string;
+  links?: BlogLink[];
 }
 
 export interface BlogPost {
@@ -96,7 +105,7 @@ export const blogPosts: BlogPost[] = [
         content: 'Basándonos en la experiencia de más de 170 alumnos que han pasado por nuestra formación, un centro de detailing bien gestionado puede alcanzar el punto de equilibrio entre el tercer y sexto mes de operación.\n\nUn escenario conservador para el primer año sería: meses 1-3 (fase de arranque): 3.000-5.000€ de facturación mensual, meses 4-6 (consolidación): 6.000-10.000€ mensuales, meses 7-12 (crecimiento): 10.000-18.000€ mensuales.\n\nLa clave para acelerar este crecimiento es combinar servicios de detailing con servicios de PPF y wrapping, que multiplican significativamente el ticket medio. Un servicio de PPF completo puede superar los 3.000€ por vehículo.'
       }
     ],
-    relatedSlugs: ['cuanto-gana-detailer-profesional-espana', '5-errores-detailers-principiantes']
+    relatedSlugs: ['cuanto-gana-detailer-profesional-espana', '5-errores-detailers-principiantes', 'como-montar-centro-detailing-inversion']
   },
   {
     id: '2',
@@ -133,7 +142,7 @@ export const blogPosts: BlogPost[] = [
         content: 'El error más peligroso es trabajar demasiado una zona sin medir el espesor. Si traspasas la capa de barniz, el daño es irreversible y costoso de reparar.\n\nOtros errores frecuentes: trabajar a pleno sol (la pintura caliente reacciona de forma impredecible), usar demasiado producto (menos es más), no limpiar el pad regularmente (se satura y pierde efectividad), y saltarse el paso de descontaminación (las partículas causan arañazos nuevos durante el pulido).\n\nEn nuestro curso de Detailing Profesional, cada alumno practica estos procesos en vehículos reales de clientes, bajo supervisión directa, hasta dominar cada técnica con seguridad y confianza.'
       }
     ],
-    relatedSlugs: ['5-errores-detailers-principiantes', 'ppf-vs-ceramico-proteccion-vehiculo']
+    relatedSlugs: ['5-errores-detailers-principiantes', 'ppf-vs-ceramico-proteccion-vehiculo', 'tecnicas-pulido-principiante-experto']
   },
   {
     id: '3',
@@ -170,7 +179,7 @@ export const blogPosts: BlogPost[] = [
         content: 'Elige cerámico si: tu vehículo es de gama media, circula principalmente por ciudad, y tu prioridad es facilitar la limpieza y mantener el brillo. Es la opción más accesible y con excelente relación calidad-precio.\n\nElige PPF si: tu vehículo es de alta gama o tiene pintura de color especial, haces muchos kilómetros por autopista, o quieres la máxima protección contra daños físicos. Es la inversión que preserva el valor del vehículo.\n\nElige PPF + cerámico si: quieres la protección definitiva. El cerámico sobre el PPF añade hidrofobicidad, facilidad de limpieza y brillo extra a la protección física del film.\n\nEn Academia Detail formamos profesionales capaces de ofrecer todas estas opciones a sus clientes, con el conocimiento técnico para recomendar la solución óptima en cada caso.'
       }
     ],
-    relatedSlugs: ['guia-completa-pulido-coches-profesional', 'car-wrapping-todo-necesitas-saber']
+    relatedSlugs: ['guia-completa-pulido-coches-profesional', 'car-wrapping-todo-necesitas-saber', 'que-es-ppf-paint-protection-film']
   },
   {
     id: '4',
@@ -207,7 +216,7 @@ export const blogPosts: BlogPost[] = [
         content: 'Un full wrap profesional con vinilo de calidad cuesta entre 2.500€ y 5.000€ para un coche de tamaño medio. Vehículos grandes (SUV, furgonetas) o con colores especiales pueden superar los 6.000€.\n\nLa durabilidad media de un wrap bien instalado es de 5 a 7 años, aunque puede durar más con el cuidado adecuado. Los factores que afectan la durabilidad son: la exposición al sol (garaje vs. intemperie), la frecuencia y método de lavado, y la calidad de la instalación.\n\nComparado con una pintura completa de calidad similar (3.000-8.000€), el wrapping ofrece ventajas claras: es reversible, protege la pintura original, se puede cambiar cuando quieras, y el proceso es más rápido que un repintado.\n\nPara los profesionales, el wrapping es un servicio muy rentable: el margen de beneficio oscila entre el 50% y el 70%, y la demanda no deja de crecer.'
       }
     ],
-    relatedSlugs: ['ppf-vs-ceramico-proteccion-vehiculo', 'como-montar-negocio-detailing-rentable']
+    relatedSlugs: ['ppf-vs-ceramico-proteccion-vehiculo', 'como-montar-negocio-detailing-rentable', 'car-wrapping-vs-pintura-mejor-opcion']
   },
   {
     id: '5',
@@ -249,7 +258,7 @@ export const blogPosts: BlogPost[] = [
         content: 'YouTube es un recurso increíble para aprender conceptos básicos, pero tiene limitaciones enormes: no puedes sentir la presión correcta sobre el pad, no puedes percibir la temperatura de la pintura, no puedes experimentar la textura del barniz al tacto.\n\nEl detailing profesional es un oficio manual que requiere práctica supervisada. Es como aprender a conducir: puedes ver mil vídeos, pero hasta que no te sientas al volante con un instructor al lado, no aprendes realmente.\n\nLa formación presencial con un instructor experimentado te ahorra meses de prueba y error, te evita errores costosos y te da la confianza de saber que estás haciendo las cosas bien. En Academia Detail, cada alumno practica en vehículos reales de clientes con supervisión directa hasta dominar cada técnica.'
       }
     ],
-    relatedSlugs: ['guia-completa-pulido-coches-profesional', 'cuanto-gana-detailer-profesional-espana']
+    relatedSlugs: ['guia-completa-pulido-coches-profesional', 'cuanto-gana-detailer-profesional-espana', 'errores-detailer-principiante-como-evitarlos']
   },
   {
     id: '6',
@@ -286,9 +295,18 @@ export const blogPosts: BlogPost[] = [
         content: 'Las claves para maximizar tus ingresos son: diversificar servicios (no solo pulido, también PPF, cerámico, wrapping), especializarte en vehículos de alta gama (mayor ticket medio), crear paquetes de mantenimiento recurrentes (ingresos predecibles), y desarrollar una marca personal fuerte en redes sociales.\n\nEl secreto que pocos conocen es que los servicios complementarios son los que más margen tienen. Un coating cerámico con un coste de producto de 40-60€ se vende por 600-1.500€. Un detallado interior con un coste de 10-20€ en productos se factura a 150-300€.\n\nLa formación continua también marca la diferencia. Los detailers que se certifican en nuevas técnicas y productos pueden cobrar un premium sobre la competencia. Y la formación en negocio es tan importante como la técnica: saber vender tu servicio es lo que separa a un detailer que sobrevive de uno que prospera.'
       }
     ],
-    relatedSlugs: ['como-montar-negocio-detailing-rentable', '5-errores-detailers-principiantes']
+    relatedSlugs: ['como-montar-negocio-detailing-rentable', '5-errores-detailers-principiantes', 'salida-laboral-car-wrapping-sueldo']
   }
 ];
+
+// Merge new articles with author image fixed
+const allNewPosts = newBlogPosts.map(post => ({
+  ...post,
+  author: { ...defaultAuthor }
+}));
+
+// Combine all posts
+blogPosts.push(...allNewPosts);
 
 export const getPostBySlug = (slug: string): BlogPost | undefined => {
   return blogPosts.find(post => post.slug === slug);
