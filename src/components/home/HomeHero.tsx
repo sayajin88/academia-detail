@@ -2,38 +2,94 @@ import { Link } from "react-router-dom";
 import { ChevronDown, Mail, Gauge } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import heroImage from "@/assets/heroes/hero-home.jpg";
+
+// Declaración global para la YouTube IFrame API
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: (() => void) | undefined;
+  }
+}
 
 export function HomeHero() {
   const isMobile = useIsMobile();
-  const [videoInteracted, setVideoInteracted] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
+  const playerRef = useRef<any>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // YouTube video ID for background
   const videoId = "1JS81ZxslpI";
-  const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+  const START_SEC = 2;
+  const END_OFFSET = 3; // segundos antes de terminar
 
-  // Cargar video solo después de scroll o interacción del usuario (facade pattern)
+  const initPlayer = useCallback(() => {
+    if (playerRef.current) return;
+
+    playerRef.current = new window.YT.Player('hero-yt-player', {
+      videoId,
+      playerVars: {
+        autoplay: 1,
+        mute: 1,
+        controls: 0,
+        showinfo: 0,
+        rel: 0,
+        modestbranding: 1,
+        playsinline: 1,
+        start: START_SEC,
+        origin: window.location.origin,
+        disablekb: 1,
+        fs: 0,
+        iv_load_policy: 3,
+      },
+      events: {
+        onReady: (e: any) => {
+          e.target.playVideo();
+          setVideoReady(true);
+
+          const duration = e.target.getDuration();
+          const endTime = duration - END_OFFSET;
+
+          intervalRef.current = setInterval(() => {
+            const current = e.target.getCurrentTime?.();
+            if (current >= endTime) {
+              e.target.seekTo(START_SEC, true);
+            }
+          }, 500);
+        },
+        onStateChange: (e: any) => {
+          if (e.data === window.YT.PlayerState.ENDED) {
+            e.target.seekTo(START_SEC, true);
+            e.target.playVideo();
+          }
+        },
+      },
+    });
+  }, []);
+
   useEffect(() => {
     if (isMobile) return;
 
-    // Cargar video automáticamente después de 8s si el usuario no interactúa
-    const timer = setTimeout(() => setVideoInteracted(true), 8000);
+    // Si la API ya está cargada, inicializar directamente
+    if (window.YT?.Player) {
+      initPlayer();
+      return;
+    }
 
-    // O cargar inmediatamente si el usuario hace scroll
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setVideoInteracted(true);
-      }
-    };
+    // Cargar el script de la YouTube IFrame API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.onYouTubeIframeAPIReady = () => initPlayer();
+
     return () => {
-      clearTimeout(timer);
-      window.removeEventListener('scroll', handleScroll);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (playerRef.current?.destroy) playerRef.current.destroy();
+      playerRef.current = null;
     };
-  }, [isMobile]);
+  }, [isMobile, initPlayer]);
 
   const scrollToFormations = () => {
     document.getElementById("formaciones")?.scrollIntoView({ behavior: "smooth" });
@@ -41,19 +97,11 @@ export function HomeHero() {
 
   return (
     <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Hero Background Image - LCP optimizado con imagen responsiva */}
-      <picture>
-        {/* Móvil: imagen pequeña optimizada */}
-        <source 
-          media="(max-width: 767px)" 
-          srcSet="/mobile-hero-bg.jpg"
-        />
-        {/* Desktop: imagen grande */}
-        <source 
-          media="(min-width: 768px)" 
-          srcSet={heroImage}
-        />
-        <img 
+      {/* Fallback image — visible hasta que el vídeo esté listo */}
+      <picture className={`transition-opacity duration-700 ${videoReady ? 'opacity-0' : 'opacity-100'}`}>
+        <source media="(max-width: 767px)" srcSet="/mobile-hero-bg.jpg" />
+        <source media="(min-width: 768px)" srcSet={heroImage} />
+        <img
           src={heroImage}
           alt="Curso de detailing profesional - Formación práctica en taller real Alicante"
           className="absolute inset-0 w-full h-full object-cover"
@@ -63,16 +111,12 @@ export function HomeHero() {
         />
       </picture>
 
-      {/* Video Background for Desktop - YouTube Facade Pattern */}
-      {!isMobile && videoInteracted && (
-        <div className="absolute inset-0 overflow-hidden">
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=17&enablejsapi=1&origin=${window.location.origin}`}
-            title="Video de fondo Detail Park - Taller 100% Real"
+      {/* YouTube IFrame API player — carga inmediata en desktop */}
+      {!isMobile && (
+        <div className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${videoReady ? 'opacity-100' : 'opacity-0'}`}>
+          <div
+            id="hero-yt-player"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            style={{ border: "none" }}
-            loading="lazy"
           />
         </div>
       )}
