@@ -125,7 +125,7 @@ export function Navbar() {
               to="/" 
               className={`flex items-center relative z-10 group transition-all duration-500 delay-100 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
             >
-              <div className="relative flex flex-col">
+              <div className="relative flex flex-col flex-shrink-0">
                 <img 
                   src={academiaLogo} 
                   alt="Academia Detail - Cursos de detailing profesional en España" 
@@ -141,7 +141,7 @@ export function Navbar() {
             {/* Desktop Navigation - Centered */}
             <div 
               ref={navRef}
-              className="hidden lg:flex items-center gap-1 relative"
+              className="hidden lg:flex items-center gap-0 relative"
             >
               {/* Animated pill indicator */}
               <div
@@ -156,7 +156,7 @@ export function Navbar() {
               <Link
                 to="/"
                 data-active={location.pathname === '/'}
-                className={`relative px-4 py-2 text-[13px] font-semibold uppercase tracking-widest transition-all duration-500 rounded-lg ${
+                className={`relative px-3 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg ${
                   location.pathname === '/' 
                     ? 'text-primary' 
                     : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
@@ -175,7 +175,7 @@ export function Navbar() {
               >
                 <button
                   data-active={isFormationsActive}
-                  className={`flex items-center gap-1.5 px-4 py-2 text-[13px] font-semibold uppercase tracking-widest transition-all duration-200 rounded-lg ${
+                  className={`flex items-center gap-1.5 px-3 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg ${
                     isFormationsActive
                       ? 'text-primary'
                       : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
@@ -228,7 +228,7 @@ export function Navbar() {
                   key={link.href}
                   to={link.href}
                   data-active={isActive(link.href)}
-                  className={`relative px-4 py-2 text-[13px] font-semibold uppercase tracking-widest transition-all duration-500 rounded-lg ${
+                  className={`relative px-3 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg ${
                     isActive(link.href)
                       ? 'text-primary'
                       : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
