@@ -10,6 +10,8 @@ import FormationDetail from "./pages/FormationDetail";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import CarreraDetailing from "./pages/CarreraDetailing";
+import Blog from "./pages/Blog";
+import BlogPostPage from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +34,8 @@ const App = () => (
             <Route path="/curso-restauracion-vehiculos" element={<FormationDetail />} />
             <Route path="/quienes-somos" element={<AboutUs />} />
             <Route path="/contacto" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
             
             {/* 301 Redirects - Old URLs to new SEO-optimized URLs */}
             <Route path="/jornada-cero" element={<Navigate to="/curso-detailing-iniciacion" replace />} />

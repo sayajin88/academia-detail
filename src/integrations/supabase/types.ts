@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+        }
+        Relationships: []
+      }
       coming_soon_subscribers: {
         Row: {
           created_at: string
