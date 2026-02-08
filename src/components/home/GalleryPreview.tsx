@@ -12,16 +12,20 @@ import training5 from '@/assets/formacion-detailing-1.jpg';
 import training6 from '@/assets/evento-alumnos-atentos.jpg';
 import training7 from '@/assets/certificado-alumno-feliz.jpg';
 import training8 from '@/assets/alumnos-formacion-3.jpg';
+import training9 from '@/assets/practicas-alumnos-detailing-1.jpg';
+import training10 from '@/assets/practicas-alumnos-detailing-3.jpg';
+import training11 from '@/assets/material-curso-detailing.jpg';
+import training12 from '@/assets/muestra-certificado-detailing.jpg';
 
 const galleryImages = [
   { src: training1, alt: 'Clase de curso de detailing profesional - Alumnos en formación práctica' },
-  { src: training2, alt: 'Grupo de alumnos en curso de detailing - Formación presencial en Alicante' },
+  { src: training9, alt: 'Grupo completo de alumnos Training practicando pulido en taller Detail Park' },
   { src: training3, alt: 'Práctica de pulido de coches con pulidora profesional - Curso de detailing' },
   { src: training4, alt: 'Instructor explicando técnicas de detailing y tratamiento cerámico' },
-  { src: training5, alt: 'Formación práctica de detailing en taller real con vehículos de alta gama' },
+  { src: training11, alt: 'Pulidoras profesionales DeWalt y Flex preparadas para formación de detailing' },
+  { src: training10, alt: 'Alumnos practicando pulido en equipo junto a coches clásicos en Detail Park' },
+  { src: training12, alt: 'Certificado oficial de Detail Park Academy - Curso de detailing profesional' },
   { src: training6, alt: 'Alumnos en clase teórica de curso de detailing profesional' },
-  { src: training7, alt: 'Alumno certificado por Academia Detail - Escuela de detailing en España' },
-  { src: training8, alt: 'Ambiente de formación en escuela de detailing - Aprender detailing desde cero' },
 ];
 
 export function GalleryPreview() {

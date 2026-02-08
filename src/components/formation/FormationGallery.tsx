@@ -31,6 +31,12 @@ import alumnosPracticas from '@/assets/alumnos-practicas-detailing.jpg';
 import instalacionesCursoFerrari from '@/assets/instalaciones-curso-ferrari.jpg';
 import instalacionesClaseTraining from '@/assets/instalaciones-clase-training.jpg';
 import instalacionesClaseClasicos from '@/assets/instalaciones-clase-coches-clasicos.jpg';
+import practicasAlumnos1 from '@/assets/practicas-alumnos-detailing-1.jpg';
+import practicasAlumnos2 from '@/assets/practicas-alumnos-detailing-2.jpg';
+import practicasAlumnos3 from '@/assets/practicas-alumnos-detailing-3.jpg';
+import practicasAlumnos4 from '@/assets/practicas-alumnos-detailing-4.jpg';
+import materialCurso from '@/assets/material-curso-detailing.jpg';
+import muestraCertificado from '@/assets/muestra-certificado-detailing.jpg';
 
 interface GalleryItem {
   image: string;
@@ -73,6 +79,12 @@ const detailingGalleryItems: GalleryItem[] = [
   { image: instalacionesCursoFerrari, title: 'Clase con Ferrari', description: 'Daniel explicando con Ferrari y coches de lujo en el taller' },
   { image: instalacionesClaseTraining, title: 'Clase Teórica Completa', description: 'Alumnos con camisetas Training en sesión teórica de formación' },
   { image: instalacionesClaseClasicos, title: 'Formación con Clásicos', description: 'Clase magistral junto a Porsche clásico y Ferrari en Detail Park' },
+  { image: practicasAlumnos1, title: 'Taller Completo en Acción', description: 'Grupo completo de alumnos Training practicando pulido en Detail Park' },
+  { image: practicasAlumnos2, title: 'Técnica de Pulido Cercana', description: 'Alumnos practicando técnica de pulido con pulidora DeWalt profesional' },
+  { image: practicasAlumnos3, title: 'Práctica en Equipo', description: 'Tres alumnos puliendo capó con pulidoras junto a coches clásicos' },
+  { image: practicasAlumnos4, title: 'Trabajo en Grupo', description: 'Grupo de alumnos Training puliendo vehículo con microfibra y pulidora' },
+  { image: materialCurso, title: 'Material Profesional', description: 'Pulidoras profesionales DeWalt y Flex preparadas para la formación' },
+  { image: muestraCertificado, title: 'Certificado de Entrenamiento', description: 'Certificado oficial de Detail Park Academy entregado al finalizar el curso' },
 ];
 
 export function FormationGallery({ 
