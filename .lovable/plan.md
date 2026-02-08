@@ -1,211 +1,173 @@
 
-# Calculadora Visual de Dilucion - VisualDilutionCalculator
+# Calculadora de Dilucion en Pagina Independiente + Banner en Blog
 
 ## Resumen
 
-Crear un componente interactivo y educativo que permita a detailers novatos entender visualmente como mezclar productos quimicos. Incluye una botella animada con niveles de liquido en tiempo real, controles tactiles, un traductor educativo y resultados copiables.
-
-**Nota importante**: El proyecto no tiene `framer-motion` instalado. Todas las animaciones se implementaran con CSS transitions y keyframes, que ya se usan extensamente en el proyecto (oleaje, burbujas, transiciones de altura).
+Mover la calculadora de dilucion a una pagina dedicada con su propia ruta, SEO optimizado con keywords de alta intencion, y contenido educativo complementario. Ademas, insertar un banner/cuadro permanente en todos los articulos del blog que enlace a esta herramienta.
 
 ---
 
-## 1. Estructura de archivos
+## 1. Nueva pagina: `/calculadora-dilucion-detailing`
 
-| Archivo | Tipo | Descripcion |
-|---------|------|-------------|
-| `src/components/glossary/VisualDilutionCalculator.tsx` | Nuevo | Componente principal con toda la logica |
-| `src/pages/Glossary.tsx` | Modificar | Insertar el componente entre las secciones educativas y el grid de terminos |
+### Slug elegido
 
-Se ubicara en la carpeta `glossary/` ya que es una herramienta educativa directamente relacionada con el glosario de detailing.
+`/calculadora-dilucion-detailing` -- combina los terminos de busqueda principales:
+- "calculadora dilucion" (intencion directa de herramienta)
+- "detailing" (nicho profesional)
+
+Alternativas descartadas: `/calculadora-mezcla-productos` (menos especifico), `/herramienta-dilucion` (menos buscado).
+
+### SEO Metadata
+
+| Campo | Valor |
+|-------|-------|
+| **H1** | Calculadora de Dilucion para Productos de Detailing |
+| **Title** | Calculadora de Dilucion Detailing Gratis - Ratios de Mezcla Exactos - Academia Detail |
+| **Description** | Calcula la dilucion exacta de cualquier producto de car detailing. Ratios de mezcla visual para APC, champu, desengrasante y mas. Herramienta gratuita e interactiva. |
+| **Keywords** | calculadora dilucion detailing, ratio mezcla productos limpieza coche, como diluir productos detailing, tabla diluciones detailing, proporcion agua producto limpieza, calculadora mezcla quimica coche |
+| **Canonical** | /calculadora-dilucion-detailing |
+| **OG Image** | og-image.png (reutilizar la generica) |
+
+### Estructura del contenido de la pagina
+
+La pagina `src/pages/CalculadoraDilucion.tsx` contendra:
+
+1. **Hero compacto** con H1 optimizado y descripcion breve
+2. **La calculadora** (componente `VisualDilutionCalculator` existente, sin cambios)
+3. **Seccion educativa: "Como Diluir Productos de Detailing"** (H2)
+   - Contenido largo (~400 palabras) explicando por que la dilucion correcta importa
+   - Subtemas: seguridad, ahorro, proteccion de superficies, eficacia
+4. **Tabla de Ratios Comunes por Tipo de Producto** (H2)
+   - Tabla HTML con: Tipo de producto | Ratio comun | Uso recomendado
+   - Filas: APC multiusos, champu de lavado, desengrasante, iron remover, limpiacristales, abrillantador rapido, limpiador de cuero, etc.
+5. **FAQ: Preguntas frecuentes sobre dilucion** (H2)
+   - 5-6 preguntas tipo "Que pasa si diluyo demasiado", "Que ratio usar para un APC", etc.
+   - Schema FAQPage para rich snippets
+6. **CTA final** enlazando a los cursos (reutilizando patron existente)
+
+### Schema JSON-LD
+
+- **WebApplication** schema (tipo SoftwareApplication/WebApplication) para que Google entienda que es una herramienta interactiva
+- **FAQPage** schema con las preguntas frecuentes
+- **BreadcrumbList**: Inicio > Glosario > Calculadora de Dilucion
+- **LocalBusiness** (reutilizado)
+
+### Archivo nuevo
+
+`src/pages/CalculadoraDilucion.tsx`
 
 ---
 
-## 2. Layout responsivo
+## 2. Configuracion de ruta en App.tsx
+
+Anadir la nueva ruta:
 
 ```text
-DESKTOP (md+):
-+-------------------------------+----------------------------+
-|    CONTROLES DE INPUT         |   BOTELLA ANIMADA SVG      |
-|  - Slider capacidad           |   +------------------+     |
-|  - Grid de ratios             |   |   [gatillo]      |     |
-|  - Input custom               |   |                  |     |
-|                               |   |  ~~~ producto ~~~|     |
-|  TRADUCTOR EDUCATIVO          |   |  .................|     |
-|  - Texto dinamico             |   |                  |     |
-|  - Barra de potencia          |   |  ~~~ agua ~~~~~~ |     |
-|                               |   +------------------+     |
-+-------------------------------+----------------------------+
-|              RESULTADO FINAL: X ml Producto + Y ml Agua    |
-|              [Copiar Receta al Portapapeles]                |
-+------------------------------------------------------------+
+<Route path="/calculadora-dilucion-detailing" element={<CalculadoraDilucion />} />
+```
 
-MOVIL:
-+--------------------------+
-| CONTROLES DE INPUT       |
-| ...                      |
-+--------------------------+
-| BOTELLA ANIMADA          |
-| ...                      |
-+--------------------------+
-| TRADUCTOR EDUCATIVO      |
-+--------------------------+
-| RESULTADO FINAL          |
-+--------------------------+
+Posicion: justo despues de la ruta del glosario.
+
+---
+
+## 3. SEO Config en seoConfig.ts
+
+Anadir nueva entrada `calculadoraDilucion` al objeto `seoConfig` con todos los metadatos, schemas y breadcrumbs.
+
+Tambien actualizar el `URL_NAME_MAP` en `SEO.tsx` para incluir el nuevo slug.
+
+---
+
+## 4. Actualizacion del Glosario
+
+En `src/pages/Glossary.tsx`:
+
+- **Eliminar** la seccion de la calculadora embebida (lineas 140-145)
+- **Reemplazar** con un banner/enlace que diga: "Usa nuestra Calculadora de Dilucion interactiva" con enlace a la nueva pagina
+- Esto mantiene el flujo del glosario limpio y dirige trafico a la pagina dedicada
+
+---
+
+## 5. Banner permanente en articulos del Blog
+
+### Nuevo componente: `src/components/blog/BlogDilutionBanner.tsx`
+
+Un cuadro visual compacto que se insertara en todos los articulos del blog. Diseno:
+
+```text
++---------------------------------------------------+
+|  [Icono Beaker]                                    |
+|  Herramienta Gratuita                              |
+|  Calculadora de Dilucion                           |
+|  Calcula la mezcla exacta de cualquier producto    |
+|  de detailing con nuestra herramienta interactiva  |
+|  [Boton: Usar Calculadora -->]                     |
++---------------------------------------------------+
+```
+
+- Estilo: `bg-card/50 border border-border rounded-xl` con icono y enlace interno
+- Responsive: se adapta a movil
+- Enlace interno `follow` a `/calculadora-dilucion-detailing`
+
+### Integracion en BlogPost.tsx
+
+Insertar `<BlogDilutionBanner />` justo despues del contenido del articulo y antes de los tags, en `src/pages/BlogPost.tsx` (linea ~183 aprox, entre `BlogArticleContent` y el bloque de tags).
+
+---
+
+## 6. Sitemap
+
+Anadir la nueva URL al `public/sitemap.xml`:
+
+```text
+<url>
+  <loc>https://academiadetail.com/calculadora-dilucion-detailing</loc>
+  <lastmod>2026-02-08</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
 ```
 
 ---
 
-## 3. Seccion izquierda: Controles interactivos
+## Resumen de archivos
 
-### A. Slider de Capacidad Total
-- Componente `Slider` de Radix UI (ya existe en el proyecto como `src/components/ui/slider.tsx`)
-- Rango: 100ml a 5000ml, step de 50ml
-- Valor mostrado en `text-3xl font-monument` al lado del slider, editable con un input numerico
-- Etiqueta: "Capacidad del envase"
+| Archivo | Accion | Descripcion |
+|---------|--------|-------------|
+| `src/pages/CalculadoraDilucion.tsx` | Crear | Pagina dedicada con hero, calculadora, contenido SEO, tabla, FAQ y CTA |
+| `src/components/blog/BlogDilutionBanner.tsx` | Crear | Banner compacto para enlazar la calculadora desde el blog |
+| `src/App.tsx` | Modificar | Anadir ruta `/calculadora-dilucion-detailing` |
+| `src/utils/seoConfig.ts` | Modificar | Anadir configuracion SEO de la calculadora |
+| `src/components/SEO.tsx` | Modificar | Anadir slug al URL_NAME_MAP |
+| `src/pages/Glossary.tsx` | Modificar | Reemplazar calculadora embebida por enlace a la pagina dedicada |
+| `src/pages/BlogPost.tsx` | Modificar | Insertar BlogDilutionBanner en todos los articulos |
+| `public/sitemap.xml` | Modificar | Anadir nueva URL |
 
-### B. Selector de Ratios (Grid de botones)
-- Grid de 3x2 con botones grandes (`min-h-[56px]`) para tacto movil
-- Presets: `1:1` (Extremo), `1:4` (Fuerte), `1:10` (General), `1:20` (Suave), `1:100` (Jabon)
-- Boton activo: `bg-blue-600 text-white border-blue-500 shadow-lg`
-- Boton inactivo: `bg-card border-border text-foreground hover:border-blue-400`
-- Boton "Custom" que revela dos inputs numericos para parte de producto y parte de agua
-
----
-
-## 4. Seccion central: Traductor Educativo
-
-Bloque dinamico que cambia con cada seleccion de ratio:
-
-- Texto: "Una dilucion 1:X significa que por cada tapon de producto, debes anadir X tapones de agua."
-- Incluye emoji de bombilla y texto con `text-muted-foreground`
-
-### Barra de Potencia/Peligro
-- Barra de progreso visual con degradado de color:
-  - 1:1 a 1:4 --> Rojo/naranja (80-100% llena) con etiqueta "Concentracion extrema"
-  - 1:10 --> Amarillo (50% llena) con etiqueta "Uso general"
-  - 1:20 a 1:100 --> Verde (10-25% llena) con etiqueta "Concentracion suave"
-- Implementada con un `div` de ancho animado via CSS `transition-all duration-500`
-- Degradado de color calculado dinamicamente con `style={{ background: ... }}`
-
----
-
-## 5. Seccion derecha: Botella Animada SVG
-
-### Diseno de la botella
-- SVG en linea con forma de botella pulverizadora (spray bottle)
-- Contorno sutil en `stroke: hsl(var(--border))` con `stroke-width: 2`
-- Cuerpo rectangular redondeado con cuello estrecho y gatillo/cabezal
-- Dimensiones: ~200px ancho x ~350px alto, responsivo con `viewBox`
-
-### Liquidos animados (CSS puro)
-- Dos capas rectangulares dentro del SVG, clippeadas al contorno de la botella:
-  - **Agua** (capa inferior): `fill: #60a5fa` (blue-400)
-  - **Producto** (capa superior): `fill: #f59e0b` (amber-500)
-- Las alturas se calculan matematicamente:
-  ```text
-  volumePorParte = capacidadTotal / (partesProducto + partesAgua)
-  volumenProducto = volumePorParte * partesProducto
-  volumenAgua = volumePorParte * partesAgua
-  alturaProducto% = (volumenProducto / capacidadTotal) * alturaMaximaLiquido
-  alturaAgua% = (volumenAgua / capacidadTotal) * alturaMaximaLiquido
-  ```
-- Animacion de transicion: `transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1)` en los atributos `height` y `y` de los rectangulos SVG
-- Etiquetas flotantes dentro del SVG indicando "Producto" y "Agua" con sus ml respectivos
-
-### Efecto de oleaje
-- Linea ondulada en la superficie de cada liquido usando un `path` SVG con curvas bezier
-- Animacion sutil con keyframe CSS que desplaza horizontalmente el patron de onda:
-  ```css
-  @keyframes wave { 0%, 100% { d: path("M0,0 Q25,-3 50,0 T100,0"); } 50% { d: path("M0,0 Q25,3 50,0 T100,0"); } }
-  ```
-- Solo se aplica a la capa superior (producto) para mantener rendimiento
-
-### Burbujas decorativas
-- 3-4 circulos SVG pequenos (r=2-4px) con animacion `float-gentle` posicionados aleatoriamente dentro de la zona de agua
-- Opacidad baja (0.3-0.5) para no distraer
-
----
-
-## 6. Resultado Final
-
-- Dos bloques lado a lado (o apilados en movil):
-  - Bloque producto: Fondo `bg-amber-500/10`, borde `border-amber-500/30`, icono Droplets, texto "ANADE: X ml de Producto" en `text-2xl font-bold`
-  - Bloque agua: Fondo `bg-blue-400/10`, borde `border-blue-400/30`, icono Droplets, texto "RELLENA CON: Y ml de Agua" en `text-2xl font-bold`
-- Boton "Copiar Receta al Portapapeles" con icono `Copy` de lucide-react
-  - Usa `navigator.clipboard.writeText()` para copiar texto formateado
-  - Feedback visual: cambia a "Copiado" con icono `Check` durante 2 segundos via `useState`
-
----
-
-## 7. Estilos y coherencia con la marca
-
-- Contenedor principal: `bg-card/80 backdrop-blur-sm rounded-2xl border border-border shadow-lg p-6 md:p-8`
-- Titulo de seccion en la pagina: "Herramienta Interactiva" con badge tipo glosario
-- Subtitulo: "Calcula la dilucion exacta de cualquier producto quimico"
-- Respeta la paleta oscura del proyecto (fondo charcoal, acentos burdeos) pero usa azul/ambar para los liquidos (contraste funcional)
-
----
-
-## 8. Integracion en la pagina del Glosario
-
-En `src/pages/Glossary.tsx`, el componente se insertara entre `<GlossaryEducationalSections />` y la seccion principal del grid, envuelto en una seccion con fondo alternado para mantener el ritmo visual:
+## Contenido educativo de la pagina (Estructura H)
 
 ```text
-<GlossaryEducationalSections />
+H1: Calculadora de Dilucion para Productos de Detailing
+  [Calculadora interactiva]
 
-<!-- NUEVO: Calculadora de Dilucion -->
-<section className="py-16 bg-card/30 border-y border-border/30">
-  <div className="container mx-auto px-4">
-    <VisualDilutionCalculator />
-  </div>
-</section>
+H2: Como Diluir Productos de Detailing Correctamente
+  H3: Por que importa la dilucion exacta
+  H3: Consecuencias de una dilucion incorrecta
 
-<!-- Grid de terminos existente -->
-<section className="pb-20">
+H2: Tabla de Ratios de Dilucion por Producto
+  [Tabla con 8-10 productos comunes]
+
+H2: Preguntas Frecuentes sobre Dilucion de Productos
+  - Que pasa si diluyo demasiado un producto?
+  - Cual es el ratio mas comun para un APC?
+  - Puedo mezclar productos de distintas marcas?
+  - Como medir las cantidades sin instrumentos?
+  - Se puede guardar un producto ya diluido?
 ```
-
----
-
-## 9. Logica matematica (React hooks)
-
-```text
-Estado:
-- capacity: number (100-5000, default 1000)
-- ratioProduct: number (default 1)
-- ratioWater: number (default 10)
-- isCustomRatio: boolean
-- copied: boolean (para feedback del clipboard)
-
-Calculos (useMemo):
-- totalParts = ratioProduct + ratioWater
-- volumePerPart = capacity / totalParts
-- productVolume = volumePerPart * ratioProduct (redondeado a 1 decimal)
-- waterVolume = volumePerPart * ratioWater (redondeado a 1 decimal)
-- strengthPercent = (ratioProduct / totalParts) * 100
-
-Visualizacion botella:
-- maxLiquidHeight = 200 (px en viewBox SVG)
-- productHeight = (productVolume / capacity) * maxLiquidHeight
-- waterHeight = (waterVolume / capacity) * maxLiquidHeight
-```
-
----
-
-## 10. Accesibilidad
-
-- Todos los controles con `aria-label` descriptivos
-- El slider con `aria-valuemin`, `aria-valuemax`, `aria-valuenow` (ya proporcionados por Radix)
-- Los botones de ratio con `aria-pressed` para indicar estado activo
-- Botones de tacto con `min-h-[44px]` (estandar del proyecto)
-- Texto alternativo en la botella SVG con `role="img"` y `aria-label`
-- Prefers-reduced-motion respetado (las animaciones de oleaje se desactivan)
-
----
 
 ## Resultado esperado
 
-- Herramienta visual e intuitiva que educa al usuario sobre diluciones de productos quimicos
-- Animaciones fluidas con CSS puro (sin dependencias adicionales)
-- Totalmente responsivo con experiencia tactil optimizada
-- Coherente con el diseno premium oscuro del sitio
-- Integrada organicamente en la pagina del glosario como recurso educativo complementario
+- Pagina independiente que puede posicionar para "calculadora dilucion detailing", "ratio mezcla productos limpieza coche", "como diluir productos detailing"
+- Contenido educativo largo que refuerza la autoridad tematica
+- FAQ con schema para rich snippets en Google
+- Todos los articulos del blog enlazan a la herramienta (link juice + descubrimiento)
+- El glosario mantiene un enlace visible pero sin duplicar la herramienta completa
