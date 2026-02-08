@@ -2,6 +2,7 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { AboutHero } from '@/components/about/AboutHero';
 import { AboutHistory } from '@/components/about/AboutHistory';
 import { AboutPhilosophy } from '@/components/about/AboutPhilosophy';
+import { AboutTeam } from '@/components/about/AboutTeam';
 import { AboutStats } from '@/components/about/AboutStats';
 import { AboutGallerySection } from '@/components/about/AboutGallerySection';
 import { Button } from '@/components/ui/button';
@@ -49,6 +50,9 @@ export default function AboutUs() {
 
         {/* Philosophy / Differentiators */}
         <AboutPhilosophy />
+
+        {/* Team Section */}
+        <AboutTeam />
 
         {/* Stats Section */}
         <AboutStats />
