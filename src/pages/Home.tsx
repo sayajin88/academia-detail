@@ -15,6 +15,7 @@ const GalleryPreview = lazy(() => import('@/components/home/GalleryPreview').the
 
 const TestimonialsSection = lazy(() => import('@/components/home/TestimonialsSection').then(m => ({ default: m.TestimonialsSection })));
 const SuccessStoriesLogos = lazy(() => import('@/components/home/SuccessStoriesLogos').then(m => ({ default: m.SuccessStoriesLogos })));
+const GoogleReviews = lazy(() => import('@/components/shared/GoogleReviews').then(m => ({ default: m.GoogleReviews })));
 const HomeFAQ = lazy(() => import('@/components/home/HomeFAQ').then(m => ({ default: m.HomeFAQ })));
 const HomeCTA = lazy(() => import('@/components/home/HomeCTA').then(m => ({ default: m.HomeCTA })));
 const JornadaZeroSection = lazy(() => import('@/components/shared/JornadaZeroSection').then(m => ({ default: m.JornadaZeroSection })));
@@ -72,6 +73,9 @@ export default function Home() {
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <SuccessStoriesLogos />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <GoogleReviews />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <HomeFAQ />

@@ -14,6 +14,7 @@ import { FormationVideoTestimonials } from '@/components/formation/FormationVide
 import { SEO } from '@/components/SEO';
 import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
 import { seoConfig } from '@/utils/seoConfig';
+import { GoogleReviews } from '@/components/shared/GoogleReviews';
 
 const carreraVideoTestimonials = [
   { id: 'GWda5NH90YM', title: 'Mi experiencia en la Carrera de Detailing', name: 'Alumno Graduado', role: 'Empresario Detailing' },
@@ -122,6 +123,7 @@ const CarreraDetailing = () => {
         <CarreraROICalculator onCtaClick={handleCTAClick} />
         <CarreraPricing onCTAClick={handleCTAClick} />
         <JornadaZeroSection />
+        <GoogleReviews />
         <CarreraFAQ />
 
       </MainLayout>
