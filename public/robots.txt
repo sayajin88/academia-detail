@@ -4,6 +4,7 @@
 # Reglas generales para todos los bots
 User-agent: *
 Allow: /
+Allow: /blog/
 Allow: /curso-detailing-iniciacion
 Allow: /formacion-profesional-detailing
 Allow: /curso-detailing-profesional
