@@ -23,7 +23,8 @@ export default function PoliticaPrivacidad() {
               <section>
                 <h2 className="text-xl font-semibold text-foreground mb-3">1. Responsable del Tratamiento</h2>
                 <ul className="list-none space-y-1">
-                  <li><strong className="text-foreground">Razón social:</strong> Detail Park S.L.</li>
+                  <li><strong className="text-foreground">Razón social:</strong> Detailing Car & Parking Club S.L.</li>
+                  <li><strong className="text-foreground">CIF:</strong> B75683300</li>
                   <li><strong className="text-foreground">Dirección:</strong> Calle Metalurgias, 13 – 03008 Alicante, España</li>
                   <li><strong className="text-foreground">Email:</strong> info@academiadetail.com</li>
                   <li><strong className="text-foreground">Teléfono:</strong> +34 622 773 555</li>
@@ -87,14 +88,14 @@ export default function PoliticaPrivacidad() {
               {/* Términos */}
               <section>
                 <h2 className="text-xl font-semibold text-foreground mb-3">9. Términos y Condiciones</h2>
-                <p>El acceso y uso de este sitio web implica la aceptación de las presentes condiciones. Todo el contenido (textos, imágenes, vídeos, logotipos) es propiedad de Detail Park S.L. y está protegido por la legislación de propiedad intelectual.</p>
+                <p>El acceso y uso de este sitio web implica la aceptación de las presentes condiciones. Todo el contenido (textos, imágenes, vídeos, logotipos) es propiedad de Detailing Car & Parking Club S.L. (CIF: B75683300) y está protegido por la legislación de propiedad intelectual.</p>
                 <p className="mt-2">Queda prohibida la reproducción total o parcial del contenido sin autorización expresa. Los precios de las formaciones son orientativos y pueden variar. Las plazas están sujetas a disponibilidad.</p>
               </section>
 
               {/* Aviso legal */}
               <section>
                 <h2 className="text-xl font-semibold text-foreground mb-3">10. Aviso Legal</h2>
-                <p>En cumplimiento de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa que este sitio web es propiedad de Detail Park S.L., con domicilio en Calle Metalurgias, 13 – 03008 Alicante.</p>
+                <p>En cumplimiento de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa que este sitio web es propiedad de Detailing Car & Parking Club S.L., con CIF B75683300 y domicilio en Calle Metalurgias, 13 – 03008 Alicante.</p>
               </section>
 
               {/* Última actualización */}

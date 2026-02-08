@@ -155,7 +155,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Detail Park. Todos los derechos reservados.
+              © {new Date().getFullYear()} Detailing Car & Parking Club S.L. Todos los derechos reservados.
             </p>
             <p className="text-xs text-muted-foreground/60">
               Hecho con pasión por el detailing
