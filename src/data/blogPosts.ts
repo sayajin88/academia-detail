@@ -1,8 +1,8 @@
 import professionalDetailing from '@/assets/alumnos-instalaciones-curso-detailing.jpg';
-import beforeAfterDetailing from '@/assets/before-after-detailing.jpg';
-import cursoPpf from '@/assets/curso-ppf-new.jpg';
-import cursoWrapping from '@/assets/curso-wrapping-new.jpg';
-import detailingTools from '@/assets/detailing-tools.jpg';
+import beforeAfterDetailing from '@/assets/evento-practica-pulidora-real.jpg';
+import cursoPpf from '@/assets/curso-ppf-formacion.jpg';
+import cursoWrapping from '@/assets/curso-wrapping-formacion.jpg';
+import detailingTools from '@/assets/alumnos-practicas-detailing.jpg';
 import formacionDetailing from '@/assets/formacion-detailing-1.jpg';
 import danielLopez from '@/assets/daniel-lopez-instructor.webp';
 import { newBlogPosts } from './blogPostsNew';
@@ -184,7 +184,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: '2026-01-08',
     readingTime: '10 min',
     image: beforeAfterDetailing,
-    imageAlt: 'Resultado antes y después de un pulido profesional de coche mostrando corrección de pintura',
+    imageAlt: 'Alumno practicando técnicas de pulido profesional con pulidora en curso de detailing de Academia Detail',
     featured: false,
     tags: ['pulido', 'corrección pintura', 'técnicas', 'cerámico'],
     sections: [
@@ -221,7 +221,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: '2025-12-20',
     readingTime: '8 min',
     image: cursoPpf,
-    imageAlt: 'Instalación profesional de PPF paint protection film en vehículo de alta gama',
+    imageAlt: 'Formación profesional de instalación de PPF paint protection film en Academia Detail',
     featured: false,
     tags: ['PPF', 'cerámico', 'protección', 'comparativa'],
     sections: [
@@ -258,7 +258,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: '2025-12-10',
     readingTime: '9 min',
     image: cursoWrapping,
-    imageAlt: 'Proceso profesional de car wrapping vinilado de vehículo con cambio de color',
+    imageAlt: 'Alumnos del curso de car wrapping aprendiendo técnicas de vinilado profesional en Academia Detail',
     featured: false,
     tags: ['wrapping', 'vinilado', 'cambio color', 'vinilo'],
     sections: [
@@ -295,7 +295,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: '2025-11-28',
     readingTime: '7 min',
     image: detailingTools,
-    imageAlt: 'Herramientas profesionales de detailing organizadas en un taller para evitar errores comunes',
+    imageAlt: 'Alumnos en prácticas de detailing profesional aprendiendo a evitar errores comunes en Academia Detail',
     featured: false,
     tags: ['errores', 'principiantes', 'consejos', 'formación'],
     sections: [
