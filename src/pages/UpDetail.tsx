@@ -33,11 +33,9 @@ import {
 // Images
 import detailParkLogo from '@/assets/detail-park-logo.webp';
 import detailParkLogoWhite from '@/assets/detail-park-logo-white.png';
-import danielLopezInstructor from '@/assets/daniel-lopez-instructor.webp';
-import leandroImg from '@/assets/leandro-curso-detailing.jpg';
-import leandroImg2 from '@/assets/leandro-curso-detailing-2.jpg';
-import federicaImg from '@/assets/federica-curso-detailing.jpg';
-import federicaImg2 from '@/assets/federica-curso-detailing-2.jpg';
+import danielLopezUpdetail from '@/assets/daniel-lopez-updetail.jpg';
+import leandroUpdetail from '@/assets/leandro-updetail.jpg';
+import federicaUpdetail from '@/assets/federica-updetail.jpg';
 import eventoGrupo from '@/assets/evento-grupo-formacion.jpg';
 import eventoClase from '@/assets/evento-clase-completa.jpg';
 import eventoAlumnos from '@/assets/evento-alumnos-atencion.jpg';
@@ -48,21 +46,21 @@ const experts = [
     name: 'Daniel López',
     role: 'CEO Detail Park',
     description: 'Fundador de Detail Park y formador principal con más de 15 años de experiencia en detailing de alta gama.',
-    image: danielLopezInstructor,
+    image: danielLopezUpdetail,
     tags: ['Detailing', 'Corrección Pintura', 'Cerámico'],
   },
   {
     name: 'Leandro',
     role: 'Academy Pro Detailing',
     description: 'Especialista en formación de detailing profesional con reconocimiento a nivel nacional por su metodología práctica.',
-    image: leandroImg,
+    image: leandroUpdetail,
     tags: ['Formación', 'Técnica Avanzada', 'Pulido'],
   },
   {
     name: 'Federica',
     role: '@la_detailher',
     description: 'Referente en el sector del detailing, reconocida por su enfoque innovador y su comunidad de profesionales.',
-    image: federicaImg,
+    image: federicaUpdetail,
     tags: ['Innovación', 'Comunidad', 'Tendencias'],
   },
 ];
@@ -455,7 +453,7 @@ export default function UpDetail() {
               </h2>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
-              {[leandroImg, federicaImg2, leandroImg2, eventoGrupo, eventoClase, eventoAlumnos, federicaImg, danielLopezInstructor].map((img, i) => (
+              {[leandroUpdetail, federicaUpdetail, danielLopezUpdetail, eventoGrupo, eventoClase, eventoAlumnos].map((img, i) => (
                 <div key={i} className="relative rounded-xl overflow-hidden aspect-square group">
                   <img 
                     src={img} 
