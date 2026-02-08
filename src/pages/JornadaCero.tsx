@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -69,6 +69,30 @@ import eventoPracticaPulidora from "@/assets/evento-practica-pulidora.jpg";
 import certificadoAlumno from "@/assets/certificado-alumno.png";
 import certificadoAlumnoFeliz from "@/assets/certificado-alumno-feliz.jpg";
 import eventoGrupoReal from "@/assets/evento-grupo-coche-rojo.jpg";
+
+/** Deferred YouTube background — delays iframe load by 3s to avoid blocking LCP */
+function DeferredYouTubeBackground() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setShow(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <div className="absolute inset-0 w-full h-full hidden md:block">
+      <iframe
+        src="https://www.youtube.com/embed/ByRhg2kYD-A?autoplay=1&mute=1&loop=1&playlist=ByRhg2kYD-A&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=39"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.77777778vh] min-w-full min-h-[56.25vw] h-full"
+        allow="autoplay; encrypted-media"
+        style={{ pointerEvents: 'none' }}
+        title="Detail Park Background"
+        loading="lazy"
+      />
+    </div>
+  );
+}
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -172,16 +196,8 @@ const Index = () => {
           />
         </div>
         
-        {/* Background video for desktop */}
-        <div className="absolute inset-0 w-full h-full hidden md:block">
-          <iframe
-            src="https://www.youtube.com/embed/ByRhg2kYD-A?autoplay=1&mute=1&loop=1&playlist=ByRhg2kYD-A&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=39"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.77777778vh] min-w-full min-h-[56.25vw] h-full"
-            allow="autoplay; encrypted-media"
-            style={{ pointerEvents: 'none' }}
-            title="Detail Park Background"
-          />
-        </div>
+        {/* Background video for desktop — deferred loading to improve LCP */}
+        <DeferredYouTubeBackground />
         
         {/* Overlays for readability */}
         <div className="absolute inset-0 bg-black/60 md:bg-black/50"></div>

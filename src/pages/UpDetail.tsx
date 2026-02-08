@@ -189,7 +189,7 @@ export default function UpDetail() {
         {/* Hero Section */}
         <section className="relative py-12 md:py-24 overflow-hidden min-h-[45vh] md:min-h-[50vh]">
           <div className="absolute inset-0">
-            <img src={heroUpDetail} alt="Up Detail — Formación colaborativa con expertos" className="w-full h-full object-cover" />
+            <img src={heroUpDetail} alt="Up Detail — Formación colaborativa con expertos" className="w-full h-full object-cover" loading="eager" fetchPriority="high" />
           </div>
           <div className="absolute inset-0 bg-black/60" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />

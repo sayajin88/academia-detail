@@ -112,16 +112,15 @@ export function VideoTestimonials() {
                     </div>
                   ) : (
                     <div 
-                      className="w-full h-64 bg-gradient-primary/20 flex items-center justify-center cursor-pointer relative group/video"
+                      className="w-full h-64 flex items-center justify-center cursor-pointer relative group/video"
                       onClick={() => handlePlayVideo(testimonial.id, testimonial.videoId)}
                     >
-                      {/* Thumbnail de YouTube */}
-                      <div 
-                        className="absolute inset-0 bg-cover bg-center rounded-t-lg"
-                        style={{ 
-                          backgroundImage: `url(https://img.youtube.com/vi/${testimonial.videoId}/maxresdefault.jpg)`,
-                          filter: 'brightness(0.7)'
-                        }}
+                      {/* Thumbnail de YouTube — img lazy en vez de background CSS */}
+                      <img
+                        src={`https://img.youtube.com/vi/${testimonial.videoId}/hqdefault.jpg`}
+                        alt={`Testimonio de ${testimonial.name}`}
+                        className="absolute inset-0 w-full h-full object-cover rounded-t-lg brightness-[0.7]"
+                        loading="lazy"
                       />
                       
                       <div className="relative z-10 text-center">

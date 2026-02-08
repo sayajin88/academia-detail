@@ -1,47 +1,61 @@
+import { lazy, Suspense } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { AboutHero } from '@/components/about/AboutHero';
 import { AboutHistory } from '@/components/about/AboutHistory';
 import { AboutPhilosophy } from '@/components/about/AboutPhilosophy';
-import { AboutTeam } from '@/components/about/AboutTeam';
-import { AboutStats } from '@/components/about/AboutStats';
-import { AboutGallerySection } from '@/components/about/AboutGallerySection';
-import { AboutVideoChannel } from '@/components/about/AboutVideoChannel';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 
+// Below-the-fold sections — lazy loaded
+const AboutTeam = lazy(() => import('@/components/about/AboutTeam').then(m => ({ default: m.AboutTeam })));
+const AboutStats = lazy(() => import('@/components/about/AboutStats').then(m => ({ default: m.AboutStats })));
+const AboutGallerySection = lazy(() => import('@/components/about/AboutGallerySection').then(m => ({ default: m.AboutGallerySection })));
+const AboutVideoChannel = lazy(() => import('@/components/about/AboutVideoChannel').then(m => ({ default: m.AboutVideoChannel })));
+const JornadaZeroSection = lazy(() => import('@/components/shared/JornadaZeroSection').then(m => ({ default: m.JornadaZeroSection })));
+
+const SectionSkeleton = ({ variant = 'default' }: { variant?: 'default' | 'card' }) => (
+  <div className={`py-16 md:py-24 ${variant === 'card' ? 'bg-card' : 'bg-background'}`}>
+    <div className="container mx-auto px-4">
+      <div className="h-8 skeleton-shimmer rounded w-1/3 mx-auto mb-4" />
+      <div className="h-4 skeleton-shimmer rounded w-1/2 mx-auto mb-8" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="h-48 skeleton-shimmer rounded-xl" />
+        ))}
+      </div>
+    </div>
+  </div>
+);
 
 export default function AboutUs() {
   return (
     <>
       <SEO {...seoConfig.aboutUs} />
       <MainLayout>
-        {/* Hero Section */}
+        {/* Above-the-fold — carga síncrona */}
         <AboutHero />
-
-        {/* History Timeline */}
         <AboutHistory />
-
-        {/* Philosophy / Differentiators */}
         <AboutPhilosophy />
 
-        {/* Team Section */}
-        <AboutTeam />
-
-        {/* Stats Section */}
-        <AboutStats />
-
-        {/* Gallery Section */}
-        <AboutGallerySection />
-
-        {/* YouTube Channel Videos */}
-        <AboutVideoChannel />
-
-        {/* Jornada Zero Section */}
-        <JornadaZeroSection />
+        {/* Below-the-fold — carga diferida */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <AboutTeam />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <AboutStats />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <AboutGallerySection />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <AboutVideoChannel />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <JornadaZeroSection />
+        </Suspense>
 
         {/* CTA Section */}
         <section className="py-16 md:py-24 bg-card section-divider">
