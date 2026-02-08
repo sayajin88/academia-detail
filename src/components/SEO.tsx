@@ -39,6 +39,8 @@ const URL_NAME_MAP: Record<string, string> = {
   'quienes-somos': 'Quiénes Somos',
   'contacto': 'Contacto',
   'galeria': 'Galería',
+  'glosario-detailing': 'Glosario de Detailing',
+  'calculadora-dilucion-detailing': 'Calculadora de Dilución',
 };
 
 // Auto-generate breadcrumb schema from URL

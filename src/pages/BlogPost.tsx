@@ -8,6 +8,7 @@ import { BlogSidebar } from '@/components/blog/BlogSidebar';
 import { BlogShareButtons } from '@/components/blog/BlogShareButtons';
 import { BlogRelatedPosts } from '@/components/blog/BlogRelatedPosts';
 import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
+import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { getPostBySlug, getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
 
@@ -180,6 +181,9 @@ export default function BlogPostPage() {
               <div className="mt-8">
                 <BlogArticleContent sections={post.sections} />
               </div>
+
+              {/* Dilution Calculator Banner */}
+              <BlogDilutionBanner />
 
               {/* Tags */}
               <AnimatedSection animation="fade-up" delay={50}>

@@ -788,6 +788,26 @@ export const seoConfig = {
     ]
   },
 
+  calculadoraDilucion: {
+    title: "Calculadora de Dilución Detailing Gratis ⚗️ Ratios de Mezcla Exactos | Academia Detail",
+    description: "✅ Calcula la dilución exacta de cualquier producto de car detailing. Ratios de mezcla visual para APC, champú, desengrasante y más. ➤ Herramienta gratuita e interactiva.",
+    keywords: "calculadora dilución detailing, ratio mezcla productos limpieza coche, como diluir productos detailing, tabla diluciones detailing, proporción agua producto limpieza, calculadora mezcla química coche, dilución APC detailing, ratio champú coche",
+    url: "/calculadora-dilucion-detailing",
+    schema: [
+      localBusinessSchema,
+      generateWebPageSchema({
+        name: "Calculadora de Dilución para Productos de Detailing",
+        description: "Herramienta interactiva para calcular la dilución exacta de productos químicos de car detailing profesional",
+        url: "/calculadora-dilucion-detailing"
+      }),
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" },
+        { name: "Glosario de Detailing", url: "/glosario-detailing" },
+        { name: "Calculadora de Dilución", url: "/calculadora-dilucion-detailing" }
+      ])
+    ]
+  },
+
   contact: {
     title: "Contacto | Academia Detail Alicante | Reserva tu Plaza ★4.9",
     description: "✅ Contacta con Academia Detail en Alicante. Información sobre cursos de detailing en taller real, wrapping, PPF y restauración. ➤ Reserva tu plaza ahora - Respuesta en 24h.",
