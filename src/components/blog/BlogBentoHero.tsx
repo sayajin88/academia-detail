@@ -42,8 +42,11 @@ export function BlogBentoHero({ featuredPost }: BlogBentoHeroProps) {
           </div>
 
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight mb-3"
-            style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.02em' }}
+            className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-snug mb-3"
+            style={{
+              fontFamily: "'Open Sans', sans-serif",
+              textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+            }}
           >
             {featuredPost.title}
           </h2>
@@ -114,12 +117,15 @@ export function BlogBentoHero({ featuredPost }: BlogBentoHeroProps) {
             <span className={`inline-block px-2.5 py-0.5 text-[10px] font-semibold rounded-full border mb-2 ${categoryColors[secondaryPost.category]}`}>
               {categoryLabels[secondaryPost.category]}
             </span>
-            <h3
-              className="text-white font-bold text-sm leading-tight line-clamp-2"
-              style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.02em' }}
-            >
-              {secondaryPost.title}
-            </h3>
+          <h3
+            className="text-white font-bold text-sm leading-snug line-clamp-2"
+            style={{
+              fontFamily: "'Open Sans', sans-serif",
+              textShadow: '0 1px 4px rgba(0,0,0,0.6)',
+            }}
+          >
+            {secondaryPost.title}
+          </h3>
           </div>
         </Link>
       )}
