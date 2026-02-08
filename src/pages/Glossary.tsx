@@ -11,6 +11,7 @@ import { glossaryTerms, getAvailableLetters } from '@/data/glossaryData';
 import type { GlossaryCategory } from '@/data/glossaryData';
 import { BookOpen } from 'lucide-react';
 import heroGlosario from '@/assets/heroes/hero-glosario.jpg';
+import { VisualDilutionCalculator } from '@/components/glossary/VisualDilutionCalculator';
 
 const ALL_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -135,6 +136,13 @@ const Glossary = () => {
 
       {/* Educational Sections */}
       <GlossaryEducationalSections />
+
+      {/* Dilution Calculator */}
+      <section className="py-16 bg-card/30 border-y border-border/30">
+        <div className="container mx-auto px-4">
+          <VisualDilutionCalculator />
+        </div>
+      </section>
 
       {/* Main Content */}
       <section className="pb-20">
