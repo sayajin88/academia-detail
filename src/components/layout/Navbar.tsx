@@ -151,7 +151,7 @@ export function Navbar() {
             {/* Desktop Navigation - Centered */}
             <div 
               ref={navRef}
-              className="hidden lg:flex items-center gap-0 relative"
+              className="hidden lg:flex items-center gap-0.5 relative ml-6 xl:ml-8"
             >
               {/* Animated pill indicator */}
               <div
@@ -166,7 +166,7 @@ export function Navbar() {
               <Link
                 to="/"
                 data-active={location.pathname === '/'}
-                className={`relative px-3 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg ${
+                className={`relative px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg ${
                   location.pathname === '/' 
                     ? 'text-primary' 
                     : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
@@ -185,7 +185,7 @@ export function Navbar() {
               >
                 <button
                   data-active={isFormationsActive}
-                  className={`flex items-center gap-1.5 px-3 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg ${
+                  className={`flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg ${
                     isFormationsActive
                       ? 'text-primary'
                       : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
@@ -242,7 +242,7 @@ export function Navbar() {
               >
                 <button
                   data-active={isToolsActive}
-                  className={`flex items-center gap-1.5 px-3 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg ${
+                  className={`flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg ${
                     isToolsActive
                       ? 'text-primary'
                       : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
@@ -294,7 +294,7 @@ export function Navbar() {
                   key={link.href}
                   to={link.href}
                   data-active={isActive(link.href)}
-                  className={`relative px-3 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg ${
+                  className={`relative px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg ${
                     isActive(link.href)
                       ? 'text-primary'
                       : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
