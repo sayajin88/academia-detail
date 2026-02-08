@@ -1,9 +1,19 @@
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { SectionHeading } from '@/components/shared/SectionHeading';
+import danielImg from '@/assets/daniel-lopez-team.jpg';
 import sergioImg from '@/assets/sergio-felipe.jpg';
 import gerardoImg from '@/assets/gerardo-espinosa.jpg';
 
 const teamMembers = [
+  {
+    name: 'Daniel López',
+    role: 'Fundador & Instructor Principal',
+    image: danielImg,
+    alt: 'Daniel López - Fundador e instructor principal de Academia Detail y Detail Park',
+    description:
+      'Fundador de Detail Park y Academia Detail, Daniel combina más de 12 años de experiencia en detailing profesional con una visión empresarial única. Ha trabajado con marcas como Ferrari, Lamborghini y Porsche. Su metodología une la perfección técnica con la mentalidad de negocio rentable.',
+    tags: ['Detailing', 'Gestión de Negocio', 'Instructor Principal'],
+  },
   {
     name: 'Sergio Felipe',
     role: 'Instructor & Gestor de Centro',
@@ -36,7 +46,7 @@ export function AboutTeam() {
           />
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {teamMembers.map((member, index) => (
             <AnimatedSection key={member.name} delay={index * 150}>
               <div className="group h-full bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500">
