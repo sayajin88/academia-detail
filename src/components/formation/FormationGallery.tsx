@@ -28,6 +28,9 @@ import formacionDetailing2 from '@/assets/formacion-detailing-2.jpg';
 import formacionDetailingJuanDaniel from '@/assets/formacion-detailing-juan-daniel.jpg';
 import alumnosInstalaciones from '@/assets/alumnos-instalaciones-curso-detailing.jpg';
 import alumnosPracticas from '@/assets/alumnos-practicas-detailing.jpg';
+import instalacionesCursoFerrari from '@/assets/instalaciones-curso-ferrari.jpg';
+import instalacionesClaseTraining from '@/assets/instalaciones-clase-training.jpg';
+import instalacionesClaseClasicos from '@/assets/instalaciones-clase-coches-clasicos.jpg';
 
 interface GalleryItem {
   image: string;
@@ -67,6 +70,9 @@ const detailingGalleryItems: GalleryItem[] = [
   { image: formacionDetailingJuanDaniel, title: 'Práctica Real', description: 'Alumno practicando en vehículo real' },
   { image: alumnosInstalaciones, title: 'Instalaciones Detail Park', description: 'Grupo de alumnos en las instalaciones del centro de formación' },
   { image: alumnosPracticas, title: 'Prácticas en Grupo', description: 'Alumnos practicando detailing alrededor de un descapotable' },
+  { image: instalacionesCursoFerrari, title: 'Clase con Ferrari', description: 'Daniel explicando con Ferrari y coches de lujo en el taller' },
+  { image: instalacionesClaseTraining, title: 'Clase Teórica Completa', description: 'Alumnos con camisetas Training en sesión teórica de formación' },
+  { image: instalacionesClaseClasicos, title: 'Formación con Clásicos', description: 'Clase magistral junto a Porsche clásico y Ferrari en Detail Park' },
 ];
 
 export function FormationGallery({ 
