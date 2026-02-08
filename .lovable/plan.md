@@ -1,101 +1,118 @@
 
 
-# Actualizar Landing Up Detail: Colores, Precio, Videos y Testimonios
+# Seccion de Videos de YouTube en "Quienes Somos"
 
-## Resumen de cambios
+## Objetivo
 
-La landing de Up Detail necesita 5 actualizaciones principales:
-
-1. **Paleta de colores**: Cambiar dorado/amber por violeta/morado en toda la pagina
-2. **Precio**: Actualizar de 97 euros + IVA a 349 euros + IVA
-3. **Videos YouTube**: Incrustar 2 videos (promo + evento pasado Mayo 2025)
-4. **Hero background**: Reemplazar imagen del hero por una foto real del proyecto
-5. **Video testimonios**: Anadir los mismos testimonios en video que tiene la Jornada Zero
+Crear una seccion visual moderna dentro de la pagina "Quienes Somos" que muestre 12 videos del canal de YouTube de Detail Park para aumentar la autoridad de la academia. La seccion incluira un enlace al canal completo.
 
 ---
 
-## Detalle de cada cambio
+## Diseno Visual: "Galeria de Videos"
 
-### 1. Paleta de colores: de dorado a violeta
+La seccion tendra un diseno tipo **galeria multimedia dinamica** con las siguientes caracteristicas:
 
-Se reemplazaran **todas las referencias** a colores amber/orange por violeta/morado:
+### Layout principal
+- **Titulo con badge**: "Nuestro Canal de YouTube" con subtitulo orientado a autoridad ("Mas de 12 videos mostrando nuestro trabajo real en el taller")
+- **Video destacado grande**: El primer video ocupa un area prominente (16:9, ancho completo en movil, 60% en desktop)
+- **Grid de miniaturas**: Los 11 videos restantes en un grid compacto de 2 columnas en movil, 3 en tablet, 4 en desktop
+- Cada miniatura usa el componente `YouTubeEmbed` existente con facade pattern (carga perezosa)
+- **CTA al canal**: Boton "Ver mas videos en YouTube" con icono de YouTube, enlazando al canal
 
-| Elemento | Antes (amber) | Despues (violet) |
-|---|---|---|
-| Top banner gradient | `from-amber-600 via-amber-500 to-orange-500` | `from-violet-700 via-purple-600 to-violet-500` |
-| Badges | `bg-amber-500/20 text-amber-400` | `bg-violet-500/20 text-violet-400` |
-| Gradientes de texto | `from-amber-400 to-orange-400` | `from-violet-400 to-purple-400` |
-| Bordes hover | `border-amber-500/30` | `border-violet-500/30` |
-| Iconos | `text-amber-400` | `text-violet-400` |
-| Botones CTA | `from-amber-500 to-orange-500` | `from-violet-600 to-purple-600` |
-| Links hover footer | `hover:text-amber-400` | `hover:text-violet-400` |
-| Shadow del banner | `rgba(245,158,11,0.3)` | `rgba(139,92,246,0.3)` |
+### Interaccion
+- Al hacer clic en cualquier miniatura, se reproduce el video in-place usando el YouTubeEmbed existente
+- Las miniaturas tendran hover con escala y overlay con icono de play (ya incluido en YouTubeEmbed)
 
-Esto afecta a **todo el archivo** `UpDetail.tsx`. Tambien se actualizara la tarjeta de Up Detail en el **Hub** (`JornadasIntensivas.tsx`) para coherencia visual: la linea de acento, el badge "Proximamente", y el icono pasaran a violeta.
-
----
-
-### 2. Precio actualizado: 349 euros + IVA
-
-Cambios en los siguientes puntos del archivo:
-
-- **Hero**: La tarjeta de precio cambia de "97 euros + IVA" a "349 euros + IVA"
-- **Seccion pre-registro**: El texto "Precio confirmado: 97 euros + IVA" cambia a "Precio confirmado: 349 euros + IVA"
-- **Cross-promotion**: El texto "El mismo precio" se actualiza para reflejar que ya no es el mismo precio que Jornada Zero
-- **Hub** (`JornadasIntensivas.tsx`): El badge de precio cambia a 349 euros, y el texto de la FAQ sobre precios se actualiza para reflejar que cada formato tiene su propio precio
+### Movil
+- El video destacado ocupa ancho completo
+- Las miniaturas se muestran en grid de 2 columnas para mantener buena visibilidad
+- El boton del canal es full-width y prominente
 
 ---
 
-### 3. Incrustar 2 videos de YouTube
+## Ubicacion en la pagina
 
-Se anaden dos nuevas secciones con videos embebidos:
+Se colocara **despues de la seccion de galeria de trabajos (AboutGallerySection) y antes de JornadaZeroSection**, ya que los videos refuerzan la autoridad mostrada en la galeria de trabajos y crean una transicion natural hacia el CTA de formacion.
 
-**Video 1 - Video promocional** (`TR_K9l3GZWc`)
-- Se ubica justo despues de la seccion de concepto "Que es Up Detail?"
-- Titulo: "Descubre Up Detail"
-- Presentado como el video principal de presentacion del formato
-- Embebido con facade pattern (thumbnail + click para cargar iframe)
-
-**Video 2 - Evento pasado Mayo 2025** (`ZA8lZ5R6Yg0`)
-- Se ubica como nueva seccion despues de los expertos, antes de la galeria
-- Titulo: "Revive Nuestro Ultimo Evento — Mayo 2025"
-- Texto contextual: Se presenta como el primer Up Detail celebrado en Mayo 2025, con texto que resalta el exito del evento (sold out, reunion de expertos, asistentes satisfechos)
-- Se describe como "la jornada que inicio todo" o "nuestro primer evento colaborativo"
-- Embebido tambien con facade pattern
-
-Ambos videos usaran el mismo patron visual: thumbnail de YouTube, overlay oscuro, boton play con colores violeta, y carga de iframe al hacer clic.
+```text
+AboutHero
+AboutHistory
+AboutPhilosophy
+AboutTeam
+AboutStats
+AboutGallerySection
+>>> NUEVA: AboutVideoChannel <<<
+JornadaZeroSection
+CTA Final
+```
 
 ---
 
-### 4. Hero background
+## SEO y Autoridad
 
-Se reemplaza `heroJornadaCero` (que es la misma imagen usada en Jornada Zero) por una imagen diferente para dar identidad propia a Up Detail. Se usara `evento-grupo-detailing.jpg` o `evento-instructor-explicando.jpg`, que son fotos reales de eventos colaborativos y encajan con el concepto de Up Detail con multiples expertos.
+### Schema VideoObject
+Se generara un array de schemas `VideoObject` para los 12 videos, con:
+- `name`: Titulo descriptivo con keywords de detailing
+- `thumbnailUrl`: Thumbnail de YouTube
+- `contentUrl`: URL del video
+- `uploadDate`: Fecha aproximada
+- `publisher`: Academia Detail / Detail Park
+
+### Schema ItemList (Carrusel de videos)
+Un schema `ItemList` que agrupe los videos para que Google pueda mostrarlos como carrusel en resultados de busqueda.
+
+### Atributos SEO en el componente
+- Heading H2 con keywords: "Videos de Detailing Profesional en Nuestro Taller"
+- Textos ALT descriptivos en cada miniatura
+- Enlaces `follow` al canal de YouTube para reforzar el sameAs del Organization schema existente
+
+### Actualizacion del SEO config
+Se anadiran los schemas VideoObject e ItemList al array de schemas de la pagina aboutUs en `seoConfig.ts`.
 
 ---
 
-### 5. Video testimonios
+## Videos con titulos descriptivos para SEO
 
-Se reutiliza el componente `VideoTestimonials` que ya existe en la Jornada Zero (`src/components/VideoTestimonials.tsx`). Este componente contiene 6 testimonios en video de participantes reales.
-
-Se importa y se coloca despues de la galeria de fotos, antes de la seccion de pre-registro. Para integrarlo en la paleta violeta, se ajustara el contenedor envolvente con clases de fondo consistentes.
+| # | Video ID | Titulo SEO propuesto |
+|---|----------|---------------------|
+| 1 | lgHS6CO2G2s | Detailing profesional en taller real |
+| 2 | TtPs7WPVLzE | Proceso de pulido y correccion de pintura |
+| 3 | ByRhg2kYD-A | Tratamiento ceramico en vehiculo de alta gama |
+| 4 | G3AU2913_vw | Lavado profesional y descontaminacion |
+| 5 | thUgGa5ULkI | Trabajo real en Detail Park Alicante |
+| 6 | kp_yZNZnUwo | Proteccion de pintura y acabado perfecto |
+| 7 | zr_FFDz06Fc | Restauracion y detailing de vehiculos |
+| 8 | iMatPTngV0g | Tecnicas avanzadas de detailing |
+| 9 | U3K4VsFlY8E | Interior detailing profesional |
+| 10 | L14vIkJWgKw | Resultados reales de nuestro taller |
+| 11 | eFfzwvhGNcU | Preparacion de vehiculos premium |
+| 12 | sqK6qkTWynk | Detail Park - Trabajo diario en el taller |
 
 ---
 
 ## Archivos afectados
 
-| Archivo | Cambios |
-|---|---|
-| `src/pages/UpDetail.tsx` | Colores violeta, precio 349 euros, 2 videos YouTube, hero image, import VideoTestimonials |
-| `src/pages/JornadasIntensivas.tsx` | Colores violeta en tarjeta Up Detail, precio 349 euros, FAQ actualizada |
+| Archivo | Accion | Detalle |
+|---------|--------|---------|
+| `src/components/about/AboutVideoChannel.tsx` | Nuevo | Componente de la seccion de videos con grid + video destacado + CTA canal |
+| `src/pages/AboutUs.tsx` | Modificado | Importar y colocar AboutVideoChannel entre AboutGallerySection y JornadaZeroSection |
+| `src/utils/seoConfig.ts` | Modificado | Anadir schemas VideoObject e ItemList al bloque aboutUs |
 
 ---
 
-## Orden de implementacion
+## Detalles tecnicos
 
-1. Actualizar todos los colores amber/orange a violet/purple en `UpDetail.tsx`
-2. Cambiar el precio a 349 euros + IVA en todos los puntos
-3. Cambiar la imagen del hero
-4. Anadir seccion de video promo despues de "Que es Up Detail?"
-5. Anadir seccion de evento pasado Mayo 2025 con video y texto contextual
-6. Importar y colocar `VideoTestimonials` despues de la galeria
-7. Actualizar `JornadasIntensivas.tsx` (hub) con colores y precio coherentes
+### Componente `AboutVideoChannel.tsx`
+- Usa `YouTubeEmbed` existente de `@/components/shared/YouTubeEmbed`
+- Usa `AnimatedSection` y `SectionHeading` existentes
+- El primer video se muestra en un contenedor mas grande con borde y sombra
+- Grid responsive: `grid-cols-2 md:grid-cols-3 lg:grid-cols-4`
+- Boton de canal usa icono de YouTube (SVG inline o icono de lucide `ExternalLink`)
+- Fondo alternado con el patron visual existente (bg-muted/20 o bg-gradient)
+- Las animaciones usan stagger para que los videos aparezcan secuencialmente
+
+### Patron de rendimiento
+- Todos los videos usan facade pattern (thumbnail hasta click) via YouTubeEmbed
+- Las imagenes de thumbnail se cargan con `loading="lazy"`
+- No se carga ningun iframe de YouTube hasta que el usuario hace clic
+
