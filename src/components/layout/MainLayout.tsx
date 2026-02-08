@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
-import { SoyNuevoButton } from '@/components/shared/SoyNuevoButton';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -15,7 +14,6 @@ export function MainLayout({ children }: MainLayoutProps) {
         {children}
       </main>
       <Footer />
-      <SoyNuevoButton />
     </div>
   );
 }

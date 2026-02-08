@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail, BookOpen } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail, BookOpen, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import academiaLogo from '@/assets/academia-detail-logo-light.png';
 
@@ -240,8 +240,8 @@ export function Navbar() {
             </div>
 
             {/* Desktop CTA Buttons */}
-            <div className={`hidden lg:flex items-center gap-3 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`} style={{ transitionDelay: '450ms' }}>
-              {/* WhatsApp Button */}
+            <div className={`hidden lg:flex items-center gap-2 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`} style={{ transitionDelay: '450ms' }}>
+              {/* WhatsApp Button - compact icon */}
               <a 
                 href="https://wa.me/34622773555"
                 target="_blank"
@@ -249,13 +249,30 @@ export function Navbar() {
                 aria-label="Contactar por WhatsApp"
               >
                 <Button 
-                  size="sm"
-                  className="bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold px-4 py-2 rounded-xl shadow-lg shadow-[#25D366]/20 transition-all duration-300 hover:shadow-xl hover:shadow-[#25D366]/30 hover:scale-105"
+                  size="icon"
+                  className="bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-lg shadow-md shadow-[#25D366]/20 transition-all duration-300 hover:shadow-lg hover:shadow-[#25D366]/30 hover:scale-105 h-9 w-9"
                 >
-                  <WhatsAppIcon className="h-4 w-4 mr-2" />
-                  WhatsApp
+                  <WhatsAppIcon className="h-4 w-4" />
                 </Button>
               </a>
+
+              {/* Soy Nuevo Button - animated */}
+              <Link to="/curso-detailing-iniciacion" className="group relative">
+                {/* Glow ring */}
+                <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-primary via-primary to-primary/50 opacity-50 blur-sm group-hover:opacity-80 transition-opacity duration-500 animate-pulse" />
+                <Button 
+                  size="sm"
+                  className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-4 py-2 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 gap-2"
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Soy nuevo
+                  {/* Live dot */}
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-foreground opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary-foreground" />
+                  </span>
+                </Button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -408,22 +425,36 @@ export function Navbar() {
 
           {/* Mobile CTA */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-background/90 backdrop-blur-xl">
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               {/* WhatsApp Button */}
               <a 
                 href="https://wa.me/34622773555"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1"
                 aria-label="Contactar por WhatsApp"
               >
                 <Button 
-                  className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold py-6 rounded-xl shadow-lg"
+                  size="icon"
+                  className="bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-xl shadow-lg h-12 w-12"
                 >
-                  <WhatsAppIcon className="h-5 w-5 mr-2" />
-                  WhatsApp
+                  <WhatsAppIcon className="h-5 w-5" />
                 </Button>
               </a>
+
+              {/* Soy Nuevo Button */}
+              <Link to="/curso-detailing-iniciacion" className="flex-1 group relative">
+                <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-primary via-primary to-primary/50 opacity-50 blur-sm animate-pulse" />
+                <Button 
+                  className="relative w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 rounded-xl shadow-lg gap-2"
+                >
+                  <Sparkles className="h-5 w-5" />
+                  Soy nuevo
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-foreground opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-foreground" />
+                  </span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
