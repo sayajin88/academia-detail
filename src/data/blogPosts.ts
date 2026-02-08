@@ -191,7 +191,10 @@ export const blogPosts: BlogPost[] = [
       {
         id: 'que-es-pulido-profesional',
         title: '¿Qué es el pulido profesional y en qué se diferencia?',
-        content: 'El pulido profesional es mucho más que "sacar brillo". Es un proceso técnico de corrección de la capa de barniz del vehículo que elimina defectos como marcas de lavado (swirl marks), arañazos superficiales, oxidación y hologramas.\n\nLa diferencia entre un pulido amateur y uno profesional radica en tres factores: el diagnóstico previo del estado de la pintura (medición de espesor), la selección correcta de la combinación de pad y compound, y el control preciso de la presión, velocidad y temperatura durante el proceso.\n\nUn profesional bien formado puede transformar una pintura deteriorada en un acabado de espejo en 6-10 horas de trabajo, generando un valor percibido enorme para el cliente.'
+        content: 'El pulido profesional es mucho más que "sacar brillo". Es un proceso técnico de corrección de la capa de barniz del vehículo que elimina defectos como marcas de lavado ([[swirl marks]]), arañazos superficiales, oxidación y hologramas.\n\nLa diferencia entre un pulido amateur y uno profesional radica en tres factores: el diagnóstico previo del estado de la pintura (medición de espesor), la selección correcta de la combinación de pad y compound, y el control preciso de la presión, velocidad y temperatura durante el proceso.\n\nUn profesional bien formado puede transformar una pintura deteriorada en un acabado de espejo en 6-10 horas de trabajo, generando un valor percibido enorme para el cliente.',
+        links: [
+          { text: 'swirl marks', href: '/glosario-detailing#letra-S', rel: 'follow' }
+        ]
       },
       {
         id: 'herramientas-necesarias',
@@ -201,7 +204,10 @@ export const blogPosts: BlogPost[] = [
       {
         id: 'proceso-paso-a-paso',
         title: 'El proceso paso a paso',
-        content: 'Paso 1: Lavado de descontaminación. Antes de tocar la pintura con una pulidora, el vehículo debe estar impecablemente limpio. Esto incluye lavado con espuma, descontaminación con clay bar y desengrasado.\n\nPaso 2: Medición de espesor. Con el medidor, registra el espesor del barniz en cada panel. Esto te dirá cuánto margen tienes para trabajar sin comprometer la pintura.\n\nPaso 3: Corrección. Comienza con el compound menos agresivo que consiga el resultado. Trabaja panel por panel, con pasadas cruzadas y presión constante. La temperatura del pad y la superficie es tu indicador clave.\n\nPaso 4: Refinado. Después de la corrección, el refinado elimina cualquier marca dejada por el compound y deja un acabado cristalino.\n\nPaso 5: Protección. Aplica el sellante o coating cerámico para proteger el trabajo realizado y dar durabilidad al resultado.'
+        content: 'Paso 1: Lavado de descontaminación. Antes de tocar la pintura con una pulidora, el vehículo debe estar impecablemente limpio. Esto incluye lavado con espuma, descontaminación con [[clay bar]] y desengrasado.\n\nPaso 2: Medición de espesor. Con el medidor, registra el espesor del barniz en cada panel. Esto te dirá cuánto margen tienes para trabajar sin comprometer la pintura.\n\nPaso 3: Corrección. Comienza con el compound menos agresivo que consiga el resultado. Trabaja panel por panel, con pasadas cruzadas y presión constante. La temperatura del pad y la superficie es tu indicador clave.\n\nPaso 4: Refinado. Después de la corrección, el refinado elimina cualquier marca dejada por el compound y deja un acabado cristalino.\n\nPaso 5: Protección. Aplica el sellante o coating cerámico para proteger el trabajo realizado y dar durabilidad al resultado.',
+        links: [
+          { text: 'clay bar', href: '/glosario-detailing#letra-C', rel: 'follow' }
+        ]
       },
       {
         id: 'errores-comunes',
@@ -228,7 +234,10 @@ export const blogPosts: BlogPost[] = [
       {
         id: 'que-son',
         title: '¿Qué es el PPF y qué es el cerámico?',
-        content: 'El PPF (Paint Protection Film) es una película de poliuretano transparente que se aplica sobre la pintura del vehículo. Funciona como una barrera física que absorbe impactos de piedras, arañazos y agresiones externas. Los mejores films del mercado tienen propiedades de auto-reparación: los arañazos superficiales desaparecen con el calor.\n\nEl tratamiento cerámico (coating cerámico) es una capa líquida de nanotecnología basada en dióxido de silicio (SiO2) que se aplica sobre la pintura. Crea una capa hidrófoba extremadamente dura que protege contra contaminantes químicos, rayos UV y facilita enormemente la limpieza del vehículo.\n\nAmbos productos son complementarios, no excluyentes. De hecho, la combinación ideal para la máxima protección es PPF + cerámico encima.'
+        content: 'El PPF (Paint Protection Film) es una película de poliuretano transparente que se aplica sobre la pintura del vehículo. Funciona como una barrera física que absorbe impactos de piedras, arañazos y agresiones externas. Los mejores films del mercado tienen propiedades de auto-reparación: los arañazos superficiales desaparecen con el calor.\n\nEl tratamiento cerámico (coating cerámico) es una capa líquida de nanotecnología basada en [[dióxido de silicio (SiO2)]] que se aplica sobre la pintura. Crea una capa hidrófoba extremadamente dura que protege contra contaminantes químicos, rayos UV y facilita enormemente la limpieza del vehículo.\n\nAmbos productos son complementarios, no excluyentes. De hecho, la combinación ideal para la máxima protección es PPF + cerámico encima.',
+        links: [
+          { text: 'dióxido de silicio (SiO2)', href: '/glosario-detailing#letra-S', rel: 'follow' }
+        ]
       },
       {
         id: 'proteccion-fisica',
@@ -307,7 +316,10 @@ export const blogPosts: BlogPost[] = [
       {
         id: 'error-2-productos-baratos',
         title: 'Error 2: Usar productos de baja calidad',
-        content: 'El ahorro en productos es una falsa economía. Un compound barato puede ser demasiado abrasivo, difícil de trabajar y dejar hologramas imposibles de eliminar. Un pad de mala calidad se degrada rápidamente y no distribuye el producto uniformemente.\n\nLa diferencia de coste entre un producto profesional y uno mediocre es mínima comparada con el valor del servicio. Si cobras 400€ por un pulido, la diferencia entre usar un compound de 15€ y uno de 30€ es irrelevante, pero el resultado puede ser drásticamente diferente.\n\nNuestro consejo: elige 2-3 marcas profesionales de confianza y aprende a dominar sus productos. Es mejor conocer a fondo un sistema que tener 20 productos diferentes sin saber cuándo usar cada uno.'
+        content: 'El ahorro en productos es una falsa economía. Un compound barato puede ser demasiado abrasivo, difícil de trabajar y dejar [[hologramas]] imposibles de eliminar. Un pad de mala calidad se degrada rápidamente y no distribuye el producto uniformemente.\n\nLa diferencia de coste entre un producto profesional y uno mediocre es mínima comparada con el valor del servicio. Si cobras 400€ por un pulido, la diferencia entre usar un compound de 15€ y uno de 30€ es irrelevante, pero el resultado puede ser drásticamente diferente.\n\nNuestro consejo: elige 2-3 marcas profesionales de confianza y aprende a dominar sus productos. Es mejor conocer a fondo un sistema que tener 20 productos diferentes sin saber cuándo usar cada uno.',
+        links: [
+          { text: 'hologramas', href: '/glosario-detailing#letra-H', rel: 'follow' }
+        ]
       },
       {
         id: 'error-3-iluminacion',

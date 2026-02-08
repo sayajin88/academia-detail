@@ -310,8 +310,10 @@ export const businessBlogPosts: BlogPost[] = [
       {
         id: 'detailing-sin-agua',
         title: 'Detailing sin agua: productos y técnicas',
-        content: 'El detailing sin agua no es simplemente rociar un spray y pasar un paño. Es una disciplina con sus propias técnicas, productos y metodología que, bien ejecutada, ofrece resultados comparables al lavado tradicional sin el impacto ambiental.\n\nProductos clave: sprays waterless de alta lubricación (la lubricación es crítica para no rayar), toallas de microfibra de alta gama (mínimo 400 GSM), productos de descontaminación sin agua, y ceras o sellantes en formato spray para protección inmediata.\n\nTécnica correcta: aplicar generosamente el producto waterless sobre un panel, dejar actuar 30 segundos para que encapsule la suciedad, retirar con microfibra doblada en cuartos (4 caras limpias por toalla), y nunca frotar sobre suciedad seca. La clave es la lubricación abundante.\n\nLimitaciones honestas: el detailing sin agua funciona perfectamente para mantenimiento regular, pero un vehículo extremadamente sucio (barro, arena gruesa) sigue necesitando un pre-lavado con agua a presión. La honestidad con el cliente sobre estas limitaciones genera confianza.',
-        links: []
+        content: 'El detailing sin agua no es simplemente rociar un spray y pasar un paño. Es una disciplina con sus propias técnicas, productos y metodología que, bien ejecutada, ofrece resultados comparables al lavado tradicional sin el impacto ambiental.\n\nProductos clave: sprays waterless de alta lubricación (la lubricación es crítica para no rayar), toallas de microfibra de alta gama (mínimo 400 [[GSM]]), productos de descontaminación sin agua, y ceras o sellantes en formato spray para protección inmediata.\n\nTécnica correcta: aplicar generosamente el producto waterless sobre un panel, dejar actuar 30 segundos para que encapsule la suciedad, retirar con microfibra doblada en cuartos (4 caras limpias por toalla), y nunca frotar sobre suciedad seca. La clave es la lubricación abundante.\n\nLimitaciones honestas: el detailing sin agua funciona perfectamente para mantenimiento regular, pero un vehículo extremadamente sucio (barro, arena gruesa) sigue necesitando un pre-lavado con agua a presión. La honestidad con el cliente sobre estas limitaciones genera confianza.',
+        links: [
+          { text: 'GSM', href: '/glosario-detailing#letra-G', rel: 'follow' }
+        ]
       },
       {
         id: 'reciclaje-residuos',
@@ -353,8 +355,10 @@ export const businessBlogPosts: BlogPost[] = [
       {
         id: 'margenes-ppf',
         title: 'Los márgenes del PPF vs otros servicios de detailing',
-        content: 'Si analizamos los números fríos, el PPF es el servicio con mayor beneficio absoluto por trabajo del sector del detailing. Los márgenes son espectaculares comparados con cualquier otro servicio del catálogo.\n\nComparativa de beneficio bruto por servicio: lavado premium (ticket 80€, margen 75%, beneficio 60€), pulido completo (ticket 450€, margen 85%, beneficio 382€), tratamiento cerámico (ticket 900€, margen 88%, beneficio 792€), PPF frontal parcial (ticket 2.000€, margen 60%, beneficio 1.200€), PPF full body (ticket 5.500€, margen 55%, beneficio 3.025€).\n\nAunque el porcentaje de margen del PPF es inferior al del pulido o el cerámico (por el coste del material), el beneficio absoluto por trabajo es demoledoramente superior. Un solo PPF frontal genera el mismo beneficio que 3 pulidos completos o 20 lavados premium.\n\nEsta es la razón por la que los centros de detailing más rentables del mercado tienen el PPF como servicio estrella. Y la demanda no para de crecer.',
-        links: []
+        content: 'Si analizamos los números fríos, el [[PPF]] es el servicio con mayor beneficio absoluto por trabajo del sector del detailing. Los márgenes son espectaculares comparados con cualquier otro servicio del catálogo.\n\nComparativa de beneficio bruto por servicio: lavado premium (ticket 80€, margen 75%, beneficio 60€), pulido completo (ticket 450€, margen 85%, beneficio 382€), tratamiento cerámico (ticket 900€, margen 88%, beneficio 792€), PPF frontal parcial (ticket 2.000€, margen 60%, beneficio 1.200€), PPF full body (ticket 5.500€, margen 55%, beneficio 3.025€).\n\nAunque el porcentaje de margen del PPF es inferior al del pulido o el cerámico (por el coste del material), el beneficio absoluto por trabajo es demoledoramente superior. Un solo PPF frontal genera el mismo beneficio que 3 pulidos completos o 20 lavados premium.\n\nEsta es la razón por la que los centros de detailing más rentables del mercado tienen el PPF como servicio estrella. Y la demanda no para de crecer.',
+        links: [
+          { text: 'PPF', href: '/glosario-detailing#letra-P', rel: 'follow' }
+        ]
       },
       {
         id: 'ppf-vs-lavados',
