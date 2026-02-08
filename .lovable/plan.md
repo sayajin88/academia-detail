@@ -1,124 +1,104 @@
 
 
-# Plan: Rediseno visual de la pagina principal del Blog
+# Plan: Mejora del articulo "Como Montar un Negocio de Detailing Rentable en 2026"
 
 ## Objetivo
-Transformar el layout del blog para que siga el estilo "bento grid" de la imagen de referencia, con tarjetas de imagen a pantalla completa con titulo superpuesto, y reemplazar el `BlogNewsletter` por un banner CTA potente de inscripcion a cursos.
+Expandir el articulo a mas de 800 palabras, anadir tablas visuales para datos numericos (inversion, rentabilidad), mejorar el SEO con keywords estrategicas e internal links, y optimizar la meta descripcion para CTR en SERPs.
 
-## Cambios visuales principales
+## Cambios principales
 
-### 1. Nuevo estilo de tarjeta "overlay" para los articulos
-Las tarjetas actuales tienen la imagen arriba y el texto abajo en un fondo `bg-card`. El nuevo diseno muestra la imagen como fondo completo de la tarjeta con el titulo, categoria y metadata superpuestos en la parte inferior con un degradado oscuro. Esto crea un aspecto mucho mas visual e impactante.
+### 1. Extender la interfaz BlogSection para soportar tablas
+Actualmente la interfaz `BlogSection` solo tiene `id`, `title`, `content` y `links`. Para representar datos numericos visualmente, se anadira una propiedad opcional `table` que permite renderizar tablas estilizadas dentro de las secciones.
 
-```text
-Tarjeta actual:                 Tarjeta nueva:
-+------------------+            +------------------+
-| [imagen]         |            |                  |
-|                  |            |   [imagen fondo] |
-+------------------+            |                  |
-| Titulo           |            | CATEGORIA        |
-| Extracto...      |            | TITULO BOLD      |
-| Fecha            |            | TITULO BOLD      |
-+------------------+            +------------------+
-                                  5 min - 12 Ene 2026
-```
+### 2. Actualizar BlogArticleContent para renderizar tablas
+El componente que renderiza el contenido de los articulos se modificara para detectar si una seccion tiene datos de tabla y renderizarlos con un diseno profesional usando los componentes UI de tabla existentes (`src/components/ui/table.tsx`), con estilos que encajen con el tema oscuro del blog.
 
-### 2. Bento grid para la zona hero/featured
-En la parte superior (en vez del hero actual + grid uniforme), se creara un layout tipo bento con:
-- Columna izquierda grande: articulo destacado (featured) a gran tamano
-- Columna derecha: 2-3 tarjetas mas pequenas apiladas (un "highlight" de curso, un articulo secundario, una cita/tip de la semana)
+### 3. Reescribir y expandir el contenido del articulo
+El articulo pasara de ~550 palabras a 900+ palabras con:
 
-```text
-Desktop layout:
-+---------------------------+  +-------------+
-|                           |  | Curso de    |
-|  ARTICULO DESTACADO       |  | Detailing   |
-|  (imagen grande,          |  | [CTA]       |
-|   titulo superpuesto)     |  +-------------+
-|                           |  +-------------+
-|  TENDENCIA                |  | PPF o       |
-|  "Titulo largo..."        |  | Wrapping?   |
-|  Leer Reportaje ->        |  +-------------+
-+---------------------------+  +-------------+
-                               | Tip semana  |
-                               +-------------+
-```
+- **Seccion 1 - Por que el detailing es rentable**: Ampliada con datos de mercado, keywords como "emprender en detailing", "negocio de estetica automotriz", "montar taller detailing"
+- **Seccion 2 - Inversion inicial**: Se anade una **tabla visual** con el desglose detallado de inversiones por categoria (local, equipamiento, stock, marketing, reserva), con columnas de rango minimo/maximo y notas
+- **Seccion 3 - Servicios y precios**: **Nueva seccion** con una **tabla de servicios** mostrando cada servicio (lavado premium, pulido, ceramico, PPF, wrapping), su coste de material, precio de venta y margen de beneficio
+- **Seccion 4 - Ubicacion**: Se mantiene con mejoras en keywords
+- **Seccion 5 - Captacion de clientes**: Ampliada con mas detalle sobre marketing digital y keywords como "marketing para detailing", "captar clientes detailing"
+- **Seccion 6 - Rentabilidad primer ano**: Ampliada con una **tabla de proyeccion trimestral** (facturacion, gastos, beneficio neto) para los primeros 12 meses
+- **Seccion 7 - Formacion profesional**: **Nueva seccion** sobre la importancia de formarse antes de emprender, con enlace interno a las formaciones de Academia Detail
 
-### 3. Banner CTA de inscripcion (reemplaza BlogNewsletter inline)
-En vez del formulario de newsletter, se insertara un banner rojo/burdeos con:
-- Lado izquierdo: titulo "Formarte como Detailer Profesional", subtitulo con propuesta de valor, badges de confianza ("Sello Detail Park", "+500 alumnos formados")
-- Lado derecho: boton CTA grande "Inscribirme Ahora" que enlaza a `/contacto`
-- Sin formulario de inputs, solo el CTA directo
+### 4. Anadir enlaces internos (internal links)
+Usar el sistema de `[[marcadores]]` y `links` ya existente para anadir enlaces internos al articulo:
+- Enlace al curso de detailing (`/formacion/detailing-profesional`)
+- Enlace al articulo de PPF (`/blog/ppf-vs-ceramico-proteccion-vehiculo`)
+- Enlace al articulo de cuanto gana un detailer (`/blog/cuanto-gana-detailer-profesional-espana`)
+- Enlace a la pagina de contacto (`/contacto`)
 
-### 4. Seccion "Ultimos Articulos" con grid overlay
-Debajo del banner CTA, la seccion de articulos paginados usa el nuevo estilo de tarjeta overlay en un grid de 4 columnas (desktop), 2 (tablet), 1 (movil). Encabezado con "Knowledge Base" badge y titulo "Ultimos Articulos" + filtros de categoria e icono de filtro.
+### 5. Optimizar SEO: meta, tags y excerpt
+- **Meta descripcion (excerpt)**: Reescribirla con power words, numeros concretos y CTA: "Monta tu negocio de detailing rentable en 2026. Inversion desde 15.000EUR, margenes del 70% y facturacion de +10.000EUR/mes. Guia paso a paso con tablas de inversion y rentabilidad real."
+- **Tags**: Ampliar con keywords de cola larga: "montar negocio detailing", "emprender detailing", "taller estetica automotriz", "inversion detailing", "rentabilidad detailing", "curso detailing profesional", "plan de negocio detailing"
+- **readingTime**: Actualizar a "15 min" acorde al contenido expandido
 
 ## Detalle tecnico
 
-### Archivos a crear
-
-1. **`src/components/blog/BlogBentoHero.tsx`** -- Layout bento de la zona superior
-   - Recibe el `featuredPost` y muestra el articulo destacado en la columna grande
-   - Columna derecha con:
-     - Tarjeta de promocion del "Curso de Detailing Profesional" (datos de `formations.ts`) con CTA "Ver Detalles"
-     - Tarjeta secundaria con el 2do articulo mas reciente (imagen overlay)
-     - Tarjeta de "Tip de la Semana" con cita inspiracional sobre detailing
-   - Responsive: en movil se apilan verticalmente
-
-2. **`src/components/blog/BlogCardOverlay.tsx`** -- Nueva tarjeta estilo overlay
-   - Imagen como fondo completo
-   - Degradado oscuro en la parte inferior
-   - Categoria en badge de color sobre la imagen
-   - Titulo en bold blanco superpuesto
-   - Metadata (tiempo lectura + fecha) debajo de la tarjeta
-   - Hover: zoom suave de la imagen + elevacion
-   - Se usara tanto en el bento hero como en el grid principal
-
-3. **`src/components/blog/BlogCTABanner.tsx`** -- Banner CTA de inscripcion
-   - Fondo `bg-primary` (burdeos) con patron decorativo sutil
-   - Layout en 2 columnas (texto izquierda, CTA derecha)
-   - Titulo: "Formarte como Detailer Profesional"
-   - Subtitulo: "Aprende la metodologia exacta para dominar el detailing y montar tu propio negocio. Formacion 80% practica con certificacion."
-   - Trust badges: "Sello de Calidad Detail Park" + "+500 Alumnos Formados"
-   - Boton: `<Link to="/contacto">` con texto "Inscribirme Ahora" en estilo blanco sobre fondo primario
-   - Responsive: apilado en movil
-
 ### Archivos a modificar
 
-4. **`src/components/blog/BlogGrid.tsx`** -- Actualizar grid
-   - Usar `BlogCardOverlay` en vez de `BlogCard`
-   - Cambiar grid a 4 columnas en desktop (`lg:grid-cols-4`)
-   - Reemplazar `BlogNewsletter` por `BlogCTABanner`
-   - Mantener la misma logica de filas y animaciones
+1. **`src/data/blogPosts.ts`** (interfaz + contenido del articulo)
+   - Extender `BlogSection` anadiendo:
+     ```
+     table?: {
+       headers: string[];
+       rows: string[][];
+       caption?: string;
+     }
+     ```
+   - Reescribir las secciones del post `como-montar-negocio-detailing-rentable` con contenido expandido, tablas de datos y enlaces internos
+   - Actualizar `excerpt`, `tags` y `readingTime`
 
-5. **`src/pages/Blog.tsx`** -- Reestructurar layout
-   - Sustituir el bloque de `BlogHero` por `BlogBentoHero`
-   - Mover los filtros (categorias + busqueda) debajo del bento, junto al titulo "Ultimos Articulos" con badge "Knowledge Base"
-   - Mantener paginacion existente
-   - Mantener todo el SEO (Helmet, schema, canonical)
+2. **`src/components/blog/BlogArticleContent.tsx`**
+   - Importar componentes de tabla desde `@/components/ui/table`
+   - Detectar `section.table` y renderizar una tabla estilizada con fondo sutil, bordes, y texto legible
+   - Mantener el renderizado actual de parrafos intacto
 
 ### Archivos que NO se tocan
-- `src/data/blogPosts.ts` -- datos intactos
-- `src/data/blogPostsNew.ts` -- datos intactos
-- `src/data/blogPostsBusiness.ts` -- datos intactos
-- `src/components/blog/BlogCard.tsx` -- se mantiene (se usa en `BlogRelatedPosts`)
-- `src/components/blog/BlogNewsletter.tsx` -- se mantiene (se usa en `BlogPost.tsx` individual)
+- `src/pages/BlogPost.tsx` - no necesita cambios, ya usa `post.excerpt` como meta description
+- `src/components/blog/BlogTableOfContents.tsx` - funciona automaticamente con las nuevas secciones
+- `src/data/blogPostsNew.ts` y `src/data/blogPostsBusiness.ts` - otros articulos no cambian
 
-### Estilos clave
+### Tablas que se incluiran
 
-- **Tarjeta overlay**: `aspect-[3/4]` (vertical) en grid principal, imagen `object-cover` como fondo, `bg-gradient-to-t from-black/80 via-black/30 to-transparent` para legibilidad del texto
-- **Titulo overlay**: `font-bold text-white uppercase text-lg leading-tight`, fuente Bebas Neue para impacto visual
-- **Metadata**: fuera de la tarjeta, debajo, en `text-xs text-muted-foreground` con icono de reloj
-- **Banner CTA**: `bg-primary rounded-2xl p-8 md:p-12`, boton blanco con texto burdeos
-- **Bento grid**: `grid-cols-1 lg:grid-cols-3 gap-4`, columna izquierda `lg:col-span-2 lg:row-span-2`
-- **Grid articulos**: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6`
+**Tabla 1 - Desglose de inversion inicial:**
+
+| Concepto | Rango minimo | Rango maximo | Notas |
+|----------|-------------|-------------|-------|
+| Alquiler local (deposito + 3 meses) | 3.000 EUR | 6.000 EUR | Zona industrial recomendada |
+| Equipamiento profesional | 4.000 EUR | 8.000 EUR | Pulidoras, aspiradores, vaporizadoras |
+| Stock inicial de productos | 2.000 EUR | 4.000 EUR | Compounds, coatings, quimicos |
+| Mobiliario y acondicionamiento | 3.000 EUR | 6.000 EUR | Iluminacion, ventilacion, suelo |
+| Marketing inicial | 1.500 EUR | 3.000 EUR | Web, redes, material grafico |
+| Reserva de tesoreria | 1.500 EUR | 3.000 EUR | Colchon primeros meses |
+| **TOTAL** | **15.000 EUR** | **30.000 EUR** | |
+
+**Tabla 2 - Servicios, costes y margenes:**
+
+| Servicio | Coste material | Precio venta | Margen |
+|----------|---------------|-------------|--------|
+| Lavado premium + descontaminacion | 5-10 EUR | 80-150 EUR | ~90% |
+| Pulido correccion completa | 20-35 EUR | 300-500 EUR | ~92% |
+| Tratamiento ceramico | 40-60 EUR | 800-1.500 EUR | ~95% |
+| PPF frontal completo | 300-500 EUR | 1.500-3.000 EUR | ~80% |
+| Car wrapping full body | 800-1.200 EUR | 3.000-5.000 EUR | ~75% |
+
+**Tabla 3 - Proyeccion de rentabilidad primer ano:**
+
+| Periodo | Facturacion mensual | Gastos fijos | Beneficio neto estimado |
+|---------|-------------------|-------------|----------------------|
+| Meses 1-3 (arranque) | 3.000-5.000 EUR | 2.500-3.500 EUR | 500-1.500 EUR |
+| Meses 4-6 (consolidacion) | 6.000-10.000 EUR | 3.000-4.000 EUR | 3.000-6.000 EUR |
+| Meses 7-12 (crecimiento) | 10.000-18.000 EUR | 3.500-5.000 EUR | 6.500-13.000 EUR |
 
 ### Resultado esperado
-- Blog con aspecto visual moderno tipo editorial/magazine
-- Layout bento en la zona hero con contenido variado (articulo destacado + promo curso + articulo secundario + tip)
-- Tarjetas overlay de imagen completa con titulos superpuestos
-- Banner CTA potente para redirigir trafico a inscripcion
-- Grid de 4 columnas para los articulos paginados
-- Totalmente responsive (1 col movil, 2 col tablet, 4 col desktop)
-- Sin cambios en el contenido de los articulos
+- Articulo de 900+ palabras (actualmente ~550)
+- 3 tablas visuales profesionales para datos numericos
+- SEO reforzado con keywords de alta intencion comercial
+- Meta descripcion optimizada para CTR en SERPs
+- Enlaces internos para mejorar la estructura de link juice del sitio
+- Tiempo de lectura actualizado
 
