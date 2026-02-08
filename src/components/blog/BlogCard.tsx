@@ -8,7 +8,7 @@ interface BlogCardProps {
 
 export function BlogCard({ post }: BlogCardProps) {
   return (
-    <article className="group relative bg-card border border-border rounded-xl overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10">
+    <article className="group relative bg-card border border-border rounded-xl overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1">
       <Link to={`/blog/${post.slug}`} className="block">
         {/* Image */}
         <div className="relative aspect-[16/10] overflow-hidden">
@@ -24,7 +24,16 @@ export function BlogCard({ post }: BlogCardProps) {
           <span className={`absolute top-3 left-3 px-3 py-1 text-xs font-semibold rounded-full border ${categoryColors[post.category]}`}>
             {categoryLabels[post.category]}
           </span>
+
+          {/* Reading time badge */}
+          <span className="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-medium rounded-full bg-background/70 text-foreground backdrop-blur-sm border border-border/50 flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            {post.readingTime}
+          </span>
         </div>
+
+        {/* Bottom accent line */}
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
         {/* Content */}
         <div className="p-5">
@@ -40,10 +49,6 @@ export function BlogCard({ post }: BlogCardProps) {
             <span className="flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5" />
               {new Date(post.publishedAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Clock className="h-3.5 w-3.5" />
-              {post.readingTime}
             </span>
           </div>
         </div>
