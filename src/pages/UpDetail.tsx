@@ -88,12 +88,13 @@ const benefits = [
   },
 ];
 
-function YouTubeEmbed({ videoId, title }: { videoId: string; title: string }) {
+function YouTubeEmbed({ videoId, title, isShort = false }: { videoId: string; title: string; isShort?: boolean }) {
   const [playing, setPlaying] = useState(false);
+  const aspectClass = isShort ? 'aspect-[9/16]' : 'aspect-video';
 
   if (playing) {
     return (
-      <div className="relative aspect-video rounded-2xl overflow-hidden">
+      <div className={`relative ${aspectClass} rounded-2xl overflow-hidden`}>
         <iframe
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
           title={title}
@@ -105,14 +106,18 @@ function YouTubeEmbed({ videoId, title }: { videoId: string; title: string }) {
     );
   }
 
+  const thumbUrl = isShort
+    ? `https://img.youtube.com/vi/${videoId}/oar2.jpg`
+    : `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
   return (
     <button
       onClick={() => setPlaying(true)}
-      className="relative aspect-video rounded-2xl overflow-hidden group w-full"
+      className={`relative ${aspectClass} rounded-2xl overflow-hidden group w-full`}
       aria-label={`Reproducir video: ${title}`}
     >
       <img
-        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+        src={thumbUrl}
         alt={title}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
@@ -297,6 +302,50 @@ export default function UpDetail() {
                   <p className="text-sm text-white/70">{benefit.description}</p>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Short Reel — Visual Support */}
+        <section className="py-12 md:py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              {/* Vertical Video */}
+              <div className="w-full max-w-[320px] mx-auto md:mx-0 flex-shrink-0">
+                <div className="rounded-2xl overflow-hidden border-2 border-violet-500/20 shadow-lg shadow-violet-500/10">
+                  <YouTubeEmbed videoId="BGL5AgEtetM" title="Up Detail — Así se vive la experiencia" isShort />
+                </div>
+              </div>
+              {/* Text */}
+              <div className="text-center md:text-left">
+                <Badge className="bg-violet-500/20 text-violet-400 border-violet-500/30 mb-4 text-xs">
+                  📱 Desde dentro del evento
+                </Badge>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                  Así se Vive{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">
+                    Up Detail
+                  </span>
+                </h3>
+                <p className="text-white/70 text-base leading-relaxed mb-6">
+                  Energía, aprendizaje y pasión por el detailing. Un ambiente donde cada minuto cuenta y cada 
+                  demostración te acerca más a dominar las técnicas que transformarán tu carrera profesional.
+                </p>
+                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                  <div className="flex items-center gap-2 text-sm text-white/60">
+                    <Sparkles className="w-4 h-4 text-violet-400" />
+                    Demos en vivo
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-white/60">
+                    <Users className="w-4 h-4 text-violet-400" />
+                    Ambiente profesional
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-white/60">
+                    <Trophy className="w-4 h-4 text-violet-400" />
+                    Nivel experto
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
