@@ -1,121 +1,139 @@
 
 
-# Mejora del Schema.org Injector para Cursos
+# Mejora del robots.txt
 
-## Problema actual
+## Problemas identificados
 
-La funcion `getFormationSEO` en `seoConfig.ts` solo recibe 5 campos del curso (title, description, price, duration, faqs), pero cada curso tiene datos mucho mas ricos en `formationDetails.ts` que Google nunca ve:
+### 1. Rutas publicas que faltan en las directivas Allow
+Las siguientes paginas activas del sitio no estan listadas explicitamente:
+- `/glosario-detailing` (herramienta SEO importante)
+- `/calculadora-dilucion-detailing` (herramienta interactiva)
+- `/jornada-zero-detailing` (evento)
+- `/up-detail-evento` (evento)
+- `/blog/:slug` (articulos individuales -- solo esta `/blog/`)
+- `/politica-privacidad` (pagina legal)
 
-| Dato disponible | Se inyecta en Schema? | Campo Schema.org correspondiente |
-|---|---|---|
-| `modules` (syllabus completo) | NO | `syllabusSections` / `hasPart` |
-| `whatYouLearn` (competencias) | NO | `teaches` (usa texto generico) |
-| `forWho` (audiencia) | NO | `audience` |
-| `instructor` (por curso) | NO | Usa siempre Daniel Lopez |
-| `includes` (lo que incluye) | NO | `coursePrerequisites` / descripcion |
-| `levels` (niveles) | NO | `hasCourseInstance` multiples |
-| `certificationTitle` | NO | `occupationalCredentialAwarded` |
-| `originalPrice` (precio tachado) | NO | `offers.priceSpecification` |
-| `advantages` | NO | (complementario) |
+### 2. Directivas obsoletas o incorrectas
+- `/_next/` -- Es de Next.js, este proyecto usa Vite. No tiene sentido.
+- `/node_modules/` -- No se sirve en produccion.
+- `/src/` -- No se sirve en produccion.
+- `/*.json$` y `/*.map$` -- La sintaxis `$` no es estandar en robots.txt. Debe ser `/*.json` y `/*.map`.
+- `/assets/*.js$` -- Misma sintaxis incorrecta, y ademas bloquea JS que Google podria necesitar para renderizar la pagina (SPA).
 
-Ademas, hay valores hardcoded incorrectos:
-- `duration` siempre cae a "P5D" (5 dias), pero hay cursos de 2, 4 y 2-4 dias
-- `courseWorkload` siempre "PT40H" independientemente del curso
-- `teaches` usa la plantilla generica "Tecnicas profesionales de X" en lugar de los datos reales
-- `occupationalCredentialAwarded` siempre dice "Certificado de Detailing Profesional" incluso para PPF/Wrapping
-- Instructor siempre es Daniel Lopez, pero Wrapping y PPF tienen a Gerardo
+### 3. URLs antiguas que no deberian estar en Disallow
+Las rutas `/jornada-cero`, `/carrera-detailing`, `/formacion/` y `/galeria` hacen redirect 301 en el router de React. Al bloquearlas con `Disallow`, se impide que Google siga el redirect y transfiera la autoridad SEO acumulada a las URLs nuevas. Deben permitirse para que el 301 funcione correctamente.
+
+### 4. Directivas redundantes
+- `Crawl-delay: 0` para Googlebot: Google ignora completamente la directiva `Crawl-delay`.
+- Las secciones de bots sociales (Twitter, Facebook, LinkedIn, Pinterest, WhatsApp) con solo `Allow: /` son redundantes porque la regla general `User-agent: *` con `Allow: /` ya los cubre.
 
 ---
 
-## Cambios planificados
+## Cambios en `public/robots.txt`
 
-### 1. Ampliar la interfaz de datos que recibe `getFormationSEO` (seoConfig.ts)
+### Estructura propuesta
 
-Cambiar la firma de `getFormationSEO` para aceptar el objeto `FormationDetail` completo (o los campos adicionales necesarios):
+```
+# Academia Detail - Robots.txt
+# https://academiadetail.com
 
-**Campos nuevos que se pasaran:**
-- `modules` -- para generar `syllabusSections` / `hasPart`
-- `whatYouLearn` -- para generar `teaches` con datos reales
-- `forWho` -- para generar `audience`
-- `instructor` -- para inyectar el instructor correcto por curso
-- `includes` -- para enriquecer la descripcion del curso
-- `levels` -- para generar multiples `CourseInstance` con precios y duraciones propias
-- `certificationTitle` -- para el nombre correcto del credential
-- `originalPrice` -- para mostrar precio original vs descuento en `offers`
-- `comingSoon` -- para marcar disponibilidad correctamente
+# --- Reglas generales ---
+User-agent: *
+Allow: /
 
-### 2. Mejorar `generateCourseSchemaEnhanced` (seoConfig.ts)
+# Paginas principales
+Allow: /curso-detailing-iniciacion
+Allow: /formacion-profesional-detailing
+Allow: /curso-detailing-profesional
+Allow: /curso-vinilado-vehiculos
+Allow: /curso-ppf-proteccion-pintura
+Allow: /curso-restauracion-vehiculos
+Allow: /quienes-somos
+Allow: /contacto
 
-Refactorizar la funcion para aceptar los nuevos campos y generar un schema mucho mas completo:
+# Eventos
+Allow: /jornada-zero-detailing
+Allow: /up-detail-evento
 
-```text
-Course
-  +-- name, description, url, image
-  +-- provider (EducationalOrganization)
-  +-- teaches[] .................. <-- whatYouLearn real
-  +-- audience ................... <-- forWho real  
-  +-- about[] .................... <-- temas clave del curso
-  +-- syllabusSections[] ......... <-- modules con topics
-  +-- hasCourseInstance[]
-  |     +-- CourseInstance (por cada level)
-  |     |     +-- courseMode: "onsite"
-  |     |     +-- duration: duración real
-  |     |     +-- instructor: instructor real del curso
-  |     |     +-- location: taller
-  |     |     +-- maximumEnrollment: 3
-  |     |     +-- offers: precio especifico del nivel
-  +-- offers (principal)
-  |     +-- price, priceCurrency
-  |     +-- priceSpecification (con precio original tachado)
-  |     +-- availability (LimitedAvailability o PreOrder si comingSoon)
-  +-- occupationalCredentialAwarded
-  |     +-- name: certificationTitle real
-  +-- aggregateRating
-  +-- coursePrerequisites: "Sin experiencia previa"
-  +-- numberOfCredits / totalHistoricalEnrollment
+# Herramientas
+Allow: /glosario-detailing
+Allow: /calculadora-dilucion-detailing
+
+# Blog
+Allow: /blog
+Allow: /blog/
+
+# Legal
+Allow: /politica-privacidad
+
+# Bloquear endpoints internos
+Disallow: /api/
+
+# --- Sitemap ---
+Sitemap: https://academiadetail.com/sitemap.xml
+
+# --- Google ---
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/
+
+# --- Bing ---
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# --- Bots de SEO ---
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Allow: /
+
+# --- Bloquear bots no deseados ---
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
 ```
 
-### 3. Actualizar `FormationDetailPage` para pasar datos completos (FormationDetail.tsx)
+### Detalle de cada cambio
 
-Cambiar la llamada a `getFormationSEO` para pasar el objeto `formation` completo en lugar de solo 5 campos:
-
-Antes:
-```text
-seoConfig.getFormationSEO(slug, {
-  title: formation.title,
-  description: formation.description,
-  price: formation.price,
-  duration: formation.duration,
-  faqs: formation.faqs,
-});
-```
-
-Despues:
-```text
-seoConfig.getFormationSEO(slug, formation);
-```
-
-### 4. Corregir duraciones ISO 8601 por curso (seoConfig.ts)
-
-Mapa de duraciones reales:
-
-| Curso | Duracion real | ISO 8601 | Workload |
-|---|---|---|---|
-| Detailing | 4 dias | P4D | PT32H |
-| Wrapping | 2-4 dias | P4D (max) | PT32H |
-| PPF | 2 dias | P2D | PT16H |
-| Restauracion | 2 dias | P2D | PT16H |
-
-### 5. Corregir instructor por curso (seoConfig.ts)
-
-| Curso | Instructor | Schema |
-|---|---|---|
-| Detailing | Daniel Lopez | instructorSchema actual |
-| Wrapping | Gerardo | nuevo schema con datos de formationDetails |
-| PPF | Gerardo | nuevo schema con datos de formationDetails |
-| Restauracion | Daniel Lopez | instructorSchema actual |
-
-La funcion usara `formation.instructor` para generar el schema del instructor dinamicamente.
+| Cambio | Motivo |
+|---|---|
+| Anadir `/glosario-detailing`, `/calculadora-dilucion-detailing` | Paginas activas no listadas |
+| Anadir `/jornada-zero-detailing`, `/up-detail-evento` | Eventos activos no listados |
+| Anadir `/blog/` (con barra final) | Cubre articulos individuales `/blog/slug` |
+| Anadir `/politica-privacidad` | Pagina legal activa |
+| Eliminar `/_next/`, `/node_modules/`, `/src/` | No existen en produccion (Vite, no Next.js) |
+| Corregir `/*.json$` a eliminar | Sintaxis `$` no estandar; manifest.json ya tiene cache headers |
+| Corregir `/*.map$` a eliminar | Vite no genera .map en produccion por defecto |
+| Eliminar `/assets/*.js$` | Bloquear JS impide que Google renderice la SPA correctamente |
+| Eliminar Disallow de URLs antiguas | Las URLs hacen redirect 301; bloquearlas impide transferir autoridad SEO |
+| Eliminar `Crawl-delay: 0` de Googlebot | Google ignora Crawl-delay |
+| Eliminar secciones redundantes de bots sociales | Ya cubiertos por `User-agent: *` con `Allow: /` |
+| Eliminar `Screaming Frog SEO Spider` | Ya cubierto por `User-agent: *` |
+| Anadir GPTBot, CCBot, anthropic-ai, Claude-Web, Google-Extended | Bloquear bots de IA que scrapen contenido para entrenamiento |
 
 ---
 
@@ -123,14 +141,13 @@ La funcion usara `formation.instructor` para generar el schema del instructor di
 
 | Archivo | Accion | Descripcion |
 |---|---|---|
-| `src/utils/seoConfig.ts` | Modificar | Ampliar `getFormationSEO` y `generateCourseSchemaEnhanced` para aceptar y usar todos los datos del curso: modules, whatYouLearn, forWho, instructor, levels, includes, certificationTitle, originalPrice |
-| `src/pages/FormationDetail.tsx` | Modificar | Pasar el objeto `formation` completo a `getFormationSEO` en lugar de solo 5 campos |
-
----
+| `public/robots.txt` | Reescribir | Actualizar con rutas correctas, eliminar directivas obsoletas, anadir proteccion contra bots de IA |
 
 ## Resultado esperado
 
-- Google recibira un schema Course mucho mas rico con syllabus real, competencias, audiencia, instructor correcto y multiples instancias con precios
-- Cada curso tendra duraciones e instructores correctos en lugar de valores genericos
-- Los rich snippets de Google podran mostrar mas informacion: precio con descuento, modulos del temario, y credenciales especificas
-- Se mantiene retrocompatibilidad con el resto de schemas de la pagina (LocalBusiness, FAQ, Breadcrumbs, etc.)
+- Todas las paginas activas del sitio estan explicitamente permitidas
+- No se bloquean recursos necesarios para el renderizado de la SPA
+- Las URLs antiguas con redirect 301 pueden ser seguidas por Google para transferir autoridad
+- Se elimina sintaxis no estandar que podria causar interpretaciones incorrectas
+- Se anade proteccion contra bots de IA que scrapen contenido para entrenamiento
+
