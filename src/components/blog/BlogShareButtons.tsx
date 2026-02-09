@@ -84,7 +84,7 @@ export function BlogShareButtons({ title, url }: BlogShareButtonsProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Compartir en ${link.name}`}
-            className={`p-2 rounded-lg bg-card border border-border text-muted-foreground transition-all duration-200 hover:border-primary/30 ${link.color}`}
+            className={`p-2 min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg bg-card border border-border text-muted-foreground transition-all duration-200 hover:border-primary/30 ${link.color}`}
           >
             <link.icon className="h-4 w-4" />
           </a>
@@ -92,7 +92,7 @@ export function BlogShareButtons({ title, url }: BlogShareButtonsProps) {
         <button
           onClick={handleCopyLink}
           aria-label="Copiar enlace"
-          className={`p-2 rounded-lg border transition-all duration-200 ${
+          className={`p-2 min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg border transition-all duration-200 ${
             copied
               ? 'bg-primary/10 border-primary/30 text-primary'
               : 'bg-card border-border text-muted-foreground hover:border-primary/30 hover:text-foreground'

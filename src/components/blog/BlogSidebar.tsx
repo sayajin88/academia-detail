@@ -34,6 +34,7 @@ export function BlogSidebar({ readProgress, readingTime }: BlogSidebarProps) {
               src={cursoDetailing}
               alt="Curso de Detailing Profesional"
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
 

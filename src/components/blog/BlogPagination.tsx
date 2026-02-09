@@ -43,14 +43,14 @@ export function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPa
   const pageNumbers = getPageNumbers();
 
   return (
-    <Pagination className="mt-10">
+    <Pagination className="mt-10" aria-label="Paginación del blog">
       <PaginationContent>
         {/* Previous */}
         <PaginationItem>
           <button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40 disabled:pointer-events-none"
+            className="inline-flex items-center gap-1.5 px-4 py-2 min-h-[44px] text-sm font-medium rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40 disabled:pointer-events-none"
             aria-label="Página anterior"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -73,6 +73,7 @@ export function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPa
                   onPageChange(page);
                 }}
                 isActive={page === currentPage}
+                aria-current={page === currentPage ? 'page' : undefined}
                 className={
                   page === currentPage
                     ? 'bg-primary text-primary-foreground border-primary hover:bg-primary/90 hover:text-primary-foreground'
@@ -90,7 +91,7 @@ export function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPa
           <button
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40 disabled:pointer-events-none"
+            className="inline-flex items-center gap-1.5 px-4 py-2 min-h-[44px] text-sm font-medium rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40 disabled:pointer-events-none"
             aria-label="Página siguiente"
           >
             Siguiente
