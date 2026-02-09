@@ -247,7 +247,16 @@ export const blogPosts: BlogPost[] = [
       {
         id: 'coste-durabilidad',
         title: 'Coste y durabilidad: la inversión a largo plazo',
-        content: 'Un tratamiento cerámico profesional cuesta entre 500€ y 1.500€ y dura de 2 a 5 años según el producto y el mantenimiento. Requiere un mantenimiento semestral de refuerzo para mantener sus propiedades óptimas.\n\nUn PPF de calidad profesional cuesta entre 1.500€ y 5.000€ dependiendo de la cobertura (frontal parcial, frontal completo o full body) y dura entre 7 y 10 años. No requiere mantenimiento especial más allá del lavado normal.\n\nSi calculamos el coste por año de protección: cerámico ≈ 200-400€/año, PPF frontal ≈ 200-300€/año, PPF full body ≈ 400-600€/año. A largo plazo, el coste es sorprendentemente similar, pero el nivel de protección del PPF es incomparablemente superior.'
+        content: 'Un tratamiento cerámico profesional cuesta entre 500€ y 1.500€ y dura de 2 a 5 años según el producto y el mantenimiento. Requiere un mantenimiento semestral de refuerzo para mantener sus propiedades óptimas.\n\nUn PPF de calidad profesional cuesta entre 1.500€ y 5.000€ dependiendo de la cobertura (frontal parcial, frontal completo o full body) y dura entre 7 y 10 años. No requiere mantenimiento especial más allá del lavado normal.\n\nSi calculamos el coste por año de protección: cerámico ≈ 200-400€/año, PPF frontal ≈ 200-300€/año, PPF full body ≈ 400-600€/año. A largo plazo, el coste es sorprendentemente similar, pero el nivel de protección del PPF es incomparablemente superior.',
+        table: {
+          headers: ['Protección', 'Coste', 'Durabilidad', 'Coste/año', 'Mantenimiento'],
+          rows: [
+            ['Cerámico profesional', '500 - 1.500 €', '2 - 5 años', '200 - 400 €', 'Refuerzo semestral'],
+            ['PPF frontal', '1.500 - 2.500 €', '7 - 10 años', '200 - 300 €', 'Lavado normal'],
+            ['PPF full body', '4.000 - 5.000 €', '7 - 10 años', '400 - 600 €', 'Lavado normal']
+          ],
+          caption: 'Comparativa de coste y durabilidad: cerámico vs PPF'
+        }
       },
       {
         id: 'que-elegir',
@@ -356,7 +365,16 @@ export const blogPosts: BlogPost[] = [
       {
         id: 'detailer-cuenta-ajena',
         title: 'Detailer por cuenta ajena: salario medio',
-        content: 'Un detailer empleado en España puede esperar los siguientes rangos salariales según su experiencia y la empresa:\n\nDetailer junior (0-2 años de experiencia): 18.000€ - 22.000€ brutos anuales. Normalmente trabaja bajo supervisión y se encarga de lavados premium, descontaminación y preparaciones.\n\nDetailer profesional (2-5 años): 22.000€ - 30.000€ brutos anuales. Realiza pulidos completos, tratamientos cerámicos y tiene autonomía en la gestión de trabajos.\n\nDetailer senior o jefe de taller (5+ años): 30.000€ - 40.000€ brutos anuales. Gestiona equipos, trata con clientes VIP y supervisa la calidad de todos los trabajos.\n\nEstos salarios pueden parecer modestos, pero hay que tener en cuenta que el sector está creciendo y que las empresas premium están dispuestas a pagar más por profesionales realmente cualificados.'
+        content: 'Un detailer empleado en España puede esperar los siguientes rangos salariales según su experiencia y la empresa:\n\nDetailer junior (0-2 años de experiencia): 18.000€ - 22.000€ brutos anuales. Normalmente trabaja bajo supervisión y se encarga de lavados premium, descontaminación y preparaciones.\n\nDetailer profesional (2-5 años): 22.000€ - 30.000€ brutos anuales. Realiza pulidos completos, tratamientos cerámicos y tiene autonomía en la gestión de trabajos.\n\nDetailer senior o jefe de taller (5+ años): 30.000€ - 40.000€ brutos anuales. Gestiona equipos, trata con clientes VIP y supervisa la calidad de todos los trabajos.\n\nEstos salarios pueden parecer modestos, pero hay que tener en cuenta que el sector está creciendo y que las empresas premium están dispuestas a pagar más por profesionales realmente cualificados.',
+        table: {
+          headers: ['Nivel', 'Experiencia', 'Salario bruto anual', 'Funciones principales'],
+          rows: [
+            ['Junior', '0 - 2 años', '18.000 - 22.000 €', 'Lavados premium, descontaminación'],
+            ['Profesional', '2 - 5 años', '22.000 - 30.000 €', 'Pulidos, cerámicos, autonomía'],
+            ['Senior / Jefe de taller', '5+ años', '30.000 - 40.000 €', 'Gestión de equipos, clientes VIP']
+          ],
+          caption: 'Salarios de detailer por cuenta ajena en España (2026)'
+        }
       },
       {
         id: 'detailer-autonomo',
@@ -366,7 +384,18 @@ export const blogPosts: BlogPost[] = [
       {
         id: 'centro-propio',
         title: 'Tu propio centro de detailing: el potencial real',
-        content: 'El salto a tener tu propio centro con empleados es donde el potencial de ingresos se multiplica exponencialmente.\n\nUn centro de detailing bien gestionado con 2-3 empleados puede facturar entre 15.000€ y 35.000€ mensuales. Descontando gastos operativos (nóminas, alquiler, productos, seguros), el beneficio neto para el propietario oscila entre 5.000€ y 15.000€ mensuales.\n\nLos centros más exitosos que conocemos facturan por encima de 40.000€ mensuales, combinando detailing con PPF, wrapping y servicios de lujo como detailing a domicilio para clientes VIP.\n\nEn Academia Detail, nuestro programa de Formación Profesional Completa incluye un módulo de negocio exclusivo donde te ayudamos a crear tu plan de negocio personalizado, con proyecciones financieras realistas y estrategias probadas por nuestros propios alumnos.'
+        content: 'El salto a tener tu propio centro con empleados es donde el potencial de ingresos se multiplica exponencialmente.\n\nUn centro de detailing bien gestionado con 2-3 empleados puede facturar entre 15.000€ y 35.000€ mensuales. Descontando gastos operativos (nóminas, alquiler, productos, seguros), el beneficio neto para el propietario oscila entre 5.000€ y 15.000€ mensuales.\n\nLos centros más exitosos que conocemos facturan por encima de 40.000€ mensuales, combinando detailing con PPF, wrapping y servicios de lujo como detailing a domicilio para clientes VIP.\n\nEn Academia Detail, nuestro programa de Formación Profesional Completa incluye un módulo de negocio exclusivo donde te ayudamos a crear tu plan de negocio personalizado, con proyecciones financieras realistas y estrategias probadas por nuestros propios alumnos.',
+        table: {
+          headers: ['Modalidad', 'Facturación mensual', 'Beneficio neto mensual'],
+          rows: [
+            ['Empleado junior', '—', '1.500 - 1.833 € (neto de nómina)'],
+            ['Autónomo solo', '3.000 - 6.000 €', '1.750 - 4.000 €'],
+            ['Autónomo diversificado (PPF + wrapping)', '6.000 - 12.000 €', '3.500 - 8.000 €'],
+            ['Centro propio (2-3 empleados)', '15.000 - 35.000 €', '5.000 - 15.000 €'],
+            ['Centro premium exitoso', '40.000+ €', '15.000+ €']
+          ],
+          caption: 'Potencial de ingresos según modalidad profesional en detailing'
+        }
       },
       {
         id: 'como-maximizar-ingresos',
