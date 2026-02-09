@@ -1,10 +1,11 @@
-# Academia Detailing - Robots.txt
+# Academia Detail - Robots.txt
 # https://academiadetail.com
 
-# Reglas generales para todos los bots
+# --- Reglas generales ---
 User-agent: *
 Allow: /
-Allow: /blog/
+
+# Paginas principales
 Allow: /curso-detailing-iniciacion
 Allow: /formacion-profesional-detailing
 Allow: /curso-detailing-profesional
@@ -14,66 +15,47 @@ Allow: /curso-restauracion-vehiculos
 Allow: /quienes-somos
 Allow: /contacto
 
-# Bloquear recursos del sistema y archivos innecesarios
+# Eventos
+Allow: /jornada-zero-detailing
+Allow: /up-detail-evento
+
+# Herramientas
+Allow: /glosario-detailing
+Allow: /calculadora-dilucion-detailing
+
+# Blog
+Allow: /blog
+Allow: /blog/
+
+# Legal
+Allow: /politica-privacidad
+
+# Bloquear endpoints internos
 Disallow: /api/
-Disallow: /_next/
-Disallow: /node_modules/
-Disallow: /*.json$
-Disallow: /*.map$
-Disallow: /src/
-Disallow: /assets/*.js$
 
-# Bloquear URLs antiguas (redirigidas)
-Disallow: /jornada-cero
-Disallow: /carrera-detailing
-Disallow: /formacion/
-Disallow: /galeria
-
-# Sitemap
+# --- Sitemap ---
 Sitemap: https://academiadetail.com/sitemap.xml
 
-# Google
+# --- Google ---
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
 
 User-agent: Googlebot-Image
 Allow: /assets/
-Allow: /images/
 
-# Bing
+# --- Bing ---
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
 
-# Redes sociales - Permitir para previsualizaciones
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
-User-agent: Pinterest
-Allow: /
-
-User-agent: WhatsApp
-Allow: /
-
-# Bots de SEO
-User-agent: Screaming Frog SEO Spider
-Allow: /
-
+# --- Bots de SEO ---
 User-agent: AhrefsBot
-Allow: /
 Crawl-delay: 10
 
 User-agent: SemrushBot
 Allow: /
 
-# Bloquear bots maliciosos conocidos
+# --- Bloquear bots no deseados ---
 User-agent: MJ12bot
 Disallow: /
 
@@ -81,4 +63,19 @@ User-agent: DotBot
 Disallow: /
 
 User-agent: BLEXBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Google-Extended
 Disallow: /
