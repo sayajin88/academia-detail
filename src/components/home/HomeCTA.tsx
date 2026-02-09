@@ -22,9 +22,9 @@ export function HomeCTA() {
         }}
       />
 
-      {/* Decorative Circles */}
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-black/10 rounded-full blur-3xl" />
+      {/* Decorative Circles — ocultos en móvil */}
+      <div className="hidden md:block absolute top-0 left-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl" style={{ contain: 'paint' }} />
+      <div className="hidden md:block absolute bottom-0 right-1/4 w-80 h-80 bg-black/10 rounded-full blur-3xl" style={{ contain: 'paint' }} />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">

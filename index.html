@@ -29,12 +29,12 @@
     <link rel="preconnect" href="https://www.youtube-nocookie.com">
     <link rel="preconnect" href="https://i.ytimg.com">
     
-    <!-- Fonts - NO BLOQUEANTE (reducido de 5 a 3 pesos) -->
+    <!-- Fonts - NO BLOQUEANTE (media=print -> swap on load) -->
     <link 
-      rel="preload" 
-      as="style" 
+      rel="stylesheet" 
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600;700&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
+      media="print"
+      onload="this.media='all'"
     />
     <noscript>
       <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">

@@ -38,16 +38,10 @@ export function Navbar() {
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [mobileFormationsOpen, setMobileFormationsOpen] = useState(false);
   const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true); // Eliminado delay de 100ms — visible inmediatamente
   const location = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
-
-  // Trigger entrance animation on mount
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,29 +59,31 @@ export function Navbar() {
     setMobileToolsOpen(false);
   }, [location.pathname]);
 
-  // Update pill position based on active link
+  // Update pill position based on active link — usando rAF para evitar layout síncronos
   useEffect(() => {
     const updatePill = () => {
-      if (!navRef.current) return;
-      
-      const activeLink = navRef.current.querySelector('[data-active="true"]') as HTMLElement;
-      if (activeLink) {
-        const navRect = navRef.current.getBoundingClientRect();
-        const linkRect = activeLink.getBoundingClientRect();
-        setPillStyle({
-          left: linkRect.left - navRect.left,
-          width: linkRect.width,
-          opacity: 1,
-        });
-      } else {
-        setPillStyle(prev => ({ ...prev, opacity: 0 }));
-      }
+      requestAnimationFrame(() => {
+        if (!navRef.current) return;
+        
+        const activeLink = navRef.current.querySelector('[data-active="true"]') as HTMLElement;
+        if (activeLink) {
+          const navRect = navRef.current.getBoundingClientRect();
+          const linkRect = activeLink.getBoundingClientRect();
+          setPillStyle({
+            left: linkRect.left - navRect.left,
+            width: linkRect.width,
+            opacity: 1,
+          });
+        } else {
+          setPillStyle(prev => ({ ...prev, opacity: 0 }));
+        }
+      });
     };
 
     updatePill();
     window.addEventListener('resize', updatePill);
     return () => window.removeEventListener('resize', updatePill);
-  }, [location.pathname, isLoaded]);
+  }, [location.pathname]);
 
   const isActive = (href: string) => {
     if (href === '/') return location.pathname === '/';
@@ -574,13 +570,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* CSS Animation */}
-      <style>{`
-        @keyframes shimmer-border {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-      `}</style>
+      {/* shimmer-border keyframes moved to index.css */}
     </>
   );
 }

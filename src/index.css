@@ -379,7 +379,18 @@ img {
   height: auto;
   object-fit: cover;
   object-position: center;
-  loading: lazy;
+}
+
+/* Brand logos infinite scroll animation */
+@keyframes brand-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Navbar shimmer border animation */
+@keyframes shimmer-border {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .image-centered {
