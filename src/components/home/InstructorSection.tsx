@@ -16,7 +16,7 @@ export function InstructorSection() {
     <section className="py-20 md:py-28 bg-card relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden md:block absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" style={{ contain: 'paint' }} />
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading

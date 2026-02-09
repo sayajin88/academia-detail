@@ -22,7 +22,7 @@ export function HomeHero() {
 
   const videoId = "1JS81ZxslpI";
   const START_SEC = 2;
-  const END_OFFSET = 3; // segundos antes de terminar
+  const END_OFFSET = 3;
 
   const isDestroyedRef = useRef(false);
 
@@ -65,7 +65,6 @@ export function HomeHero() {
                 playerRef.current.seekTo(START_SEC, true);
               }
             } catch {
-              // Player destroyed, clear interval
               if (intervalRef.current) clearInterval(intervalRef.current);
             }
           }, 500);
@@ -88,20 +87,26 @@ export function HomeHero() {
   useEffect(() => {
     if (isMobile) return;
 
-    // Si la API ya está cargada, inicializar directamente
-    if (window.YT?.Player) {
-      initPlayer();
-      return;
-    }
+    // Diferir la carga del YouTube API 5 segundos para no bloquear el LCP
+    const deferTimer = setTimeout(() => {
+      if (isDestroyedRef.current) return;
 
-    // Cargar el script de la YouTube IFrame API
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
+      // Si la API ya está cargada, inicializar directamente
+      if (window.YT?.Player) {
+        initPlayer();
+        return;
+      }
 
-    window.onYouTubeIframeAPIReady = () => initPlayer();
+      // Cargar el script de la YouTube IFrame API
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+
+      window.onYouTubeIframeAPIReady = () => initPlayer();
+    }, 5000);
 
     return () => {
+      clearTimeout(deferTimer);
       isDestroyedRef.current = true;
       if (intervalRef.current) clearInterval(intervalRef.current);
       try {
@@ -133,7 +138,7 @@ export function HomeHero() {
         />
       </picture>
 
-      {/* YouTube IFrame API player — carga inmediata en desktop */}
+      {/* YouTube IFrame API player — carga diferida en desktop */}
       {!isMobile && (
         <div className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${videoReady ? 'opacity-100' : 'opacity-0'}`}>
           <div
@@ -146,11 +151,11 @@ export function HomeHero() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background" />
 
-      {/* Animated Gradient Orbs - Ocultos en móvil (blur-3xl es costoso) */}
+      {/* Animated Gradient Orbs - Solo desktop, con contain para GPU */}
       {!isMobile && (
         <>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-glow/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ contain: 'paint' }} />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-glow/10 rounded-full blur-3xl animate-pulse delay-1000" style={{ contain: 'paint' }} />
         </>
       )}
 

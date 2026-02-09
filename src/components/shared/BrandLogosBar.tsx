@@ -64,12 +64,6 @@ export function BrandLogosBar({
     <section
       className={`py-12 md:py-16 bg-card/50 overflow-hidden ${className}`}
     >
-      <style>{`
-        @keyframes brand-scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
 
       <div className="container mx-auto px-4">
         {variant === 'full' && (
