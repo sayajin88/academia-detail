@@ -7,6 +7,7 @@ import { BlogSearch } from '@/components/blog/BlogSearch';
 import { BlogCategories } from '@/components/blog/BlogCategories';
 import { BlogPagination } from '@/components/blog/BlogPagination';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
+import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { blogPosts, getFeaturedPost, BlogCategory } from '@/data/blogPosts';
 
 const BASE_URL = 'https://academiadetail.com';
@@ -89,6 +90,7 @@ export default function Blog() {
         <title>Blog de Detailing Profesional | Guías y Consejos | Academia Detail</title>
         <meta name="description" content="✅ Guías, consejos y artículos sobre detailing profesional, PPF, car wrapping y emprendimiento. Aprende de expertos con +12 años de experiencia. ➤ Léelo ahora." />
         <meta name="keywords" content="blog detailing, guías detailing profesional, consejos car wrapping, artículos PPF, montar negocio detailing, tips pulido coches" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={`${BASE_URL}/blog`} />
         <meta property="og:title" content="Blog de Detailing Profesional | Academia Detail" />
         <meta property="og:description" content="Guías, consejos y artículos sobre detailing profesional, PPF, car wrapping y emprendimiento." />
@@ -98,8 +100,18 @@ export default function Blog() {
         <script type="application/ld+json">{JSON.stringify(blogSchema)}</script>
       </Helmet>
 
-      <div className="pt-24 md:pt-28 pb-16 md:pb-24">
+      <section aria-label="Blog de detailing profesional" className="pt-24 md:pt-28 pb-16 md:pb-24">
         <div className="container mx-auto px-4">
+          {/* Breadcrumbs */}
+          <PageBreadcrumbs items={[{ label: 'Blog' }]} />
+
+          {/* H1 - visible but styled as section intro */}
+          <h1
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-8"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
+            Blog de Detailing Profesional
+          </h1>
           {/* Bento Hero */}
           {featuredPost && !searchQuery && !activeCategory && (
             <AnimatedSection animation="fade-up" duration="fast">
@@ -144,7 +156,7 @@ export default function Blog() {
             />
           )}
         </div>
-      </div>
+      </section>
     </MainLayout>
   );
 }

@@ -46,10 +46,10 @@ export function BlogCard({ post }: BlogCardProps) {
 
           {/* Meta */}
           <div className="flex items-center gap-4 text-xs text-muted-foreground/70">
-            <span className="flex items-center gap-1.5">
-              <Calendar className="h-3.5 w-3.5" />
+            <time dateTime={post.publishedAt} className="flex items-center gap-1.5">
+              <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
               {new Date(post.publishedAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
-            </span>
+            </time>
           </div>
         </div>
       </Link>

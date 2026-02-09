@@ -10,6 +10,7 @@ import { BlogRelatedPosts } from '@/components/blog/BlogRelatedPosts';
 import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
+import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { getPostBySlug, getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
 
 const BASE_URL = 'https://academiadetail.com';
@@ -69,6 +70,15 @@ export default function BlogPostPage() {
     "keywords": post.tags.join(', ')
   };
 
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": post.author.name,
+    "jobTitle": post.author.role,
+    "worksFor": { "@type": "Organization", "name": "Academia Detail", "url": BASE_URL },
+    "sameAs": ["https://www.instagram.com/danidetailoficial/"]
+  };
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -85,6 +95,7 @@ export default function BlogPostPage() {
         <title>{`${post.title} | Blog Academia Detail`}</title>
         <meta name="description" content={post.excerpt} />
         <meta name="keywords" content={post.tags.join(', ')} />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={`${BASE_URL}${fullUrl}`} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
@@ -99,6 +110,7 @@ export default function BlogPostPage() {
         ))}
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(personSchema)}</script>
       </Helmet>
 
       {/* Reading progress bar */}
@@ -119,6 +131,7 @@ export default function BlogPostPage() {
                 src={post.image}
                 alt={post.imageAlt}
                 className="w-full h-full object-cover"
+                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
               <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent" />
@@ -126,7 +139,10 @@ export default function BlogPostPage() {
 
             {/* Hero content */}
             <div className="relative container mx-auto px-4 pt-32 md:pt-44 pb-10 md:pb-14 min-h-[420px] md:min-h-[500px] flex flex-col justify-end">
-              {/* Badges */}
+              {/* Breadcrumbs */}
+              <div className="absolute top-28 md:top-36 left-4 right-4">
+                <PageBreadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: post.title }]} />
+              </div>
               <div className="flex items-center gap-2.5 mb-5">
                 <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full border ${categoryColors[post.category]}`}>
                   {categoryLabels[post.category]}

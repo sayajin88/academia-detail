@@ -55,13 +55,13 @@ export function BlogCardOverlay({ post, tall = false }: BlogCardOverlayProps) {
         <Clock className="h-3 w-3" />
         <span>{post.readingTime}</span>
         <span className="text-muted-foreground/40">·</span>
-        <span>
+        <time dateTime={post.publishedAt}>
           {new Date(post.publishedAt).toLocaleDateString('es-ES', {
             day: 'numeric',
             month: 'short',
             year: 'numeric',
           })}
-        </span>
+        </time>
       </div>
     </article>
   );

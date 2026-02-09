@@ -81,6 +81,8 @@ export function BlogNewsletter({ variant = 'standalone' }: BlogNewsletterProps) 
         <input
           type="text"
           placeholder="Tu nombre (opcional)"
+          aria-label="Tu nombre"
+          autoComplete="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={100}
@@ -89,6 +91,8 @@ export function BlogNewsletter({ variant = 'standalone' }: BlogNewsletterProps) 
         <input
           type="email"
           placeholder="tu@email.com"
+          aria-label="Tu email"
+          autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required

@@ -61,6 +61,7 @@ export function BlogPostCTA() {
                 src={portfolioFerrari}
                 alt="Trabajo profesional de detailing en Ferrari"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
             </div>

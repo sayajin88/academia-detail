@@ -24,6 +24,7 @@ export function BlogBentoHero({ featuredPost }: BlogBentoHeroProps) {
           src={featuredPost.image}
           alt={featuredPost.imageAlt}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 

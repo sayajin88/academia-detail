@@ -14,7 +14,7 @@ export function BlogCategories({ activeCategory, onCategoryChange }: BlogCategor
         <button
           key={cat ?? 'all'}
           onClick={() => onCategoryChange(cat)}
-          className={`px-4 py-2 text-sm font-medium rounded-full border transition-all duration-200 ${
+          className={`px-4 py-2 min-h-[44px] text-sm font-medium rounded-full border transition-all duration-200 ${
             activeCategory === cat
               ? 'bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20'
               : 'bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground'
