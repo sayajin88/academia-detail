@@ -51,7 +51,21 @@ export const businessBlogPosts: BlogPost[] = [
         id: 'costes-fijos-variables',
         title: 'Costes fijos y variables desglosados',
         content: 'Antes de abrir, necesitas tener claro qué gastos tendrás cada mes independientemente de cuántos coches hagas (costes fijos) y cuáles dependerán del volumen de trabajo (costes variables).\n\nCostes fijos mensuales típicos: alquiler del local (800-2.000€ según zona y tamaño), seguros de responsabilidad civil y del local (150-300€), suministros (agua, luz, internet: 200-400€), gestoría y asesoría fiscal (100-200€), cuota de autónomo o nómina del gerente (300-400€), amortización de equipamiento (200-400€), y marketing recurrente (200-500€). Total estimado: 2.000-4.200€/mes.\n\nCostes variables por servicio: productos de detailing (5-8% del precio de venta), materiales desechables (microfibras, guantes, cinta: 2-3%), y comisiones si tienes comercial (5-10%). Un servicio de pulido de 400€ tiene un coste variable aproximado de 30-50€, lo que deja un margen bruto del 87-92%.\n\nConocer estos números al dedillo te permite calcular con precisión cuántos servicios necesitas al mes para llegar al punto de equilibrio.',
-        links: []
+        links: [],
+        table: {
+          headers: ['Concepto (coste fijo)', 'Rango mensual'],
+          rows: [
+            ['Alquiler del local', '800 - 2.000 €'],
+            ['Seguros (RC + local)', '150 - 300 €'],
+            ['Suministros (agua, luz, internet)', '200 - 400 €'],
+            ['Gestoría y asesoría fiscal', '100 - 200 €'],
+            ['Cuota autónomo / nómina gerente', '300 - 400 €'],
+            ['Amortización de equipamiento', '200 - 400 €'],
+            ['Marketing recurrente', '200 - 500 €'],
+            ['TOTAL COSTES FIJOS', '2.000 - 4.200 €']
+          ],
+          caption: 'Costes fijos mensuales típicos de un centro de detailing'
+        }
       },
       {
         id: 'punto-equilibrio',
@@ -110,13 +124,39 @@ export const businessBlogPosts: BlogPost[] = [
         id: 'comparativa-inversion',
         title: 'Comparativa de inversión inicial',
         content: 'Detailing móvil: furgoneta (usada equipada: 5.000-12.000€ o leasing), generador eléctrico (500-1.500€), depósito de agua y sistema de presión (300-800€), kit de pulidoras y herramientas (2.000-4.000€), stock de productos (500-1.000€), y marketing inicial (500-1.000€). Total: 8.000-20.000€.\n\nTaller físico: depósito y primeros meses de alquiler (2.000-6.000€), acondicionamiento del local (3.000-8.000€), equipamiento profesional (4.000-10.000€), iluminación profesional LED (1.000-3.000€), sistema de extracción y ventilación (500-2.000€), stock de productos (1.000-2.000€), y marketing inicial (1.500-3.000€). Total: 13.000-34.000€.\n\nLa diferencia de inversión es significativa, pero hay que ponerla en contexto: el taller tiene un techo de facturación muy superior y permite ofrecer servicios de alto valor (PPF, wrapping) que el modelo móvil no puede.',
-        links: []
+        links: [],
+        table: {
+          headers: ['Concepto', 'Detailing móvil', 'Taller físico'],
+          rows: [
+            ['Vehículo / local', '5.000 - 12.000 €', '2.000 - 6.000 €'],
+            ['Equipamiento / acondicionamiento', '2.000 - 4.000 €', '4.000 - 10.000 €'],
+            ['Energía / iluminación', '500 - 1.500 €', '1.000 - 3.000 €'],
+            ['Agua / extracción', '300 - 800 €', '500 - 2.000 €'],
+            ['Stock de productos', '500 - 1.000 €', '1.000 - 2.000 €'],
+            ['Marketing inicial', '500 - 1.000 €', '1.500 - 3.000 €'],
+            ['TOTAL', '8.000 - 20.000 €', '13.000 - 34.000 €']
+          ],
+          caption: 'Comparativa de inversión inicial: detailing móvil vs taller físico'
+        }
       },
       {
         id: 'rentabilidad-12-meses',
         title: 'Análisis de rentabilidad a 12 meses',
         content: 'Escenario móvil: con un ticket medio de 250€ y 3 servicios por semana (12 al mes), facturas 3.000€/mes. Con costes variables del 15% y costes fijos de 800€/mes (seguro, combustible, teléfono, marketing), el beneficio neto ronda los 1.750€/mes. Escalable hasta 5.000€/mes si consigues llenar la agenda.\n\nEscenario taller: con un ticket medio de 400€ y 20 servicios al mes (5 por semana), facturas 8.000€/mes. Con costes variables del 12% y costes fijos de 3.200€/mes, el beneficio neto supera los 3.800€/mes. Con servicios de PPF y wrapping, la facturación puede superar los 15.000€/mes en el segundo semestre.\n\nLa diferencia clave es el techo de crecimiento: el modelo móvil está limitado por tu tiempo personal, mientras que el taller puede escalar contratando empleados y ampliando servicios. Un taller con 2 empleados puede triplicar la facturación sin que tú tengas que pulir ni un coche más.',
-        links: []
+        links: [],
+        table: {
+          headers: ['Concepto', 'Detailing móvil', 'Taller físico'],
+          rows: [
+            ['Ticket medio', '250 €', '400 €'],
+            ['Servicios/mes', '12', '20'],
+            ['Facturación/mes', '3.000 €', '8.000 €'],
+            ['Costes fijos/mes', '800 €', '3.200 €'],
+            ['Costes variables', '15%', '12%'],
+            ['Beneficio neto/mes', '~1.750 €', '~3.800 €'],
+            ['Techo escalable', '~5.000 €/mes', '15.000+ €/mes']
+          ],
+          caption: 'Análisis de rentabilidad a 12 meses: móvil vs taller'
+        }
       },
       {
         id: 'modelo-hibrido',
@@ -169,7 +209,16 @@ export const businessBlogPosts: BlogPost[] = [
         content: 'Nivel básico (empezar cuanto antes): pulidora DA (350€), hidrolimpiadora (500€), aspiradora (400€), medidor de espesor (200€), kit de pads y productos (400€), iluminación básica LED (500€), mobiliario básico (500€), marketing inicial (500€). Total: 3.350€. Ideal para modelo móvil o garaje propio.\n\nNivel medio (taller profesional estándar): todo lo anterior más pulidora rotativa (350€), sistema de iluminación profesional (1.500€), sistema de extracción (1.000€), lavabo profesional con osmosis (800€), estantería y organización profesional (600€), señalización y decoración del taller (500€), y alquiler + acondicionamiento (5.000€). Total: 13.600€.\n\nNivel premium (centro de referencia): todo lo anterior más elevador de columnas (3.500€), cabina de aplicación de PPF/wrapping (2.500€), plotter de corte para PPF (3.000€), vaporizadora profesional (800€), y equipamiento de wrapping completo (1.500€). Total: 24.900€.\n\nLa recomendación de [[Detail Park]] es empezar en nivel medio y escalar a premium conforme generas beneficios. Invertir todo de golpe sin experiencia es arriesgado.',
         links: [
           { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true }
-        ]
+        ],
+        table: {
+          headers: ['Nivel', 'Equipamiento clave', 'Inversión total'],
+          rows: [
+            ['Básico (móvil/garaje)', 'Pulidora DA, hidrolimpiadora, aspiradora, medidor, pads, LED básico', '3.350 €'],
+            ['Medio (taller estándar)', 'Todo lo anterior + rotativa, iluminación pro, extracción, osmosis, alquiler', '13.600 €'],
+            ['Premium (centro referencia)', 'Todo lo anterior + elevador, cabina PPF/wrapping, plotter, vaporizadora', '24.900 €']
+          ],
+          caption: 'Desglose de inversión por niveles de equipamiento'
+        }
       },
       {
         id: 'amortizar-inversion',
@@ -214,7 +263,19 @@ export const businessBlogPosts: BlogPost[] = [
         id: 'precios-por-servicio',
         title: 'Estrategia de precios por servicio: detailing, PPF y wrapping',
         content: 'Cada servicio tiene su propia lógica de pricing. Aquí van los rangos de mercado para un centro profesional en España en 2026:\n\nDetailing exterior básico (lavado premium + descontaminación + sellante): 80-150€. Tiempo: 2-3 horas. Margen: 70-80%.\n\nPulido completo (corrección en 2-3 pasos + protección): 350-600€. Tiempo: 5-8 horas. Margen: 80-90%.\n\nTratamiento cerámico profesional (preparación + coating multicapa): 600-1.500€. Tiempo: 8-12 horas (incluyendo curado). Margen: 85-92%.\n\nPPF frontal parcial: 1.200-2.500€. Tiempo: 4-8 horas. Margen: 55-70%. PPF full body: 4.000-8.000€. Tiempo: 2-4 días. Margen: 50-65%.\n\nWrapping completo: 2.500-6.000€. Tiempo: 3-5 días. Margen: 45-65%.\n\nNota: los márgenes del PPF y wrapping son inferiores en porcentaje pero superiores en valor absoluto. Un PPF frontal de 2.000€ con 60% de margen deja 1.200€ de beneficio bruto, más que un pulido de 500€ con 85% de margen (425€).',
-        links: []
+        links: [],
+        table: {
+          headers: ['Servicio', 'Precio', 'Tiempo', 'Margen'],
+          rows: [
+            ['Detailing exterior básico', '80 - 150 €', '2 - 3 h', '70 - 80%'],
+            ['Pulido completo', '350 - 600 €', '5 - 8 h', '80 - 90%'],
+            ['Tratamiento cerámico', '600 - 1.500 €', '8 - 12 h', '85 - 92%'],
+            ['PPF frontal parcial', '1.200 - 2.500 €', '4 - 8 h', '55 - 70%'],
+            ['PPF full body', '4.000 - 8.000 €', '2 - 4 días', '50 - 65%'],
+            ['Wrapping completo', '2.500 - 6.000 €', '3 - 5 días', '45 - 65%']
+          ],
+          caption: 'Precios, tiempos y márgenes por servicio de detailing en España (2026)'
+        }
       },
       {
         id: 'paquetes-premium',
@@ -358,7 +419,18 @@ export const businessBlogPosts: BlogPost[] = [
         content: 'Si analizamos los números fríos, el [[PPF]] es el servicio con mayor beneficio absoluto por trabajo del sector del detailing. Los márgenes son espectaculares comparados con cualquier otro servicio del catálogo.\n\nComparativa de beneficio bruto por servicio: lavado premium (ticket 80€, margen 75%, beneficio 60€), pulido completo (ticket 450€, margen 85%, beneficio 382€), tratamiento cerámico (ticket 900€, margen 88%, beneficio 792€), PPF frontal parcial (ticket 2.000€, margen 60%, beneficio 1.200€), PPF full body (ticket 5.500€, margen 55%, beneficio 3.025€).\n\nAunque el porcentaje de margen del PPF es inferior al del pulido o el cerámico (por el coste del material), el beneficio absoluto por trabajo es demoledoramente superior. Un solo PPF frontal genera el mismo beneficio que 3 pulidos completos o 20 lavados premium.\n\nEsta es la razón por la que los centros de detailing más rentables del mercado tienen el PPF como servicio estrella. Y la demanda no para de crecer.',
         links: [
           { text: 'PPF', href: '/glosario-detailing#letra-P', rel: 'follow' }
-        ]
+        ],
+        table: {
+          headers: ['Servicio', 'Ticket medio', 'Margen', 'Beneficio bruto'],
+          rows: [
+            ['Lavado premium', '80 €', '75%', '60 €'],
+            ['Pulido completo', '450 €', '85%', '382 €'],
+            ['Tratamiento cerámico', '900 €', '88%', '792 €'],
+            ['PPF frontal parcial', '2.000 €', '60%', '1.200 €'],
+            ['PPF full body', '5.500 €', '55%', '3.025 €']
+          ],
+          caption: 'Comparativa de beneficio bruto por servicio de detailing'
+        }
       },
       {
         id: 'ppf-vs-lavados',

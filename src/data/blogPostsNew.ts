@@ -70,7 +70,19 @@ export const newBlogPosts: BlogPost[] = [
         id: 'ingresos-detailer-profesional',
         title: '¿Cuánto puede ganar un Detailer Profesional?',
         content: 'Los ingresos de un detailer profesional varían enormemente según su nivel de especialización, ubicación y modalidad de trabajo:\n\nPor cuenta ajena, un detailer junior puede esperar entre 18.000€ y 22.000€ brutos anuales. Un detailer senior con especialización en PPF o cerámicos puede alcanzar los 30.000-40.000€. Los jefes de taller en centros premium pueden superar los 45.000€ anuales.\n\nComo autónomo, las cifras cambian radicalmente. Un detailer autónomo con buena cartera de clientes puede facturar entre 4.000€ y 10.000€ mensuales netos. Los que combinan detailing, PPF y wrapping pueden superar los 12.000€ mensuales.\n\nCon centro propio y empleados, los ingresos se multiplican. Un centro bien gestionado puede facturar entre 15.000€ y 40.000€ mensuales, con beneficios netos para el propietario de 5.000€ a 15.000€ al mes.\n\nLa clave para maximizar ingresos es la diversificación de servicios y la formación continua. Los detailers que invierten en formación constante pueden cobrar un premium sobre la competencia.',
-        links: []
+        links: [],
+        table: {
+          headers: ['Modalidad', 'Ingresos', 'Observaciones'],
+          rows: [
+            ['Empleado junior', '18.000 - 22.000 €/año', 'Bajo supervisión'],
+            ['Empleado senior (PPF/cerámicos)', '30.000 - 40.000 €/año', 'Especialización valorada'],
+            ['Jefe de taller premium', '45.000+ €/año', 'Gestión de equipos y clientes VIP'],
+            ['Autónomo', '4.000 - 10.000 €/mes netos', 'Con buena cartera de clientes'],
+            ['Autónomo diversificado', '12.000+ €/mes netos', 'Detailing + PPF + wrapping'],
+            ['Centro propio', '15.000 - 40.000 €/mes fact.', 'Beneficio neto: 5.000 - 15.000 €/mes']
+          ],
+          caption: 'Ingresos de un detailer profesional según modalidad de trabajo'
+        }
       },
       {
         id: 'certificacion-importancia',
@@ -129,7 +141,17 @@ export const newBlogPosts: BlogPost[] = [
         id: 'costes-ppf',
         title: 'Costes del PPF: inversión vs. valor',
         content: 'El coste de una instalación profesional de PPF varía según la cobertura elegida y el tipo de film:\n\nPaquete frontal parcial (capó, paragolpes, retrovisores, paso de rueda): 1.200€ - 2.500€. Es la opción más popular y protege las zonas de mayor exposición a impactos.\n\nFrontal completo (toda la parte delantera incluyendo faros y aletas): 2.000€ - 3.500€. La opción recomendada para vehículos que hacen muchos kilómetros por autopista.\n\nFull body (todo el vehículo): 4.000€ - 8.000€. La protección definitiva para vehículos de colección o superdeportivos con pinturas exclusivas.\n\nComparado con el coste de repintar un capó (500-1.500€ dependiendo del color y acabado), el PPF se amortiza con el primer impacto de piedra que evita. Para profesionales del sector, dominar la instalación de PPF abre las puertas al servicio más rentable del detailing actual, con márgenes que superan el 60%.',
-        links: []
+        links: [],
+        table: {
+          headers: ['Paquete PPF', 'Precio', 'Cobertura'],
+          rows: [
+            ['Frontal parcial', '1.200 - 2.500 €', 'Capó, paragolpes, retrovisores, paso de rueda'],
+            ['Frontal completo', '2.000 - 3.500 €', 'Toda la parte delantera incl. faros y aletas'],
+            ['Full body', '4.000 - 8.000 €', 'Todo el vehículo'],
+            ['Repintado capó (referencia)', '500 - 1.500 €', 'Coste si NO tienes PPF']
+          ],
+          caption: 'Precios de instalación profesional de PPF según cobertura'
+        }
       },
       {
         id: 'futuro-ppf-formacion',
@@ -227,7 +249,18 @@ export const newBlogPosts: BlogPost[] = [
         id: 'comparativa-costes-2026',
         title: 'Comparativa de costes actualizada a 2026',
         content: 'Los precios actualizados a 2026 para un vehículo de tamaño medio (tipo BMW Serie 3, Audi A4 o Mercedes Clase C):\n\nCar Wrapping full body con vinilo premium (3M, Avery Dennison, KPMF): 2.500€ - 4.500€. Acabados especiales (cromado, color shift): 3.500€ - 6.000€. Durabilidad: 5-7 años con cuidado adecuado.\n\nPintura completa de calidad profesional: 3.500€ - 7.000€ para colores sólidos y metalizados estándar. Colores especiales o perlados: 5.000€ - 10.000€+. Tiempo de ejecución: 2-4 semanas.\n\nWrapping parcial (techo, retrovisores, detalles): 300€ - 800€. Es una opción popular para personalizar sin un gran desembolso.\n\nEn términos de coste-beneficio, el wrapping ofrece mayor valor en la mayoría de escenarios: precio inferior, reversibilidad, variedad de acabados y protección adicional de la pintura original. La pintura solo es claramente superior cuando buscas un acabado específico que el vinilo no pueda ofrecer.',
-        links: []
+        links: [],
+        table: {
+          headers: ['Servicio', 'Precio (coche medio)', 'Durabilidad', 'Tiempo'],
+          rows: [
+            ['Wrapping full body (vinilo premium)', '2.500 - 4.500 €', '5 - 7 años', '3 - 5 días'],
+            ['Wrapping acabado especial (cromado, color shift)', '3.500 - 6.000 €', '5 - 7 años', '4 - 6 días'],
+            ['Wrapping parcial (techo, retrovisores)', '300 - 800 €', '5 - 7 años', '1 día'],
+            ['Pintura completa profesional (estándar)', '3.500 - 7.000 €', 'Permanente', '2 - 4 semanas'],
+            ['Pintura colores especiales/perlados', '5.000 - 10.000+ €', 'Permanente', '2 - 4 semanas']
+          ],
+          caption: 'Comparativa de precios wrapping vs pintura actualizada a 2026'
+        }
       },
       {
         id: 'wrapping-profesion',
@@ -266,7 +299,18 @@ export const newBlogPosts: BlogPost[] = [
         id: 'inversion-desglosada',
         title: 'Inversión necesaria desglosada al detalle',
         content: 'Vamos a desglosar la inversión real necesaria para montar un centro de detailing profesional, sin edulcorar las cifras:\n\nLocal y acondicionamiento: 5.000€ - 15.000€. Necesitas un mínimo de 100 m², con buena iluminación, ventilación, toma de agua y desagüe. Las zonas industriales ofrecen la mejor relación espacio-precio. El acondicionamiento incluye pintura epoxi del suelo, iluminación LED profesional y cortinas de separación.\n\nEquipamiento principal: 6.000€ - 12.000€. Incluye pulidoras rotativas y DA (mínimo 2 de cada), aspirador profesional, vaporizadora, hidrolimpiadora, compresor, y equipamiento específico de PPF si vas a ofrecer ese servicio (plotter, mesa de corte).\n\nProductos y stock inicial: 3.000€ - 5.000€. Compounds, polish, cerámicos, productos de limpieza, microfibras, pads de todo tipo, y stock de PPF y vinilo si ofreces esos servicios.\n\nMarketing y arranque: 2.000€ - 4.000€. Web profesional, material gráfico, sesión de fotos inicial, campaña de Google Ads y gestión de redes sociales los primeros meses.\n\nTotal realista: 16.000€ - 36.000€ según el nivel de servicio.',
-        links: []
+        links: [],
+        table: {
+          headers: ['Concepto', 'Inversión mínima', 'Inversión máxima'],
+          rows: [
+            ['Local y acondicionamiento', '5.000 €', '15.000 €'],
+            ['Equipamiento principal', '6.000 €', '12.000 €'],
+            ['Productos y stock inicial', '3.000 €', '5.000 €'],
+            ['Marketing y arranque', '2.000 €', '4.000 €'],
+            ['TOTAL', '16.000 €', '36.000 €']
+          ],
+          caption: 'Desglose de inversión para montar un centro de detailing profesional'
+        }
       },
       {
         id: 'herramientas-imprescindibles',
@@ -280,7 +324,16 @@ export const newBlogPosts: BlogPost[] = [
         content: 'Basándonos en la experiencia de más de 170 alumnos de [[Academia Detail]] que han montado sus propios centros, este es un plan financiero realista:\n\nMeses 1-3 (Arranque): facturación de 3.000-6.000€/mes. Estás construyendo cartera de clientes y reputación. Los gastos fijos (alquiler, suministros, cuota de autónomo) rondarán los 2.000-3.000€/mes. Beneficio neto: 0-3.000€/mes.\n\nMeses 4-6 (Consolidación): facturación de 6.000-12.000€/mes. El boca a boca empieza a funcionar, tu perfil de Google My Business acumula reseñas, y empiezas a recibir clientes recurrentes. Beneficio neto: 2.000-6.000€/mes.\n\nMeses 7-12 (Crecimiento): facturación de 10.000-20.000€/mes. Puedes plantearte contratar a tu primer empleado. Los servicios de PPF y wrapping empiezan a pesar en la facturación. Beneficio neto: 4.000-10.000€/mes.\n\nEl punto de equilibrio se alcanza típicamente entre el mes 3 y el mes 6. La inversión inicial se recupera entre el mes 8 y el mes 14. A partir del segundo año, con procesos optimizados y cartera fidelizada, los márgenes mejoran significativamente.',
         links: [
           { text: 'Academia Detail', href: '/formacion-profesional-detailing', rel: 'follow' }
-        ]
+        ],
+        table: {
+          headers: ['Periodo', 'Facturación/mes', 'Gastos fijos/mes', 'Beneficio neto/mes'],
+          rows: [
+            ['Meses 1-3 (arranque)', '3.000 - 6.000 €', '2.000 - 3.000 €', '0 - 3.000 €'],
+            ['Meses 4-6 (consolidación)', '6.000 - 12.000 €', '2.500 - 3.500 €', '2.000 - 6.000 €'],
+            ['Meses 7-12 (crecimiento)', '10.000 - 20.000 €', '3.000 - 5.000 €', '4.000 - 10.000 €']
+          ],
+          caption: 'Proyección financiera del primer año de un centro de detailing'
+        }
       },
       {
         id: 'errores-montar-centro',
@@ -344,7 +397,17 @@ export const newBlogPosts: BlogPost[] = [
         content: 'El detailing de interior es uno de los servicios más rentables que puedes ofrecer. El coste en productos por servicio es mínimo (5-20€ por vehículo), mientras que los precios de mercado son significativos:\n\nLimpieza interior básica: 80-150€ (tiempo: 2-3 horas). Limpieza profunda con descontaminación: 150-300€ (tiempo: 3-5 horas). Restauración de cuero con acondicionamiento: 200-400€ (tiempo: 4-6 horas). Restauración completa de interior premium (cuero + Alcantara + plásticos + techo): 400-800€ (tiempo: 6-10 horas).\n\nEl margen de beneficio oscila entre el 80% y el 90%, lo que hace del detailing de interior un servicio con una rentabilidad excepcional. Además, es un servicio que fideliza enormemente: los propietarios de vehículos de alta gama que ven la transformación de su interior vuelven regularmente y recomiendan activamente.\n\nSi quieres dominar estas técnicas y añadir el detailing de interior a tu oferta de servicios, [[contacta con nosotros]] para conocer nuestras formaciones especializadas.',
         links: [
           { text: 'contacta con nosotros', href: '/contacto', rel: 'follow' }
-        ]
+        ],
+        table: {
+          headers: ['Servicio interior', 'Precio', 'Tiempo', 'Margen'],
+          rows: [
+            ['Limpieza interior básica', '80 - 150 €', '2 - 3 horas', '~85%'],
+            ['Limpieza profunda + descontaminación', '150 - 300 €', '3 - 5 horas', '~87%'],
+            ['Restauración de cuero', '200 - 400 €', '4 - 6 horas', '~88%'],
+            ['Restauración completa premium', '400 - 800 €', '6 - 10 horas', '~90%']
+          ],
+          caption: 'Servicios de detailing de interior: precios, tiempos y márgenes'
+        }
       }
     ],
     relatedSlugs: ['kit-esencial-detailing-herramientas', 'errores-detailer-principiante-como-evitarlos', 'como-ser-detailer-profesional-guia-formacion']
