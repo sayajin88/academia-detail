@@ -110,30 +110,7 @@ export function FormationVideoTestimonials({
           ))}
         </div>
 
-        {/* JSON-LD Structured Data for Videos - Individual VideoObject schemas */}
-        {videos.map((video, index) => (
-          <script key={video.id} type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "VideoObject",
-              "name": video.title,
-              "description": `Testimonio de ${video.name || 'alumno'} sobre su experiencia en el curso de Academia Detail`,
-              "thumbnailUrl": `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`,
-              "uploadDate": "2025-06-01",
-              "contentUrl": `https://www.youtube.com/watch?v=${video.id}`,
-              "embedUrl": `https://www.youtube.com/embed/${video.id}`,
-              "duration": "PT3M",
-              "publisher": {
-                "@type": "Organization",
-                "name": "Academia Detail",
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://academiadetail.com/og-image.png"
-                }
-              }
-            })}
-          </script>
-        ))}
+        {/* VideoObject JSON-LD schemas are now injected centrally via SEO component in getFormationSEO */}
       </div>
     </section>
   );
