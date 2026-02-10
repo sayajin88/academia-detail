@@ -21,6 +21,10 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const PoliticaPrivacidad = lazy(() => import("./pages/PoliticaPrivacidad"));
 const Glossary = lazy(() => import("./pages/Glossary"));
 const CalculadoraDilucion = lazy(() => import("./pages/CalculadoraDilucion"));
+const Directory = lazy(() => import("./pages/Directory"));
+const DirectoryCity = lazy(() => import("./pages/DirectoryCity"));
+const DetailerPage = lazy(() => import("./pages/DetailerPage"));
+const DirectoryJoin = lazy(() => import("./pages/DirectoryJoin"));
 
 const queryClient = new QueryClient();
 
@@ -52,6 +56,10 @@ const App = () => (
               <Route path="/contacto" element={<Contact />} />
               <Route path="/glosario-detailing" element={<Glossary />} />
               <Route path="/calculadora-dilucion-detailing" element={<CalculadoraDilucion />} />
+              <Route path="/directorio" element={<Directory />} />
+              <Route path="/directorio/unete" element={<DirectoryJoin />} />
+              <Route path="/directorio/:province/:city" element={<DirectoryCity />} />
+              <Route path="/directorio/:slug" element={<DetailerPage />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               
