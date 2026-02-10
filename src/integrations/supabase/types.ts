@@ -107,6 +107,167 @@ export type Database = {
         }
         Relationships: []
       }
+      detailer_profiles: {
+        Row: {
+          address: string | null
+          business_name: string
+          city: string
+          created_at: string
+          description: string | null
+          email: string
+          featured_image_url: string | null
+          id: string
+          instagram_handle: string | null
+          is_published: boolean | null
+          is_verified: boolean | null
+          latitude: number | null
+          level_badge: string
+          longitude: number | null
+          owner_name: string
+          phone: string | null
+          province: string
+          services: string[] | null
+          slug: string
+          website_url: string | null
+          whatsapp_number: string | null
+          zip_code: string | null
+        }
+        Insert: {
+          address?: string | null
+          business_name: string
+          city: string
+          created_at?: string
+          description?: string | null
+          email: string
+          featured_image_url?: string | null
+          id?: string
+          instagram_handle?: string | null
+          is_published?: boolean | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          level_badge?: string
+          longitude?: number | null
+          owner_name: string
+          phone?: string | null
+          province: string
+          services?: string[] | null
+          slug: string
+          website_url?: string | null
+          whatsapp_number?: string | null
+          zip_code?: string | null
+        }
+        Update: {
+          address?: string | null
+          business_name?: string
+          city?: string
+          created_at?: string
+          description?: string | null
+          email?: string
+          featured_image_url?: string | null
+          id?: string
+          instagram_handle?: string | null
+          is_published?: boolean | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          level_badge?: string
+          longitude?: number | null
+          owner_name?: string
+          phone?: string | null
+          province?: string
+          services?: string[] | null
+          slug?: string
+          website_url?: string | null
+          whatsapp_number?: string | null
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
+      directory_applications: {
+        Row: {
+          business_name: string
+          city: string
+          course_name: string | null
+          created_at: string
+          email: string
+          experience_level: string | null
+          has_taken_course: boolean | null
+          id: string
+          message: string | null
+          owner_name: string
+          phone: string
+          province: string
+          services: string[] | null
+          status: string
+        }
+        Insert: {
+          business_name: string
+          city: string
+          course_name?: string | null
+          created_at?: string
+          email: string
+          experience_level?: string | null
+          has_taken_course?: boolean | null
+          id?: string
+          message?: string | null
+          owner_name: string
+          phone: string
+          province: string
+          services?: string[] | null
+          status?: string
+        }
+        Update: {
+          business_name?: string
+          city?: string
+          course_name?: string | null
+          created_at?: string
+          email?: string
+          experience_level?: string | null
+          has_taken_course?: boolean | null
+          id?: string
+          message?: string | null
+          owner_name?: string
+          phone?: string
+          province?: string
+          services?: string[] | null
+          status?: string
+        }
+        Relationships: []
+      }
+      portfolio_images: {
+        Row: {
+          after_image_url: string | null
+          before_image_url: string | null
+          created_at: string
+          detailer_id: string
+          id: string
+          title: string | null
+        }
+        Insert: {
+          after_image_url?: string | null
+          before_image_url?: string | null
+          created_at?: string
+          detailer_id: string
+          id?: string
+          title?: string | null
+        }
+        Update: {
+          after_image_url?: string | null
+          before_image_url?: string | null
+          created_at?: string
+          detailer_id?: string
+          id?: string
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_images_detailer_id_fkey"
+            columns: ["detailer_id"]
+            isOneToOne: false
+            referencedRelation: "detailer_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       registrations: {
         Row: {
           accept_marketing: boolean

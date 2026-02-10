@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail, BookOpen, Sparkles, FlaskConical, Settings2 } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail, BookOpen, Sparkles, FlaskConical, Settings2, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import academiaLogo from '@/assets/academia-detail-logo-light.png';
 
@@ -28,6 +28,7 @@ const navLinks = [
   { name: 'Inicio', href: '/', icon: Home },
   { name: 'Quiénes Somos', href: '/quienes-somos', icon: Image },
   { name: 'Blog', href: '/blog', icon: BookOpen },
+  { name: 'Directorio', href: '/directorio', icon: MapPin },
   { name: 'Inscribirse', href: '/contacto', icon: Mail },
 ];
 
