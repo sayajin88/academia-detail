@@ -124,12 +124,17 @@ export type Database = {
           level_badge: string
           longitude: number | null
           owner_name: string
+          owner_photo_url: string | null
           phone: string | null
+          profile_type: string
           province: string
           services: string[] | null
+          skills: string[] | null
           slug: string
+          specialty: string | null
           website_url: string | null
           whatsapp_number: string | null
+          years_experience: number | null
           zip_code: string | null
         }
         Insert: {
@@ -148,12 +153,17 @@ export type Database = {
           level_badge?: string
           longitude?: number | null
           owner_name: string
+          owner_photo_url?: string | null
           phone?: string | null
+          profile_type?: string
           province: string
           services?: string[] | null
+          skills?: string[] | null
           slug: string
+          specialty?: string | null
           website_url?: string | null
           whatsapp_number?: string | null
+          years_experience?: number | null
           zip_code?: string | null
         }
         Update: {
@@ -172,12 +182,17 @@ export type Database = {
           level_badge?: string
           longitude?: number | null
           owner_name?: string
+          owner_photo_url?: string | null
           phone?: string | null
+          profile_type?: string
           province?: string
           services?: string[] | null
+          skills?: string[] | null
           slug?: string
+          specialty?: string | null
           website_url?: string | null
           whatsapp_number?: string | null
+          years_experience?: number | null
           zip_code?: string | null
         }
         Relationships: []
@@ -195,6 +210,7 @@ export type Database = {
           message: string | null
           owner_name: string
           phone: string
+          profile_type: string
           province: string
           services: string[] | null
           status: string
@@ -211,6 +227,7 @@ export type Database = {
           message?: string | null
           owner_name: string
           phone: string
+          profile_type?: string
           province: string
           services?: string[] | null
           status?: string
@@ -227,6 +244,7 @@ export type Database = {
           message?: string | null
           owner_name?: string
           phone?: string
+          profile_type?: string
           province?: string
           services?: string[] | null
           status?: string

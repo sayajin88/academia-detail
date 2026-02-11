@@ -8,7 +8,7 @@ import { DetailerBadge } from '@/components/directory/DetailerBadge';
 import { DetailerMap } from '@/components/directory/DetailerMap';
 import { BeforeAfterSlider } from '@/components/directory/BeforeAfterSlider';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '@/components/ui/breadcrumb';
-import { MapPin, Phone, Globe, Instagram, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Globe, Instagram, MessageCircle, Calendar, Target, Award, CheckCircle, User, Building2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface PortfolioImage {
@@ -25,7 +25,7 @@ const DetailerPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchData = async () => {
       if (!slug) return;
       const { data } = await supabase
         .from('detailer_profiles' as any)
@@ -46,7 +46,7 @@ const DetailerPage = () => {
       }
       setIsLoading(false);
     };
-    fetch();
+    fetchData();
   }, [slug]);
 
   if (isLoading) {
@@ -73,6 +73,15 @@ const DetailerPage = () => {
   const whatsappLink = detailer.whatsapp_number
     ? `https://wa.me/${detailer.whatsapp_number.replace(/\D/g, '')}`
     : null;
+
+  const TypeIcon = detailer.profile_type === 'centro' ? Building2 : User;
+  const typeLabel = detailer.profile_type === 'centro' ? 'Centro' : 'Detailer';
+
+  const badgeLabels: Record<string, string> = {
+    elite_detailer: 'Élite Detailer',
+    master_detailer: 'Master Detailer',
+    certified_pro: 'Certificado Pro',
+  };
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -101,34 +110,56 @@ const DetailerPage = () => {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://academiadetail.com/' },
       { '@type': 'ListItem', position: 2, name: 'Directorio', item: 'https://academiadetail.com/directorio' },
-      { '@type': 'ListItem', position: 3, name: detailer.province, item: `https://academiadetail.com/directorio/${detailer.province.toLowerCase()}` },
-      { '@type': 'ListItem', position: 4, name: detailer.business_name },
+      { '@type': 'ListItem', position: 3, name: detailer.business_name },
     ],
   };
+
+  const stats = [
+    detailer.years_experience != null && {
+      icon: Calendar,
+      label: 'Experiencia',
+      value: `${detailer.years_experience} años`,
+    },
+    detailer.specialty && {
+      icon: Target,
+      label: 'Especialidad',
+      value: detailer.specialty,
+    },
+    {
+      icon: Award,
+      label: 'Rango',
+      value: badgeLabels[detailer.level_badge] || detailer.level_badge,
+    },
+    detailer.is_verified && {
+      icon: CheckCircle,
+      label: 'Estado',
+      value: 'Verificado',
+    },
+  ].filter(Boolean) as { icon: any; label: string; value: string }[];
 
   return (
     <MainLayout>
       <Helmet>
-        <title>{detailer.business_name} - Detailer en {detailer.city} | Academia Detail</title>
-        <meta name="description" content={`${detailer.business_name} en ${detailer.city}, ${detailer.province}. ${detailer.services.slice(0, 3).join(', ')}. Profesional certificado por Academia Detail ✅`} />
+        <title>{detailer.business_name} - {typeLabel} en {detailer.city} | Academia Detail</title>
+        <meta name="description" content={`${detailer.business_name} — ${typeLabel} ${badgeLabels[detailer.level_badge]} en ${detailer.city}, ${detailer.province}. ${detailer.services.slice(0, 3).join(', ')}. Certificado por Academia Detail ✅`} />
         <link rel="canonical" href={`https://academiadetail.com/directorio/${detailer.slug}`} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
 
-      {/* Hero Image */}
-      <div className="relative h-64 md:h-96 bg-muted">
+      {/* Hero with background image */}
+      <div className="relative h-72 md:h-[420px] bg-muted">
         {detailer.featured_image_url ? (
           <img src={detailer.featured_image_url} alt={detailer.business_name} className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-card to-background" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 -mt-24 relative z-10 pb-20">
+      <div className="container mx-auto px-4 -mt-32 relative z-10 pb-20 space-y-8">
         {/* Breadcrumbs */}
-        <Breadcrumb className="mb-6">
+        <Breadcrumb className="mb-4">
           <BreadcrumbList>
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -138,69 +169,128 @@ const DetailerPage = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
-        {/* Info Card */}
-        <div className="bg-card/80 backdrop-blur-xl border border-border rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-            <div className="space-y-2">
-              <div className="flex items-center gap-3 flex-wrap">
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground">{detailer.business_name}</h1>
-                <DetailerBadge level={detailer.level_badge} size="lg" />
+        {/* Main profile card */}
+        <div className="bg-card/80 backdrop-blur-xl border border-border rounded-2xl p-6 md:p-8 shadow-xl">
+          <div className="flex flex-col md:flex-row gap-6 items-start">
+            {/* Photo */}
+            <div className="shrink-0">
+              {detailer.owner_photo_url ? (
+                <div className={`w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-4 ${
+                  detailer.level_badge === 'elite_detailer' ? 'border-[hsl(45,93%,47%)] shadow-[0_0_20px_hsl(45_93%_47%/0.3)]' :
+                  detailer.level_badge === 'master_detailer' ? 'border-[hsl(220,15%,70%)] shadow-[0_0_15px_hsl(220_10%_50%/0.2)]' :
+                  'border-primary/40'
+                }`}>
+                  <img src={detailer.owner_photo_url} alt={detailer.owner_name} className="w-full h-full object-cover" />
+                </div>
+              ) : (
+                <div className={`w-28 h-28 md:w-36 md:h-36 rounded-full flex items-center justify-center bg-muted border-4 ${
+                  detailer.level_badge === 'elite_detailer' ? 'border-[hsl(45,93%,47%)]' :
+                  detailer.level_badge === 'master_detailer' ? 'border-[hsl(220,15%,70%)]' :
+                  'border-primary/40'
+                }`}>
+                  <TypeIcon className="h-12 w-12 text-muted-foreground" />
+                </div>
+              )}
+            </div>
+
+            {/* Info */}
+            <div className="flex-1 space-y-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+                  <TypeIcon className="h-3.5 w-3.5" />
+                  {typeLabel}
+                </span>
+                <DetailerBadge level={detailer.level_badge} size="md" />
               </div>
-              <div className="flex items-center gap-1.5 text-muted-foreground">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground">{detailer.business_name}</h1>
+              <p className="text-lg text-muted-foreground">{detailer.owner_name}</p>
+              <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
                 <MapPin className="h-4 w-4" />
                 <span>{detailer.address ? `${detailer.address}, ` : ''}{detailer.city}, {detailer.province}</span>
               </div>
-            </div>
 
-            {/* Contact buttons */}
-            <div className="flex gap-2 flex-wrap">
-              {whatsappLink && (
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <Button className="gap-2 bg-[#25D366] hover:bg-[#20BA5A] text-white">
-                    <MessageCircle className="h-4 w-4" />WhatsApp
-                  </Button>
-                </a>
-              )}
-              {detailer.phone && (
-                <a href={`tel:${detailer.phone}`}>
-                  <Button variant="outline" className="gap-2"><Phone className="h-4 w-4" />Llamar</Button>
-                </a>
-              )}
-              {detailer.website_url && (
-                <a href={detailer.website_url} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" className="gap-2"><Globe className="h-4 w-4" />Web</Button>
-                </a>
-              )}
-              {detailer.instagram_handle && (
-                <a href={`https://instagram.com/${detailer.instagram_handle}`} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" className="gap-2"><Instagram className="h-4 w-4" />Instagram</Button>
-                </a>
-              )}
-            </div>
-          </div>
-
-          {detailer.description && (
-            <p className="text-muted-foreground leading-relaxed max-w-3xl">{detailer.description}</p>
-          )}
-
-          {/* Services */}
-          {detailer.services.length > 0 && (
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold text-foreground">Servicios</h2>
-              <div className="flex flex-wrap gap-2">
-                {detailer.services.map((s) => (
-                  <span key={s} className="px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary border border-primary/20">
-                    {s}
-                  </span>
-                ))}
+              {/* Contact buttons */}
+              <div className="flex gap-2 flex-wrap pt-2">
+                {whatsappLink && (
+                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                    <Button className="gap-2 bg-[#25D366] hover:bg-[#20BA5A] text-white">
+                      <MessageCircle className="h-4 w-4" />WhatsApp
+                    </Button>
+                  </a>
+                )}
+                {detailer.phone && (
+                  <a href={`tel:${detailer.phone}`}>
+                    <Button variant="outline" className="gap-2"><Phone className="h-4 w-4" />Llamar</Button>
+                  </a>
+                )}
+                {detailer.website_url && (
+                  <a href={detailer.website_url} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" className="gap-2"><Globe className="h-4 w-4" />Web</Button>
+                  </a>
+                )}
+                {detailer.instagram_handle && (
+                  <a href={`https://instagram.com/${detailer.instagram_handle}`} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" className="gap-2"><Instagram className="h-4 w-4" />Instagram</Button>
+                  </a>
+                )}
               </div>
             </div>
-          )}
+          </div>
         </div>
+
+        {/* Stats panel */}
+        {stats.length > 0 && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {stats.map((stat) => (
+              <div key={stat.label} className="bg-card/60 backdrop-blur border border-border rounded-xl p-4 text-center space-y-2">
+                <stat.icon className="h-6 w-6 text-primary mx-auto" />
+                <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">{stat.label}</p>
+                <p className="text-lg font-bold text-foreground">{stat.value}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Description */}
+        {detailer.description && (
+          <div className="space-y-3">
+            <h2 className="text-xl font-bold text-foreground">Sobre {detailer.profile_type === 'centro' ? 'el centro' : 'mí'}</h2>
+            <p className="text-muted-foreground leading-relaxed max-w-3xl">{detailer.description}</p>
+          </div>
+        )}
+
+        {/* Skills */}
+        {detailer.skills && detailer.skills.length > 0 && (
+          <div className="space-y-3">
+            <h2 className="text-xl font-bold text-foreground">Habilidades</h2>
+            <div className="flex flex-wrap gap-3">
+              {detailer.skills.map((skill) => (
+                <div key={skill} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 text-primary border border-primary/20">
+                  <Sparkles className="h-4 w-4" />
+                  <span className="text-sm font-medium">{skill}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Services */}
+        {detailer.services.length > 0 && (
+          <div className="space-y-3">
+            <h2 className="text-xl font-bold text-foreground">Servicios</h2>
+            <div className="flex flex-wrap gap-2">
+              {detailer.services.map((s) => (
+                <span key={s} className="px-4 py-1.5 text-sm font-medium rounded-full bg-primary/10 text-primary border border-primary/20">
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Map */}
         {detailer.latitude && detailer.longitude && (
-          <div className="mt-8 space-y-3">
+          <div className="space-y-3">
             <h2 className="text-xl font-bold text-foreground">Ubicación</h2>
             <DetailerMap latitude={detailer.latitude} longitude={detailer.longitude} businessName={detailer.business_name} />
           </div>
@@ -208,7 +298,7 @@ const DetailerPage = () => {
 
         {/* Portfolio */}
         {portfolio.length > 0 && (
-          <div className="mt-8 space-y-4">
+          <div className="space-y-4">
             <h2 className="text-xl font-bold text-foreground">Portfolio — Antes / Después</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {portfolio.map((img) =>

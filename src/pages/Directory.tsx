@@ -18,6 +18,7 @@ const Directory = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedLevel, setSelectedLevel] = useState('');
+  const [selectedType, setSelectedType] = useState('');
   const [isLocating, setIsLocating] = useState(false);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
 
@@ -79,6 +80,10 @@ const Directory = () => {
       result = result.filter((d) => d.level_badge === selectedLevel);
     }
 
+    if (selectedType) {
+      result = result.filter((d) => (d as any).profile_type === selectedType);
+    }
+
     if (selectedServices.length > 0) {
       result = result.filter((d) =>
         selectedServices.every((s) => d.services.includes(s))
@@ -100,7 +105,7 @@ const Directory = () => {
     });
 
     return result;
-  }, [detailers, searchQuery, selectedLevel, selectedServices, userLocation]);
+  }, [detailers, searchQuery, selectedLevel, selectedServices, selectedType, userLocation]);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -142,6 +147,8 @@ const Directory = () => {
             onToggleService={toggleService}
             selectedLevel={selectedLevel}
             onLevelChange={setSelectedLevel}
+            selectedType={selectedType}
+            onTypeChange={setSelectedType}
           />
           <Link to="/directorio/unete">
             <Button variant="outline" className="gap-2 border-primary/30 hover:bg-primary/10 hover:text-primary whitespace-nowrap">

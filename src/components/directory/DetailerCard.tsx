@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MapPin, Phone } from 'lucide-react';
+import { MapPin, Phone, User, Building2 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { DetailerBadge } from './DetailerBadge';
 
@@ -11,7 +11,7 @@ export interface DetailerProfile {
   city: string;
   province: string;
   services: string[];
-  level_badge: 'member' | 'certified' | 'master';
+  level_badge: 'certified_pro' | 'master_detailer' | 'elite_detailer';
   is_verified: boolean;
   featured_image_url: string | null;
   description: string | null;
@@ -24,6 +24,11 @@ export interface DetailerProfile {
   email: string;
   address: string | null;
   zip_code: string | null;
+  profile_type: 'detailer' | 'centro';
+  owner_photo_url: string | null;
+  skills: string[];
+  years_experience: number | null;
+  specialty: string | null;
 }
 
 interface DetailerCardProps {
@@ -31,6 +36,9 @@ interface DetailerCardProps {
 }
 
 export function DetailerCard({ detailer }: DetailerCardProps) {
+  const TypeIcon = detailer.profile_type === 'centro' ? Building2 : User;
+  const typeLabel = detailer.profile_type === 'centro' ? 'Centro' : 'Detailer';
+
   return (
     <Link to={`/directorio/${detailer.slug}`} className="group block">
       <Card className="overflow-hidden border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-[var(--shadow-glow-subtle)] bg-card">
@@ -50,9 +58,13 @@ export function DetailerCard({ detailer }: DetailerCardProps) {
               </span>
             </div>
           )}
-          {/* Badge overlay */}
-          <div className="absolute top-3 left-3">
+          {/* Badge + Type overlay */}
+          <div className="absolute top-3 left-3 flex items-center gap-2">
             <DetailerBadge level={detailer.level_badge} size="sm" />
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-background/80 backdrop-blur-sm text-foreground border border-border/50">
+              <TypeIcon className="h-3 w-3" />
+              {typeLabel}
+            </span>
           </div>
         </div>
 
