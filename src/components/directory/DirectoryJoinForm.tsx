@@ -9,9 +9,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Send, Loader2, CheckCircle2 } from 'lucide-react';
+import { Send, Loader2, CheckCircle2, User, Building2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 const ALL_SERVICES = [
   'Pulido', 'Cerámico', 'Interior', 'PPF', 'Wrapping',
@@ -19,6 +20,7 @@ const ALL_SERVICES = [
 ];
 
 const schema = z.object({
+  profile_type: z.enum(['detailer', 'centro']),
   business_name: z.string().trim().min(1, 'Obligatorio').max(100),
   owner_name: z.string().trim().min(1, 'Obligatorio').max(100),
   email: z.string().trim().email('Email no válido'),
@@ -42,6 +44,7 @@ export function DirectoryJoinForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
+      profile_type: 'detailer',
       business_name: '', owner_name: '', email: '', phone: '',
       city: '', province: '', services: [], experience_level: '',
       has_taken_course: false, course_name: '', message: '',
@@ -50,11 +53,13 @@ export function DirectoryJoinForm() {
   });
 
   const hasTakenCourse = form.watch('has_taken_course');
+  const profileType = form.watch('profile_type');
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
       const { error } = await supabase.from('directory_applications' as any).insert({
+        profile_type: data.profile_type,
         business_name: data.business_name,
         owner_name: data.owner_name,
         email: data.email,
@@ -106,13 +111,43 @@ export function DirectoryJoinForm() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Profile type selector */}
+            <FormField control={form.control} name="profile_type" render={({ field }) => (
+              <FormItem>
+                <FormLabel>¿Qué tipo de perfil eres? *</FormLabel>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { value: 'detailer' as const, label: 'Soy Detailer', desc: 'Profesional independiente', icon: User },
+                    { value: 'centro' as const, label: 'Soy Centro', desc: 'Negocio / taller establecido', icon: Building2 },
+                  ].map((opt) => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => field.onChange(opt.value)}
+                      className={cn(
+                        'flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all text-center',
+                        field.value === opt.value
+                          ? 'border-primary bg-primary/10 text-foreground'
+                          : 'border-border bg-card text-muted-foreground hover:border-primary/30'
+                      )}
+                    >
+                      <opt.icon className={cn('h-8 w-8', field.value === opt.value ? 'text-primary' : '')} />
+                      <span className="font-semibold text-sm">{opt.label}</span>
+                      <span className="text-[11px]">{opt.desc}</span>
+                    </button>
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )} />
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField control={form.control} name="business_name" render={({ field }) => (
-                <FormItem><FormLabel>Nombre comercial *</FormLabel><FormControl><Input placeholder="Tu negocio" {...field} className="h-12" /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>{profileType === 'centro' ? 'Nombre del centro *' : 'Nombre comercial *'}</FormLabel><FormControl><Input placeholder={profileType === 'centro' ? 'Tu centro' : 'Tu negocio'} {...field} className="h-12" /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="owner_name" render={({ field }) => (
-                <FormItem><FormLabel>Nombre del titular *</FormLabel><FormControl><Input placeholder="Tu nombre" {...field} className="h-12" /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>{profileType === 'centro' ? 'Responsable *' : 'Nombre del titular *'}</FormLabel><FormControl><Input placeholder="Tu nombre" {...field} className="h-12" /></FormControl><FormMessage /></FormItem>
               )} />
             </div>
 

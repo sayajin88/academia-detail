@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { User, Building2 } from 'lucide-react';
 
 const ALL_SERVICES = [
   'Pulido', 'Cerámico', 'Interior', 'PPF', 'Wrapping',
@@ -7,9 +8,15 @@ const ALL_SERVICES = [
 
 const LEVELS = [
   { value: '', label: 'Todos' },
-  { value: 'master', label: '⭐ Master' },
-  { value: 'certified', label: '🛡️ Certified' },
-  { value: 'member', label: 'Member' },
+  { value: 'elite_detailer', label: '👑 Élite Detailer' },
+  { value: 'master_detailer', label: '⭐ Master Detailer' },
+  { value: 'certified_pro', label: '🛡️ Certificado Pro' },
+];
+
+const TYPES = [
+  { value: '', label: 'Todos', icon: null },
+  { value: 'detailer', label: 'Detailers', icon: User },
+  { value: 'centro', label: 'Centros', icon: Building2 },
 ];
 
 interface DirectoryFiltersProps {
@@ -17,6 +24,8 @@ interface DirectoryFiltersProps {
   onToggleService: (service: string) => void;
   selectedLevel: string;
   onLevelChange: (level: string) => void;
+  selectedType: string;
+  onTypeChange: (type: string) => void;
 }
 
 export function DirectoryFilters({
@@ -24,9 +33,30 @@ export function DirectoryFilters({
   onToggleService,
   selectedLevel,
   onLevelChange,
+  selectedType,
+  onTypeChange,
 }: DirectoryFiltersProps) {
   return (
     <div className="space-y-4">
+      {/* Type filter */}
+      <div className="flex flex-wrap gap-2">
+        {TYPES.map((type) => (
+          <button
+            key={type.value}
+            onClick={() => onTypeChange(type.value)}
+            className={cn(
+              'px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border inline-flex items-center gap-1.5',
+              selectedType === type.value
+                ? 'bg-primary text-primary-foreground border-primary'
+                : 'bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground'
+            )}
+          >
+            {type.icon && <type.icon className="h-3.5 w-3.5" />}
+            {type.label}
+          </button>
+        ))}
+      </div>
+
       {/* Level filter */}
       <div className="flex flex-wrap gap-2">
         {LEVELS.map((level) => (

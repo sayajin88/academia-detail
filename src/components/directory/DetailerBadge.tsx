@@ -1,27 +1,27 @@
-import { Star, Shield, Award } from 'lucide-react';
+import { Crown, Star, Shield } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface DetailerBadgeProps {
-  level: 'member' | 'certified' | 'master';
+  level: 'certified_pro' | 'master_detailer' | 'elite_detailer';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
 
 const badgeConfig = {
-  master: {
-    label: 'Master',
-    icon: Star,
+  elite_detailer: {
+    label: 'Élite Detailer',
+    icon: Crown,
     className: 'bg-gradient-to-r from-[hsl(45,93%,47%)] to-[hsl(45,93%,67%)] text-[hsl(45,93%,10%)] shadow-[0_0_20px_hsl(45_93%_47%/0.4)]',
   },
-  certified: {
-    label: 'Certified',
-    icon: Shield,
-    className: 'bg-gradient-to-r from-[hsl(210,10%,60%)] to-[hsl(210,10%,80%)] text-[hsl(210,10%,10%)] shadow-[0_0_15px_hsl(210_10%_60%/0.3)]',
+  master_detailer: {
+    label: 'Master Detailer',
+    icon: Star,
+    className: 'bg-gradient-to-r from-[hsl(220,10%,45%)] to-[hsl(220,15%,70%)] text-white shadow-[0_0_15px_hsl(220_10%_50%/0.3)]',
   },
-  member: {
-    label: 'Member',
-    icon: Award,
-    className: 'bg-muted text-muted-foreground border border-border',
+  certified_pro: {
+    label: 'Certificado Pro',
+    icon: Shield,
+    className: 'bg-primary/20 text-primary border border-primary/40',
   },
 };
 
