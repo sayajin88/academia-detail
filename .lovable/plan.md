@@ -1,291 +1,194 @@
 
-# Plan: Directorio de Profesionales (Marketplace de Servicios)
+
+# Plan: Diferenciar Detailers vs Centros + Mejorar Ficha de Perfil
 
 ## Resumen
 
-Modulo completo de directorio de detailers certificados. Sin autenticacion -- los detailers envian un formulario publico de solicitud y un admin los da de alta. Incluye subida de imagenes con almacenamiento en Lovable Cloud y mapas con OpenStreetMap/Leaflet (gratis).
+Dos cambios principales:
+1. Nuevo campo `profile_type` ("detailer" o "centro") en la base de datos, reflejado en tarjetas, filtros y formulario.
+2. Rediseno completo de la pagina de perfil (DetailerPage) con foto del profesional, habilidades, anos de experiencia, especialidad y rango.
+
+Los rangos cambian de `member/certified/master` a `certified_pro/master_detailer/elite_detailer`.
 
 ---
 
-## Fase 1: Base de Datos
+## 1. Base de Datos - Migracion
 
-### Nuevas tablas
+### Nuevos campos en `detailer_profiles`
 
-**`detailer_profiles`**
+| Campo | Tipo | Default | Descripcion |
+|---|---|---|---|
+| profile_type | text | 'detailer' | 'detailer' o 'centro' |
+| owner_photo_url | text | null | Foto del profesional/dueno |
+| skills | text[] | '{}' | Array: Correccion de pintura, Ceramico, PPF, etc. |
+| years_experience | integer | null | Anos de experiencia |
+| specialty | text | null | Especialidad principal |
 
-| Campo | Tipo | Notas |
-|---|---|---|
-| id | uuid (PK) | Auto-generado |
-| created_at | timestamptz | Default now() |
-| business_name | text | Nombre comercial |
-| slug | text (unique) | URL amigable |
-| owner_name | text | Nombre del titular |
-| email | text | Contacto interno |
-| phone | text | Telefono |
-| city | text | Ciudad |
-| province | text | Provincia |
-| zip_code | text | Codigo postal |
-| address | text | Direccion completa |
-| latitude | double precision | Para mapa |
-| longitude | double precision | Para mapa |
-| services | text[] | Array: Pulido, Ceramico, Interior, PPF, Wrapping... |
-| level_badge | text | Enum via check: 'member', 'certified', 'master' |
-| is_verified | boolean | Default false |
-| is_published | boolean | Default false (admin activa) |
-| whatsapp_number | text | Nullable |
-| website_url | text | Nullable |
-| instagram_handle | text | Nullable |
-| description | text | Bio/descripcion del negocio |
-| featured_image_url | text | Imagen destacada (URL de storage) |
+### Actualizar constraint de `level_badge`
 
-**`portfolio_images`**
-
-| Campo | Tipo | Notas |
-|---|---|---|
-| id | uuid (PK) | Auto-generado |
-| detailer_id | uuid (FK) | Referencia a detailer_profiles |
-| before_image_url | text | URL de storage |
-| after_image_url | text | URL de storage |
-| title | text | Descripcion del trabajo |
-| created_at | timestamptz | Default now() |
-
-**`directory_applications`** (formulario publico)
-
-| Campo | Tipo | Notas |
-|---|---|---|
-| id | uuid (PK) | Auto-generado |
-| created_at | timestamptz | Default now() |
-| business_name | text | |
-| owner_name | text | |
-| email | text | |
-| phone | text | |
-| city | text | |
-| province | text | |
-| services | text[] | |
-| experience_level | text | |
-| has_taken_course | boolean | |
-| course_name | text | Nullable |
-| message | text | Nullable |
-| status | text | Default 'pending' |
-
-### RLS Policies
-
-- **detailer_profiles**: SELECT publico para `is_published = true`. No INSERT/UPDATE/DELETE publico (solo admin).
-- **portfolio_images**: SELECT publico (vinculado a perfiles publicados). No INSERT/UPDATE/DELETE publico.
-- **directory_applications**: INSERT publico (formulario). No SELECT/UPDATE/DELETE publico.
-
-### Storage Bucket
-
-- Crear bucket `portfolio` (publico) para imagenes de before/after y fotos destacadas.
-- RLS: lectura publica, escritura restringida.
-
----
-
-## Fase 2: Frontend - Componentes y Paginas
-
-### Nuevas paginas
-
-1. **`/directorio`** - Pagina principal del directorio
-   - Hero con titulo "Encuentra tu Detailer Certificado"
-   - Buscador por ciudad/provincia con input de texto
-   - Boton "Cerca de mi" (geolocation API del navegador)
-   - Filtros: servicios (tags clickables) + nivel de certificacion
-   - Grid de tarjetas de detailers (ordenados por level_badge > nombre)
-   - Paginacion
-
-2. **`/directorio/:province/:city`** - Paginas de ciudad (SEO programatico)
-   - H1 dinamico: "Mejores Detailers en [Ciudad], [Provincia]"
-   - Texto introductorio SEO generado por ciudad
-   - Lista filtrada de detailers en esa ciudad
-   - Breadcrumbs: Inicio > Directorio > [Provincia] > [Ciudad]
-
-3. **`/directorio/:slug`** - Ficha del detailer
-   - Imagen destacada grande
-   - Nombre comercial, nivel (badge dorado/plateado/bronce)
-   - Mapa OpenStreetMap con ubicacion
-   - Slider antes/despues con imagenes del portfolio
-   - Servicios como tags
-   - Seccion "Certificaciones" con iconos de cursos
-   - Boton flotante WhatsApp/Telefono
-   - Breadcrumbs: Inicio > Directorio > [Provincia] > [Ciudad] > [Negocio]
-
-4. **`/directorio/unete`** - Formulario "Unete al Directorio"
-   - Formulario publico similar al de contacto actual
-   - Campos: nombre comercial, titular, email, telefono, ciudad, provincia, servicios, experiencia, si ha hecho curso, mensaje
-   - Guarda en `directory_applications`
-   - Modal de exito
-
-### Nuevos componentes
-
-```text
-src/components/directory/
-  DirectoryHero.tsx        - Hero con buscador
-  DirectoryFilters.tsx     - Filtros de servicios y nivel
-  DirectoryGrid.tsx        - Grid de tarjetas
-  DetailerCard.tsx         - Tarjeta individual
-  DetailerProfile.tsx      - Ficha completa
-  DetailerMap.tsx          - Mapa Leaflet/OSM
-  BeforeAfterSlider.tsx    - Slider comparativo
-  DetailerBadge.tsx        - Badge Member/Certified/Master
-  DirectoryJoinForm.tsx    - Formulario de solicitud
-  DirectoryCityIntro.tsx   - Texto SEO por ciudad
-```
-
-### Navegacion
-
-- Anadir "Directorio" al Navbar, en la seccion principal de links (entre "Blog" e "Inscribirse")
-
----
-
-## Fase 3: SEO Tecnico
-
-### Schema.org JSON-LD
-
-- **Ficha detailer**: Schema `AutoBodyShop` con nombre, direccion, geo, telefono, imagen, servicios
-- **Todas las paginas del directorio**: Schema `BreadcrumbList`
-- **Paginas de ciudad**: Schema `ItemList` con los detailers listados
-
-### Metadatos
-
-- Cada pagina con `<title>` y `<meta description>` unicos
-- Canonical autorreferencial
-- Meta robots: index, follow
-
-### Sitemap
-
-- Actualizar el sitemap para incluir rutas del directorio (paginas de ciudades y fichas)
-
----
-
-## Fase 4: Diseno UI
-
-### Tarjetas de detailer (DetailerCard)
-
-- Fondo `bg-card` con borde `border-white/10`
-- Imagen destacada grande (aspect-[16/9])
-- Badge de nivel:
-  - **Master**: Gradiente dorado (`gradient-gold`), icono estrella
-  - **Certified**: Borde plateado, icono shield
-  - **Member**: Borde blanco/10, icono basico
-- Servicios como chips/tags pequenos
-- Ciudad y provincia en texto muted
-
-### Ficha del detailer
-
-- Imagen hero full-width con overlay gradiente
-- Tarjeta de informacion glassmorphism sobre la imagen
-- Mapa en un contenedor con bordes redondeados
-- Slider antes/despues con handle draggable
-- CTA flotante sticky (WhatsApp) en la parte inferior de la pantalla en movil
-
-### Colores y tipografia
-
-- Mantener la paleta existente: fondo carbon (#1a1a1f), acento granate (#8B2332), dorado para badges premium
-- Fuentes: Bebas Neue para titulos, Open Sans para cuerpo
-
----
-
-## Dependencia nueva
-
-- `leaflet` y `react-leaflet` para los mapas OpenStreetMap
-
----
-
-## Detalles tecnicos: Migracion SQL
+Cambiar los valores permitidos de `member/certified/master` a `certified_pro/master_detailer/elite_detailer`:
 
 ```sql
--- Enum-like constraint via check
-CREATE TABLE public.detailer_profiles (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  created_at timestamptz NOT NULL DEFAULT now(),
-  business_name text NOT NULL,
-  slug text UNIQUE NOT NULL,
-  owner_name text NOT NULL,
-  email text NOT NULL,
-  phone text,
-  city text NOT NULL,
-  province text NOT NULL,
-  zip_code text,
-  address text,
-  latitude double precision,
-  longitude double precision,
-  services text[] DEFAULT '{}',
-  level_badge text NOT NULL DEFAULT 'member'
-    CHECK (level_badge IN ('member', 'certified', 'master')),
-  is_verified boolean DEFAULT false,
-  is_published boolean DEFAULT false,
-  whatsapp_number text,
-  website_url text,
-  instagram_handle text,
-  description text,
-  featured_image_url text
-);
-
-ALTER TABLE public.detailer_profiles ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Public can view published detailer profiles"
-  ON public.detailer_profiles FOR SELECT
-  USING (is_published = true);
-
-CREATE TABLE public.portfolio_images (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  detailer_id uuid REFERENCES public.detailer_profiles(id)
-    ON DELETE CASCADE NOT NULL,
-  before_image_url text,
-  after_image_url text,
-  title text,
-  created_at timestamptz NOT NULL DEFAULT now()
-);
-
-ALTER TABLE public.portfolio_images ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Public can view portfolio images"
-  ON public.portfolio_images FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.detailer_profiles
-      WHERE id = detailer_id AND is_published = true
-    )
-  );
-
-CREATE TABLE public.directory_applications (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  created_at timestamptz NOT NULL DEFAULT now(),
-  business_name text NOT NULL,
-  owner_name text NOT NULL,
-  email text NOT NULL,
-  phone text NOT NULL,
-  city text NOT NULL,
-  province text NOT NULL,
-  services text[] DEFAULT '{}',
-  experience_level text,
-  has_taken_course boolean DEFAULT false,
-  course_name text,
-  message text,
-  status text NOT NULL DEFAULT 'pending'
-);
-
-ALTER TABLE public.directory_applications ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Anyone can apply to directory"
-  ON public.directory_applications FOR INSERT
-  WITH CHECK (true);
-
--- Storage bucket for portfolio images
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('portfolio', 'portfolio', true);
-
-CREATE POLICY "Public can read portfolio files"
-  ON storage.objects FOR SELECT
-  USING (bucket_id = 'portfolio');
+ALTER TABLE detailer_profiles DROP CONSTRAINT IF EXISTS detailer_profiles_level_badge_check;
+ALTER TABLE detailer_profiles ADD CONSTRAINT detailer_profiles_level_badge_check
+  CHECK (level_badge IN ('certified_pro', 'master_detailer', 'elite_detailer'));
 ```
 
-## Orden de implementacion
+Actualizar los datos existentes (5 registros de prueba):
+- `master` -> `elite_detailer`
+- `certified` -> `master_detailer`
+- `member` -> `certified_pro`
 
-1. Migracion SQL (tablas + storage bucket)
-2. Instalar dependencias (leaflet, react-leaflet)
-3. Crear componentes del directorio
-4. Crear paginas (directorio, ciudad, ficha, formulario)
-5. Actualizar App.tsx con nuevas rutas
-6. Actualizar Navbar con enlace al directorio
-7. SEO: schemas, metadatos, sitemap
+### Nuevo campo en `directory_applications`
+
+| Campo | Tipo | Default |
+|---|---|---|
+| profile_type | text | 'detailer' |
+
+---
+
+## 2. Componentes - Cambios
+
+### 2.1 DetailerBadge.tsx (actualizar rangos)
+
+Reemplazar las 3 categorias:
+
+| Rango | Label | Icono | Estilo |
+|---|---|---|---|
+| elite_detailer | Elite Detailer | Crown (lucide) | Gradiente dorado con glow, efecto premium |
+| master_detailer | Master Detailer | Star | Gradiente plateado oscuro con brillo metalico |
+| certified_pro | Certificado Pro | Shield | Fondo primario solido con borde |
+
+### 2.2 DetailerCard.tsx (diferenciar tipo)
+
+- Anadir un chip visual debajo del badge que diga "Detailer" o "Centro" con iconos diferentes (User vs Building2)
+- Actualizar la interface `DetailerProfile` con los nuevos campos
+
+### 2.3 DirectoryFilters.tsx (nuevo filtro de tipo)
+
+- Anadir una fila de filtro con 3 botones: "Todos", "Detailers", "Centros"
+- Actualizar los labels de nivel: Elite Detailer, Master Detailer, Certificado Pro
+
+### 2.4 DirectoryHero.tsx
+
+- Actualizar el titulo: "Encuentra tu Detailer o Centro Certificado"
+
+### 2.5 DirectoryJoinForm.tsx (selector de tipo)
+
+- Anadir campo `profile_type` al inicio del formulario como selector visual (dos tarjetas clickables: "Soy Detailer" / "Soy Centro")
+- Anadir campos nuevos: anos de experiencia, especialidad
+
+### 2.6 DirectoryGrid.tsx
+
+- Sin cambios estructurales, ya recibe el array filtrado
+
+---
+
+## 3. Pagina de Perfil (DetailerPage.tsx) - Rediseno completo
+
+La ficha actual es basica. El nuevo diseno tendra las siguientes secciones:
+
+### Seccion 1: Hero con foto del profesional
+
+- Imagen de fondo del negocio (featured_image_url) con overlay oscuro
+- Sobre el hero: tarjeta glassmorphism con:
+  - Foto circular del profesional (owner_photo_url) con borde dorado/plateado segun rango
+  - Nombre del profesional (owner_name)
+  - Nombre comercial (business_name)
+  - Badge de rango grande
+  - Chip de tipo (Detailer / Centro)
+  - Ubicacion
+
+### Seccion 2: Panel de estadisticas rapidas
+
+Fila horizontal con 3-4 cajas:
+- Anos de experiencia (con icono Calendar)
+- Especialidad (con icono Target)
+- Rango Academia Detail (con icono Award)
+- Verificado / No verificado (con icono CheckCircle)
+
+### Seccion 3: Sobre mi / Descripcion
+
+- Texto libre del profesional
+
+### Seccion 4: Habilidades
+
+- Grid de skills como tarjetas/chips visuales con iconos
+- Cada habilidad con un icono representativo (Paintbrush, Shield, Sparkles, etc.)
+
+### Seccion 5: Servicios
+
+- Tags similares a los actuales pero mas grandes y visuales
+
+### Seccion 6: Portfolio (antes/despues)
+
+- Sliders como estan ahora
+
+### Seccion 7: Mapa
+
+- OpenStreetMap como esta ahora
+
+### Seccion 8: Contacto
+
+- Botones WhatsApp, telefono, web, Instagram (como estan)
+- CTA flotante movil WhatsApp (como esta)
+
+---
+
+## 4. Paginas de directorio (Directory.tsx)
+
+- Anadir filtro de tipo (detailer/centro) al estado y pasarlo a DirectoryFilters
+- Filtrar por `profile_type` en el useMemo
+
+---
+
+## 5. SEO
+
+- Actualizar JSON-LD en DetailerPage con los nuevos campos
+- Actualizar meta description para incluir tipo y rango
+
+---
+
+## Archivos a modificar
+
+| Archivo | Cambios |
+|---|---|
+| Migracion SQL | Nuevos campos, actualizar constraint, migrar datos |
+| `src/components/directory/DetailerCard.tsx` | Actualizar interface, chip de tipo |
+| `src/components/directory/DetailerBadge.tsx` | Nuevos rangos con nuevos estilos |
+| `src/components/directory/DirectoryHero.tsx` | Titulo actualizado |
+| `src/components/directory/DirectoryFilters.tsx` | Filtro de tipo, nuevos labels de nivel |
+| `src/components/directory/DirectoryJoinForm.tsx` | Selector de tipo, nuevos campos |
+| `src/pages/DetailerPage.tsx` | Rediseno completo con secciones nuevas |
+| `src/pages/Directory.tsx` | Estado y filtro de tipo |
+| `src/pages/DirectoryCity.tsx` | Filtro de tipo |
+| `src/pages/DirectoryJoin.tsx` | Actualizar textos |
+
+---
+
+## Detalles tecnicos: SQL de migracion
+
+```sql
+-- Nuevos campos
+ALTER TABLE public.detailer_profiles
+  ADD COLUMN IF NOT EXISTS profile_type text NOT NULL DEFAULT 'detailer',
+  ADD COLUMN IF NOT EXISTS owner_photo_url text,
+  ADD COLUMN IF NOT EXISTS skills text[] DEFAULT '{}',
+  ADD COLUMN IF NOT EXISTS years_experience integer,
+  ADD COLUMN IF NOT EXISTS specialty text;
+
+-- Actualizar level_badge existentes
+UPDATE public.detailer_profiles SET level_badge = 'elite_detailer' WHERE level_badge = 'master';
+UPDATE public.detailer_profiles SET level_badge = 'master_detailer' WHERE level_badge = 'certified';
+UPDATE public.detailer_profiles SET level_badge = 'certified_pro' WHERE level_badge = 'member';
+
+-- Actualizar constraint
+ALTER TABLE public.detailer_profiles DROP CONSTRAINT IF EXISTS detailer_profiles_level_badge_check;
+ALTER TABLE public.detailer_profiles ADD CONSTRAINT detailer_profiles_level_badge_check
+  CHECK (level_badge IN ('certified_pro', 'master_detailer', 'elite_detailer'));
+
+-- Nuevo campo en applications
+ALTER TABLE public.directory_applications
+  ADD COLUMN IF NOT EXISTS profile_type text NOT NULL DEFAULT 'detailer';
+```
+
