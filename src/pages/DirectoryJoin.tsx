@@ -4,7 +4,6 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { DirectoryJoinForm } from '@/components/directory/DirectoryJoinForm';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '@/components/ui/breadcrumb';
-import { Shield, Star, Users } from 'lucide-react';
 
 const DirectoryJoin = () => {
   return (
@@ -28,27 +27,10 @@ const DirectoryJoin = () => {
 
         <SectionHeading
           titleAs="h1"
-          badge="Únete gratis"
-          title="Aparece en el Directorio de Detailers"
-          subtitle="Hazte visible para miles de propietarios que buscan un profesional de confianza en su ciudad."
+          badge="Solicitud gratuita"
+          title="Únete al Directorio"
+          subtitle="Completa los 4 pasos y revisaremos tu solicitud en menos de 48 horas."
         />
-
-        {/* Benefits */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-8">
-          {[
-            { icon: Users, title: 'Más visibilidad', desc: 'Llega a clientes que buscan detailing en tu zona' },
-            { icon: Shield, title: 'Sello de calidad', desc: 'Badge de certificación que genera confianza' },
-            { icon: Star, title: 'Portfolio profesional', desc: 'Muestra tus mejores trabajos con sliders antes/después' },
-          ].map((b) => (
-            <div key={b.title} className="text-center space-y-2">
-              <div className="mx-auto w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <b.icon className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold text-foreground">{b.title}</h3>
-              <p className="text-sm text-muted-foreground">{b.desc}</p>
-            </div>
-          ))}
-        </div>
 
         <DirectoryJoinForm />
       </section>

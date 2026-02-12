@@ -199,55 +199,73 @@ export type Database = {
       }
       directory_applications: {
         Row: {
+          brands: string[] | null
           business_name: string
           city: string
           course_name: string | null
           created_at: string
           email: string
           experience_level: string | null
+          gallery_urls: string[] | null
+          has_insurance: boolean | null
           has_taken_course: boolean | null
           id: string
+          logo_url: string | null
           message: string | null
           owner_name: string
           phone: string
+          portfolio_url: string | null
           profile_type: string
           province: string
           services: string[] | null
           status: string
+          value_proposition: string | null
         }
         Insert: {
+          brands?: string[] | null
           business_name: string
           city: string
           course_name?: string | null
           created_at?: string
           email: string
           experience_level?: string | null
+          gallery_urls?: string[] | null
+          has_insurance?: boolean | null
           has_taken_course?: boolean | null
           id?: string
+          logo_url?: string | null
           message?: string | null
           owner_name: string
           phone: string
+          portfolio_url?: string | null
           profile_type?: string
           province: string
           services?: string[] | null
           status?: string
+          value_proposition?: string | null
         }
         Update: {
+          brands?: string[] | null
           business_name?: string
           city?: string
           course_name?: string | null
           created_at?: string
           email?: string
           experience_level?: string | null
+          gallery_urls?: string[] | null
+          has_insurance?: boolean | null
           has_taken_course?: boolean | null
           id?: string
+          logo_url?: string | null
           message?: string | null
           owner_name?: string
           phone?: string
+          portfolio_url?: string | null
           profile_type?: string
           province?: string
           services?: string[] | null
           status?: string
+          value_proposition?: string | null
         }
         Relationships: []
       }
