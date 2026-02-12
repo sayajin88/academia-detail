@@ -5,12 +5,16 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { DirectoryHero } from '@/components/directory/DirectoryHero';
 import { DirectoryFilters } from '@/components/directory/DirectoryFilters';
 import { DirectoryGrid } from '@/components/directory/DirectoryGrid';
+import { DirectoryMap } from '@/components/directory/DirectoryMap';
 import { supabase } from '@/integrations/supabase/client';
 import type { DetailerProfile } from '@/components/directory/DetailerCard';
 import { Button } from '@/components/ui/button';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Map, LayoutGrid, Layers } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const levelOrder = { master: 0, certified: 1, member: 2 };
+
+type ViewMode = 'map' | 'grid' | 'both';
 
 const Directory = () => {
   const [detailers, setDetailers] = useState<DetailerProfile[]>([]);
@@ -21,6 +25,7 @@ const Directory = () => {
   const [selectedType, setSelectedType] = useState('');
   const [isLocating, setIsLocating] = useState(false);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [viewMode, setViewMode] = useState<ViewMode>('both');
 
   useEffect(() => {
     const fetchDetailers = async () => {
@@ -90,7 +95,6 @@ const Directory = () => {
       );
     }
 
-    // Sort: level > distance > name
     result = [...result].sort((a, b) => {
       const levelDiff = (levelOrder[a.level_badge] ?? 2) - (levelOrder[b.level_badge] ?? 2);
       if (levelDiff !== 0) return levelDiff;
@@ -124,6 +128,12 @@ const Directory = () => {
     })),
   };
 
+  const viewButtons: { mode: ViewMode; icon: typeof Map; label: string }[] = [
+    { mode: 'both', icon: Layers, label: 'Ambos' },
+    { mode: 'map', icon: Map, label: 'Mapa' },
+    { mode: 'grid', icon: LayoutGrid, label: 'Grid' },
+  ];
+
   return (
     <MainLayout>
       <Helmet>
@@ -150,15 +160,44 @@ const Directory = () => {
             selectedType={selectedType}
             onTypeChange={setSelectedType}
           />
-          <Link to="/directorio/unete">
-            <Button variant="outline" className="gap-2 border-primary/30 hover:bg-primary/10 hover:text-primary whitespace-nowrap">
-              <UserPlus className="h-4 w-4" />
-              Únete al directorio
-            </Button>
-          </Link>
+          <div className="flex items-center gap-2">
+            {/* View toggle */}
+            <div className="flex items-center rounded-lg border border-border bg-card p-1 gap-0.5">
+              {viewButtons.map(({ mode, icon: Icon, label }) => (
+                <button
+                  key={mode}
+                  onClick={() => setViewMode(mode)}
+                  className={cn(
+                    'px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 inline-flex items-center gap-1.5',
+                    viewMode === mode
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                  )}
+                  title={label}
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">{label}</span>
+                </button>
+              ))}
+            </div>
+            <Link to="/directorio/unete">
+              <Button variant="outline" className="gap-2 border-primary/30 hover:bg-primary/10 hover:text-primary whitespace-nowrap">
+                <UserPlus className="h-4 w-4" />
+                Únete al directorio
+              </Button>
+            </Link>
+          </div>
         </div>
 
-        <DirectoryGrid detailers={filtered} isLoading={isLoading} />
+        {/* Map */}
+        {(viewMode === 'map' || viewMode === 'both') && (
+          <DirectoryMap detailers={filtered} />
+        )}
+
+        {/* Grid */}
+        {(viewMode === 'grid' || viewMode === 'both') && (
+          <DirectoryGrid detailers={filtered} isLoading={isLoading} />
+        )}
       </section>
     </MainLayout>
   );
