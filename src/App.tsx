@@ -25,6 +25,8 @@ const Directory = lazy(() => import("./pages/Directory"));
 const DirectoryCity = lazy(() => import("./pages/DirectoryCity"));
 const DetailerPage = lazy(() => import("./pages/DetailerPage"));
 const DirectoryJoin = lazy(() => import("./pages/DirectoryJoin"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminApplications = lazy(() => import("./pages/AdminApplications"));
 
 const queryClient = new QueryClient();
 
@@ -85,6 +87,10 @@ const App = () => (
               {/* Catch-all for old /formacion/:slug pattern */}
               <Route path="/formacion/:slug" element={<FormationDetail />} />
               
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/applications" element={<AdminApplications />} />
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

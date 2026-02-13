@@ -1,0 +1,38 @@
+import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { Button } from "@/components/ui/button";
+import { LogOut, LayoutDashboard } from "lucide-react";
+
+interface AdminLayoutProps {
+  children: React.ReactNode;
+}
+
+const AdminLayout = ({ children }: AdminLayoutProps) => {
+  const { loading, isAdmin, logout } = useAdminAuth();
+
+  if (loading) {
+    return <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+    </div>;
+  }
+
+  if (!isAdmin) return null;
+
+  return (
+    <div className="min-h-screen bg-background">
+      <header className="border-b bg-card">
+        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <LayoutDashboard className="h-5 w-5 text-primary" />
+            <span className="font-semibold">Admin Panel</span>
+          </div>
+          <Button variant="ghost" size="sm" onClick={logout}>
+            <LogOut className="h-4 w-4 mr-2" /> Cerrar sesión
+          </Button>
+        </div>
+      </header>
+      <main className="container mx-auto px-4 py-6">{children}</main>
+    </div>
+  );
+};
+
+export default AdminLayout;
