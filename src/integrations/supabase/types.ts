@@ -197,6 +197,41 @@ export type Database = {
         }
         Relationships: []
       }
+      directory_application_logs: {
+        Row: {
+          action: string
+          admin_id: string
+          application_id: string
+          created_at: string | null
+          id: string
+          reason: string | null
+        }
+        Insert: {
+          action: string
+          admin_id: string
+          application_id: string
+          created_at?: string | null
+          id?: string
+          reason?: string | null
+        }
+        Update: {
+          action?: string
+          admin_id?: string
+          application_id?: string
+          created_at?: string | null
+          id?: string
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "directory_application_logs_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "directory_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       directory_applications: {
         Row: {
           brands: string[] | null
@@ -379,14 +414,33 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: { Args: { _role: string; _user_id: string }; Returns: boolean }
     }
     Enums: {
+      app_role: "admin" | "user"
       payment_status: "pending" | "completed" | "cancelled" | "expired"
     }
     CompositeTypes: {
@@ -515,6 +569,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "user"],
       payment_status: ["pending", "completed", "cancelled", "expired"],
     },
   },
