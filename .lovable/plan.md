@@ -1,72 +1,260 @@
 
-# Plan: Mapa Interactivo de Espana en el Directorio
 
-## Concepto
+# Plan: Panel de Administración para Gestionar Solicitudes del Directorio
 
-Un mapa interactivo de Espana usando Leaflet (ya instalado) que muestra todos los detailers/centros como marcadores en sus coordenadas reales. El mapa se posiciona entre el hero y los filtros, con una vista centrada en Espana. Los marcadores tienen colores segun el rango y al hacer clic muestran una mini-tarjeta (popup) con la informacion del detailer y un enlace directo a su ficha.
+## Resumen Ejecutivo
 
-## Diseno Visual
+Sistema completo de administración con autenticación segura (email + contraseña) para revisar, aprobar y rechazar solicitudes del directorio. Cuando se aprueba una solicitud, se crea automáticamente un perfil publicado en la tabla `detailer_profiles`.
 
-- Mapa centrado en Espana (coordenadas ~40.0, -3.7, zoom 6)
-- Tiles oscuros (CartoDB Dark Matter) para mantener la estetica premium del sitio
-- Marcadores circulares con color segun rango:
-  - Elite Detailer: dorado
-  - Master Detailer: plateado
-  - Certificado Pro: granate (color primario)
-- Marcadores con tamano ligeramente diferente por rango (Elite mas grande)
-- Cuando hay varios detailers muy juntos, los marcadores se agrupan (cluster) con un numero
+---
 
-## Interactividad
+## 1. Backend - Base de Datos y Seguridad
 
-- **Click en marcador**: Abre un popup Leaflet con una mini-tarjeta que incluye:
-  - Nombre comercial
-  - Badge de rango (texto)
-  - Tipo (Detailer / Centro)
-  - Ciudad, provincia
-  - Servicios (primeros 3)
-  - Boton "Ver perfil" que enlaza a `/directorio/[slug]`
-- **Zoom**: El mapa es zoomable con scroll y pinch (movil)
-- **Responsive**: Altura adaptable (300px movil, 450px desktop)
-- **Filtros sincronizados**: El mapa refleja los mismos filtros que el grid (si filtras por "Centro" solo se ven centros en el mapa)
-- **Toggle vista**: Un boton permite alternar entre vista mapa y vista grid, o mostrar ambos
+### 1.1 Crear Sistema de Roles
 
-## Implementacion Tecnica
+**Tabla `user_roles`**: Almacena qué usuario es admin (nunca se guarda en el perfil).
 
-### Nuevo componente: `DirectoryMap.tsx`
+```sql
+-- Crear enum para roles
+CREATE TYPE public.app_role AS ENUM ('admin', 'user');
 
-```text
-src/components/directory/DirectoryMap.tsx
+-- Tabla de roles
+CREATE TABLE public.user_roles (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  role app_role NOT NULL,
+  UNIQUE(user_id, role)
+);
+
+-- Habilitar RLS en user_roles
+ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
+
+-- Política: Solo admins pueden ver la tabla de roles
+CREATE POLICY "Only admins can view user_roles"
+  ON public.user_roles FOR SELECT
+  USING (auth.uid() = user_id OR public.has_role(auth.uid(), 'admin'::app_role));
 ```
 
-Recibe como prop el array `detailers` (ya filtrado) y renderiza un mapa Leaflet con:
-- Centro en Espana
-- Un marcador por cada detailer que tenga lat/lng
-- Popups con HTML personalizado (mini-tarjeta)
-- Tiles CartoDB Dark Matter para coherencia visual
+### 1.2 Función `has_role()`
 
-### Cambios en `Directory.tsx`
+**Función SQL con SECURITY DEFINER** para evitar problemas recursivos con RLS:
 
-- Importar `DirectoryMap`
-- Anadir un estado `viewMode` ("map" | "grid" | "both") con botones toggle
-- Renderizar el mapa encima o junto al grid segun el modo
-- Pasar el array `filtered` al mapa (mismos filtros que el grid)
+```sql
+CREATE OR REPLACE FUNCTION public.has_role(_user_id uuid, _role app_role)
+RETURNS boolean
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.user_roles
+    WHERE user_id = _user_id
+      AND role = _role
+  )
+$$;
+```
 
-### Sin dependencias nuevas
+### 1.3 Actualizar RLS en `directory_applications`
 
-Leaflet ya esta instalado. No se necesita leaflet.markercluster por ahora -- si hay pocos perfiles, no hace falta clustering. Se puede anadir despues si crece.
+Agregar una política para que solo admins puedan leer todas las solicitudes:
 
-## Layout en la pagina
+```sql
+-- Los admins pueden ver todas las solicitudes
+CREATE POLICY "Admins can view all applications"
+  ON public.directory_applications FOR SELECT
+  USING (public.has_role(auth.uid(), 'admin'::app_role));
 
-La seccion del mapa se coloca entre los filtros y el grid. Un grupo de botones permite cambiar entre:
-- Icono mapa: Solo mapa
-- Icono grid: Solo tarjetas (comportamiento actual)
-- Icono mixto: Mapa arriba + grid debajo (por defecto)
+-- Los admins pueden actualizar solicitudes (aprobar/rechazar)
+CREATE POLICY "Admins can update applications"
+  ON public.directory_applications FOR UPDATE
+  USING (public.has_role(auth.uid(), 'admin'::app_role));
+```
 
-## Archivos a crear/modificar
+### 1.4 Tabla de Auditoría (Opcional)
 
-| Archivo | Accion |
-|---|---|
-| `src/components/directory/DirectoryMap.tsx` | **Crear** - Mapa interactivo con marcadores y popups |
-| `src/pages/Directory.tsx` | **Modificar** - Anadir toggle de vista y renderizar mapa |
+Para registrar quién aprobó/rechazó y cuándo:
 
-No se necesitan cambios en base de datos ni dependencias nuevas.
+```sql
+CREATE TABLE public.directory_application_logs (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  application_id uuid REFERENCES directory_applications(id) ON DELETE CASCADE NOT NULL,
+  admin_id uuid REFERENCES auth.users(id) NOT NULL,
+  action text NOT NULL, -- 'approved', 'rejected', 'pending'
+  reason text,
+  created_at timestamp with time zone DEFAULT now()
+);
+```
+
+---
+
+## 2. Frontend - Estructura de Componentes
+
+### 2.1 Nuevo Layout: `AdminLayout.tsx`
+
+Layout específico para el panel admin con:
+- Navbar minimalista
+- Sidebar con navegación admin
+- Protección de rutas (solo admins acceden)
+
+### 2.2 Nueva Ruta en `App.tsx`
+
+```
+/admin/login - Página de login admin
+/admin/applications - Panel de revisión de solicitudes (solo admin)
+```
+
+### 2.3 Página de Login: `src/pages/AdminLogin.tsx`
+
+- Formulario email + contraseña
+- Validación con Zod
+- Persiste sesión en localStorage
+- Redirige a `/admin/applications` si login exitoso
+
+**Seguridad**: Usa `supabase.auth.signInWithPassword()` y verifica que el usuario sea admin consultando `user_roles` en el backend.
+
+### 2.4 Página Admin: `src/pages/AdminApplications.tsx`
+
+Panel de control completo:
+
+**Secciones**:
+1. **Filtros**: Por estado (Pendiente, Aprobado, Rechazado)
+2. **Tabla de solicitudes** con columnas:
+   - Nombre comercial
+   - Tipo (Detailer/Centro)
+   - Propietario
+   - Fecha solicitud
+   - Estado
+   - Acciones (Ver detalles, Aprobar, Rechazar)
+
+3. **Modal de detalles** (al hacer clic en una fila):
+   - Información completa del formulario
+   - Logo, galería, servicios, especialidades
+   - Botones: Aprobar / Rechazar con textarea para motivo de rechazo
+
+### 2.5 Componente `AdminApplicationCard.tsx`
+
+Tarjeta con resumen de solicitud (para vista previa en modal).
+
+### 2.6 Hook `useAdminAuth.ts`
+
+- Verifica si usuario está autenticado
+- Verifica si tiene rol admin
+- Maneja logout
+- Redirige a login si no es admin
+
+---
+
+## 3. Lógica de Aprobación
+
+### 3.1 Edge Function: `approve-application`
+
+**Path**: `supabase/functions/approve-application/index.ts`
+
+Cuando admin aprueba:
+
+```text
+1. Validar que el usuario sea admin (verificar user_roles)
+2. Leer datos de directory_applications
+3. Crear registro en detailer_profiles con:
+   - Copiar todos los campos del formulario
+   - Asignar level_badge = 'certified_pro' (por defecto)
+   - Asignar is_published = true
+   - Generar slug único
+4. Actualizar directory_applications.status = 'approved'
+5. Insertar log en directory_application_logs
+6. Retornar confirmación
+```
+
+**Seguridad**: Verificar rol admin en el edge function (no confiar solo en RLS).
+
+### 3.2 Edge Function: `reject-application`
+
+**Path**: `supabase/functions/reject-application/index.ts`
+
+```text
+1. Validar admin
+2. Actualizar directory_applications.status = 'rejected'
+3. Guardar motivo de rechazo
+4. Insertar log
+5. Retornar confirmación
+```
+
+---
+
+## 4. Flujo de Seguridad
+
+```
+User clicks /admin/login
+  ↓
+Form: email + password
+  ↓
+supabase.auth.signInWithPassword()
+  ↓
+Check user_roles table: ¿tiene rol 'admin'?
+  ↓
+Si YES → Guarda sesión, redirige a /admin/applications
+Si NO → Error "No tienes permisos"
+  ↓
+En /admin/applications:
+  - useAdminAuth hook verifica session + role
+  - Si no es admin, redirige a /admin/login
+```
+
+---
+
+## 5. Configuración: `supabase/config.toml`
+
+```toml
+[functions.approve-application]
+verify_jwt = false
+
+[functions.reject-application]
+verify_jwt = false
+```
+
+Las funciones validan el rol admin internamente.
+
+---
+
+## 6. Archivos a Crear/Modificar
+
+| Archivo | Tipo | Descripción |
+|---------|------|-------------|
+| `supabase/migrations/...sql` | Crear | Tablas `user_roles`, `directory_application_logs`, funciones, RLS policies |
+| `src/pages/AdminLogin.tsx` | Crear | Formulario login admin |
+| `src/pages/AdminApplications.tsx` | Crear | Panel de control con tabla de solicitudes |
+| `src/components/admin/AdminLayout.tsx` | Crear | Layout específico para admin |
+| `src/components/admin/AdminApplicationCard.tsx` | Crear | Tarjeta con detalles de solicitud |
+| `src/hooks/useAdminAuth.ts` | Crear | Hook para proteger rutas admin |
+| `supabase/functions/approve-application/index.ts` | Crear | Edge function para aprobar |
+| `supabase/functions/reject-application/index.ts` | Crear | Edge function para rechazar |
+| `src/App.tsx` | Modificar | Agregar rutas `/admin/login` y `/admin/applications` |
+
+---
+
+## 7. UX/UI Design
+
+**Admin Login**:
+- Diseño minimalista, marca Academia Detail
+- Input email + password
+- Botón "Acceder"
+- Mensaje "Acceso restringido a administradores"
+
+**Admin Panel**:
+- Tabla con scroll horizontal en móvil
+- Colores: Pendiente (amarillo), Aprobado (verde), Rechazado (rojo)
+- Modal al hacer clic en solicitud
+- Botones de acción grandes y accesibles
+- Confirmación antes de aprobar/rechazar
+
+---
+
+## 8. Próximos Pasos Post-Plan
+
+1. Crear usuario admin manualmente en Supabase Auth + asignar rol
+2. Probar login
+3. Probar flujo completo: aprobar solicitud → verificar que aparece en directorio
+4. (Opcional) Dashboard con estadísticas: pendientes, aprobadas, rechazadas
+
