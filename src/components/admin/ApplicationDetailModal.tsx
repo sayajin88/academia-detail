@@ -73,35 +73,62 @@ const ApplicationDetailModal = ({ application, onClose, onAction }: ApplicationD
     if (!form) return;
     setSaveLoading(true);
 
+    const updateData = {
+      business_name: form.business_name,
+      owner_name: form.owner_name,
+      email: form.email,
+      phone: form.phone,
+      city: form.city,
+      province: form.province,
+      profile_type: form.profile_type,
+      services: form.services,
+      brands: form.brands,
+      has_taken_course: form.has_taken_course,
+      has_insurance: form.has_insurance,
+      value_proposition: form.value_proposition,
+      portfolio_url: form.portfolio_url,
+      experience_level: form.experience_level,
+      course_name: form.course_name,
+      message: form.message,
+    };
+
     const { error } = await supabase
       .from("directory_applications")
-      .update({
-        business_name: form.business_name,
-        owner_name: form.owner_name,
-        email: form.email,
-        phone: form.phone,
-        city: form.city,
-        province: form.province,
-        profile_type: form.profile_type,
-        services: form.services,
-        brands: form.brands,
-        has_taken_course: form.has_taken_course,
-        has_insurance: form.has_insurance,
-        value_proposition: form.value_proposition,
-        portfolio_url: form.portfolio_url,
-        experience_level: form.experience_level,
-        course_name: form.course_name,
-        message: form.message,
-      })
+      .update(updateData)
       .eq("id", form.id);
 
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
-    } else {
-      toast({ title: "Guardado", description: "Solicitud actualizada correctamente." });
-      setEditing(false);
-      onAction();
+      setSaveLoading(false);
+      return;
     }
+
+    // If approved, also sync changes to the published detailer_profiles
+    if (form.status === "approved") {
+      const { error: profileError } = await supabase
+        .from("detailer_profiles")
+        .update({
+          business_name: form.business_name,
+          owner_name: form.owner_name,
+          email: form.email,
+          phone: form.phone,
+          city: form.city,
+          province: form.province,
+          profile_type: form.profile_type,
+          services: form.services,
+        })
+        .eq("email", application.email);
+
+      if (profileError) {
+        toast({ title: "Aviso", description: "Solicitud actualizada, pero hubo un error actualizando el perfil publicado.", variant: "destructive" });
+        setSaveLoading(false);
+        return;
+      }
+    }
+
+    toast({ title: "Guardado", description: "Solicitud actualizada correctamente." });
+    setEditing(false);
+    onAction();
     setSaveLoading(false);
   };
 
@@ -147,7 +174,7 @@ const ApplicationDetailModal = ({ application, onClose, onAction }: ApplicationD
             <Badge variant={statusConfig[form.status]?.variant || "outline"}>
               {statusConfig[form.status]?.label}
             </Badge>
-            {!editing && form.status === "pending" && (
+            {!editing && (
               <Button variant="ghost" size="sm" onClick={() => setEditing(true)} className="ml-auto">
                 <Pencil className="h-4 w-4 mr-1" /> Editar
               </Button>
