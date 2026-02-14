@@ -27,6 +27,7 @@ const DetailerPage = lazy(() => import("./pages/DetailerPage"));
 const DirectoryJoin = lazy(() => import("./pages/DirectoryJoin"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminApplications = lazy(() => import("./pages/AdminApplications"));
+const AdminProfiles = lazy(() => import("./pages/AdminProfiles"));
 
 const queryClient = new QueryClient();
 
@@ -90,6 +91,7 @@ const App = () => (
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin/applications" element={<AdminApplications />} />
+              <Route path="/admin/profiles" element={<AdminProfiles />} />
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
