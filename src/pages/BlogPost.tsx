@@ -12,13 +12,14 @@ import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
 import { BlogDirectoryBanner } from '@/components/blog/BlogDirectoryBanner';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
-import { getPostBySlug, getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
+import { getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
+import { useDbBlogPost } from '@/hooks/useBlogPosts';
 
 const BASE_URL = 'https://academiadetail.com';
 
 export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getPostBySlug(slug) : undefined;
+  const { data: post, isLoading } = useDbBlogPost(slug);
   const [readProgress, setReadProgress] = useState(0);
   const articleRef = useRef<HTMLElement>(null);
 
@@ -37,6 +38,10 @@ export default function BlogPostPage() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  if (isLoading) {
+    return <MainLayout><div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" /></div></MainLayout>;
+  }
 
   if (!post) {
     return <Navigate to="/blog" replace />;

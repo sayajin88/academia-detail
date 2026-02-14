@@ -11,6 +11,7 @@ interface AdminLayoutProps {
 const navItems = [
   { href: "/admin/profiles", label: "Directorio", icon: Users },
   { href: "/admin/contacts", label: "Contactos", icon: MessageSquare },
+  { href: "/admin/blog", label: "Blog", icon: FileText },
 ];
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
