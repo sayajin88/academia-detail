@@ -13,13 +13,14 @@
       gtag('config', 'G-EQW4MPZTEW');
     </script>
     
-    <!-- CRÍTICO: Preload CONDICIONAL del LCP según dispositivo -->
-    <!-- MÓVIL (< 768px) - Imagen optimizada pequeña -->
+    <!-- CRÍTICO: Preload del LCP - Desktop hero -->
+    <!-- NOTA: La imagen móvil ahora se procesa via Vite (src/assets/) y se carga via <picture> en el componente -->
+    <!-- DESKTOP (>= 768px) - Imagen grande -->
     <link 
       rel="preload" 
       as="image" 
-      href="/mobile-hero-bg.jpg" 
-      media="(max-width: 767px)"
+      href="/src/assets/heroes/hero-home.jpg" 
+      media="(min-width: 768px)"
       fetchpriority="high"
     />
     <!-- DESKTOP (>= 768px) - Imagen grande -->

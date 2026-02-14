@@ -31,6 +31,8 @@ export function FormationHero({ formation, onCTAClick }: FormationHeroProps) {
           loading="eager"
           fetchPriority="high"
           decoding="async"
+          width={1920}
+          height={1080}
         />
       </div>
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40" />

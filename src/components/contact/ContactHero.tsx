@@ -10,6 +10,8 @@ const ContactHero = () => {
         alt="Contacta con Academia Detail - Formación profesional en detailing"
         className="absolute inset-0 w-full h-full object-cover"
         loading="eager"
+        width={1920}
+        height={1080}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-background" />
       
