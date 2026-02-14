@@ -9,6 +9,7 @@ import { BlogShareButtons } from '@/components/blog/BlogShareButtons';
 import { BlogRelatedPosts } from '@/components/blog/BlogRelatedPosts';
 import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
+import { BlogDirectoryBanner } from '@/components/blog/BlogDirectoryBanner';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { getPostBySlug, getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
@@ -200,6 +201,7 @@ export default function BlogPostPage() {
 
               {/* Dilution Calculator Banner */}
               <BlogDilutionBanner />
+              <BlogDirectoryBanner />
 
               {/* Tags */}
               <AnimatedSection animation="fade-up" delay={50}>
