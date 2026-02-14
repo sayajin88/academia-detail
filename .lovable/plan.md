@@ -1,50 +1,50 @@
 
 
-## Banner "Únete al Directorio" en todos los artículos del blog
+## Rediseñar filtros del Directorio: mover debajo del mapa y compactar
 
-### Objetivo
-Añadir un banner visual de alto CTR dentro de la estructura de todos los artículos del blog, reutilizando el estilo del `DirectoryJoinBanner` pero adaptado al contexto del contenido (inline, más compacto).
+### Problema actual
+Los filtros ocupan demasiado espacio vertical arriba del mapa (3 filas de chips) y crean una zona visualmente pesada que aleja al usuario del contenido principal.
 
----
+### Solucion propuesta
+Mover los filtros debajo del mapa y presentarlos en una barra compacta horizontal tipo toolbar, agrupando todo en una sola fila con secciones colapsables.
 
-### 1. Nuevo componente: `BlogDirectoryBanner`
+### Cambios
 
-**Archivo**: `src/components/blog/BlogDirectoryBanner.tsx`
+**1. Redisenar `DirectoryFilters.tsx`** - Layout compacto tipo toolbar:
+- Una sola fila horizontal con los 3 grupos de filtros separados por divisores verticales
+- Tipo (Todos/Detailers/Centros) y Nivel (Todos/Elite/Master/Certificado) en la misma linea
+- Los servicios se muestran en un boton desplegable "Servicios" que abre un popover con los chips
+- Fondo card con borde, bordes redondeados, padding interno (aspecto de barra de herramientas)
+- En movil: los filtros de tipo y nivel se muestran en fila, y servicios en un acordeon/popover
 
-Un banner inline adaptado al contexto del blog, con el mismo mensaje y ventajas que el `DirectoryJoinBanner` pero en un formato más compacto que encaje entre el contenido del artículo (similar al estilo de `BlogDilutionBanner` pero con el fondo granate y las ventajas del directorio).
+**2. Reorganizar `Directory.tsx`** - Nuevo orden de elementos:
+- Hero (busqueda)
+- Toggle de vista (Ambos/Mapa/Grid) alineado a la derecha, solo
+- Mapa (si visible)
+- Barra de filtros compacta (debajo del mapa, encima del grid)
+- Grid de tarjetas
+- Banner de unirse
 
-**Contenido:**
-- Fondo gradiente granate (primary) con circulos decorativos (mismo estilo que `DirectoryJoinBanner`)
-- Titulo: "¿Eres Profesional, Detailer o Tienes un Centro?"
-- Subtitulo corto: "Aparece en nuestro directorio nacional e internacional"
-- 4 bullet points en linea (2x2 en desktop, 1 columna en movil):
-  - Llega a nuevos clientes cerca de ti
-  - Aumenta tu visibilidad digital
-  - Ficha verificada con badge
-  - Solicitud gratuita, revision en 48h
-- Boton CTA blanco: "Unete Gratis" enlazando a `/directorio/unete`
-
-### 2. Insercion en BlogPost.tsx
-
-Se insertara el `BlogDirectoryBanner` en la pagina de articulos, entre el `BlogDilutionBanner` y los tags (linea 202-204 actual). Asi aparece despues del contenido principal y antes del cierre del articulo, en una posicion de alta visibilidad.
-
-**Orden final del contenido:**
-1. Contenido del articulo (`BlogArticleContent`)
-2. Banner Calculadora Dilucion (`BlogDilutionBanner`)
-3. **Banner Directorio** (`BlogDirectoryBanner`) -- NUEVO
-4. Tags del articulo
-5. Share buttons
-6. CTA de formacion (`BlogPostCTA`)
-7. Articulos relacionados
-
----
+Esto situa los filtros en una posicion mas logica: el usuario primero ve el mapa general y luego filtra para afinar resultados en el grid.
 
 ### Detalles tecnicos
 
-**Archivo nuevo:**
-- `src/components/blog/BlogDirectoryBanner.tsx`
+**Archivos modificados:**
+- `src/components/directory/DirectoryFilters.tsx` -- redisenar a toolbar compacta con popover de servicios
+- `src/pages/Directory.tsx` -- reordenar: toggle vista arriba solo, filtros entre mapa y grid
 
-**Archivo modificado:**
-- `src/pages/BlogPost.tsx` -- importar y colocar el nuevo banner
+**Estructura de la toolbar de filtros:**
+```text
++------------------------------------------------------------------+
+| [Todos] [Detailers] [Centros]  |  [Todos] [Elite] [Master] [Pro]  |  [Servicios v]  |
++------------------------------------------------------------------+
+```
 
-Sin cambios en base de datos, rutas ni otros archivos.
+- En desktop: todo en una fila con separadores `|`
+- En movil: tipo y nivel en filas apiladas, servicios en boton desplegable
+- El popover de servicios muestra los 8 chips actuales en un dropdown al hacer clic
+- Se usa el componente Popover de Radix existente para el dropdown de servicios
+- Indicador visual: si hay servicios seleccionados se muestra un badge con el contador
+
+**No hay cambios en base de datos ni en otros archivos.**
+
