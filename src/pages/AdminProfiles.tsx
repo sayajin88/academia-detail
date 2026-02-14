@@ -1,72 +1,21 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
+import AdminProfileEditModal, { type UnifiedEntry } from "@/components/admin/AdminProfileEditModal";
 import { AdminProfileMap } from "@/components/admin/AdminProfileMap";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Pencil, Trash2, Plus, Loader2, Save, Map, LayoutGrid, Layers, Upload, X, User } from "lucide-react";
+import { Pencil, Plus, Loader2, Map, LayoutGrid, Layers, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Profile = {
-  id: string;
-  business_name: string;
-  slug: string;
-  owner_name: string;
-  email: string;
-  phone: string | null;
-  city: string;
-  province: string;
-  profile_type: string;
-  services: string[] | null;
-  level_badge: string;
-  is_published: boolean | null;
-  is_verified: boolean | null;
-  description: string | null;
-  featured_image_url: string | null;
-  latitude: number | null;
-  longitude: number | null;
-  specialty: string | null;
-  years_experience: number | null;
-  website_url: string | null;
-  instagram_handle: string | null;
-  whatsapp_number: string | null;
-  owner_photo_url: string | null;
-  created_at: string;
-};
-
-const emptyProfile: Omit<Profile, "id" | "created_at"> = {
-  business_name: "",
-  slug: "",
-  owner_name: "",
-  email: "",
-  phone: "",
-  city: "",
-  province: "",
-  profile_type: "detailer",
-  services: [],
-  level_badge: "certified_pro",
-  is_published: true,
-  is_verified: true,
-  description: "",
-  featured_image_url: "",
-  latitude: null,
-  longitude: null,
-  specialty: "",
-  years_experience: null,
-  website_url: "",
-  instagram_handle: "",
-  whatsapp_number: "",
-  owner_photo_url: "",
+const statusConfig: Record<string, { label: string; variant: "default" | "destructive" | "outline" | "secondary" }> = {
+  pending: { label: "Pendiente", variant: "outline" },
+  approved: { label: "Activo", variant: "default" },
+  rejected: { label: "Rechazado", variant: "destructive" },
 };
 
 const levelLabels: Record<string, string> = {
@@ -76,165 +25,131 @@ const levelLabels: Record<string, string> = {
   elite_detailer: "Élite Detailer",
 };
 
+const emptyEntry: UnifiedEntry = {
+  id: "", source: "profile", status: "approved",
+  business_name: "", owner_name: "", email: "", phone: "", whatsapp_number: "",
+  city: "", province: "", address: "", zip_code: "",
+  profile_type: "detailer", services: [], brands: [], skills: [],
+  specialty: "", years_experience: null, experience_level: "",
+  owner_photo_url: null, logo_url: null, featured_image_url: null, gallery_urls: [],
+  has_taken_course: false, course_name: "", has_insurance: false,
+  website_url: "", instagram_handle: "", portfolio_url: "",
+  description: "", value_proposition: "", message: "",
+  level_badge: "certified_pro", is_published: true, is_verified: true,
+  latitude: null, longitude: null, slug: null, created_at: new Date().toISOString(),
+};
+
 const AdminProfiles = () => {
-  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [entries, setEntries] = useState<UnifiedEntry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState<Partial<Profile> | null>(null);
-  const [isNew, setIsNew] = useState(false);
-  const [saveLoading, setSaveLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState<UnifiedEntry | null>(null);
+  const [isNew, setIsNew] = useState(false);
   const [viewMode, setViewMode] = useState<"both" | "map" | "table">("both");
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const { toast } = useToast();
 
-  const fetchProfiles = async () => {
+  const fetchAll = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("detailer_profiles")
-      .select("*")
-      .order("created_at", { ascending: false });
 
-    if (error) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    } else {
-      setProfiles((data as unknown as Profile[]) || []);
-    }
+    // Fetch both tables in parallel
+    const [appsRes, profilesRes] = await Promise.all([
+      supabase.from("directory_applications").select("*").order("created_at", { ascending: false }),
+      supabase.from("detailer_profiles").select("*").order("created_at", { ascending: false }),
+    ]);
+
+    if (appsRes.error) toast({ title: "Error", description: appsRes.error.message, variant: "destructive" });
+    if (profilesRes.error) toast({ title: "Error", description: profilesRes.error.message, variant: "destructive" });
+
+    const apps: UnifiedEntry[] = (appsRes.data || [])
+      .filter((a: any) => a.status !== "approved") // approved ones live in profiles
+      .map((a: any) => ({
+        id: a.id, source: "application" as const, status: a.status as any,
+        business_name: a.business_name, owner_name: a.owner_name, email: a.email,
+        phone: a.phone, whatsapp_number: a.whatsapp_number,
+        city: a.city, province: a.province, address: a.address, zip_code: a.zip_code,
+        profile_type: a.profile_type, services: a.services, brands: a.brands, skills: a.skills,
+        specialty: a.specialty, years_experience: a.years_experience, experience_level: a.experience_level,
+        owner_photo_url: a.owner_photo_url, logo_url: a.logo_url, featured_image_url: null,
+        gallery_urls: a.gallery_urls,
+        has_taken_course: a.has_taken_course, course_name: a.course_name, has_insurance: a.has_insurance,
+        website_url: a.website_url, instagram_handle: a.instagram_handle, portfolio_url: a.portfolio_url,
+        description: a.description, value_proposition: a.value_proposition, message: a.message,
+        level_badge: "certified_pro", is_published: null, is_verified: null,
+        latitude: null, longitude: null, slug: null, created_at: a.created_at,
+      }));
+
+    const profiles: UnifiedEntry[] = (profilesRes.data || []).map((p: any) => ({
+      id: p.id, source: "profile" as const, status: "approved" as const,
+      business_name: p.business_name, owner_name: p.owner_name, email: p.email,
+      phone: p.phone, whatsapp_number: p.whatsapp_number,
+      city: p.city, province: p.province, address: p.address, zip_code: p.zip_code,
+      profile_type: p.profile_type, services: p.services, brands: null, skills: p.skills,
+      specialty: p.specialty, years_experience: p.years_experience, experience_level: null,
+      owner_photo_url: p.owner_photo_url, logo_url: null, featured_image_url: p.featured_image_url,
+      gallery_urls: null,
+      has_taken_course: null, course_name: null, has_insurance: null,
+      website_url: p.website_url, instagram_handle: p.instagram_handle, portfolio_url: null,
+      description: p.description, value_proposition: null, message: null,
+      level_badge: p.level_badge, is_published: p.is_published, is_verified: p.is_verified,
+      latitude: p.latitude, longitude: p.longitude, slug: p.slug, created_at: p.created_at,
+    }));
+
+    setEntries([...apps, ...profiles]);
     setLoading(false);
   };
 
-  useEffect(() => { fetchProfiles(); }, []);
+  useEffect(() => { fetchAll(); }, []);
 
-  const generateSlug = (name: string) =>
-    name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") + "-" + Date.now().toString(36);
-
-  const handleSave = async () => {
-    if (!editing) return;
-    setSaveLoading(true);
-
-    const slug = editing.slug || generateSlug(editing.business_name || "perfil");
-
-    // Upload photo if new file selected
-    let ownerPhotoUrl = editing.owner_photo_url || null;
-    if (photoFile) {
-      setUploadingPhoto(true);
-      try {
-        const ts = Date.now();
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('directory-uploads')
-          .upload(`photos/${ts}-${photoFile.name}`, photoFile, { upsert: true });
-        if (uploadError) throw uploadError;
-        const { data: urlData } = supabase.storage.from('directory-uploads').getPublicUrl(uploadData.path);
-        ownerPhotoUrl = urlData.publicUrl;
-      } catch (e) {
-        console.error("Photo upload failed:", e);
-        toast({ title: "Error", description: "No se pudo subir la foto", variant: "destructive" });
-      }
-      setUploadingPhoto(false);
-    }
-
-    // Geocode if no coords or if city/province changed
-    let latitude = editing.latitude;
-    let longitude = editing.longitude;
-    const original = profiles.find(p => p.id === editing.id);
-    const locationChanged = !isNew && original && (original.city !== editing.city || original.province !== editing.province);
-    if (((!latitude || !longitude) || locationChanged) && editing.city && editing.province) {
-      try {
-        const query = encodeURIComponent(`${editing.city}, ${editing.province}, España`);
-        const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1`, {
-          headers: { "User-Agent": "AcademiaDetail/1.0" },
-        });
-        const geoData = await geoRes.json();
-        if (geoData?.length > 0) {
-          latitude = parseFloat(geoData[0].lat);
-          longitude = parseFloat(geoData[0].lon);
-        }
-      } catch (e) { console.error("Geocoding failed:", e); }
-    }
-
-    const profileData = {
-      business_name: editing.business_name || "",
-      slug,
-      owner_name: editing.owner_name || "",
-      email: editing.email || "",
-      phone: editing.phone || null,
-      city: editing.city || "",
-      province: editing.province || "",
-      profile_type: editing.profile_type || "detailer",
-      services: editing.services || [],
-      level_badge: editing.level_badge || "certified_pro",
-      is_published: editing.is_published ?? true,
-      is_verified: editing.is_verified ?? true,
-      description: editing.description || null,
-      featured_image_url: editing.featured_image_url || null,
-      latitude,
-      longitude,
-      specialty: editing.specialty || null,
-      years_experience: editing.years_experience ?? null,
-      website_url: editing.website_url || null,
-      instagram_handle: editing.instagram_handle || null,
-      whatsapp_number: editing.whatsapp_number || null,
-      owner_photo_url: ownerPhotoUrl,
-    };
-
-    let error;
-    if (isNew) {
-      ({ error } = await supabase.from("detailer_profiles").insert(profileData));
-    } else {
-      ({ error } = await supabase.from("detailer_profiles").update(profileData).eq("id", editing.id!));
-    }
-
-    if (error) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    } else {
-      toast({ title: isNew ? "Creado" : "Actualizado", description: `Perfil de ${profileData.business_name} guardado.` });
-      setEditing(null);
-      setIsNew(false);
-      fetchProfiles();
-    }
-    setSaveLoading(false);
+  const counts = {
+    all: entries.length,
+    pending: entries.filter(e => e.status === "pending").length,
+    approved: entries.filter(e => e.status === "approved").length,
+    rejected: entries.filter(e => e.status === "rejected").length,
   };
 
-  const handleDelete = async () => {
-    if (!deleteId) return;
-    setDeleteLoading(true);
-    const { error } = await supabase.from("detailer_profiles").delete().eq("id", deleteId);
-    if (error) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    } else {
-      toast({ title: "Eliminado", description: "Perfil eliminado del directorio." });
-      fetchProfiles();
+  const filtered = entries.filter(e => {
+    if (filter !== "all" && e.status !== filter) return false;
+    if (search) {
+      const q = search.toLowerCase();
+      return e.business_name.toLowerCase().includes(q) || e.city.toLowerCase().includes(q) || e.owner_name.toLowerCase().includes(q);
     }
-    setDeleteId(null);
-    setDeleteLoading(false);
-  };
-
-  const filtered = profiles.filter(p => {
-    const q = search.toLowerCase();
-    return !q || p.business_name.toLowerCase().includes(q) || p.city.toLowerCase().includes(q) || p.owner_name.toLowerCase().includes(q);
+    return true;
   });
 
-  const updateField = (field: string, value: any) => {
-    setEditing(prev => prev ? { ...prev, [field]: value } : null);
-  };
+  // For the map, only show profiles with coordinates
+  const mapProfiles = filtered.filter(e => e.latitude && e.longitude).map(e => ({
+    id: e.id, business_name: e.business_name, owner_name: e.owner_name, city: e.city,
+    province: e.province, profile_type: e.profile_type, latitude: e.latitude, longitude: e.longitude,
+    is_published: e.is_published, level_badge: e.level_badge,
+  }));
 
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
-            <h1 className="text-2xl font-bold">Perfiles del Directorio</h1>
-            <p className="text-muted-foreground">{profiles.length} perfiles en total</p>
+            <h1 className="text-2xl font-bold">Directorio</h1>
+            <p className="text-muted-foreground">Gestiona solicitudes y perfiles activos</p>
           </div>
-          <Button onClick={() => { setEditing({ ...emptyProfile }); setIsNew(true); }}>
+          <Button onClick={() => { setSelected({ ...emptyEntry }); setIsNew(true); }}>
             <Plus className="h-4 w-4 mr-1" /> Añadir perfil
           </Button>
         </div>
 
+        {/* Status cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {(["all", "pending", "approved", "rejected"] as const).map(key => (
+            <Card key={key} className={`cursor-pointer transition-colors ${filter === key ? "border-primary" : ""}`} onClick={() => setFilter(key)}>
+              <CardContent className="p-4 text-center">
+                <p className="text-2xl font-bold">{counts[key]}</p>
+                <p className="text-xs text-muted-foreground">{key === "all" ? "Total" : statusConfig[key]?.label}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Search + view toggle */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <Input placeholder="Buscar por nombre, ciudad o propietario..." value={search} onChange={e => setSearch(e.target.value)} className="max-w-md" />
           <div className="flex items-center rounded-lg border border-border bg-card p-1 gap-0.5">
@@ -243,18 +158,11 @@ const AdminProfiles = () => {
               { mode: "map" as const, icon: Map, label: "Mapa" },
               { mode: "table" as const, icon: LayoutGrid, label: "Tabla" },
             ]).map(({ mode, icon: Icon, label }) => (
-              <button
-                key={mode}
-                onClick={() => setViewMode(mode)}
-                className={cn(
-                  "px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 inline-flex items-center gap-1.5",
-                  viewMode === mode
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                )}
-              >
-                <Icon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">{label}</span>
+              <button key={mode} onClick={() => setViewMode(mode)} className={cn(
+                "px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 inline-flex items-center gap-1.5",
+                viewMode === mode ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              )}>
+                <Icon className="h-3.5 w-3.5" /><span className="hidden sm:inline">{label}</span>
               </button>
             ))}
           </div>
@@ -264,22 +172,17 @@ const AdminProfiles = () => {
           <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
         ) : (
           <>
-            {/* Admin Map */}
-            {(viewMode === "map" || viewMode === "both") && (
+            {(viewMode === "map" || viewMode === "both") && mapProfiles.length > 0 && (
               <AdminProfileMap
-                profiles={filtered}
-                onEdit={(id) => {
-                  const p = profiles.find(pr => pr.id === id);
-                  if (p) { setEditing({ ...p }); setIsNew(false); }
-                }}
-                onDelete={(id) => setDeleteId(id)}
+                profiles={mapProfiles as any}
+                onEdit={(id) => { const e = entries.find(x => x.id === id); if (e) { setSelected(e); setIsNew(false); } }}
+                onDelete={() => {}}
               />
             )}
 
-            {/* Table */}
             {(viewMode === "table" || viewMode === "both") && (
               filtered.length === 0 ? (
-                <Card><CardContent className="py-12 text-center text-muted-foreground">No hay perfiles</CardContent></Card>
+                <Card><CardContent className="py-12 text-center text-muted-foreground">No hay resultados</CardContent></Card>
               ) : (
                 <Card>
                   <Table>
@@ -288,38 +191,43 @@ const AdminProfiles = () => {
                         <TableHead>Negocio</TableHead>
                         <TableHead className="hidden md:table-cell">Tipo</TableHead>
                         <TableHead className="hidden md:table-cell">Ubicación</TableHead>
-                        <TableHead className="hidden md:table-cell">Rango</TableHead>
+                        <TableHead className="hidden md:table-cell">Fecha</TableHead>
                         <TableHead>Estado</TableHead>
                         <TableHead className="text-right">Acciones</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filtered.map(p => (
-                        <TableRow key={p.id}>
+                      {filtered.map(e => (
+                        <TableRow key={`${e.source}-${e.id}`}>
                           <TableCell>
-                            <div>
-                              <p className="font-medium">{p.business_name}</p>
-                              <p className="text-xs text-muted-foreground">{p.owner_name}</p>
+                            <div className="flex items-center gap-3">
+                              {e.owner_photo_url ? (
+                                <img src={e.owner_photo_url} alt="" className="w-8 h-8 rounded-full object-cover border" />
+                              ) : (
+                                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground text-xs font-bold">
+                                  {e.business_name.charAt(0)}
+                                </div>
+                              )}
+                              <div>
+                                <p className="font-medium">{e.business_name}</p>
+                                <p className="text-xs text-muted-foreground">{e.owner_name}</p>
+                              </div>
                             </div>
                           </TableCell>
-                          <TableCell className="hidden md:table-cell capitalize">{p.profile_type}</TableCell>
-                          <TableCell className="hidden md:table-cell">{p.city}, {p.province}</TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            <Badge variant="secondary">{levelLabels[p.level_badge] || p.level_badge}</Badge>
-                          </TableCell>
+                          <TableCell className="hidden md:table-cell capitalize">{e.profile_type}</TableCell>
+                          <TableCell className="hidden md:table-cell">{e.city}, {e.province}</TableCell>
+                          <TableCell className="hidden md:table-cell">{new Date(e.created_at).toLocaleDateString("es-ES")}</TableCell>
                           <TableCell>
-                            {p.is_published ? (
-                              <Badge variant="default">Publicado</Badge>
-                            ) : (
-                              <Badge variant="outline">Borrador</Badge>
+                            <Badge variant={statusConfig[e.status]?.variant || "outline"}>
+                              {statusConfig[e.status]?.label || e.status}
+                            </Badge>
+                            {e.source === "profile" && e.level_badge && e.level_badge !== "member" && (
+                              <Badge variant="secondary" className="ml-1 text-[10px]">{levelLabels[e.level_badge] || e.level_badge}</Badge>
                             )}
                           </TableCell>
-                          <TableCell className="text-right space-x-1">
-                            <Button variant="ghost" size="sm" onClick={() => { setEditing({ ...p }); setIsNew(false); }}>
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="sm" onClick={() => setDeleteId(p.id)} className="text-destructive hover:text-destructive">
-                              <Trash2 className="h-4 w-4" />
+                          <TableCell className="text-right">
+                            <Button variant="ghost" size="sm" onClick={() => { setSelected(e); setIsNew(false); }}>
+                              {e.status === "pending" ? <Eye className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -332,158 +240,12 @@ const AdminProfiles = () => {
           </>
         )}
 
-        {/* Edit/Create Modal */}
-        <Dialog open={!!editing} onOpenChange={open => { if (!open) { setEditing(null); setIsNew(false); setPhotoFile(null); setPhotoPreview(null); } }}>
-          <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto z-[9999]">
-            {editing && (
-              <>
-                <DialogHeader>
-                  <DialogTitle>{isNew ? "Añadir perfil manualmente" : `Editar: ${editing.business_name}`}</DialogTitle>
-                </DialogHeader>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div className="space-y-1.5">
-                    <Label>Nombre del negocio *</Label>
-                    <Input value={editing.business_name || ""} onChange={e => updateField("business_name", e.target.value)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Propietario *</Label>
-                    <Input value={editing.owner_name || ""} onChange={e => updateField("owner_name", e.target.value)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Email *</Label>
-                    <Input type="email" value={editing.email || ""} onChange={e => updateField("email", e.target.value)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Teléfono</Label>
-                    <Input value={editing.phone || ""} onChange={e => updateField("phone", e.target.value)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Ciudad *</Label>
-                    <Input value={editing.city || ""} onChange={e => updateField("city", e.target.value)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Provincia *</Label>
-                    <Input value={editing.province || ""} onChange={e => updateField("province", e.target.value)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Tipo de perfil</Label>
-                    <Select value={editing.profile_type || "detailer"} onValueChange={v => updateField("profile_type", v)}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="detailer">Detailer</SelectItem>
-                        <SelectItem value="centro">Centro</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Rango</Label>
-                    <Select value={editing.level_badge || "certified_pro"} onValueChange={v => updateField("level_badge", v)}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="member">Miembro</SelectItem>
-                        <SelectItem value="certified_pro">Certificado Pro</SelectItem>
-                        <SelectItem value="master_detailer">Master Detailer</SelectItem>
-                        <SelectItem value="elite_detailer">Élite Detailer</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Especialidad</Label>
-                    <Input value={editing.specialty || ""} onChange={e => updateField("specialty", e.target.value)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Años de experiencia</Label>
-                    <Input type="number" value={editing.years_experience ?? ""} onChange={e => updateField("years_experience", e.target.value ? parseInt(e.target.value) : null)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Web</Label>
-                    <Input value={editing.website_url || ""} onChange={e => updateField("website_url", e.target.value)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>Instagram</Label>
-                    <Input value={editing.instagram_handle || ""} onChange={e => updateField("instagram_handle", e.target.value)} placeholder="@usuario" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>WhatsApp</Label>
-                    <Input value={editing.whatsapp_number || ""} onChange={e => updateField("whatsapp_number", e.target.value)} />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label>URL imagen destacada</Label>
-                    <Input value={editing.featured_image_url || ""} onChange={e => updateField("featured_image_url", e.target.value)} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Foto de perfil</Label>
-                    <div className="flex items-center gap-4">
-                      {(photoPreview || editing.owner_photo_url) ? (
-                        <div className="relative">
-                          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/30">
-                            <img src={photoPreview || editing.owner_photo_url || ""} alt="Foto perfil" className="w-full h-full object-cover" />
-                          </div>
-                          <button type="button" onClick={() => { setPhotoFile(null); setPhotoPreview(null); updateField("owner_photo_url", null); }}
-                            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-destructive text-white flex items-center justify-center">
-                            <X className="h-3 w-3" />
-                          </button>
-                        </div>
-                      ) : (
-                        <label className="w-16 h-16 rounded-full border-2 border-dashed border-border hover:border-primary/40 bg-muted flex items-center justify-center cursor-pointer transition-colors">
-                          <User className="h-6 w-6 text-muted-foreground" />
-                          <input type="file" accept="image/*" className="hidden" onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (!file) return;
-                            if (file.size > 5 * 1024 * 1024) { toast({ title: "Error", description: "Máximo 5MB", variant: "destructive" }); return; }
-                            setPhotoFile(file);
-                            setPhotoPreview(URL.createObjectURL(file));
-                          }} />
-                        </label>
-                      )}
-                      <span className="text-xs text-muted-foreground">JPG/PNG, máx 5MB</span>
-                    </div>
-                  </div>
-                  <div className="space-y-1.5 flex items-center gap-3 pt-6">
-                    <Switch checked={editing.is_published ?? true} onCheckedChange={v => updateField("is_published", v)} />
-                    <Label>{editing.is_published ? "Publicado" : "Borrador"}</Label>
-                  </div>
-                  <div className="space-y-1.5 flex items-center gap-3 pt-6">
-                    <Switch checked={editing.is_verified ?? false} onCheckedChange={v => updateField("is_verified", v)} />
-                    <Label>Verificado</Label>
-                  </div>
-                  <div className="space-y-1.5 md:col-span-2">
-                    <Label>Servicios (separados por coma)</Label>
-                    <Input value={(editing.services || []).join(", ")} onChange={e => updateField("services", e.target.value.split(",").map(s => s.trim()).filter(Boolean))} />
-                  </div>
-                  <div className="space-y-1.5 md:col-span-2">
-                    <Label>Descripción</Label>
-                    <Textarea value={editing.description || ""} onChange={e => updateField("description", e.target.value)} rows={3} />
-                  </div>
-                </div>
-                <DialogFooter className="gap-2">
-                  <Button variant="outline" onClick={() => { setEditing(null); setIsNew(false); }}>Cancelar</Button>
-                  <Button onClick={handleSave} disabled={saveLoading || !editing.business_name || !editing.email || !editing.city || !editing.province}>
-                    {saveLoading ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <Save className="h-4 w-4 mr-1" />}
-                    {isNew ? "Crear perfil" : "Guardar cambios"}
-                  </Button>
-                </DialogFooter>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
-
-        {/* Delete confirmation */}
-        <AlertDialog open={!!deleteId} onOpenChange={open => { if (!open) setDeleteId(null); }}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>¿Eliminar este perfil?</AlertDialogTitle>
-              <AlertDialogDescription>Esta acción no se puede deshacer. El perfil será eliminado del directorio permanentemente.</AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDelete} disabled={deleteLoading} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                {deleteLoading ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <Trash2 className="h-4 w-4 mr-1" />}
-                Eliminar
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <AdminProfileEditModal
+          entry={selected}
+          isNew={isNew}
+          onClose={() => { setSelected(null); setIsNew(false); }}
+          onAction={fetchAll}
+        />
       </div>
     </AdminLayout>
   );

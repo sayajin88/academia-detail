@@ -9,8 +9,7 @@ interface AdminLayoutProps {
 }
 
 const navItems = [
-  { href: "/admin/applications", label: "Solicitudes", icon: FileText },
-  { href: "/admin/profiles", label: "Perfiles", icon: Users },
+  { href: "/admin/profiles", label: "Directorio", icon: Users },
 ];
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {

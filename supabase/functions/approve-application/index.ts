@@ -58,7 +58,7 @@ Deno.serve(async (req) => {
     // Geocode city/province
     const coords = await geocode(app.city, app.province);
 
-    // Create detailer profile
+    // Create detailer profile with ALL fields from application
     const { error: profileError } = await admin.from("detailer_profiles").insert({
       business_name: app.business_name,
       slug,
@@ -67,13 +67,22 @@ Deno.serve(async (req) => {
       phone: app.phone,
       city: app.city,
       province: app.province,
+      address: app.address || null,
+      zip_code: app.zip_code || null,
       services: app.services || [],
+      skills: app.skills || [],
       profile_type: app.profile_type || "detailer",
       level_badge: "certified_pro",
       is_published: true,
       is_verified: true,
       featured_image_url: app.logo_url,
-      description: app.value_proposition,
+      owner_photo_url: app.owner_photo_url || null,
+      description: app.description || app.value_proposition,
+      specialty: app.specialty || null,
+      years_experience: app.years_experience || null,
+      website_url: app.website_url || null,
+      instagram_handle: app.instagram_handle || null,
+      whatsapp_number: app.whatsapp_number || null,
       latitude: coords?.lat ?? null,
       longitude: coords?.lon ?? null,
     });
