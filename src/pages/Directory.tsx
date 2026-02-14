@@ -176,7 +176,7 @@ const Directory = () => {
     <MainLayout>
       <Helmet>
         <title>Centros de Detailing Certificados en España | Academia Detail</title>
-        <meta name="description" content="Encuentra centros de detailing y detailers certificados cerca de ti. Pulido, cerámico, PPF e interiores con garantía de calidad ✅ Busca por ciudad" />
+        <meta name="description" content="Busca centros de detailing y detailers certificados en toda España ✅ Pulido, cerámico, PPF y wrapping con garantía de calidad ➤ Encuentra tu profesional y pide presupuesto sin compromiso." />
         <link rel="canonical" href="https://academiadetail.com/centros-detailing-espana" />
         <script type="application/ld+json">{JSON.stringify(itemListSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
