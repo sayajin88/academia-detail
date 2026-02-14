@@ -309,7 +309,7 @@ const AdminProfiles = () => {
 
         {/* Edit/Create Modal */}
         <Dialog open={!!editing} onOpenChange={open => { if (!open) { setEditing(null); setIsNew(false); } }}>
-          <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto z-[9999]">
             {editing && (
               <>
                 <DialogHeader>
