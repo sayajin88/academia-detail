@@ -14,7 +14,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Pencil, Trash2, Plus, Loader2, Save, Map, LayoutGrid, Layers } from "lucide-react";
+import { Pencil, Trash2, Plus, Loader2, Save, Map, LayoutGrid, Layers, Upload, X, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Profile = {
@@ -40,6 +40,7 @@ type Profile = {
   website_url: string | null;
   instagram_handle: string | null;
   whatsapp_number: string | null;
+  owner_photo_url: string | null;
   created_at: string;
 };
 
@@ -65,6 +66,7 @@ const emptyProfile: Omit<Profile, "id" | "created_at"> = {
   website_url: "",
   instagram_handle: "",
   whatsapp_number: "",
+  owner_photo_url: "",
 };
 
 const levelLabels: Record<string, string> = {
@@ -84,6 +86,9 @@ const AdminProfiles = () => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [viewMode, setViewMode] = useState<"both" | "map" | "table">("both");
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const { toast } = useToast();
 
   const fetchProfiles = async () => {
@@ -112,6 +117,25 @@ const AdminProfiles = () => {
     setSaveLoading(true);
 
     const slug = editing.slug || generateSlug(editing.business_name || "perfil");
+
+    // Upload photo if new file selected
+    let ownerPhotoUrl = editing.owner_photo_url || null;
+    if (photoFile) {
+      setUploadingPhoto(true);
+      try {
+        const ts = Date.now();
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('directory-uploads')
+          .upload(`photos/${ts}-${photoFile.name}`, photoFile, { upsert: true });
+        if (uploadError) throw uploadError;
+        const { data: urlData } = supabase.storage.from('directory-uploads').getPublicUrl(uploadData.path);
+        ownerPhotoUrl = urlData.publicUrl;
+      } catch (e) {
+        console.error("Photo upload failed:", e);
+        toast({ title: "Error", description: "No se pudo subir la foto", variant: "destructive" });
+      }
+      setUploadingPhoto(false);
+    }
 
     // Geocode if no coords or if city/province changed
     let latitude = editing.latitude;
@@ -154,6 +178,7 @@ const AdminProfiles = () => {
       website_url: editing.website_url || null,
       instagram_handle: editing.instagram_handle || null,
       whatsapp_number: editing.whatsapp_number || null,
+      owner_photo_url: ownerPhotoUrl,
     };
 
     let error;
@@ -308,7 +333,7 @@ const AdminProfiles = () => {
         )}
 
         {/* Edit/Create Modal */}
-        <Dialog open={!!editing} onOpenChange={open => { if (!open) { setEditing(null); setIsNew(false); } }}>
+        <Dialog open={!!editing} onOpenChange={open => { if (!open) { setEditing(null); setIsNew(false); setPhotoFile(null); setPhotoPreview(null); } }}>
           <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto z-[9999]">
             {editing && (
               <>
@@ -385,6 +410,34 @@ const AdminProfiles = () => {
                   <div className="space-y-1.5">
                     <Label>URL imagen destacada</Label>
                     <Input value={editing.featured_image_url || ""} onChange={e => updateField("featured_image_url", e.target.value)} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Foto de perfil</Label>
+                    <div className="flex items-center gap-4">
+                      {(photoPreview || editing.owner_photo_url) ? (
+                        <div className="relative">
+                          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/30">
+                            <img src={photoPreview || editing.owner_photo_url || ""} alt="Foto perfil" className="w-full h-full object-cover" />
+                          </div>
+                          <button type="button" onClick={() => { setPhotoFile(null); setPhotoPreview(null); updateField("owner_photo_url", null); }}
+                            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-destructive text-white flex items-center justify-center">
+                            <X className="h-3 w-3" />
+                          </button>
+                        </div>
+                      ) : (
+                        <label className="w-16 h-16 rounded-full border-2 border-dashed border-border hover:border-primary/40 bg-muted flex items-center justify-center cursor-pointer transition-colors">
+                          <User className="h-6 w-6 text-muted-foreground" />
+                          <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            if (file.size > 5 * 1024 * 1024) { toast({ title: "Error", description: "Máximo 5MB", variant: "destructive" }); return; }
+                            setPhotoFile(file);
+                            setPhotoPreview(URL.createObjectURL(file));
+                          }} />
+                        </label>
+                      )}
+                      <span className="text-xs text-muted-foreground">JPG/PNG, máx 5MB</span>
+                    </div>
                   </div>
                   <div className="space-y-1.5 flex items-center gap-3 pt-6">
                     <Switch checked={editing.is_published ?? true} onCheckedChange={v => updateField("is_published", v)} />
