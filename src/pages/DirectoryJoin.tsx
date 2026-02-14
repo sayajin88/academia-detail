@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { DirectoryJoinForm } from '@/components/directory/DirectoryJoinForm';
+import { DirectoryJoinValueProps } from '@/components/directory/DirectoryJoinValueProps';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '@/components/ui/breadcrumb';
 
@@ -31,6 +32,8 @@ const DirectoryJoin = () => {
           title="Únete al Directorio"
           subtitle="Completa los pasos y empieza GRATIS. Oferta limitada hasta el 31 de Marzo."
         />
+
+        <DirectoryJoinValueProps />
 
         <DirectoryJoinForm />
       </section>
