@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
+import { AdminProfileMap } from "@/components/admin/AdminProfileMap";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,7 +14,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Pencil, Trash2, Plus, Loader2, Eye, EyeOff, Save } from "lucide-react";
+import { Pencil, Trash2, Plus, Loader2, Save, Map, LayoutGrid, Layers } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Profile = {
   id: string;
@@ -81,6 +83,7 @@ const AdminProfiles = () => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [viewMode, setViewMode] = useState<"both" | "map" | "table">("both");
   const { toast } = useToast();
 
   const fetchProfiles = async () => {
@@ -110,10 +113,12 @@ const AdminProfiles = () => {
 
     const slug = editing.slug || generateSlug(editing.business_name || "perfil");
 
-    // Geocode if no coords
+    // Geocode if no coords or if city/province changed
     let latitude = editing.latitude;
     let longitude = editing.longitude;
-    if ((!latitude || !longitude) && editing.city && editing.province) {
+    const original = profiles.find(p => p.id === editing.id);
+    const locationChanged = !isNew && original && (original.city !== editing.city || original.province !== editing.province);
+    if (((!latitude || !longitude) || locationChanged) && editing.city && editing.province) {
       try {
         const query = encodeURIComponent(`${editing.city}, ${editing.province}, España`);
         const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1`, {
@@ -205,59 +210,101 @@ const AdminProfiles = () => {
           </Button>
         </div>
 
-        <Input placeholder="Buscar por nombre, ciudad o propietario..." value={search} onChange={e => setSearch(e.target.value)} className="max-w-md" />
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <Input placeholder="Buscar por nombre, ciudad o propietario..." value={search} onChange={e => setSearch(e.target.value)} className="max-w-md" />
+          <div className="flex items-center rounded-lg border border-border bg-card p-1 gap-0.5">
+            {([
+              { mode: "both" as const, icon: Layers, label: "Ambos" },
+              { mode: "map" as const, icon: Map, label: "Mapa" },
+              { mode: "table" as const, icon: LayoutGrid, label: "Tabla" },
+            ]).map(({ mode, icon: Icon, label }) => (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode)}
+                className={cn(
+                  "px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 inline-flex items-center gap-1.5",
+                  viewMode === mode
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                )}
+              >
+                <Icon className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">{label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         {loading ? (
           <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
-        ) : filtered.length === 0 ? (
-          <Card><CardContent className="py-12 text-center text-muted-foreground">No hay perfiles</CardContent></Card>
         ) : (
-          <Card>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Negocio</TableHead>
-                  <TableHead className="hidden md:table-cell">Tipo</TableHead>
-                  <TableHead className="hidden md:table-cell">Ubicación</TableHead>
-                  <TableHead className="hidden md:table-cell">Rango</TableHead>
-                  <TableHead>Estado</TableHead>
-                  <TableHead className="text-right">Acciones</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filtered.map(p => (
-                  <TableRow key={p.id}>
-                    <TableCell>
-                      <div>
-                        <p className="font-medium">{p.business_name}</p>
-                        <p className="text-xs text-muted-foreground">{p.owner_name}</p>
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell capitalize">{p.profile_type}</TableCell>
-                    <TableCell className="hidden md:table-cell">{p.city}, {p.province}</TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      <Badge variant="secondary">{levelLabels[p.level_badge] || p.level_badge}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      {p.is_published ? (
-                        <Badge variant="default">Publicado</Badge>
-                      ) : (
-                        <Badge variant="outline">Borrador</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right space-x-1">
-                      <Button variant="ghost" size="sm" onClick={() => { setEditing({ ...p }); setIsNew(false); }}>
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button variant="ghost" size="sm" onClick={() => setDeleteId(p.id)} className="text-destructive hover:text-destructive">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
+          <>
+            {/* Admin Map */}
+            {(viewMode === "map" || viewMode === "both") && (
+              <AdminProfileMap
+                profiles={filtered}
+                onEdit={(id) => {
+                  const p = profiles.find(pr => pr.id === id);
+                  if (p) { setEditing({ ...p }); setIsNew(false); }
+                }}
+                onDelete={(id) => setDeleteId(id)}
+              />
+            )}
+
+            {/* Table */}
+            {(viewMode === "table" || viewMode === "both") && (
+              filtered.length === 0 ? (
+                <Card><CardContent className="py-12 text-center text-muted-foreground">No hay perfiles</CardContent></Card>
+              ) : (
+                <Card>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Negocio</TableHead>
+                        <TableHead className="hidden md:table-cell">Tipo</TableHead>
+                        <TableHead className="hidden md:table-cell">Ubicación</TableHead>
+                        <TableHead className="hidden md:table-cell">Rango</TableHead>
+                        <TableHead>Estado</TableHead>
+                        <TableHead className="text-right">Acciones</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filtered.map(p => (
+                        <TableRow key={p.id}>
+                          <TableCell>
+                            <div>
+                              <p className="font-medium">{p.business_name}</p>
+                              <p className="text-xs text-muted-foreground">{p.owner_name}</p>
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell capitalize">{p.profile_type}</TableCell>
+                          <TableCell className="hidden md:table-cell">{p.city}, {p.province}</TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            <Badge variant="secondary">{levelLabels[p.level_badge] || p.level_badge}</Badge>
+                          </TableCell>
+                          <TableCell>
+                            {p.is_published ? (
+                              <Badge variant="default">Publicado</Badge>
+                            ) : (
+                              <Badge variant="outline">Borrador</Badge>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right space-x-1">
+                            <Button variant="ghost" size="sm" onClick={() => { setEditing({ ...p }); setIsNew(false); }}>
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => setDeleteId(p.id)} className="text-destructive hover:text-destructive">
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Card>
+              )
+            )}
+          </>
         )}
 
         {/* Edit/Create Modal */}
