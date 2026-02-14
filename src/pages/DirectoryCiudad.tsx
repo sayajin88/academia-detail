@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { DirectoryHero } from '@/components/directory/DirectoryHero';
 import { DirectoryGrid } from '@/components/directory/DirectoryGrid';
 import { DirectoryMap } from '@/components/directory/DirectoryMap';
 import { supabase } from '@/integrations/supabase/client';
 import type { DetailerProfile } from '@/components/directory/DetailerCard';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '@/components/ui/breadcrumb';
-import { SectionHeading } from '@/components/shared/SectionHeading';
 import { getComunidadBySlug, slugify, getSeoText } from '@/data/comunidadesAutonomas';
 import { MapPin } from 'lucide-react';
 
@@ -18,6 +18,7 @@ const DirectoryCiudad = () => {
   const [detailers, setDetailers] = useState<DetailerProfile[]>([]);
   const [allCityDetailers, setAllCityDetailers] = useState<DetailerProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const comunidadData = getComunidadBySlug(comunidad || '');
   const comunidadName = comunidadData?.name || '';
@@ -77,18 +78,33 @@ const DirectoryCiudad = () => {
 
   const noIndex = !isLoading && detailers.length === 0;
 
+  const filteredDetailers = detailers.filter(d => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return d.business_name.toLowerCase().includes(q);
+  });
+
   return (
     <MainLayout>
       <Helmet>
         <title>Los Mejores Centros de Detailing en {ciudadName}, {provinciaName} | Academia Detail</title>
-        <meta name="description" content={`Detailing profesional en ${ciudadName}. Pulido, cerámico, PPF, wrapping y más ✅ Centros certificados por Academia Detail. Contacta sin compromiso.`} />
+        <meta name="description" content={`¿Buscas detailing profesional en ${ciudadName}, ${provinciaName}? Compara centros certificados: pulido, cerámico, PPF y wrapping ✅ Pide presupuesto gratis ➤ Reserva tu cita hoy.`} />
         <link rel="canonical" href={`https://academiadetail.com/centros-detailing-espana/${comunidad}/${provincia}/${ciudad}`} />
         {noIndex && <meta name="robots" content="noindex" />}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
 
-      <section className="container mx-auto px-4 pt-28 pb-20 space-y-8">
+      <DirectoryHero
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onNearMe={() => {}}
+        isLocating={false}
+        locationLabel={ciudadName}
+        locationContext={`Detailers y centros certificados en ${ciudadName}, ${provinciaName}. Pulido, cerámico, PPF y wrapping con garantía ➤ Contacta y reserva tu cita hoy.`}
+      />
+
+      <section className="container mx-auto px-4 pb-20 space-y-8">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
@@ -103,17 +119,11 @@ const DirectoryCiudad = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <SectionHeading
-          titleAs="h1"
-          title={`Los Mejores Centros de Detailing en ${ciudadName}`}
-          subtitle={getSeoText('ciudad', ciudadName)}
-        />
-
-        {detailers.some(d => d.latitude && d.longitude) && (
-          <DirectoryMap detailers={detailers} />
+        {filteredDetailers.some(d => d.latitude && d.longitude) && (
+          <DirectoryMap detailers={filteredDetailers} />
         )}
 
-        <DirectoryGrid detailers={detailers} isLoading={isLoading} />
+        <DirectoryGrid detailers={filteredDetailers} isLoading={isLoading} />
 
         {otherCities.length > 0 && (
           <div className="space-y-4 pt-8 border-t border-border">

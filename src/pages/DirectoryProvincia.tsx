@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { DirectoryHero } from '@/components/directory/DirectoryHero';
 import { DirectoryGrid } from '@/components/directory/DirectoryGrid';
 import { supabase } from '@/integrations/supabase/client';
 import type { DetailerProfile } from '@/components/directory/DetailerCard';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '@/components/ui/breadcrumb';
-import { SectionHeading } from '@/components/shared/SectionHeading';
 import { getComunidadBySlug, slugify, getSeoText } from '@/data/comunidadesAutonomas';
 import { MapPin } from 'lucide-react';
 
@@ -16,6 +16,7 @@ const DirectoryProvincia = () => {
   const { comunidad, provincia } = useParams<{ comunidad: string; provincia: string }>();
   const [detailers, setDetailers] = useState<DetailerProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const comunidadData = getComunidadBySlug(comunidad || '');
   const comunidadName = comunidadData?.name || '';
@@ -62,18 +63,33 @@ const DirectoryProvincia = () => {
 
   const noIndex = !isLoading && detailers.length === 0;
 
+  const filteredDetailers = detailers.filter(d => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return d.city.toLowerCase().includes(q) || d.province.toLowerCase().includes(q) || d.business_name.toLowerCase().includes(q);
+  });
+
   return (
     <MainLayout>
       <Helmet>
         <title>Detailing Profesional en {provinciaName} - Centros Certificados | Academia Detail</title>
-        <meta name="description" content={`Centros de detailing certificados en ${provinciaName}. Pulido profesional, protección cerámica, PPF e interiorismo ✅ Encuentra tu detailer cerca.`} />
+        <meta name="description" content={`Los mejores centros de detailing en ${provinciaName} ✅ Pulido profesional, cerámico, PPF y wrapping. Compara precios, lee opiniones y contacta sin compromiso ➤ Pide tu presupuesto gratis.`} />
         <link rel="canonical" href={`https://academiadetail.com/centros-detailing-espana/${comunidad}/${provincia}`} />
         {noIndex && <meta name="robots" content="noindex" />}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
 
-      <section className="container mx-auto px-4 pt-28 pb-20 space-y-8">
+      <DirectoryHero
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onNearMe={() => {}}
+        isLocating={false}
+        locationLabel={provinciaName}
+        locationContext={`Encuentra detailers y centros certificados en ${provinciaName}. Compara servicios de pulido, cerámico, PPF y wrapping ➤ Pide presupuesto gratis.`}
+      />
+
+      <section className="container mx-auto px-4 pb-20 space-y-8">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
@@ -86,13 +102,7 @@ const DirectoryProvincia = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <SectionHeading
-          titleAs="h1"
-          title={`Detailing Profesional en ${provinciaName}`}
-          subtitle={getSeoText('provincia', provinciaName)}
-        />
-
-        <DirectoryGrid detailers={detailers} isLoading={isLoading} />
+        <DirectoryGrid detailers={filteredDetailers} isLoading={isLoading} />
 
         {citiesWithDetailers.length > 0 && (
           <div className="space-y-4 pt-8 border-t border-border">

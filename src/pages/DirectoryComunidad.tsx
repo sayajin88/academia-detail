@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { DirectoryHero } from '@/components/directory/DirectoryHero';
 import { DirectoryGrid } from '@/components/directory/DirectoryGrid';
 import { supabase } from '@/integrations/supabase/client';
 import type { DetailerProfile } from '@/components/directory/DetailerCard';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '@/components/ui/breadcrumb';
-import { SectionHeading } from '@/components/shared/SectionHeading';
 import { getComunidadBySlug, slugify, getSeoText } from '@/data/comunidadesAutonomas';
 import { MapPin } from 'lucide-react';
 
@@ -14,6 +14,7 @@ const DirectoryComunidad = () => {
   const { comunidad } = useParams<{ comunidad: string }>();
   const [detailers, setDetailers] = useState<DetailerProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const comunidadData = getComunidadBySlug(comunidad || '');
   const comunidadName = comunidadData?.name || comunidad?.replace(/-/g, ' ') || '';
@@ -62,14 +63,23 @@ const DirectoryComunidad = () => {
     <MainLayout>
       <Helmet>
         <title>Mejores Centros de Detailing en {comunidadName} | Academia Detail</title>
-        <meta name="description" content={`Encuentra centros de detailing certificados en ${comunidadName}. Pulido, cerámico, PPF, wrapping y más ✅ Profesionales formados por Academia Detail.`} />
+        <meta name="description" content={`${detailers.length > 0 ? `${detailers.length}+ centros de detailing certificados en ${comunidadName}` : `Centros de detailing certificados en ${comunidadName}`}. Pulido, cerámico, PPF y wrapping ✅ Compara profesionales y pide presupuesto gratis ➤ Reserva tu cita hoy.`} />
         <link rel="canonical" href={`https://academiadetail.com/centros-detailing-espana/${comunidad}`} />
         {noIndex && <meta name="robots" content="noindex" />}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
 
-      <section className="container mx-auto px-4 pt-28 pb-20 space-y-8">
+      <DirectoryHero
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onNearMe={() => {}}
+        isLocating={false}
+        locationLabel={comunidadName}
+        locationContext={`Descubre los mejores centros y detailers certificados en ${comunidadName}. Compara servicios, consulta opiniones y pide presupuesto sin compromiso.`}
+      />
+
+      <section className="container mx-auto px-4 pb-20 space-y-8">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
@@ -80,13 +90,11 @@ const DirectoryComunidad = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <SectionHeading
-          titleAs="h1"
-          title={`Mejores Centros de Detailing en ${comunidadName}`}
-          subtitle={getSeoText('comunidad', comunidadName)}
-        />
-
-        <DirectoryGrid detailers={detailers} isLoading={isLoading} />
+        <DirectoryGrid detailers={detailers.filter(d => {
+          if (!searchQuery.trim()) return true;
+          const q = searchQuery.toLowerCase();
+          return d.city.toLowerCase().includes(q) || d.province.toLowerCase().includes(q) || d.business_name.toLowerCase().includes(q);
+        })} isLoading={isLoading} />
 
         {provincesWithDetailers.length > 0 && (
           <div className="space-y-4 pt-8 border-t border-border">
