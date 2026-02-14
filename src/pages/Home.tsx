@@ -13,6 +13,7 @@ const CarreraNegocioSection = lazy(() => import('@/components/home/CarreraNegoci
 const MontamosTuCentro = lazy(() => import('@/components/home/MontamosTuCentro').then(m => ({ default: m.MontamosTuCentro })));
 const InstructorSection = lazy(() => import('@/components/home/InstructorSection').then(m => ({ default: m.InstructorSection })));
 const GalleryPreview = lazy(() => import('@/components/home/GalleryPreview').then(m => ({ default: m.GalleryPreview })));
+const DirectoryJoinBanner = lazy(() => import('@/components/directory/DirectoryJoinBanner').then(m => ({ default: m.DirectoryJoinBanner })));
 
 const TestimonialsSection = lazy(() => import('@/components/home/TestimonialsSection').then(m => ({ default: m.TestimonialsSection })));
 const SuccessStoriesLogos = lazy(() => import('@/components/home/SuccessStoriesLogos').then(m => ({ default: m.SuccessStoriesLogos })));
@@ -71,6 +72,11 @@ export default function Home() {
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <GalleryPreview />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <div className="container mx-auto px-4 py-16 md:py-24">
+            <DirectoryJoinBanner />
+          </div>
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <TestimonialsSection />
