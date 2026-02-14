@@ -85,6 +85,20 @@ const AdminProfileEditModal = ({ entry, isNew = false, onClose, onAction }: Prop
       setForm({ ...entry });
       setRejectReason("");
       setDeleteConfirm(false);
+
+      // Load existing gallery images from portfolio_images for profiles
+      if (entry.source === "profile" && entry.id) {
+        supabase
+          .from("portfolio_images")
+          .select("after_image_url")
+          .eq("detailer_id", entry.id)
+          .then(({ data }) => {
+            if (data && data.length > 0) {
+              const urls = data.map(img => img.after_image_url).filter(Boolean) as string[];
+              setForm(prev => prev ? { ...prev, gallery_urls: urls } : null);
+            }
+          });
+      }
     }
   }, [entry]);
 
@@ -155,6 +169,31 @@ const AdminProfileEditModal = ({ entry, isNew = false, onClose, onAction }: Prop
     return null;
   };
 
+  const syncPortfolioImages = async (detailerId: string, galleryUrls: string[]) => {
+    // Get current images from DB
+    const { data: existing } = await supabase
+      .from("portfolio_images")
+      .select("id, after_image_url")
+      .eq("detailer_id", detailerId);
+
+    const currentImages = existing || [];
+    const currentUrls = currentImages.map(img => img.after_image_url).filter(Boolean) as string[];
+
+    // Images to add
+    const toAdd = galleryUrls.filter(url => !currentUrls.includes(url));
+    // Images to remove
+    const toRemove = currentImages.filter(img => img.after_image_url && !galleryUrls.includes(img.after_image_url));
+
+    if (toAdd.length > 0) {
+      await supabase.from("portfolio_images").insert(
+        toAdd.map(url => ({ detailer_id: detailerId, after_image_url: url, title: null }))
+      );
+    }
+    if (toRemove.length > 0) {
+      await supabase.from("portfolio_images").delete().in("id", toRemove.map(img => img.id));
+    }
+  };
+
   const handleSave = async () => {
     if (!form) return;
     setSaveLoading(true);
@@ -193,12 +232,15 @@ const AdminProfileEditModal = ({ entry, isNew = false, onClose, onAction }: Prop
           latitude: lat, longitude: lon,
         }).eq("id", form.id);
         if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); setSaveLoading(false); return; }
+
+        // Sync gallery_urls with portfolio_images
+        await syncPortfolioImages(form.id, form.gallery_urls || []);
       }
     } else if (isNew) {
       // Create new profile directly
       const slug = generateSlug(form.business_name || "perfil");
       const coords = form.city && form.province ? await geocode(form.city, form.province) : null;
-      const { error } = await supabase.from("detailer_profiles").insert({
+      const { data: newProfile, error } = await supabase.from("detailer_profiles").insert({
         business_name: form.business_name, slug, owner_name: form.owner_name, email: form.email, phone: form.phone,
         city: form.city, province: form.province, address: form.address, zip_code: form.zip_code,
         profile_type: form.profile_type, services: form.services, skills: form.skills,
@@ -208,8 +250,13 @@ const AdminProfileEditModal = ({ entry, isNew = false, onClose, onAction }: Prop
         description: form.description, level_badge: form.level_badge || "certified_pro",
         is_published: form.is_published ?? true, is_verified: form.is_verified ?? true,
         latitude: coords?.lat ?? null, longitude: coords?.lon ?? null,
-      });
+      }).select("id").single();
       if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); setSaveLoading(false); return; }
+
+      // Sync gallery images for new profile
+      if (newProfile?.id && form.gallery_urls && form.gallery_urls.length > 0) {
+        await syncPortfolioImages(newProfile.id, form.gallery_urls);
+      }
     }
 
     toast({ title: "Guardado", description: `${form.business_name} actualizado correctamente.` });
