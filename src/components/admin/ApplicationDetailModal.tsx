@@ -105,18 +105,38 @@ const ApplicationDetailModal = ({ application, onClose, onAction }: ApplicationD
 
     // If approved, also sync changes to the published detailer_profiles
     if (form.status === "approved") {
+      const profileUpdate: Record<string, any> = {
+        business_name: form.business_name,
+        owner_name: form.owner_name,
+        email: form.email,
+        phone: form.phone,
+        city: form.city,
+        province: form.province,
+        profile_type: form.profile_type,
+        services: form.services,
+      };
+
+      // Re-geocode if city or province changed
+      const cityChanged = form.city !== application.city || form.province !== application.province;
+      if (cityChanged) {
+        try {
+          const query = encodeURIComponent(`${form.city}, ${form.province}, España`);
+          const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1`, {
+            headers: { "User-Agent": "AcademiaDetail/1.0" },
+          });
+          const geoData = await geoRes.json();
+          if (geoData && geoData.length > 0) {
+            profileUpdate.latitude = parseFloat(geoData[0].lat);
+            profileUpdate.longitude = parseFloat(geoData[0].lon);
+          }
+        } catch (e) {
+          console.error("Geocoding failed:", e);
+        }
+      }
+
       const { error: profileError } = await supabase
         .from("detailer_profiles")
-        .update({
-          business_name: form.business_name,
-          owner_name: form.owner_name,
-          email: form.email,
-          phone: form.phone,
-          city: form.city,
-          province: form.province,
-          profile_type: form.profile_type,
-          services: form.services,
-        })
+        .update(profileUpdate)
         .eq("email", application.email);
 
       if (profileError) {
