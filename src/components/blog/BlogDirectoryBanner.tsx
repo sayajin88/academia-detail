@@ -2,6 +2,15 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Users, Eye, BadgeCheck, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+const trackDirectoryClick = () => {
+  if (typeof window !== 'undefined' && (window as any).gtag) {
+    (window as any).gtag('event', 'directory_banner_click', {
+      event_category: 'engagement',
+      event_label: 'blog_directory_banner',
+    });
+  }
+};
+
 const benefits = [
   { icon: Users, text: 'Llega a nuevos clientes cerca de ti' },
   { icon: Eye, text: 'Aumenta tu visibilidad digital' },
@@ -52,7 +61,7 @@ export function BlogDirectoryBanner() {
           ))}
         </div>
 
-        <Link to="/directorio/unete">
+        <Link to="/directorio/unete" onClick={trackDirectoryClick}>
           <Button
             size="default"
             className="bg-white text-primary hover:bg-white/90 rounded-xl px-6 py-2.5 text-sm font-bold shadow-lg shadow-black/20 group"
