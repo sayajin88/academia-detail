@@ -59,7 +59,7 @@ Deno.serve(async (req) => {
     const coords = await geocode(app.city, app.province);
 
     // Create detailer profile with ALL fields from application
-    const { error: profileError } = await admin.from("detailer_profiles").insert({
+    const { data: newProfile, error: profileError } = await admin.from("detailer_profiles").insert({
       business_name: app.business_name,
       slug,
       owner_name: app.owner_name,
@@ -85,8 +85,19 @@ Deno.serve(async (req) => {
       whatsapp_number: app.whatsapp_number || null,
       latitude: coords?.lat ?? null,
       longitude: coords?.lon ?? null,
-    });
+    }).select("id").single();
     if (profileError) throw new Error("Failed to create profile: " + profileError.message);
+
+    // Migrate gallery_urls to portfolio_images
+    if (newProfile?.id && app.gallery_urls && app.gallery_urls.length > 0) {
+      await admin.from("portfolio_images").insert(
+        app.gallery_urls.map((url: string) => ({
+          detailer_id: newProfile.id,
+          after_image_url: url,
+          title: null,
+        }))
+      );
+    }
 
     // Update application status
     await admin.from("directory_applications").update({ status: "approved" }).eq("id", application_id);
