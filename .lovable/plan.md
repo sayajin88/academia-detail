@@ -1,168 +1,89 @@
 
 
-## Modulo de Gestion de Blog en el Panel de Admin
+## Migrar todos los articulos estaticos al modulo de blog del admin
 
-### Resumen
+### Objetivo
 
-Crear un sistema completo de redaccion y gestion de articulos de blog desde el panel de administracion, con asistencia de IA para SEO, legibilidad, fact-checking y generacion de contenido. Los articulos se almacenaran en la base de datos y se renderizaran usando la misma plantilla visual que los articulos actuales.
-
----
-
-### Arquitectura General
-
-El sistema se compone de 4 capas:
-
-1. **Base de datos**: tabla `blog_posts` que almacena articulos con el mismo esquema que `BlogPost`
-2. **Panel admin**: pagina `/admin/blog` con listado, editor y herramientas de IA
-3. **Edge function**: `blog-ai-assistant` que conecta con Lovable AI para las funciones inteligentes
-4. **Frontend publico**: el blog actual (`Blog.tsx`, `BlogPost.tsx`) lee tanto de datos estaticos como de la base de datos
+Insertar los 26 articulos de blog existentes (actualmente definidos en archivos TypeScript estaticos) en la tabla `blog_posts` de la base de datos, con estado `published`, para que aparezcan en el listado del panel admin y se puedan editar, modificar y eliminar. Ademas, cada articulo tendra una puntuacion SEO calculada previamente.
 
 ---
 
-### 1. Base de datos
+### Que se hara
 
-**Nueva tabla `blog_posts`:**
+**1. Insercion masiva de los 26 articulos en la base de datos**
 
-| Columna | Tipo | Descripcion |
-|---------|------|-------------|
-| id | uuid (PK) | Identificador unico |
-| slug | text (unique) | URL del articulo |
-| title | text | Titulo |
-| excerpt | text | Extracto / meta description |
-| category | text | detailing, ppf, wrapping, negocios |
-| author_name | text | Nombre del autor |
-| author_role | text | Cargo del autor |
-| author_image | text | URL imagen del autor |
-| published_at | date | Fecha de publicacion |
-| reading_time | text | Tiempo estimado de lectura |
-| image_url | text | URL imagen principal |
-| image_alt | text | Alt text de la imagen |
-| featured | boolean | Articulo destacado |
-| tags | text[] | Array de etiquetas |
-| sections | jsonb | Array de BlogSection (id, title, content, links, table) |
-| related_slugs | text[] | Slugs de articulos relacionados |
-| status | text | draft, published |
-| seo_score | integer | Puntuacion SEO calculada por IA |
-| readability_score | integer | Puntuacion de legibilidad |
-| created_at | timestamptz | Fecha de creacion |
-| updated_at | timestamptz | Ultima modificacion |
-| created_by | uuid | Usuario que creo el articulo |
+Se creara una edge function temporal (`seed-blog-posts`) que:
 
-**RLS**: Solo usuarios con rol `admin` pueden leer/escribir. Las filas con `status = 'published'` son legibles por `anon` (para el frontend publico).
+- Recibe una llamada POST con el array completo de articulos
+- Inserta cada uno en la tabla `blog_posts` con todos sus campos: slug, title, excerpt, category, author_name, author_role, published_at, reading_time, image_alt, featured, tags, sections (JSONB), related_slugs, status = 'published'
+- Las imagenes (`image_url`) se dejaran como referencia a las rutas locales del proyecto (ya que son assets importados, se usara un mapeo de slug a ruta de imagen publica o se dejara null para articulos existentes que usan assets locales)
 
-**Storage bucket**: `blog-images` para subir fotos del articulo.
+**2. Calculo de SEO score para cada articulo**
 
----
+Se creara una logica de scoring SEO basica (sin IA, determinista) que evalua cada articulo segun estos criterios:
 
-### 2. Edge Function: `blog-ai-assistant`
+| Criterio | Puntos | Descripcion |
+|----------|--------|-------------|
+| Titulo contiene keyword principal | 10 | Si el titulo incluye alguna de las tags |
+| Excerpt tiene longitud optima (120-160 chars) | 10 | Meta description ideal |
+| Tiene al menos 4 secciones | 10 | Profundidad del contenido |
+| Tiene al menos 5 tags | 10 | Cobertura de keywords |
+| Secciones tienen enlaces internos | 15 | Internal linking |
+| Al menos una seccion tiene tabla | 10 | Contenido enriquecido |
+| Titulo < 65 caracteres | 5 | Longitud SEO optima |
+| Excerpt no esta vacio | 5 | Tiene meta description |
+| Tiene related slugs | 10 | Malla de contenido |
+| Tiene image alt descriptivo | 5 | SEO de imagenes |
+| Contenido total > 1500 palabras | 10 | Long-form content |
 
-Una unica edge function que recibe un `action` y delega a Lovable AI (google/gemini-3-flash-preview):
+Score maximo: 100. Se calculara para cada articulo y se guardara en el campo `seo_score`.
 
-| Accion | Entrada | Salida |
-|--------|---------|--------|
-| `generate-outline` | Titulo + categoria + keywords | Array de secciones (id, title, descripcion breve) |
-| `write-section` | Titulo seccion + contexto articulo + keywords | Contenido de la seccion con enlaces `[[texto]]` |
-| `seo-analysis` | Titulo + excerpt + sections + tags | Score 0-100 + lista de mejoras concretas |
-| `readability-analysis` | Contenido completo | Score 0-100 + sugerencias (frases largas, pasiva, tecnicismos) |
-| `suggest-keywords` | Titulo + categoria | Lista de keywords + sugerencias de enlaces internos a rutas existentes |
-| `fact-check` | Contenido de una seccion | Lista de afirmaciones verificables + nivel de confianza |
-| `suggest-meta` | Titulo + contenido | Meta title, meta description, og:title, og:description optimizados |
-| `improve-section` | Contenido seccion + instruccion | Seccion reescrita |
+**3. Script de seed en el frontend (pagina admin temporal o accion en BlogPostList)**
 
-Cada accion incluye en el system prompt el contexto de Academia Detail, las rutas internas de la web, y las directrices de estilo.
+Se anadira un boton "Importar articulos estaticos" en el `BlogPostList.tsx` que:
+- Importa los 26 articulos del archivo `blogPosts.ts`
+- Calcula el SEO score de cada uno
+- Los inserta en la base de datos mediante `supabase.from('blog_posts').upsert()`
+- Muestra un toast de exito/error
+- El boton solo aparece si no hay articulos en la base de datos (para evitar duplicados)
+
+**4. Ajuste del hook `useBlogPosts` para priorizar DB**
+
+- Si hay articulos en la base de datos, se usaran esos como fuente principal
+- Los articulos estaticos solo se muestran como fallback si no estan en la DB
 
 ---
 
-### 3. Panel Admin: `/admin/blog`
-
-**3.1. Listado de articulos**
-- Tabla con columnas: titulo, categoria, estado (borrador/publicado), fecha, score SEO
-- Botones: Nuevo articulo, Editar, Eliminar, Cambiar estado
-- Filtros por estado y categoria
-
-**3.2. Editor de articulo (modal o pagina completa)**
-
-El editor se organiza en pestanas:
-
-**Pestana "Contenido":**
-- Campos basicos: titulo, slug (auto-generado), excerpt, categoria, tags, fecha publicacion
-- Editor de secciones: lista ordenable de secciones, cada una con titulo y editor de texto
-- Boton "Generar Outline con IA" que crea la estructura de secciones automaticamente
-- Boton "Escribir seccion con IA" en cada seccion individual
-- Boton "Mejorar seccion" para reescribir con instrucciones
-
-**Pestana "SEO":**
-- Analisis SEO on-page: muestra score + checklist de mejoras
-- Sugerencia de keywords y enlaces internos
-- Preview de como se veria en Google (titulo + meta description + URL)
-- Analisis SEO off-page: sugerencias de link building, slugs relacionados
-
-**Pestana "Legibilidad":**
-- Score de legibilidad (0-100)
-- Indicadores: longitud media de frase, uso de voz pasiva, nivel de tecnicismo
-- Sugerencias especificas de mejora por seccion
-
-**Pestana "Multimedia":**
-- Subida de imagen principal (con campo alt text)
-- Subida de imagen de autor
-- Galeria de imagenes disponibles en el proyecto
-- Sugerencias de imagenes basadas en el contenido
-
-**Pestana "Verificacion":**
-- Fact-checking automatizado seccion por seccion
-- Lista de afirmaciones con nivel de confianza (alto/medio/bajo)
-- Preview del articulo renderizado con la plantilla real
-
-**Pestana "Publicar":**
-- Resumen final: titulo, excerpt, tags, imagen, scores
-- Selector de estado: borrador / publicado
-- Selector de articulo destacado
-- Selector de articulos relacionados
-- Boton "Guardar borrador" y "Publicar"
-
----
-
-### 4. Integracion con el frontend publico
-
-- Crear un hook `useBlogPosts()` que combine los posts estaticos (`blogPosts` del archivo TS) con los posts de la base de datos con `status = 'published'`
-- Ordenar todos por `publishedAt` descendente
-- `BlogPost.tsx` intentara primero buscar en los datos estaticos, y si no encuentra, hara query a la base de datos
-- Esto permite una transicion gradual sin romper los articulos existentes
-
----
-
-### 5. Navegacion admin
-
-- Anadir entrada "Blog" en el `navItems` de `AdminLayout.tsx`
-- Anadir ruta `/admin/blog` en `App.tsx`
-
----
-
-### Detalle tecnico de archivos
-
-**Nuevos archivos:**
-- `supabase/functions/blog-ai-assistant/index.ts` — Edge function con logica de IA
-- `src/pages/AdminBlog.tsx` — Pagina principal del modulo
-- `src/components/admin/blog/BlogPostEditor.tsx` — Editor completo con pestanas
-- `src/components/admin/blog/BlogPostList.tsx` — Tabla de listado
-- `src/components/admin/blog/BlogSEOPanel.tsx` — Pestana de analisis SEO
-- `src/components/admin/blog/BlogReadabilityPanel.tsx` — Pestana de legibilidad
-- `src/components/admin/blog/BlogMediaPanel.tsx` — Pestana de multimedia
-- `src/components/admin/blog/BlogFactCheckPanel.tsx` — Pestana de verificacion
-- `src/components/admin/blog/BlogSectionEditor.tsx` — Editor individual de seccion
-- `src/components/admin/blog/BlogAIActions.tsx` — Botones y modales de acciones IA
-- `src/components/admin/blog/BlogPublishPanel.tsx` — Pestana de publicacion
-- `src/components/admin/blog/BlogGooglePreview.tsx` — Preview tipo SERP
-- `src/hooks/useBlogPosts.ts` — Hook que combina datos estaticos + DB
+### Detalle tecnico
 
 **Archivos modificados:**
-- `src/components/admin/AdminLayout.tsx` — Anadir nav item "Blog"
-- `src/App.tsx` — Anadir ruta `/admin/blog`
-- `src/pages/Blog.tsx` — Usar `useBlogPosts()` en lugar de importar directamente
-- `src/pages/BlogPost.tsx` — Buscar tambien en la base de datos
 
-**Migracion SQL:**
-- Crear tabla `blog_posts`
-- Crear bucket `blog-images`
-- Crear politicas RLS
+- `src/components/admin/blog/BlogPostList.tsx` — Anadir boton de importacion con logica de seed y scoring SEO
+- `src/hooks/useBlogPosts.ts` — Sin cambios (ya tiene la logica de merge correcta)
+
+**Logica del boton "Importar articulos":**
+
+```text
+1. Verificar que la tabla blog_posts esta vacia (query count)
+2. Importar blogPosts desde src/data/blogPosts.ts
+3. Para cada post:
+   a. Calcular seo_score con la funcion determinista
+   b. Mapear campos: slug, title, excerpt, category, author_name, author_role, 
+      published_at, reading_time, image_alt, featured, tags, sections, 
+      related_slugs, status='published', seo_score
+   c. image_url = null (se mantienen los assets locales via el merge del hook)
+4. Insertar todo con upsert (on conflict slug)
+5. Invalidar query cache
+6. Mostrar toast con resultado
+```
+
+**No se necesitan migraciones SQL** — la tabla ya existe con el esquema correcto.
+
+**No se necesitan edge functions nuevas** — la insercion se hace directamente desde el cliente admin (protegido por RLS de admin).
+
+### Resultado esperado
+
+- Los 26 articulos apareceran en la tabla del admin con titulo, categoria, estado, fecha y puntuacion SEO
+- Se podran editar, modificar estado (publicado/borrador) y eliminar desde el panel
+- La puntuacion SEO sera visible como un numero de color (verde > 70, amarillo 40-70, rojo < 40)
 
