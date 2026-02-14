@@ -1,7 +1,7 @@
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { useLocation, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { LogOut, LayoutDashboard, FileText, Users } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, Users, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AdminLayoutProps {
@@ -10,6 +10,7 @@ interface AdminLayoutProps {
 
 const navItems = [
   { href: "/admin/profiles", label: "Directorio", icon: Users },
+  { href: "/admin/contacts", label: "Contactos", icon: MessageSquare },
 ];
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
