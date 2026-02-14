@@ -1,100 +1,70 @@
 
 
-## Rediseno completo de la ficha DetailerPage
+## Correccion: Guardar imagenes de galeria correctamente
 
-### Problema actual
+### Problema
 
-La ficha tiene una estructura plana y poco visual: todo se apila verticalmente sin jerarquia clara, los badges de rango no destacan, el WhatsApp no tiene prominencia suficiente, y las imagenes del portfolio solo se muestran como sliders antes/despues sin galeria general.
+Cuando se suben fotos de galeria en el panel admin, se suben al storage correctamente pero **nunca se insertan en la tabla `portfolio_images`**. El guardado del perfil (`handleSave`) no incluye logica para sincronizar las URLs de galeria con `portfolio_images`. La ficha del detailer (`DetailerPage`) lee de `portfolio_images`, asi que las fotos nunca aparecen.
 
-### Cambios planificados
+### Solucion
 
----
+#### 1. Base de datos: Politicas RLS para `portfolio_images`
 
-#### 1. `src/components/directory/DetailerBadge.tsx` - Animaciones premium
+Actualmente solo existe una politica SELECT publica. Faltan politicas de INSERT, UPDATE y DELETE para admins:
 
-- Anadir animacion CSS `shimmer-gold` al badge Elite Detailer (efecto de brillo dorado que recorre el badge)
-- Anadir animacion `shimmer-silver` al badge Master Detailer (efecto plateado similar)
-- El badge Certified Pro mantiene su estilo actual sin animacion
+- INSERT: admins pueden insertar imagenes de portfolio
+- DELETE: admins pueden eliminar imagenes de portfolio
 
-#### 2. `src/index.css` - Nuevos keyframes
+#### 2. `AdminProfileEditModal.tsx` - Sincronizar galeria con `portfolio_images`
 
-Anadir dos keyframes:
-- `@keyframes shimmer-gold`: efecto de brillo dorado que recorre el badge de izquierda a derecha con gradiente translucido
-- `@keyframes shimmer-silver`: mismo efecto pero con tono plateado
+Cambios en el flujo de guardado:
 
-#### 3. `src/pages/DetailerPage.tsx` - Reestructuracion completa
+- **Al guardar un perfil existente (source: "profile")**: Tras guardar los datos del perfil, sincronizar las imagenes de galeria con `portfolio_images`:
+  1. Obtener las imagenes actuales de `portfolio_images` para ese detailer_id
+  2. Comparar con las URLs en `form.gallery_urls`
+  3. Insertar las nuevas (como `after_image_url`, sin `before_image_url`)
+  4. Eliminar las que ya no estan en la lista
 
-**Layout general**: Pasar de una sola columna a un layout de 2 columnas en desktop (sidebar + contenido principal).
+- **Al crear un perfil nuevo**: Tras el INSERT del perfil, obtener el ID generado e insertar todas las gallery_urls como registros en `portfolio_images`
 
-**Columna izquierda (sidebar sticky)**:
-- Foto del profesional con borde animado dorado/plateado segun rango
-- Nombre y tipo (Detailer/Centro)
-- Badge de rango con animacion
-- Boton WhatsApp prominente (verde, ancho completo, siempre visible)
-- Botones secundarios: Llamar, Web
-- Enlace de Instagram con icono visual (no boton outline generico)
-- Estadisticas compactas (experiencia, especialidad, verificado)
+- **Al guardar una aplicacion**: Las gallery_urls se guardan en `directory_applications` como antes (ya funciona). Cuando se aprueba, la edge function deberia migrarlas a `portfolio_images` automaticamente.
 
-**Columna derecha (contenido)**:
-- H1 con nombre del negocio + ubicacion
-- Seccion "Sobre mi/el centro" con descripcion
-- Servicios como chips visuales
-- Habilidades con iconos
-- Mapa de ubicacion
-- Galeria de portfolio (antes/despues)
+#### 3. `AdminProfileEditModal.tsx` - Cargar galeria existente al abrir
 
-**Seccion hero mejorada**:
-- Mantener la imagen de portada actual pero con overlay mas elegante
-- Breadcrumbs sobre el hero con mejor contraste
-
-**Galeria de imagenes**:
-- Si `portfolio_images` tiene entradas donde solo hay `after_image_url` (sin before), mostrarlas como galeria de fotos normal
-- Los pares antes/despues siguen usando el slider
-- Layout tipo masonry o grid 2x2 para las fotos sueltas
-
-**CTA flotante movil mejorado**:
-- Mantener el boton WhatsApp flotante pero con efecto pulse sutil
-
-**SEO adicional**:
-- Anadir schema `makesOffer` con los servicios del detailer
-- Anadir `sameAs` con enlace a Instagram y web si existen
-- Meta keywords con ciudad + servicios para reforzar geolocalizacion
-- Open Graph image con la featured_image_url
-
-#### 4. Mejoras visuales adicionales
-
-- **Foto de perfil con anillo animado**: Para Elite, un anillo dorado con gradiente que rota suavemente alrededor de la foto. Para Master, un anillo plateado.
-- **Seccion de servicios mejorada**: Iconos asociados a cada tipo de servicio conocido (Pulido, Ceramico, PPF, Wrapping, Interior, Motores, Restauracion)
-- **Verificado badge**: Icono verde con tooltip "Verificado por Academia Detail"
-- **Seccion CTA inferior**: Banner al final de la ficha invitando a contactar, con fondo gradiente
+Cuando se abre un perfil existente (source: "profile"), cargar las imagenes desde `portfolio_images` y poblar `gallery_urls` en el formulario para que se vean en la UI de galeria.
 
 ### Detalle tecnico por archivo
 
-**`src/index.css`** (2 keyframes nuevos):
+**Migracion SQL:**
 ```text
-@keyframes shimmer-gold {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-@keyframes shimmer-silver {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
+-- Politica INSERT para admins en portfolio_images
+CREATE POLICY "Admins can insert portfolio images"
+ON portfolio_images FOR INSERT
+TO authenticated
+WITH CHECK (has_role(auth.uid(), 'admin'));
+
+-- Politica DELETE para admins en portfolio_images
+CREATE POLICY "Admins can delete portfolio images"
+ON portfolio_images FOR DELETE
+TO authenticated
+USING (has_role(auth.uid(), 'admin'));
+
+-- Politica SELECT para admins (ver todas, no solo publicadas)
+CREATE POLICY "Admins can view all portfolio images"
+ON portfolio_images FOR SELECT
+TO authenticated
+USING (has_role(auth.uid(), 'admin'));
 ```
 
-**`src/components/directory/DetailerBadge.tsx`**:
-- Anadir clase `animate-shimmer-gold` al badge elite con `background-size: 200%` y gradiente translucido superpuesto
-- Anadir clase `animate-shimmer-silver` al badge master
+**`AdminProfileEditModal.tsx`:**
 
-**`src/pages/DetailerPage.tsx`** - Reescritura completa del render:
-- Layout: `grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-8`
-- Sidebar: `lg:sticky lg:top-24` con todos los datos de contacto
-- Contenido: descripcion, servicios, skills, mapa, portfolio
-- SEO: schema `makesOffer`, `sameAs`, OG tags mejorados
-- Servicios con iconos mapeados (diccionario servicio -> icono Lucide)
-- Banner CTA final con gradiente burdeos
+1. Anadir `useEffect` que al abrir un perfil (source: "profile"), haga `SELECT after_image_url FROM portfolio_images WHERE detailer_id = id` y rellene `gallery_urls` con esas URLs
 
-### Resultado esperado
+2. En `handleSave`, tras guardar el perfil:
+   - Obtener imagenes actuales: `SELECT id, after_image_url FROM portfolio_images WHERE detailer_id = form.id`
+   - Calcular nuevas URLs (las que estan en gallery_urls pero no en las actuales) -> INSERT
+   - Calcular URLs eliminadas (las que estan en actuales pero no en gallery_urls) -> DELETE por ID
+   - Cada nueva imagen se inserta como: `{ detailer_id: form.id, after_image_url: url, title: null }`
 
-Una ficha profesional con aspecto premium tipo marketplace de lujo, donde los badges animados refuerzan la jerarquia visual, el WhatsApp es el CTA principal siempre accesible, y la informacion esta organizada en un layout de dos columnas que facilita la lectura y la conversion.
+3. Para perfiles nuevos: tras el INSERT, usar el ID retornado para insertar las gallery_urls en portfolio_images
 
