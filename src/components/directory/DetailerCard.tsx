@@ -48,7 +48,7 @@ export function DetailerCard({ detailer }: DetailerCardProps) {
             <img
               src={detailer.featured_image_url}
               alt={`${detailer.business_name} - Detailing en ${detailer.city}`}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${detailer.profile_type === 'centro' ? 'object-contain p-4 bg-white' : 'object-cover'}`}
               loading="lazy"
             />
           ) : (
