@@ -1,4 +1,4 @@
-import type { FormationModule, FormationInstructor, FormationLevel } from '@/data/formationDetails';
+import type { FormationModule, FormationInstructor, FormationLevel, FormationDetail } from '@/data/formationDetails';
 import { localBusinessSchema } from '@/components/SEO';
 
 const BASE_URL = 'https://academiadetail.com';
@@ -492,7 +492,98 @@ const normalizeSlug = (slug: string): string => {
 // ============================================
 // SEO CONFIG POR PÁGINA
 // ============================================
+
+// Dynamic home SEO generator - builds schemas from real formation data
+export const generateHomeSEO = (formations: { id: string; title: string; shortTitle: string; description: string; href: string; alumnosCertificados?: number }[], details: Record<string, FormationDetail>) => {
+  // Aggregate dynamic keywords from all course categories
+  const categoryKeywords = Object.values(details).map(d => {
+    const words = d.title.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+    return words.slice(0, 3).join(', ');
+  }).join(', ');
+
+  const totalAlumnos = formations.reduce((sum, f) => sum + (f.alumnosCertificados || 0), 0);
+
+  // Build ItemList of courses dynamically from real data
+  const courseItemList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Cursos de Detailing Profesional",
+    "numberOfItems": formations.length,
+    "itemListElement": formations.map((f, i) => {
+      const detail = details[f.id];
+      return {
+        "@type": "ListItem",
+        "position": i + 1,
+        "item": {
+          "@type": "Course",
+          "name": detail?.title || f.title,
+          "url": `${BASE_URL}${f.href}`,
+          "description": detail?.description || f.description,
+          "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
+          ...(detail && {
+            "offers": {
+              "@type": "Offer",
+              "price": String(detail.price),
+              "priceCurrency": "EUR",
+              "availability": detail.comingSoon ? "https://schema.org/PreOrder" : "https://schema.org/LimitedAvailability"
+            },
+            ...(detail.modules && detail.modules.length > 0 && {
+              "hasPart": detail.modules.map((mod, mi) => ({
+                "@type": "Course",
+                "name": mod.title,
+                "position": mi + 1
+              }))
+            })
+          })
+        }
+      };
+    })
+  };
+
+  // Navigation schema from real formation slugs
+  const navItems = [
+    ...formations.map((f, i) => ({
+      "@type": "ListItem" as const,
+      "position": i + 1,
+      "name": f.shortTitle || f.title,
+      "url": `${BASE_URL}${f.href}`
+    })),
+    { "@type": "ListItem" as const, "position": formations.length + 1, "name": "Formación Profesional Completa", "url": `${BASE_URL}/formacion-profesional-detailing` },
+    { "@type": "ListItem" as const, "position": formations.length + 2, "name": "Jornada Zero - Experiencia Inmersión", "url": `${BASE_URL}/curso-detailing-iniciacion` },
+    { "@type": "ListItem" as const, "position": formations.length + 3, "name": "Contacto", "url": `${BASE_URL}/contacto` },
+  ];
+
+  return {
+    title: "Cursos de Detailing Profesional 2026 | 100% Práctico en Alicante | ★4.9",
+    description: `✅ Cursos de detailing 100% prácticos en taller real de Alicante. Pulido, tratamiento cerámico, PPF y wrapping. ⭐ +${totalAlumnos} alumnos certificados. ➤ Reserva tu plaza ahora - Grupos de máx 3 personas.`,
+    keywords: `curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, ${categoryKeywords}`,
+    url: "/",
+    price: details['curso-detailing-profesional']?.price ? String(details['curso-detailing-profesional'].price) : "2997",
+    schema: [
+      localBusinessSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Academia Detail",
+        "alternateName": "Detail Park Academy",
+        "url": BASE_URL
+      },
+      { "@context": "https://schema.org", "@type": "ItemList", "name": "Navegación Principal - Academia Detail", "itemListElement": navItems },
+      courseItemList,
+      generateWebPageSchema({
+        name: "Cursos de Detailing Profesional en España",
+        description: "Formación 100% práctica en taller real con visión de negocio",
+        url: "/"
+      }),
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" }
+      ])
+    ]
+  };
+};
+
 export const seoConfig = {
+  // Legacy static fallback - prefer generateHomeSEO()
   home: {
     title: "Cursos de Detailing Profesional 2026 | 100% Práctico en Alicante | ★4.9",
     description: "✅ Cursos de detailing 100% prácticos en taller real de Alicante. Pulido, tratamiento cerámico, PPF y wrapping. ⭐ +170 alumnos certificados. ➤ Reserva tu plaza ahora - Grupos de máx 3 personas.",
@@ -507,124 +598,6 @@ export const seoConfig = {
         "name": "Academia Detail",
         "alternateName": "Detail Park Academy",
         "url": BASE_URL
-      },
-      // SiteNavigationElement - Helps Google generate sitelinks
-      {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "Navegación Principal - Academia Detail",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Curso de Detailing Profesional",
-            "url": `${BASE_URL}/curso-detailing-profesional`
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Curso de Car Wrapping",
-            "url": `${BASE_URL}/curso-vinilado-vehiculos`
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Curso PPF Protección Pintura",
-            "url": `${BASE_URL}/curso-ppf-proteccion-pintura`
-          },
-          {
-            "@type": "ListItem",
-            "position": 4,
-            "name": "Curso Restauración Vehículos",
-            "url": `${BASE_URL}/curso-restauracion-vehiculos`
-          },
-          {
-            "@type": "ListItem",
-            "position": 5,
-            "name": "Formación Profesional Completa",
-            "url": `${BASE_URL}/formacion-profesional-detailing`
-          },
-          {
-            "@type": "ListItem",
-            "position": 6,
-            "name": "Jornada Zero - Experiencia Inmersión",
-            "url": `${BASE_URL}/curso-detailing-iniciacion`
-          },
-          {
-            "@type": "ListItem",
-            "position": 7,
-            "name": "Contacto",
-            "url": `${BASE_URL}/contacto`
-          }
-        ]
-      },
-      // ItemList of Courses - Enables course carousel in Google
-      {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "Cursos de Detailing Profesional",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@type": "Course",
-              "name": "Curso de Detailing Profesional",
-              "url": `${BASE_URL}/curso-detailing-profesional`,
-              "description": "Pulido profesional y tratamiento cerámico. 4 días de formación intensiva en taller real.",
-              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
-              "offers": { "@type": "Offer", "price": "2997", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "item": {
-              "@type": "Course",
-              "name": "Curso Car Wrapping Profesional",
-              "url": `${BASE_URL}/curso-vinilado-vehiculos`,
-              "description": "Instalación de vinilo y cambio de color. Formación práctica de 5 días.",
-              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
-              "offers": { "@type": "Offer", "price": "2997", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "item": {
-              "@type": "Course",
-              "name": "Curso PPF Protección Pintura",
-              "url": `${BASE_URL}/curso-ppf-proteccion-pintura`,
-              "description": "Instalación de Paint Protection Film profesional. 5 días intensivos.",
-              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
-              "offers": { "@type": "Offer", "price": "2997", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 4,
-            "item": {
-              "@type": "Course",
-              "name": "Formación Profesional Detailing - Monta tu Centro",
-              "url": `${BASE_URL}/formacion-profesional-detailing`,
-              "description": "Programa completo de 1 mes con 4 certificaciones y módulo de negocio exclusivo.",
-              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
-              "offers": { "@type": "Offer", "price": "9997", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 5,
-            "item": {
-              "@type": "Course",
-              "name": "Jornada Zero - Experiencia Inmersión",
-              "url": `${BASE_URL}/curso-detailing-iniciacion`,
-              "description": "Tu primer contacto con el detailing profesional. 1 día de experiencia práctica por 97€.",
-              "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
-              "offers": { "@type": "Offer", "price": "97", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability" }
-            }
-          }
-        ]
       },
       generateWebPageSchema({
         name: "Cursos de Detailing Profesional en España",
