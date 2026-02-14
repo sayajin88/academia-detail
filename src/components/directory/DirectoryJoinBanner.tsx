@@ -59,7 +59,7 @@ export function DirectoryJoinBanner() {
         </div>
 
         {/* CTA */}
-        <Link to="/directorio/unete">
+        <Link to="/centros-detailing-espana/unete">
           <Button
             size="lg"
             className="bg-white text-primary hover:bg-white/90 rounded-xl px-8 py-3 text-base font-bold shadow-lg shadow-black/20 group"

@@ -65,7 +65,7 @@ const DetailerPage = () => {
       <MainLayout>
         <div className="min-h-screen flex flex-col items-center justify-center gap-4">
           <h1 className="text-2xl font-bold">Detailer no encontrado</h1>
-          <Link to="/directorio" className="text-primary underline">Volver al directorio</Link>
+          <Link to="/centros-detailing-espana" className="text-primary underline">Volver al directorio</Link>
         </div>
       </MainLayout>
     );
@@ -119,10 +119,10 @@ const DetailerPage = () => {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://academiadetail.com/' },
-      { '@type': 'ListItem', position: 2, name: 'Directorio', item: 'https://academiadetail.com/directorio' },
-      ...(comunidadName ? [{ '@type': 'ListItem', position: 3, name: comunidadName, item: `https://academiadetail.com/directorio/${comunidadSlug}` }] : []),
-      { '@type': 'ListItem', position: comunidadName ? 4 : 3, name: detailer.province, item: `https://academiadetail.com/directorio/${comunidadSlug}/${provinciaSlug}` },
-      { '@type': 'ListItem', position: comunidadName ? 5 : 4, name: detailer.city, item: `https://academiadetail.com/directorio/${comunidadSlug}/${provinciaSlug}/${ciudadSlug}` },
+      { '@type': 'ListItem', position: 2, name: 'Centros Detailing España', item: 'https://academiadetail.com/centros-detailing-espana' },
+      ...(comunidadName ? [{ '@type': 'ListItem', position: 3, name: comunidadName, item: `https://academiadetail.com/centros-detailing-espana/${comunidadSlug}` }] : []),
+      { '@type': 'ListItem', position: comunidadName ? 4 : 3, name: detailer.province, item: `https://academiadetail.com/centros-detailing-espana/${comunidadSlug}/${provinciaSlug}` },
+      { '@type': 'ListItem', position: comunidadName ? 5 : 4, name: detailer.city, item: `https://academiadetail.com/centros-detailing-espana/${comunidadSlug}/${provinciaSlug}/${ciudadSlug}` },
       { '@type': 'ListItem', position: comunidadName ? 6 : 5, name: detailer.business_name },
     ],
   };
@@ -176,17 +176,17 @@ const DetailerPage = () => {
           <BreadcrumbList>
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/directorio">Directorio</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/centros-detailing-espana">Centros Detailing</Link></BreadcrumbLink></BreadcrumbItem>
             {comunidadName && (
               <>
                 <BreadcrumbSeparator />
-                <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/directorio/${comunidadSlug}`}>{comunidadName}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/centros-detailing-espana/${comunidadSlug}`}>{comunidadName}</Link></BreadcrumbLink></BreadcrumbItem>
               </>
             )}
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/directorio/${comunidadSlug}/${provinciaSlug}`}>{detailer.province}</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/centros-detailing-espana/${comunidadSlug}/${provinciaSlug}`}>{detailer.province}</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/directorio/${comunidadSlug}/${provinciaSlug}/${ciudadSlug}`}>{detailer.city}</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/centros-detailing-espana/${comunidadSlug}/${provinciaSlug}/${ciudadSlug}`}>{detailer.city}</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem><BreadcrumbPage>{detailer.business_name}</BreadcrumbPage></BreadcrumbItem>
           </BreadcrumbList>

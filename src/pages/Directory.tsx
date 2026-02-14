@@ -112,21 +112,56 @@ const Directory = () => {
     return result;
   }, [detailers, searchQuery, selectedLevel, selectedServices, selectedType, userLocation]);
 
-  const jsonLd = {
+  // Schema 1: ItemList mejorado (20 items con image y address)
+  const itemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Directorio de Detailers Certificados - Academia Detail',
-    description: 'Encuentra profesionales de detailing certificados en toda España.',
+    name: 'Centros de Detailing Certificados en España',
+    description: 'Directorio de profesionales y centros de detailing certificados por Academia Detail en toda España.',
     numberOfItems: filtered.length,
-    itemListElement: filtered.slice(0, 10).map((d, i) => ({
+    itemListElement: filtered.slice(0, 20).map((d, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       item: {
         '@type': 'AutoBodyShop',
         name: d.business_name,
         url: `https://academiadetail.com/detailer/${d.slug}`,
+        ...(d.featured_image_url && { image: d.featured_image_url }),
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: d.city,
+          addressRegion: d.province,
+          addressCountry: 'ES',
+        },
       },
     })),
+  };
+
+  // Schema 2: BreadcrumbList
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://academiadetail.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Centros Detailing España', item: 'https://academiadetail.com/centros-detailing-espana' },
+    ],
+  };
+
+  // Schema 3: WebPage con SearchAction
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Directorio de Centros de Detailing Certificados en España',
+    description: 'Encuentra centros de detailing y detailers certificados cerca de ti. Pulido, cerámico, PPF e interiores con garantía de calidad.',
+    url: 'https://academiadetail.com/centros-detailing-espana',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://academiadetail.com/centros-detailing-espana?q={search_term}',
+      },
+      'query-input': 'required name=search_term',
+    },
   };
 
   const allComunidades = getAllComunidades();
@@ -140,10 +175,12 @@ const Directory = () => {
   return (
     <MainLayout>
       <Helmet>
-        <title>Directorio Detailers Certificados España | Academia Detail</title>
-        <meta name="description" content="Encuentra tu detailer certificado cerca de ti. Profesionales formados en Academia Detail con garantía de calidad ✅ Busca por ciudad o servicio." />
-        <link rel="canonical" href="https://academiadetail.com/directorio" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+        <title>Centros de Detailing Certificados en España | Academia Detail</title>
+        <meta name="description" content="Encuentra centros de detailing y detailers certificados cerca de ti. Pulido, cerámico, PPF e interiores con garantía de calidad ✅ Busca por ciudad" />
+        <link rel="canonical" href="https://academiadetail.com/centros-detailing-espana" />
+        <script type="application/ld+json">{JSON.stringify(itemListSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(webPageSchema)}</script>
       </Helmet>
 
       <DirectoryHero
@@ -154,7 +191,7 @@ const Directory = () => {
       />
 
       <section className="container mx-auto px-4 pb-20 space-y-6">
-        {/* View toggle - alone on top */}
+        {/* View toggle */}
         <div className="flex justify-end">
           <div className="flex items-center rounded-lg border border-border bg-card p-1 gap-0.5">
             {viewButtons.map(({ mode, icon: Icon, label }) => (
@@ -209,7 +246,7 @@ const Directory = () => {
             {allComunidades.map((c) => (
               <Link
                 key={c.slug}
-                to={`/directorio/${c.slug}`}
+                to={`/centros-detailing-espana/${c.slug}`}
                 className="flex items-center gap-2 px-4 py-3 rounded-lg border border-border bg-card/60 hover:border-primary/40 hover:bg-card transition-colors text-sm font-medium text-foreground"
               >
                 <MapPin className="h-4 w-4 text-primary shrink-0" />

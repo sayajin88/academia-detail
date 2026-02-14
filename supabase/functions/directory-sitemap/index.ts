@@ -51,21 +51,21 @@ Deno.serve(async (req) => {
     });
   });
 
-  let urls = `  <url><loc>${baseUrl}/directorio</loc><changefreq>weekly</changefreq><priority>0.9</priority><lastmod>${today}</lastmod></url>\n`;
+  let urls = `  <url><loc>${baseUrl}/centros-detailing-espana</loc><changefreq>weekly</changefreq><priority>0.9</priority><lastmod>${today}</lastmod></url>\n`;
 
   // Comunidades
   comunidades.forEach((c) => {
-    urls += `  <url><loc>${baseUrl}/directorio/${c}</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>${today}</lastmod></url>\n`;
+    urls += `  <url><loc>${baseUrl}/centros-detailing-espana/${c}</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>${today}</lastmod></url>\n`;
   });
 
   // Provincias
   provincias.forEach((cSlug, pSlug) => {
-    urls += `  <url><loc>${baseUrl}/directorio/${cSlug}/${pSlug}</loc><changefreq>weekly</changefreq><priority>0.7</priority><lastmod>${today}</lastmod></url>\n`;
+    urls += `  <url><loc>${baseUrl}/centros-detailing-espana/${cSlug}/${pSlug}</loc><changefreq>weekly</changefreq><priority>0.7</priority><lastmod>${today}</lastmod></url>\n`;
   });
 
   // Ciudades
   ciudades.forEach((_, path) => {
-    urls += `  <url><loc>${baseUrl}/directorio/${path}</loc><changefreq>weekly</changefreq><priority>0.7</priority><lastmod>${today}</lastmod></url>\n`;
+    urls += `  <url><loc>${baseUrl}/centros-detailing-espana/${path}</loc><changefreq>weekly</changefreq><priority>0.7</priority><lastmod>${today}</lastmod></url>\n`;
   });
 
   // Detailer profiles

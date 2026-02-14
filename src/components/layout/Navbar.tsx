@@ -28,7 +28,7 @@ const navLinks = [
   { name: 'Inicio', href: '/', icon: Home },
   { name: 'Quiénes Somos', href: '/quienes-somos', icon: Image },
   { name: 'Blog', href: '/blog', icon: BookOpen },
-  { name: 'Directorio', href: '/directorio', icon: MapPin },
+  { name: 'Directorio', href: '/centros-detailing-espana', icon: MapPin },
   { name: 'Inscribirse', href: '/contacto', icon: Mail },
 ];
 

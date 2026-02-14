@@ -11,7 +11,7 @@ const DirectoryJoin = () => {
       <Helmet>
         <title>Únete al Directorio de Detailers | Academia Detail</title>
         <meta name="description" content="Aparece en nuestro directorio de detailers certificados. Llega a nuevos clientes y muestra tus trabajos ✅ Solicitud gratuita en 2 minutos." />
-        <link rel="canonical" href="https://academiadetail.com/directorio/unete" />
+        <link rel="canonical" href="https://academiadetail.com/centros-detailing-espana/unete" />
       </Helmet>
 
       <section className="container mx-auto px-4 pt-28 pb-20 space-y-8">
@@ -19,7 +19,7 @@ const DirectoryJoin = () => {
           <BreadcrumbList>
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/directorio">Directorio</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/centros-detailing-espana">Centros Detailing</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem><BreadcrumbPage>Únete</BreadcrumbPage></BreadcrumbItem>
           </BreadcrumbList>
