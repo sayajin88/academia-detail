@@ -33,7 +33,7 @@ function buildPopupHtml(d: DetailerProfile) {
       </div>
       <div style="font-size:12px;color:#aaa;margin-bottom:6px;">📍 ${d.city}, ${d.province}</div>
       ${services ? `<div style="margin-bottom:8px;">${services}</div>` : ''}
-      <a href="/directorio/${d.slug}" style="display:inline-block;padding:6px 16px;background:hsl(348,60%,34%);color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">Ver perfil →</a>
+      <a href="/detailer/${d.slug}" style="display:inline-block;padding:6px 16px;background:hsl(348,60%,34%);color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">Ver perfil →</a>
     </div>
   `;
 }

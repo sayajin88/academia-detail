@@ -22,7 +22,9 @@ const PoliticaPrivacidad = lazy(() => import("./pages/PoliticaPrivacidad"));
 const Glossary = lazy(() => import("./pages/Glossary"));
 const CalculadoraDilucion = lazy(() => import("./pages/CalculadoraDilucion"));
 const Directory = lazy(() => import("./pages/Directory"));
-const DirectoryCity = lazy(() => import("./pages/DirectoryCity"));
+const DirectoryComunidad = lazy(() => import("./pages/DirectoryComunidad"));
+const DirectoryProvincia = lazy(() => import("./pages/DirectoryProvincia"));
+const DirectoryCiudad = lazy(() => import("./pages/DirectoryCiudad"));
 const DetailerPage = lazy(() => import("./pages/DetailerPage"));
 const DirectoryJoin = lazy(() => import("./pages/DirectoryJoin"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
@@ -61,8 +63,10 @@ const App = () => (
               <Route path="/calculadora-dilucion-detailing" element={<CalculadoraDilucion />} />
               <Route path="/directorio" element={<Directory />} />
               <Route path="/directorio/unete" element={<DirectoryJoin />} />
-              <Route path="/directorio/:province/:city" element={<DirectoryCity />} />
-              <Route path="/directorio/:slug" element={<DetailerPage />} />
+              <Route path="/directorio/:comunidad/:provincia/:ciudad" element={<DirectoryCiudad />} />
+              <Route path="/directorio/:comunidad/:provincia" element={<DirectoryProvincia />} />
+              <Route path="/directorio/:comunidad" element={<DirectoryComunidad />} />
+              <Route path="/detailer/:slug" element={<DetailerPage />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               

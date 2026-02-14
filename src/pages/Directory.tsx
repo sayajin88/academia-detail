@@ -8,9 +8,10 @@ import { DirectoryGrid } from '@/components/directory/DirectoryGrid';
 import { DirectoryMap } from '@/components/directory/DirectoryMap';
 import { supabase } from '@/integrations/supabase/client';
 import type { DetailerProfile } from '@/components/directory/DetailerCard';
-import { Map, LayoutGrid, Layers } from 'lucide-react';
+import { Map, LayoutGrid, Layers, MapPin } from 'lucide-react';
 import { DirectoryJoinBanner } from '@/components/directory/DirectoryJoinBanner';
 import { cn } from '@/lib/utils';
+import { getAllComunidades, slugify } from '@/data/comunidadesAutonomas';
 
 const levelOrder = { master: 0, certified: 1, member: 2 };
 
@@ -115,7 +116,7 @@ const Directory = () => {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Directorio de Detailers Certificados - Academia Detail',
-    description: 'Encuentra profesionales de detailing certificados en España.',
+    description: 'Encuentra profesionales de detailing certificados en toda España.',
     numberOfItems: filtered.length,
     itemListElement: filtered.slice(0, 10).map((d, i) => ({
       '@type': 'ListItem',
@@ -123,10 +124,12 @@ const Directory = () => {
       item: {
         '@type': 'AutoBodyShop',
         name: d.business_name,
-        url: `https://academiadetail.com/directorio/${d.slug}`,
+        url: `https://academiadetail.com/detailer/${d.slug}`,
       },
     })),
   };
+
+  const allComunidades = getAllComunidades();
 
   const viewButtons: { mode: ViewMode; icon: typeof Map; label: string }[] = [
     { mode: 'both', icon: Layers, label: 'Ambos' },
@@ -195,6 +198,26 @@ const Directory = () => {
 
         {/* Join CTA Banner */}
         <DirectoryJoinBanner />
+
+        {/* Interlinking: Comunidades Autónomas */}
+        <div className="space-y-4 pt-8 border-t border-border">
+          <h2 className="text-xl font-bold text-foreground">Busca por Comunidad Autónoma</h2>
+          <p className="text-sm text-muted-foreground max-w-2xl">
+            Encuentra centros de detailing certificados en toda España. Navega por comunidad autónoma, provincia o ciudad para localizar al profesional más cercano a ti.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {allComunidades.map((c) => (
+              <Link
+                key={c.slug}
+                to={`/directorio/${c.slug}`}
+                className="flex items-center gap-2 px-4 py-3 rounded-lg border border-border bg-card/60 hover:border-primary/40 hover:bg-card transition-colors text-sm font-medium text-foreground"
+              >
+                <MapPin className="h-4 w-4 text-primary shrink-0" />
+                {c.name}
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
     </MainLayout>
   );
