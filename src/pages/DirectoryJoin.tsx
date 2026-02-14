@@ -27,9 +27,9 @@ const DirectoryJoin = () => {
 
         <SectionHeading
           titleAs="h1"
-          badge="Solicitud gratuita"
+          badge="GRATIS hasta el 31 de Marzo"
           title="Únete al Directorio"
-          subtitle="Completa los 4 pasos y revisaremos tu solicitud en menos de 48 horas."
+          subtitle="Completa los pasos y empieza GRATIS. Oferta limitada hasta el 31 de Marzo."
         />
 
         <DirectoryJoinForm />

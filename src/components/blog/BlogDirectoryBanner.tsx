@@ -34,8 +34,9 @@ export function BlogDirectoryBanner() {
       <div className="hidden md:block absolute bottom-0 left-0 w-32 h-32 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/3 pointer-events-none" />
 
       <div className="relative z-10 flex flex-col items-center text-center gap-4">
-        <span className="inline-block px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-white/10 text-white/90 border border-white/20">
-          Directorio Profesional
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-green-500/20 text-white/90 border border-green-400/30 animate-pulse">
+          <Clock className="h-3 w-3" />
+          GRATIS hasta 31 Mar
         </span>
 
         <h3
@@ -48,6 +49,13 @@ export function BlogDirectoryBanner() {
         <p className="text-primary-foreground/75 text-sm leading-relaxed max-w-md">
           Aparece en nuestro directorio nacional e internacional y conecta con clientes que buscan profesionales de confianza.
         </p>
+
+        {/* Price chip */}
+        <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/20">
+          <span className="text-xs text-white/60 line-through">4,99 €/mes</span>
+          <span className="text-xs font-bold text-green-300">0 €/mes</span>
+          <span className="text-[10px] uppercase font-semibold text-white/70">· Oferta limitada</span>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg w-full">
           {benefits.map(({ icon: Icon, text }) => (
@@ -66,7 +74,7 @@ export function BlogDirectoryBanner() {
             size="default"
             className="bg-white text-primary hover:bg-white/90 rounded-xl px-6 py-2.5 text-sm font-bold shadow-lg shadow-black/20 group"
           >
-            Únete Gratis
+            Únete Gratis — 0 €/mes
             <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
         </Link>
