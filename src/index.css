@@ -387,10 +387,10 @@ img {
   100% { transform: translateX(-50%); }
 }
 
-/* Navbar shimmer border animation */
+/* Navbar shimmer border animation - GPU composited */
 @keyframes shimmer-border {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .image-centered {

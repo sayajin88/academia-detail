@@ -25,6 +25,8 @@ export function JornadaZeroSection() {
                 alt="Alumno practicando detailing con pulidora durante la Jornada Zero"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
+                width={800}
+                height={600}
               />
               {/* Overlay for text readability on mobile */}
               <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-card/80" />

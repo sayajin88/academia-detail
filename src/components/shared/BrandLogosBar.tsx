@@ -109,6 +109,8 @@ export function BrandLogosBar({
                 className="h-8 md:h-12 w-auto brightness-0 invert opacity-50 hover:opacity-100 transition-opacity duration-300"
                 loading="lazy"
                 draggable={false}
+                width={120}
+                height={48}
               />
             </div>
           ))}

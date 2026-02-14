@@ -86,7 +86,7 @@ export function FormationsGrid() {
                   {/* Content Side */}
                   <div className="flex-1 p-6 md:p-8 lg:p-10 flex flex-col justify-center relative">
                     {/* Large decorative number */}
-                    <span className={`absolute ${isEven ? 'top-4 right-6 md:top-6 md:right-8' : 'top-4 right-6 md:top-6 md:right-8'} text-[5rem] md:text-[7rem] font-black leading-none text-foreground/[0.04] select-none pointer-events-none font-heading`}>
+                    <span className={`absolute ${isEven ? 'top-4 right-6 md:top-6 md:right-8' : 'top-4 right-6 md:top-6 md:right-8'} text-[5rem] md:text-[7rem] font-black leading-none text-foreground/[0.08] select-none pointer-events-none font-heading`}>
                       {num}
                     </span>
 
