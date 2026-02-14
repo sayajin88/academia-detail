@@ -1,5 +1,8 @@
 import { cn } from '@/lib/utils';
-import { User, Building2 } from 'lucide-react';
+import { User, Building2, ChevronDown } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
 const ALL_SERVICES = [
   'Pulido', 'Cerámico', 'Interior', 'PPF', 'Wrapping',
@@ -8,9 +11,9 @@ const ALL_SERVICES = [
 
 const LEVELS = [
   { value: '', label: 'Todos' },
-  { value: 'elite_detailer', label: '👑 Élite Detailer' },
-  { value: 'master_detailer', label: '⭐ Master Detailer' },
-  { value: 'certified_pro', label: '🛡️ Certificado Pro' },
+  { value: 'elite_detailer', label: '👑 Élite' },
+  { value: 'master_detailer', label: '⭐ Master' },
+  { value: 'certified_pro', label: '🛡️ Pro' },
 ];
 
 const TYPES = [
@@ -28,6 +31,10 @@ interface DirectoryFiltersProps {
   onTypeChange: (type: string) => void;
 }
 
+const chipBase = 'px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 border inline-flex items-center gap-1.5 cursor-pointer';
+const chipActive = 'bg-primary text-primary-foreground border-primary';
+const chipInactive = 'bg-transparent text-muted-foreground border-border hover:border-primary/40 hover:text-foreground';
+
 export function DirectoryFilters({
   selectedServices,
   onToggleService,
@@ -36,62 +43,73 @@ export function DirectoryFilters({
   selectedType,
   onTypeChange,
 }: DirectoryFiltersProps) {
+  const serviceCount = selectedServices.length;
+
   return (
-    <div className="space-y-4">
+    <div className="w-full rounded-lg border border-border bg-card/80 backdrop-blur-sm px-3 py-2 flex flex-wrap items-center gap-2">
       {/* Type filter */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex items-center gap-1">
         {TYPES.map((type) => (
           <button
             key={type.value}
             onClick={() => onTypeChange(type.value)}
-            className={cn(
-              'px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border inline-flex items-center gap-1.5',
-              selectedType === type.value
-                ? 'bg-primary text-primary-foreground border-primary'
-                : 'bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground'
-            )}
+            className={cn(chipBase, selectedType === type.value ? chipActive : chipInactive)}
           >
-            {type.icon && <type.icon className="h-3.5 w-3.5" />}
+            {type.icon && <type.icon className="h-3 w-3" />}
             {type.label}
           </button>
         ))}
       </div>
 
+      <Separator orientation="vertical" className="h-5 hidden md:block" />
+
       {/* Level filter */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex items-center gap-1">
         {LEVELS.map((level) => (
           <button
             key={level.value}
             onClick={() => onLevelChange(level.value)}
-            className={cn(
-              'px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border',
-              selectedLevel === level.value
-                ? 'bg-primary text-primary-foreground border-primary'
-                : 'bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground'
-            )}
+            className={cn(chipBase, selectedLevel === level.value ? chipActive : chipInactive)}
           >
             {level.label}
           </button>
         ))}
       </div>
 
-      {/* Services filter */}
-      <div className="flex flex-wrap gap-2">
-        {ALL_SERVICES.map((service) => (
-          <button
-            key={service}
-            onClick={() => onToggleService(service)}
-            className={cn(
-              'px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border',
-              selectedServices.includes(service)
-                ? 'bg-primary/15 text-primary border-primary/40'
-                : 'bg-card/50 text-muted-foreground border-border/50 hover:border-primary/30'
+      <Separator orientation="vertical" className="h-5 hidden md:block" />
+
+      {/* Services popover */}
+      <Popover>
+        <PopoverTrigger asChild>
+          <button className={cn(chipBase, serviceCount > 0 ? chipActive : chipInactive, 'gap-1')}>
+            Servicios
+            {serviceCount > 0 && (
+              <Badge variant="secondary" className="h-4 min-w-4 px-1 text-[10px] leading-none">
+                {serviceCount}
+              </Badge>
             )}
-          >
-            {service}
+            <ChevronDown className="h-3 w-3" />
           </button>
-        ))}
-      </div>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-3 z-50 bg-popover" align="start" sideOffset={8}>
+          <div className="flex flex-wrap gap-1.5 max-w-xs">
+            {ALL_SERVICES.map((service) => (
+              <button
+                key={service}
+                onClick={() => onToggleService(service)}
+                className={cn(
+                  chipBase,
+                  selectedServices.includes(service)
+                    ? 'bg-primary/15 text-primary border-primary/40'
+                    : 'bg-card/50 text-muted-foreground border-border/50 hover:border-primary/30'
+                )}
+              >
+                {service}
+              </button>
+            ))}
+          </div>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
