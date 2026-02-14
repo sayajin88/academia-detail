@@ -33,8 +33,11 @@ Allow: /politica-privacidad
 # Bloquear endpoints internos
 Disallow: /api/
 
-# --- Sitemap ---
+# --- Sitemap Index ---
 Sitemap: https://academiadetail.com/sitemap.xml
+
+# Directorio
+Allow: /centros-detailing-espana/unete
 
 # --- Google ---
 User-agent: Googlebot
