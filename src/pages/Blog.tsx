@@ -8,7 +8,8 @@ import { BlogCategories } from '@/components/blog/BlogCategories';
 import { BlogPagination } from '@/components/blog/BlogPagination';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
-import { blogPosts, getFeaturedPost, BlogCategory } from '@/data/blogPosts';
+import { BlogCategory } from '@/data/blogPosts';
+import { useBlogPosts } from '@/hooks/useBlogPosts';
 
 const BASE_URL = 'https://academiadetail.com';
 const POSTS_PER_PAGE = 8;
@@ -18,8 +19,9 @@ export default function Blog() {
   const [activeCategory, setActiveCategory] = useState<BlogCategory | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const gridRef = useRef<HTMLDivElement>(null);
+  const { posts: blogPosts } = useBlogPosts();
 
-  const featuredPost = getFeaturedPost();
+  const featuredPost = useMemo(() => blogPosts.find(p => p.featured), [blogPosts]);
 
   const handleSearch = useCallback((query: string) => {
     setSearchQuery(query);
