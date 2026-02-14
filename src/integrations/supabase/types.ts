@@ -65,8 +65,11 @@ export type Database = {
       contact_submissions: {
         Row: {
           acepto_privacidad: boolean
+          admin_notes: string | null
           apellidos: string
           centro_propio: string
+          contact_status: string
+          contacted_at: string | null
           created_at: string
           email: string
           experiencia: string
@@ -79,8 +82,11 @@ export type Database = {
         }
         Insert: {
           acepto_privacidad?: boolean
+          admin_notes?: string | null
           apellidos: string
           centro_propio: string
+          contact_status?: string
+          contacted_at?: string | null
           created_at?: string
           email: string
           experiencia: string
@@ -93,8 +99,11 @@ export type Database = {
         }
         Update: {
           acepto_privacidad?: boolean
+          admin_notes?: string | null
           apellidos?: string
           centro_propio?: string
+          contact_status?: string
+          contacted_at?: string | null
           created_at?: string
           email?: string
           experiencia?: string
