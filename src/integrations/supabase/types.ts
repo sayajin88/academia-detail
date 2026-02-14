@@ -237,73 +237,103 @@ export type Database = {
       }
       directory_applications: {
         Row: {
+          address: string | null
           brands: string[] | null
           business_name: string
           city: string
           course_name: string | null
           created_at: string
+          description: string | null
           email: string
           experience_level: string | null
           gallery_urls: string[] | null
           has_insurance: boolean | null
           has_taken_course: boolean | null
           id: string
+          instagram_handle: string | null
           logo_url: string | null
           message: string | null
           owner_name: string
+          owner_photo_url: string | null
           phone: string
           portfolio_url: string | null
           profile_type: string
           province: string
           services: string[] | null
+          skills: string[] | null
+          specialty: string | null
           status: string
           value_proposition: string | null
+          website_url: string | null
+          whatsapp_number: string | null
+          years_experience: number | null
+          zip_code: string | null
         }
         Insert: {
+          address?: string | null
           brands?: string[] | null
           business_name: string
           city: string
           course_name?: string | null
           created_at?: string
+          description?: string | null
           email: string
           experience_level?: string | null
           gallery_urls?: string[] | null
           has_insurance?: boolean | null
           has_taken_course?: boolean | null
           id?: string
+          instagram_handle?: string | null
           logo_url?: string | null
           message?: string | null
           owner_name: string
+          owner_photo_url?: string | null
           phone: string
           portfolio_url?: string | null
           profile_type?: string
           province: string
           services?: string[] | null
+          skills?: string[] | null
+          specialty?: string | null
           status?: string
           value_proposition?: string | null
+          website_url?: string | null
+          whatsapp_number?: string | null
+          years_experience?: number | null
+          zip_code?: string | null
         }
         Update: {
+          address?: string | null
           brands?: string[] | null
           business_name?: string
           city?: string
           course_name?: string | null
           created_at?: string
+          description?: string | null
           email?: string
           experience_level?: string | null
           gallery_urls?: string[] | null
           has_insurance?: boolean | null
           has_taken_course?: boolean | null
           id?: string
+          instagram_handle?: string | null
           logo_url?: string | null
           message?: string | null
           owner_name?: string
+          owner_photo_url?: string | null
           phone?: string
           portfolio_url?: string | null
           profile_type?: string
           province?: string
           services?: string[] | null
+          skills?: string[] | null
+          specialty?: string | null
           status?: string
           value_proposition?: string | null
+          website_url?: string | null
+          whatsapp_number?: string | null
+          years_experience?: number | null
+          zip_code?: string | null
         }
         Relationships: []
       }

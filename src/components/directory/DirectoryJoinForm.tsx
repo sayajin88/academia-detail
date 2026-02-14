@@ -11,9 +11,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Card } from '@/components/ui/card';
 import {
   Send, Loader2, CheckCircle2, User, Building2, ArrowRight, ArrowLeft,
-  MapPin, Sparkles, ShieldCheck, Camera, Upload, X, ExternalLink,
+  MapPin, Sparkles, ShieldCheck, Camera, Upload, X,
   Paintbrush, Shield, Car, Armchair, Wrench, Cog, Instagram,
-  Crown, Star, GraduationCap,
+  Crown, Star, GraduationCap, Globe, Phone, Clock, Briefcase,
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -33,11 +33,30 @@ const BRANDS = [
   'Chemical Guys', '3M', 'STEK', 'Avery Dennison', 'Hexis',
 ];
 
+const SPECIALTIES = [
+  'Detailing', 'PPF', 'Wrapping', 'Restauración', 'Multiservicios',
+];
+
+const SKILLS = [
+  'Corrección de pintura', 'Coating cerámico', 'Descontaminación',
+  'Limpieza de interiores', 'Restauración de faros', 'Pulido a máquina',
+  'Tratamiento de cuero', 'Detailing de motor', 'Protección PPF',
+  'Wrapping vinilo', 'Lavado sin agua', 'Ozone / Ozono',
+];
+
+const EXPERIENCE_OPTIONS = [
+  { value: '1-3', label: '1–3 años' },
+  { value: '3-5', label: '3–5 años' },
+  { value: '5-10', label: '5–10 años' },
+  { value: '10+', label: '+10 años' },
+];
+
 const STEPS = [
   { num: 1, label: 'Identidad' },
-  { num: 2, label: 'Especialización' },
-  { num: 3, label: 'Confianza' },
-  { num: 4, label: 'Galería' },
+  { num: 2, label: 'Ubicación' },
+  { num: 3, label: 'Especialización' },
+  { num: 4, label: 'Confianza' },
+  { num: 5, label: 'Galería' },
 ];
 
 const schema = z.object({
@@ -46,27 +65,38 @@ const schema = z.object({
   owner_name: z.string().trim().min(1, 'Obligatorio').max(100),
   email: z.string().trim().email('Email no válido'),
   phone: z.string().trim().min(9, 'Teléfono no válido').max(20),
+  whatsapp_number: z.string().max(20).optional(),
   city: z.string().trim().min(1, 'Obligatorio').max(100),
   province: z.string().trim().min(1, 'Obligatorio').max(100),
+  address: z.string().max(200).optional(),
+  zip_code: z.string().max(10).optional(),
   portfolio_url: z.string().max(500).optional(),
   services: z.array(z.string()).min(1, 'Selecciona al menos un servicio'),
   brands: z.array(z.string()).optional(),
+  specialty: z.string().optional(),
+  skills: z.array(z.string()).optional(),
+  years_experience: z.string().optional(),
   has_taken_course: z.boolean(),
   course_name: z.string().optional(),
   has_insurance: z.boolean(),
   value_proposition: z.string().max(500).optional(),
+  description: z.string().max(1000).optional(),
+  website_url: z.string().max(500).optional(),
+  instagram_handle: z.string().max(100).optional(),
   acepto_privacidad: z.boolean().refine((v) => v, { message: 'Debes aceptar la política de privacidad' }),
 });
 
 type FormData = z.infer<typeof schema>;
 
-// Step validation: which fields must be valid to proceed
 const stepFields: Record<number, (keyof FormData)[]> = {
-  1: ['profile_type', 'business_name', 'owner_name', 'email', 'phone', 'city', 'province'],
-  2: ['services'],
-  3: [],
-  4: ['acepto_privacidad'],
+  1: ['profile_type', 'business_name', 'owner_name', 'email', 'phone'],
+  2: ['city', 'province'],
+  3: ['services'],
+  4: [],
+  5: ['acepto_privacidad'],
 };
+
+const TOTAL_STEPS = 5;
 
 export function DirectoryJoinForm() {
   const [step, setStep] = useState(1);
@@ -74,6 +104,8 @@ export function DirectoryJoinForm() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [profilePhotoFile, setProfilePhotoFile] = useState<File | null>(null);
+  const [profilePhotoPreview, setProfilePhotoPreview] = useState<string | null>(null);
   const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
   const [galleryPreviews, setGalleryPreviews] = useState<string[]>([]);
   const [uploadingLogo, setUploadingLogo] = useState(false);
@@ -84,28 +116,34 @@ export function DirectoryJoinForm() {
     mode: 'onChange',
     defaultValues: {
       profile_type: 'detailer',
-      business_name: '', owner_name: '', email: '', phone: '',
-      city: '', province: '', portfolio_url: '',
-      services: [], brands: [],
+      business_name: '', owner_name: '', email: '', phone: '', whatsapp_number: '',
+      city: '', province: '', address: '', zip_code: '',
+      portfolio_url: '', website_url: '', instagram_handle: '',
+      services: [], brands: [], skills: [],
+      specialty: '', years_experience: '',
       has_taken_course: false, course_name: '',
-      has_insurance: false, value_proposition: '',
+      has_insurance: false, value_proposition: '', description: '',
       acepto_privacidad: false,
     },
   });
 
   const watched = form.watch();
 
-  const handleLogoSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = useCallback((
+    setter: (f: File | null) => void,
+    previewSetter: (s: string | null) => void,
+    maxMb: number
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) { toast.error('El logo no puede superar 5MB'); return; }
-    setLogoFile(file);
-    setLogoPreview(URL.createObjectURL(file));
+    if (file.size > maxMb * 1024 * 1024) { toast.error(`El archivo no puede superar ${maxMb}MB`); return; }
+    setter(file);
+    previewSetter(URL.createObjectURL(file));
   }, []);
 
   const handleGallerySelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    const remaining = 3 - galleryFiles.length;
+    const remaining = 5 - galleryFiles.length;
     const toAdd = files.slice(0, remaining);
     if (toAdd.some(f => f.size > 10 * 1024 * 1024)) { toast.error('Cada foto no puede superar 10MB'); return; }
     setGalleryFiles(prev => [...prev, ...toAdd]);
@@ -127,21 +165,27 @@ export function DirectoryJoinForm() {
   const canAdvance = async () => {
     const fields = stepFields[step];
     if (fields.length === 0) return true;
-    const valid = await form.trigger(fields);
-    return valid;
+    return await form.trigger(fields);
   };
 
   const nextStep = async () => {
     if (!(await canAdvance())) return;
-    setStep(s => Math.min(s + 1, 4));
+    setStep(s => Math.min(s + 1, TOTAL_STEPS));
   };
 
   const prevStep = () => setStep(s => Math.max(s - 1, 1));
+
+  const parseYearsExperience = (val: string | undefined): number | null => {
+    if (!val) return null;
+    const map: Record<string, number> = { '1-3': 2, '3-5': 4, '5-10': 7, '10+': 12 };
+    return map[val] ?? null;
+  };
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
       let logoUrl: string | null = null;
+      let profilePhotoUrl: string | null = null;
       const galleryUrls: string[] = [];
       const ts = Date.now();
 
@@ -149,6 +193,10 @@ export function DirectoryJoinForm() {
         setUploadingLogo(true);
         logoUrl = await uploadFile(logoFile, `logos/${ts}-${logoFile.name}`);
         setUploadingLogo(false);
+      }
+
+      if (profilePhotoFile) {
+        profilePhotoUrl = await uploadFile(profilePhotoFile, `photos/${ts}-${profilePhotoFile.name}`);
       }
 
       if (galleryFiles.length > 0) {
@@ -169,7 +217,7 @@ export function DirectoryJoinForm() {
         city: data.city,
         province: data.province,
         services: data.services,
-        experience_level: 'not_specified',
+        experience_level: data.years_experience || 'not_specified',
         has_taken_course: data.has_taken_course,
         course_name: data.course_name || null,
         message: data.value_proposition || null,
@@ -179,6 +227,17 @@ export function DirectoryJoinForm() {
         has_insurance: data.has_insurance,
         value_proposition: data.value_proposition || null,
         gallery_urls: galleryUrls,
+        // New fields
+        owner_photo_url: profilePhotoUrl,
+        description: data.description || null,
+        website_url: data.website_url || null,
+        whatsapp_number: data.whatsapp_number || null,
+        instagram_handle: data.instagram_handle || null,
+        years_experience: parseYearsExperience(data.years_experience),
+        specialty: data.specialty || null,
+        skills: data.skills || [],
+        address: data.address || null,
+        zip_code: data.zip_code || null,
       } as any);
 
       if (error) throw error;
@@ -203,7 +262,7 @@ export function DirectoryJoinForm() {
         <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
           Tu solicitud está siendo revisada por el equipo de Academia Detail. Te avisaremos cuando tu ficha esté activa.
         </p>
-        <Button onClick={() => { setIsSuccess(false); setStep(1); form.reset(); setLogoFile(null); setLogoPreview(null); setGalleryFiles([]); setGalleryPreviews([]); }} variant="outline">
+        <Button onClick={() => { setIsSuccess(false); setStep(1); form.reset(); setLogoFile(null); setLogoPreview(null); setProfilePhotoFile(null); setProfilePhotoPreview(null); setGalleryFiles([]); setGalleryPreviews([]); }} variant="outline">
           Enviar otra solicitud
         </Button>
       </div>
@@ -214,22 +273,22 @@ export function DirectoryJoinForm() {
     <div className="max-w-5xl mx-auto">
       {/* Progress Bar */}
       <div className="mb-10">
-        <div className="flex items-center justify-between max-w-lg mx-auto">
+        <div className="flex items-center justify-between max-w-2xl mx-auto">
           {STEPS.map((s, i) => (
             <div key={s.num} className="flex items-center">
               <div className="flex flex-col items-center gap-1.5">
                 <div className={cn(
-                  'w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 border-2',
+                  'w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 border-2',
                   step > s.num ? 'bg-primary border-primary text-primary-foreground' :
                   step === s.num ? 'bg-primary/10 border-primary text-primary' :
                   'bg-card border-border text-muted-foreground'
                 )}>
-                  {step > s.num ? <CheckCircle2 className="h-5 w-5" /> : s.num}
+                  {step > s.num ? <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5" /> : s.num}
                 </div>
-                <span className={cn('text-[11px] font-medium', step >= s.num ? 'text-foreground' : 'text-muted-foreground')}>{s.label}</span>
+                <span className={cn('text-[10px] sm:text-[11px] font-medium hidden sm:block', step >= s.num ? 'text-foreground' : 'text-muted-foreground')}>{s.label}</span>
               </div>
               {i < STEPS.length - 1 && (
-                <div className={cn('w-12 sm:w-20 h-0.5 mx-2 mb-5 transition-all duration-300', step > s.num ? 'bg-primary' : 'bg-border')} />
+                <div className={cn('w-6 sm:w-14 h-0.5 mx-1 sm:mx-2 mb-0 sm:mb-5 transition-all duration-300', step > s.num ? 'bg-primary' : 'bg-border')} />
               )}
             </div>
           ))}
@@ -241,12 +300,13 @@ export function DirectoryJoinForm() {
         <div className="lg:col-span-3">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+
               {/* STEP 1: Identidad */}
               {step === 1 && (
                 <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
-                    <h2 className="text-xl font-bold text-foreground mb-1">Identidad y ubicación</h2>
-                    <p className="text-sm text-muted-foreground">Datos básicos de tu negocio.</p>
+                    <h2 className="text-xl font-bold text-foreground mb-1">Identidad</h2>
+                    <p className="text-sm text-muted-foreground">Datos básicos de contacto.</p>
                   </div>
 
                   {/* Type selector */}
@@ -288,26 +348,21 @@ export function DirectoryJoinForm() {
                     )} />
                   </div>
 
-                  {/* Logo upload */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Logo (opcional)</label>
-                    <div className="flex items-center gap-4">
-                      {logoPreview ? (
-                        <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-border bg-card">
-                          <img src={logoPreview} alt="Logo" className="w-full h-full object-cover" />
-                          <button type="button" onClick={() => { setLogoFile(null); setLogoPreview(null); }}
-                            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-destructive text-white flex items-center justify-center">
-                            <X className="h-3 w-3" />
-                          </button>
-                        </div>
-                      ) : (
-                        <label className="w-16 h-16 rounded-xl border-2 border-dashed border-border hover:border-primary/40 bg-card flex items-center justify-center cursor-pointer transition-colors">
-                          <Upload className="h-5 w-5 text-muted-foreground" />
-                          <input type="file" accept="image/*" className="hidden" onChange={handleLogoSelect} />
-                        </label>
-                      )}
-                      <span className="text-xs text-muted-foreground">PNG, JPG. Máx 5MB</span>
-                    </div>
+                  <FormField control={form.control} name="whatsapp_number" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-1"><Phone className="h-3.5 w-3.5" />WhatsApp (opcional)</FormLabel>
+                      <FormControl><Input type="tel" placeholder="622 77 35 55" {...field} className="h-11" /></FormControl>
+                    </FormItem>
+                  )} />
+                </div>
+              )}
+
+              {/* STEP 2: Ubicación y fotos */}
+              {step === 2 && (
+                <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+                  <div>
+                    <h2 className="text-xl font-bold text-foreground mb-1">Ubicación y fotos</h2>
+                    <p className="text-sm text-muted-foreground">¿Dónde estás y cómo te ven?</p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -322,18 +377,72 @@ export function DirectoryJoinForm() {
                     )} />
                   </div>
 
-                  <FormField control={form.control} name="portfolio_url" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1"><Instagram className="h-3.5 w-3.5" />Portfolio / Instagram (opcional)</FormLabel>
-                      <FormControl><Input placeholder="https://instagram.com/tudetailing" {...field} className="h-11" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="address" render={({ field }) => (
+                      <FormItem><FormLabel>Dirección (opcional)</FormLabel><FormControl><Input placeholder="Calle Ejemplo, 12" {...field} className="h-11" /></FormControl></FormItem>
+                    )} />
+                    <FormField control={form.control} name="zip_code" render={({ field }) => (
+                      <FormItem><FormLabel>Código Postal (opcional)</FormLabel><FormControl><Input placeholder="28001" {...field} className="h-11" /></FormControl></FormItem>
+                    )} />
+                  </div>
+
+                  {/* Profile photo & Logo side by side */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/* Profile Photo */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-foreground">Tu foto de perfil (opcional)</label>
+                      <div className="flex flex-col items-center gap-3">
+                        {profilePhotoPreview ? (
+                          <div className="relative">
+                            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-primary/30">
+                              <img src={profilePhotoPreview} alt="Perfil" className="w-full h-full object-cover" />
+                            </div>
+                            <button type="button" onClick={() => { setProfilePhotoFile(null); setProfilePhotoPreview(null); }}
+                              className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-destructive text-white flex items-center justify-center">
+                              <X className="h-3 w-3" />
+                            </button>
+                          </div>
+                        ) : (
+                          <label className="w-24 h-24 rounded-full border-2 border-dashed border-border hover:border-primary/40 bg-card flex flex-col items-center justify-center cursor-pointer transition-colors gap-1">
+                            <User className="h-6 w-6 text-muted-foreground" />
+                            <span className="text-[10px] text-muted-foreground">Subir</span>
+                            <input type="file" accept="image/*" className="hidden" onChange={handleFileSelect(setProfilePhotoFile, setProfilePhotoPreview, 5)} />
+                          </label>
+                        )}
+                        <span className="text-[11px] text-muted-foreground">Foto circular. Máx 5MB</span>
+                      </div>
+                    </div>
+
+                    {/* Logo */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-foreground">Logo del negocio (opcional)</label>
+                      <div className="flex flex-col items-center gap-3">
+                        {logoPreview ? (
+                          <div className="relative">
+                            <div className="w-24 h-24 rounded-xl overflow-hidden border border-border bg-card">
+                              <img src={logoPreview} alt="Logo" className="w-full h-full object-cover" />
+                            </div>
+                            <button type="button" onClick={() => { setLogoFile(null); setLogoPreview(null); }}
+                              className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-destructive text-white flex items-center justify-center">
+                              <X className="h-3 w-3" />
+                            </button>
+                          </div>
+                        ) : (
+                          <label className="w-24 h-24 rounded-xl border-2 border-dashed border-border hover:border-primary/40 bg-card flex flex-col items-center justify-center cursor-pointer transition-colors gap-1">
+                            <Upload className="h-6 w-6 text-muted-foreground" />
+                            <span className="text-[10px] text-muted-foreground">Subir</span>
+                            <input type="file" accept="image/*" className="hidden" onChange={handleFileSelect(setLogoFile, setLogoPreview, 5)} />
+                          </label>
+                        )}
+                        <span className="text-[11px] text-muted-foreground">PNG, JPG. Máx 5MB</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
 
-              {/* STEP 2: Especialización */}
-              {step === 2 && (
+              {/* STEP 3: Especialización */}
+              {step === 3 && (
                 <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
                     <h2 className="text-xl font-bold text-foreground mb-1">Especialización técnica</h2>
@@ -363,6 +472,66 @@ export function DirectoryJoinForm() {
                     </FormItem>
                   )} />
 
+                  {/* Specialty */}
+                  <FormField control={form.control} name="specialty" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-1"><Briefcase className="h-3.5 w-3.5" />Especialidad principal (opcional)</FormLabel>
+                      <div className="flex flex-wrap gap-2">
+                        {SPECIALTIES.map((sp) => (
+                          <button key={sp} type="button"
+                            onClick={() => field.onChange(field.value === sp ? '' : sp)}
+                            className={cn(
+                              'px-4 py-2 rounded-full text-xs font-semibold transition-all border',
+                              field.value === sp ? 'bg-primary/15 text-primary border-primary/40' : 'bg-card text-muted-foreground border-border hover:border-primary/30'
+                            )}>
+                            {sp}
+                          </button>
+                        ))}
+                      </div>
+                    </FormItem>
+                  )} />
+
+                  {/* Years experience */}
+                  <FormField control={form.control} name="years_experience" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" />Años de experiencia (opcional)</FormLabel>
+                      <div className="flex flex-wrap gap-2">
+                        {EXPERIENCE_OPTIONS.map((opt) => (
+                          <button key={opt.value} type="button"
+                            onClick={() => field.onChange(field.value === opt.value ? '' : opt.value)}
+                            className={cn(
+                              'px-4 py-2 rounded-full text-xs font-semibold transition-all border',
+                              field.value === opt.value ? 'bg-primary/15 text-primary border-primary/40' : 'bg-card text-muted-foreground border-border hover:border-primary/30'
+                            )}>
+                            {opt.label}
+                          </button>
+                        ))}
+                      </div>
+                    </FormItem>
+                  )} />
+
+                  {/* Skills chips */}
+                  <FormField control={form.control} name="skills" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Habilidades técnicas (opcional)</FormLabel>
+                      <div className="flex flex-wrap gap-2">
+                        {SKILLS.map((skill) => {
+                          const selected = (field.value || []).includes(skill);
+                          return (
+                            <button key={skill} type="button"
+                              onClick={() => field.onChange(selected ? (field.value || []).filter((s: string) => s !== skill) : [...(field.value || []), skill])}
+                              className={cn(
+                                'px-3 py-1.5 rounded-full text-xs font-medium transition-all border',
+                                selected ? 'bg-primary/15 text-primary border-primary/40' : 'bg-card text-muted-foreground border-border hover:border-primary/30'
+                              )}>
+                              {skill}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </FormItem>
+                  )} />
+
                   <FormField control={form.control} name="brands" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Marcas con las que trabajas (opcional)</FormLabel>
@@ -386,11 +555,11 @@ export function DirectoryJoinForm() {
                 </div>
               )}
 
-              {/* STEP 3: Confianza */}
-              {step === 3 && (
+              {/* STEP 4: Confianza y presencia */}
+              {step === 4 && (
                 <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
-                    <h2 className="text-xl font-bold text-foreground mb-1">Autoridad y confianza</h2>
+                    <h2 className="text-xl font-bold text-foreground mb-1">Autoridad y presencia online</h2>
                     <p className="text-sm text-muted-foreground">Demuestra tu profesionalidad.</p>
                   </div>
 
@@ -448,11 +617,43 @@ export function DirectoryJoinForm() {
                     </FormItem>
                   )} />
 
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="website_url" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-1"><Globe className="h-3.5 w-3.5" />Web (opcional)</FormLabel>
+                        <FormControl><Input placeholder="https://tudetailing.com" {...field} className="h-11" /></FormControl>
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="instagram_handle" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-1"><Instagram className="h-3.5 w-3.5" />Instagram (opcional)</FormLabel>
+                        <FormControl><Input placeholder="@tudetailing" {...field} className="h-11" /></FormControl>
+                      </FormItem>
+                    )} />
+                  </div>
+
+                  <FormField control={form.control} name="portfolio_url" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Portfolio / Enlace adicional (opcional)</FormLabel>
+                      <FormControl><Input placeholder="https://..." {...field} className="h-11" /></FormControl>
+                    </FormItem>
+                  )} />
+
+                  <FormField control={form.control} name="description" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Descripción / Bio (opcional)</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="Cuéntanos sobre ti, tu trayectoria y lo que te apasiona del detailing..." className="min-h-[100px] resize-none" maxLength={1000} {...field} />
+                      </FormControl>
+                      <p className="text-[11px] text-muted-foreground text-right">{(field.value || '').length}/1000</p>
+                    </FormItem>
+                  )} />
+
                   <FormField control={form.control} name="value_proposition" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>¿Por qué deberían elegir tu centro? (opcional)</FormLabel>
+                      <FormLabel>¿Por qué deberían elegirte? (opcional)</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Describe en pocas palabras qué te hace diferente..." className="min-h-[100px] resize-none" maxLength={500} {...field} />
+                        <Textarea placeholder="Describe en pocas palabras qué te hace diferente..." className="min-h-[80px] resize-none" maxLength={500} {...field} />
                       </FormControl>
                       <p className="text-[11px] text-muted-foreground text-right">{(field.value || '').length}/500</p>
                     </FormItem>
@@ -460,16 +661,16 @@ export function DirectoryJoinForm() {
                 </div>
               )}
 
-              {/* STEP 4: Galería */}
-              {step === 4 && (
+              {/* STEP 5: Galería */}
+              {step === 5 && (
                 <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
                     <h2 className="text-xl font-bold text-foreground mb-1">Galería de calidad</h2>
-                    <p className="text-sm text-muted-foreground">Sube hasta 3 fotos de tu taller.</p>
+                    <p className="text-sm text-muted-foreground">Sube hasta 5 fotos de tu taller o trabajos.</p>
                   </div>
 
                   <div className="space-y-3">
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       {galleryPreviews.map((preview, i) => (
                         <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border bg-card">
                           <img src={preview} alt={`Foto ${i + 1}`} className="w-full h-full object-cover" />
@@ -478,11 +679,11 @@ export function DirectoryJoinForm() {
                             <X className="h-3 w-3" />
                           </button>
                           <span className="absolute bottom-2 left-2 text-[10px] font-medium bg-background/70 backdrop-blur-sm px-2 py-0.5 rounded-full text-foreground">
-                            {i === 0 ? 'Fachada' : i === 1 ? 'Zona de trabajo' : 'Detalle'}
+                            Foto {i + 1}
                           </span>
                         </div>
                       ))}
-                      {galleryFiles.length < 3 && (
+                      {galleryFiles.length < 5 && (
                         <label className="aspect-[4/3] rounded-xl border-2 border-dashed border-border hover:border-primary/40 bg-card flex flex-col items-center justify-center cursor-pointer transition-colors gap-2">
                           <Camera className="h-6 w-6 text-muted-foreground" />
                           <span className="text-[11px] text-muted-foreground font-medium">Añadir foto</span>
@@ -490,7 +691,7 @@ export function DirectoryJoinForm() {
                         </label>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground">Fachada, zona de trabajo, detalle de iluminación. Máx 10MB cada una.</p>
+                    <p className="text-xs text-muted-foreground">Fachada, zona de trabajo, iluminación, trabajos realizados. Máx 10MB cada una.</p>
                   </div>
 
                   <FormField control={form.control} name="acepto_privacidad" render={({ field }) => (
@@ -518,7 +719,7 @@ export function DirectoryJoinForm() {
                   </Button>
                 ) : <div />}
 
-                {step < 4 ? (
+                {step < TOTAL_STEPS ? (
                   <Button type="button" onClick={nextStep} className="gap-2 min-w-[140px]">
                     Siguiente <ArrowRight className="h-4 w-4" />
                   </Button>
@@ -559,17 +760,39 @@ export function DirectoryJoinForm() {
                     {watched.profile_type === 'centro' ? <><Building2 className="h-3 w-3" /> Centro</> : <><User className="h-3 w-3" /> Detailer</>}
                   </span>
                 </div>
+                {/* Profile photo overlay */}
+                {profilePhotoPreview && (
+                  <div className="absolute -bottom-6 left-4 w-14 h-14 rounded-full border-2 border-card overflow-hidden shadow-lg">
+                    <img src={profilePhotoPreview} alt="Perfil" className="w-full h-full object-cover" />
+                  </div>
+                )}
               </div>
-              <div className="p-4 space-y-3">
+              <div className={cn("p-4 space-y-3", profilePhotoPreview ? "pt-8" : "")}>
                 <div>
                   <h3 className="font-bold text-foreground text-lg leading-tight">
                     {watched.business_name || 'Tu negocio'}
                   </h3>
+                  <p className="text-xs text-muted-foreground">{watched.owner_name || 'Tu nombre'}</p>
                   <div className="flex items-center gap-1 mt-1 text-muted-foreground text-sm">
                     <MapPin className="h-3.5 w-3.5 shrink-0" />
                     <span>{watched.city || 'Ciudad'}, {watched.province || 'Provincia'}</span>
                   </div>
                 </div>
+
+                {watched.specialty && (
+                  <div className="flex items-center gap-1.5 text-xs">
+                    <Briefcase className="h-3.5 w-3.5 text-primary" />
+                    <span className="font-medium text-foreground">{watched.specialty}</span>
+                  </div>
+                )}
+
+                {watched.years_experience && (
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock className="h-3.5 w-3.5" />
+                    <span>{EXPERIENCE_OPTIONS.find(o => o.value === watched.years_experience)?.label || watched.years_experience}</span>
+                  </div>
+                )}
+
                 {watched.services.length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
                     {watched.services.slice(0, 4).map((s) => (
@@ -579,6 +802,15 @@ export function DirectoryJoinForm() {
                     ))}
                   </div>
                 )}
+
+                {(watched.skills || []).length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {(watched.skills || []).slice(0, 3).map((sk) => (
+                      <span key={sk} className="px-1.5 py-0.5 text-[10px] rounded bg-muted text-muted-foreground">{sk}</span>
+                    ))}
+                  </div>
+                )}
+
                 {watched.has_taken_course && (
                   <div className="flex items-center gap-1.5 text-xs text-primary">
                     <GraduationCap className="h-3.5 w-3.5" />
@@ -589,6 +821,12 @@ export function DirectoryJoinForm() {
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                     <ShieldCheck className="h-3.5 w-3.5" />
                     <span>Seguro RC</span>
+                  </div>
+                )}
+                {watched.instagram_handle && (
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Instagram className="h-3.5 w-3.5" />
+                    <span>{watched.instagram_handle}</span>
                   </div>
                 )}
               </div>
