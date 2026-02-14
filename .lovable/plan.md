@@ -1,22 +1,26 @@
 
+## Centrar imagenes y evitar recorte en tarjetas del directorio
 
-## Reducir el logo de Academia Detail en el menu
+### Problema
 
-El logo actual usa `md:h-12` (48px) que es demasiado grande y solapa los enlaces del menu. Se reducira para que quede proporcionado.
+Actualmente todas las imagenes de las tarjetas usan `object-cover`, que funciona bien para fotos de personas pero recorta los logos de centros (como se ve en la captura con "Detail Park").
 
-### Cambio unico
+### Solucion
 
-**Archivo:** `src/components/layout/Navbar.tsx` (linea 139)
+Diferenciar el comportamiento segun el tipo de perfil (`profile_type`):
 
-**Actual:**
-```
-h-7 sm:h-8 md:h-12
-```
+- **Detailer** (fotos de caras): mantener `object-cover` para que la foto llene la tarjeta sin dejar huecos.
+- **Centro** (logos): usar `object-contain` con padding y fondo blanco para que el logo se vea completo y centrado sin recortar nada.
 
-**Nuevo:**
-```
-h-6 sm:h-7 md:h-8
-```
+El tamano de las tarjetas no cambia en absoluto, solo cambia como se ajusta la imagen dentro del contenedor.
 
-Esto reduce el logo de escritorio de 48px a 32px, y ajusta proporcionalmente en movil. El logo dejara de tapar los enlaces de navegacion.
+### Detalle tecnico
 
+**Archivo:** `src/components/directory/DetailerCard.tsx`
+
+Cambio en la clase CSS del `<img>` (linea 51):
+
+- Si `profile_type === 'centro'`: usar `object-contain p-4 bg-white` (logo centrado sobre fondo blanco, con padding).
+- Si `profile_type === 'detailer'`: mantener `object-cover` (foto recortada para llenar).
+
+Se aplica la clase de forma condicional. El contenedor (`aspect-[16/9]`) y el resto de la tarjeta permanecen identicos.
