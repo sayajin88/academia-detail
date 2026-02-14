@@ -35,6 +35,8 @@ export function BlogSidebar({ readProgress, readingTime }: BlogSidebarProps) {
               alt="Curso de Detailing Profesional"
               className="w-full h-full object-cover"
               loading="lazy"
+              width={640}
+              height={400}
             />
           </div>
 

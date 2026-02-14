@@ -57,6 +57,8 @@ export function AboutTeam() {
                     alt={member.alt}
                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
                     loading="lazy"
+                    width={400}
+                    height={500}
                   />
                 </div>
 

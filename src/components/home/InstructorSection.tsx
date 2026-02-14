@@ -38,6 +38,8 @@ export function InstructorSection() {
                 alt="Daniel López - Instructor de cursos de detailing profesional en Academia Detail"
                 className="relative w-full h-full object-cover rounded-3xl shadow-2xl border border-border"
                 loading="lazy"
+                width={480}
+                height={600}
               />
 
               {/* Experience badge */}

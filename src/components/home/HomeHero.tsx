@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState, useEffect, useRef, useCallback } from "react";
 import heroImage from "@/assets/heroes/hero-home.jpg";
+import mobileHeroImage from "@/assets/mobile-hero-bg.jpg";
 
 // Declaración global para la YouTube IFrame API
 declare global {
@@ -126,7 +127,7 @@ export function HomeHero() {
     <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Fallback image — visible hasta que el vídeo esté listo */}
       <picture className={`transition-opacity duration-700 ${videoReady ? 'opacity-0' : 'opacity-100'}`}>
-        <source media="(max-width: 767px)" srcSet="/mobile-hero-bg.jpg" />
+        <source media="(max-width: 767px)" srcSet={mobileHeroImage} />
         <source media="(min-width: 768px)" srcSet={heroImage} />
         <img
           src={heroImage}
@@ -135,6 +136,9 @@ export function HomeHero() {
           fetchPriority="high"
           loading="eager"
           decoding="async"
+          width={1920}
+          height={1080}
+          sizes="100vw"
         />
       </picture>
 

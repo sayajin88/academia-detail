@@ -40,6 +40,8 @@ export function YouTubeEmbed({ videoId, title, isShort = false }: YouTubeEmbedPr
         alt={title}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
+        width={480}
+        height={isShort ? 854 : 360}
       />
       <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
       <div className="absolute inset-0 flex items-center justify-center">

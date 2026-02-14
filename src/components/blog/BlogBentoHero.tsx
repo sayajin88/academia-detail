@@ -25,6 +25,8 @@ export function BlogBentoHero({ featuredPost }: BlogBentoHeroProps) {
           alt={featuredPost.imageAlt}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
           fetchPriority="high"
+          width={960}
+          height={540}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
@@ -111,6 +113,8 @@ export function BlogBentoHero({ featuredPost }: BlogBentoHeroProps) {
             alt={secondaryPost.imageAlt}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover/sec:scale-105"
             loading="lazy"
+            width={480}
+            height={270}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
