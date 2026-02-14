@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, ExternalLink, Search } from 'lucide-react';
+import { Sparkles, ExternalLink, Search, Target } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { BlogGooglePreview } from './BlogGooglePreview';
@@ -49,9 +49,7 @@ export function BlogSEOPanel({ title, excerpt, slug, tags, sections, category, o
       toast({ title: `SEO Score: ${parsed.score}/100` });
     } catch (e: unknown) {
       toast({ title: 'Error', description: e instanceof Error ? e.message : 'Error', variant: 'destructive' });
-    } finally {
-      setLoading(null);
-    }
+    } finally { setLoading(null); }
   };
 
   const suggestKeywords = async () => {
@@ -64,19 +62,15 @@ export function BlogSEOPanel({ title, excerpt, slug, tags, sections, category, o
       setKeywords(JSON.parse(data.result));
     } catch (e: unknown) {
       toast({ title: 'Error', description: e instanceof Error ? e.message : 'Error', variant: 'destructive' });
-    } finally {
-      setLoading(null);
-    }
+    } finally { setLoading(null); }
   };
 
   const severityColor = (s: string) => s === 'high' ? 'destructive' : s === 'medium' ? 'secondary' : 'outline';
 
   return (
     <div className="space-y-6">
-      {/* Google Preview */}
       <BlogGooglePreview title={title} excerpt={excerpt} slug={slug} />
 
-      {/* Actions */}
       <div className="flex gap-3">
         <Button onClick={runSEOAnalysis} disabled={loading === 'seo'} variant="outline">
           <Search className="h-4 w-4 mr-1" /> {loading === 'seo' ? 'Analizando...' : 'Análisis SEO'}
@@ -86,7 +80,16 @@ export function BlogSEOPanel({ title, excerpt, slug, tags, sections, category, o
         </Button>
       </div>
 
-      {/* SEO Results */}
+      {!seoResult && !keywords && (
+        <Card className="border-dashed">
+          <CardContent className="py-10 text-center">
+            <Target className="h-12 w-12 mx-auto text-muted-foreground/30 mb-3" />
+            <p className="text-sm text-muted-foreground">Ejecuta el análisis SEO para obtener recomendaciones</p>
+            <p className="text-xs text-muted-foreground mt-1">Evaluaremos título, meta description, enlaces internos, keywords y más</p>
+          </CardContent>
+        </Card>
+      )}
+
       {seoResult && (
         <div className="space-y-4">
           <div className="flex items-center gap-3">
@@ -96,70 +99,65 @@ export function BlogSEOPanel({ title, excerpt, slug, tags, sections, category, o
             <span className="text-muted-foreground">/100 SEO Score</span>
           </div>
 
-          <Card className="p-4">
-            <h4 className="font-semibold mb-2">SEO On-Page</h4>
-            <div className="space-y-2">
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">SEO On-Page</CardTitle></CardHeader>
+            <CardContent className="space-y-2">
               {seoResult.onPage.map((item, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <Badge variant={severityColor(item.severity) as "destructive" | "secondary" | "outline"} className="mt-0.5 text-xs">{item.severity}</Badge>
                   <div><p className="text-sm font-medium">{item.issue}</p><p className="text-xs text-muted-foreground">{item.suggestion}</p></div>
                 </div>
               ))}
-            </div>
+            </CardContent>
           </Card>
 
-          <Card className="p-4">
-            <h4 className="font-semibold mb-2">SEO Off-Page</h4>
-            <div className="space-y-2">
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">SEO Off-Page</CardTitle></CardHeader>
+            <CardContent className="space-y-2">
               {seoResult.offPage.map((item, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <Badge variant="outline" className="text-xs">{item.priority}</Badge>
                   <p className="text-sm">{item.suggestion}</p>
                 </div>
               ))}
-            </div>
+            </CardContent>
           </Card>
 
           {seoResult.internalLinks.length > 0 && (
-            <Card className="p-4">
-              <h4 className="font-semibold mb-2">Enlaces internos sugeridos</h4>
-              <div className="space-y-1">
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-sm">Enlaces internos sugeridos</CardTitle></CardHeader>
+              <CardContent className="space-y-1">
                 {seoResult.internalLinks.map((link, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm">
                     <ExternalLink className="h-3 w-3 text-primary" />
                     <span className="font-medium">{link.text}</span>
                     <span className="text-muted-foreground">→ {link.href}</span>
-                    <span className="text-xs text-muted-foreground">({link.context})</span>
                   </div>
                 ))}
-              </div>
+              </CardContent>
             </Card>
           )}
         </div>
       )}
 
-      {/* Keywords */}
       {keywords && (
-        <Card className="p-4">
-          <h4 className="font-semibold mb-3">Keywords sugeridas</h4>
-          <div className="space-y-2">
+        <Card>
+          <CardHeader className="pb-2"><CardTitle className="text-sm">Keywords sugeridas</CardTitle></CardHeader>
+          <CardContent className="space-y-2">
             <div><span className="text-xs text-muted-foreground">Principal:</span> <Badge>{keywords.primaryKeyword}</Badge></div>
-            <div><span className="text-xs text-muted-foreground">Secundarias:</span> <div className="flex flex-wrap gap-1 mt-1">{keywords.secondaryKeywords.map(k => <Badge key={k} variant="secondary">{k}</Badge>)}</div></div>
-            <div><span className="text-xs text-muted-foreground">Long-tail:</span> <div className="flex flex-wrap gap-1 mt-1">{keywords.longTailKeywords.map(k => <Badge key={k} variant="outline">{k}</Badge>)}</div></div>
-          </div>
-          {keywords.internalLinks.length > 0 && (
-            <div className="mt-3 pt-3 border-t">
-              <span className="text-xs text-muted-foreground">Enlaces internos sugeridos:</span>
-              <div className="space-y-1 mt-1">
-                {keywords.internalLinks.map((l, i) => (
-                  <div key={i} className="text-sm flex gap-2">
-                    <ExternalLink className="h-3 w-3 text-primary mt-0.5" />
-                    <span>{l.text} → {l.href}</span>
-                  </div>
-                ))}
+            <div><span className="text-xs text-muted-foreground">Secundarias:</span><div className="flex flex-wrap gap-1 mt-1">{keywords.secondaryKeywords.map(k => <Badge key={k} variant="secondary">{k}</Badge>)}</div></div>
+            <div><span className="text-xs text-muted-foreground">Long-tail:</span><div className="flex flex-wrap gap-1 mt-1">{keywords.longTailKeywords.map(k => <Badge key={k} variant="outline">{k}</Badge>)}</div></div>
+            {keywords.internalLinks.length > 0 && (
+              <div className="mt-3 pt-3 border-t">
+                <span className="text-xs text-muted-foreground">Enlaces internos sugeridos:</span>
+                <div className="space-y-1 mt-1">
+                  {keywords.internalLinks.map((l, i) => (
+                    <div key={i} className="text-sm flex gap-2"><ExternalLink className="h-3 w-3 text-primary mt-0.5" /><span>{l.text} → {l.href}</span></div>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </CardContent>
         </Card>
       )}
     </div>
