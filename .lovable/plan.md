@@ -1,70 +1,67 @@
 
 
-## Correccion: Guardar imagenes de galeria correctamente
+## Promocion "Gratis hasta el 31 de Marzo" + paso de confirmacion de precio
 
-### Problema
+### 1. Banners promocionales (3 archivos)
 
-Cuando se suben fotos de galeria en el panel admin, se suben al storage correctamente pero **nunca se insertan en la tabla `portfolio_images`**. El guardado del perfil (`handleSave`) no incluye logica para sincronizar las URLs de galeria con `portfolio_images`. La ficha del detailer (`DetailerPage`) lee de `portfolio_images`, asi que las fotos nunca aparecen.
+**`DirectoryJoinBanner.tsx`** (Home + Directory):
+- Cambiar el badge superior de "Directorio Profesional" a "GRATIS hasta el 31 de Marzo"
+- Anadir un chip/badge extra debajo del titulo con efecto de urgencia: "Oferta limitada - despues 4,99 EUR/mes"
+- El boton CTA pasa de "Unete Gratis" a "Unete Gratis - 0 EUR/mes"
 
-### Solucion
+**`BlogDirectoryBanner.tsx`** (Blog):
+- Mismos cambios que el banner principal pero adaptados al tamano compacto del blog
+- Badge "GRATIS hasta 31 Mar" y mencion al precio futuro tachado
 
-#### 1. Base de datos: Politicas RLS para `portfolio_images`
+**`DirectoryJoin.tsx`** (pagina de registro):
+- Actualizar el subtitle del SectionHeading para incluir mencion a la oferta gratuita temporal
 
-Actualmente solo existe una politica SELECT publica. Faltan politicas de INSERT, UPDATE y DELETE para admins:
+### 2. Nuevo paso 6 en el formulario de inscripcion
 
-- INSERT: admins pueden insertar imagenes de portfolio
-- DELETE: admins pueden eliminar imagenes de portfolio
+**`DirectoryJoinForm.tsx`** - Anadir paso "Confirmar" al flujo:
 
-#### 2. `AdminProfileEditModal.tsx` - Sincronizar galeria con `portfolio_images`
+- STEPS pasa de 5 a 6 elementos: `{ num: 6, label: 'Confirmar' }`
+- TOTAL_STEPS pasa a 6
+- El paso 5 actual (Galeria + privacidad) pierde el checkbox de privacidad
+- El paso 6 nuevo contiene:
+  - Resumen visual tipo "tarjeta de precio" con:
+    - Precio real tachado: ~~4,99 EUR/mes~~ (texto gris con line-through)
+    - Precio actual grande: 0 EUR/mes (verde, destacado)
+    - Badge "Oferta limitada" con icono de reloj
+    - Texto "Gratis hasta el 31 de Marzo de 2026. Despues: 4,99 EUR/mes"
+  - Lista de lo que incluye la suscripcion (ficha verificada, visibilidad SEO, badge de confianza, contacto directo)
+  - Checkbox de politica de privacidad (movido desde paso 5)
+  - Boton final "Confirmar inscripcion gratuita"
 
-Cambios en el flujo de guardado:
+### Detalle tecnico
 
-- **Al guardar un perfil existente (source: "profile")**: Tras guardar los datos del perfil, sincronizar las imagenes de galeria con `portfolio_images`:
-  1. Obtener las imagenes actuales de `portfolio_images` para ese detailer_id
-  2. Comparar con las URLs en `form.gallery_urls`
-  3. Insertar las nuevas (como `after_image_url`, sin `before_image_url`)
-  4. Eliminar las que ya no estan en la lista
+**`DirectoryJoinForm.tsx`:**
 
-- **Al crear un perfil nuevo**: Tras el INSERT del perfil, obtener el ID generado e insertar todas las gallery_urls como registros en `portfolio_images`
-
-- **Al guardar una aplicacion**: Las gallery_urls se guardan en `directory_applications` como antes (ya funciona). Cuando se aprueba, la edge function deberia migrarlas a `portfolio_images` automaticamente.
-
-#### 3. `AdminProfileEditModal.tsx` - Cargar galeria existente al abrir
-
-Cuando se abre un perfil existente (source: "profile"), cargar las imagenes desde `portfolio_images` y poblar `gallery_urls` en el formulario para que se vean en la UI de galeria.
-
-### Detalle tecnico por archivo
-
-**Migracion SQL:**
 ```text
--- Politica INSERT para admins en portfolio_images
-CREATE POLICY "Admins can insert portfolio images"
-ON portfolio_images FOR INSERT
-TO authenticated
-WITH CHECK (has_role(auth.uid(), 'admin'));
+Cambios en constantes:
+- STEPS: anadir { num: 6, label: 'Confirmar' }
+- TOTAL_STEPS: 6
+- stepFields[5]: [] (galeria sin privacidad)
+- stepFields[6]: ['acepto_privacidad']
 
--- Politica DELETE para admins en portfolio_images
-CREATE POLICY "Admins can delete portfolio images"
-ON portfolio_images FOR DELETE
-TO authenticated
-USING (has_role(auth.uid(), 'admin'));
-
--- Politica SELECT para admins (ver todas, no solo publicadas)
-CREATE POLICY "Admins can view all portfolio images"
-ON portfolio_images FOR SELECT
-TO authenticated
-USING (has_role(auth.uid(), 'admin'));
+Paso 6 (nuevo render):
+- Card con gradiente sutil y borde primary
+- Precio: <span className="line-through text-muted-foreground">4,99 EUR/mes</span>
+- Precio actual: <span className="text-3xl font-black text-green-500">0 EUR/mes</span>
+- Badge animado "Oferta limitada" con shimmer
+- Lista de beneficios con checks verdes
+- Checkbox privacidad
+- Boton submit con texto "Confirmar inscripcion gratuita"
 ```
 
-**`AdminProfileEditModal.tsx`:**
+**`DirectoryJoinBanner.tsx`:**
+- Badge superior: "GRATIS hasta el 31 de Marzo"
+- Nuevo parrafo bajo descripcion: chip con precio tachado y precio actual
+- Boton: "Unete Gratis - 0 EUR/mes"
 
-1. Anadir `useEffect` que al abrir un perfil (source: "profile"), haga `SELECT after_image_url FROM portfolio_images WHERE detailer_id = id` y rellene `gallery_urls` con esas URLs
+**`BlogDirectoryBanner.tsx`:**
+- Misma logica de badge y precio adaptada al tamano compacto
 
-2. En `handleSave`, tras guardar el perfil:
-   - Obtener imagenes actuales: `SELECT id, after_image_url FROM portfolio_images WHERE detailer_id = form.id`
-   - Calcular nuevas URLs (las que estan en gallery_urls pero no en las actuales) -> INSERT
-   - Calcular URLs eliminadas (las que estan en actuales pero no en gallery_urls) -> DELETE por ID
-   - Cada nueva imagen se inserta como: `{ detailer_id: form.id, after_image_url: url, title: null }`
-
-3. Para perfiles nuevos: tras el INSERT, usar el ID retornado para insertar las gallery_urls en portfolio_images
+**`DirectoryJoin.tsx`:**
+- Subtitle actualizado: "Completa los pasos y empieza GRATIS. Oferta limitada hasta el 31 de Marzo."
 
