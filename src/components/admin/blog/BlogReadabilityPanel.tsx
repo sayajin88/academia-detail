@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
@@ -37,12 +37,10 @@ export function BlogReadabilityPanel({ sections, onScoreUpdate }: Props) {
       toast({ title: `Legibilidad: ${parsed.score}/100` });
     } catch (e: unknown) {
       toast({ title: 'Error', description: e instanceof Error ? e.message : 'Error', variant: 'destructive' });
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   };
 
-  const scoreColor = (s: number) => s >= 70 ? '#22c55e' : s >= 40 ? '#eab308' : '#ef4444';
+  const scoreColor = (s: number) => s >= 70 ? 'text-green-500' : s >= 40 ? 'text-yellow-500' : 'text-red-500';
 
   return (
     <div className="space-y-4">
@@ -50,32 +48,33 @@ export function BlogReadabilityPanel({ sections, onScoreUpdate }: Props) {
         <BookOpen className="h-4 w-4 mr-1" /> {loading ? 'Analizando...' : 'Analizar legibilidad'}
       </Button>
 
+      {!result && (
+        <Card className="border-dashed">
+          <CardContent className="py-10 text-center">
+            <FileText className="h-12 w-12 mx-auto text-muted-foreground/30 mb-3" />
+            <p className="text-sm text-muted-foreground">Analiza la legibilidad de tu artículo</p>
+            <p className="text-xs text-muted-foreground mt-1">Evaluaremos longitud de frases, voz pasiva, nivel técnico y más</p>
+          </CardContent>
+        </Card>
+      )}
+
       {result && (
         <>
           <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold" style={{ color: scoreColor(result.score) }}>{result.score}</span>
+            <span className={`text-3xl font-bold ${scoreColor(result.score)}`}>{result.score}</span>
             <span className="text-muted-foreground">/100</span>
           </div>
 
           <div className="grid grid-cols-3 gap-3">
-            <Card className="p-3 text-center">
-              <p className="text-2xl font-bold">{result.avgSentenceLength}</p>
-              <p className="text-xs text-muted-foreground">Palabras/frase</p>
-            </Card>
-            <Card className="p-3 text-center">
-              <p className="text-2xl font-bold">{result.passiveVoicePercentage}%</p>
-              <p className="text-xs text-muted-foreground">Voz pasiva</p>
-            </Card>
-            <Card className="p-3 text-center">
-              <p className="text-2xl font-bold capitalize">{result.technicalLevel}</p>
-              <p className="text-xs text-muted-foreground">Nivel técnico</p>
-            </Card>
+            <Card><CardContent className="p-3 text-center"><p className="text-2xl font-bold">{result.avgSentenceLength}</p><p className="text-xs text-muted-foreground">Palabras/frase</p></CardContent></Card>
+            <Card><CardContent className="p-3 text-center"><p className="text-2xl font-bold">{result.passiveVoicePercentage}%</p><p className="text-xs text-muted-foreground">Voz pasiva</p></CardContent></Card>
+            <Card><CardContent className="p-3 text-center"><p className="text-2xl font-bold capitalize">{result.technicalLevel}</p><p className="text-xs text-muted-foreground">Nivel técnico</p></CardContent></Card>
           </div>
 
           {result.suggestions.length > 0 && (
-            <Card className="p-4">
-              <h4 className="font-semibold mb-2">Sugerencias de mejora</h4>
-              <div className="space-y-2">
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-sm">Sugerencias de mejora</CardTitle></CardHeader>
+              <CardContent className="space-y-2">
                 {result.suggestions.map((s, i) => (
                   <div key={i} className="text-sm">
                     <Badge variant="outline" className="mr-2">{s.section}</Badge>
@@ -83,7 +82,7 @@ export function BlogReadabilityPanel({ sections, onScoreUpdate }: Props) {
                     <p className="text-xs text-muted-foreground mt-0.5">{s.suggestion}</p>
                   </div>
                 ))}
-              </div>
+              </CardContent>
             </Card>
           )}
         </>
