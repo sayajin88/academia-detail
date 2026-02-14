@@ -27,8 +27,9 @@ export function DirectoryJoinBanner() {
 
       <div className="relative z-10 flex flex-col items-center text-center gap-6">
         {/* Badge */}
-        <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/10 text-white/90 border border-white/20">
-          Directorio Profesional
+        <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-green-500/20 text-white border border-green-400/30 animate-pulse">
+          <Clock className="h-3.5 w-3.5" />
+          GRATIS hasta el 31 de Marzo
         </span>
 
         {/* Heading */}
@@ -42,6 +43,13 @@ export function DirectoryJoinBanner() {
         <p className="text-primary-foreground/75 text-sm md:text-base leading-relaxed max-w-lg">
           Aparece en nuestro directorio nacional e internacional y conecta con clientes que buscan profesionales de confianza.
         </p>
+
+        {/* Price chip */}
+        <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
+          <span className="text-sm text-white/60 line-through">4,99 €/mes</span>
+          <span className="text-sm font-bold text-green-300">0 €/mes</span>
+          <span className="text-[10px] uppercase font-semibold text-white/70">· Oferta limitada</span>
+        </div>
 
         {/* Benefits grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl w-full">
@@ -64,7 +72,7 @@ export function DirectoryJoinBanner() {
             size="lg"
             className="bg-white text-primary hover:bg-white/90 rounded-xl px-8 py-3 text-base font-bold shadow-lg shadow-black/20 group"
           >
-            Únete Gratis
+            Únete Gratis — 0 €/mes
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Button>
         </Link>

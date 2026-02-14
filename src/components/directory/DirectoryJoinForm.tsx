@@ -57,6 +57,7 @@ const STEPS = [
   { num: 3, label: 'Especialización' },
   { num: 4, label: 'Confianza' },
   { num: 5, label: 'Galería' },
+  { num: 6, label: 'Confirmar' },
 ];
 
 const schema = z.object({
@@ -93,10 +94,19 @@ const stepFields: Record<number, (keyof FormData)[]> = {
   2: ['city', 'province'],
   3: ['services'],
   4: [],
-  5: ['acepto_privacidad'],
+  5: [],
+  6: ['acepto_privacidad'],
 };
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
+
+const SUBSCRIPTION_BENEFITS = [
+  'Ficha profesional verificada',
+  'Visibilidad SEO en Google',
+  'Badge de confianza para clientes',
+  'Contacto directo (teléfono, WhatsApp, email)',
+  'Galería de trabajos realizados',
+];
 
 export function DirectoryJoinForm() {
   const [step, setStep] = useState(1);
@@ -694,6 +704,48 @@ export function DirectoryJoinForm() {
                     <p className="text-xs text-muted-foreground">Fachada, zona de trabajo, iluminación, trabajos realizados. Máx 10MB cada una.</p>
                   </div>
 
+                </div>
+              )}
+
+              {/* STEP 6: Confirmación */}
+              {step === 6 && (
+                <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+                  <div>
+                    <h2 className="text-xl font-bold text-foreground mb-1">Confirma tu inscripción</h2>
+                    <p className="text-sm text-muted-foreground">Revisa el precio y confirma para enviar tu solicitud.</p>
+                  </div>
+
+                  {/* Pricing Card */}
+                  <Card className="border-primary/30 bg-gradient-to-br from-card to-primary/5 overflow-hidden">
+                    <div className="p-6 space-y-5">
+                      <div className="flex items-center justify-between">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-primary/10 text-primary border border-primary/30 animate-pulse">
+                          <Clock className="h-3 w-3" />
+                          Oferta limitada
+                        </span>
+                      </div>
+
+                      <div className="text-center space-y-1">
+                        <p className="text-lg text-muted-foreground line-through">4,99 €/mes</p>
+                        <p className="text-4xl font-black text-green-500">0 €/mes</p>
+                        <p className="text-sm text-muted-foreground">
+                          Gratis hasta el 31 de Marzo de 2026. Después: 4,99 €/mes
+                        </p>
+                      </div>
+
+                      <div className="border-t border-border pt-4 space-y-2.5">
+                        <p className="text-xs font-semibold text-foreground uppercase tracking-wider">Tu suscripción incluye:</p>
+                        {SUBSCRIPTION_BENEFITS.map((benefit) => (
+                          <div key={benefit} className="flex items-center gap-2">
+                            <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
+                            <span className="text-sm text-foreground">{benefit}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </Card>
+
+                  {/* Privacy checkbox */}
                   <FormField control={form.control} name="acepto_privacidad" render={({ field }) => (
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-xl border border-border p-4 bg-card">
                       <FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} className="mt-0.5 h-5 w-5" /></FormControl>
@@ -724,11 +776,11 @@ export function DirectoryJoinForm() {
                     Siguiente <ArrowRight className="h-4 w-4" />
                   </Button>
                 ) : (
-                  <Button type="submit" disabled={isSubmitting} className="gap-2 min-w-[180px]">
+                  <Button type="submit" disabled={isSubmitting} className="gap-2 min-w-[220px]">
                     {isSubmitting ? (
                       <><Loader2 className="h-4 w-4 animate-spin" />{uploadingLogo ? 'Subiendo logo...' : uploadingGallery ? 'Subiendo fotos...' : 'Enviando...'}</>
                     ) : (
-                      <><Send className="h-4 w-4" />Enviar solicitud</>
+                      <><CheckCircle2 className="h-4 w-4" />Confirmar inscripción gratuita</>
                     )}
                   </Button>
                 )}
