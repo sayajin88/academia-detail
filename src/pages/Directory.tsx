@@ -150,36 +150,26 @@ const Directory = () => {
         isLocating={isLocating}
       />
 
-      <section className="container mx-auto px-4 pb-20 space-y-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <DirectoryFilters
-            selectedServices={selectedServices}
-            onToggleService={toggleService}
-            selectedLevel={selectedLevel}
-            onLevelChange={setSelectedLevel}
-            selectedType={selectedType}
-            onTypeChange={setSelectedType}
-          />
-          <div className="flex items-center gap-2">
-            {/* View toggle */}
-            <div className="flex items-center rounded-lg border border-border bg-card p-1 gap-0.5">
-              {viewButtons.map(({ mode, icon: Icon, label }) => (
-                <button
-                  key={mode}
-                  onClick={() => setViewMode(mode)}
-                  className={cn(
-                    'px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 inline-flex items-center gap-1.5',
-                    viewMode === mode
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                  )}
-                  title={label}
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">{label}</span>
-                </button>
-              ))}
-            </div>
+      <section className="container mx-auto px-4 pb-20 space-y-6">
+        {/* View toggle - alone on top */}
+        <div className="flex justify-end">
+          <div className="flex items-center rounded-lg border border-border bg-card p-1 gap-0.5">
+            {viewButtons.map(({ mode, icon: Icon, label }) => (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode)}
+                className={cn(
+                  'px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 inline-flex items-center gap-1.5',
+                  viewMode === mode
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                )}
+                title={label}
+              >
+                <Icon className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">{label}</span>
+              </button>
+            ))}
           </div>
         </div>
 
@@ -187,6 +177,16 @@ const Directory = () => {
         {(viewMode === 'map' || viewMode === 'both') && (
           <DirectoryMap detailers={filtered} />
         )}
+
+        {/* Compact filter toolbar */}
+        <DirectoryFilters
+          selectedServices={selectedServices}
+          onToggleService={toggleService}
+          selectedLevel={selectedLevel}
+          onLevelChange={setSelectedLevel}
+          selectedType={selectedType}
+          onTypeChange={setSelectedType}
+        />
 
         {/* Grid */}
         {(viewMode === 'grid' || viewMode === 'both') && (
