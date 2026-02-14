@@ -118,13 +118,17 @@ export function Navbar() {
             {/* Animated border gradient */}
             <div className={`absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden pointer-events-none transition-opacity duration-1000 delay-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
               <div 
-                className="absolute inset-0 opacity-30"
-                style={{
-                  background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent)',
-                  backgroundSize: '200% 100%',
-                  animation: 'shimmer-border 3s linear infinite',
-                }}
-              />
+                className="absolute inset-0 opacity-30 overflow-hidden"
+              >
+                <div 
+                  className="absolute inset-0 w-[200%]"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 25%, hsl(var(--primary) / 0.3) 50%, transparent 75%)',
+                    animation: 'shimmer-border 3s linear infinite',
+                    willChange: 'transform',
+                  }}
+                />
+              </div>
             </div>
 
             {/* Logo */}
@@ -401,6 +405,7 @@ export function Navbar() {
             <button
               className="p-2 text-foreground/60 hover:text-primary transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Cerrar menú de navegación"
             >
               <X className="h-6 w-6" />
             </button>

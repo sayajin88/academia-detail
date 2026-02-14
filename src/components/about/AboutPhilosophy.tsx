@@ -93,13 +93,13 @@ export function AboutPhilosophy() {
         <AnimatedSection delay={0.5} className="mt-12">
           <div className="relative overflow-hidden bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 border border-primary/30 rounded-2xl p-8 md:p-10 text-center">
             {/* Animated background */}
-            <div className="absolute inset-0 opacity-30">
+            <div className="absolute inset-0 opacity-30 overflow-hidden">
               <div 
-                className="absolute inset-0"
+                className="absolute inset-0 w-[200%]"
                 style={{
-                  background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent)',
-                  backgroundSize: '200% 100%',
+                  background: 'linear-gradient(90deg, transparent 25%, hsl(var(--primary) / 0.3) 50%, transparent 75%)',
                   animation: 'shimmer-border 3s linear infinite',
+                  willChange: 'transform',
                 }}
               />
             </div>

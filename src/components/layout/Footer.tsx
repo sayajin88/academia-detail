@@ -39,7 +39,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-2">
-              <img src={logo} alt="Academia Detail - Escuela de detailing profesional" className="h-10 w-auto" />
+              <img src={logo} alt="Academia Detail - Escuela de detailing profesional" className="h-10 w-auto" width={200} height={40} />
             </Link>
             <a 
               href="https://www.detailpark.com" 
@@ -73,6 +73,8 @@ export function Footer() {
                 alt="Car Care Passion - Partner oficial de productos de detailing"
                 className="h-5 w-auto brightness-0 invert opacity-60"
                 loading="lazy"
+                width={120}
+                height={20}
               />
               <span className="text-xs text-muted-foreground/70">Partner oficial de productos</span>
             </div>
