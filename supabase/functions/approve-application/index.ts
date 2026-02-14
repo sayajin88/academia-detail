@@ -5,6 +5,22 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+async function geocode(city: string, province: string): Promise<{ lat: number; lon: number } | null> {
+  try {
+    const query = encodeURIComponent(`${city}, ${province}, España`);
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1`, {
+      headers: { "User-Agent": "AcademiaDetail/1.0" },
+    });
+    const data = await res.json();
+    if (data && data.length > 0) {
+      return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+    }
+  } catch (e) {
+    console.error("Geocoding failed:", e);
+  }
+  return null;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
@@ -15,24 +31,20 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-    // Verify user
     const userClient = createClient(supabaseUrl, Deno.env.get("SUPABASE_ANON_KEY")!, {
       global: { headers: { Authorization: authHeader } },
     });
     const { data: { user }, error: authError } = await userClient.auth.getUser();
     if (authError || !user) throw new Error("Not authenticated");
 
-    // Admin client
     const admin = createClient(supabaseUrl, serviceKey);
 
-    // Check admin role
     const { data: roles } = await admin.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin");
     if (!roles || roles.length === 0) throw new Error("Not an admin");
 
     const { application_id } = await req.json();
     if (!application_id) throw new Error("Missing application_id");
 
-    // Get application
     const { data: app, error: appError } = await admin.from("directory_applications").select("*").eq("id", application_id).single();
     if (appError || !app) throw new Error("Application not found");
 
@@ -42,6 +54,9 @@ Deno.serve(async (req) => {
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "") + "-" + Date.now().toString(36);
+
+    // Geocode city/province
+    const coords = await geocode(app.city, app.province);
 
     // Create detailer profile
     const { error: profileError } = await admin.from("detailer_profiles").insert({
@@ -59,6 +74,8 @@ Deno.serve(async (req) => {
       is_verified: true,
       featured_image_url: app.logo_url,
       description: app.value_proposition,
+      latitude: coords?.lat ?? null,
+      longitude: coords?.lon ?? null,
     });
     if (profileError) throw new Error("Failed to create profile: " + profileError.message);
 
