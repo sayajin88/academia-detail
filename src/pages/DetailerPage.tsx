@@ -9,6 +9,7 @@ import { DetailerMap } from '@/components/directory/DetailerMap';
 import { BeforeAfterSlider } from '@/components/directory/BeforeAfterSlider';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '@/components/ui/breadcrumb';
 import { MapPin, Phone, Globe, Instagram, MessageCircle, Calendar, Target, Award, CheckCircle, User, Building2, Sparkles } from 'lucide-react';
+import { getComunidadByProvincia, slugify } from '@/data/comunidadesAutonomas';
 import { Button } from '@/components/ui/button';
 
 interface PortfolioImage {
@@ -83,11 +84,19 @@ const DetailerPage = () => {
     certified_pro: 'Certificado Pro',
   };
 
+  const comunidadData = getComunidadByProvincia(detailer.province);
+  const comunidadSlug = comunidadData?.slug || '';
+  const comunidadName = comunidadData?.name || '';
+  const provinciaSlug = slugify(detailer.province);
+  const ciudadSlug = slugify(detailer.city);
+
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'AutoBodyShop',
+    '@type': 'LocalBusiness',
+    '@id': `https://academiadetail.com/detailer/${detailer.slug}`,
     name: detailer.business_name,
     description: detailer.description,
+    image: detailer.featured_image_url,
     address: {
       '@type': 'PostalAddress',
       streetAddress: detailer.address,
@@ -100,8 +109,9 @@ const DetailerPage = () => {
       geo: { '@type': 'GeoCoordinates', latitude: detailer.latitude, longitude: detailer.longitude },
     }),
     ...(detailer.phone && { telephone: detailer.phone }),
-    ...(detailer.featured_image_url && { image: detailer.featured_image_url }),
     ...(detailer.website_url && { url: detailer.website_url }),
+    priceRange: 'EUR',
+    areaServed: { '@type': 'City', name: detailer.city },
   };
 
   const breadcrumbLd = {
@@ -110,7 +120,10 @@ const DetailerPage = () => {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://academiadetail.com/' },
       { '@type': 'ListItem', position: 2, name: 'Directorio', item: 'https://academiadetail.com/directorio' },
-      { '@type': 'ListItem', position: 3, name: detailer.business_name },
+      ...(comunidadName ? [{ '@type': 'ListItem', position: 3, name: comunidadName, item: `https://academiadetail.com/directorio/${comunidadSlug}` }] : []),
+      { '@type': 'ListItem', position: comunidadName ? 4 : 3, name: detailer.province, item: `https://academiadetail.com/directorio/${comunidadSlug}/${provinciaSlug}` },
+      { '@type': 'ListItem', position: comunidadName ? 5 : 4, name: detailer.city, item: `https://academiadetail.com/directorio/${comunidadSlug}/${provinciaSlug}/${ciudadSlug}` },
+      { '@type': 'ListItem', position: comunidadName ? 6 : 5, name: detailer.business_name },
     ],
   };
 
@@ -140,9 +153,9 @@ const DetailerPage = () => {
   return (
     <MainLayout>
       <Helmet>
-        <title>{detailer.business_name} - {typeLabel} en {detailer.city} | Academia Detail</title>
+        <title>{detailer.business_name} | Detailing y Limpieza en {detailer.city} - Academia Detail</title>
         <meta name="description" content={`${detailer.business_name} — ${typeLabel} ${badgeLabels[detailer.level_badge]} en ${detailer.city}, ${detailer.province}. ${detailer.services.slice(0, 3).join(', ')}. Certificado por Academia Detail ✅`} />
-        <link rel="canonical" href={`https://academiadetail.com/directorio/${detailer.slug}`} />
+        <link rel="canonical" href={`https://academiadetail.com/detailer/${detailer.slug}`} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
@@ -150,7 +163,7 @@ const DetailerPage = () => {
       {/* Hero with background image */}
       <div className="relative h-72 md:h-[420px] bg-muted">
         {detailer.featured_image_url ? (
-          <img src={detailer.featured_image_url} alt={detailer.business_name} className="w-full h-full object-cover" />
+          <img src={detailer.featured_image_url} alt={`${detailer.business_name} - Detailing en ${detailer.city}`} className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-card to-background" />
         )}
@@ -164,6 +177,16 @@ const DetailerPage = () => {
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/directorio">Directorio</Link></BreadcrumbLink></BreadcrumbItem>
+            {comunidadName && (
+              <>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/directorio/${comunidadSlug}`}>{comunidadName}</Link></BreadcrumbLink></BreadcrumbItem>
+              </>
+            )}
+            <BreadcrumbSeparator />
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/directorio/${comunidadSlug}/${provinciaSlug}`}>{detailer.province}</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/directorio/${comunidadSlug}/${provinciaSlug}/${ciudadSlug}`}>{detailer.city}</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem><BreadcrumbPage>{detailer.business_name}</BreadcrumbPage></BreadcrumbItem>
           </BreadcrumbList>

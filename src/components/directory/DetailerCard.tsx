@@ -40,7 +40,7 @@ export function DetailerCard({ detailer }: DetailerCardProps) {
   const typeLabel = detailer.profile_type === 'centro' ? 'Centro' : 'Detailer';
 
   return (
-    <Link to={`/directorio/${detailer.slug}`} className="group block">
+    <Link to={`/detailer/${detailer.slug}`} className="group block">
       <Card className="overflow-hidden border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-[var(--shadow-glow-subtle)] bg-card">
         {/* Image */}
         <div className="aspect-[16/9] overflow-hidden bg-muted relative">

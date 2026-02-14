@@ -112,6 +112,7 @@ export type Database = {
           address: string | null
           business_name: string
           city: string
+          comunidad_autonoma: string | null
           created_at: string
           description: string | null
           email: string
@@ -141,6 +142,7 @@ export type Database = {
           address?: string | null
           business_name: string
           city: string
+          comunidad_autonoma?: string | null
           created_at?: string
           description?: string | null
           email: string
@@ -170,6 +172,7 @@ export type Database = {
           address?: string | null
           business_name?: string
           city?: string
+          comunidad_autonoma?: string | null
           created_at?: string
           description?: string | null
           email?: string

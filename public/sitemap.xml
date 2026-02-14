@@ -68,6 +68,15 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Directorio principal -->
+  <url>
+    <loc>https://academiadetail.com/directorio</loc>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Sitemap dinámico de directorio disponible en /functions/v1/directory-sitemap -->
+
   <!-- Glosario -->
   <url>
     <loc>https://academiadetail.com/glosario-detailing</loc>
