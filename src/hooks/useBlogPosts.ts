@@ -61,13 +61,24 @@ export function useBlogPosts() {
     },
   });
 
-  const dynamicPosts = dbPosts.map(dbPostToBlogPost);
-  
-  // Merge: DB posts override static posts with same slug
-  const staticSlugs = new Set(dynamicPosts.map(p => p.slug));
+  // Build static posts map for fallback
+  const staticBySlug = new Map(staticPosts.map(p => [p.slug, p]));
+
+  // Smart merge: DB posts enriched with static fallbacks for missing fields
+  const dynamicPosts = dbPosts.map(db => {
+    const converted = dbPostToBlogPost(db);
+    const staticMatch = staticBySlug.get(db.slug);
+    if (staticMatch) {
+      if (!converted.image) converted.image = staticMatch.image;
+      if (!converted.author.image) converted.author = { ...converted.author, image: staticMatch.author.image };
+    }
+    return converted;
+  });
+
+  const dbSlugs = new Set(dynamicPosts.map(p => p.slug));
   const mergedPosts = [
     ...dynamicPosts,
-    ...staticPosts.filter(p => !staticSlugs.has(p.slug)),
+    ...staticPosts.filter(p => !dbSlugs.has(p.slug)),
   ].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
   return { posts: mergedPosts, isLoading };
