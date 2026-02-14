@@ -11,17 +11,20 @@ const badgeConfig = {
   elite_detailer: {
     label: 'Élite Detailer',
     icon: Crown,
-    className: 'bg-gradient-to-r from-[hsl(45,93%,47%)] to-[hsl(45,93%,67%)] text-[hsl(45,93%,10%)] shadow-[0_0_20px_hsl(45_93%_47%/0.4)]',
+    baseClass: 'text-[hsl(45,93%,10%)] shadow-[0_0_20px_hsl(45_93%_47%/0.4)]',
+    shimmer: 'animate-shimmer-gold',
   },
   master_detailer: {
     label: 'Master Detailer',
     icon: Star,
-    className: 'bg-gradient-to-r from-[hsl(220,10%,45%)] to-[hsl(220,15%,70%)] text-white shadow-[0_0_15px_hsl(220_10%_50%/0.3)]',
+    baseClass: 'text-white shadow-[0_0_15px_hsl(220_10%_50%/0.3)]',
+    shimmer: 'animate-shimmer-silver',
   },
   certified_pro: {
     label: 'Certificado Pro',
     icon: Shield,
-    className: 'bg-primary/20 text-primary border border-primary/40',
+    baseClass: 'bg-primary/20 text-primary border border-primary/40',
+    shimmer: '',
   },
 };
 
@@ -42,7 +45,8 @@ export function DetailerBadge({ level, size = 'md', className }: DetailerBadgePr
       className={cn(
         'inline-flex items-center rounded-full font-bold uppercase tracking-wider whitespace-nowrap',
         sizeConfig[size],
-        config.className,
+        config.baseClass,
+        config.shimmer,
         className
       )}
     >
