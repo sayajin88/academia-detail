@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle, XCircle, Loader2, Save, Pencil } from "lucide-react";
+import { CheckCircle, XCircle, Loader2, Save, Pencil, Upload, X, ImagePlus, User } from "lucide-react";
 
 type Application = {
   id: string;
@@ -53,6 +53,10 @@ const ApplicationDetailModal = ({ application, onClose, onAction }: ApplicationD
   const [rejectReason, setRejectReason] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingGallery, setUploadingGallery] = useState(false);
+  const logoInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -67,6 +71,63 @@ const ApplicationDetailModal = ({ application, onClose, onAction }: ApplicationD
 
   const updateField = (field: keyof Application, value: any) => {
     setForm(prev => prev ? { ...prev, [field]: value } : null);
+  };
+
+  const uploadFile = async (file: File, folder: string): Promise<string | null> => {
+    const ext = file.name.split(".").pop();
+    const path = `${folder}/${form!.id}-${Date.now()}.${ext}`;
+    const { error } = await supabase.storage.from("directory-uploads").upload(path, file, { upsert: true });
+    if (error) {
+      toast({ title: "Error subiendo archivo", description: error.message, variant: "destructive" });
+      return null;
+    }
+    const { data: { publicUrl } } = supabase.storage.from("directory-uploads").getPublicUrl(path);
+    return publicUrl;
+  };
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingLogo(true);
+    const url = await uploadFile(file, "logos");
+    if (url) {
+      updateField("logo_url", url);
+      // Auto-save to DB
+      await supabase.from("directory_applications").update({ logo_url: url }).eq("id", form!.id);
+      // Sync to profile if approved
+      if (form!.status === "approved") {
+        await supabase.from("detailer_profiles").update({ featured_image_url: url }).eq("email", form!.email);
+      }
+      toast({ title: "Foto de perfil actualizada" });
+    }
+    setUploadingLogo(false);
+    if (logoInputRef.current) logoInputRef.current.value = "";
+  };
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setUploadingGallery(true);
+    const newUrls: string[] = [];
+    for (const file of Array.from(files)) {
+      const url = await uploadFile(file, "gallery");
+      if (url) newUrls.push(url);
+    }
+    if (newUrls.length > 0) {
+      const updated = [...(form!.gallery_urls || []), ...newUrls];
+      updateField("gallery_urls", updated);
+      await supabase.from("directory_applications").update({ gallery_urls: updated }).eq("id", form!.id);
+      toast({ title: `${newUrls.length} foto(s) añadida(s) a la galería` });
+    }
+    setUploadingGallery(false);
+    if (galleryInputRef.current) galleryInputRef.current.value = "";
+  };
+
+  const removeGalleryImage = async (index: number) => {
+    const updated = (form!.gallery_urls || []).filter((_, i) => i !== index);
+    updateField("gallery_urls", updated);
+    await supabase.from("directory_applications").update({ gallery_urls: updated }).eq("id", form!.id);
+    toast({ title: "Foto eliminada de la galería" });
   };
 
   const handleSave = async () => {
@@ -103,7 +164,6 @@ const ApplicationDetailModal = ({ application, onClose, onAction }: ApplicationD
       return;
     }
 
-    // If approved, also sync changes to the published detailer_profiles
     if (form.status === "approved") {
       const profileUpdate: Record<string, any> = {
         business_name: form.business_name,
@@ -116,7 +176,6 @@ const ApplicationDetailModal = ({ application, onClose, onAction }: ApplicationD
         services: form.services,
       };
 
-      // Re-geocode if city or province changed
       const cityChanged = form.city !== application.city || form.province !== application.province;
       if (cityChanged) {
         try {
@@ -203,10 +262,74 @@ const ApplicationDetailModal = ({ application, onClose, onAction }: ApplicationD
         </DialogHeader>
 
         <div className="space-y-4 text-sm">
-          {form.logo_url && (
-            <img src={form.logo_url} alt="Logo" className="h-16 w-16 rounded-lg object-cover" />
-          )}
+          {/* === PHOTO SECTION === */}
+          <div className="space-y-3">
+            <Label className="text-base font-semibold flex items-center gap-2">
+              <User className="h-4 w-4" /> Foto de perfil
+            </Label>
+            <div className="flex items-center gap-4">
+              {form.logo_url ? (
+                <div className="relative group">
+                  <img src={form.logo_url} alt="Logo" className="h-20 w-20 rounded-xl object-cover border border-border" />
+                  <button
+                    onClick={() => { updateField("logo_url", null); supabase.from("directory_applications").update({ logo_url: null }).eq("id", form.id); }}
+                    className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              ) : (
+                <div className="h-20 w-20 rounded-xl border-2 border-dashed border-muted-foreground/30 flex items-center justify-center">
+                  <User className="h-8 w-8 text-muted-foreground/40" />
+                </div>
+              )}
+              <div>
+                <input ref={logoInputRef} type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
+                <Button variant="outline" size="sm" onClick={() => logoInputRef.current?.click()} disabled={uploadingLogo}>
+                  {uploadingLogo ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <Upload className="h-4 w-4 mr-1" />}
+                  {form.logo_url ? "Cambiar foto" : "Subir foto"}
+                </Button>
+                <p className="text-xs text-muted-foreground mt-1">JPG, PNG o WebP. Máx 5 MB.</p>
+              </div>
+            </div>
+          </div>
 
+          {/* === GALLERY SECTION === */}
+          <div className="space-y-3">
+            <Label className="text-base font-semibold flex items-center gap-2">
+              <ImagePlus className="h-4 w-4" /> Galería de fotos
+            </Label>
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+              {(form.gallery_urls || []).map((url, i) => (
+                <div key={i} className="relative group aspect-video">
+                  <img src={url} alt={`Foto ${i + 1}`} className="rounded-lg w-full h-full object-cover border border-border" />
+                  <button
+                    onClick={() => removeGalleryImage(i)}
+                    className="absolute -top-1.5 -right-1.5 bg-destructive text-destructive-foreground rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={() => galleryInputRef.current?.click()}
+                disabled={uploadingGallery}
+                className="aspect-video rounded-lg border-2 border-dashed border-muted-foreground/30 flex flex-col items-center justify-center gap-1 hover:border-primary/50 hover:bg-primary/5 transition-colors cursor-pointer"
+              >
+                {uploadingGallery ? (
+                  <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                ) : (
+                  <>
+                    <ImagePlus className="h-5 w-5 text-muted-foreground/50" />
+                    <span className="text-[10px] text-muted-foreground/50">Añadir</span>
+                  </>
+                )}
+              </button>
+            </div>
+            <input ref={galleryInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleGalleryUpload} />
+          </div>
+
+          {/* === EXISTING DATA === */}
           {editing ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
@@ -325,17 +448,6 @@ const ApplicationDetailModal = ({ application, onClose, onAction }: ApplicationD
                 <div><span className="text-muted-foreground">Propuesta de valor:</span><p className="mt-1">{form.value_proposition}</p></div>
               )}
             </>
-          )}
-
-          {form.gallery_urls && form.gallery_urls.length > 0 && (
-            <div>
-              <span className="text-muted-foreground">Galería:</span>
-              <div className="grid grid-cols-3 gap-2 mt-1">
-                {form.gallery_urls.map((url, i) => (
-                  <img key={i} src={url} alt={`Foto ${i + 1}`} className="rounded-lg aspect-video object-cover" />
-                ))}
-              </div>
-            </div>
           )}
 
           {!editing && form.status === "pending" && (
