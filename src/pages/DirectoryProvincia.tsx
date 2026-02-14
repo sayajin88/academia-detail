@@ -54,8 +54,8 @@ const DirectoryProvincia = () => {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://academiadetail.com/' },
-      { '@type': 'ListItem', position: 2, name: 'Directorio', item: 'https://academiadetail.com/directorio' },
-      { '@type': 'ListItem', position: 3, name: comunidadName, item: `https://academiadetail.com/directorio/${comunidad}` },
+      { '@type': 'ListItem', position: 2, name: 'Centros Detailing España', item: 'https://academiadetail.com/centros-detailing-espana' },
+      { '@type': 'ListItem', position: 3, name: comunidadName, item: `https://academiadetail.com/centros-detailing-espana/${comunidad}` },
       { '@type': 'ListItem', position: 4, name: provinciaName },
     ],
   };
@@ -67,7 +67,7 @@ const DirectoryProvincia = () => {
       <Helmet>
         <title>Detailing Profesional en {provinciaName} - Centros Certificados | Academia Detail</title>
         <meta name="description" content={`Centros de detailing certificados en ${provinciaName}. Pulido profesional, protección cerámica, PPF e interiorismo ✅ Encuentra tu detailer cerca.`} />
-        <link rel="canonical" href={`https://academiadetail.com/directorio/${comunidad}/${provincia}`} />
+        <link rel="canonical" href={`https://academiadetail.com/centros-detailing-espana/${comunidad}/${provincia}`} />
         {noIndex && <meta name="robots" content="noindex" />}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
@@ -78,9 +78,9 @@ const DirectoryProvincia = () => {
           <BreadcrumbList>
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/directorio">Directorio</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/centros-detailing-espana">Centros Detailing</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/directorio/${comunidad}`}>{comunidadName}</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/centros-detailing-espana/${comunidad}`}>{comunidadName}</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem><BreadcrumbPage>{provinciaName}</BreadcrumbPage></BreadcrumbItem>
           </BreadcrumbList>
@@ -94,7 +94,6 @@ const DirectoryProvincia = () => {
 
         <DirectoryGrid detailers={detailers} isLoading={isLoading} />
 
-        {/* Interlinking: Ciudades en esta provincia */}
         {citiesWithDetailers.length > 0 && (
           <div className="space-y-4 pt-8 border-t border-border">
             <h2 className="text-xl font-bold text-foreground">Ciudades con Detailing en {provinciaName}</h2>
@@ -102,7 +101,7 @@ const DirectoryProvincia = () => {
               {citiesWithDetailers.map((city) => (
                 <Link
                   key={city}
-                  to={`/directorio/${comunidad}/${provincia}/${slugify(city)}`}
+                  to={`/centros-detailing-espana/${comunidad}/${provincia}/${slugify(city)}`}
                   className="flex items-center gap-2 px-4 py-3 rounded-lg border border-border bg-card/60 hover:border-primary/40 hover:bg-card transition-colors text-sm font-medium text-foreground"
                 >
                   <MapPin className="h-4 w-4 text-primary shrink-0" />
@@ -113,9 +112,8 @@ const DirectoryProvincia = () => {
           </div>
         )}
 
-        {/* Back to comunidad */}
         <div className="pt-4">
-          <Link to={`/directorio/${comunidad}`} className="text-primary hover:underline text-sm">
+          <Link to={`/centros-detailing-espana/${comunidad}`} className="text-primary hover:underline text-sm">
             ← Volver a {comunidadName}
           </Link>
         </div>

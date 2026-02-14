@@ -28,7 +28,6 @@ const DirectoryCiudad = () => {
     const fetchData = async () => {
       if (!ciudadName || !provinciaName) return;
       
-      // Fetch detailers for this city
       const { data } = await supabase
         .from('detailer_profiles' as any)
         .select('*')
@@ -37,7 +36,6 @@ const DirectoryCiudad = () => {
 
       if (data) setDetailers(data as unknown as DetailerProfile[]);
 
-      // Fetch other cities in the same province for interlinking
       const { data: provinciaData } = await supabase
         .from('detailer_profiles' as any)
         .select('*')
@@ -70,9 +68,9 @@ const DirectoryCiudad = () => {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://academiadetail.com/' },
-      { '@type': 'ListItem', position: 2, name: 'Directorio', item: 'https://academiadetail.com/directorio' },
-      { '@type': 'ListItem', position: 3, name: comunidadName, item: `https://academiadetail.com/directorio/${comunidad}` },
-      { '@type': 'ListItem', position: 4, name: provinciaName, item: `https://academiadetail.com/directorio/${comunidad}/${provincia}` },
+      { '@type': 'ListItem', position: 2, name: 'Centros Detailing España', item: 'https://academiadetail.com/centros-detailing-espana' },
+      { '@type': 'ListItem', position: 3, name: comunidadName, item: `https://academiadetail.com/centros-detailing-espana/${comunidad}` },
+      { '@type': 'ListItem', position: 4, name: provinciaName, item: `https://academiadetail.com/centros-detailing-espana/${comunidad}/${provincia}` },
       { '@type': 'ListItem', position: 5, name: ciudadName },
     ],
   };
@@ -84,7 +82,7 @@ const DirectoryCiudad = () => {
       <Helmet>
         <title>Los Mejores Centros de Detailing en {ciudadName}, {provinciaName} | Academia Detail</title>
         <meta name="description" content={`Detailing profesional en ${ciudadName}. Pulido, cerámico, PPF, wrapping y más ✅ Centros certificados por Academia Detail. Contacta sin compromiso.`} />
-        <link rel="canonical" href={`https://academiadetail.com/directorio/${comunidad}/${provincia}/${ciudad}`} />
+        <link rel="canonical" href={`https://academiadetail.com/centros-detailing-espana/${comunidad}/${provincia}/${ciudad}`} />
         {noIndex && <meta name="robots" content="noindex" />}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
@@ -95,11 +93,11 @@ const DirectoryCiudad = () => {
           <BreadcrumbList>
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/directorio">Directorio</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/centros-detailing-espana">Centros Detailing</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/directorio/${comunidad}`}>{comunidadName}</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/centros-detailing-espana/${comunidad}`}>{comunidadName}</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/directorio/${comunidad}/${provincia}`}>{provinciaName}</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to={`/centros-detailing-espana/${comunidad}/${provincia}`}>{provinciaName}</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem><BreadcrumbPage>{ciudadName}</BreadcrumbPage></BreadcrumbItem>
           </BreadcrumbList>
@@ -111,14 +109,12 @@ const DirectoryCiudad = () => {
           subtitle={getSeoText('ciudad', ciudadName)}
         />
 
-        {/* Map for this city */}
         {detailers.some(d => d.latitude && d.longitude) && (
           <DirectoryMap detailers={detailers} />
         )}
 
         <DirectoryGrid detailers={detailers} isLoading={isLoading} />
 
-        {/* Interlinking: Other cities in this province */}
         {otherCities.length > 0 && (
           <div className="space-y-4 pt-8 border-t border-border">
             <h2 className="text-xl font-bold text-foreground">Otras ciudades en {provinciaName}</h2>
@@ -126,7 +122,7 @@ const DirectoryCiudad = () => {
               {otherCities.map((city) => (
                 <Link
                   key={city}
-                  to={`/directorio/${comunidad}/${provincia}/${slugify(city)}`}
+                  to={`/centros-detailing-espana/${comunidad}/${provincia}/${slugify(city)}`}
                   className="flex items-center gap-2 px-4 py-3 rounded-lg border border-border bg-card/60 hover:border-primary/40 hover:bg-card transition-colors text-sm font-medium text-foreground"
                 >
                   <MapPin className="h-4 w-4 text-primary shrink-0" />
@@ -137,12 +133,11 @@ const DirectoryCiudad = () => {
           </div>
         )}
 
-        {/* Back links */}
         <div className="flex gap-4 pt-4">
-          <Link to={`/directorio/${comunidad}/${provincia}`} className="text-primary hover:underline text-sm">
+          <Link to={`/centros-detailing-espana/${comunidad}/${provincia}`} className="text-primary hover:underline text-sm">
             ← {provinciaName}
           </Link>
-          <Link to={`/directorio/${comunidad}`} className="text-primary hover:underline text-sm">
+          <Link to={`/centros-detailing-espana/${comunidad}`} className="text-primary hover:underline text-sm">
             ← {comunidadName}
           </Link>
         </div>

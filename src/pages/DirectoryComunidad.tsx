@@ -32,7 +32,6 @@ const DirectoryComunidad = () => {
     fetchData();
   }, [comunidadName]);
 
-  // Get unique provinces with detailers
   const provincesWithDetailers = [...new Set(detailers.map((d) => d.province))].sort();
 
   const jsonLd = {
@@ -52,7 +51,7 @@ const DirectoryComunidad = () => {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://academiadetail.com/' },
-      { '@type': 'ListItem', position: 2, name: 'Directorio', item: 'https://academiadetail.com/directorio' },
+      { '@type': 'ListItem', position: 2, name: 'Centros Detailing España', item: 'https://academiadetail.com/centros-detailing-espana' },
       { '@type': 'ListItem', position: 3, name: comunidadName },
     ],
   };
@@ -64,7 +63,7 @@ const DirectoryComunidad = () => {
       <Helmet>
         <title>Mejores Centros de Detailing en {comunidadName} | Academia Detail</title>
         <meta name="description" content={`Encuentra centros de detailing certificados en ${comunidadName}. Pulido, cerámico, PPF, wrapping y más ✅ Profesionales formados por Academia Detail.`} />
-        <link rel="canonical" href={`https://academiadetail.com/directorio/${comunidad}`} />
+        <link rel="canonical" href={`https://academiadetail.com/centros-detailing-espana/${comunidad}`} />
         {noIndex && <meta name="robots" content="noindex" />}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
@@ -75,7 +74,7 @@ const DirectoryComunidad = () => {
           <BreadcrumbList>
             <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Inicio</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/directorio">Directorio</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem><BreadcrumbLink asChild><Link to="/centros-detailing-espana">Centros Detailing</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem><BreadcrumbPage>{comunidadName}</BreadcrumbPage></BreadcrumbItem>
           </BreadcrumbList>
@@ -89,7 +88,6 @@ const DirectoryComunidad = () => {
 
         <DirectoryGrid detailers={detailers} isLoading={isLoading} />
 
-        {/* Interlinking: Provincias en esta comunidad */}
         {provincesWithDetailers.length > 0 && (
           <div className="space-y-4 pt-8 border-t border-border">
             <h2 className="text-xl font-bold text-foreground">Provincias en {comunidadName}</h2>
@@ -97,7 +95,7 @@ const DirectoryComunidad = () => {
               {provincesWithDetailers.map((prov) => (
                 <Link
                   key={prov}
-                  to={`/directorio/${comunidad}/${slugify(prov)}`}
+                  to={`/centros-detailing-espana/${comunidad}/${slugify(prov)}`}
                   className="flex items-center gap-2 px-4 py-3 rounded-lg border border-border bg-card/60 hover:border-primary/40 hover:bg-card transition-colors text-sm font-medium text-foreground"
                 >
                   <MapPin className="h-4 w-4 text-primary shrink-0" />
@@ -108,12 +106,11 @@ const DirectoryComunidad = () => {
           </div>
         )}
 
-        {/* Interlinking: Todas las comunidades */}
         {comunidadData && (
           <div className="space-y-4 pt-8 border-t border-border">
             <h2 className="text-xl font-bold text-foreground">Otras comunidades</h2>
             <p className="text-sm text-muted-foreground">
-              <Link to="/directorio" className="text-primary hover:underline">← Ver todas las comunidades autónomas</Link>
+              <Link to="/centros-detailing-espana" className="text-primary hover:underline">← Ver todas las comunidades autónomas</Link>
             </p>
           </div>
         )}
