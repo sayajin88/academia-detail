@@ -1,9 +1,11 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { HomeHero } from '@/components/home/HomeHero';
 import { FormationsGrid } from '@/components/home/FormationsGrid';
 import { SEO } from '@/components/SEO';
-import { seoConfig } from '@/utils/seoConfig';
+import { generateHomeSEO } from '@/utils/seoConfig';
+import { formations } from '@/data/formations';
+import { formationDetails } from '@/data/formationDetails';
 
 // Componentes below-the-fold - carga diferida para mejor LCP
 const CompetitiveComparison = lazy(() => import('@/components/home/CompetitiveComparison').then(m => ({ default: m.CompetitiveComparison })));
@@ -38,9 +40,11 @@ const SectionSkeleton = ({ variant = 'default' }: { variant?: 'default' | 'card'
 );
 
 export default function Home() {
+  const homeSEO = useMemo(() => generateHomeSEO(formations, formationDetails), []);
+
   return (
     <>
-      <SEO {...seoConfig.home} />
+      <SEO {...homeSEO} />
       <MainLayout>
         {/* Componentes críticos above-the-fold - carga síncrona */}
         <HomeHero />
