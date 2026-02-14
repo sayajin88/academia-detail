@@ -8,8 +8,8 @@ import { DirectoryGrid } from '@/components/directory/DirectoryGrid';
 import { DirectoryMap } from '@/components/directory/DirectoryMap';
 import { supabase } from '@/integrations/supabase/client';
 import type { DetailerProfile } from '@/components/directory/DetailerCard';
-import { Button } from '@/components/ui/button';
-import { UserPlus, Map, LayoutGrid, Layers } from 'lucide-react';
+import { Map, LayoutGrid, Layers } from 'lucide-react';
+import { DirectoryJoinBanner } from '@/components/directory/DirectoryJoinBanner';
 import { cn } from '@/lib/utils';
 
 const levelOrder = { master: 0, certified: 1, member: 2 };
@@ -180,12 +180,6 @@ const Directory = () => {
                 </button>
               ))}
             </div>
-            <Link to="/directorio/unete">
-              <Button variant="outline" className="gap-2 border-primary/30 hover:bg-primary/10 hover:text-primary whitespace-nowrap">
-                <UserPlus className="h-4 w-4" />
-                Únete al directorio
-              </Button>
-            </Link>
           </div>
         </div>
 
@@ -198,6 +192,9 @@ const Directory = () => {
         {(viewMode === 'grid' || viewMode === 'both') && (
           <DirectoryGrid detailers={filtered} isLoading={isLoading} />
         )}
+
+        {/* Join CTA Banner */}
+        <DirectoryJoinBanner />
       </section>
     </MainLayout>
   );
