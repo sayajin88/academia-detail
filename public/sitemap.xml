@@ -2,10 +2,18 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://academiadetail.com/sitemap-pages.xml</loc>
-    <lastmod>2026-02-14</lastmod>
+    <lastmod>2026-02-15</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/blog-sitemap</loc>
+    <lastmod>2026-02-15</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/glossary-sitemap</loc>
+    <lastmod>2026-02-15</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/directory-sitemap</loc>
-    <lastmod>2026-02-14</lastmod>
+    <lastmod>2026-02-15</lastmod>
   </sitemap>
 </sitemapindex>
