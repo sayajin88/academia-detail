@@ -1,8 +1,8 @@
 import { useParams, Navigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { Calendar, Clock, User } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { SEO } from '@/components/SEO';
 import { BlogArticleContent } from '@/components/blog/BlogArticleContent';
 import { BlogSidebar } from '@/components/blog/BlogSidebar';
 import { BlogShareButtons } from '@/components/blog/BlogShareButtons';
@@ -50,14 +50,16 @@ export default function BlogPostPage() {
   const relatedPosts = getRelatedPosts(post);
   const fullUrl = `/blog/${post.slug}`;
 
+  const postImage = post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`;
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt,
-    "image": post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`,
+    "image": postImage,
     "datePublished": post.publishedAt,
-    "dateModified": post.publishedAt,
+    "dateModified": (post as any).updatedAt || post.publishedAt,
     "author": {
       "@type": "Person",
       "name": post.author.name,
@@ -71,9 +73,14 @@ export default function BlogPostPage() {
       "logo": { "@type": "ImageObject", "url": `${BASE_URL}/og-image.png` }
     },
     "mainEntityOfPage": { "@type": "WebPage", "@id": `${BASE_URL}${fullUrl}` },
+    "isPartOf": { "@type": "Blog", "@id": `${BASE_URL}/blog`, "name": "Blog de Academia Detail" },
     "articleSection": categoryLabels[post.category],
     "wordCount": post.sections.reduce((acc, s) => acc + s.content.split(/\s+/).length, 0),
-    "keywords": post.tags.join(', ')
+    "keywords": post.tags.join(', '),
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["h1", ".blog-excerpt"]
+    }
   };
 
   const personSchema = {
@@ -97,27 +104,15 @@ export default function BlogPostPage() {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>{`${post.title} | Blog Academia Detail`}</title>
-        <meta name="description" content={post.excerpt} />
-        <meta name="keywords" content={post.tags.join(', ')} />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <link rel="canonical" href={`${BASE_URL}${fullUrl}`} />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.excerpt} />
-        <meta property="og:url" content={`${BASE_URL}${fullUrl}`} />
-        <meta property="og:type" content="article" />
-        <meta property="og:image" content={post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`} />
-        <meta property="article:published_time" content={post.publishedAt} />
-        <meta property="article:author" content={post.author.name} />
-        <meta property="article:section" content={categoryLabels[post.category]} />
-        {post.tags.map(tag => (
-          <meta key={tag} property="article:tag" content={tag} />
-        ))}
-        <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(personSchema)}</script>
-      </Helmet>
+      <SEO
+        title={`${post.title} | Blog Academia Detail`}
+        description={post.excerpt}
+        keywords={post.tags.join(', ')}
+        url={fullUrl}
+        type="article"
+        image={postImage}
+        schema={[articleSchema, breadcrumbSchema, personSchema]}
+      />
 
       {/* Reading progress bar */}
       <div className="fixed top-0 left-0 right-0 z-[60] h-0.5 bg-transparent">

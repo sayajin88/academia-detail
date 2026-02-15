@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { X } from 'lucide-react';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { SEO } from '@/components/SEO';
 import { BlogBentoHero } from '@/components/blog/BlogBentoHero';
 import { BlogGrid } from '@/components/blog/BlogGrid';
 import { BlogSearch } from '@/components/blog/BlogSearch';
@@ -74,41 +75,40 @@ export default function Blog() {
 
   const blogSchema = {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "Blog de Academia Detail - Detailing Profesional",
+    "@type": "CollectionPage",
+    "name": "Blog de Detailing Profesional",
     "description": "Artículos, guías y consejos sobre detailing profesional, PPF, car wrapping y cómo montar tu propio negocio de detailing.",
     "url": `${BASE_URL}/blog`,
-    "publisher": {
-      "@type": "Organization",
-      "name": "Academia Detail",
-      "url": BASE_URL,
-      "logo": `${BASE_URL}/og-image.png`
-    },
-    "blogPost": blogPosts.map(post => ({
-      "@type": "BlogPosting",
-      "headline": post.title,
-      "url": `${BASE_URL}/blog/${post.slug}`,
-      "datePublished": post.publishedAt,
-      "author": { "@type": "Person", "name": post.author.name },
-      "image": typeof post.image === 'string' ? post.image : `${BASE_URL}/og-image.png`,
-    }))
+    "mainEntity": {
+      "@type": "Blog",
+      "name": "Blog de Academia Detail - Detailing Profesional",
+      "url": `${BASE_URL}/blog`,
+      "publisher": {
+        "@type": "Organization",
+        "name": "Academia Detail",
+        "url": BASE_URL,
+        "logo": `${BASE_URL}/og-image.png`
+      },
+      "blogPost": blogPosts.map(post => ({
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "url": `${BASE_URL}/blog/${post.slug}`,
+        "datePublished": post.publishedAt,
+        "author": { "@type": "Person", "name": post.author.name },
+        "image": typeof post.image === 'string' ? post.image : `${BASE_URL}/og-image.png`,
+      }))
+    }
   };
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>Blog de Detailing Profesional | Guías y Consejos | Academia Detail</title>
-        <meta name="description" content="✅ Guías, consejos y artículos sobre detailing profesional, PPF, car wrapping y emprendimiento. Aprende de expertos con +12 años de experiencia. ➤ Léelo ahora." />
-        <meta name="keywords" content="blog detailing, guías detailing profesional, consejos car wrapping, artículos PPF, montar negocio detailing, tips pulido coches" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <link rel="canonical" href={`${BASE_URL}/blog`} />
-        <meta property="og:title" content="Blog de Detailing Profesional | Academia Detail" />
-        <meta property="og:description" content="Guías, consejos y artículos sobre detailing profesional, PPF, car wrapping y emprendimiento." />
-        <meta property="og:url" content={`${BASE_URL}/blog`} />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
-        <script type="application/ld+json">{JSON.stringify(blogSchema)}</script>
-      </Helmet>
+      <SEO
+        title="Blog Detailing Profesional | Guías y Consejos"
+        description="✅ Guías, consejos y artículos sobre detailing profesional, PPF, car wrapping y emprendimiento. Aprende de expertos con +12 años de experiencia."
+        keywords="blog detailing, guías detailing profesional, consejos car wrapping, artículos PPF, montar negocio detailing, tips pulido coches"
+        url="/blog"
+        schema={[blogSchema]}
+      />
 
       <section aria-label="Blog de detailing profesional" className="pt-24 md:pt-28 pb-16 md:pb-24">
         <div className="container mx-auto px-4">

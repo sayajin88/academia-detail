@@ -43,7 +43,7 @@ export function FormationsGrid() {
             const categoryLabel = categoryLabels[index] || 'Formación';
 
             return (
-              <div 
+              <article 
                 key={formation.id}
                 className="group"
               >
@@ -163,7 +163,7 @@ export function FormationsGrid() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>

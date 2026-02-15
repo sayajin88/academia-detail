@@ -68,6 +68,7 @@ export function AboutHero() {
           badge="Desde 2017"
           title="Quiénes Somos"
           subtitle="Nacidos del taller, no del aula. Somos el único centro de formación en España que vive de verdad del Detailing, no de la formación."
+          titleAs="h1"
         />
         
         {/* Tagline diferenciador */}

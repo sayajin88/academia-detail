@@ -554,7 +554,7 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
   ];
 
   return {
-    title: "Cursos de Detailing Profesional 2026 | 100% Práctico en Alicante | ★4.9",
+    title: "Cursos Detailing Profesional 2026 | Alicante ★4.9",
     description: `✅ Cursos de detailing 100% prácticos en taller real de Alicante. Pulido, tratamiento cerámico, PPF y wrapping. ⭐ +${totalAlumnos} alumnos certificados. ➤ Reserva tu plaza ahora - Grupos de máx 3 personas.`,
     keywords: `curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, ${categoryKeywords}`,
     url: "/",
@@ -566,7 +566,15 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
         "@type": "WebSite",
         "name": "Academia Detail",
         "alternateName": "Detail Park Academy",
-        "url": BASE_URL
+        "url": BASE_URL,
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": `${BASE_URL}/blog?q={search_term_string}`
+          },
+          "query-input": "required name=search_term_string"
+        }
       },
       { "@context": "https://schema.org", "@type": "ItemList", "name": "Navegación Principal - Academia Detail", "itemListElement": navItems },
       courseItemList,
@@ -585,8 +593,8 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
 export const seoConfig = {
   // Legacy static fallback - prefer generateHomeSEO()
   home: {
-    title: "Cursos de Detailing Profesional 2026 | 100% Práctico en Alicante | ★4.9",
-    description: "✅ Cursos de detailing 100% prácticos en taller real de Alicante. Pulido, tratamiento cerámico, PPF y wrapping. ⭐ +170 alumnos certificados. ➤ Reserva tu plaza ahora - Grupos de máx 3 personas.",
+    title: "Cursos Detailing Profesional 2026 | Alicante ★4.9",
+    description: "✅ Cursos de detailing 100% prácticos en taller real de Alicante. Pulido, cerámico, PPF y wrapping. ⭐ +170 alumnos certificados. ➤ Reserva tu plaza.",
     keywords: "curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso corrección pintura",
     url: "/",
     price: "2997",
@@ -597,7 +605,15 @@ export const seoConfig = {
         "@type": "WebSite",
         "name": "Academia Detail",
         "alternateName": "Detail Park Academy",
-        "url": BASE_URL
+        "url": BASE_URL,
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": `${BASE_URL}/blog?q={search_term_string}`
+          },
+          "query-input": "required name=search_term_string"
+        }
       },
       generateWebPageSchema({
         name: "Cursos de Detailing Profesional en España",
@@ -611,7 +627,7 @@ export const seoConfig = {
   },
 
   jornadaCero: {
-    title: "Jornada Zero Detailing [97€] | Prueba Antes de Invertir | Solo 10 Plazas",
+    title: "Jornada Zero Detailing [97€] | Prueba Antes de Invertir",
     description: "🚀 Tu primer contacto con el detailing profesional por solo 97€. Accede a herramientas de élite, toca máquinas reales y descubre si tienes mente de empresario. ➤ ¡Plazas limitadas!",
     keywords: "jornada zero detailing, probar detailing barato, experiencia detailing inmersión, curso detailing económico, primer contacto detailing profesional, prueba antes de invertir detailing",
     url: "/jornada-zero-detailing",
@@ -723,7 +739,7 @@ export const seoConfig = {
 
 
   carreraDetailing: {
-    title: "Monta Tu Centro de Detailing | Formación Completa 1 Mes | Desde 9.997€",
+    title: "Monta Tu Centro de Detailing | Formación 1 Mes",
     description: "🔥 Programa completo para montar tu lavadero de coches: 4 certificaciones + módulo de negocio exclusivo. ✅ Detailing, Wrapping, PPF y Restauración. ➤ Solicita info sin compromiso.",
     keywords: "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, curso completo detailing, emprender lavadero rentable, aprender detailing desde cero",
     url: "/formacion-profesional-detailing",
@@ -857,7 +873,7 @@ export const seoConfig = {
   },
 
   glossary: {
-    title: "Glosario de Detailing 2026 | +85 Términos Profesionales | Academia Detail",
+    title: "Glosario Detailing | +85 Términos Profesionales",
     description: "✅ Domina el vocabulario del detailing profesional. +85 términos con definiciones: PPF, coating cerámico, clay bar, swirl marks y más. ➤ Guía de referencia completa.",
     keywords: "glosario detailing, terminología detailing, diccionario car detailing, que es PPF, que es coating cerámico, términos detailing profesional, vocabulario detailing",
     url: "/glosario-detailing",
@@ -889,7 +905,7 @@ export const seoConfig = {
   },
 
   calculadoraDilucion: {
-    title: "Calculadora de Dilución Detailing Gratis ⚗️ Ratios de Mezcla Exactos | Academia Detail",
+    title: "Calculadora Dilución Detailing ⚗️ Ratios Exactos",
     description: "✅ Calcula la dilución exacta de cualquier producto de car detailing. Ratios de mezcla visual para APC, champú, desengrasante y más. ➤ Herramienta gratuita e interactiva.",
     keywords: "calculadora dilución detailing, ratio mezcla productos limpieza coche, como diluir productos detailing, tabla diluciones detailing, proporción agua producto limpieza, calculadora mezcla química coche, dilución APC detailing, ratio champú coche",
     url: "/calculadora-dilucion-detailing",
