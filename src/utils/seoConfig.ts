@@ -50,7 +50,7 @@ export const organizationSchemaComplete = {
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.9",
-    "reviewCount": "170",
+    "reviewCount": "174",
     "bestRating": "5",
     "worstRating": "1"
   },
@@ -559,8 +559,8 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
   ];
 
   return {
-    title: "Cursos Detailing Profesional 2026 | Alicante ★4.9",
-    description: `✅ Cursos de detailing 100% prácticos en taller real de Alicante. Pulido, tratamiento cerámico, PPF y wrapping. ⭐ +${totalAlumnos} alumnos certificados. ➤ Reserva tu plaza ahora - Grupos de máx 3 personas.`,
+    title: "Cursos Detailing Profesional 2026 | Certificación y Práctica Real ★4.9",
+    description: `✅ ¿Quieres ser experto en detailing? Formación 100% PRÁCTICA en taller real. Detailing, Wrapping y PPF. +${totalAlumnos} alumnos certificados. Plazas limitadas — Reserva tu plaza hoy 🔥`,
     keywords: `curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, ${categoryKeywords}`,
     url: "/",
     price: details['curso-detailing-profesional']?.price ? String(details['curso-detailing-profesional'].price) : "2997",
@@ -598,8 +598,8 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
 export const seoConfig = {
   // Legacy static fallback - prefer generateHomeSEO()
   home: {
-    title: "Cursos Detailing Profesional 2026 | Alicante ★4.9",
-    description: "✅ Cursos de detailing 100% prácticos en taller real de Alicante. Pulido, cerámico, PPF y wrapping. ⭐ +170 alumnos certificados. ➤ Reserva tu plaza.",
+    title: "Cursos Detailing Profesional 2026 | Certificación y Práctica Real ★4.9",
+    description: "✅ ¿Quieres ser experto en detailing? Formación 100% PRÁCTICA en taller real. Detailing, Wrapping y PPF. +174 alumnos certificados. Plazas limitadas — Reserva tu plaza hoy 🔥",
     keywords: "curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso corrección pintura",
     url: "/",
     price: "2997",

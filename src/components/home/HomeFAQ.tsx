@@ -12,6 +12,21 @@ import {
 
 const faqs = [
   {
+    question: '¿Es formación certificada?',
+    answer:
+      'Sí, entregamos diploma certificado profesional al finalizar cada formación. Nuestras certificaciones están reconocidas por las principales marcas del sector.',
+  },
+  {
+    question: '¿Hay prácticas en coches reales?',
+    answer:
+      'Absolutamente, el 100% de la formación es práctica sobre vehículos reales de clientes en nuestro taller Detail Park.',
+  },
+  {
+    question: '¿Necesito experiencia previa?',
+    answer:
+      'No, tenemos niveles desde iniciación hasta avanzado. Puedes empezar desde cero y avanzar a tu ritmo.',
+  },
+  {
     question: '¿Necesito experiencia previa para apuntarme a una formación?',
     answer:
       'No, nuestras formaciones están diseñadas para todos los niveles. Puedes aprender detailing desde cero. Empezamos desde los conceptos básicos y avanzamos progresivamente hasta las técnicas más avanzadas.',
