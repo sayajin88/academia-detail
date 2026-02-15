@@ -65,8 +65,8 @@ export function ExitIntentPopup() {
               ))}
             </div>
 
-            <Button variant="hero" size="lg" className="w-full mb-4">
-              APROVECHAR OFERTA AHORA
+            <Button variant="hero" size="lg" className="w-full mb-4" asChild>
+              <a href="/contacto">APROVECHAR OFERTA AHORA</a>
             </Button>
 
             <div className="flex items-center justify-center gap-1 mb-2">

@@ -35,9 +35,14 @@ const AdminBlog = lazy(() => import("./pages/AdminBlog"));
 
 const queryClient = new QueryClient();
 
-// Fallback mínimo para Suspense — evita CLS
+// Branded loading fallback for Suspense — shows spinner instead of blank screen
 const PageFallback = () => (
-  <div className="min-h-screen bg-background" />
+  <div className="min-h-screen bg-background flex items-center justify-center">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-10 h-10 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+      <span className="text-sm text-muted-foreground">Cargando…</span>
+    </div>
+  </div>
 );
 
 const App = () => (

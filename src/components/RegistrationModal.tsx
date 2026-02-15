@@ -47,15 +47,10 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
     
     try {
       setLoading(true);
-      console.log('🚀 Starting checkout process...');
-      
       // Validar datos
-      console.log('📝 Validating form data...');
       const validatedData = registrationSchema.parse(formData);
-      console.log('✅ Validation successful');
 
       // Crear sesión de pago con Stripe desde el servidor (inserta y crea checkout)
-      console.log('💳 Creating Stripe checkout session (server)...');
       const { data: checkoutData, error: checkoutError } = await supabase.functions.invoke('create-checkout', {
         body: {
           firstName: validatedData.firstName,
@@ -67,30 +62,20 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
         }
       });
 
-      console.log('Checkout response:', { checkoutData, checkoutError });
-
       if (checkoutError) {
-        console.error('❌ Checkout creation error:', checkoutError);
         toast.error("Error al crear la sesión de pago: " + (checkoutError.message || 'Desconocido'));
         return;
       }
 
       if (!checkoutData?.url) {
-        console.error('❌ No checkout URL received:', checkoutData);
         toast.error("No se recibió la URL de pago");
         return;
       }
 
-      console.log('✅ Redirecting to Stripe checkout:', checkoutData.url);
       window.location.href = checkoutData.url;
       
     } catch (error) {
-      console.error('❌ Registration submit failed:', error);
-      console.error('Error type:', typeof error);
-      try { console.error('Error details:', JSON.stringify(error, null, 2)); } catch {}
-      
       if (error instanceof z.ZodError) {
-        console.error('Validation errors:', error.errors);
         toast.error(error.errors[0].message);
       } else if (error instanceof Error) {
         toast.error("Error al registrar: " + error.message);
@@ -171,6 +156,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     onChange={(e) => handleInputChange("firstName", e.target.value)}
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary h-9 sm:h-10 text-sm"
                     placeholder="Tu nombre"
+                    autoComplete="given-name"
                     required
                     disabled={loading}
                   />
@@ -186,6 +172,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                     onChange={(e) => handleInputChange("lastName", e.target.value)}
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary h-9 sm:h-10 text-sm"
                     placeholder="Tus apellidos"
+                    autoComplete="family-name"
                     required
                     disabled={loading}
                   />
@@ -203,6 +190,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary h-9 sm:h-10 text-sm"
                   placeholder="tu@email.com"
+                  autoComplete="email"
                   required
                   disabled={loading}
                 />
@@ -219,6 +207,8 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
                   onChange={(e) => handleInputChange("phone", e.target.value)}
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-primary h-9 sm:h-10 text-sm"
                   placeholder="+34 600 000 000"
+                  inputMode="tel"
+                  autoComplete="tel"
                   required
                   disabled={loading}
                 />

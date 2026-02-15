@@ -167,7 +167,7 @@ export function Navbar() {
               <Link
                 to="/"
                 data-active={location.pathname === '/'}
-                className={`relative px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg ${
+                className={`relative px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                   location.pathname === '/' 
                     ? 'text-primary' 
                     : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
@@ -186,7 +186,9 @@ export function Navbar() {
               >
                 <button
                   data-active={isFormationsActive}
-                  className={`flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg ${
+                  aria-expanded={isFormationsOpen}
+                  aria-haspopup="true"
+                  className={`flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                     isFormationsActive
                       ? 'text-primary'
                       : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
@@ -206,9 +208,9 @@ export function Navbar() {
                       : 'opacity-0 -translate-y-2 pointer-events-none'
                   }`}
                 >
-                  <div className="relative bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-3 min-w-[280px]">
+                  <div role="menu" className="relative bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-3 min-w-[280px]">
                     {/* Dropdown accent */}
-                    <div className="absolute -inset-px bg-gradient-to-b from-primary/10 to-transparent rounded-2xl pointer-events-none" />
+                    <div className="absolute -inset-px bg-gradient-to-b from-primary/10 to-transparent rounded-2xl pointer-events-none" aria-hidden="true" />
                     
                     <div className="relative space-y-1">
                       {formationLinks.map((link, index) => (
@@ -243,7 +245,9 @@ export function Navbar() {
               >
                 <button
                   data-active={isToolsActive}
-                  className={`flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg ${
+                  aria-expanded={isToolsOpen}
+                  aria-haspopup="true"
+                  className={`flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                     isToolsActive
                       ? 'text-primary'
                       : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
@@ -263,8 +267,8 @@ export function Navbar() {
                       : 'opacity-0 -translate-y-2 pointer-events-none'
                   }`}
                 >
-                  <div className="relative bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-3 min-w-[280px]">
-                    <div className="absolute -inset-px bg-gradient-to-b from-primary/10 to-transparent rounded-2xl pointer-events-none" />
+                  <div role="menu" className="relative bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-3 min-w-[280px]">
+                    <div className="absolute -inset-px bg-gradient-to-b from-primary/10 to-transparent rounded-2xl pointer-events-none" aria-hidden="true" />
                     
                     <div className="relative space-y-1">
                       {toolLinks.map((link, index) => (
@@ -295,7 +299,7 @@ export function Navbar() {
                   key={link.href}
                   to={link.href}
                   data-active={isActive(link.href)}
-                  className={`relative px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg ${
+                  className={`relative px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                     isActive(link.href)
                       ? 'text-primary'
                       : 'text-foreground/80 hover:text-foreground hover:bg-white/5'

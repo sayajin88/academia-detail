@@ -20,9 +20,9 @@ const ContactSuccessModal = ({ open, onClose }: ContactSuccessModalProps) => {
         {/* Gradient header */}
         <div className="relative bg-gradient-to-br from-primary/20 via-primary/10 to-transparent pt-10 pb-6 px-6 text-center">
           {/* Decorative circles */}
-          <div className="absolute top-4 left-6 w-16 h-16 rounded-full bg-primary/10 blur-xl" />
-          <div className="absolute top-8 right-10 w-10 h-10 rounded-full bg-primary/15 blur-lg" />
-          <div className="absolute bottom-2 left-1/3 w-8 h-8 rounded-full bg-primary/10 blur-md" />
+          <div className="absolute top-4 left-6 w-16 h-16 rounded-full bg-primary/10 blur-xl" aria-hidden="true" />
+          <div className="absolute top-8 right-10 w-10 h-10 rounded-full bg-primary/15 blur-lg" aria-hidden="true" />
+          <div className="absolute bottom-2 left-1/3 w-8 h-8 rounded-full bg-primary/10 blur-md" aria-hidden="true" />
 
           {/* Success icon */}
           <div className="relative mx-auto w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mb-5 animate-scale-in">
