@@ -1,137 +1,83 @@
 
 
-# Rutas Dinamicas para Terminos del Glosario
+# Reestructuracion del Mapa de Sitemaps
 
-## Objetivo
+## Problema
 
-Crear una pagina individual por cada termino del glosario en `/glosario-detailing/[slug]`, con contenido enriquecido (definicion, proceso, herramientas, FAQ), esquema JSON-LD `DefinedTerm` y un componente de cursos relacionados basado en palabras clave.
+Tras los cambios recientes (rutas dinamicas del glosario, migracion SEO, nuevos esquemas JSON-LD), el sitemap esta desactualizado y le faltan URLs criticas:
 
----
+- Las nuevas paginas individuales de cada termino del glosario (`/glosario-detailing/:slug`) no aparecen en ningun sitemap -- Google no las conoce
+- Los 26 articulos del blog estan hardcodeados en `sitemap-pages.xml` en vez de usar el Edge Function `blog-urls` que ya existe
+- No hay un sitemap separado para el glosario (potencialmente 100+ terminos)
+- Las fechas `lastmod` no reflejan los cambios realizados
 
-## Arquitectura
+## Solucion: Arquitectura de Sitemaps modular
 
-Cada termino del glosario generara un slug a partir de su nombre (ej. "Ceramic Coating" -> `ceramic-coating`). La pagina mostrara contenido estructurado derivado de los datos existentes del termino, enriquecido con secciones contextuales.
+Pasar de 2 sitemaps a 4, organizados por tipo de contenido:
 
 ```text
-/glosario-detailing                -> Listado (ya existe)
-/glosario-detailing/:slug          -> Pagina individual del termino (NUEVO)
+sitemap.xml (Sitemap Index)
+  |-- sitemap-pages.xml        (paginas estaticas: home, cursos, legal, herramientas)
+  |-- sitemap-blog.xml         (nuevo - Edge Function que genera URLs del blog)
+  |-- sitemap-glossary.xml     (nuevo - Edge Function que genera URLs del glosario)
+  |-- directory-sitemap        (existente - Edge Function para detailers)
 ```
-
----
 
 ## Cambios por archivo
 
-### 1. Ampliar el modelo de datos (`src/data/glossaryData.ts`)
+### 1. `public/sitemap.xml` -- Actualizar Sitemap Index
 
-- Anadir una funcion `generateSlug(term: string): string` que normalice el nombre a slug URL-safe (minusculas, sin acentos, guiones)
-- Anadir una funcion `getTermBySlug(slug: string): GlossaryTerm | undefined` para buscar un termino por slug
-- Anadir campos opcionales enriquecidos a la interfaz `GlossaryTerm`:
-  - `relatedProcess?: string` -- Descripcion del proceso donde se aplica el termino
-  - `tools?: string[]` -- Herramientas necesarias relacionadas
-  - `faq?: { question: string; answer: string }[]` -- Preguntas frecuentes
+Agregar las 2 nuevas entradas (blog y glosario) y actualizar fechas:
 
-Como los datos existentes no tienen estos campos, se generaran automaticamente en la pagina a partir de la categoria y la definicion del termino (logica contextual, no IA).
+- Anadir `sitemap-blog` apuntando al nuevo Edge Function
+- Anadir `sitemap-glossary` apuntando al nuevo Edge Function
+- Actualizar `lastmod` a fecha actual
 
-### 2. Crear pagina de termino (`src/pages/GlossaryTerm.tsx`)
+### 2. `public/sitemap-pages.xml` -- Limpiar
 
-Layout de la pagina individual:
+- **Eliminar** todas las URLs de blog (las 26 entradas de `/blog/...`), ya que se moveran al nuevo sitemap de blog
+- **Mantener** las paginas estaticas: home, cursos, eventos, herramientas, directorio index, legal
+- Actualizar `lastmod` a `2026-02-15` en las paginas que fueron modificadas
 
-- **Hero compacto**: Nombre del termino como `<h1>`, badge de categoria, breadcrumb
-- **Seccion 1 - Definicion**: La definicion completa del termino en un bloque destacado con icono
-- **Seccion 2 - Proceso Relacionado**: Texto contextual generado segun la categoria del termino (ej. si es "exterior" -> proceso de correccion de pintura; si es "protecciones" -> proceso de proteccion)
-- **Seccion 3 - Herramientas Necesarias**: Lista de herramientas asociadas a la categoria (ej. "tecnicas" -> pulidora, pads, compound)
-- **Seccion 4 - FAQ**: 3 preguntas frecuentes auto-generadas basadas en el termino y su categoria
-- **Seccion 5 - Cursos Relacionados**: Componente que muestra cursos segun reglas de keywords:
-  - Si el termino o definicion contiene "pintura", "barniz", "pulido", "correccion", "ceramico" -> Detailing Pro
-  - Si contiene "vinilo", "wrapping", "wrap", "vinyl" -> Car Wrapping
-  - Si contiene "PPF", "proteccion", "lamina", "film" -> Curso PPF
-  - Si contiene "restaur" -> Curso Restauracion
-  - Fallback: Detailing Pro (curso mas general)
-- **Seccion 6 - Terminos Relacionados**: Grid de 4-6 terminos de la misma categoria con links a sus paginas individuales
-- **Navegacion**: Link "Volver al Glosario" y breadcrumbs
+### 3. Crear Edge Function `supabase/functions/glossary-sitemap/index.ts`
 
-### 3. Crear componente de cursos relacionados (`src/components/glossary/GlossaryRelatedCourses.tsx`)
+Genera dinamicamente un sitemap XML con todas las URLs de terminos del glosario:
 
-- Recibe el termino como prop
-- Aplica la logica de matching de keywords descrita arriba
-- Muestra 1-2 cards de curso con imagen, titulo, duracion y CTA "Ver curso"
-- Usa los datos de `src/data/formations.ts`
+- Importa la lista de terminos y la funcion `generateSlug` desde los datos
+- Genera una URL por cada termino: `https://academiadetail.com/glosario-detailing/{slug}`
+- Incluye la URL indice `/glosario-detailing` con prioridad 0.8
+- Cada termino individual con prioridad 0.6 y changefreq monthly
 
-### 4. Crear componente de FAQ del termino (`src/components/glossary/GlossaryTermFAQ.tsx`)
+Como los datos del glosario estan en el frontend (no en base de datos), el Edge Function incluira la lista de slugs directamente para evitar dependencias.
 
-- Genera 3 preguntas frecuentes basadas en el termino:
-  1. "Que es [termino] en detailing?"
-  2. "Como se aplica/usa [termino]?" (segun categoria)
-  3. "Que herramientas se necesitan para [termino]?" (segun categoria)
-- Las respuestas se derivan de la definicion existente
-- Incluye schema `FAQPage` JSON-LD inyectado via el componente SEO
+### 4. Crear Edge Function `supabase/functions/blog-sitemap/index.ts`
 
-### 5. Actualizar las cards del glosario (`src/components/glossary/GlossaryTermCard.tsx`)
+Genera dinamicamente un sitemap XML con todas las URLs del blog:
 
-- Convertir cada card en un `<Link>` a `/glosario-detailing/[slug]`
-- Mantener el diseno visual actual intacto
+- Reutiliza la misma lista de articulos que ya tiene `blog-urls/index.ts`
+- Formato XML sitemap en vez de JSON
+- Incluye la URL indice `/blog` con prioridad 0.8
+- Cada articulo con prioridad 0.7 y su `lastmod` real
 
-### 6. Registrar la ruta (`src/App.tsx`)
+### 5. `public/robots.txt` -- Anadir rutas del glosario
 
-- Anadir la ruta lazy-loaded:
-  ```
-  const GlossaryTerm = lazy(() => import("./pages/GlossaryTerm"));
-  ```
-  ```
-  <Route path="/glosario-detailing/:slug" element={<GlossaryTerm />} />
-  ```
+- Agregar `Allow: /glosario-detailing/` para las paginas individuales de terminos
+- Agregar `Allow: /centros-detailing-espana/` para las subrutas del directorio
 
-### 7. JSON-LD DefinedTerm (`src/pages/GlossaryTerm.tsx`)
+## Resumen de archivos
 
-Cada pagina inyectara un esquema `DefinedTerm` dinamico:
+| Archivo | Accion |
+|---------|--------|
+| `public/sitemap.xml` | Modificar: anadir 2 sitemaps al indice |
+| `public/sitemap-pages.xml` | Modificar: eliminar URLs de blog, actualizar fechas |
+| `supabase/functions/glossary-sitemap/index.ts` | Crear: Edge Function sitemap del glosario |
+| `supabase/functions/blog-sitemap/index.ts` | Crear: Edge Function sitemap del blog |
+| `public/robots.txt` | Modificar: anadir Allow para rutas nuevas |
 
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "DefinedTerm",
-  "name": "Ceramic Coating",
-  "description": "Proteccion de larga duracion basada en nanotecnologia...",
-  "inDefinedTermSet": {
-    "@type": "DefinedTermSet",
-    "name": "Glosario de Detailing Profesional",
-    "url": "https://academiadetail.com/glosario-detailing"
-  },
-  "url": "https://academiadetail.com/glosario-detailing/ceramic-coating"
-}
-```
+## Resultado
 
-Ademas se incluira el esquema `FAQPage` con las preguntas generadas.
-
-### 8. SEO Config (`src/utils/seoConfig.ts`)
-
-- Anadir entrada al `URL_NAME_MAP` en `SEO.tsx` para que los breadcrumbs funcionen correctamente con la nueva ruta
-
----
-
-## Archivos a crear
-
-| Archivo | Descripcion |
-|---------|-------------|
-| `src/pages/GlossaryTerm.tsx` | Pagina individual del termino con todas las secciones |
-| `src/components/glossary/GlossaryRelatedCourses.tsx` | Componente de cursos relacionados por keywords |
-| `src/components/glossary/GlossaryTermFAQ.tsx` | Componente FAQ con schema JSON-LD |
-
-## Archivos a modificar
-
-| Archivo | Cambios |
-|---------|---------|
-| `src/data/glossaryData.ts` | Funciones `generateSlug()` y `getTermBySlug()` |
-| `src/components/glossary/GlossaryTermCard.tsx` | Envolver card en Link a la pagina del termino |
-| `src/App.tsx` | Registrar nueva ruta `/glosario-detailing/:slug` |
-| `src/components/SEO.tsx` | Anadir entrada en `URL_NAME_MAP` |
-
----
-
-## Restricciones
-
-- No se modifican estilos, colores ni layout existente
-- Se reutilizan los componentes de UI existentes (cards, badges, accordion para FAQ)
-- El contenido de "proceso relacionado", "herramientas" y "FAQ" se genera contextualmente a partir de la categoria y definicion, sin necesidad de IA ni datos externos
-- La pagina usa `MainLayout` para mantener navbar y footer consistentes
-- Si el slug no coincide con ningun termino, se redirige a `/glosario-detailing`
+- Google descubrira automaticamente las 100+ paginas de terminos del glosario
+- Los articulos del blog se gestionan desde un unico punto (Edge Function) en vez de hardcodearlos
+- La arquitectura de sitemaps escala sin necesidad de editar archivos estaticos al anadir contenido
+- Cada tipo de contenido tiene su propio sitemap, facilitando el diagnostico en Google Search Console
 
