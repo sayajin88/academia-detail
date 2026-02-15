@@ -42,6 +42,7 @@ const URL_NAME_MAP: Record<string, string> = {
   'glosario-detailing': 'Glosario de Detailing',
   'calculadora-dilucion-detailing': 'Calculadora de Dilución',
   'centros-detailing-espana': 'Centros Detailing España',
+  'blog': 'Blog',
 };
 
 // Auto-generate breadcrumb schema from URL

@@ -586,6 +586,21 @@ export const glossaryTerms: GlossaryTerm[] = [
   },
 ];
 
+// Generate URL-safe slug from term name
+export const generateSlug = (term: string): string => {
+  return term
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
+
+// Find a term by its slug
+export const getTermBySlug = (slug: string): GlossaryTerm | undefined => {
+  return glossaryTerms.find(t => generateSlug(t.term) === slug);
+};
+
 // Get all unique letters that have terms
 export const getAvailableLetters = (): string[] => {
   const letters = new Set(glossaryTerms.map(t => t.letter));

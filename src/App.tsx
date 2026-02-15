@@ -20,6 +20,7 @@ const BlogPostPage = lazy(() => import("./pages/BlogPost"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PoliticaPrivacidad = lazy(() => import("./pages/PoliticaPrivacidad"));
 const Glossary = lazy(() => import("./pages/Glossary"));
+const GlossaryTermPage = lazy(() => import("./pages/GlossaryTerm"));
 const CalculadoraDilucion = lazy(() => import("./pages/CalculadoraDilucion"));
 const Directory = lazy(() => import("./pages/Directory"));
 const DirectoryComunidad = lazy(() => import("./pages/DirectoryComunidad"));
@@ -67,6 +68,7 @@ const App = () => (
               <Route path="/quienes-somos" element={<AboutUs />} />
               <Route path="/contacto" element={<Contact />} />
               <Route path="/glosario-detailing" element={<Glossary />} />
+              <Route path="/glosario-detailing/:slug" element={<GlossaryTermPage />} />
               <Route path="/calculadora-dilucion-detailing" element={<CalculadoraDilucion />} />
               <Route path="/centros-detailing-espana" element={<Directory />} />
               <Route path="/centros-detailing-espana/unete" element={<DirectoryJoin />} />
