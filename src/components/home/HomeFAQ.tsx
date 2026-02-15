@@ -12,19 +12,19 @@ import {
 
 const faqs = [
   {
-    question: '¿Es formación certificada?',
+    question: '¿Los cursos son en Alicante?',
     answer:
-      'Sí, entregamos diploma certificado profesional al finalizar cada formación. Nuestras certificaciones están reconocidas por las principales marcas del sector.',
+      'Sí, se imparten en nuestras instalaciones de Detail Park en Alicante.',
   },
   {
-    question: '¿Hay prácticas en coches reales?',
+    question: '¿Es formación práctica?',
     answer:
-      'Absolutamente, el 100% de la formación es práctica sobre vehículos reales de clientes en nuestro taller Detail Park.',
+      'Totalmente, formación 100% práctica sobre vehículos reales desde el primer día.',
   },
   {
-    question: '¿Necesito experiencia previa?',
+    question: '¿Incluye diploma?',
     answer:
-      'No, tenemos niveles desde iniciación hasta avanzado. Puedes empezar desde cero y avanzar a tu ritmo.',
+      'Al finalizar recibirás tu Certificado Profesional de Academia Detail.',
   },
   {
     question: '¿Necesito experiencia previa para apuntarme a una formación?',

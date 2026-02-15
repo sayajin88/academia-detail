@@ -9,8 +9,8 @@ const BASE_URL = 'https://academiadetail.com';
 export const organizationSchemaComplete = {
   "@context": "https://schema.org",
   "@type": ["Organization", "EducationalOrganization", "LocalBusiness"],
-  "name": "Academia Detail",
-  "alternateName": ["Detail Park", "Academia Detailing", "Detail Park Academy"],
+  "name": "Detail Park - Academia Detail",
+  "alternateName": ["Academia Detail", "Detail Park", "Academia Detailing", "Detail Park Academy"],
   "url": BASE_URL,
   "logo": {
     "@type": "ImageObject",
@@ -41,11 +41,14 @@ export const organizationSchemaComplete = {
     "longitude": -0.4892
   },
   "sameAs": [
+    "http://www.detailpark.com/",
     "https://www.instagram.com/detailparkoficial/",
     "https://www.instagram.com/danidetailoficial/",
     "https://www.youtube.com/@detailpark",
     "https://www.facebook.com/detailpark",
-    "https://www.tiktok.com/@detailpark"
+    "https://facebook.com/detailparkoficial",
+    "https://www.tiktok.com/@detailpark",
+    "https://www.tiktok.com/@detail_park"
   ],
   "aggregateRating": {
     "@type": "AggregateRating",

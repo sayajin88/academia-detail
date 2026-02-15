@@ -77,8 +77,8 @@ const generateAutoBreadcrumbs = (url: string, title: string) => {
 export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": ["LocalBusiness", "EducationalOrganization", "AutoRepair"],
-  "name": "Academia Detail",
-  "alternateName": "Detail Park - Taller y Academia",
+  "name": "Detail Park - Academia Detail",
+  "alternateName": ["Academia Detail", "Detail Park", "Detail Park - Taller y Academia"],
   "slogan": "No enseñamos a lavar coches, formamos empresarios del Detailing",
   "description": "El ÚNICO centro de formación en detailing que opera en un taller 100% real con clientes de alta gama. Aprende técnica Y negocio desde el día 1. Sin aulas vacías, solo práctica real.",
   "url": BASE_URL,
@@ -132,11 +132,14 @@ export const localBusinessSchema = {
     "geoRadius": "50000"
   },
   "sameAs": [
+    "http://www.detailpark.com/",
     "https://www.instagram.com/detailparkoficial/",
     "https://www.instagram.com/danidetailoficial/",
     "https://www.youtube.com/@detailpark",
     "https://www.facebook.com/detailpark",
-    "https://www.tiktok.com/@detailpark"
+    "https://facebook.com/detailparkoficial",
+    "https://www.tiktok.com/@detailpark",
+    "https://www.tiktok.com/@detail_park"
   ],
   "aggregateRating": {
     "@type": "AggregateRating",
