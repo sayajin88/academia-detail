@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { X } from 'lucide-react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { BlogBentoHero } from '@/components/blog/BlogBentoHero';
 import { BlogGrid } from '@/components/blog/BlogGrid';
@@ -8,11 +9,11 @@ import { BlogCategories } from '@/components/blog/BlogCategories';
 import { BlogPagination } from '@/components/blog/BlogPagination';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
-import { BlogCategory } from '@/data/blogPosts';
+import { BlogCategory, categoryLabels } from '@/data/blogPosts';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 
 const BASE_URL = 'https://academiadetail.com';
-const POSTS_PER_PAGE = 8;
+const POSTS_PER_PAGE = 9;
 
 export default function Blog() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,6 +39,12 @@ export default function Blog() {
     gridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
+  const clearFilters = useCallback(() => {
+    setActiveCategory(null);
+    setSearchQuery('');
+    setCurrentPage(1);
+  }, []);
+
   const filteredPosts = useMemo(() => {
     let posts = blogPosts.filter(p => !p.featured);
 
@@ -56,9 +63,10 @@ export default function Blog() {
     }
 
     return posts;
-  }, [searchQuery, activeCategory]);
+  }, [blogPosts, searchQuery, activeCategory]);
 
   const isSearching = searchQuery.trim().length > 0;
+  const hasFilters = isSearching || activeCategory !== null;
   const totalPages = isSearching ? 1 : Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
   const paginatedPosts = isSearching
     ? filteredPosts
@@ -104,18 +112,17 @@ export default function Blog() {
 
       <section aria-label="Blog de detailing profesional" className="pt-24 md:pt-28 pb-16 md:pb-24">
         <div className="container mx-auto px-4">
-          {/* Breadcrumbs */}
           <PageBreadcrumbs items={[{ label: 'Blog' }]} />
 
-          {/* H1 - visible but styled as section intro */}
           <h1
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-8"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             Blog de Detailing Profesional
           </h1>
+
           {/* Bento Hero */}
-          {featuredPost && !searchQuery && !activeCategory && (
+          {featuredPost && !hasFilters && (
             <AnimatedSection animation="fade-up" duration="fast">
               <div className="mb-10 md:mb-14">
                 <BlogBentoHero featuredPost={featuredPost} />
@@ -123,33 +130,40 @@ export default function Blog() {
             </AnimatedSection>
           )}
 
-          {/* Section heading + filters */}
+          {/* Sticky filter bar */}
           <div ref={gridRef} className="scroll-mt-24">
-            <AnimatedSection animation="fade-up" delay={100}>
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
-                <div>
-                  <span className="inline-block px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-primary/10 text-primary border border-primary/30 mb-3">
-                    Knowledge Base
-                  </span>
-                  <h2
-                    className="text-2xl md:text-3xl font-bold text-foreground"
-                    style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                  >
-                    Últimos Artículos
-                  </h2>
-                </div>
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="sticky top-16 z-30 -mx-4 px-4 py-3 bg-background/80 backdrop-blur-md border-b border-border/50 mb-6">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
                   <BlogCategories activeCategory={activeCategory} onCategoryChange={handleCategoryChange} />
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
                   <BlogSearch onSearch={handleSearch} />
                 </div>
               </div>
-            </AnimatedSection>
 
-            {/* Grid */}
+              {/* Active filter indicator */}
+              {hasFilters && (
+                <div className="flex items-center gap-2 mt-2 text-xs">
+                  <span className="text-muted-foreground">
+                    {filteredPosts.length} artículo{filteredPosts.length !== 1 ? 's' : ''}
+                    {activeCategory && ` en ${categoryLabels[activeCategory]}`}
+                    {isSearching && ` para "${searchQuery}"`}
+                  </span>
+                  <button
+                    onClick={clearFilters}
+                    className="inline-flex items-center gap-1 text-primary hover:text-primary/80 font-medium transition-colors"
+                  >
+                    <X className="h-3 w-3" />
+                    Limpiar
+                  </button>
+                </div>
+              )}
+            </div>
+
             <BlogGrid posts={paginatedPosts} />
           </div>
 
-          {/* Pagination */}
           {!isSearching && (
             <BlogPagination
               currentPage={currentPage}

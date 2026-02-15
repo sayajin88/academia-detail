@@ -17,45 +17,21 @@ export function BlogGrid({ posts }: BlogGridProps) {
     );
   }
 
-  const firstRow = posts.slice(0, 4);
-  const restRows = posts.slice(4);
-  const showCTA = posts.length > 4;
-
   return (
-    <div className="space-y-8">
-      {/* First row of overlay cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {firstRow.map((post, index) => (
-          <AnimatedSection key={post.id} stagger={index * 80} animation="fade-up" duration="fast">
+    <div className="space-y-10">
+      {/* Cards grid: 1 col mobile, 2 col tablet, 3 col desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {posts.map((post, index) => (
+          <AnimatedSection key={post.id} stagger={index * 60} animation="fade-up" duration="fast">
             <BlogCardOverlay post={post} />
           </AnimatedSection>
         ))}
       </div>
 
-      {/* CTA Banner between rows */}
-      {showCTA && (
-        <AnimatedSection animation="fade-up" delay={200}>
-          <BlogCTABanner />
-        </AnimatedSection>
-      )}
-
-      {/* Remaining cards */}
-      {restRows.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {restRows.map((post, index) => (
-            <AnimatedSection key={post.id} stagger={index * 80} animation="fade-up" duration="fast">
-              <BlogCardOverlay post={post} />
-            </AnimatedSection>
-          ))}
-        </div>
-      )}
-
-      {/* If 4 or fewer posts, show CTA at the end */}
-      {!showCTA && (
-        <AnimatedSection animation="fade-up" delay={200}>
-          <BlogCTABanner />
-        </AnimatedSection>
-      )}
+      {/* CTA at the end */}
+      <AnimatedSection animation="fade-up" delay={200}>
+        <BlogCTABanner />
+      </AnimatedSection>
     </div>
   );
 }
