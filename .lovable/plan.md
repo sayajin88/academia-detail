@@ -1,57 +1,66 @@
 
+# Correccion de Errores de Video en Google Search Console
 
-# Correccion del Favicon en SERPs de Google
+## Problemas detectados (3 errores)
 
-## Problema
+### Error 1: "uploadDate" falta la zona horaria
+### Error 2: "uploadDate" no es valido
+**Causa raiz**: El esquema `VideoObject` genera fechas como `"2025-03-15"` (solo fecha). Google requiere formato ISO 8601 completo con zona horaria: `"2025-03-15T00:00:00+00:00"`.
 
-Google muestra un icono generico (bola del mundo) en lugar del monograma "AD" en los resultados de busqueda de academiadetail.com. El archivo `public/favicon.png` existe y contiene el logo correcto, pero la configuracion tecnica tiene gaps que impiden que Google lo detecte correctamente.
+**Solucion**: Modificar la funcion `generateVideoObjectSchema` en `src/utils/seoConfig.ts` para transformar automaticamente cualquier fecha recibida al formato completo con timezone. Si recibe `"2025-03-15"`, lo convierte a `"2025-03-15T00:00:00+00:00"`.
 
-## Diagnostico
+Esto corrige los 8+8 = 16 elementos afectados de golpe, ya que todas las fechas pasan por esta unica funcion.
 
-1. El archivo `public/favicon.ico` puede ser un archivo generico o vacio -- Google busca este archivo como primera opcion
-2. Las etiquetas `<link>` en `index.html` referencian todas al mismo PNG grande para multiples tamaños (48x48, 32x32, 180x180), sin imagenes reales optimizadas por tamaño
-3. Falta el favicon SVG, que es el formato preferido por navegadores modernos y Google
-4. El `manifest.json` declara 3 tamaños (48, 192, 512) pero usa el mismo archivo para todos
+### Error 3: "El video no esta en una pagina de visualizacion"
+**Causa raiz**: Google detecta esquemas `VideoObject` en paginas donde el video no es visible directamente (por ejemplo, el hero de `/quienes-somos` usa un iframe de fondo en modo mute/autoplay/sin controles, que Google no considera una "pagina de visualizacion"). Tambien puede ocurrir cuando el video esta tras un click (lazy-loaded) y el bot no puede verlo.
 
-## Solucion
+**Solucion**:
+- Eliminar los esquemas `VideoObject` de la pagina `/quienes-somos` (About), ya que el video del hero es decorativo (fondo, sin controles, mute)
+- Asegurar que las paginas que SI tienen esquemas de video tambien tengan el iframe/embed visible o referenciable por el bot
 
-### 1. Generar favicon.ico desde el PNG existente
+---
 
-Copiar el PNG actual como base para `favicon.ico`. Dado que no podemos ejecutar herramientas de conversion de imagen, la solucion mas fiable es usar el SVG existente (`public/favicon.svg`) como favicon principal, ya que los SVG escalan perfectamente a cualquier tamaño.
+## Cambios por archivo
 
-### 2. Actualizar `index.html`
+### 1. `src/utils/seoConfig.ts`
 
-Reordenar y completar las etiquetas de favicon siguiendo las mejores practicas de Google:
+**Cambio A** -- Corregir formato `uploadDate` (linea 322):
 
-```html
-<!-- Favicon SVG (preferido por navegadores modernos) -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<!-- Favicon PNG fallback -->
-<link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">
-<!-- Favicon ICO fallback (Google SERPs) -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<!-- Apple Touch Icon -->
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+Transformar la fecha para que siempre incluya timezone:
+```typescript
+// Antes:
+"uploadDate": video.uploadDate || "2025-06-01",
+
+// Despues:
+"uploadDate": formatUploadDate(video.uploadDate || "2025-06-01"),
 ```
 
-El orden importa: el navegador/bot usara el primero que soporte.
+Anadir funcion helper:
+```typescript
+const formatUploadDate = (date: string): string => {
+  // Si ya tiene timezone (contiene T y +/-), devolver tal cual
+  if (date.includes('T') && (date.includes('+') || date.includes('Z'))) return date;
+  // Si solo es fecha YYYY-MM-DD, anadir hora y timezone
+  return `${date}T00:00:00+00:00`;
+};
+```
 
-### 3. Verificar `public/favicon.svg`
+**Cambio B** -- Eliminar esquemas VideoObject de la pagina "quienes-somos":
 
-Comprobar que el SVG existente contiene el monograma "AD" correcto. Si esta vacio o es generico, se creara un SVG vectorial del monograma.
+En la seccion de SEO de About/quienes-somos, eliminar los `generateVideoObjectSchemas([...])` que referencian los videos del canal de YouTube usados como fondo decorativo. Estos videos no son contenido principal de la pagina y Google los rechaza.
 
-### 4. Actualizar `manifest.json`
+### 2. Sin cambios en otros archivos
 
-Asegurar que las referencias de iconos sean correctas y anadir el SVG como opcion.
+Los demas archivos (componentes de video) no necesitan cambios, ya que el problema es exclusivamente del schema JSON-LD, no de la implementacion visual.
 
-## Archivos a modificar
+---
+
+## Resumen
 
 | Archivo | Cambio |
 |---------|--------|
-| `index.html` | Actualizar etiquetas de favicon con SVG prioritario + orden correcto |
-| `public/favicon.svg` | Verificar que contenga el monograma AD (crear si es generico) |
+| `src/utils/seoConfig.ts` | Anadir `formatUploadDate()` helper + aplicar en `generateVideoObjectSchema` + eliminar VideoObject schemas de la pagina About |
 
-## Nota importante sobre tiempos
+## Validacion post-implementacion
 
-Despues de publicar estos cambios, Google puede tardar entre 1 y 4 semanas en actualizar el favicon en los SERPs. Se puede acelerar el proceso solicitando la reinspeccion de la URL en Google Search Console.
-
+Despues de publicar los cambios, deberas pulsar "Validar Correccion" en cada uno de los 3 informes de errores en Search Console. Google re-rastreara las URLs afectadas y confirmara si los errores se han resuelto (normalmente en 3-7 dias).
