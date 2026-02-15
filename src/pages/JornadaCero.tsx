@@ -226,17 +226,17 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mt-8">
               <div className="glass-card p-4 rounded-xl border border-green-500/30">
                 <div className="text-2xl mb-2">💰</div>
-                <h3 className="font-bold text-white mb-1">Inversión Mínima</h3>
+                <p className="font-bold text-white mb-1">Inversión Mínima</p>
                 <p className="text-sm text-white/70">Solo €97 + IVA - El curso más accesible del sector</p>
               </div>
               <div className="glass-card p-4 rounded-xl border border-primary/30">
                 <div className="text-2xl mb-2">🔧</div>
-                <h3 className="font-bold text-white mb-1">Acceso Total</h3>
+                <p className="font-bold text-white mb-1">Acceso Total</p>
                 <p className="text-sm text-white/70">Usa las mismas pulidoras y químicos que los profesionales</p>
               </div>
               <div className="glass-card p-4 rounded-xl border border-amber-500/30">
                 <div className="text-2xl mb-2">🧠</div>
-                <h3 className="font-bold text-white mb-1">Mentalidad Business</h3>
+                <p className="font-bold text-white mb-1">Mentalidad Business</p>
                 <p className="text-sm text-white/70">Te enseñamos qué material comprar primero para no tirar el dinero</p>
               </div>
             </div>
@@ -259,7 +259,7 @@ const Index = () => {
               }
             ].map((problem, index) => (
               <Card key={index} className="glass-card p-4 md:p-6 text-center">
-                <h3 className="text-base md:text-lg font-semibold text-white mb-2 md:mb-3">{problem.title}</h3>
+                <p className="text-base md:text-lg font-semibold text-white mb-2 md:mb-3">{problem.title}</p>
                 <p className="text-sm md:text-base text-white/70">{problem.description}</p>
               </Card>
             ))}
@@ -273,9 +273,9 @@ const Index = () => {
           {/* Value Proposition Box */}
           <div className="max-w-4xl mx-auto mb-12 glass-intense rounded-2xl p-6 md:p-8 border border-primary/30">
             <div className="text-center">
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
+              <h2 className="text-xl md:text-2xl font-bold text-white mb-3">
                 ¿No estás seguro de invertir en formación completa?
-              </h3>
+              </h2>
               <p className="text-white/80 mb-4">
                 La Jornada Zero te permite <strong className="text-primary">probar antes de comprometerte</strong>. Por solo €97 + IVA, vive un día en nuestro taller, practica con vehículos reales y decide con conocimiento de causa.
               </p>
@@ -305,7 +305,7 @@ const Index = () => {
                 <div className="glass-card rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-3 md:mb-4">
                   <span className="text-xl md:text-2xl font-bold gradient-text">{step.step}</span>
                 </div>
-                <h3 className="text-sm md:text-lg font-semibold text-white mb-1 md:mb-2">{step.title}</h3>
+                <p className="text-sm md:text-lg font-semibold text-white mb-1 md:mb-2">{step.title}</p>
                 <p className="text-xs md:text-sm text-white/70">{step.description}</p>
               </div>
             ))}
@@ -350,9 +350,9 @@ const Index = () => {
             {/* Overlay text */}
             <div className="absolute inset-0 flex items-center justify-center z-20">
               <div className="text-center px-4">
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3 drop-shadow-2xl">
+                <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3 drop-shadow-2xl">
                   Aprende de los <span className="gradient-text">Mejores Profesionales</span>
-                </h3>
+                </h2>
                 <p className="text-base md:text-xl text-white/90 drop-shadow-lg">
                   Experiencia práctica con vehículos reales
                 </p>
@@ -505,7 +505,7 @@ const Index = () => {
                         <div className={`inline-block glass-card px-4 py-1 rounded-full mb-3 bg-gradient-to-r ${item.gradient}`}>
                           <span className="text-white text-sm font-bold">{item.time}</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
+                        <h3 className="text-2xl font-bold text-white mb-2" aria-label={item.title}>{item.title}</h3>
                         <p className="text-white/80">{item.description}</p>
                       </div>
                     </div>
