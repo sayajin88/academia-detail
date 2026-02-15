@@ -21,7 +21,11 @@ Allow: /up-detail-evento
 
 # Herramientas
 Allow: /glosario-detailing
+Allow: /glosario-detailing/
 Allow: /calculadora-dilucion-detailing
+
+# Directorio subrutas
+Allow: /centros-detailing-espana/
 
 # Blog
 Allow: /blog
