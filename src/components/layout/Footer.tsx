@@ -59,7 +59,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary hover:border-primary/30 border border-transparent transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center"
+                  className="p-3 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary hover:border-primary/30 border border-transparent transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   aria-label={social.name}
                 >
                   <social.icon className="h-5 w-5 md:h-6 md:w-6" />
@@ -171,7 +171,7 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Detailing Car & Parking Club S.L. Todos los derechos reservados.
             </p>
-            <p className="text-xs text-muted-foreground/60">
+            <p className="text-xs text-muted-foreground/70">
               Hecho con pasión por el detailing
             </p>
           </div>

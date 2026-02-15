@@ -202,6 +202,7 @@ const ContactForm = () => {
                       <FormControl>
                         <Input 
                           placeholder="Tu nombre" 
+                          autoComplete="given-name"
                           {...field} 
                           className="h-12 text-base"
                         />
@@ -219,6 +220,7 @@ const ContactForm = () => {
                       <FormControl>
                         <Input 
                           placeholder="Tus apellidos" 
+                          autoComplete="family-name"
                           {...field}
                           className="h-12 text-base"
                         />
@@ -241,6 +243,7 @@ const ContactForm = () => {
                         <Input
                           type="email"
                           placeholder="tu@email.com"
+                          autoComplete="email"
                           {...field}
                           className="h-12 text-base"
                         />
@@ -258,7 +261,9 @@ const ContactForm = () => {
                       <FormControl>
                         <Input
                           type="tel"
+                          inputMode="tel"
                           placeholder="622 77 35 55"
+                          autoComplete="tel"
                           {...field}
                           className="h-12 text-base"
                         />

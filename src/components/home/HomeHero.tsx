@@ -158,8 +158,8 @@ export function HomeHero() {
       {/* Animated Gradient Orbs - Solo desktop, con contain para GPU */}
       {!isMobile && (
         <>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ contain: 'paint' }} />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-glow/10 rounded-full blur-3xl animate-pulse delay-1000" style={{ contain: 'paint' }} />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ contain: 'paint' }} aria-hidden="true" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-glow/10 rounded-full blur-3xl animate-pulse delay-1000" style={{ contain: 'paint' }} aria-hidden="true" />
         </>
       )}
 
@@ -213,7 +213,7 @@ export function HomeHero() {
               ].map((stat, index) => (
                 <div key={stat.label} className={`text-center p-2 sm:p-3 rounded-lg bg-white/5 backdrop-blur-sm ${index >= 3 ? 'hidden sm:block' : ''}`}>
                   <div className={`text-xl sm:text-2xl md:text-3xl font-bold mb-0.5 sm:mb-1 ${index < 3 ? 'text-primary' : 'text-white'}`}>{stat.value}</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-white/70 leading-tight">
+                  <div className="text-[10px] sm:text-xs md:text-sm text-white/75 leading-tight">
                     <span className="sm:hidden">{stat.label}</span>
                     <span className="hidden sm:inline">{stat.label} {stat.sublabel}</span>
                   </div>
@@ -227,7 +227,7 @@ export function HomeHero() {
       {/* Scroll Indicator */}
       <button
         onClick={scrollToFormations}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 hover:text-white transition-colors animate-bounce"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 hover:text-white transition-colors animate-bounce focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-full"
         aria-label="Ver formaciones"
       >
         <ChevronDown className="h-8 w-8" />

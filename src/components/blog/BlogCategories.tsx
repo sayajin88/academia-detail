@@ -11,7 +11,7 @@ export function BlogCategories({ activeCategory, onCategoryChange }: BlogCategor
   return (
     <nav
       aria-label="Filtrar por categoría"
-      className="flex items-center gap-1 overflow-x-auto scrollbar-hide pb-1 -mb-1"
+      className="relative flex items-center gap-1 overflow-x-auto scrollbar-hide pb-1 -mb-1"
     >
       {categories.map((cat) => (
         <button
@@ -29,6 +29,8 @@ export function BlogCategories({ activeCategory, onCategoryChange }: BlogCategor
           )}
         </button>
       ))}
+      {/* Fade gradient indicator for horizontal scroll on mobile */}
+      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent sm:hidden" aria-hidden="true" />
     </nav>
   );
 }
