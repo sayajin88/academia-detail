@@ -82,9 +82,13 @@
       @media (min-width: 1280px) { .container { max-width: 1280px; } }
     </style>
     
-    <!-- Favicon mejorado -->
+    <!-- Favicon SVG (preferido por navegadores modernos y Google) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <!-- Favicon PNG fallback (48x48 para Google SERPs) -->
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <!-- Favicon ICO fallback (legacy) -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
     
     <!-- Web App Manifest -->
