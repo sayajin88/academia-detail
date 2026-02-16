@@ -1,57 +1,96 @@
 
 
-# Heredar Autoridad de Google Business Profile y Maximizar CTR
+# Mejoras SEO de Efecto Inmediato
 
-## Problema
+## 1. Sincronizar fallbacks de index.html con los metadatos actuales
 
-Los esquemas JSON-LD de la web no coinciden exactamente con la ficha de Google Business Profile (GBP) de "Detail Park". Google necesita senales claras de que la web y la ficha fisica son la misma entidad para transferir la autoridad (estrellas, resenas, Knowledge Panel).
+El archivo `index.html` contiene metadatos de respaldo que los crawlers sin JavaScript (y algunas plataformas sociales) leen directamente. Actualmente estan desactualizados:
 
-## Diferencias detectadas entre la web y la ficha GBP
+**Archivo**: `index.html`
 
-| Campo | Web actual | Ficha GBP | Accion |
-|-------|-----------|-----------|--------|
-| `name` | "Academia Detail" | "Detail Park - Academia Detail" | Alinear con GBP |
-| `sameAs` | Falta detailpark.com | Incluye `http://www.detailpark.com/` | Anadir |
-| `sameAs` TikTok | `@detailpark` | `@detail_park` | Anadir ambas variantes |
-| `sameAs` Facebook | `/detailpark` | `/detailparkoficial` | Anadir variante |
-| FAQs solicitadas | No existen | 3 preguntas nuevas | Anadir al principio |
+| Campo | Valor actual | Valor correcto |
+|-------|-------------|----------------|
+| og:title | "Cursos Detailing Profesional 2026 \| Alicante ★4.9" | "Cursos Detailing Profesional 2026 \| Certificacion y Practica Real ★4.9" |
+| og:description | "+170 alumnos certificados" | "+174 alumnos certificados" |
+| twitter:title | Mismo error | Mismo fix |
+| twitter:description | Mismo error | Mismo fix |
+| og:site_name | "Academia Detail" | "Detail Park - Academia Detail" |
 
-## Cambios por archivo
+---
 
-### 1. `src/utils/seoConfig.ts` -- Schema Organization
+## 2. Unificar nombre en esquemas WebSite y WebPage
 
-- Cambiar `name` a `"Detail Park - Academia Detail"` (coincide exactamente con GBP)
-- Anadir `"http://www.detailpark.com/"` y `"https://www.tiktok.com/@detail_park"` y `"https://facebook.com/detailparkoficial"` al array `sameAs`
-- Mantener los perfiles existentes (no eliminar, solo anadir)
+En `src/utils/seoConfig.ts`, los esquemas WebSite y WebPage todavia usan "Academia Detail" en lugar de "Detail Park - Academia Detail". Google necesita coherencia total para asociar la web con la ficha GBP.
 
-### 2. `src/components/SEO.tsx` -- Schema LocalBusiness
+**Archivo**: `src/utils/seoConfig.ts`
 
-- Cambiar `name` a `"Detail Park - Academia Detail"` para coherencia
-- Actualizar `sameAs` con las mismas URLs del GBP
-- Mantener `alternateName` con las variantes para no perder busquedas por nombre alternativo
+Cambios en las siguientes referencias:
+- WebSite schema `name` en `generateHomeSEO()` (linea 575): "Academia Detail" -> "Detail Park - Academia Detail"
+- WebSite schema en `seoConfig.home` (linea 614): misma correccion
+- `generateCourseSchemaEnhanced` provider name (linea 274): "Academia Detail" -> "Detail Park - Academia Detail"
+- `generateWebPageSchema` mainEntity name (linea 453): misma correccion
+- Todas las referencias de provider/seller `"name": "Academia Detail"` -> `"Detail Park - Academia Detail"` para coherencia completa con GBP
 
-### 3. `src/components/home/HomeFAQ.tsx` -- Nuevas FAQs
+---
 
-Reemplazar las 3 primeras FAQs actuales (que son similares pero con texto diferente) por las 3 solicitadas con el texto exacto del usuario:
+## 3. Corregir fecha de evento pasado (Jornada Zero)
 
-- "¿Los cursos son en Alicante?" (nueva, refuerza SEO local)
-- "¿Es formacion practica?" (reemplaza la similar existente)
-- "¿Incluye diploma?" (reemplaza la similar existente)
+El schema `EducationEvent` de Jornada Zero tiene `startDate: "2026-01-17"` que ya paso. Google penaliza eventos con fechas pasadas mostrandolos como "Evento finalizado" o directamente no indexandolos.
 
-Esto mejora el CTR porque las preguntas con intencion local ("Alicante") refuerzan la conexion con la ficha GBP.
+**Archivo**: `src/utils/seoConfig.ts`
 
-## Nota sobre el rating
+Actualizar las fechas del evento a la proxima edicion disponible (o eliminar el EventSchema si no hay fecha confirmada y dejar solo el CourseSchema).
 
-La ficha GBP indica 5.0 con 150 resenas, pero la web actualmente muestra 4.9 con 174 resenas. Se mantendra el valor actual de la web (4.9/174) porque:
-- Bajar el reviewCount de 174 a 150 seria un retroceso
-- Google reconcilia ambos valores automaticamente; no es necesario que coincidan exactamente
-- El 4.9 es mas creible que un 5.0 perfecto en schemas web
+---
 
-## Archivos a modificar
+## 4. Eliminar inyeccion duplicada de FAQPage schema
+
+`HomeFAQ.tsx` inyecta su propio schema `FAQPage` via Helmet (linea 107-118), pero la pagina Home YA recibe schemas desde `generateHomeSEO()`. Esto puede crear dos bloques `FAQPage` en la misma pagina, lo que Google marca como "Duplicate schema" en Rich Results Test.
+
+**Archivo**: `src/components/home/HomeFAQ.tsx`
+
+Solucion: Integrar las FAQs del componente en el schema principal de Home via `generateHomeSEO()`, y eliminar la inyeccion duplicada de Helmet en `HomeFAQ.tsx`.
+
+**Archivo**: `src/utils/seoConfig.ts`
+
+Anadir `generateFAQSchema(homeFaqs)` al array de schemas de `generateHomeSEO()`, importando las FAQs desde `HomeFAQ.tsx` (o extrayendolas a un archivo de datos compartido).
+
+---
+
+## 5. Anadir schema `Review` individual para reforzar aggregateRating
+
+Google valora mas un `aggregateRating` cuando va acompanado de al menos 1-2 reviews individuales con autor, fecha y texto. Actualmente solo hay `aggregateRating` sin reviews reales.
+
+**Archivo**: `src/components/SEO.tsx`
+
+Anadir 2-3 reviews reales al `localBusinessSchema`:
+```
+"review": [
+  {
+    "@type": "Review",
+    "author": { "@type": "Person", "name": "Nombre Alumno" },
+    "datePublished": "2025-XX-XX",
+    "reviewBody": "Texto real de la resena",
+    "reviewRating": { "@type": "Rating", "ratingValue": "5" }
+  }
+]
+```
+
+---
+
+## Resumen de archivos a modificar
 
 | Archivo | Cambio |
 |---------|--------|
-| `src/utils/seoConfig.ts` | Actualizar `name` y `sameAs` en organizationSchemaComplete |
-| `src/components/SEO.tsx` | Actualizar `name` y `sameAs` en localBusinessSchema |
-| `src/components/home/HomeFAQ.tsx` | Reemplazar las 3 primeras FAQs por las solicitadas |
+| `index.html` | Actualizar og:title, og:description, twitter:title, twitter:description, og:site_name |
+| `src/utils/seoConfig.ts` | Unificar nombre a "Detail Park - Academia Detail" en WebSite/WebPage/provider schemas + corregir fecha evento Jornada Zero + integrar FAQs de Home |
+| `src/components/SEO.tsx` | Anadir reviews individuales al localBusinessSchema |
+| `src/components/home/HomeFAQ.tsx` | Eliminar inyeccion duplicada de FAQPage schema via Helmet |
+
+## Impacto esperado
+
+- **Coherencia GBP**: Google reconcilia web + ficha fisica = Knowledge Panel + estrellas
+- **FAQs limpias**: Sin duplicados, mayor probabilidad de rich snippet FAQ
+- **Evento actualizado**: Evita penalizacion por fecha pasada
+- **Reviews reales**: Refuerzan la credibilidad del aggregateRating ante Google
 
