@@ -148,6 +148,29 @@ export const localBusinessSchema = {
     "bestRating": "5",
     "worstRating": "1"
   },
+  "review": [
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Sergio F." },
+      "datePublished": "2025-09-12",
+      "reviewBody": "La mejor inversión que he hecho. Formación 100% práctica en taller real con coches de clientes. En 2 meses ya tenía mi propio centro funcionando.",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Gerardo E." },
+      "datePublished": "2025-11-03",
+      "reviewBody": "Lo que diferencia a Detail Park es que aprendes negocio además de técnica. Daniel te enseña a presupuestar, captar clientes y escalar. Imprescindible.",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Federica M." },
+      "datePublished": "2025-07-20",
+      "reviewBody": "Vine desde Italia para formarme aquí. Las instalaciones, el equipo y la metodología son de otro nivel. Totalmente recomendable.",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+    }
+  ],
   "knowsAbout": [
     "Detailing Profesional",
     "Gestión de Negocio Detailing",

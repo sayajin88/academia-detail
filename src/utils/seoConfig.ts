@@ -1,5 +1,6 @@
 import type { FormationModule, FormationInstructor, FormationLevel, FormationDetail } from '@/data/formationDetails';
 import { localBusinessSchema } from '@/components/SEO';
+import { homeFaqs } from '@/components/home/HomeFAQ';
 
 const BASE_URL = 'https://academiadetail.com';
 
@@ -90,7 +91,7 @@ export const instructorSchema = {
   "image": `${BASE_URL}/daniel-lopez-instructor.webp`,
   "worksFor": {
     "@type": "Organization",
-    "name": "Academia Detail"
+    "name": "Detail Park - Academia Detail"
   }
 };
 
@@ -113,7 +114,7 @@ const generateInstructorSchema = (instructor?: FormationInstructor) => {
     "description": instructor.description,
     "worksFor": {
       "@type": "Organization" as const,
-      "name": "Academia Detail"
+      "name": "Detail Park - Academia Detail"
     }
   };
 };
@@ -156,7 +157,7 @@ export const generateCourseSchemaEnhanced = (course: {
     "name": mod.title,
     "description": mod.topics.join('. '),
     "position": i + 1,
-    "provider": { "@type": "Organization", "name": "Academia Detail" }
+    "provider": { "@type": "Organization", "name": "Detail Park - Academia Detail" }
   }));
 
   // Build CourseInstance per level (or single default)
@@ -228,7 +229,7 @@ export const generateCourseSchemaEnhanced = (course: {
     "validFrom": "2025-01-01",
     "priceValidUntil": "2026-12-31",
     "url": `${BASE_URL}${course.url}`,
-    "seller": { "@type": "Organization", "name": "Academia Detail" }
+    "seller": { "@type": "Organization", "name": "Detail Park - Academia Detail" }
   };
 
   if (course.originalPrice && course.originalPrice > course.price) {
@@ -271,7 +272,7 @@ export const generateCourseSchemaEnhanced = (course: {
     "description": course.description,
     "provider": {
       "@type": "EducationalOrganization",
-      "name": "Academia Detail",
+      "name": "Detail Park - Academia Detail",
       "url": BASE_URL,
       "logo": `${BASE_URL}/og-image.png`,
       "sameAs": organizationSchemaComplete.sameAs
@@ -333,7 +334,7 @@ export const generateVideoObjectSchema = (video: {
   "duration": video.duration || "PT3M",
   "publisher": {
     "@type": "Organization",
-    "name": "Academia Detail",
+    "name": "Detail Park - Academia Detail",
     "logo": {
       "@type": "ImageObject",
       "url": `${BASE_URL}/og-image.png`
@@ -382,7 +383,7 @@ export const generateEventSchema = (event: {
   },
   "organizer": {
     "@type": "Organization",
-    "name": "Academia Detail",
+    "name": "Detail Park - Academia Detail",
     "url": BASE_URL
   },
   "offers": {
@@ -441,7 +442,7 @@ export const generateWebPageSchema = (page: {
   "url": `${BASE_URL}${page.url}`,
   "isPartOf": {
     "@type": "WebSite",
-    "name": "Academia Detail",
+    "name": "Detail Park - Academia Detail",
     "url": BASE_URL
   },
   "speakable": {
@@ -450,7 +451,7 @@ export const generateWebPageSchema = (page: {
   },
   "mainEntity": {
     "@type": "EducationalOrganization",
-    "name": "Academia Detail"
+    "name": "Detail Park - Academia Detail"
   }
 });
 
@@ -470,7 +471,7 @@ export const generateImageObjectSchema = (image: {
   "representativeOfPage": true,
   "creator": {
     "@type": "Organization",
-    "name": "Academia Detail"
+    "name": "Detail Park - Academia Detail"
   }
 });
 
@@ -527,7 +528,7 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
           "name": detail?.title || f.title,
           "url": `${BASE_URL}${f.href}`,
           "description": detail?.description || f.description,
-          "provider": { "@type": "Organization", "name": "Academia Detail", "sameAs": BASE_URL },
+          "provider": { "@type": "Organization", "name": "Detail Park - Academia Detail", "sameAs": BASE_URL },
           ...(detail && {
             "offers": {
               "@type": "Offer",
@@ -572,7 +573,7 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Academia Detail",
+        "name": "Detail Park - Academia Detail",
         "alternateName": "Detail Park Academy",
         "url": BASE_URL,
         "potentialAction": {
@@ -593,7 +594,8 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" }
-      ])
+      ]),
+      generateFAQSchema(homeFaqs)
     ]
   };
 };
@@ -611,7 +613,7 @@ export const seoConfig = {
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Academia Detail",
+        "name": "Detail Park - Academia Detail",
         "alternateName": "Detail Park Academy",
         "url": BASE_URL,
         "potentialAction": {
@@ -654,8 +656,8 @@ export const seoConfig = {
       generateEventSchema({
         name: "Jornada Zero - Experiencia de Inmersión Detailing",
         description: "Tu primer contacto con el detailing profesional. 1 día de experiencia práctica en taller real con herramientas profesionales.",
-        startDate: "2026-01-17T10:00:00+01:00",
-        endDate: "2026-01-17T18:00:00+01:00",
+        startDate: "2026-03-15T10:00:00+01:00",
+        endDate: "2026-03-15T18:00:00+01:00",
         price: 97,
         location: "Academia Detail - Taller 100% Real"
       }),
@@ -722,7 +724,7 @@ export const seoConfig = {
         },
         "organizer": {
           "@type": "Organization",
-          "name": "Academia Detail",
+          "name": "Detail Park - Academia Detail",
           "url": BASE_URL
         },
         "offers": {
@@ -779,7 +781,7 @@ export const seoConfig = {
         "programPrerequisites": "Sin experiencia previa necesaria",
         "provider": {
           "@type": "EducationalOrganization",
-          "name": "Academia Detail",
+          "name": "Detail Park - Academia Detail",
           "url": BASE_URL,
           "sameAs": organizationSchemaComplete.sameAs
         },
@@ -860,7 +862,7 @@ export const seoConfig = {
         "inLanguage": "es",
         "publisher": {
           "@type": "Organization",
-          "name": "Academia Detail",
+          "name": "Detail Park - Academia Detail",
           "url": BASE_URL
         }
       },
@@ -911,7 +913,7 @@ export const seoConfig = {
         "url": `${BASE_URL}/contacto`,
         "mainEntity": {
           "@type": "Organization",
-          "name": "Academia Detail",
+          "name": "Detail Park - Academia Detail",
           "telephone": "+34 622 773 555",
           "email": "info@detailpark.es",
           "address": {

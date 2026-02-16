@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import {
@@ -103,29 +102,11 @@ const faqs = [
   },
 ];
 
-// Schema.org FAQ structured data for SEO
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(faq => ({
-    "@type": "Question",
-    "name": faq.question,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": faq.answer
-    }
-  }))
-};
+// Export FAQs for centralized schema generation in seoConfig.ts
+export { faqs as homeFaqs };
 
 export function HomeFAQ() {
   return (
-    <>
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(faqSchema)}
-        </script>
-      </Helmet>
-      
       <section id="faq" className="py-20 md:py-28 bg-card">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
@@ -159,6 +140,5 @@ export function HomeFAQ() {
           </div>
         </div>
       </section>
-    </>
   );
 }
