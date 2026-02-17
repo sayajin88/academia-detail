@@ -100,6 +100,21 @@ const faqs = [
     answer:
       'Durante la formación trabajamos con vehículos reales de clientes. En el curso de Detailing, por ejemplo, cada alumno practica en al menos 3-4 vehículos diferentes, incluyendo modelos de alta gama.',
   },
+  {
+    question: '¿Se puede financiar el curso de detailing?',
+    answer:
+      'Sí, ofrecemos opciones de financiación flexibles para todos nuestros cursos de detailing. Puedes fraccionar el pago en cómodos plazos. Contacta con nosotros para conocer las condiciones y encontrar la mejor opción para ti. Queremos que la inversión económica no sea un obstáculo para tu formación profesional.',
+  },
+  {
+    question: '¿Hay bolsa de empleo tras la formación?',
+    answer:
+      'Sí, todos nuestros alumnos certificados tienen acceso a nuestra bolsa de empleo nacional. Colaboramos con centros de detailing, talleres y empresas del sector que buscan profesionales formados. Además, si decides emprender, te asesoramos en la apertura de tu propio negocio de detailing con soporte post-curso personalizado.',
+  },
+  {
+    question: '¿Ofrecéis cursos de detailing online?',
+    answer:
+      'No. Nuestras formaciones son exclusivamente presenciales porque creemos que el detailing profesional requiere práctica real sobre vehículos. A diferencia de un curso detailing online, aquí trabajas desde el primer minuto con pulidoras, productos y coches reales en nuestro taller operativo. Es la diferencia entre ver un vídeo y vivir la experiencia. El 100% de nuestros alumnos confirma que la formación presencial es insustituible.',
+  },
 ];
 
 // Export FAQs for centralized schema generation in seoConfig.ts
