@@ -1,96 +1,43 @@
 
 
-# Mejoras SEO de Efecto Inmediato
+# Rediseño de Tarjetas de Formaciones en Home
 
-## 1. Sincronizar fallbacks de index.html con los metadatos actuales
+## Cambios solicitados
 
-El archivo `index.html` contiene metadatos de respaldo que los crawlers sin JavaScript (y algunas plataformas sociales) leen directamente. Actualmente estan desactualizados:
+1. **Ocultar precios** de los 4 cursos para incentivar el clic hacia cada landing
+2. **Mejorar el atractivo visual** de las tarjetas
 
-**Archivo**: `index.html`
+## Cambios en `src/components/home/FormationsGrid.tsx`
 
-| Campo | Valor actual | Valor correcto |
-|-------|-------------|----------------|
-| og:title | "Cursos Detailing Profesional 2026 \| Alicante ★4.9" | "Cursos Detailing Profesional 2026 \| Certificacion y Practica Real ★4.9" |
-| og:description | "+170 alumnos certificados" | "+174 alumnos certificados" |
-| twitter:title | Mismo error | Mismo fix |
-| twitter:description | Mismo error | Mismo fix |
-| og:site_name | "Academia Detail" | "Detail Park - Academia Detail" |
+### Ocultar precios
+Eliminar todo el bloque de precio (lineas 128-150) que muestra "Desde €X + IVA" y reemplazarlo por informacion que invite al clic:
+- Mostrar la **duracion** del curso con icono de reloj
+- Mostrar la **proxima fecha** disponible (si existe) con un icono de calendario
+- Para "Proximamente", mantener la etiqueta actual
 
----
+### Mejoras visuales
 
-## 2. Unificar nombre en esquemas WebSite y WebPage
+1. **CTA mas prominente**: Cambiar el boton outline actual por un boton solido con fondo `bg-primary` y texto claro, mas grande y con efecto hover mas llamativo. Incluir texto "Descubre el Programa" en lugar de "Ver Detalles".
 
-En `src/utils/seoConfig.ts`, los esquemas WebSite y WebPage todavia usan "Academia Detail" en lugar de "Detail Park - Academia Detail". Google necesita coherencia total para asociar la web con la ficha GBP.
+2. **Linea de acento granate** en el borde inferior de la imagen (una franja decorativa de 3-4px con gradiente primary) para reforzar la identidad visual.
 
-**Archivo**: `src/utils/seoConfig.ts`
+3. **Hover mas dinamico en la imagen**: Ademas del scale actual, anadir un overlay con gradiente sutil que revele un texto "Ver programa" centrado al hacer hover (solo en desktop).
 
-Cambios en las siguientes referencias:
-- WebSite schema `name` en `generateHomeSEO()` (linea 575): "Academia Detail" -> "Detail Park - Academia Detail"
-- WebSite schema en `seoConfig.home` (linea 614): misma correccion
-- `generateCourseSchemaEnhanced` provider name (linea 274): "Academia Detail" -> "Detail Park - Academia Detail"
-- `generateWebPageSchema` mainEntity name (linea 453): misma correccion
-- Todas las referencias de provider/seller `"name": "Academia Detail"` -> `"Detail Park - Academia Detail"` para coherencia completa con GBP
+4. **Badges mejorados**: Anadir un badge de duracion junto al badge de alumnos certificados en la esquina de la imagen, con icono de reloj y fondo semitransparente.
 
----
+5. **Separador decorativo** entre la descripcion y los highlights: una linea fina con gradiente que aporte estructura visual.
 
-## 3. Corregir fecha de evento pasado (Jornada Zero)
-
-El schema `EducationEvent` de Jornada Zero tiene `startDate: "2026-01-17"` que ya paso. Google penaliza eventos con fechas pasadas mostrandolos como "Evento finalizado" o directamente no indexandolos.
-
-**Archivo**: `src/utils/seoConfig.ts`
-
-Actualizar las fechas del evento a la proxima edicion disponible (o eliminar el EventSchema si no hay fecha confirmada y dejar solo el CourseSchema).
-
----
-
-## 4. Eliminar inyeccion duplicada de FAQPage schema
-
-`HomeFAQ.tsx` inyecta su propio schema `FAQPage` via Helmet (linea 107-118), pero la pagina Home YA recibe schemas desde `generateHomeSEO()`. Esto puede crear dos bloques `FAQPage` en la misma pagina, lo que Google marca como "Duplicate schema" en Rich Results Test.
-
-**Archivo**: `src/components/home/HomeFAQ.tsx`
-
-Solucion: Integrar las FAQs del componente en el schema principal de Home via `generateHomeSEO()`, y eliminar la inyeccion duplicada de Helmet en `HomeFAQ.tsx`.
-
-**Archivo**: `src/utils/seoConfig.ts`
-
-Anadir `generateFAQSchema(homeFaqs)` al array de schemas de `generateHomeSEO()`, importando las FAQs desde `HomeFAQ.tsx` (o extrayendolas a un archivo de datos compartido).
-
----
-
-## 5. Anadir schema `Review` individual para reforzar aggregateRating
-
-Google valora mas un `aggregateRating` cuando va acompanado de al menos 1-2 reviews individuales con autor, fecha y texto. Actualmente solo hay `aggregateRating` sin reviews reales.
-
-**Archivo**: `src/components/SEO.tsx`
-
-Anadir 2-3 reviews reales al `localBusinessSchema`:
-```
-"review": [
-  {
-    "@type": "Review",
-    "author": { "@type": "Person", "name": "Nombre Alumno" },
-    "datePublished": "2025-XX-XX",
-    "reviewBody": "Texto real de la resena",
-    "reviewRating": { "@type": "Rating", "ratingValue": "5" }
-  }
-]
-```
-
----
-
-## Resumen de archivos a modificar
+## Archivo a modificar
 
 | Archivo | Cambio |
 |---------|--------|
-| `index.html` | Actualizar og:title, og:description, twitter:title, twitter:description, og:site_name |
-| `src/utils/seoConfig.ts` | Unificar nombre a "Detail Park - Academia Detail" en WebSite/WebPage/provider schemas + corregir fecha evento Jornada Zero + integrar FAQs de Home |
-| `src/components/SEO.tsx` | Anadir reviews individuales al localBusinessSchema |
-| `src/components/home/HomeFAQ.tsx` | Eliminar inyeccion duplicada de FAQPage schema via Helmet |
+| `src/components/home/FormationsGrid.tsx` | Eliminar precios, mejorar CTA, anadir elementos visuales decorativos |
 
-## Impacto esperado
+## Lo que NO cambia
 
-- **Coherencia GBP**: Google reconcilia web + ficha fisica = Knowledge Panel + estrellas
-- **FAQs limpias**: Sin duplicados, mayor probabilidad de rich snippet FAQ
-- **Evento actualizado**: Evita penalizacion por fecha pasada
-- **Reviews reales**: Refuerzan la credibilidad del aggregateRating ante Google
+- La estructura alternada (imagen izquierda/derecha) se mantiene
+- Los datos de `formations.ts` no se modifican
+- El numero decorativo grande se mantiene
+- La caja "Lo que aprenderas" se mantiene
+- Los badges de alumnos certificados y "Proximamente" se mantienen
 
