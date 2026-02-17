@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { formations } from '@/data/formations';
-import { formationDetails } from '@/data/formationDetails';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { 
   ArrowRight, 
   Clock,
+  Calendar,
   Construction,
   GraduationCap,
   CheckCircle2
@@ -30,10 +30,7 @@ export function FormationsGrid() {
             const isComingSoon = formation.comingSoon;
             const isEven = index % 2 === 0;
             const num = String(index + 1).padStart(2, '0');
-            const detail = formationDetails[formation.id];
-            const price = detail?.price;
             
-            // Get category label
             const categoryLabels = [
               'Módulo Principal',
               'Especialización',
@@ -61,32 +58,47 @@ export function FormationsGrid() {
                       height={500}
                       sizes="(max-width: 768px) 100vw, 45vw"
                     />
-                    {/* Subtle gradient overlay on image */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent md:hidden" />
+                    {/* Gradient overlay on image */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+                    
+                    {/* Hover overlay with text - desktop only */}
+                    {!isComingSoon && (
+                      <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden md:flex items-center justify-center">
+                        <span className="text-white text-lg font-bold tracking-wide bg-black/40 px-5 py-2.5 rounded-lg backdrop-blur-sm border border-white/20">
+                          Ver programa →
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Accent line at bottom of image */}
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 ${isComingSoon ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500' : 'bg-gradient-to-r from-primary via-primary-glow to-primary'}`} />
                     
                     {/* Badges on image */}
-                    {isComingSoon && (
-                      <div className="absolute top-4 left-4 z-10">
+                    <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
+                      {isComingSoon && (
                         <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-amber-500/90 text-black text-xs font-bold uppercase tracking-wider shadow-lg">
                           <Construction className="h-3.5 w-3.5" />
                           Próximamente
                         </span>
-                      </div>
-                    )}
-                    {formation.alumnosCertificados && !isComingSoon && (
-                      <div className="absolute top-4 left-4 z-10">
+                      )}
+                      {formation.alumnosCertificados && !isComingSoon && (
                         <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/90 text-primary-foreground text-xs font-bold uppercase tracking-wider shadow-lg">
                           <GraduationCap className="h-3.5 w-3.5" />
                           +{formation.alumnosCertificados} alumnos
                         </span>
-                      </div>
-                    )}
+                      )}
+                      {/* Duration badge */}
+                      <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-black/60 backdrop-blur-sm text-white text-xs font-bold uppercase tracking-wider shadow-lg">
+                        <Clock className="h-3.5 w-3.5" />
+                        {formation.duration}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Content Side */}
                   <div className="flex-1 p-6 md:p-8 lg:p-10 flex flex-col justify-center relative">
                     {/* Large decorative number */}
-                    <span className={`absolute ${isEven ? 'top-4 right-6 md:top-6 md:right-8' : 'top-4 right-6 md:top-6 md:right-8'} text-[5rem] md:text-[7rem] font-black leading-none text-foreground/[0.08] select-none pointer-events-none font-heading`}>
+                    <span className="absolute top-4 right-6 md:top-6 md:right-8 text-[5rem] md:text-[7rem] font-black leading-none text-foreground/[0.08] select-none pointer-events-none font-heading">
                       {num}
                     </span>
 
@@ -104,9 +116,12 @@ export function FormationsGrid() {
                     </h3>
                     
                     {/* Description */}
-                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-5 max-w-lg">
+                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4 max-w-lg">
                       {formation.description}
                     </p>
+
+                    {/* Decorative separator */}
+                    <div className={`h-px w-full max-w-[200px] mb-4 ${isComingSoon ? 'bg-gradient-to-r from-amber-500/60 via-amber-500/20 to-transparent' : 'bg-gradient-to-r from-primary/60 via-primary/20 to-transparent'}`} />
 
                     {/* What you'll learn box */}
                     {formation.highlights && formation.highlights.length > 0 && (
@@ -125,39 +140,35 @@ export function FormationsGrid() {
                       </div>
                     )}
 
-                    {/* Price + CTA row */}
+                    {/* Info + CTA row */}
                     <div className="flex items-end justify-between gap-4 mt-auto">
-                      <div>
+                      <div className="flex flex-col gap-1.5">
                         {isComingSoon ? (
                           <div>
                             <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-1">Estado</span>
                             <span className="text-xl font-bold text-amber-500">Próximamente</span>
                           </div>
-                        ) : price ? (
-                          <div>
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-1">Desde</span>
-                            <div className="flex items-baseline gap-1">
-                              <span className="text-3xl md:text-4xl font-bold text-foreground">€{price.toLocaleString('es-ES')}</span>
-                              <span className="text-sm text-muted-foreground">+ IVA</span>
-                            </div>
-                          </div>
                         ) : (
-                          <div className="flex items-center gap-2 text-muted-foreground">
-                            <Clock className="h-4 w-4" />
-                            <span className="text-sm font-medium">{formation.duration}</span>
-                          </div>
+                          <>
+                            {formation.proximaFecha && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <Calendar className="h-4 w-4 text-primary" />
+                                <span>Próxima edición: <span className="text-foreground font-semibold">{formation.proximaFecha}</span></span>
+                              </div>
+                            )}
+                          </>
                         )}
                       </div>
 
                       <Link
                         to={formation.href}
-                        className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border text-sm font-semibold transition-all duration-300 group/btn hover:gap-3 ${
+                        className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-bold transition-all duration-300 group/btn hover:gap-3 shadow-lg ${
                           isComingSoon
-                            ? 'border-amber-500/50 text-amber-500 hover:bg-amber-500/10'
-                            : 'border-primary/50 text-primary hover:bg-primary/10'
+                            ? 'border border-amber-500/50 text-amber-500 hover:bg-amber-500/10'
+                            : 'bg-primary text-primary-foreground hover:bg-primary-glow hover:shadow-primary/30 hover:shadow-xl'
                         }`}
                       >
-                        {isComingSoon ? 'Más Info' : 'Ver Detalles'}
+                        {isComingSoon ? 'Más Info' : 'Descubre el Programa'}
                         <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" />
                       </Link>
                     </div>
