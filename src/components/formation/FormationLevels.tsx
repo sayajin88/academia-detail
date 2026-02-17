@@ -28,9 +28,9 @@ export function FormationLevels({ formation, onCTAClick }: FormationLevelsProps)
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionHeading
-            badge={isSingleLevel ? "Formación" : "Niveles"}
-            title={isSingleLevel ? "Curso Completo" : "Elige tu formación"}
-            subtitle={isSingleLevel ? "Todo lo que necesitas para dominar esta especialidad" : "Cursos adaptados a tu experiencia y objetivos"}
+            badge={isSingleLevel ? "Formación Intensiva" : "Niveles"}
+            title={isSingleLevel ? "Curso Intensivo Completo" : "Elige tu formación intensiva"}
+            subtitle={isSingleLevel ? "Aprende desde cero todo lo que necesitas para dominar esta especialidad" : "Cursos intensivos adaptados a tu experiencia y objetivos — desde cero hasta nivel profesional"}
           />
         </AnimatedSection>
 

@@ -25,8 +25,8 @@ export function FormationAdvantages({ formation }: FormationAdvantagesProps) {
         <AnimatedSection>
           <SectionHeading
             badge="Ventajas"
-            title="¿Por qué elegir nuestra academia?"
-            subtitle="Formación de calidad con experiencia real en taller"
+            title="¿Por qué elegir nuestra academia de detailing?"
+            subtitle="Formación intensiva desde cero con experiencia real en taller y soporte post-curso"
           />
         </AnimatedSection>
 
