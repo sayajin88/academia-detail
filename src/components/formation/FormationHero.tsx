@@ -88,11 +88,11 @@ export function FormationHero({ formation, onCTAClick }: FormationHeroProps) {
             </div>
             <div className="flex items-center gap-2 text-white/70 glass-card px-4 py-2 rounded-full">
               <Users className="h-5 w-5 text-primary" />
-              <span>Grupos reducidos</span>
+              <span>Grupos reducidos (máx. 3 alumnos)</span>
             </div>
             <div className="flex items-center gap-2 text-white/70 glass-card px-4 py-2 rounded-full">
               <Award className="h-5 w-5 text-primary" />
-              <span>Certificado incluido</span>
+              <span>Certificación oficial + Bolsa de empleo</span>
             </div>
           </div>
 

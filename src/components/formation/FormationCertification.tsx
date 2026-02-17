@@ -18,9 +18,9 @@ export function FormationCertification({ formation }: FormationCertificationProp
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionHeading
-            badge="Certificación"
+            badge="Certificación Oficial"
             title={certTitle}
-            subtitle="Tu inversión en formación reconocida por el sector profesional"
+            subtitle="Certificación oficial reconocida por el sector, bolsa de empleo nacional y soporte post-curso personalizado"
           />
         </AnimatedSection>
 
