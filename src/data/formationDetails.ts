@@ -267,6 +267,26 @@ export const formationDetails: Record<string, FormationDetail> = {
         question: '¿Trabajáis con alguna marca específica?',
         answer: 'No. Somos un centro 100% independiente y neutral. No tenemos ataduras comerciales con ninguna marca, lo que nos permite enseñarte a elegir los mejores productos del mercado según cada situación. Trabajamos con marcas líderes como Koch Chemie, Gyeon, Sonax, Meguiar\'s, 3M y muchas más, siempre eligiendo lo que realmente funciona.',
       },
+      {
+        question: '¿Se puede financiar el curso de detailing?',
+        answer: 'Sí, ofrecemos opciones de financiación flexibles para que la inversión económica no sea un obstáculo. Puedes fraccionar el pago en cómodos plazos. Contacta con nosotros para conocer las condiciones y encontrar la mejor opción para ti.',
+      },
+      {
+        question: '¿Hay bolsa de empleo tras la formación?',
+        answer: 'Sí, todos nuestros alumnos certificados tienen acceso a nuestra bolsa de empleo nacional. Colaboramos con centros de detailing, talleres y empresas del sector que buscan profesionales formados. Además, si decides emprender, te asesoramos en la apertura de tu propio negocio de detailing.',
+      },
+      {
+        question: '¿Ofrecéis cursos de detailing online?',
+        answer: 'No. Nuestras formaciones son exclusivamente presenciales porque el detailing profesional requiere práctica real sobre vehículos. A diferencia de un curso detailing online, aquí trabajas desde el primer minuto con pulidoras, productos y coches reales en nuestro taller operativo. El 100% de nuestros alumnos confirma que la formación presencial es insustituible.',
+      },
+      {
+        question: '¿Es un curso de detailing intensivo?',
+        answer: 'Sí, nuestra formación de detailing es 100% intensiva: jornadas completas de 8 horas de práctica real en taller. En 3-5 días sales con nivel profesional para trabajar o montar tu propio negocio. Grupos reducidos de máximo 3 alumnos garantizan atención personalizada.',
+      },
+      {
+        question: '¿Puedo venir desde Madrid, Barcelona u otra ciudad?',
+        answer: 'Por supuesto. Recibimos alumnos de toda España e incluso internacionales. Gestionamos tu alojamiento cerca del taller para que solo te preocupes de aprender. Muchos de nuestros alumnos vienen desde Madrid, Barcelona, Valencia, Sevilla y otras ciudades.',
+      },
     ],
   },
   'curso-vinilado-vehiculos': {
@@ -445,6 +465,18 @@ export const formationDetails: Record<string, FormationDetail> = {
         question: '¿Trabajáis con alguna marca de vinilo específica?',
         answer: 'No. Somos un centro 100% independiente y neutral. No tenemos ataduras comerciales con ninguna marca, lo que nos permite enseñarte a elegir los mejores vinilos del mercado según cada situación. Trabajamos con marcas líderes como 3M, Avery Dennison, Hexis, Oracal y muchas más, siempre eligiendo lo que realmente funciona.',
       },
+      {
+        question: '¿Se puede financiar el curso de wrapping?',
+        answer: 'Sí, ofrecemos opciones de financiación flexibles. Puedes fraccionar el pago en cómodos plazos para que la inversión no sea un obstáculo. Contacta con nosotros para conocer las condiciones.',
+      },
+      {
+        question: '¿Hay bolsa de empleo para wrapping?',
+        answer: 'Sí, nuestros alumnos certificados acceden a nuestra bolsa de empleo nacional. El car wrapping es uno de los servicios con mayor demanda y rentabilidad del sector, por lo que las oportunidades laborales son abundantes.',
+      },
+      {
+        question: '¿Es un curso de wrapping intensivo?',
+        answer: 'Sí, es formación 100% intensiva con jornadas de 8 horas de práctica real. En 2-4 días aprendes desde cero las técnicas de instalación de vinilo que necesitas para trabajar profesionalmente o emprender tu propio negocio de rotulación.',
+      },
     ],
   },
   'curso-ppf-proteccion-pintura': {
@@ -610,6 +642,18 @@ export const formationDetails: Record<string, FormationDetail> = {
         question: '¿Trabajáis con alguna marca de PPF específica?',
         answer: 'No. Somos un centro 100% independiente y neutral. No tenemos ataduras comerciales con ninguna marca, lo que nos permite enseñarte a elegir los mejores productos del mercado según cada situación. Trabajamos con marcas líderes como XPEL, SunTek, 3M, Llumar y muchas más, siempre eligiendo lo que realmente funciona.',
       },
+      {
+        question: '¿Se puede financiar el curso de PPF?',
+        answer: 'Sí, ofrecemos opciones de financiación flexibles para todos nuestros cursos. Contacta con nosotros para conocer las condiciones de pago fraccionado.',
+      },
+      {
+        question: '¿Hay bolsa de empleo para instaladores de PPF?',
+        answer: 'Sí, nuestros alumnos certificados acceden a la bolsa de empleo nacional. La instalación de PPF es uno de los servicios premium con mayor demanda y rentabilidad, con menos competencia que otros servicios de detailing.',
+      },
+      {
+        question: '¿Es rentable especializarse en PPF?',
+        answer: 'Muy rentable. El PPF es un servicio premium con tickets altos (entre 500€ y 5.000€ por instalación) y la demanda crece cada año. Pocos profesionales están bien formados, lo que significa menos competencia y más oportunidades.',
+      },
     ],
   },
   'curso-restauracion-vehiculos': {
@@ -706,6 +750,18 @@ export const formationDetails: Record<string, FormationDetail> = {
       {
         question: '¿Trabajáis con alguna marca específica?',
         answer: 'No. Somos un centro 100% independiente y neutral. No tenemos ataduras comerciales con ninguna marca, lo que nos permite enseñarte a elegir los mejores productos del mercado según cada situación. Trabajamos con marcas líderes como Koch Chemie, Gyeon, Sonax, Meguiar\'s, 3M y muchas más, siempre eligiendo lo que realmente funciona.',
+      },
+      {
+        question: '¿Se puede financiar el curso de restauración?',
+        answer: 'Sí, ofrecemos opciones de financiación flexibles. Contacta con nosotros para conocer las condiciones de pago fraccionado y encontrar la mejor opción para ti.',
+      },
+      {
+        question: '¿Incluye restauración de tapicerías de cuero?',
+        answer: 'Sí, el curso cubre técnicas profesionales de restauración de cuero y tapicerías: limpieza profunda, reparación de grietas, teñido y acondicionamiento. Es uno de los servicios más demandados y rentables del sector.',
+      },
+      {
+        question: '¿Es un curso de restauración intensivo?',
+        answer: 'Sí, es formación 100% intensiva con jornadas completas de práctica real. En 2 días aprendes las técnicas profesionales de restauración que necesitas para ofrecer este servicio premium a tus clientes.',
       },
     ],
   },
