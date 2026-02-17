@@ -565,7 +565,7 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
   return {
     title: "Cursos Detailing Profesional 2026 | Certificación y Práctica Real ★4.9",
     description: `✅ ¿Quieres ser experto en detailing? Formación 100% PRÁCTICA en taller real. Detailing, Wrapping y PPF. +${totalAlumnos} alumnos certificados. Plazas limitadas — Reserva tu plaza hoy 🔥`,
-    keywords: `curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, ${categoryKeywords}`,
+    keywords: `curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso detailing online vs presencial, bolsa empleo detailing, certificación oficial detailing, curso detailing Madrid, curso detailing Barcelona, curso detailing Alicante, financiar curso detailing, ${categoryKeywords}`,
     url: "/",
     price: details['curso-detailing-profesional']?.price ? String(details['curso-detailing-profesional'].price) : "2997",
     schema: [
@@ -605,7 +605,7 @@ export const seoConfig = {
   home: {
     title: "Cursos Detailing Profesional 2026 | Certificación y Práctica Real ★4.9",
     description: "✅ ¿Quieres ser experto en detailing? Formación 100% PRÁCTICA en taller real. Detailing, Wrapping y PPF. +174 alumnos certificados. Plazas limitadas — Reserva tu plaza hoy 🔥",
-    keywords: "curso detailing, curso de pulido de coches, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso corrección pintura",
+    keywords: "curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso corrección pintura, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona",
     url: "/",
     price: "2997",
     schema: [
@@ -957,10 +957,10 @@ export const seoConfig = {
     const normalizedSlug = normalizeSlug(slug);
     
     const formationKeywords: Record<string, string> = {
-      'curso-detailing-profesional': "curso detailing profesional taller real, aprender detailing con clientes, curso detailing desde cero, formación pulido profesional, curso pulido coche certificado, corrección pintura negocio",
-      'curso-vinilado-vehiculos': "curso vinilado vehículos profesional, curso car wrapping negocio, rotulación coches formación, forrado vehículos curso, wrap coche taller real, cambio color coche rentable",
-      'curso-ppf-proteccion-pintura': "curso PPF taller real, curso protección pintura profesional, PPF instalador certificado España, proteger pintura coche negocio, film transparente formación práctica",
-      'curso-restauracion-vehiculos': "curso restauración vehículos profesional, restaurar coches clásicos negocio, curso chapa y pintura, reparar pintura coche formación taller real"
+      'curso-detailing-profesional': "curso detailing intensivo, curso detailing profesional taller real, curso detailing desde cero, curso pulido profesional, curso pulido coche certificado, corrección pintura negocio, formación detailing presencial, curso detailing Alicante, curso detailing Madrid, curso detailing Barcelona, bolsa empleo detailing, certificación oficial detailing, curso tratamiento cerámico, escuela detailing España",
+      'curso-vinilado-vehiculos': "curso wrapping intensivo, curso vinilado vehículos profesional, curso car wrapping negocio, rotulación coches formación, vinilado vehiculos formacion, wrap coche taller real, cambio color coche rentable, curso wrapping desde cero, curso wrapping Alicante, bolsa empleo wrapping",
+      'curso-ppf-proteccion-pintura': "curso PPF intensivo, curso PPF taller real, instalación PPF formación, curso protección pintura profesional, PPF instalador certificado España, proteger pintura coche negocio, film transparente formación práctica, curso PPF desde cero, curso PPF Alicante, bolsa empleo PPF",
+      'curso-restauracion-vehiculos': "curso restauración vehículos intensivo, restauración cuero vehículo, restauración tapicerías cuero, restaurar coches clásicos negocio, curso chapa y pintura, reparar pintura coche formación taller real, curso restauración desde cero, tapizado asientos coche"
     };
 
     const formationTitles: Record<string, string> = {
