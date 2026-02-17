@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import heroImage from '@/assets/heroes/hero-galeria.jpg';
+import detailParkLogo from '@/assets/detail-park-logo-white.png';
 
 export function AboutHero() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -71,8 +72,17 @@ export function AboutHero() {
           titleAs="h1"
         />
         
-        {/* Tagline diferenciador */}
+        {/* Logo Detail Park */}
         <div className="mt-8 flex justify-center">
+          <img 
+            src={detailParkLogo} 
+            alt="Detail Park logo" 
+            className="h-12 md:h-16 w-auto opacity-80"
+          />
+        </div>
+        
+        {/* Tagline diferenciador */}
+        <div className="mt-5 flex justify-center">
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/10 border border-primary/20">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-sm md:text-base font-medium text-primary">
