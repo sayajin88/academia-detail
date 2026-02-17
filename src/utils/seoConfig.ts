@@ -964,17 +964,17 @@ export const seoConfig = {
     };
 
     const formationTitles: Record<string, string> = {
-      'curso-detailing-profesional': "Curso de Pulido y Cerámico [4 Días] | Certificación + Bolsa Empleo | ★4.9",
-      'curso-vinilado-vehiculos': "Curso Car Wrapping Profesional [2-4 Días] | Certificación Oficial | ★4.8",
-      'curso-ppf-proteccion-pintura': "Curso PPF Instalador [2 Días] | Certificación Profesional | ★4.9",
-      'curso-restauracion-vehiculos': "Curso Restauración Vehículos [2 Días] | Certificación Oficial | ★4.7"
+      'curso-detailing-profesional': "Curso Detailing Intensivo [4 Días] | Pulido + Cerámico | Certificación + Bolsa Empleo ★4.9",
+      'curso-vinilado-vehiculos': "Curso Wrapping Intensivo [2-4 Días] | Vinilado Profesional | Certificación ★4.8",
+      'curso-ppf-proteccion-pintura': "Curso PPF Intensivo [2 Días] | Instalador Certificado | Desde Cero ★4.9",
+      'curso-restauracion-vehiculos': "Curso Restauración Intensivo [2 Días] | Cuero y Tapicerías | Certificación ★4.7"
     };
 
     const formationDescriptions: Record<string, string> = {
-      'curso-detailing-profesional': "Domina el pulido profesional y tratamiento cerámico en 4 días intensivos. ✅ Certificación oficial + Bolsa de empleo. ⭐ Valoración 4.9/5. ➤ ¡Solo 3 plazas por curso!",
-      'curso-vinilado-vehiculos': "Domina el car wrapping profesional en 2-4 días intensivos. ✅ Técnicas de instalación de vinilo y cambio de color. ⭐ Valoración 4.8/5. ➤ ¡Certificación oficial!",
-      'curso-ppf-proteccion-pintura': "Domina la instalación de PPF en 2 días intensivos. ✅ Técnicas avanzadas en vehículos de alta gama. ⭐ Valoración 4.9/5. ➤ ¡Certificación oficial!",
-      'curso-restauracion-vehiculos': "Domina la restauración de vehículos en 2 días intensivos. ✅ Técnicas avanzadas de recuperación. ⭐ Valoración 4.7/5. ➤ ¡Certificación oficial!"
+      'curso-detailing-profesional': "🔥 Curso detailing intensivo: pulido profesional y tratamiento cerámico en 4 días. ✅ Aprende desde cero en taller real. Certificación oficial + Bolsa empleo. ⭐ 4.9/5. Solo 3 plazas — ¡Reserva ahora!",
+      'curso-vinilado-vehiculos': "🔥 Curso wrapping intensivo: instalación de vinilo y cambio de color en 2-4 días. ✅ Desde cero en taller real. Certificación oficial + Bolsa empleo. ⭐ 4.8/5. ➤ ¡Plazas limitadas!",
+      'curso-ppf-proteccion-pintura': "🔥 Curso PPF intensivo: instalación de paint protection film en 2 días. ✅ Desde cero en taller real con vehículos de alta gama. Certificación + Bolsa empleo. ⭐ 4.9/5. ➤ ¡Reserva ya!",
+      'curso-restauracion-vehiculos': "🔥 Curso restauración intensivo: cuero, tapicerías y vehículos clásicos en 2 días. ✅ Desde cero en taller real. Certificación oficial. ⭐ 4.7/5. ➤ ¡Próximamente!"
     };
 
     const formationImages: Record<string, string> = {
