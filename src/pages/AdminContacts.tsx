@@ -16,7 +16,7 @@ import {
 import {
   Search, Mail, Phone, MessageCircle,
   GraduationCap, Wrench, Shield, Paintbrush, Car,
-  Clock, CheckCircle2, Save,
+  Clock, CheckCircle2, Save, Trash2,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
@@ -143,6 +143,20 @@ const AdminContacts = () => {
       toast({ title: "Notas guardadas" });
     },
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("contact_submissions").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-contacts"] });
+      setSelected(null);
+      toast({ title: "Lead eliminado" });
+    },
+  });
+
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   const pendingCount = contacts.filter((c) => c.contact_status === "pendiente").length;
   const contactedCount = contacts.filter((c) => c.contact_status === "contactado").length;
@@ -403,6 +417,35 @@ const AdminContacts = () => {
                     >
                       <Save className="h-4 w-4" /> Guardar notas
                     </Button>
+                  </div>
+
+                  {/* Delete */}
+                  <div className="border-t pt-4 mt-4">
+                    {confirmDeleteId === selected.id ? (
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm text-destructive font-medium">¿Eliminar este lead permanentemente?</p>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          disabled={deleteMutation.isPending}
+                          onClick={() => deleteMutation.mutate(selected.id)}
+                        >
+                          Confirmar
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => setConfirmDeleteId(null)}>
+                          Cancelar
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="text-destructive hover:bg-destructive/10 gap-1.5"
+                        onClick={() => setConfirmDeleteId(selected.id)}
+                      >
+                        <Trash2 className="h-4 w-4" /> Eliminar lead
+                      </Button>
+                    )}
                   </div>
                 </div>
               </>
