@@ -95,7 +95,8 @@ const itemReviewed = {
   "sameAs": [
     "https://www.instagram.com/detailparkoficial/",
     "https://www.instagram.com/danidetailoficial/",
-    "https://www.youtube.com/@detailpark"
+    "https://www.youtube.com/@detailpark",
+    "https://www.google.com/maps/place/Detail+Park/"
   ],
   "aggregateRating": {
     "@type": "AggregateRating",
