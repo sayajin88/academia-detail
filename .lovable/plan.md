@@ -1,33 +1,63 @@
 
+# Vincular la Web con Google Business Profile
 
-# Anadir Schema FAQ Dinamico a Paginas que lo Necesitan
+## Problema Identificado
 
-## Situacion Actual
+La web de Academia Detail NO esta enlazada correctamente con la ficha de Google Business Profile de "Detail Park". Hay 4 puntos de conexion que faltan o estan mal configurados:
 
-Las paginas de cursos individuales (Detailing, Wrapping, PPF, Restauracion) y la Home **ya incluyen** el schema `FAQPage` correctamente via `generateFAQSchema()`. Sin embargo, hay **2 paginas** con secciones de preguntas frecuentes visibles que **no tienen** el schema JSON-LD correspondiente:
-
-1. **Carrera Detailing** (`/formacion-profesional-detailing`) -- Tiene el componente `CarreraFAQ` con FAQs de `carreraDetailingData.faqs`, pero su config SEO en `seoConfig.carreraDetailing` no incluye `generateFAQSchema()`
-2. **Jornada Zero** (`/jornada-zero-detailing`) -- Tiene el componente `<FAQ />` con 10 preguntas hardcodeadas, pero su config SEO en `seoConfig.jornadaCero` no incluye `generateFAQSchema()`
+1. **Falta la URL de Google Maps en `sameAs`** - Los arrays `sameAs` en los schemas JSON-LD (tanto en `SEO.tsx` como en `seoConfig.ts` y `TestimonialsSection.tsx`) no incluyen la URL de Google Maps del negocio
+2. **Falta la propiedad `hasMap`** - El schema `LocalBusiness` no tiene la propiedad `hasMap` que conecta explicitamente con Google Maps
+3. **El embed de Google Maps usa una busqueda generica** - En `ContactInfo.tsx`, el iframe y los enlaces usan `maps.google.com/?q=Calle+Metalurgias+13...` en vez de la URL de Place directa de Detail Park
+4. **Datos inconsistentes** - El schema dice 4.9 con 174 resenas pero la ficha real de Google muestra 4.8 con 218 resenas
 
 ## Plan de Implementacion
 
-### Paso 1: Carrera Detailing -- Anadir FAQ schema
+### Paso 1: SEO.tsx - Anadir Google Maps Place URL al localBusinessSchema
 
-Modificar `src/utils/seoConfig.ts` en la seccion `carreraDetailing` (linea ~758) para importar `carreraDetailingData` y anadir `generateFAQSchema(carreraDetailingData.faqs)` al array de schemas.
+Anadir al array `sameAs` la URL de Google Maps con el nombre del negocio:
+```
+"https://www.google.com/maps/place/Detail+Park/"
+```
 
-### Paso 2: Jornada Zero -- Anadir FAQ schema
+Anadir propiedad `hasMap`:
+```
+"hasMap": "https://www.google.com/maps/place/Detail+Park/"
+```
 
-Las FAQs de Jornada Zero estan hardcodeadas dentro de `src/components/FAQ.tsx`. Para reutilizarlas:
+Actualizar `aggregateRating` para coincidir con Google (4.8 / 218 resenas).
 
-- Exportar el array `faqs` desde `src/components/FAQ.tsx` (actualmente es una constante local)
-- Importar ese array en `src/utils/seoConfig.ts` y anadir `generateFAQSchema(jornadaCeroFaqs)` al array de schemas de `seoConfig.jornadaCero`
+### Paso 2: seoConfig.ts - Sincronizar sameAs y aggregateRating
+
+Anadir la misma URL de Google Maps al array `sameAs` del `organizationSchemaComplete`.
+Actualizar el `aggregateRating` a 4.8 / 218.
+
+### Paso 3: TestimonialsSection.tsx - Anadir Google Maps al itemReviewed.sameAs
+
+Anadir la URL de Google Maps al array `sameAs` del objeto `itemReviewed` que se usa en los schemas de Review.
+
+### Paso 4: ContactInfo.tsx - Usar URL de Place directa
+
+Cambiar los enlaces de Google Maps de busqueda generica a la URL de Place:
+- `href` del enlace de direccion
+- `href` del enlace "Abrir en Google Maps"
+- `src` del iframe embed para que apunte al negocio real
+
+### Paso 5: GoogleReviews.tsx - Sincronizar datos con GBP real
+
+Actualizar la puntuacion mostrada de 4.8 y el conteo de 218 resenas (ya coincide con la ficha real, verificado).
+
+---
 
 ## Detalles Tecnicos
 
 ### Archivos a modificar:
-1. **`src/utils/seoConfig.ts`** -- Anadir `generateFAQSchema()` a los schemas de `carreraDetailing` y `jornadaCero`
-2. **`src/components/FAQ.tsx`** -- Exportar el array `faqs` para que sea importable desde seoConfig
+1. `src/components/SEO.tsx` - sameAs + hasMap + aggregateRating en localBusinessSchema
+2. `src/utils/seoConfig.ts` - sameAs + aggregateRating en organizationSchemaComplete
+3. `src/components/home/TestimonialsSection.tsx` - sameAs en itemReviewed
+4. `src/components/contact/ContactInfo.tsx` - URLs de Google Maps
+
+### Por que esto importa para el Knowledge Panel:
+Google usa las senales de `sameAs` y `hasMap` en el JSON-LD para vincular una web con su ficha de Google Business Profile. Sin estas senales, Google puede no asociar automaticamente `academiadetail.com` con la ficha de "Detail Park" en Maps, perdiendo la conexion entre el Knowledge Panel y la web.
 
 ### Sin nuevas dependencias
 ### Sin cambios en base de datos
-### Sin cambios visuales -- solo metadata invisible para Google
