@@ -4,6 +4,7 @@ import logo from '@/assets/detail-park-logo-white.png';
 import logoCarcarePassion from '@/assets/brands/carcare-passion.png';
 
 const formationLinks = [
+  { name: 'Jornada Zero', href: '/jornada-zero-detailing' },
   { name: 'Detailing', href: '/curso-detailing-profesional' },
   { name: 'Car Wrapping', href: '/curso-vinilado-vehiculos' },
   { name: 'Paint Protection Film', href: '/curso-ppf-proteccion-pintura' },
@@ -14,6 +15,8 @@ const formationLinks = [
 const quickLinks = [
   { name: 'Blog', href: '/blog' },
   { name: 'Glosario Detailing', href: '/glosario-detailing' },
+  { name: 'Directorio Detailers', href: '/centros-detailing-espana' },
+  { name: 'Calculadora Dilución', href: '/calculadora-dilucion-detailing' },
   { name: 'Quiénes Somos', href: '/quienes-somos' },
   { name: 'Contacto', href: '/contacto' },
 ];
