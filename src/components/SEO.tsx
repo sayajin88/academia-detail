@@ -139,12 +139,14 @@ export const localBusinessSchema = {
     "https://www.facebook.com/detailpark",
     "https://facebook.com/detailparkoficial",
     "https://www.tiktok.com/@detailpark",
-    "https://www.tiktok.com/@detail_park"
+    "https://www.tiktok.com/@detail_park",
+    "https://www.google.com/maps/place/Detail+Park/"
   ],
+  "hasMap": "https://www.google.com/maps/place/Detail+Park/",
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "174",
+    "ratingValue": "4.8",
+    "reviewCount": "218",
     "bestRating": "5",
     "worstRating": "1"
   },

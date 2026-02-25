@@ -8,7 +8,7 @@ const ContactInfo = () => {
       label: "Dirección",
       value: "Calle Metalurgias, 13",
       subvalue: "03008 Alicante, España",
-      href: "https://maps.google.com/?q=Calle+Metalurgias+13+03008+Alicante+España",
+      href: "https://www.google.com/maps/place/Detail+Park/",
       external: true,
     },
     {
@@ -93,7 +93,7 @@ const ContactInfo = () => {
 
         <div className="rounded-xl overflow-hidden border border-border">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3128.5!2d-0.4892!3d38.3452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd62364f92b3c9b9%3A0x0!2sCalle%20Metalurgias%2C%2013%2C%2003008%20Alicante%2C%20Spain!5e0!3m2!1sen!2ses!4v1"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3128.5!2d-0.4892!3d38.3452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd62364f92b3c9b9%3A0x1234567890!2sDetail+Park!5e0!3m2!1ses!2ses!4v1"
             width="100%"
             height="250"
             style={{ border: 0 }}
@@ -106,7 +106,7 @@ const ContactInfo = () => {
         </div>
 
         <a
-          href="https://maps.google.com/?q=Calle+Metalurgias+13+03008+Alicante+España"
+          href="https://www.google.com/maps/place/Detail+Park/"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 mt-4 text-primary hover:underline"
