@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowLeft } from "lucide-react";
 import detailParkLogo from "@/assets/detail-park-logo-white.png";
@@ -6,6 +7,11 @@ import detailParkLogo from "@/assets/detail-park-logo-white.png";
 const NotFound = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
+      <Helmet>
+        <title>Página no encontrada | Academia Detail</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+
       {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />

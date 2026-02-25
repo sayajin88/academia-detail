@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { SEO } from '@/components/SEO';
 import { DirectoryHero } from '@/components/directory/DirectoryHero';
 import { DirectoryFilters } from '@/components/directory/DirectoryFilters';
 import { DirectoryGrid } from '@/components/directory/DirectoryGrid';
@@ -174,14 +174,13 @@ const Directory = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>Centros de Detailing Certificados en España | Academia Detail</title>
-        <meta name="description" content="Busca centros de detailing y detailers certificados en toda España ✅ Pulido, cerámico, PPF y wrapping con garantía de calidad ➤ Encuentra tu profesional y pide presupuesto sin compromiso." />
-        <link rel="canonical" href="https://academiadetail.com/centros-detailing-espana" />
-        <script type="application/ld+json">{JSON.stringify(itemListSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(webPageSchema)}</script>
-      </Helmet>
+      <SEO
+        title="Centros de Detailing Certificados en España | Academia Detail"
+        description="Busca centros de detailing y detailers certificados en toda España ✅ Pulido, cerámico, PPF y wrapping con garantía de calidad ➤ Encuentra tu profesional y pide presupuesto sin compromiso."
+        keywords="centros detailing españa, detailers certificados, pulido coches, protección cerámica, PPF, car wrapping"
+        url="/centros-detailing-espana"
+        schema={[itemListSchema, breadcrumbSchema, webPageSchema]}
+      />
 
       <DirectoryHero
         searchQuery={searchQuery}
