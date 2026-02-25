@@ -1,6 +1,8 @@
 import type { FormationModule, FormationInstructor, FormationLevel, FormationDetail } from '@/data/formationDetails';
 import { localBusinessSchema } from '@/components/SEO';
 import { homeFaqs } from '@/components/home/HomeFAQ';
+import { carreraDetailingData } from '@/data/carreraDetailingData';
+import { faqs as jornadaCeroFaqs } from '@/components/FAQ';
 
 const BASE_URL = 'https://academiadetail.com';
 
@@ -670,7 +672,8 @@ export const seoConfig = {
         { name: "Inicio", url: "/" },
         { name: "Jornadas Intensivas", url: "/curso-detailing-iniciacion" },
         { name: "Jornada Zero", url: "/jornada-zero-detailing" }
-      ])
+      ]),
+      generateFAQSchema(jornadaCeroFaqs)
     ]
   },
 
@@ -814,7 +817,8 @@ export const seoConfig = {
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
         { name: "Formación Profesional Detailing", url: "/formacion-profesional-detailing" }
-      ])
+      ]),
+      generateFAQSchema(carreraDetailingData.faqs)
     ]
   },
 
