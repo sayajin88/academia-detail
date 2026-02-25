@@ -1,72 +1,137 @@
 
 
-# Rediseno Visual de las Pricing Tables de Cursos
+# Analisis SEO Completo y Plan de Mejoras
 
-## Objetivo
-Redisenar completamente las secciones de precios de todas las landing pages de cursos (Detailing, Car Wrapping, PPF, Restauracion) con un diseno moderno, alto CTA y visualmente impactante, manteniendo todo el contenido y precios actuales.
+## Estado Actual: Lo Que Funciona Bien
 
-## Componentes Afectados
+La web tiene una base SEO solida con muchos aspectos bien implementados:
 
-Hay dos componentes de pricing que se renderizan en cada pagina de curso:
-
-1. **`FormationPricing.tsx`** -- Seccion principal con precio, beneficios incluidos, descuento y CTA
-2. **`FormationLevels.tsx`** -- Grid de niveles/modalidades (Aficionados, Profesionales, Monta tu Negocio)
-
-Ambos necesitan rediseno. Se mantienen los datos de `formationDetails.ts` sin cambios.
+- Schemas JSON-LD avanzados (Course, FAQPage, LocalBusiness, VideoObject, BreadcrumbList, EducationalOccupationalProgram)
+- Hreflang para mercado hispanohablante
+- Meta tags con emojis estrategicos para CTR (estrellas, check, fuego)
+- Sitemap Index modular (4 sitemaps: paginas, blog, glosario, directorio)
+- robots.txt con bloqueo de bots IA y crawl-delay para bots SEO
+- Canonicals correctos en todas las paginas
+- Redirects 301 de URLs antiguas a nuevas
+- Critical CSS inline + preload del LCP en index.html
+- noindex dinamico en paginas de directorio vacias
+- Lazy loading con code-splitting por ruta
+- OG fallback en index.html para crawlers sin JS
+- Breadcrumbs automaticos con schema y componente visual
 
 ---
 
-## Nuevo Diseno: FormationPricing
+## Problemas Detectados y Mejoras Propuestas
 
-Estructura actual: 2 columnas (lista de beneficios + tarjeta de precio). Es funcional pero visualmente plana.
+### 1. Pagina 404 sin SEO ni meta "noindex"
 
-**Nuevo concepto**: Layout centrado tipo "hero pricing" con tarjeta protagonista y beneficios integrados.
+**Problema**: La pagina `NotFound.tsx` no tiene componente `<SEO>` ni `<meta name="robots" content="noindex">`. Los bots podrian indexar paginas 404, generando URLs basura en las SERPs.
 
-- Tarjeta unica centrada con gradiente sutil del color primario (granate)
-- Precio grande con animacion countUp mantenida
-- Precio tachado y badge de descuento flotante con efecto glassmorphism
-- Beneficios reorganizados en grid 2x4 compacto debajo del precio, dentro de la misma tarjeta
-- Barra de plazas disponibles con micro-animacion
-- CTA boton grande con efecto glow pulsante
-- Garantia / social proof compacto debajo del CTA
-- Para cursos "coming soon": misma estructura pero con paleta ambar y CTA "Avisarme"
+**Solucion**: Anadir `<SEO>` con titulo descriptivo y `<meta name="robots" content="noindex, nofollow">` via Helmet.
 
-## Nuevo Diseno: FormationLevels
+---
 
-Estructura actual: grid de cards simples con borde y checkmarks.
+### 2. Falta el Glosario en el sitemap de paginas
 
-**Nuevo concepto**: Cards con efecto hover elevado y visual jerarquico claro.
+**Problema**: `sitemap-pages.xml` no incluye `/glosario-detailing`. Aunque los terminos individuales estan en el sitemap dinamico de glossary, la pagina principal del glosario no aparece en ningun sitemap.
 
-- Card destacada (highlighted) con borde gradiente animado y escala mayor
-- Cada card tiene un icono/numero grande de nivel en la parte superior
-- Fondo con gradiente sutil diferente para cada nivel
-- Features con iconos en lugar de solo checks
-- CTA integrado en cada card con variante visual segun nivel
-- Badge "Mas Popular" rediseado con efecto glow
-- Transiciones staggered al hacer scroll
+**Solucion**: Anadir entrada para `/glosario-detailing` en `sitemap-pages.xml`.
+
+---
+
+### 3. Blog index no esta en el sitemap de paginas
+
+**Problema**: `/blog` no aparece en `sitemap-pages.xml`. Los posts individuales estan en el sitemap dinamico, pero la pagina hub `/blog` no.
+
+**Solucion**: Anadir entrada para `/blog` en `sitemap-pages.xml`.
+
+---
+
+### 4. Falta la Jornada Zero en el footer
+
+**Problema**: El footer lista las formaciones principales pero no incluye "Jornada Zero" ni "Jornadas Intensivas", que son paginas con prioridad 0.9 en el sitemap. Esto reduce el internal linking hacia esas paginas.
+
+**Solucion**: Anadir "Jornada Zero" al bloque de enlaces de formacion en el Footer.
+
+---
+
+### 5. Directorio y herramientas ausentes del footer
+
+**Problema**: El footer no incluye enlaces al Directorio (`/centros-detailing-espana`) ni a la Calculadora de Dilucion. Estas herramientas son assets SEO clave (link magnets).
+
+**Solucion**: Anadir ambos al bloque de quickLinks del Footer.
+
+---
+
+### 6. Jornadas Intensivas Hub sin entrada en sitemap
+
+**Problema**: La pagina hub `/curso-detailing-iniciacion` tiene prioridad 0.9 en el sitemap pero las subpaginas `/jornada-zero-detailing` y `/up-detail-evento` si estan incluidas. Verificado: la hub SI esta en el sitemap. Sin embargo, faltan los eventos (Jornada Zero y Up Detail) en los quickLinks del footer para reforzar el enlazado interno.
+
+---
+
+### 7. Falta schema "Blog" en la pagina /blog
+
+**Problema**: La pagina `/blog` usa `<SEO>` directamente con Helmet inline, pero no incluye un schema `CollectionPage` o `Blog` especifico. Esto desaprovecha la oportunidad de rich snippets para la pagina hub del blog.
+
+**Solucion**: Anadir schema `Blog` o `CollectionPage` en la pagina `/blog`.
+
+---
+
+### 8. lastmod desactualizado en sitemaps
+
+**Problema**: Todos los `lastmod` del `sitemap-pages.xml` y `sitemap.xml` estan en febrero 2026, pero se han hecho cambios significativos recientemente (pricing tables, blog posts nuevos). Los lastmod estaticos no reflejan los cambios reales.
+
+**Solucion**: Actualizar `lastmod` en `sitemap-pages.xml` para reflejar la fecha actual (2026-02-25) en las paginas modificadas recientemente (cursos, blog, home).
+
+---
+
+### 9. Meta description del Directorio falta en SEO component
+
+**Problema**: La pagina `Directory.tsx` usa `<Helmet>` directo en vez de `<SEO>`, perdiendo los schemas automaticos (LocalBusiness, breadcrumbs, hreflang). No tiene schema `ItemList` para los detailers listados.
+
+**Solucion**: Migrar a `<SEO>` con seoConfig dedicado y anadir schema `ItemList` dinamico.
+
+---
+
+### 10. Imagenes alt="" vacias en admin (menor impacto)
+
+**Problema**: Las imagenes del admin (`AdminProfileEditModal`) tienen `alt=""`. Impacto SEO nulo (admin no es publico), pero es buena practica corregirlo. **Prioridad baja**, no se implementara.
+
+---
+
+## Plan de Implementacion (Ordenado por Impacto SEO)
+
+### Paso 1: NotFound.tsx - Anadir noindex
+Anadir `<SEO>` con meta noindex para evitar indexacion de paginas 404.
+
+### Paso 2: sitemap-pages.xml - Completar paginas faltantes
+Anadir `/glosario-detailing`, `/blog` y actualizar fechas `lastmod`.
+
+### Paso 3: Footer.tsx - Ampliar internal linking
+Anadir al footer: Jornada Zero, Directorio, Calculadora de Dilucion.
+
+### Paso 4: Blog.tsx - Anadir schema Blog/CollectionPage
+Migrar el Helmet inline a `<SEO>` con schemas adecuados desde seoConfig.
+
+### Paso 5: Directory.tsx - Migrar a SEO component
+Migrar de Helmet directo a `<SEO>` con schema `ItemList` dinamico.
+
+### Paso 6: sitemap.xml - Actualizar lastmod del index
+Sincronizar las fechas del sitemap index principal.
 
 ---
 
 ## Detalles Tecnicos
 
 ### Archivos a modificar:
-1. **`src/components/formation/FormationPricing.tsx`** -- Reescritura completa del layout JSX y clases Tailwind
-2. **`src/components/formation/FormationLevels.tsx`** -- Reescritura completa del layout JSX y clases Tailwind
+1. `src/pages/NotFound.tsx` - Anadir `<SEO>` + noindex
+2. `public/sitemap-pages.xml` - Anadir 2 URLs + actualizar lastmod
+3. `public/sitemap.xml` - Actualizar lastmod
+4. `src/components/layout/Footer.tsx` - Ampliar quickLinks y formationLinks
+5. `src/pages/Blog.tsx` o `src/utils/seoConfig.ts` - Anadir seoConfig.blog con schema
+6. `src/pages/Directory.tsx` - Migrar Helmet a `<SEO>` con schemas
 
-### Lo que se mantiene sin cambios:
-- `src/data/formationDetails.ts` -- Todos los datos, precios y contenido
-- `src/pages/FormationDetail.tsx` -- Composicion de pagina intacta
-- Props e interfaces de ambos componentes
-- Hook `useCountUp` y logica de intersection observer
-- Soporte para estados "comingSoon"
-
-### Dependencias:
-- No se requieren nuevas dependencias
-- Se usan los iconos de `lucide-react` ya instalados
-- Se mantiene el sistema de diseno existente (Tailwind + componentes UI de shadcn)
-
-### Compatibilidad:
-- Responsive: mobile-first con breakpoints md/lg
-- Aplica automaticamente a todos los cursos (Detailing, Wrapping, PPF, Restauracion)
-- Soporte completo para el estado "coming soon" (Restauracion)
+### Sin nuevas dependencias requeridas
+### Sin cambios en base de datos
+### Sin cambios en edge functions
 
