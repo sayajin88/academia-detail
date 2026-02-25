@@ -93,7 +93,7 @@ const ContactInfo = () => {
 
         <div className="rounded-xl overflow-hidden border border-border">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3128.5!2d-0.4892!3d38.3452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd62364f92b3c9b9%3A0x1234567890!2sDetail+Park!5e0!3m2!1ses!2ses!4v1"
+            src="https://www.google.com/maps?q=Detail+Park,+Calle+Metalurgias+13,+Alicante&output=embed"
             width="100%"
             height="250"
             style={{ border: 0 }}
