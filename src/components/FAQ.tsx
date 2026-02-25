@@ -2,7 +2,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HelpCircle } from "lucide-react";
 
-const faqs = [
+export const faqs = [
   {
     question: "¿Necesito experiencia previa?",
     answer: "No, La Jornada Cero está diseñada para personas sin experiencia que quieren conocer el mundo del detailing profesional de forma práctica e intensiva."
