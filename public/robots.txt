@@ -62,6 +62,32 @@ Crawl-delay: 10
 User-agent: SemrushBot
 Allow: /
 
+# --- Bots de IA (PERMITIDOS para GEO) ---
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+
 # --- Bloquear bots no deseados ---
 User-agent: MJ12bot
 Disallow: /
@@ -72,17 +98,5 @@ Disallow: /
 User-agent: BLEXBot
 Disallow: /
 
-User-agent: GPTBot
-Disallow: /
-
-User-agent: CCBot
-Disallow: /
-
-User-agent: anthropic-ai
-Disallow: /
-
-User-agent: Claude-Web
-Disallow: /
-
-User-agent: Google-Extended
+User-agent: Bytespider
 Disallow: /
