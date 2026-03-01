@@ -15,6 +15,14 @@
 
 ---
 
+## Jornada Zero Detailing (Página de Evento)
+
+- **URL:** https://academiadetail.com/jornada-zero-detailing
+- **Descripción:** Página dedicada al evento Jornada Zero con fechas disponibles, programa detallado del día, galería de ediciones anteriores y formulario de registro directo.
+- **Dirigido a:** Personas interesadas en reservar plaza para la próxima edición de la Jornada Zero.
+
+---
+
 ## Curso Detailing Profesional
 
 - **URL:** https://academiadetail.com/curso-detailing-profesional
@@ -95,6 +103,28 @@
 
 ---
 
+## Evento Up Detail
+
+- **URL:** https://academiadetail.com/up-detail-evento
+- **Descripción:** Evento exclusivo de networking y formación avanzada para profesionales y emprendedores del sector del detailing automotriz. Incluye ponencias, demostraciones en vivo y oportunidades de conexión con otros profesionales del sector.
+- **Dirigido a:** Profesionales del detailing, propietarios de centros y emprendedores que quieran hacer crecer su negocio.
+
+---
+
+## Quiénes Somos
+
+- **URL:** https://academiadetail.com/quienes-somos
+- **Descripción:** Historia de Academia Detail y Detail Park desde 2017, presentación del equipo de instructores, filosofía de formación práctica en taller real, galería de instalaciones y canal de YouTube con contenido educativo.
+
+---
+
+## Contacto
+
+- **URL:** https://academiadetail.com/contacto
+- **Descripción:** Formulario de contacto para solicitar información sobre cursos y formaciones. Incluye mapa de ubicación, horarios de atención e información de contacto directo (teléfono, email, WhatsApp).
+
+---
+
 ## Preguntas Frecuentes
 
 ### ¿Necesito experiencia previa para hacer un curso?
@@ -129,6 +159,7 @@ No gestionamos alojamiento directamente, pero orientamos a los alumnos sobre opc
 - **Glosario:** https://academiadetail.com/glosario-detailing - Más de 100 términos técnicos del detailing profesional con definiciones completas.
 - **Calculadora de Dilución:** https://academiadetail.com/calculadora-dilucion-detailing - Herramienta interactiva para calcular ratios de dilución.
 - **Directorio de Centros:** https://academiadetail.com/centros-detailing-espana - Directorio de centros de detailing certificados en toda España.
+- **Únete al Directorio:** https://academiadetail.com/centros-detailing-espana/unete - Formulario para que centros de detailing soliciten aparecer en el directorio profesional.
 
 ---
 
@@ -142,3 +173,9 @@ No gestionamos alojamiento directamente, pero orientamos a los alumnos sobre opc
 - **Instagram:** https://www.instagram.com/detailparkoficial/
 - **YouTube:** https://www.youtube.com/@detailpark
 - **TikTok:** https://www.tiktok.com/@detailpark
+
+---
+
+## Legal
+
+- **Política de Privacidad:** https://academiadetail.com/politica-privacidad - Política de protección de datos personales y privacidad conforme a la normativa vigente.
