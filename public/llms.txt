@@ -5,11 +5,16 @@
 ## Cursos de Formación
 
 - [Jornada Zero - Curso Iniciación](https://academiadetail.com/curso-detailing-iniciacion): Experiencia de inmersión de 1 día por 97€. Primer contacto con el detailing profesional.
+- [Jornada Zero Detailing](https://academiadetail.com/jornada-zero-detailing): Página dedicada al evento Jornada Zero con fechas, programa completo y registro.
 - [Curso Detailing Profesional](https://academiadetail.com/curso-detailing-profesional): Formación completa en pulido, descontaminación, tratamiento cerámico y corrección de pintura. 4 días intensivos.
 - [Curso Car Wrapping](https://academiadetail.com/curso-vinilado-vehiculos): Instalación profesional de vinilo y cambio de color de vehículos. 2-4 días.
 - [Curso PPF](https://academiadetail.com/curso-ppf-proteccion-pintura): Instalación de Paint Protection Film en vehículos de alta gama. 2 días.
 - [Curso Restauración](https://academiadetail.com/curso-restauracion-vehiculos): Técnicas avanzadas de restauración de vehículos clásicos. 2 días.
 - [Carrera Detailing Profesional](https://academiadetail.com/formacion-profesional-detailing): Programa completo de 1 mes con 4 certificaciones + módulo de negocio.
+
+## Eventos
+
+- [Up Detail Evento](https://academiadetail.com/up-detail-evento): Evento exclusivo de networking y formación para profesionales y emprendedores del detailing.
 
 ## Recursos y Herramientas
 
@@ -17,6 +22,7 @@
 - [Glosario de Detailing](https://academiadetail.com/glosario-detailing): Más de 100 términos técnicos del detailing profesional con definiciones completas.
 - [Calculadora de Dilución](https://academiadetail.com/calculadora-dilucion-detailing): Herramienta interactiva para calcular ratios de dilución de productos de detailing.
 - [Directorio de Centros](https://academiadetail.com/centros-detailing-espana): Directorio de centros de detailing certificados en toda España.
+- [Únete al Directorio](https://academiadetail.com/centros-detailing-espana/unete): Formulario para que centros de detailing soliciten aparecer en el directorio.
 
 ## Información de Contacto
 
@@ -30,3 +36,7 @@
 
 - [Quiénes Somos](https://academiadetail.com/quienes-somos): Historia, equipo e instalaciones.
 - [Contacto](https://academiadetail.com/contacto): Formulario de contacto y ubicación.
+
+## Legal
+
+- [Política de Privacidad](https://academiadetail.com/politica-privacidad): Política de protección de datos y privacidad.
