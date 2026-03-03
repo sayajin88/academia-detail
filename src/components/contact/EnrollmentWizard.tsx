@@ -103,9 +103,12 @@ const EnrollmentWizard = () => {
       console.error("DB save exception:", err);
     }
 
+    // Send to n8n webhook
     try {
-      const { error: fnError } = await supabase.functions.invoke("send-contact-email", {
-        body: {
+      const webhookResponse = await fetch("https://dlopez88.app.n8n.cloud/webhook-test/contacto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           nombre: data.nombre,
           apellidos: data.apellidos,
           email: data.email,
@@ -116,14 +119,15 @@ const EnrollmentWizard = () => {
           tipo_formacion: data.tipo_formacion,
           mensaje: data.mensaje || "",
           source: "contact_page",
-        },
+        }),
       });
-      if (fnError) {
-        console.error("Edge function error:", fnError);
-        toast.error("Tu solicitud se guardó pero hubo un problema al enviar el email.");
+      if (!webhookResponse.ok) {
+        console.error("Webhook error:", webhookResponse.status);
+        toast.error("Tu solicitud se guardó pero hubo un problema al notificar.");
       }
     } catch (err) {
-      console.error("Edge function exception:", err);
+      console.error("Webhook exception:", err);
+      toast.error("Tu solicitud se guardó pero hubo un problema de conexión.");
     }
 
     setIsSubmitting(false);
