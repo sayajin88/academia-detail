@@ -105,7 +105,7 @@ const EnrollmentWizard = () => {
 
     // Send to n8n webhook
     try {
-      const webhookResponse = await fetch("https://dlopez88.app.n8n.cloud/webhook/contacto", {
+      const webhookResponse = await fetch("https://dlopez88.app.n8n.cloud/webhook-test/contacto", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
