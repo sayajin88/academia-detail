@@ -23,7 +23,7 @@ const contactSchema = z.object({
   centro_propio: z.string({ required_error: "Indica si tienes centro propio" }).min(1, "Selecciona una opción"),
   inversion: z.string({ required_error: "Selecciona tu presupuesto" }).min(1, "Selecciona tu presupuesto"),
   tipo_formacion: z.string({ required_error: "Selecciona el tipo de formación" }).min(1, "Selecciona una formación"),
-  mensaje: z.string().trim().max(1000).optional(),
+  mensaje: z.string().trim().min(1, "El mensaje es obligatorio").max(1000),
   acepto_privacidad: z.boolean().refine((val) => val === true, {
     message: "Debes aceptar la política de privacidad",
   }),
@@ -34,7 +34,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 const steps = [
   { id: 1, label: "Formación", fields: ["tipo_formacion"] as const },
   { id: 2, label: "Perfil", fields: ["experiencia", "centro_propio", "inversion"] as const },
-  { id: 3, label: "Datos", fields: ["nombre", "apellidos", "email", "telefono", "acepto_privacidad"] as const },
+  { id: 3, label: "Datos", fields: ["nombre", "apellidos", "email", "telefono", "mensaje", "acepto_privacidad"] as const },
   { id: 4, label: "Resumen", fields: [] as const },
 ];
 
@@ -95,7 +95,7 @@ const EnrollmentWizard = () => {
         centro_propio: data.centro_propio,
         inversion: data.inversion,
         tipo_formacion: data.tipo_formacion,
-        mensaje: data.mensaje || null,
+        mensaje: data.mensaje,
         acepto_privacidad: data.acepto_privacidad,
       });
       if (dbError) console.error("DB save error:", dbError);

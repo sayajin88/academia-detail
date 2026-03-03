@@ -113,7 +113,7 @@ const StepDatos = ({ form }: StepDatosProps) => {
           name="mensaje"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mensaje (opcional)</FormLabel>
+              <FormLabel>Mensaje *</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Cuéntanos más sobre tus objetivos..."
