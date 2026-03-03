@@ -1,60 +1,81 @@
 
 
-# Completar Cobertura de Paginas en llms.txt y llms-full.txt
+# Transformar /contacto en Wizard de Inscripcion Interactivo
 
-## Problema
+## Concepto
 
-Los archivos `llms.txt` y `llms-full.txt` (los que usan ChatGPT, Gemini, Claude y Perplexity para entender tu web) no incluyen todas las paginas publicadas. Faltan paginas de eventos y utilidades que si estan en el sitemap pero no en estos archivos de descubrimiento para IAs.
+Reemplazar el formulario clasico por un **wizard multi-paso** con tarjetas visuales clicables en lugar de dropdowns aburridos. Cada paso ocupa la pantalla completa del formulario, con transiciones suaves, barra de progreso y un resumen final antes de enviar. La pagina pasa de "contacto generico" a "inscribete en nuestros cursos".
 
-## Paginas que faltan
+## Estructura del Wizard (4 pasos)
 
-| Pagina | llms.txt | llms-full.txt |
-|--------|----------|---------------|
-| Jornada Zero (`/jornada-zero-detailing`) | FALTA | FALTA |
-| Up Detail Evento (`/up-detail-evento`) | FALTA | FALTA |
-| Unete al Directorio (`/centros-detailing-espana/unete`) | FALTA | FALTA |
-| Politica de Privacidad (`/politica-privacidad`) | FALTA | FALTA |
+```text
+Paso 1: "¿Qué formación te interesa?"
+  → 6 tarjetas visuales con icono + titulo + breve descripcion
+  → Detailing | Wrapping | PPF | Restauracion | Negocio | Carrera Completa
 
-Ademas, `llms-full.txt` no menciona las paginas de Quienes Somos ni Contacto como secciones con URL (solo aparecen parcialmente en la seccion de contacto).
+Paso 2: "Cuéntanos sobre ti"
+  → Tarjetas grandes para experiencia (Soy nuevo / Tengo experiencia)
+  → Tarjetas para centro propio (Sí / No)
+  → Tarjetas para inversion (4 rangos)
 
-## Lo que YA esta bien (no se toca)
+Paso 3: "Tus datos de contacto"
+  → Nombre, Apellidos, Email, Telefono
+  → Mensaje opcional
+  → Checkbox RGPD
 
-- robots.txt: Todos los bots de IA permitidos correctamente
-- Sitemap: Las 4 partes cubren todas las paginas, blog y glosario
-- Blog sitemap: Los 26 slugs coinciden exactamente con los datos del frontend
-- Schemas JSON-LD: No se modifican
-- Ningun componente visual cambia
+Paso 4: "Resumen y envío"
+  → Tarjeta resumen con todo lo seleccionado
+  → Boton de enviar grande
+```
 
-## Plan de Implementacion
+## Componentes a Crear/Modificar
 
-### Paso 1: Actualizar llms.txt
+### Nuevo: `src/components/contact/EnrollmentWizard.tsx`
+- Componente principal con estado del paso actual (1-4)
+- Barra de progreso visual con numeros/iconos de cada paso
+- Botones "Anterior" / "Siguiente" con validacion por paso
+- Animacion de transicion entre pasos (slide o fade)
+- Misma logica de submit (Supabase insert + edge function) del ContactForm actual
 
-Anadir las paginas que faltan en las secciones correspondientes:
+### Nuevo: `src/components/contact/wizard/StepFormacion.tsx`
+- Grid de 6 tarjetas clicables (2x3 en desktop, 1 columna en movil)
+- Cada tarjeta: icono relevante, titulo, descripcion corta, estado selected con borde primary
 
-- En "Cursos de Formacion": Anadir linea para Jornada Zero con URL `/jornada-zero-detailing` (diferente de Jornada Zero - Curso Iniciacion que ya aparece con la URL `/curso-detailing-iniciacion`)
-- Crear seccion "Eventos" con Up Detail (`/up-detail-evento`)
-- En "Recursos y Herramientas": Anadir "Unete al Directorio" (`/centros-detailing-espana/unete`)
-- Crear seccion "Legal" con Politica de Privacidad (`/politica-privacidad`)
+### Nuevo: `src/components/contact/wizard/StepPerfil.tsx`
+- 3 sub-secciones con tarjetas clicables:
+  - Experiencia: 2 tarjetas grandes
+  - Centro propio: 2 tarjetas
+  - Inversion: 4 tarjetas en grid
 
-### Paso 2: Actualizar llms-full.txt
+### Nuevo: `src/components/contact/wizard/StepDatos.tsx`
+- Campos de texto: nombre, apellidos, email, telefono
+- Textarea mensaje opcional
+- Checkbox RGPD
 
-Anadir las mismas paginas que faltan con descripcion expandida:
+### Nuevo: `src/components/contact/wizard/StepResumen.tsx`
+- Tarjeta resumen con todas las selecciones
+- Boton de envio final
+- Indicador de paso completado
 
-- Seccion "Jornada Zero" con URL, duracion y descripcion
-- Seccion "Evento Up Detail" con URL y descripcion
-- Seccion "Quienes Somos" con URL y descripcion breve
-- Seccion "Contacto" con URL y descripcion
-- Seccion "Unete al Directorio" con URL
-- Seccion "Legal" con URL de politica de privacidad
+### Modificar: `src/components/contact/ContactHero.tsx`
+- Cambiar titulo de "Contacta con Nosotros" a "Inscribete en Nuestras Formaciones"
+- Cambiar descripcion acorde al enfoque de inscripcion
+- Ajustar stats si procede
+
+### Modificar: `src/pages/Contact.tsx`
+- Reemplazar el layout de 2 columnas (formulario + info) por:
+  1. Hero actualizado
+  2. Wizard de inscripcion (ancho completo, centrado)
+  3. Debajo: ContactInfo + GoogleReviews + ContactSchedule
 
 ## Detalles Tecnicos
 
-### Archivos a modificar:
-1. `public/llms.txt` -- Anadir 4 URLs que faltan en secciones nuevas y existentes
-2. `public/llms-full.txt` -- Anadir secciones expandidas para las paginas que faltan
-
-### Sin nuevas dependencias
-### Sin cambios en base de datos
-### Sin cambios visuales
-### Sin cambios en schemas JSON-LD ni robots.txt
+- Se reutiliza el **mismo schema Zod** y la **misma logica de submit** (Supabase + edge function)
+- Se mantiene react-hook-form pero con validacion parcial por paso
+- Las tarjetas clicables usan `form.setValue()` para actualizar el campo correspondiente
+- Barra de progreso con el componente Progress existente o custom con pasos numerados
+- Sin nuevas dependencias
+- Sin cambios en base de datos
+- Sin cambios en edge functions
+- ContactSuccessModal se reutiliza tal cual
 
