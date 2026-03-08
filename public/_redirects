@@ -1,0 +1,3 @@
+/sitemap-blog.xml https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/sitemap-proxy?target=blog-sitemap 200
+/sitemap-glossary.xml https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/sitemap-proxy?target=glossary-sitemap 200
+/sitemap-directory.xml https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/sitemap-proxy?target=directory-sitemap 200
