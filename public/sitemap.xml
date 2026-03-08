@@ -5,15 +5,15 @@
     <lastmod>2026-03-08</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://academiadetail.com/sitemap-blog.xml</loc>
+    <loc>https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/sitemap-proxy?target=blog-sitemap</loc>
     <lastmod>2026-03-08</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://academiadetail.com/sitemap-glossary.xml</loc>
+    <loc>https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/sitemap-proxy?target=glossary-sitemap</loc>
     <lastmod>2026-03-08</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://academiadetail.com/sitemap-directory.xml</loc>
+    <loc>https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/sitemap-proxy?target=directory-sitemap</loc>
     <lastmod>2026-03-08</lastmod>
   </sitemap>
 </sitemapindex>
