@@ -112,11 +112,11 @@ export function FormationCTA({ formation, onCTAClick }: FormationCTAProps) {
                     +34 622 773 555
                   </a>
                   <a
-                    href="mailto:info@detailpark.es"
+                    href="mailto:info@academiadetail.com"
                     className="flex items-center gap-2 text-white/80 hover:text-white transition-colors glass-card px-4 py-2 rounded-full hover:scale-105"
                   >
                     <Mail className="h-4 w-4" />
-                    info@detailpark.es
+                    info@academiadetail.com
                   </a>
                 </div>
               </div>

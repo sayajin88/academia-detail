@@ -920,7 +920,7 @@ export const seoConfig = {
           "@type": "Organization",
           "name": "Detail Park - Academia Detail",
           "telephone": "+34 622 773 555",
-          "email": "info@detailpark.es",
+          "email": "info@academiadetail.com",
           "address": {
             "@type": "PostalAddress",
             "streetAddress": "Calle Metalurgias, 13",
