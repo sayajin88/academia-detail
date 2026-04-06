@@ -531,7 +531,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         description: 'Curso estructurado como una carrera universitaria. Preparación y seguridad imprescindibles para convertirte en un profesional.',
       },
       {
-        title: 'PPF en España',
+        title: 'PPF Profesional en España',
         description: 'Unificamos estándares en todo el sector de protección de pintura con objetivo de marco nacional reconocido.',
       },
       {
