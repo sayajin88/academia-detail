@@ -21,6 +21,14 @@ const quickLinks = [
   { name: 'Contacto', href: '/contacto' },
 ];
 
+const cityLinks = [
+  { name: 'Detailing Madrid', href: '/curso-detailing-madrid' },
+  { name: 'Detailing Barcelona', href: '/curso-detailing-barcelona' },
+  { name: 'Detailing Valencia', href: '/curso-detailing-valencia' },
+  { name: 'Detailing Sevilla', href: '/curso-detailing-sevilla' },
+  { name: 'Detailing Bilbao', href: '/curso-detailing-bilbao' },
+];
+
 const legalLinks = [
   { name: 'Política de Privacidad', href: '/politica-privacidad', key: 'privacidad' },
   { name: 'Aviso Legal', href: '/politica-privacidad', key: 'aviso-legal' },
@@ -38,7 +46,7 @@ export function Footer() {
       {/* Decorative burgundy top line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
       <div className="container mx-auto px-4 py-12 md:py-16 pt-14 md:pt-18">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-2">
@@ -116,6 +124,23 @@ export function Footer() {
               ))}
               {legalLinks.map((link) => (
                 <li key={link.key}>
+                  <Link
+                    to={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Cursos por ciudad */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Cursos por ciudad</h4>
+            <ul className="space-y-2.5">
+              {cityLinks.map((link) => (
+                <li key={link.href}>
                   <Link
                     to={link.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
