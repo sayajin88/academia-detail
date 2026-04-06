@@ -595,7 +595,7 @@ export const seoConfig = {
   home: {
     title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
     description: "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
-    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso detailing para latinos",
+    keywords: "curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso pulido coche certificado, curso tratamiento cerámico, curso coating cerámico coches, aprender aplicar cerámico coche, curso limpiar coches profesional, curso lavado profesional coches, escuela de detailing, cómo montar negocio detailing, cómo montar centro detailing, abrir taller detailing, montar negocio detailing España, negocio detailing rentable, emprender detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso detailing Alicante, academia detailing Alicante, curso detailing online vs presencial, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica",
     url: "/",
     price: "2997",
     schema: [
