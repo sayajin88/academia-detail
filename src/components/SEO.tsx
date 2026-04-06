@@ -389,7 +389,12 @@ export const courseDetailingSchema = {
   "name": "Curso de Detailing Profesional",
   "description": "Formación 100% práctica en lavado profesional, descontaminación, pulido, corrección de pintura y protección cerámica. Aprende en un taller real con clientes de alta gama en Alicante.",
   "url": "https://academiadetail.com/curso-detailing-profesional/",
-  "image": "https://academiadetail.com/og-curso-detailing.jpg",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://academiadetail.com/og-curso-detailing.jpg",
+    "width": 1200,
+    "height": 630
+  },
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
