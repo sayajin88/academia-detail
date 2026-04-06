@@ -1068,7 +1068,8 @@ export const seoConfig = {
         generateWebPageSchema({
           name: formationNames[normalizedSlug] || formation.title,
           description: formationDescriptions[normalizedSlug] || formation.description,
-          url: `/${normalizedSlug}`
+          url: `/${normalizedSlug}`,
+          image: imageUrl
         }),
         generateBreadcrumbSchema([
           { name: "Inicio", url: "/" },
