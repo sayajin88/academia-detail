@@ -627,7 +627,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         answer: 'Normalmente jornadas de 8 horas, con 1 hora para comer. La duración varía según el tipo de curso (1-5 días).',
       },
       {
-        question: '¿Saldré con una buena base de conocimiento?',
+        question: '¿Saldré preparado para instalar PPF profesionalmente?',
         answer: 'Saldrás preparado para poder instalar PPF profesionalmente gracias a la experiencia real en taller.',
       },
       {
