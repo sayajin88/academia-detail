@@ -11,7 +11,7 @@ import CarreraBenefits from '@/components/carrera/CarreraBenefits';
 import CarreraPricing from '@/components/carrera/CarreraPricing';
 import CarreraFAQ from '@/components/carrera/CarreraFAQ';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
-import { SEO } from '@/components/SEO';
+import { SEO, courseFormacionProfesionalSchema } from '@/components/SEO';
 import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
 import { seoConfig } from '@/utils/seoConfig';
 import { GoogleReviews } from '@/components/shared/GoogleReviews';

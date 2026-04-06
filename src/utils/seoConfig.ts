@@ -1011,6 +1011,17 @@ export const seoConfig = {
       price: coursePrices[normalizedSlug] || String(formation.price),
       schema: [
         localBusinessSchema,
+        ...(({
+          'curso-detailing-profesional': courseDetailingSchema,
+          'curso-vinilado-vehiculos': courseWrappingSchema,
+          'curso-ppf-proteccion-pintura': coursePPFSchema,
+          'curso-restauracion-vehiculos': courseRestauracionSchema,
+        } as Record<string, object>)[normalizedSlug] ? [({
+          'curso-detailing-profesional': courseDetailingSchema,
+          'curso-vinilado-vehiculos': courseWrappingSchema,
+          'curso-ppf-proteccion-pintura': coursePPFSchema,
+          'curso-restauracion-vehiculos': courseRestauracionSchema,
+        } as Record<string, object>)[normalizedSlug]] : []),
         generateCourseSchemaEnhanced({
           name: formationNames[normalizedSlug] || formation.title,
           description: formationDescriptions[normalizedSlug] || formation.description,

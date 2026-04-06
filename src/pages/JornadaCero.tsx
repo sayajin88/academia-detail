@@ -50,7 +50,7 @@ import { RegistrationModal } from "@/components/RegistrationModal";
 import { useRegistrationModal } from "@/hooks/useRegistrationModal";
 import { ExpertiseShowcase } from "@/components/ExpertiseShowcase";
 import { ValueJustification } from "@/components/ValueJustification";
-import { SEO } from "@/components/SEO";
+import { SEO, courseJornadaZeroSchema } from "@/components/SEO";
 import { seoConfig } from "@/utils/seoConfig";
 
 // Import images
