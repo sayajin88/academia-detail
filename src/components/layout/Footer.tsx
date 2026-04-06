@@ -135,6 +135,23 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Cursos por ciudad */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Cursos por ciudad</h4>
+            <ul className="space-y-2.5">
+              {cityLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Contacto */}
           <div>
             <h4 className="font-semibold text-foreground mb-4">Contacto</h4>
