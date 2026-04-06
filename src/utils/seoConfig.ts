@@ -750,6 +750,7 @@ export const seoConfig = {
     price: "9997",
     schema: [
       localBusinessSchema,
+      courseFormacionProfesionalSchema,
       generateCourseSchemaEnhanced({
         name: "Formación Profesional Detailing - Monta tu Centro de Detailing",
         description: "Programa premium de formación profesional en detailing. Formación intensiva con 4 certificaciones profesionales: Detailing, Wrapping, PPF y Restauración, más módulo de negocio exclusivo.",
