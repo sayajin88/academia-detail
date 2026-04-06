@@ -490,7 +490,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     originalPrice: 2897,
     image: ppfHero,
     heroAlt: 'Curso PPF intensivo - Instalación profesional de paint protection film certificada',
-    heroDescription: 'Curso PPF intensivo y presencial en instalación de Paint Protection Film. Aprende desde cero con experiencia real en taller, desde las técnicas básicas hasta las instalaciones más complejas. Grupos reducidos, certificación oficial y soporte post-curso.',
+    heroDescription: 'Curso PPF intensivo y presencial en instalación de Paint Protection Film. Aprende desde cero con experiencia real en taller, desde los fundamentos hasta las instalaciones más complejas en vehículos de alta gama. Grupos reducidos de máximo 3 alumnos, certificación oficial y soporte post-curso. Sin experiencia previa necesaria.',
     advantages: [
       { icon: 'Award', title: 'Certificado de reconocimiento del sector' },
       { icon: 'HeadphonesIcon', title: 'Asistencia posterior personalizada' },
