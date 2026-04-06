@@ -742,9 +742,9 @@ export const seoConfig = {
 
 
   carreraDetailing: {
-    title: "Monta Tu Centro de Detailing | Formación 1 Mes",
-    description: "🔥 Programa completo para montar tu lavadero de coches: 4 certificaciones + módulo de negocio exclusivo. ✅ Detailing, Wrapping, PPF y Restauración. ➤ Solicita info sin compromiso.",
-    keywords: "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, curso completo detailing, emprender lavadero rentable, aprender detailing desde cero",
+    title: "Formación Profesional Detailing | 4 Certificaciones + Negocio | Alicante",
+    description: "El programa de detailing más completo de España. 1 mes intensivo, 4 certificaciones, módulo de negocio y mentoría. Aprende técnica y cómo montar tu propio centro. Alicante.",
+    keywords: "formación profesional detailing, programa completo detailing, curso detailing certificación oficial, cómo montar negocio detailing, detailing negocio rentable",
     url: "/formacion-profesional-detailing",
     image: `${BASE_URL}/og-carrera-detailing.jpg`,
     price: "9997",
