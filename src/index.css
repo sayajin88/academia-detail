@@ -148,9 +148,17 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
+
+
+  /* Focus visible for keyboard navigation (a11y) */
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
 }
 
-/* Detail Park Brand Animations */
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
