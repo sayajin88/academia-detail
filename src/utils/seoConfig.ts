@@ -567,9 +567,9 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
   ];
 
   return {
-    title: "Cursos Detailing Profesional 2026 | Certificación y Práctica Real ★4.9",
-    description: `✅ ¿Quieres ser experto en detailing? Formación 100% PRÁCTICA en taller real. Detailing, Wrapping y PPF. +${totalAlumnos} alumnos certificados. Plazas limitadas — Reserva tu plaza hoy 🔥`,
-    keywords: `curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso detailing online vs presencial, bolsa empleo detailing, certificación oficial detailing, curso detailing Madrid, curso detailing Barcelona, curso detailing Alicante, financiar curso detailing, ${categoryKeywords}`,
+    title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
+    description: "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
+    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada",
     url: "/",
     price: details['curso-detailing-profesional']?.price ? String(details['curso-detailing-profesional'].price) : "2997",
     schema: [
