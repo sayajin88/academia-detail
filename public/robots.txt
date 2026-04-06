@@ -15,6 +15,13 @@ Allow: /curso-restauracion-vehiculos
 Allow: /quienes-somos
 Allow: /contacto
 
+# Landing pages ciudades
+Allow: /curso-detailing-madrid
+Allow: /curso-detailing-barcelona
+Allow: /curso-detailing-valencia
+Allow: /curso-detailing-sevilla
+Allow: /curso-detailing-bilbao
+
 # Eventos
 Allow: /jornada-zero-detailing
 Allow: /up-detail-evento
@@ -24,24 +31,28 @@ Allow: /glosario-detailing
 Allow: /glosario-detailing/
 Allow: /calculadora-dilucion-detailing
 
-# Directorio subrutas
+# Directorio
 Allow: /centros-detailing-espana/
+Allow: /centros-detailing-espana/unete
 
 # Blog
 Allow: /blog
 Allow: /blog/
 
-# Legal
+# Institucional
+Allow: /mapa-del-sitio
 Allow: /politica-privacidad
 
-# Bloquear endpoints internos
+# Bloquear endpoints internos y admin
 Disallow: /api/
+Disallow: /admin/
+
+# Bloquear parametros de busqueda duplicados
+Disallow: /*?s=
+Disallow: /*?q=
 
 # --- Sitemap Index ---
 Sitemap: https://academiadetail.com/sitemap.xml
-
-# Directorio
-Allow: /centros-detailing-espana/unete
 
 # --- Google ---
 User-agent: Googlebot
@@ -66,6 +77,7 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 Disallow: /api/
+Disallow: /admin/
 
 User-agent: ChatGPT-User
 Allow: /
@@ -73,10 +85,12 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 Disallow: /api/
+Disallow: /admin/
 
 User-agent: Claude-Web
 Allow: /
 Disallow: /api/
+Disallow: /admin/
 
 User-agent: Google-Extended
 Allow: /
