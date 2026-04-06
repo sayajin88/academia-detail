@@ -654,6 +654,7 @@ export const seoConfig = {
         price: 97,
         duration: "P1D",
         url: "/jornada-zero-detailing",
+        image: `${BASE_URL}/og-jornada-zero.jpg`,
         rating: { value: "4.9", count: "50" }
       }),
       generateEventSchema({
