@@ -969,8 +969,8 @@ export const seoConfig = {
     const formationDescriptions: Record<string, string> = {
       'curso-detailing-profesional': "🔥 Curso detailing intensivo: pulido profesional y tratamiento cerámico en 4 días. ✅ Aprende desde cero en taller real. Certificación oficial + Bolsa empleo. ⭐ 4.9/5. Solo 3 plazas — ¡Reserva ahora!",
       'curso-vinilado-vehiculos': "🔥 Curso wrapping intensivo: instalación de vinilo y cambio de color en 2-4 días. ✅ Desde cero en taller real. Certificación oficial + Bolsa empleo. ⭐ 4.8/5. ➤ ¡Plazas limitadas!",
-      'curso-ppf-proteccion-pintura': "🔥 Curso PPF intensivo: instalación de paint protection film en 2 días. ✅ Desde cero en taller real con vehículos de alta gama. Certificación + Bolsa empleo. ⭐ 4.9/5. ➤ ¡Reserva ya!",
-      'curso-restauracion-vehiculos': "🔥 Curso restauración intensivo: cuero, tapicerías y vehículos clásicos en 2 días. ✅ Desde cero en taller real. Certificación oficial. ⭐ 4.7/5. ➤ ¡Próximamente!"
+      'curso-ppf-proteccion-pintura': "Formación intensiva de 2 días en instalación profesional de PPF en Alicante. Aprende a proteger pintura de alta gama con láminas de protección. Práctica real en taller.",
+      'curso-restauracion-vehiculos': "Aprende técnicas avanzadas de restauración de vehículos clásicos y dañados en Alicante. Corrección de pintura, recuperación de interiores y tratamientos en taller real."
     };
 
     const formationImages: Record<string, string> = {
