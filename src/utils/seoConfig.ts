@@ -1,5 +1,5 @@
 import type { FormationModule, FormationInstructor, FormationLevel, FormationDetail } from '@/data/formationDetails';
-import { localBusinessSchema, websiteSchema } from '@/components/SEO';
+import { localBusinessSchema, websiteSchema, courseDetailingSchema, courseWrappingSchema, coursePPFSchema, courseRestauracionSchema, courseFormacionProfesionalSchema, courseJornadaZeroSchema } from '@/components/SEO';
 import { homeFaqs } from '@/components/home/HomeFAQ';
 import { carreraDetailingData } from '@/data/carreraDetailingData';
 import { faqs as jornadaCeroFaqs } from '@/components/FAQ';
@@ -635,6 +635,7 @@ export const seoConfig = {
     price: "97",
     schema: [
       localBusinessSchema,
+      courseJornadaZeroSchema,
       generateCourseSchemaEnhanced({
         name: "Jornada Zero - Experiencia de Inmersión Detailing",
         description: "Tu primer contacto con el detailing profesional en un taller 100% real. 1 día de experiencia práctica para descubrir si tienes mentalidad de empresario.",
@@ -749,6 +750,7 @@ export const seoConfig = {
     price: "9997",
     schema: [
       localBusinessSchema,
+      courseFormacionProfesionalSchema,
       generateCourseSchemaEnhanced({
         name: "Formación Profesional Detailing - Monta tu Centro de Detailing",
         description: "Programa premium de formación profesional en detailing. Formación intensiva con 4 certificaciones profesionales: Detailing, Wrapping, PPF y Restauración, más módulo de negocio exclusivo.",
@@ -1011,6 +1013,17 @@ export const seoConfig = {
       price: coursePrices[normalizedSlug] || String(formation.price),
       schema: [
         localBusinessSchema,
+        ...(({
+          'curso-detailing-profesional': courseDetailingSchema,
+          'curso-vinilado-vehiculos': courseWrappingSchema,
+          'curso-ppf-proteccion-pintura': coursePPFSchema,
+          'curso-restauracion-vehiculos': courseRestauracionSchema,
+        } as Record<string, object>)[normalizedSlug] ? [({
+          'curso-detailing-profesional': courseDetailingSchema,
+          'curso-vinilado-vehiculos': courseWrappingSchema,
+          'curso-ppf-proteccion-pintura': coursePPFSchema,
+          'curso-restauracion-vehiculos': courseRestauracionSchema,
+        } as Record<string, object>)[normalizedSlug]] : []),
         generateCourseSchemaEnhanced({
           name: formationNames[normalizedSlug] || formation.title,
           description: formationDescriptions[normalizedSlug] || formation.description,
