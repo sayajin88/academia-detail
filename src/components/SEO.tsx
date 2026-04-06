@@ -451,7 +451,12 @@ export const courseWrappingSchema = {
   "name": "Curso de Car Wrapping Profesional",
   "description": "Aprende instalación profesional de vinilos y cambio de color en vehículos. Técnicas esenciales y avanzadas de car wrapping en taller real con vehículos de clientes.",
   "url": "https://academiadetail.com/curso-vinilado-vehiculos/",
-  "image": "https://academiadetail.com/og-curso-wrapping.jpg",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://academiadetail.com/og-curso-wrapping.jpg",
+    "width": 1200,
+    "height": 630
+  },
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
