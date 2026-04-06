@@ -962,8 +962,8 @@ export const seoConfig = {
     const formationTitles: Record<string, string> = {
       'curso-detailing-profesional': "Curso Detailing Intensivo [4 Días] | Pulido + Cerámico | Certificación + Bolsa Empleo ★4.9",
       'curso-vinilado-vehiculos': "Curso Wrapping Intensivo [2-4 Días] | Vinilado Profesional | Certificación ★4.8",
-      'curso-ppf-proteccion-pintura': "Curso PPF Intensivo [2 Días] | Instalador Certificado | Desde Cero ★4.9",
-      'curso-restauracion-vehiculos': "Curso Restauración Intensivo [2 Días] | Cuero y Tapicerías | Certificación ★4.7"
+      'curso-ppf-proteccion-pintura': "Curso PPF Paint Protection Film en Alicante | Formación Presencial",
+      'curso-restauracion-vehiculos': "Curso Restauración de Vehículos en Alicante | Técnicas Avanzadas"
     };
 
     const formationDescriptions: Record<string, string> = {
