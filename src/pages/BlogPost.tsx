@@ -226,6 +226,15 @@ export default function BlogPostPage() {
                 <BlogShareButtons title={post.title} url={fullUrl} />
               </div>
 
+              {/* Related courses */}
+              <RelatedCourses
+                courses={[
+                  { name: 'Curso Detailing Profesional', url: '/curso-detailing-profesional', description: 'Pulido, cerámico y negocio' },
+                  { name: 'Curso Car Wrapping', url: '/curso-vinilado-vehiculos', description: 'Vinilado profesional de vehículos' },
+                  { name: 'Curso PPF', url: '/curso-ppf-proteccion-pintura', description: 'Protección de pintura PPF' },
+                ]}
+              />
+
               {/* CTA section (replaces newsletter) */}
               <BlogPostCTA />
 

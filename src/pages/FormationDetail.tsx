@@ -125,6 +125,11 @@ export default function FormationDetailPage() {
     <>
       <SEO {...formationSEO} />
       <MainLayout>
+        {slug && breadcrumbItems[slug] && (
+          <div className="container mx-auto px-4 pt-2">
+            <Breadcrumbs items={breadcrumbItems[slug]} />
+          </div>
+        )}
         <FormationHero formation={formation} onCTAClick={handleCTAClick} />
         <FormationAdvantages formation={formation} />
         {slug === 'curso-detailing-profesional' && (

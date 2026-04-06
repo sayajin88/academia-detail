@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
+import { CookieBanner } from "./components/shared/CookieBanner";
 
 // Lazy-loaded pages — code splitting por ruta
 const JornadasIntensivas = lazy(() => import("./pages/JornadasIntensivas"));

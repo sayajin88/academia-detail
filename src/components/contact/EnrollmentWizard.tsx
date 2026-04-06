@@ -133,9 +133,9 @@ const EnrollmentWizard = () => {
     }
 
     setIsSubmitting(false);
-    setShowSuccessModal(true);
     form.reset();
     setCurrentStep(0);
+    navigate('/gracias');
   };
 
   return (
