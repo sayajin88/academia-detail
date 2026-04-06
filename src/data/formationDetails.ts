@@ -482,8 +482,8 @@ export const formationDetails: Record<string, FormationDetail> = {
   'curso-ppf-proteccion-pintura': {
     id: 'curso-ppf-proteccion-pintura',
     slug: 'curso-ppf-proteccion-pintura',
-    title: 'Curso PPF Intensivo: Paint Protection Film Certificado',
-    subtitle: 'Formación Intensiva en Instalación de Lámina Protectora — Desde Cero',
+    title: 'Curso PPF Profesional | Instalación Paint Protection Film desde Cero',
+    subtitle: 'Aprende a Instalar PPF Profesionalmente en Taller Real con Certificación Oficial',
     description: 'Curso PPF intensivo de 2 días: instalación de paint protection film en vehículos de alta gama. Formación presencial 100% práctica en taller real con certificación oficial y bolsa de empleo. Aprende instalación de PPF desde cero con grupos reducidos.',
     duration: '2 Días de Formación Intensiva',
     price: 2397,
