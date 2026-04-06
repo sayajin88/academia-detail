@@ -482,15 +482,15 @@ export const formationDetails: Record<string, FormationDetail> = {
   'curso-ppf-proteccion-pintura': {
     id: 'curso-ppf-proteccion-pintura',
     slug: 'curso-ppf-proteccion-pintura',
-    title: 'Curso PPF Intensivo: Paint Protection Film Certificado',
-    subtitle: 'Formación Intensiva en Instalación de Lámina Protectora — Desde Cero',
+    title: 'Curso PPF Profesional | Instalación Paint Protection Film desde Cero',
+    subtitle: 'Aprende a Instalar PPF Profesionalmente en Taller Real con Certificación Oficial',
     description: 'Curso PPF intensivo de 2 días: instalación de paint protection film en vehículos de alta gama. Formación presencial 100% práctica en taller real con certificación oficial y bolsa de empleo. Aprende instalación de PPF desde cero con grupos reducidos.',
     duration: '2 Días de Formación Intensiva',
     price: 2397,
     originalPrice: 2897,
     image: ppfHero,
     heroAlt: 'Curso PPF intensivo - Instalación profesional de paint protection film certificada',
-    heroDescription: 'Curso PPF intensivo y presencial en instalación de Paint Protection Film. Aprende desde cero con experiencia real en taller, desde las técnicas básicas hasta las instalaciones más complejas. Grupos reducidos, certificación oficial y soporte post-curso.',
+    heroDescription: 'Curso PPF intensivo y presencial en instalación de Paint Protection Film. Aprende desde cero con experiencia real en taller, desde los fundamentos hasta las instalaciones más complejas en vehículos de alta gama. Grupos reducidos de máximo 3 alumnos, certificación oficial y soporte post-curso. Sin experiencia previa necesaria.',
     advantages: [
       { icon: 'Award', title: 'Certificado de reconocimiento del sector' },
       { icon: 'HeadphonesIcon', title: 'Asistencia posterior personalizada' },
@@ -501,8 +501,8 @@ export const formationDetails: Record<string, FormationDetail> = {
     ],
     levels: [
       {
-        title: 'Curso de Instalar de PPF',
-        subtitle: '2 Días de Formación Intensiva',
+        title: 'Curso de Instalación de PPF',
+        subtitle: '2 Días de Formación Intensiva en Paint Protection Film',
         duration: '2 Días',
         price: 2397,
         features: [
@@ -531,7 +531,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         description: 'Curso estructurado como una carrera universitaria. Preparación y seguridad imprescindibles para convertirte en un profesional.',
       },
       {
-        title: 'PPF en España',
+        title: 'PPF Profesional en España',
         description: 'Unificamos estándares en todo el sector de protección de pintura con objetivo de marco nacional reconocido.',
       },
       {
@@ -539,7 +539,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         description: 'Excelencia en el servicio con estándares de calidad europeos. Tu trabajo será reconocido por su profesionalidad.',
       },
     ],
-    certificationTitle: 'Certificación y Bolsa de Empleo',
+    certificationTitle: 'Certificado de Instalador PPF y Bolsa de Empleo',
     certificationText: 'Gracias a nuestra certificación otorgada por Detail Park, no solo tendrás un diploma que avale tus conocimientos, sino que te servirá para añadir valor a tu currículum y dar confianza a tus futuros clientes. Además, tendrás acceso a nuestra bolsa de empleo nacional para encontrar oportunidades laborales en el sector.',
     certificationImage: certificadoImg,
     forWho: [
@@ -623,11 +623,11 @@ export const formationDetails: Record<string, FormationDetail> = {
         answer: 'No necesitas llevar nada. Te proporcionaremos todo el material con las marcas más punteras del sector (XPEL, SunTek, 3M).',
       },
       {
-        question: '¿Cuánto tiempo dura el curso?',
+        question: '¿Cuánto dura el curso de instalación de PPF?',
         answer: 'Normalmente jornadas de 8 horas, con 1 hora para comer. La duración varía según el tipo de curso (1-5 días).',
       },
       {
-        question: '¿Saldré con una buena base de conocimiento?',
+        question: '¿Saldré preparado para instalar PPF profesionalmente?',
         answer: 'Saldrás preparado para poder instalar PPF profesionalmente gracias a la experiencia real en taller.',
       },
       {
@@ -635,7 +635,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         answer: 'Por supuesto, tendrás asesoramiento personalizado por un experto en PPF. ¡Nos tendrás siempre a tu disposición!',
       },
       {
-        question: '¿Hay algún tipo de certificado?',
+        question: '¿Qué certificado obtengo como instalador de PPF?',
         answer: 'Sí, al finalizar se entrega un certificado de asistencia con reconocimiento otorgado por Detail Park.',
       },
       {
@@ -651,7 +651,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         answer: 'Sí, nuestros alumnos certificados acceden a la bolsa de empleo nacional. La instalación de PPF es uno de los servicios premium con mayor demanda y rentabilidad, con menos competencia que otros servicios de detailing.',
       },
       {
-        question: '¿Es rentable especializarse en PPF?',
+        question: '¿Es rentable especializarse en instalación de PPF en España?',
         answer: 'Muy rentable. El PPF es un servicio premium con tickets altos (entre 500€ y 5.000€ por instalación) y la demanda crece cada año. Pocos profesionales están bien formados, lo que significa menos competencia y más oportunidades.',
       },
     ],
@@ -659,15 +659,15 @@ export const formationDetails: Record<string, FormationDetail> = {
   'curso-restauracion-vehiculos': {
     id: 'curso-restauracion-vehiculos',
     slug: 'curso-restauracion-vehiculos',
-    title: 'Curso Restauración Vehículos Intensivo: Clásicos, Cuero y Tapicerías',
-    subtitle: 'Formación Intensiva en Restauración de Cuero, Tapicerías y Recuperación de Vehículos',
+    title: 'Curso Restauración de Vehículos | Cuero, Tapicerías y Coches Clásicos',
+    subtitle: 'Aprende Técnicas Profesionales de Restauración en Taller Real — Desde Cero',
     description: 'Curso restauración de vehículos intensivo de 2 días: restauración de cuero, tapicerías, coches clásicos y dañados. Formación presencial 100% práctica con certificación oficial. Aprende restauración de tapicerías de cuero y recuperación profesional desde cero.',
     duration: '2 Días de Formación Intensiva',
     price: 449,
     originalPrice: 699,
     image: restauracionHero,
     heroAlt: 'Curso restauración vehículos intensivo - Restauración de cuero y tapicerías profesional',
-    heroDescription: 'Aprende a recuperar pinturas oxidadas, restaurar cuero y tapicerías, faros opacos, interiores deteriorados y plásticos dañados con técnicas profesionales. Curso intensivo desde cero con certificación oficial.',
+    heroDescription: 'Aprende a recuperar pinturas oxidadas, restaurar cuero y tapicerías, faros opacos, interiores deteriorados y plásticos dañados con técnicas profesionales. Formación 100% práctica desde cero con certificación oficial. Ideal para profesionales del detailing que quieren ampliar servicios.',
     comingSoon: true,
     forWho: [
       'Profesionales del detailing que quieren especializarse',
