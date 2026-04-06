@@ -2,7 +2,7 @@ import { lazy, Suspense, useMemo } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { HomeHero } from '@/components/home/HomeHero';
 import { FormationsGrid } from '@/components/home/FormationsGrid';
-import { SEO } from '@/components/SEO';
+import { SEO, localBusinessSchema, websiteSchema } from '@/components/SEO';
 import { generateHomeSEO } from '@/utils/seoConfig';
 import { formations } from '@/data/formations';
 import { formationDetails } from '@/data/formationDetails';

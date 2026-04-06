@@ -52,10 +52,11 @@ const generateAutoBreadcrumbs = (url: string, title: string) => {
   
   if (segments.length > 0) {
     let path = '';
-    segments.forEach((segment) => {
+    segments.forEach((segment, index) => {
       path += `/${segment}`;
+      const isLast = index === segments.length - 1;
       items.push({
-        name: URL_NAME_MAP[segment] || title,
+        name: URL_NAME_MAP[segment] || (isLast ? title : segment),
         item: `${BASE_URL}${path}`
       });
     });
@@ -76,7 +77,7 @@ const generateAutoBreadcrumbs = (url: string, title: string) => {
 // LocalBusiness Schema with complete business data for local SEO - Emphasizing REAL WORKSHOP
 export const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "EducationalOrganization", "AutoRepair"],
+  "@type": ["LocalBusiness", "EducationalOrganization"],
   "name": "Detail Park - Academia Detail",
   "alternateName": ["Academia Detail", "Detail Park", "Detail Park - Taller y Academia"],
   "slogan": "No enseñamos a lavar coches, formamos empresarios del Detailing",
@@ -84,9 +85,9 @@ export const localBusinessSchema = {
   "url": BASE_URL,
   "logo": {
     "@type": "ImageObject",
-    "url": DEFAULT_IMAGE,
-    "width": 1200,
-    "height": 630
+    "url": "https://academiadetail.com/favicon.svg",
+    "width": 512,
+    "height": 512
   },
   "image": DEFAULT_IMAGE,
   "telephone": "+34 622 773 555",
@@ -117,9 +118,8 @@ export const localBusinessSchema = {
     {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": "Saturday",
-      "opens": "00:00",
-      "closes": "00:00",
-      "description": "Previa cita"
+      "opens": "09:00",
+      "closes": "14:00"
     }
   ],
   "areaServed": {
@@ -238,6 +238,26 @@ export const localBusinessSchema = {
         }
       }
     ]
+  }
+};
+
+export const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://academiadetail.com/#website",
+  "url": "https://academiadetail.com",
+  "name": "Academia Detail",
+  "inLanguage": "es",
+  "publisher": {
+    "@id": "https://academiadetail.com/#organization"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://academiadetail.com/?s={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
   }
 };
 
