@@ -651,7 +651,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         answer: 'Sí, nuestros alumnos certificados acceden a la bolsa de empleo nacional. La instalación de PPF es uno de los servicios premium con mayor demanda y rentabilidad, con menos competencia que otros servicios de detailing.',
       },
       {
-        question: '¿Es rentable especializarse en PPF?',
+        question: '¿Es rentable especializarse en instalación de PPF en España?',
         answer: 'Muy rentable. El PPF es un servicio premium con tickets altos (entre 500€ y 5.000€ por instalación) y la demanda crece cada año. Pocos profesionales están bien formados, lo que significa menos competencia y más oportunidades.',
       },
     ],
