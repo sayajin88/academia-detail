@@ -659,8 +659,8 @@ export const formationDetails: Record<string, FormationDetail> = {
   'curso-restauracion-vehiculos': {
     id: 'curso-restauracion-vehiculos',
     slug: 'curso-restauracion-vehiculos',
-    title: 'Curso Restauración Vehículos Intensivo: Clásicos, Cuero y Tapicerías',
-    subtitle: 'Formación Intensiva en Restauración de Cuero, Tapicerías y Recuperación de Vehículos',
+    title: 'Curso Restauración de Vehículos | Cuero, Tapicerías y Coches Clásicos',
+    subtitle: 'Aprende Técnicas Profesionales de Restauración en Taller Real — Desde Cero',
     description: 'Curso restauración de vehículos intensivo de 2 días: restauración de cuero, tapicerías, coches clásicos y dañados. Formación presencial 100% práctica con certificación oficial. Aprende restauración de tapicerías de cuero y recuperación profesional desde cero.',
     duration: '2 Días de Formación Intensiva',
     price: 449,
