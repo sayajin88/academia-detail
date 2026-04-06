@@ -105,6 +105,26 @@ const EnrollmentWizard = () => {
       console.error("DB save exception:", err);
     }
 
+    // Send admin notification + client confirmation email
+    try {
+      await supabase.functions.invoke("send-contact-email", {
+        body: {
+          nombre: data.nombre,
+          apellidos: data.apellidos,
+          email: data.email,
+          telefono: data.telefono,
+          experiencia: data.experiencia,
+          centro_propio: data.centro_propio,
+          inversion: data.inversion,
+          tipo_formacion: data.tipo_formacion,
+          mensaje: data.mensaje || "",
+          source: "contact_page",
+        },
+      });
+    } catch (err) {
+      console.error("Email send error:", err);
+    }
+
     // Send to n8n webhook
     try {
       const webhookResponse = await fetch("https://dlopez88.app.n8n.cloud/webhook/contacto", {
