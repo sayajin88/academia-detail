@@ -85,9 +85,9 @@ export const localBusinessSchema = {
   "url": BASE_URL,
   "logo": {
     "@type": "ImageObject",
-    "url": DEFAULT_IMAGE,
-    "width": 1200,
-    "height": 630
+    "url": "https://academiadetail.com/favicon.svg",
+    "width": 512,
+    "height": 512
   },
   "image": DEFAULT_IMAGE,
   "telephone": "+34 622 773 555",
