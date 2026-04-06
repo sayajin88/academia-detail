@@ -118,9 +118,8 @@ export const localBusinessSchema = {
     {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": "Saturday",
-      "opens": "00:00",
-      "closes": "00:00",
-      "description": "Previa cita"
+      "opens": "09:00",
+      "closes": "14:00"
     }
   ],
   "areaServed": {
