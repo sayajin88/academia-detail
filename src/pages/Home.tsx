@@ -97,6 +97,18 @@ export default function Home() {
         <Suspense fallback={<SectionSkeleton />}>
           <HomeCTA />
         </Suspense>
+
+        {/* LATAM SEO text block */}
+        <section className="py-8 px-4 text-center text-sm text-muted-foreground">
+          <p>
+            ¿Buscas un <strong>curso de detailing de autos</strong> o
+            <strong> curso de car detailing</strong> desde Latinoamérica?
+            Formamos alumnos de México, Colombia, Argentina y Chile.
+            Nuestro programa incluye gestión de alojamiento y atención personalizada
+            para alumnos internacionales.{' '}
+            <a href="/contacto" className="underline">Contáctanos</a>.
+          </p>
+        </section>
       </MainLayout>
     </>
   );

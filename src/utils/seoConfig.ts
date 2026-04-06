@@ -569,7 +569,7 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
   return {
     title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
     description: "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
-    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada",
+    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso detailing para latinos",
     url: "/",
     price: details['curso-detailing-profesional']?.price ? String(details['curso-detailing-profesional'].price) : "2997",
     schema: [
@@ -595,7 +595,7 @@ export const seoConfig = {
   home: {
     title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
     description: "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
-    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada",
+    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso detailing para latinos",
     url: "/",
     price: "2997",
     schema: [
@@ -953,7 +953,7 @@ export const seoConfig = {
     const normalizedSlug = normalizeSlug(slug);
     
     const formationKeywords: Record<string, string> = {
-      'curso-detailing-profesional': "curso detailing intensivo, curso detailing profesional taller real, curso detailing desde cero, curso pulido profesional, curso pulido coche certificado, corrección pintura negocio, formación detailing presencial, curso detailing Alicante, curso detailing Madrid, curso detailing Barcelona, bolsa empleo detailing, certificación oficial detailing, curso tratamiento cerámico, escuela detailing España",
+      'curso-detailing-profesional': "curso detailing intensivo, curso detailing profesional taller real, curso detailing desde cero, curso pulido profesional, curso pulido coche certificado, corrección pintura negocio, formación detailing presencial, curso detailing Alicante, curso detailing Madrid, curso detailing Barcelona, bolsa empleo detailing, certificación oficial detailing, curso tratamiento cerámico, escuela detailing España, curso de car detailing, curso de detailing de autos, curso detailing online latinoamerica",
       'curso-vinilado-vehiculos': "curso wrapping intensivo, curso vinilado vehículos profesional, curso car wrapping negocio, rotulación coches formación, vinilado vehiculos formacion, wrap coche taller real, cambio color coche rentable, curso wrapping desde cero, curso wrapping Alicante, bolsa empleo wrapping",
       'curso-ppf-proteccion-pintura': "curso PPF protección pintura, formación paint protection film, aprender instalar PPF coches, curso PPF España presencial, curso vinilo protección pintura",
       'curso-restauracion-vehiculos': "curso restauración vehículos, formación restauración coches clásicos, curso corrección pintura avanzada, restauración interior exterior vehículos"
