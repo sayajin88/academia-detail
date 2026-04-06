@@ -33,6 +33,8 @@ const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminProfiles = lazy(() => import("./pages/AdminProfiles"));
 const AdminContacts = lazy(() => import("./pages/AdminContacts"));
 const AdminBlog = lazy(() => import("./pages/AdminBlog"));
+const Gracias = lazy(() => import("./pages/Gracias"));
+const MapaSitio = lazy(() => import("./pages/MapaSitio"));
 
 const queryClient = new QueryClient();
 
