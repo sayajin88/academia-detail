@@ -512,7 +512,12 @@ export const coursePPFSchema = {
   "name": "Curso de PPF - Paint Protection Film",
   "description": "Formación intensiva en instalación profesional de Paint Protection Film (PPF) en vehículos de alta gama. 2 días, 16 horas de práctica real en taller.",
   "url": "https://academiadetail.com/curso-ppf-proteccion-pintura/",
-  "image": "https://academiadetail.com/og-curso-ppf.jpg",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://academiadetail.com/og-curso-ppf.jpg",
+    "width": 1200,
+    "height": 630
+  },
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
