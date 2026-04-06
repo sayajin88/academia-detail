@@ -569,7 +569,7 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
   return {
     title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
     description: "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
-    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso detailing para latinos",
+    keywords: `curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso pulido coche certificado, curso tratamiento cerámico, curso coating cerámico coches, aprender aplicar cerámico coche, curso limpiar coches profesional, curso lavado profesional coches, escuela de detailing, cómo montar negocio detailing, cómo montar centro detailing, abrir taller detailing, montar negocio detailing España, negocio detailing rentable, emprender detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso detailing Alicante, academia detailing Alicante, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, ${categoryKeywords}`,
     url: "/",
     price: details['curso-detailing-profesional']?.price ? String(details['curso-detailing-profesional'].price) : "2997",
     schema: [
@@ -595,7 +595,7 @@ export const seoConfig = {
   home: {
     title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
     description: "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
-    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso detailing para latinos",
+    keywords: "curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso pulido coche certificado, curso tratamiento cerámico, curso coating cerámico coches, aprender aplicar cerámico coche, curso limpiar coches profesional, curso lavado profesional coches, escuela de detailing, cómo montar negocio detailing, cómo montar centro detailing, abrir taller detailing, montar negocio detailing España, negocio detailing rentable, emprender detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso detailing Alicante, academia detailing Alicante, curso detailing online vs presencial, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica",
     url: "/",
     price: "2997",
     schema: [
@@ -629,7 +629,7 @@ export const seoConfig = {
   jornadaCero: {
     title: "Jornada Zero Detailing — Iniciación 1 Día desde 97€ | Alicante",
     description: "Tu primer contacto con el detailing profesional por solo 97€. 1 día intensivo en taller real en Alicante. Descubre si el detailing es tu camino antes de invertir más.",
-    keywords: "curso iniciación detailing, curso detailing 1 día, jornada intensiva detailing principiantes, probar detailing profesional, detailing iniciación Alicante",
+    keywords: "jornada zero detailing, probar detailing barato, experiencia detailing inmersión, curso detailing económico, primer contacto detailing profesional, prueba antes de invertir detailing, curso detailing 1 día, curso iniciación detailing, jornada intensiva detailing principiantes, detailing iniciación Alicante, aprender detailing 1 día",
     url: "/jornada-zero-detailing",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
     price: "97",
@@ -670,7 +670,7 @@ export const seoConfig = {
   jornadasHub: {
     title: "Jornadas Intensivas de Detailing 2026 | Jornada Zero y Up Detail | Academia Detail",
     description: "🚀 Descubre el detailing en 1 día: Jornada Zero o Up Detail. Dos formatos, múltiples expertos, desde 97€ + IVA. ✅ Certificado incluido. ➤ Elige tu jornada.",
-    keywords: "jornada detailing, curso detailing 1 dia, iniciacion detailing, experiencia detailing, up detail, jornada zero, formacion detailing barata",
+    keywords: "jornada detailing, curso detailing 1 dia, iniciacion detailing, experiencia detailing, up detail, jornada zero, formacion detailing barata, curso iniciación detailing Alicante, jornada intensiva detailing principiantes, primer paso detailing profesional",
     url: "/curso-detailing-iniciacion",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
     price: "97",
@@ -744,7 +744,7 @@ export const seoConfig = {
   carreraDetailing: {
     title: "Formación Profesional Detailing | 4 Certificaciones + Negocio | Alicante",
     description: "El programa de detailing más completo de España. 1 mes intensivo, 4 certificaciones, módulo de negocio y mentoría. Aprende técnica y cómo montar tu propio centro. Alicante.",
-    keywords: "formación profesional detailing, programa completo detailing, curso detailing certificación oficial, cómo montar negocio detailing, detailing negocio rentable",
+    keywords: "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, abrir taller detailing España, montar negocio detailing rentable, emprender detailing, curso completo detailing, programa completo detailing, curso detailing certificación oficial, cómo montar un negocio de detailing desde cero, 4 certificaciones detailing, detailing negocio rentable, aprender detailing desde cero, curso detailing Alicante, formacion profesional detailing España",
     url: "/formacion-profesional-detailing",
     image: `${BASE_URL}/og-carrera-detailing.jpg`,
     price: "9997",
@@ -955,8 +955,8 @@ export const seoConfig = {
     const formationKeywords: Record<string, string> = {
       'curso-detailing-profesional': "curso detailing intensivo, curso detailing profesional taller real, curso detailing desde cero, curso pulido profesional, curso pulido coche certificado, corrección pintura negocio, formación detailing presencial, curso detailing Alicante, curso detailing Madrid, curso detailing Barcelona, bolsa empleo detailing, certificación oficial detailing, curso tratamiento cerámico, escuela detailing España, curso de car detailing, curso de detailing de autos, curso detailing online latinoamerica",
       'curso-vinilado-vehiculos': "curso wrapping intensivo, curso vinilado vehículos profesional, curso car wrapping negocio, rotulación coches formación, vinilado vehiculos formacion, wrap coche taller real, cambio color coche rentable, curso wrapping desde cero, curso wrapping Alicante, bolsa empleo wrapping",
-      'curso-ppf-proteccion-pintura': "curso PPF protección pintura, formación paint protection film, aprender instalar PPF coches, curso PPF España presencial, curso vinilo protección pintura",
-      'curso-restauracion-vehiculos': "curso restauración vehículos, formación restauración coches clásicos, curso corrección pintura avanzada, restauración interior exterior vehículos"
+      'curso-ppf-proteccion-pintura': "curso PPF intensivo, curso PPF taller real, instalación PPF formación, curso protección pintura profesional, curso PPF España presencial, curso PPF Alicante, aprender instalar PPF coches, curso vinilo protección pintura, PPF instalador certificado España, proteger pintura coche negocio, film transparente formación práctica, curso PPF desde cero, bolsa empleo PPF, paint protection film curso",
+      'curso-restauracion-vehiculos': "curso restauración vehículos intensivo, curso restauración vehículos Alicante, restauración cuero vehículo profesional, restauración tapicerías cuero, restaurar coches clásicos negocio, curso corrección pintura avanzada, restauración interior exterior vehículos curso, reparar pintura coche formación taller real, curso restauración desde cero, tapizado asientos coche, curso chapa y pintura detailing, formación restauración coches"
     };
 
     const formationTitles: Record<string, string> = {
