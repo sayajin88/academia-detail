@@ -627,9 +627,9 @@ export const seoConfig = {
   },
 
   jornadaCero: {
-    title: "Jornada Zero Detailing [97€] | Prueba Antes de Invertir",
-    description: "🚀 Tu primer contacto con el detailing profesional por solo 97€. Accede a herramientas de élite, toca máquinas reales y descubre si tienes mente de empresario. ➤ ¡Plazas limitadas!",
-    keywords: "jornada zero detailing, probar detailing barato, experiencia detailing inmersión, curso detailing económico, primer contacto detailing profesional, prueba antes de invertir detailing",
+    title: "Jornada Zero Detailing — Iniciación 1 Día desde 97€ | Alicante",
+    description: "Tu primer contacto con el detailing profesional por solo 97€. 1 día intensivo en taller real en Alicante. Descubre si el detailing es tu camino antes de invertir más.",
+    keywords: "curso iniciación detailing, curso detailing 1 día, jornada intensiva detailing principiantes, probar detailing profesional, detailing iniciación Alicante",
     url: "/jornada-zero-detailing",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
     price: "97",
