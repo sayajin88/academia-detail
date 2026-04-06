@@ -46,7 +46,7 @@ export function Footer() {
       {/* Decorative burgundy top line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
       <div className="container mx-auto px-4 py-12 md:py-16 pt-14 md:pt-18">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-2">
