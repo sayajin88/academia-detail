@@ -1,5 +1,5 @@
 import type { FormationModule, FormationInstructor, FormationLevel, FormationDetail } from '@/data/formationDetails';
-import { localBusinessSchema } from '@/components/SEO';
+import { localBusinessSchema, websiteSchema } from '@/components/SEO';
 import { homeFaqs } from '@/components/home/HomeFAQ';
 import { carreraDetailingData } from '@/data/carreraDetailingData';
 import { faqs as jornadaCeroFaqs } from '@/components/FAQ';
