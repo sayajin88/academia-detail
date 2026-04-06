@@ -77,7 +77,7 @@ const generateAutoBreadcrumbs = (url: string, title: string) => {
 // LocalBusiness Schema with complete business data for local SEO - Emphasizing REAL WORKSHOP
 export const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "EducationalOrganization", "AutoRepair"],
+  "@type": ["LocalBusiness", "EducationalOrganization"],
   "name": "Detail Park - Academia Detail",
   "alternateName": ["Academia Detail", "Detail Park", "Detail Park - Taller y Academia"],
   "slogan": "No enseñamos a lavar coches, formamos empresarios del Detailing",
