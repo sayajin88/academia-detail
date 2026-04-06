@@ -81,6 +81,10 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               
+              {/* Conversion & Utility Pages */}
+              <Route path="/gracias" element={<Gracias />} />
+              <Route path="/mapa-del-sitio" element={<MapaSitio />} />
+
               {/* Legal Pages */}
               <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
               
