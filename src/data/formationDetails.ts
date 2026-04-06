@@ -539,7 +539,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         description: 'Excelencia en el servicio con estándares de calidad europeos. Tu trabajo será reconocido por su profesionalidad.',
       },
     ],
-    certificationTitle: 'Certificación y Bolsa de Empleo',
+    certificationTitle: 'Certificado de Instalador PPF y Bolsa de Empleo',
     certificationText: 'Gracias a nuestra certificación otorgada por Detail Park, no solo tendrás un diploma que avale tus conocimientos, sino que te servirá para añadir valor a tu currículum y dar confianza a tus futuros clientes. Además, tendrás acceso a nuestra bolsa de empleo nacional para encontrar oportunidades laborales en el sector.',
     certificationImage: certificadoImg,
     forWho: [
