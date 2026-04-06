@@ -574,21 +574,7 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
     price: details['curso-detailing-profesional']?.price ? String(details['curso-detailing-profesional'].price) : "2997",
     schema: [
       localBusinessSchema,
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Detail Park - Academia Detail",
-        "alternateName": "Detail Park Academy",
-        "url": BASE_URL,
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": `${BASE_URL}/blog?q={search_term_string}`
-          },
-          "query-input": "required name=search_term_string"
-        }
-      },
+      websiteSchema,
       { "@context": "https://schema.org", "@type": "ItemList", "name": "Navegación Principal - Academia Detail", "itemListElement": navItems },
       courseItemList,
       generateWebPageSchema({
