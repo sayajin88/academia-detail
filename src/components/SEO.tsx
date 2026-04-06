@@ -575,7 +575,12 @@ export const courseRestauracionSchema = {
   "name": "Curso de Restauración de Vehículos",
   "description": "Técnicas avanzadas de restauración de vehículos clásicos y dañados. Corrección profunda de pintura, eliminación de óxido y recuperación de interiores en taller real.",
   "url": "https://academiadetail.com/curso-restauracion-vehiculos/",
-  "image": "https://academiadetail.com/og-curso-restauracion.jpg",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://academiadetail.com/og-curso-restauracion.jpg",
+    "width": 1200,
+    "height": 630
+  },
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
