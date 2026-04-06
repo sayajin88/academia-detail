@@ -1,74 +1,37 @@
 
 
-## Plan: Contenido Único por Ciudad + Estrategia de Keywords + Footer
+## Plan: Actualizar sitemap.xml y robots.txt
 
-### Problema actual de contenido duplicado
+### Cambios necesarios
 
-La plantilla actual tiene **3 secciones idénticas** en todas las ciudades (solo cambia el nombre de la ciudad):
-- La sección "¿Por qué formarte en Alicante?" tiene los **mismos 3 bloques** (Taller 100% real, Todo incluido, Certificación nacional) con texto idéntico palabra por palabra
-- El CTA final es idéntico
-- La estructura hero repite el mismo patrón con solo el nombre de ciudad intercambiado
+#### 1. `public/robots.txt` — Añadir rutas faltantes
 
-Google detecta esto como **contenido thin/boilerplate** con sustitución de variables. Riesgo alto de canibalización y penalización.
+Faltan estas rutas y directivas:
+- Landing pages de ciudades: `Allow: /curso-detailing-madrid`, etc.
+- Página `/gracias` y `/mapa-del-sitio`
+- Bloquear `/admin/` (ruta de admin que existe en el proyecto)
+- Bloquear parámetros de búsqueda duplicados: `Disallow: /*?s=` y `Disallow: /*?q=`
+- Mover `Allow: /centros-detailing-espana/unete` dentro de la sección de directorio (actualmente está desordenado, aparece después del Sitemap)
 
-### Cambios propuestos
+#### 2. `public/sitemap.xml` — Añadir sub-sitemaps dinámicos
 
-#### 1. Añadir campos únicos por ciudad al `cityData`
+El sitemap index solo referencia `sitemap-pages.xml`. Faltan los 3 sub-sitemaps servidos por edge functions:
+- `sitemap-blog.xml` (proxy de `blog-sitemap`)
+- `sitemap-glossary.xml` (proxy de `glossary-sitemap`)
+- `sitemap-directory.xml` (proxy de `directory-sitemap`)
 
-Cada ciudad tendrá contenido exclusivo adicional:
+#### 3. `public/sitemap-pages.xml` — Añadir páginas faltantes
 
-- **`ventajasUnicas`**: Array de 3 objetos `{titulo, descripcion}` con ventajas específicas para esa ciudad (reemplaza los 3 bloques genéricos idénticos). Ejemplo: Madrid habla de "mercado de lujo en La Moraleja", Barcelona de "demanda en Sant Cugat", Valencia de "proximidad sin alojamiento", etc.
-- **`datosLocales`**: Datos de mercado específicos (n.o de centros detailing en la ciudad, ticket medio local, crecimiento interanual local)
-- **`serviciosMasDemandados`**: Los 3 servicios más demandados en esa zona específica, con porcentaje de demanda (genera contenido numérico único)
-- **`alumnosGraduados`**: Número de alumnos de esa ciudad concreta
-- **`zonasNegocio`**: Array de barrios/zonas de alto potencial exclusivas de la ciudad
+Falta la página `/gracias` (priority 0.2, noindex en SEO pero presente para tracking).
 
-#### 2. Añadir una sección nueva "Mercado del detailing en [Ciudad]"
+Realmente `/gracias` no debería estar en el sitemap ya que es una página de conversión sin valor SEO. No la añadimos.
 
-Sección con datos locales exclusivos que no se repite entre ciudades:
-- Estadísticas del mercado local (vehículos premium, competencia, ticket medio)
-- Zonas de mayor demanda en la ciudad
-- Servicios más demandados en la región
-
-Esto genera **contenido indexable único** que diferencia cada URL.
-
-#### 3. Sección "Alumnos de [Ciudad]" con contador
-
-Bloque con el número de alumnos graduados de esa ciudad + mención a las zonas donde operan.
-
-#### 4. Estrategia de keywords en headings
-
-Actualmente los H1/H2 usan patrones genéricos. Se cambiará a:
-- **H1**: "Curso de Detailing Profesional en {Ciudad}" (no "para profesionales de")  
-- **H2s**: Incluir variaciones long-tail: "Formación detailing {Ciudad}", "Aprender detailing en {Ciudad}", "Academia detailing {Ciudad}"
-- Añadir campo **`h1`** y **`h2Mercado`** al cityData para que cada heading sea único y no un simple find-replace
-
-#### 5. Schema FAQPage por ciudad
-
-Añadir JSON-LD `FAQPage` schema con las preguntas específicas de cada ciudad para que Google muestre rich results diferenciados por URL.
-
-#### 6. Footer: sección "Cursos por ciudad"
-
-Añadir un nuevo bloque en el Footer con enlaces a las 5 ciudades:
-
-```
-Cursos por ciudad
-├── Detailing Madrid
-├── Detailing Barcelona  
-├── Detailing Valencia
-├── Detailing Sevilla
-└── Detailing Bilbao
-```
-
-Esto aporta enlazado interno permanente desde todas las páginas.
+Sin cambios adicionales necesarios — las ciudades y mapa del sitio ya están incluidos.
 
 ### Archivos a modificar
 
 | Archivo | Cambio |
 |---|---|
-| `src/pages/CursoDetailingCiudad.tsx` | Añadir campos únicos al cityData, nueva sección "Mercado local", headings con keywords, schema FAQPage |
-| `src/components/layout/Footer.tsx` | Añadir columna "Cursos por ciudad" con enlaces a las 5 landing pages |
-
-### Archivos NO modificados
-- Ningún otro archivo de estilos, rutas o lógica
+| `public/robots.txt` | Añadir ciudades, bloquear `/admin/` y parámetros de query, reordenar directivas |
+| `public/sitemap.xml` | Añadir los 3 sub-sitemaps (blog, glosario, directorio) |
 
