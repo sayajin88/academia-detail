@@ -1,5 +1,5 @@
 import type { FormationModule, FormationInstructor, FormationLevel, FormationDetail } from '@/data/formationDetails';
-import { localBusinessSchema, websiteSchema } from '@/components/SEO';
+import { localBusinessSchema, websiteSchema, courseDetailingSchema, courseWrappingSchema, coursePPFSchema, courseRestauracionSchema, courseFormacionProfesionalSchema, courseJornadaZeroSchema } from '@/components/SEO';
 import { homeFaqs } from '@/components/home/HomeFAQ';
 import { carreraDetailingData } from '@/data/carreraDetailingData';
 import { faqs as jornadaCeroFaqs } from '@/components/FAQ';
