@@ -71,6 +71,10 @@ export function FormationHero({ formation, onCTAClick }: FormationHeroProps) {
           <h2 className="sr-only">
             {formation.slug === 'curso-detailing-profesional' 
               ? 'Curso de pulido de coches y tratamiento cerámico profesional en España'
+              : formation.slug === 'curso-ppf-proteccion-pintura'
+              ? 'Aprende a instalar paint protection film profesionalmente en España'
+              : formation.slug === 'curso-restauracion-vehiculos'
+              ? 'Curso de restauración de vehículos clásicos, cuero y tapicerías en España'
               : formation.subtitle}
           </h2>
           <p className="text-xl md:text-2xl text-white/70 mb-6">

@@ -667,7 +667,7 @@ export const formationDetails: Record<string, FormationDetail> = {
     originalPrice: 699,
     image: restauracionHero,
     heroAlt: 'Curso restauración vehículos intensivo - Restauración de cuero y tapicerías profesional',
-    heroDescription: 'Aprende a recuperar pinturas oxidadas, restaurar cuero y tapicerías, faros opacos, interiores deteriorados y plásticos dañados con técnicas profesionales. Curso intensivo desde cero con certificación oficial.',
+    heroDescription: 'Aprende a recuperar pinturas oxidadas, restaurar cuero y tapicerías, faros opacos, interiores deteriorados y plásticos dañados con técnicas profesionales. Formación 100% práctica desde cero con certificación oficial. Ideal para profesionales del detailing que quieren ampliar servicios.',
     comingSoon: true,
     forWho: [
       'Profesionales del detailing que quieren especializarse',
