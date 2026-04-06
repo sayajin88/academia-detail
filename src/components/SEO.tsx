@@ -52,10 +52,11 @@ const generateAutoBreadcrumbs = (url: string, title: string) => {
   
   if (segments.length > 0) {
     let path = '';
-    segments.forEach((segment) => {
+    segments.forEach((segment, index) => {
       path += `/${segment}`;
+      const isLast = index === segments.length - 1;
       items.push({
-        name: URL_NAME_MAP[segment] || title,
+        name: URL_NAME_MAP[segment] || (isLast ? title : segment),
         item: `${BASE_URL}${path}`
       });
     });
