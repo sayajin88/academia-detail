@@ -241,6 +241,26 @@ export const localBusinessSchema = {
   }
 };
 
+export const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://academiadetail.com/#website",
+  "url": "https://academiadetail.com",
+  "name": "Academia Detail",
+  "inLanguage": "es",
+  "publisher": {
+    "@id": "https://academiadetail.com/#organization"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://academiadetail.com/?s={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
+
 export const SEO = ({
   title,
   description,
