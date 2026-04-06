@@ -437,6 +437,7 @@ export const generateWebPageSchema = (page: {
   name: string;
   description: string;
   url: string;
+  image?: string;
 }) => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -448,6 +449,14 @@ export const generateWebPageSchema = (page: {
     "name": "Detail Park - Academia Detail",
     "url": BASE_URL
   },
+  ...(page.image && {
+    "primaryImageOfPage": {
+      "@type": "ImageObject",
+      "url": page.image,
+      "width": 1200,
+      "height": 630
+    }
+  }),
   "speakable": {
     "@type": "SpeakableSpecification",
     "cssSelector": ["h1", ".hero-description", ".section-heading"]
