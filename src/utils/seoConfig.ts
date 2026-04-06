@@ -635,6 +635,7 @@ export const seoConfig = {
     price: "97",
     schema: [
       localBusinessSchema,
+      courseJornadaZeroSchema,
       generateCourseSchemaEnhanced({
         name: "Jornada Zero - Experiencia de Inmersión Detailing",
         description: "Tu primer contacto con el detailing profesional en un taller 100% real. 1 día de experiencia práctica para descubrir si tienes mentalidad de empresario.",
