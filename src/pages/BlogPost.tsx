@@ -10,6 +10,7 @@ import { BlogRelatedPosts } from '@/components/blog/BlogRelatedPosts';
 import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
 import { BlogDirectoryBanner } from '@/components/blog/BlogDirectoryBanner';
+import { RelatedCourses } from '@/components/shared/RelatedCourses';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
