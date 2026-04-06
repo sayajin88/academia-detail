@@ -526,6 +526,7 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
       return {
         "@type": "ListItem",
         "position": i + 1,
+        "name": detail?.title || f.title,
         "item": {
           "@type": "Course",
           "name": detail?.title || f.title,
@@ -654,6 +655,7 @@ export const seoConfig = {
         price: 97,
         duration: "P1D",
         url: "/jornada-zero-detailing",
+        image: `${BASE_URL}/og-jornada-zero.jpg`,
         rating: { value: "4.9", count: "50" }
       }),
       generateEventSchema({
@@ -767,6 +769,7 @@ export const seoConfig = {
         price: 9997,
         duration: "P30D",
         url: "/formacion-profesional-detailing",
+        image: `${BASE_URL}/og-carrera-detailing.jpg`,
         rating: { value: "4.9", count: "89" }
       }),
       // EducationalOccupationalProgram - More specific than Course for full programs
