@@ -55,8 +55,8 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <CookieBanner />
         <BrowserRouter>
+          <CookieBanner />
           <Suspense fallback={<PageFallback />}>
             <Routes>
               {/* Main Routes - New SEO-optimized slugs */}
