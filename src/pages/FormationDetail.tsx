@@ -27,6 +27,26 @@ import { getFormationBySlug } from '@/data/formationDetails';
 
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
+import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
+
+const breadcrumbItems: Record<string, { name: string; url: string }[]> = {
+  'curso-detailing-profesional': [
+    { name: 'Formaciones', url: '/#formaciones' },
+    { name: 'Curso Detailing Profesional', url: '/curso-detailing-profesional' },
+  ],
+  'curso-vinilado-vehiculos': [
+    { name: 'Formaciones', url: '/#formaciones' },
+    { name: 'Curso Car Wrapping', url: '/curso-vinilado-vehiculos' },
+  ],
+  'curso-ppf-proteccion-pintura': [
+    { name: 'Formaciones', url: '/#formaciones' },
+    { name: 'Curso PPF', url: '/curso-ppf-proteccion-pintura' },
+  ],
+  'curso-restauracion-vehiculos': [
+    { name: 'Formaciones', url: '/#formaciones' },
+    { name: 'Curso Restauración', url: '/curso-restauracion-vehiculos' },
+  ],
+};
 
 // Video assets for detailing course (vertical 9:16 format)
 import detailCursoVideo from '@/assets/detail-curso-v2.webm';
