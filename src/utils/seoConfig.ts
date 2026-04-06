@@ -567,9 +567,9 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
   ];
 
   return {
-    title: "Cursos Detailing Profesional 2026 | Certificación y Práctica Real ★4.9",
-    description: `✅ ¿Quieres ser experto en detailing? Formación 100% PRÁCTICA en taller real. Detailing, Wrapping y PPF. +${totalAlumnos} alumnos certificados. Plazas limitadas — Reserva tu plaza hoy 🔥`,
-    keywords: `curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso detailing online vs presencial, bolsa empleo detailing, certificación oficial detailing, curso detailing Madrid, curso detailing Barcelona, curso detailing Alicante, financiar curso detailing, ${categoryKeywords}`,
+    title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
+    description: "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
+    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada",
     url: "/",
     price: details['curso-detailing-profesional']?.price ? String(details['curso-detailing-profesional'].price) : "2997",
     schema: [
@@ -593,9 +593,9 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
 export const seoConfig = {
   // Legacy static fallback - prefer generateHomeSEO()
   home: {
-    title: "Cursos Detailing Profesional 2026 | Certificación y Práctica Real ★4.9",
-    description: "✅ ¿Quieres ser experto en detailing? Formación 100% PRÁCTICA en taller real. Detailing, Wrapping y PPF. +174 alumnos certificados. Plazas limitadas — Reserva tu plaza hoy 🔥",
-    keywords: "curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso tratamiento cerámico, escuela de detailing, cómo montar negocio detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso corrección pintura, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona",
+    title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
+    description: "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
+    keywords: "cursos detailing profesional, academia detailing España, curso detailing Alicante, aprender detailing desde cero, formación detailing certificada",
     url: "/",
     price: "2997",
     schema: [
@@ -627,9 +627,9 @@ export const seoConfig = {
   },
 
   jornadaCero: {
-    title: "Jornada Zero Detailing [97€] | Prueba Antes de Invertir",
-    description: "🚀 Tu primer contacto con el detailing profesional por solo 97€. Accede a herramientas de élite, toca máquinas reales y descubre si tienes mente de empresario. ➤ ¡Plazas limitadas!",
-    keywords: "jornada zero detailing, probar detailing barato, experiencia detailing inmersión, curso detailing económico, primer contacto detailing profesional, prueba antes de invertir detailing",
+    title: "Jornada Zero Detailing — Iniciación 1 Día desde 97€ | Alicante",
+    description: "Tu primer contacto con el detailing profesional por solo 97€. 1 día intensivo en taller real en Alicante. Descubre si el detailing es tu camino antes de invertir más.",
+    keywords: "curso iniciación detailing, curso detailing 1 día, jornada intensiva detailing principiantes, probar detailing profesional, detailing iniciación Alicante",
     url: "/jornada-zero-detailing",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
     price: "97",
@@ -742,9 +742,9 @@ export const seoConfig = {
 
 
   carreraDetailing: {
-    title: "Monta Tu Centro de Detailing | Formación 1 Mes",
-    description: "🔥 Programa completo para montar tu lavadero de coches: 4 certificaciones + módulo de negocio exclusivo. ✅ Detailing, Wrapping, PPF y Restauración. ➤ Solicita info sin compromiso.",
-    keywords: "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, curso completo detailing, emprender lavadero rentable, aprender detailing desde cero",
+    title: "Formación Profesional Detailing | 4 Certificaciones + Negocio | Alicante",
+    description: "El programa de detailing más completo de España. 1 mes intensivo, 4 certificaciones, módulo de negocio y mentoría. Aprende técnica y cómo montar tu propio centro. Alicante.",
+    keywords: "formación profesional detailing, programa completo detailing, curso detailing certificación oficial, cómo montar negocio detailing, detailing negocio rentable",
     url: "/formacion-profesional-detailing",
     image: `${BASE_URL}/og-carrera-detailing.jpg`,
     price: "9997",
@@ -955,22 +955,22 @@ export const seoConfig = {
     const formationKeywords: Record<string, string> = {
       'curso-detailing-profesional': "curso detailing intensivo, curso detailing profesional taller real, curso detailing desde cero, curso pulido profesional, curso pulido coche certificado, corrección pintura negocio, formación detailing presencial, curso detailing Alicante, curso detailing Madrid, curso detailing Barcelona, bolsa empleo detailing, certificación oficial detailing, curso tratamiento cerámico, escuela detailing España",
       'curso-vinilado-vehiculos': "curso wrapping intensivo, curso vinilado vehículos profesional, curso car wrapping negocio, rotulación coches formación, vinilado vehiculos formacion, wrap coche taller real, cambio color coche rentable, curso wrapping desde cero, curso wrapping Alicante, bolsa empleo wrapping",
-      'curso-ppf-proteccion-pintura': "curso PPF intensivo, curso PPF taller real, instalación PPF formación, curso protección pintura profesional, PPF instalador certificado España, proteger pintura coche negocio, film transparente formación práctica, curso PPF desde cero, curso PPF Alicante, bolsa empleo PPF",
-      'curso-restauracion-vehiculos': "curso restauración vehículos intensivo, restauración cuero vehículo, restauración tapicerías cuero, restaurar coches clásicos negocio, curso chapa y pintura, reparar pintura coche formación taller real, curso restauración desde cero, tapizado asientos coche"
+      'curso-ppf-proteccion-pintura': "curso PPF protección pintura, formación paint protection film, aprender instalar PPF coches, curso PPF España presencial, curso vinilo protección pintura",
+      'curso-restauracion-vehiculos': "curso restauración vehículos, formación restauración coches clásicos, curso corrección pintura avanzada, restauración interior exterior vehículos"
     };
 
     const formationTitles: Record<string, string> = {
       'curso-detailing-profesional': "Curso Detailing Intensivo [4 Días] | Pulido + Cerámico | Certificación + Bolsa Empleo ★4.9",
       'curso-vinilado-vehiculos': "Curso Wrapping Intensivo [2-4 Días] | Vinilado Profesional | Certificación ★4.8",
-      'curso-ppf-proteccion-pintura': "Curso PPF Intensivo [2 Días] | Instalador Certificado | Desde Cero ★4.9",
-      'curso-restauracion-vehiculos': "Curso Restauración Intensivo [2 Días] | Cuero y Tapicerías | Certificación ★4.7"
+      'curso-ppf-proteccion-pintura': "Curso PPF Paint Protection Film en Alicante | Formación Presencial",
+      'curso-restauracion-vehiculos': "Curso Restauración de Vehículos en Alicante | Técnicas Avanzadas"
     };
 
     const formationDescriptions: Record<string, string> = {
       'curso-detailing-profesional': "🔥 Curso detailing intensivo: pulido profesional y tratamiento cerámico en 4 días. ✅ Aprende desde cero en taller real. Certificación oficial + Bolsa empleo. ⭐ 4.9/5. Solo 3 plazas — ¡Reserva ahora!",
       'curso-vinilado-vehiculos': "🔥 Curso wrapping intensivo: instalación de vinilo y cambio de color en 2-4 días. ✅ Desde cero en taller real. Certificación oficial + Bolsa empleo. ⭐ 4.8/5. ➤ ¡Plazas limitadas!",
-      'curso-ppf-proteccion-pintura': "🔥 Curso PPF intensivo: instalación de paint protection film en 2 días. ✅ Desde cero en taller real con vehículos de alta gama. Certificación + Bolsa empleo. ⭐ 4.9/5. ➤ ¡Reserva ya!",
-      'curso-restauracion-vehiculos': "🔥 Curso restauración intensivo: cuero, tapicerías y vehículos clásicos en 2 días. ✅ Desde cero en taller real. Certificación oficial. ⭐ 4.7/5. ➤ ¡Próximamente!"
+      'curso-ppf-proteccion-pintura': "Formación intensiva de 2 días en instalación profesional de PPF en Alicante. Aprende a proteger pintura de alta gama con láminas de protección. Práctica real en taller.",
+      'curso-restauracion-vehiculos': "Aprende técnicas avanzadas de restauración de vehículos clásicos y dañados en Alicante. Corrección de pintura, recuperación de interiores y tratamientos en taller real."
     };
 
     const formationImages: Record<string, string> = {
