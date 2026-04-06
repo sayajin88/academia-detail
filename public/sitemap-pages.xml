@@ -170,6 +170,42 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- LANDING PAGES CIUDADES -->
+  <url>
+    <loc>https://academiadetail.com/curso-detailing-madrid</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://academiadetail.com/curso-detailing-barcelona</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://academiadetail.com/curso-detailing-valencia</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://academiadetail.com/curso-detailing-sevilla</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://academiadetail.com/curso-detailing-bilbao</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- LEGAL -->
   <url>
     <loc>https://academiadetail.com/politica-privacidad</loc>
