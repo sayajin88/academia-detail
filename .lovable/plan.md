@@ -1,37 +1,56 @@
 
 
-## Plan: Actualizar sitemap.xml y robots.txt
+## Plan: Notificar a admin@detailpark.com en cada nuevo lead
 
-### Cambios necesarios
+### Situación actual
 
-#### 1. `public/robots.txt` — Añadir rutas faltantes
+- La edge function `send-contact-email` ya existe y envía emails bien formateados (admin + confirmación al cliente) vía Resend.
+- El formulario activo (`EnrollmentWizard.tsx`) guarda en DB y envía al webhook de n8n, pero **nunca llama a `send-contact-email`**.
+- La variable `ADMIN_EMAIL` en secrets está configurada (actualmente apunta a `info@academiadetail.com` por defecto).
 
-Faltan estas rutas y directivas:
-- Landing pages de ciudades: `Allow: /curso-detailing-madrid`, etc.
-- Página `/gracias` y `/mapa-del-sitio`
-- Bloquear `/admin/` (ruta de admin que existe en el proyecto)
-- Bloquear parámetros de búsqueda duplicados: `Disallow: /*?s=` y `Disallow: /*?q=`
-- Mover `Allow: /centros-detailing-espana/unete` dentro de la sección de directorio (actualmente está desordenado, aparece después del Sitemap)
+### Cambios
 
-#### 2. `public/sitemap.xml` — Añadir sub-sitemaps dinámicos
+#### 1. Actualizar `ADMIN_EMAIL` secret → `admin@detailpark.com`
+Usar la herramienta de secrets para actualizar el valor a `admin@detailpark.com`.
 
-El sitemap index solo referencia `sitemap-pages.xml`. Faltan los 3 sub-sitemaps servidos por edge functions:
-- `sitemap-blog.xml` (proxy de `blog-sitemap`)
-- `sitemap-glossary.xml` (proxy de `glossary-sitemap`)
-- `sitemap-directory.xml` (proxy de `directory-sitemap`)
+#### 2. Añadir llamada a `send-contact-email` en `EnrollmentWizard.tsx`
+Después del insert en DB (línea ~103), añadir una llamada a la edge function existente:
 
-#### 3. `public/sitemap-pages.xml` — Añadir páginas faltantes
+```typescript
+// Después del DB insert, enviar emails
+try {
+  await supabase.functions.invoke("send-contact-email", {
+    body: {
+      nombre: data.nombre,
+      apellidos: data.apellidos,
+      email: data.email,
+      telefono: data.telefono,
+      experiencia: data.experiencia,
+      centro_propio: data.centro_propio,
+      inversion: data.inversion,
+      tipo_formacion: data.tipo_formacion,
+      mensaje: data.mensaje || "",
+      source: "contact_page",
+    },
+  });
+} catch (err) {
+  console.error("Email send error:", err);
+}
+```
 
-Falta la página `/gracias` (priority 0.2, noindex en SEO pero presente para tracking).
-
-Realmente `/gracias` no debería estar en el sitemap ya que es una página de conversión sin valor SEO. No la añadimos.
-
-Sin cambios adicionales necesarios — las ciudades y mapa del sitio ya están incluidos.
+Esto reutiliza la edge function existente que ya:
+- Envía email completo al admin con todos los campos formateados
+- Envía confirmación al cliente
+- Usa Resend con el dominio verificado `formacion@academiadetail.com`
 
 ### Archivos a modificar
 
 | Archivo | Cambio |
 |---|---|
-| `public/robots.txt` | Añadir ciudades, bloquear `/admin/` y parámetros de query, reordenar directivas |
-| `public/sitemap.xml` | Añadir los 3 sub-sitemaps (blog, glosario, directorio) |
+| `src/components/contact/EnrollmentWizard.tsx` | Añadir invocación de `send-contact-email` tras el DB insert |
+| Secret `ADMIN_EMAIL` | Actualizar valor a `admin@detailpark.com` |
+
+### Sin cambios
+- No se toca la edge function `send-contact-email` (ya funciona correctamente)
+- No se elimina el webhook de n8n (sigue operativo en paralelo)
 
