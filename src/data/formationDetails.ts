@@ -623,7 +623,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         answer: 'No necesitas llevar nada. Te proporcionaremos todo el material con las marcas más punteras del sector (XPEL, SunTek, 3M).',
       },
       {
-        question: '¿Cuánto tiempo dura el curso?',
+        question: '¿Cuánto dura el curso de instalación de PPF?',
         answer: 'Normalmente jornadas de 8 horas, con 1 hora para comer. La duración varía según el tipo de curso (1-5 días).',
       },
       {
