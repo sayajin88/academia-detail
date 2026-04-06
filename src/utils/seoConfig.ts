@@ -670,7 +670,7 @@ export const seoConfig = {
   jornadasHub: {
     title: "Jornadas Intensivas de Detailing 2026 | Jornada Zero y Up Detail | Academia Detail",
     description: "🚀 Descubre el detailing en 1 día: Jornada Zero o Up Detail. Dos formatos, múltiples expertos, desde 97€ + IVA. ✅ Certificado incluido. ➤ Elige tu jornada.",
-    keywords: "jornada detailing, curso detailing 1 dia, iniciacion detailing, experiencia detailing, up detail, jornada zero, formacion detailing barata",
+    keywords: "jornada detailing, curso detailing 1 dia, iniciacion detailing, experiencia detailing, up detail, jornada zero, formacion detailing barata, curso iniciación detailing Alicante, jornada intensiva detailing principiantes, primer paso detailing profesional",
     url: "/curso-detailing-iniciacion",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
     price: "97",
