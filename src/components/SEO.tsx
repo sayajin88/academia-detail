@@ -378,4 +378,337 @@ export const SEO = ({
 // Alias for backwards compatibility
 export const organizationSchema = localBusinessSchema;
 
+// ─── SCHEMAS INDIVIDUALES POR CURSO ───────────────────────────────────────
+
+export const courseDetailingSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://academiadetail.com/curso-detailing-profesional/#course",
+  "name": "Curso de Detailing Profesional",
+  "description": "Formación 100% práctica en lavado profesional, descontaminación, pulido, corrección de pintura y protección cerámica. Aprende en un taller real con clientes de alta gama en Alicante.",
+  "url": "https://academiadetail.com/curso-detailing-profesional/",
+  "image": "https://academiadetail.com/og-curso-detailing.jpg",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://academiadetail.com/#organization",
+    "name": "Academia Detail",
+    "url": "https://academiadetail.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Paid",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2025-01-01",
+    "url": "https://academiadetail.com/curso-detailing-profesional/"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "location": {
+      "@type": "Place",
+      "name": "Detail Park",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Metalurgias, 13",
+        "addressLocality": "Alicante",
+        "postalCode": "03008",
+        "addressCountry": "ES"
+      }
+    },
+    "inLanguage": "es",
+    "courseWorkload": "PT20H"
+  },
+  "teaches": [
+    "Lavado profesional de vehículos",
+    "Descontaminación química y mecánica",
+    "Corrección de pintura con pulidora",
+    "Aplicación de tratamiento cerámico",
+    "Presupuestación de servicios detailing"
+  ],
+  "educationalLevel": "Beginner to Professional",
+  "inLanguage": "es",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "218",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+};
+
+export const courseWrappingSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://academiadetail.com/curso-vinilado-vehiculos/#course",
+  "name": "Curso de Car Wrapping Profesional",
+  "description": "Aprende instalación profesional de vinilos y cambio de color en vehículos. Técnicas esenciales y avanzadas de car wrapping en taller real con vehículos de clientes.",
+  "url": "https://academiadetail.com/curso-vinilado-vehiculos/",
+  "image": "https://academiadetail.com/og-curso-wrapping.jpg",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://academiadetail.com/#organization",
+    "name": "Academia Detail",
+    "url": "https://academiadetail.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Paid",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2025-01-01",
+    "url": "https://academiadetail.com/curso-vinilado-vehiculos/"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "location": {
+      "@type": "Place",
+      "name": "Detail Park",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Metalurgias, 13",
+        "addressLocality": "Alicante",
+        "postalCode": "03008",
+        "addressCountry": "ES"
+      }
+    },
+    "inLanguage": "es"
+  },
+  "teaches": [
+    "Preparación de superficies para vinilado",
+    "Instalación profesional de vinilos de color",
+    "Técnicas de corte y acabado",
+    "Vinilado de piezas complejas",
+    "Gestión de clientes VIP"
+  ],
+  "educationalLevel": "Beginner to Professional",
+  "inLanguage": "es",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "202",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+};
+
+export const coursePPFSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://academiadetail.com/curso-ppf-proteccion-pintura/#course",
+  "name": "Curso de PPF - Paint Protection Film",
+  "description": "Formación intensiva en instalación profesional de Paint Protection Film (PPF) en vehículos de alta gama. 2 días, 16 horas de práctica real en taller.",
+  "url": "https://academiadetail.com/curso-ppf-proteccion-pintura/",
+  "image": "https://academiadetail.com/og-curso-ppf.jpg",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://academiadetail.com/#organization",
+    "name": "Academia Detail",
+    "url": "https://academiadetail.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Paid",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2025-01-01",
+    "url": "https://academiadetail.com/curso-ppf-proteccion-pintura/"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "courseWorkload": "PT16H",
+    "location": {
+      "@type": "Place",
+      "name": "Detail Park",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Metalurgias, 13",
+        "addressLocality": "Alicante",
+        "postalCode": "03008",
+        "addressCountry": "ES"
+      }
+    },
+    "inLanguage": "es"
+  },
+  "teaches": [
+    "Fundamentos del Paint Protection Film",
+    "Preparación de superficie previa a PPF",
+    "Instalación de PPF en zonas de impacto",
+    "Full wrap en vehículos de alta gama",
+    "Presupuestación y captación de clientes PPF"
+  ],
+  "timeRequired": "P2D",
+  "educationalLevel": "Beginner to Professional",
+  "inLanguage": "es",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "202",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+};
+
+export const courseRestauracionSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://academiadetail.com/curso-restauracion-vehiculos/#course",
+  "name": "Curso de Restauración de Vehículos",
+  "description": "Técnicas avanzadas de restauración de vehículos clásicos y dañados. Corrección profunda de pintura, eliminación de óxido y recuperación de interiores en taller real.",
+  "url": "https://academiadetail.com/curso-restauracion-vehiculos/",
+  "image": "https://academiadetail.com/og-curso-restauracion.jpg",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://academiadetail.com/#organization",
+    "name": "Academia Detail",
+    "url": "https://academiadetail.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Paid",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2025-01-01",
+    "url": "https://academiadetail.com/curso-restauracion-vehiculos/"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "location": {
+      "@type": "Place",
+      "name": "Detail Park",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Metalurgias, 13",
+        "addressLocality": "Alicante",
+        "postalCode": "03008",
+        "addressCountry": "ES"
+      }
+    },
+    "inLanguage": "es"
+  },
+  "teaches": [
+    "Restauración de pintura envejecida",
+    "Eliminación de óxido superficial",
+    "Recuperación de plásticos y gomas",
+    "Restauración de tapicería e interiores",
+    "Valoración y presupuestación de restauraciones"
+  ],
+  "educationalLevel": "Intermediate to Professional",
+  "inLanguage": "es"
+};
+
+export const courseFormacionProfesionalSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://academiadetail.com/formacion-profesional-detailing/#course",
+  "name": "Formación Profesional Detailing - Programa Completo",
+  "description": "Programa completo de 1 mes con 4 certificaciones profesionales: Detailing, Car Wrapping, PPF y Restauración. Incluye módulo exclusivo de negocio y mentoría empresarial.",
+  "url": "https://academiadetail.com/formacion-profesional-detailing/",
+  "image": "https://academiadetail.com/og-detailing-profesional.jpg",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://academiadetail.com/#organization",
+    "name": "Academia Detail",
+    "url": "https://academiadetail.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Paid",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2025-01-01",
+    "url": "https://academiadetail.com/formacion-profesional-detailing/"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "courseWorkload": "P1M",
+    "location": {
+      "@type": "Place",
+      "name": "Detail Park",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Metalurgias, 13",
+        "addressLocality": "Alicante",
+        "postalCode": "03008",
+        "addressCountry": "ES"
+      }
+    },
+    "inLanguage": "es"
+  },
+  "teaches": [
+    "Detailing profesional completo",
+    "Car wrapping e instalación de vinilos",
+    "Instalación de PPF",
+    "Restauración de vehículos",
+    "Cómo montar y escalar un negocio de detailing",
+    "Captación de clientes de alta gama",
+    "Presupuestación y márgenes de beneficio"
+  ],
+  "numberOfCredits": 4,
+  "timeRequired": "P1M",
+  "educationalLevel": "Professional",
+  "inLanguage": "es",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "218",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+};
+
+export const courseJornadaZeroSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://academiadetail.com/curso-detailing-iniciacion/#course",
+  "name": "Jornada Zero - Iniciación al Detailing Profesional",
+  "description": "Tu primer contacto con el detailing profesional. 1 día intensivo para descubrir si el detailing es tu camino antes de invertir en formación completa. Precio de entrada: €97.",
+  "url": "https://academiadetail.com/curso-detailing-iniciacion/",
+  "image": "https://academiadetail.com/og-jornada-zero.jpg",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://academiadetail.com/#organization",
+    "name": "Academia Detail",
+    "url": "https://academiadetail.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Paid",
+    "price": "97",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2025-01-01",
+    "url": "https://academiadetail.com/curso-detailing-iniciacion/"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "courseWorkload": "PT10H",
+    "location": {
+      "@type": "Place",
+      "name": "Detail Park",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Metalurgias, 13",
+        "addressLocality": "Alicante",
+        "postalCode": "03008",
+        "addressCountry": "ES"
+      }
+    },
+    "inLanguage": "es"
+  },
+  "teaches": [
+    "Introducción al detailing profesional",
+    "Herramientas y productos básicos",
+    "Proceso de lavado y descontaminación",
+    "Primeros pasos en corrección de pintura"
+  ],
+  "timeRequired": "P1D",
+  "educationalLevel": "Beginner",
+  "inLanguage": "es"
+};
 export default SEO;
