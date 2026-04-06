@@ -744,7 +744,7 @@ export const seoConfig = {
   carreraDetailing: {
     title: "Formación Profesional Detailing | 4 Certificaciones + Negocio | Alicante",
     description: "El programa de detailing más completo de España. 1 mes intensivo, 4 certificaciones, módulo de negocio y mentoría. Aprende técnica y cómo montar tu propio centro. Alicante.",
-    keywords: "formación profesional detailing, programa completo detailing, curso detailing certificación oficial, cómo montar negocio detailing, detailing negocio rentable",
+    keywords: "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, abrir taller detailing España, montar negocio detailing rentable, emprender detailing, curso completo detailing, programa completo detailing, curso detailing certificación oficial, cómo montar un negocio de detailing desde cero, 4 certificaciones detailing, detailing negocio rentable, aprender detailing desde cero, curso detailing Alicante, formacion profesional detailing España",
     url: "/formacion-profesional-detailing",
     image: `${BASE_URL}/og-carrera-detailing.jpg`,
     price: "9997",
