@@ -323,6 +323,8 @@ export const SEO = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:secure_url" content={image} />
+      <meta name="thumbnail" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:type" content={getImageType(image)} />
@@ -387,7 +389,12 @@ export const courseDetailingSchema = {
   "name": "Curso de Detailing Profesional",
   "description": "Formación 100% práctica en lavado profesional, descontaminación, pulido, corrección de pintura y protección cerámica. Aprende en un taller real con clientes de alta gama en Alicante.",
   "url": "https://academiadetail.com/curso-detailing-profesional/",
-  "image": "https://academiadetail.com/og-curso-detailing.jpg",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://academiadetail.com/og-curso-detailing.jpg",
+    "width": 1200,
+    "height": 630
+  },
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
@@ -444,7 +451,12 @@ export const courseWrappingSchema = {
   "name": "Curso de Car Wrapping Profesional",
   "description": "Aprende instalación profesional de vinilos y cambio de color en vehículos. Técnicas esenciales y avanzadas de car wrapping en taller real con vehículos de clientes.",
   "url": "https://academiadetail.com/curso-vinilado-vehiculos/",
-  "image": "https://academiadetail.com/og-curso-wrapping.jpg",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://academiadetail.com/og-curso-wrapping.jpg",
+    "width": 1200,
+    "height": 630
+  },
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
@@ -500,7 +512,12 @@ export const coursePPFSchema = {
   "name": "Curso de PPF - Paint Protection Film",
   "description": "Formación intensiva en instalación profesional de Paint Protection Film (PPF) en vehículos de alta gama. 2 días, 16 horas de práctica real en taller.",
   "url": "https://academiadetail.com/curso-ppf-proteccion-pintura/",
-  "image": "https://academiadetail.com/og-curso-ppf.jpg",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://academiadetail.com/og-curso-ppf.jpg",
+    "width": 1200,
+    "height": 630
+  },
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
@@ -558,7 +575,12 @@ export const courseRestauracionSchema = {
   "name": "Curso de Restauración de Vehículos",
   "description": "Técnicas avanzadas de restauración de vehículos clásicos y dañados. Corrección profunda de pintura, eliminación de óxido y recuperación de interiores en taller real.",
   "url": "https://academiadetail.com/curso-restauracion-vehiculos/",
-  "image": "https://academiadetail.com/og-curso-restauracion.jpg",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://academiadetail.com/og-curso-restauracion.jpg",
+    "width": 1200,
+    "height": 630
+  },
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",

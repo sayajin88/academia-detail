@@ -437,6 +437,7 @@ export const generateWebPageSchema = (page: {
   name: string;
   description: string;
   url: string;
+  image?: string;
 }) => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -448,6 +449,14 @@ export const generateWebPageSchema = (page: {
     "name": "Detail Park - Academia Detail",
     "url": BASE_URL
   },
+  ...(page.image && {
+    "primaryImageOfPage": {
+      "@type": "ImageObject",
+      "url": page.image,
+      "width": 1200,
+      "height": 630
+    }
+  }),
   "speakable": {
     "@type": "SpeakableSpecification",
     "cssSelector": ["h1", ".hero-description", ".section-heading"]
@@ -465,16 +474,28 @@ export const generateImageObjectSchema = (image: {
   url: string;
   name: string;
   description: string;
+  width?: number;
+  height?: number;
 }) => ({
   "@context": "https://schema.org",
   "@type": "ImageObject",
   "contentUrl": image.url,
+  "url": image.url,
   "name": image.name,
   "description": image.description,
+  "width": image.width || 1200,
+  "height": image.height || 630,
+  "encodingFormat": image.url.endsWith('.jpg') || image.url.endsWith('.jpeg') 
+    ? "image/jpeg" 
+    : "image/png",
   "representativeOfPage": true,
+  "license": "https://academiadetail.com/politica-privacidad",
+  "acquireLicensePage": "https://academiadetail.com/contacto",
+  "creditText": "Academia Detail - Detail Park",
   "creator": {
     "@type": "Organization",
-    "name": "Detail Park - Academia Detail"
+    "name": "Detail Park - Academia Detail",
+    "url": "https://academiadetail.com"
   }
 });
 
@@ -1047,7 +1068,8 @@ export const seoConfig = {
         generateWebPageSchema({
           name: formationNames[normalizedSlug] || formation.title,
           description: formationDescriptions[normalizedSlug] || formation.description,
-          url: `/${normalizedSlug}`
+          url: `/${normalizedSlug}`,
+          image: imageUrl
         }),
         generateBreadcrumbSchema([
           { name: "Inicio", url: "/" },
