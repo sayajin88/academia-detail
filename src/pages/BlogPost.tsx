@@ -133,6 +133,9 @@ export default function BlogPostPage() {
                 alt={post.imageAlt}
                 className="w-full h-full object-cover"
                 fetchPriority="high"
+                loading="eager"
+                width={1200}
+                height={630}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
               <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent" />
