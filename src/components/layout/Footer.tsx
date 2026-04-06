@@ -21,6 +21,14 @@ const quickLinks = [
   { name: 'Contacto', href: '/contacto' },
 ];
 
+const cityLinks = [
+  { name: 'Detailing Madrid', href: '/curso-detailing-madrid' },
+  { name: 'Detailing Barcelona', href: '/curso-detailing-barcelona' },
+  { name: 'Detailing Valencia', href: '/curso-detailing-valencia' },
+  { name: 'Detailing Sevilla', href: '/curso-detailing-sevilla' },
+  { name: 'Detailing Bilbao', href: '/curso-detailing-bilbao' },
+];
+
 const legalLinks = [
   { name: 'Política de Privacidad', href: '/politica-privacidad', key: 'privacidad' },
   { name: 'Aviso Legal', href: '/politica-privacidad', key: 'aviso-legal' },
