@@ -955,8 +955,8 @@ export const seoConfig = {
     const formationKeywords: Record<string, string> = {
       'curso-detailing-profesional': "curso detailing intensivo, curso detailing profesional taller real, curso detailing desde cero, curso pulido profesional, curso pulido coche certificado, corrección pintura negocio, formación detailing presencial, curso detailing Alicante, curso detailing Madrid, curso detailing Barcelona, bolsa empleo detailing, certificación oficial detailing, curso tratamiento cerámico, escuela detailing España",
       'curso-vinilado-vehiculos': "curso wrapping intensivo, curso vinilado vehículos profesional, curso car wrapping negocio, rotulación coches formación, vinilado vehiculos formacion, wrap coche taller real, cambio color coche rentable, curso wrapping desde cero, curso wrapping Alicante, bolsa empleo wrapping",
-      'curso-ppf-proteccion-pintura': "curso PPF intensivo, curso PPF taller real, instalación PPF formación, curso protección pintura profesional, PPF instalador certificado España, proteger pintura coche negocio, film transparente formación práctica, curso PPF desde cero, curso PPF Alicante, bolsa empleo PPF",
-      'curso-restauracion-vehiculos': "curso restauración vehículos intensivo, restauración cuero vehículo, restauración tapicerías cuero, restaurar coches clásicos negocio, curso chapa y pintura, reparar pintura coche formación taller real, curso restauración desde cero, tapizado asientos coche"
+      'curso-ppf-proteccion-pintura': "curso PPF protección pintura, formación paint protection film, aprender instalar PPF coches, curso PPF España presencial, curso vinilo protección pintura",
+      'curso-restauracion-vehiculos': "curso restauración vehículos, formación restauración coches clásicos, curso corrección pintura avanzada, restauración interior exterior vehículos"
     };
 
     const formationTitles: Record<string, string> = {
