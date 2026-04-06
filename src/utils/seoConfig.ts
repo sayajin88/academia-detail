@@ -768,6 +768,7 @@ export const seoConfig = {
         price: 9997,
         duration: "P30D",
         url: "/formacion-profesional-detailing",
+        image: `${BASE_URL}/og-carrera-detailing.jpg`,
         rating: { value: "4.9", count: "89" }
       }),
       // EducationalOccupationalProgram - More specific than Course for full programs
