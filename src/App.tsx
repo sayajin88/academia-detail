@@ -84,6 +84,14 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               
+              {/* City Landing Pages */}
+              <Route path="/curso-detailing-madrid" element={<CursoDetailingCiudad />} />
+              <Route path="/curso-detailing-barcelona" element={<CursoDetailingCiudad />} />
+              <Route path="/curso-detailing-valencia" element={<CursoDetailingCiudad />} />
+              <Route path="/curso-detailing-sevilla" element={<CursoDetailingCiudad />} />
+              <Route path="/curso-detailing-bilbao" element={<CursoDetailingCiudad />} />
+              <Route path="/curso-detailing-:ciudad" element={<CursoDetailingCiudad />} />
+
               {/* Conversion & Utility Pages */}
               <Route path="/gracias" element={<Gracias />} />
               <Route path="/mapa-del-sitio" element={<MapaSitio />} />
