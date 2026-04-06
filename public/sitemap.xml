@@ -4,4 +4,16 @@
     <loc>https://academiadetail.com/sitemap-pages.xml</loc>
     <lastmod>2026-04-06</lastmod>
   </sitemap>
+  <sitemap>
+    <loc>https://academiadetail.com/sitemap-blog.xml</loc>
+    <lastmod>2026-04-06</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://academiadetail.com/sitemap-glossary.xml</loc>
+    <lastmod>2026-04-06</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://academiadetail.com/sitemap-directory.xml</loc>
+    <lastmod>2026-04-06</lastmod>
+  </sitemap>
 </sitemapindex>
