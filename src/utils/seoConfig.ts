@@ -526,6 +526,7 @@ export const generateHomeSEO = (formations: { id: string; title: string; shortTi
       return {
         "@type": "ListItem",
         "position": i + 1,
+        "name": detail?.title || f.title,
         "item": {
           "@type": "Course",
           "name": detail?.title || f.title,
