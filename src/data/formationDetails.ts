@@ -635,7 +635,7 @@ export const formationDetails: Record<string, FormationDetail> = {
         answer: 'Por supuesto, tendrás asesoramiento personalizado por un experto en PPF. ¡Nos tendrás siempre a tu disposición!',
       },
       {
-        question: '¿Hay algún tipo de certificado?',
+        question: '¿Qué certificado obtengo como instalador de PPF?',
         answer: 'Sí, al finalizar se entrega un certificado de asistencia con reconocimiento otorgado por Detail Park.',
       },
       {
