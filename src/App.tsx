@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
+import { CookieBanner } from "./components/shared/CookieBanner";
 
 // Lazy-loaded pages — code splitting por ruta
 const JornadasIntensivas = lazy(() => import("./pages/JornadasIntensivas"));
@@ -33,6 +34,8 @@ const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminProfiles = lazy(() => import("./pages/AdminProfiles"));
 const AdminContacts = lazy(() => import("./pages/AdminContacts"));
 const AdminBlog = lazy(() => import("./pages/AdminBlog"));
+const Gracias = lazy(() => import("./pages/Gracias"));
+const MapaSitio = lazy(() => import("./pages/MapaSitio"));
 
 const queryClient = new QueryClient();
 
@@ -52,6 +55,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <CookieBanner />
         <BrowserRouter>
           <Suspense fallback={<PageFallback />}>
             <Routes>
@@ -79,6 +83,10 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               
+              {/* Conversion & Utility Pages */}
+              <Route path="/gracias" element={<Gracias />} />
+              <Route path="/mapa-del-sitio" element={<MapaSitio />} />
+
               {/* Legal Pages */}
               <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
               

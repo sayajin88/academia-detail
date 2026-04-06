@@ -1,28 +1,35 @@
 
+## Plan: Mejoras técnicas SEO, rendimiento, accesibilidad y RGPD
 
-## Plan: Optimizar imagen OG para /curso-detailing-profesional
+### ⚠️ Ajustes importantes antes de empezar
 
-### Contexto
-La página del curso Detailing ya referencia `public/og-curso-detailing.jpg` (actualmente 1200x640). El usuario quiere reemplazarla con la foto subida (alumnos puliendo coches en taller), adaptada al formato OG recomendado.
+1. **FASE 1 — `vite-plugin-imagemin`**: Este paquete tiene problemas crónicos de instalación por dependencias nativas (gifsicle, mozjpeg, etc.). El proyecto **ya usa `vite-plugin-image-optimizer`** que hace lo mismo. Propongo mantener el plugin actual en vez de añadir uno conflictivo. Sí revisaré loading/fetchPriority y width/height en imágenes.
 
-### Especificaciones OG recomendadas
-- Tamaño: 1200 x 630 px
-- Formato: JPEG
-- Peso: menos de 300 KB (ideal < 200 KB)
-- Calidad: 85% JPEG
+2. **FASE 2 — Fuentes**: Ya tienen `display=swap` en index.html. Verificaré y confirmaré.
 
-### Pasos
+3. **FASE 4 — `vercel.json` y `_headers`**: Lovable hosting **NO procesa** `vercel.json`, `_headers`, ni `_redirects`. Estos archivos no tienen efecto. Los headers de seguridad deben gestionarse a nivel de plataforma. **Omitiré esta fase** por ser inoperante.
 
-1. **Copiar la imagen subida** al proyecto como archivo temporal
-2. **Procesar con Pillow** (Python):
-   - Redimensionar/recortar al ratio 1200:630 (≈1.905:1) usando crop centrado
-   - Exportar como JPEG calidad 85, optimizado
-   - Guardar como `public/og-curso-detailing.jpg` (reemplaza el existente)
-3. **Verificar** que el peso final sea < 300 KB y las dimensiones sean exactamente 1200x630
+4. **FASE 6 — A11y**: El proyecto ya tiene skip-to-main link, `id="main-content"` en `<main>`, y `role="main"`. Revisaré lo que falta sin duplicar.
 
-### Archivos modificados
-- `public/og-curso-detailing.jpg` — reemplazado con la nueva imagen optimizada
+### Fases que ejecutaré
+
+| Fase | Descripción | Archivos principales |
+|------|-------------|---------------------|
+| 1 | Revisar loading/fetchPriority + width/height en imágenes | HomeHero, FormationHero, otros componentes con img |
+| 2 | Verificar font-display: swap (ya presente) | index.html |
+| 3 | Crear /gracias + redirección post-envío | Gracias.tsx, App.tsx, EnrollmentWizard.tsx |
+| ~~4~~ | ~~vercel.json / _headers~~ | ~~Omitida — no aplica en Lovable~~ |
+| 5 | Breadcrumbs visuales en FormationDetail | Breadcrumbs.tsx, FormationDetail.tsx |
+| 6 | Auditoría a11y: aria-labels, alt texts, nav landmarks | Múltiples componentes |
+| 7 | Sitemap con hreflang | sitemap-pages.xml |
+| 8 | Página Mapa del Sitio HTML | MapaSitio.tsx, App.tsx |
+| 9 | RelatedCourses + enlazado interno | RelatedCourses.tsx, BlogPost.tsx, GlossaryTerm.tsx |
+| 10 | CookieBanner RGPD + Consent Mode v2 | CookieBanner.tsx, index.html, App.tsx |
 
 ### Archivos NO modificados
-- Ningún archivo `.ts` / `.tsx` / de estilos / de lógica (ya apuntan a `/og-curso-detailing.jpg` con dimensiones 1200x630)
+- Estilos visuales ni lógica de negocio existente
+- src/integrations/supabase/* (autogenerados)
+- .env, supabase/migrations/
 
+### Auditoría final
+Checklist completa al terminar todas las fases.

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -39,6 +40,7 @@ const steps = [
 ];
 
 const EnrollmentWizard = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -131,9 +133,9 @@ const EnrollmentWizard = () => {
     }
 
     setIsSubmitting(false);
-    setShowSuccessModal(true);
     form.reset();
     setCurrentStep(0);
+    navigate('/gracias');
   };
 
   return (

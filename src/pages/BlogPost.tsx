@@ -10,6 +10,7 @@ import { BlogRelatedPosts } from '@/components/blog/BlogRelatedPosts';
 import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
 import { BlogDirectoryBanner } from '@/components/blog/BlogDirectoryBanner';
+import { RelatedCourses } from '@/components/shared/RelatedCourses';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
@@ -133,6 +134,9 @@ export default function BlogPostPage() {
                 alt={post.imageAlt}
                 className="w-full h-full object-cover"
                 fetchPriority="high"
+                loading="eager"
+                width={1200}
+                height={630}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
               <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent" />
@@ -168,6 +172,9 @@ export default function BlogPostPage() {
                   src={post.author.image}
                   alt={post.author.name}
                   className="w-10 h-10 md:w-11 md:h-11 rounded-full object-cover border-2 border-primary/30"
+                  width={44}
+                  height={44}
+                  loading="lazy"
                 />
                 <div>
                   <div className="flex items-center gap-1.5">
@@ -218,6 +225,15 @@ export default function BlogPostPage() {
               <div className="mt-6">
                 <BlogShareButtons title={post.title} url={fullUrl} />
               </div>
+
+              {/* Related courses */}
+              <RelatedCourses
+                courses={[
+                  { name: 'Curso Detailing Profesional', url: '/curso-detailing-profesional', description: 'Pulido, cerámico y negocio' },
+                  { name: 'Curso Car Wrapping', url: '/curso-vinilado-vehiculos', description: 'Vinilado profesional de vehículos' },
+                  { name: 'Curso PPF', url: '/curso-ppf-proteccion-pintura', description: 'Protección de pintura PPF' },
+                ]}
+              />
 
               {/* CTA section (replaces newsletter) */}
               <BlogPostCTA />
