@@ -501,8 +501,8 @@ export const formationDetails: Record<string, FormationDetail> = {
     ],
     levels: [
       {
-        title: 'Curso de Instalar de PPF',
-        subtitle: '2 Días de Formación Intensiva',
+        title: 'Curso de Instalación de PPF',
+        subtitle: '2 Días de Formación Intensiva en Paint Protection Film',
         duration: '2 Días',
         price: 2397,
         features: [
