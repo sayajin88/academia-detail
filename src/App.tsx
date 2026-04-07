@@ -94,6 +94,10 @@ const App = () => (
               <Route path="/curso-detailing-bilbao" element={<CursoDetailingCiudad />} />
               <Route path="/curso-detailing-:ciudad" element={<CursoDetailingCiudad />} />
 
+              {/* Payment result pages */}
+              <Route path="/pago-exitoso" element={<PagoExitoso />} />
+              <Route path="/pago-cancelado" element={<PagoCancelado />} />
+
               {/* Conversion & Utility Pages */}
               <Route path="/gracias" element={<Gracias />} />
               <Route path="/mapa-del-sitio" element={<MapaSitio />} />

@@ -19,7 +19,7 @@ export default function PagoCancelado() {
 
   return (
     <>
-      <SEO title="Pago Cancelado | Academia Detail" description="El pago no se ha completado." noIndex />
+      <SEO title="Pago Cancelado | Academia Detail" description="El pago no se ha completado." />
       <MainLayout>
         <section className="min-h-[70vh] flex items-center justify-center py-20">
           <div className="container mx-auto px-4 max-w-xl text-center">

@@ -24,8 +24,8 @@ export default function PagoExitoso() {
         <section className="min-h-[70vh] flex items-center justify-center py-20">
           <div className="container mx-auto px-4 max-w-xl text-center">
             <div className="bg-card border border-border rounded-2xl p-8 md:p-12 shadow-2xl shadow-black/20">
-              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-                <CheckCircle className="w-10 h-10 text-green-400" />
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+                <CheckCircle className="w-10 h-10 text-primary" />
               </div>
 
               <h1 className="text-3xl md:text-4xl font-bold mb-3">¡Pago Confirmado!</h1>
