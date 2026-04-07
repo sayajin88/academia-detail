@@ -1,4 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { crypto as stdCrypto } from "https://deno.land/std@0.168.0/crypto/mod.ts";
+import { encode as hexEncode } from "https://deno.land/std@0.168.0/encoding/hex.ts";
 
 serve(async (req) => {
   const corsHeaders = {
@@ -17,11 +19,9 @@ serve(async (req) => {
     const appUrl = Deno.env.get("NEXT_PUBLIC_APP_URL") ?? "https://academiadetail.com";
 
     // md5check con separador #
-    const encoder = new TextEncoder();
-    const data = encoder.encode(`${amount}#${currency}#${orderNumber}#${orderNumber}#${apikey}#${secret}`);
-    const hashBuffer = await crypto.subtle.digest("MD5", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const md5check = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    const md5string = `${amount}#${currency}#${orderNumber}#${orderNumber}#${apikey}#${secret}`;
+    const md5bytes = await stdCrypto.subtle.digest("MD5", new TextEncoder().encode(md5string));
+    const md5check = new TextDecoder().decode(hexEncode(new Uint8Array(md5bytes)));
 
     const body = new URLSearchParams({
       apikey,
