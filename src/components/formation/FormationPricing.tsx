@@ -15,7 +15,8 @@ import {
   Bell,
   Scale,
   ArrowRight,
-  Shield
+  Shield,
+  CreditCard
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FormationDetail } from '@/data/formationDetails';
