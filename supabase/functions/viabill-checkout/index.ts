@@ -10,8 +10,12 @@ serve(async (req) => {
 
   try {
     const { amount, courseSlug } = await req.json();
-    const apiKey = Deno.env.get("VIABILL_API_KEY")?.trim();
-    const secret = Deno.env.get("VIABILL_SECRET")?.trim();
+    const apiKey = Deno.env
+      .get(
+        "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJNRVJDSEFOVCIsIlNZU1RFTSJdLCJ1dWlkIjoiZTllY2NkOTAtMzFjMy0xMWYxLTlhMTctZmIxYmYzYWM4NDZlIiwidHYiOjEsImVudiI6IlBST0RVQ1RJT04iLCJpYXQiOjE3NzU0ODUyOTQsImV4cCI6MjA5MTEwNDQ5NH0.zoKaAtlpck09R9shexWRuANuj8YfdsPfDXz31V3xz10",
+      )
+      ?.trim();
+    const secret = Deno.env.get("ivxBzMAP7EP5")?.trim();
 
     if (!apiKey || !secret) throw new Error("Credenciales no configuradas");
 
