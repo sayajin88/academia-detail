@@ -20,43 +20,42 @@ serve(async (req) => {
 
   try {
     const { amount, currency = "EUR", orderNumber, transaction } = await req.json();
-    const apikey = Deno.env.get("VIABILL_API_KEY") ?? "";
+    const apiKey = Deno.env.get("VIABILL_API_KEY") ?? "";
     const secret = Deno.env.get("VIABILL_SECRET") ?? "";
     const appUrl = Deno.env.get("NEXT_PUBLIC_APP_URL") ?? "https://academiadetail.com";
+    const testMode = Deno.env.get("VIABILL_TEST_MODE") === "true";
 
-    // Ensure amount is a number
     const numericAmount = Number(amount);
-
-    // Generate unique IDs if not provided
     const txn = transaction || `txn_${Date.now()}`;
     const order = orderNumber || `ORD-${Date.now()}`;
 
-    // SHA256 hash: apikey#amount#currency#transaction#orderNumber#secret
-    const hashString = `${apikey}#${numericAmount}#${currency}#${txn}#${order}#${secret}`;
+    const successUrl = `${appUrl}/pago-exitoso?orderId=${order}`;
+    const cancelUrl = `${appUrl}/pago-cancelado?orderId=${order}`;
+    const callbackUrl = `${appUrl}/api/viabill-callback`;
+
+    // SHA256: apiKey#amount#currency#transaction#orderNumber#successUrl#cancelUrl#secret
+    const hashString = `${apiKey}#${numericAmount}#${currency}#${txn}#${order}#${successUrl}#${cancelUrl}#${secret}`;
     const sha256check = await sha256(hashString);
 
-    console.log("Hash input:", hashString);
-    console.log("SHA256 check:", sha256check);
-
-    const payload = {
-      apikey,
+    const payload: Record<string, unknown> = {
+      protocol: "V3",
+      apiKey,
+      orderNumber: order,
       amount: numericAmount,
       currency,
       transaction: txn,
-      orderNumber: order,
       sha256check,
-      successUrl: `${appUrl}/pago-exitoso?orderId=${order}`,
-      cancelUrl: `${appUrl}/pago-cancelado?orderId=${order}`,
-      callbackUrl: `${appUrl}/api/viabill-callback`,
+      successUrl,
+      cancelUrl,
+      callbackUrl,
+      test: testMode,
     };
 
     console.log("ViaBill payload:", JSON.stringify(payload));
 
-    const response = await fetch("https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM", {
+    const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
