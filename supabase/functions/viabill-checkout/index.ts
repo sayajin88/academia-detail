@@ -43,9 +43,8 @@ serve(async (req) => {
     const hashInput = `${formattedAmount}|EUR|${transaction}|${orderNumber}|${apikey}|${secret}`;
     const encoder = new TextEncoder();
     const data = encoder.encode(hashInput);
-    const hashBuffer = await crypto.subtle.digest('MD5', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const md5check = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const hashBuffer = await stdCrypto.subtle.digest('MD5', data);
+    const md5check = encodeHex(new Uint8Array(hashBuffer));
 
     const body = {
       apikey,
