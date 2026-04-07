@@ -142,25 +142,32 @@ export function FormationsGrid() {
                       </div>
                     )}
 
-                    {/* Info + CTA row */}
-                    <div className="flex items-end justify-between gap-4 mt-auto">
-                      <div className="flex flex-col gap-1.5">
-                        {isComingSoon ? (
-                          <div>
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-1">Estado</span>
-                            <span className="text-xl font-bold text-amber-500">Próximamente</span>
-                          </div>
-                        ) : (
-                          <>
-                            {formation.proximaFecha && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <Calendar className="h-4 w-4 text-primary" />
-                                <span>Próxima edición: <span className="text-foreground font-semibold">{formation.proximaFecha}</span></span>
-                              </div>
-                            )}
-                          </>
-                        )}
-                      </div>
+                    <div className="flex flex-col items-start gap-3 mt-auto">
+                      {/* Financing badge for non-coming-soon courses */}
+                      {!isComingSoon && (
+                        <div className="flex flex-col gap-2">
+                          <FinancingBadge price={index === 0 ? 2997 : index === 1 ? 2497 : 1997} variant="compact" />
+                          <ViaBillPriceTag price={index === 0 ? 2997 : index === 1 ? 2497 : 1997} view="list" />
+                        </div>
+                      )}
+                      <div className="flex items-end justify-between gap-4 w-full">
+                        <div className="flex flex-col gap-1.5">
+                          {isComingSoon ? (
+                            <div>
+                              <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-1">Estado</span>
+                              <span className="text-xl font-bold text-amber-500">Próximamente</span>
+                            </div>
+                          ) : (
+                            <>
+                              {formation.proximaFecha && (
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <Calendar className="h-4 w-4 text-primary" />
+                                  <span>Próxima edición: <span className="text-foreground font-semibold">{formation.proximaFecha}</span></span>
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </div>
 
                       <Link
                         to={formation.href}
