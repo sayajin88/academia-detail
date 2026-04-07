@@ -138,6 +138,9 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                     </div>
                     <p className="text-sm text-muted-foreground mt-2">Pago único · Financiación disponible</p>
                     <ViaBillPriceTag price={formation.price} />
+                    <div className="mt-4">
+                      <FinancingBadge price={formation.price} variant="prominent" />
+                    </div>
                   </div>
                 )}
               </div>
