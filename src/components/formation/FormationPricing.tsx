@@ -225,7 +225,8 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                     }
                   }}
                 >
-                  💳 Pagar a Plazos con ViaBill
+                  <CreditCard className="w-5 h-5 mr-2 group-hover/vb:scale-110 transition-transform" />
+                  Pagar a Plazos sin Intereses
                 </Button>
               )}
 
