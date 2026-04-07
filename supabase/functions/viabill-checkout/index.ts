@@ -20,41 +20,44 @@ serve(async (req) => {
 
   try {
     const { amount, currency = "EUR", orderNumber, transaction } = await req.json();
-    const apiKey = (Deno.env.get("VIABILL_API_KEY") ?? "").trim();
+    const apikey = (Deno.env.get("VIABILL_API_KEY") ?? "").trim();
     const secret = (Deno.env.get("VIABILL_SECRET") ?? "").trim();
     const appUrl = Deno.env.get("NEXT_PUBLIC_APP_URL") ?? "https://academiadetail.com";
     const testMode = Deno.env.get("VIABILL_TEST_MODE") === "true";
 
     const numericAmount = Number(amount);
-    const txn = transaction || `txn_${Date.now()}`;
+    const transactionId = transaction || `txn_${Date.now()}`;
     const order = orderNumber || `ORD-${Date.now()}`;
 
     const successUrl = `${appUrl}/pago-exitoso?orderId=${order}`;
     const cancelUrl = `${appUrl}/pago-cancelado?orderId=${order}`;
     const callbackUrl = `${appUrl}/api/viabill-callback`;
 
-    // Basic Auth: apiKey base64-encoded
-    const auth = btoa(apiKey + ":");
-
-    // SHA256: apiKey#amount#currency#transaction#orderNumber#successUrl#cancelUrl#secret
-    const hashString = `${apiKey}#${numericAmount}#${currency}#${txn}#${order}#${successUrl}#${cancelUrl}#${secret}`;
+    // Hash: apikey#amount#currency#transaction#orderNumber#successUrl#cancelUrl#secret[#test]
+    const hashString = `${apikey}#${numericAmount}#${currency}#${transactionId}#${order}#${successUrl}#${cancelUrl}#${secret}${testMode ? "#test" : ""}`;
     const sha256check = await sha256(hashString);
 
-    const payload = {
+    console.log("ViaBill hashString:", hashString);
+    console.log("ViaBill sha256check:", sha256check);
+
+    const payload: any = {
       protocol: "V3",
-      apiKey,
+      apikey,
       orderNumber: order,
       amount: numericAmount,
       currency,
-      transaction: txn,
+      transaction: transactionId,
       sha256check,
       successUrl,
       cancelUrl,
       callbackUrl,
-      test: testMode,
     };
 
+    if (testMode) payload.test = true;
+
     console.log("ViaBill payload:", JSON.stringify(payload));
+
+    const auth = btoa(apikey + ":");
 
     const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
       method: "POST",
