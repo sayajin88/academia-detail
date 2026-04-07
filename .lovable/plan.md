@@ -1,56 +1,40 @@
 
 
-## Plan: Notificar a admin@detailpark.com en cada nuevo lead
+## Plan: Mejora visual y funcional de /admin/contacts
 
-### Situación actual
+### 1. Toggle de estado ya existe — pero mejorarlo
 
-- La edge function `send-contact-email` ya existe y envía emails bien formateados (admin + confirmación al cliente) vía Resend.
-- El formulario activo (`EnrollmentWizard.tsx`) guarda en DB y envía al webhook de n8n, pero **nunca llama a `send-contact-email`**.
-- La variable `ADMIN_EMAIL` en secrets está configurada (actualmente apunta a `info@academiadetail.com` por defecto).
+El toggle desde el listado ya funciona (el badge es clickable). Sin embargo, no es obvio visualmente que se puede hacer clic. Cambios:
+- Añadir un **checkbox/switch visual** o un icono de toggle más claro en lugar del badge clickable actual
+- Añadir feedback visual (animación sutil) al cambiar estado
 
-### Cambios
+### 2. Formato de inversión — fallback sin guiones bajos
 
-#### 1. Actualizar `ADMIN_EMAIL` secret → `admin@detailpark.com`
-Usar la herramienta de secrets para actualizar el valor a `admin@detailpark.com`.
+Actualmente si el valor no está en `inversionLabels`, se muestra el raw con `_`. Añadir una función `formatInversion` que como fallback reemplace `_` por espacios y capitalice. Además, mostrar con un icono de euro para mayor claridad visual.
 
-#### 2. Añadir llamada a `send-contact-email` en `EnrollmentWizard.tsx`
-Después del insert en DB (línea ~103), añadir una llamada a la edge function existente:
+### 3. Mejoras visuales y estructurales
 
-```typescript
-// Después del DB insert, enviar emails
-try {
-  await supabase.functions.invoke("send-contact-email", {
-    body: {
-      nombre: data.nombre,
-      apellidos: data.apellidos,
-      email: data.email,
-      telefono: data.telefono,
-      experiencia: data.experiencia,
-      centro_propio: data.centro_propio,
-      inversion: data.inversion,
-      tipo_formacion: data.tipo_formacion,
-      mensaje: data.mensaje || "",
-      source: "contact_page",
-    },
-  });
-} catch (err) {
-  console.error("Email send error:", err);
-}
-```
+**Header mejorado:**
+- Añadir icono y mejor jerarquía visual en el título
+- KPI cards en la parte superior (total, pendientes, contactados) con colores e iconos, reemplazando el texto plano actual
 
-Esto reutiliza la edge function existente que ya:
-- Envía email completo al admin con todos los campos formateados
-- Envía confirmación al cliente
-- Usa Resend con el dominio verificado `formacion@academiadetail.com`
+**Filtros más compactos:**
+- Unificar status tabs y formation tabs en una sola barra de filtros más limpia
+- Mover búsqueda al lado derecho de la barra de filtros
 
-### Archivos a modificar
+**Tabla mejorada:**
+- Añadir avatar/iniciales del contacto en la columna de nombre
+- Columna de inversión con badge coloreado según rango
+- Hover states más marcados en las filas
+- Indicador visual de "tiene notas" (icono pequeño) junto al nombre
+
+**Modal de detalle:**
+- Mejor separación visual de secciones
+- Sección de contacto más prominente con botones más grandes
+
+### Archivo a modificar
 
 | Archivo | Cambio |
 |---|---|
-| `src/components/contact/EnrollmentWizard.tsx` | Añadir invocación de `send-contact-email` tras el DB insert |
-| Secret `ADMIN_EMAIL` | Actualizar valor a `admin@detailpark.com` |
-
-### Sin cambios
-- No se toca la edge function `send-contact-email` (ya funciona correctamente)
-- No se elimina el webhook de n8n (sigue operativo en paralelo)
+| `src/pages/AdminContacts.tsx` | Rediseño visual completo: KPI cards, tabla mejorada, formato inversión, toggle más claro |
 
