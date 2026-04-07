@@ -26,3 +26,6 @@ verify_jwt = false
 
 [functions.viabill-checkout]
 verify_jwt = false
+
+[functions.viabill-v3-final]
+verify_jwt = false

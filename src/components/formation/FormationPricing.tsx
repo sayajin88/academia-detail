@@ -206,7 +206,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                     try {
                       toast.loading('Conectando con ViaBill...', { id: 'viabill' });
                       const orderNumber = `ORD-${formation.slug}-${Date.now()}`;
-                      const { data, error } = await supabase.functions.invoke('viabill-checkout', {
+                      const { data, error } = await supabase.functions.invoke('viabill-v3-final', {
                         body: {
                           amount: formation.price,
                           orderNumber,
