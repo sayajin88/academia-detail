@@ -20,8 +20,8 @@ serve(async (req) => {
 
   try {
     const { amount, currency = "EUR", orderNumber, transaction } = await req.json();
-    const apiKey = Deno.env.get("VIABILL_API_KEY") ?? "";
-    const secret = Deno.env.get("VIABILL_SECRET") ?? "";
+    const apiKey = (Deno.env.get("VIABILL_API_KEY") ?? "").trim();
+    const secret = (Deno.env.get("VIABILL_SECRET") ?? "").trim();
     const appUrl = Deno.env.get("NEXT_PUBLIC_APP_URL") ?? "https://academiadetail.com";
     const testMode = Deno.env.get("VIABILL_TEST_MODE") === "true";
 
@@ -33,11 +33,14 @@ serve(async (req) => {
     const cancelUrl = `${appUrl}/pago-cancelado?orderId=${order}`;
     const callbackUrl = `${appUrl}/api/viabill-callback`;
 
+    // Basic Auth: apiKey base64-encoded
+    const auth = btoa(apiKey + ":");
+
     // SHA256: apiKey#amount#currency#transaction#orderNumber#successUrl#cancelUrl#secret
     const hashString = `${apiKey}#${numericAmount}#${currency}#${txn}#${order}#${successUrl}#${cancelUrl}#${secret}`;
     const sha256check = await sha256(hashString);
 
-    const payload: Record<string, unknown> = {
+    const payload = {
       protocol: "V3",
       apiKey,
       orderNumber: order,
@@ -55,7 +58,10 @@ serve(async (req) => {
 
     const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Basic ${auth}`,
+      },
       body: JSON.stringify(payload),
     });
 
