@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { X, ArrowRight } from 'lucide-react';
-import viabillLogo from '@/assets/brands/viabill.png';
+import viabillLogo from '@/assets/brands/viabill-logo-purple.png';
 
 const STORAGE_KEY = 'viabill-bar-dismissed';
 
