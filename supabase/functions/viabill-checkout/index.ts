@@ -28,7 +28,7 @@ serve(async (req) => {
 
     // MD5 con separador # según documentación ViaBill
     const md5string = `${formattedAmount}#${currency}#${transaction}#${txOrderNumber}#${apikey}#${secret}`;
-    const md5check = createHash("md5").update(md5string).toString();
+    const md5check = await md5(md5string);
 
     const body = new URLSearchParams({
       apikey,
