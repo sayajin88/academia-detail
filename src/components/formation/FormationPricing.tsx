@@ -200,7 +200,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full mt-3 text-base py-6 font-semibold rounded-xl border-primary/30 hover:border-primary/60 hover:bg-primary/5"
+                  className="w-full mt-3 text-base py-6 font-semibold rounded-xl border-emerald-500/30 hover:border-emerald-500/60 hover:bg-emerald-500/5 text-emerald-400 hover:text-emerald-300 group/vb"
                   onClick={async () => {
                     try {
                       toast.loading('Conectando con ViaBill...', { id: 'viabill' });
