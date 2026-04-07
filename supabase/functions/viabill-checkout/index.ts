@@ -11,56 +11,59 @@ serve(async (req) => {
   try {
     const { amount, courseSlug } = await req.json();
 
-    // CLAVES DIRECTAS (Hardcoded para probar)
+    // CLAVES DIRECTAS
     const apiKey =
       "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJNRVJDSEFOVCIsIlNZU1RFTSJdLCJ1dWlkIjoiZTllY2NkOTAtMzFjMy0xMWYxLTlhMTctZmIxYmYzYWM4NDZlIiwidHYiOjEsImVudiI6IlBST0RVQ1RJT04iLCJpYXQiOjE3NzU0ODUyOTQsImV4cCI6MjA5MTEwNDQ5NH0.zoKaAtlpck09R9shexWRuANuj8YfdsPfDXz31V3xz10";
     const secret = "ivxBzMAP7EP5";
 
-    if (!apiKey || !secret) throw new Error("Credenciales no configuradas");
-
-    // Datos formateados
     const formattedAmount = parseFloat(amount).toFixed(2);
     const orderNumber = `ORD${Date.now()}`;
     const successUrl = `https://academiadetail.com/pago-exitoso`;
     const cancelUrl = `https://academiadetail.com/pago-cancelado`;
 
-    // FIRMA SHA256 (Orden exacto V3)
+    // 1. GENERAR HASH (Orden exacto V3)
     const hashString = `${apiKey}#${formattedAmount}#EUR#${orderNumber}#${orderNumber}#${successUrl}#${cancelUrl}#${secret}`;
-    const msgBuffer = new TextEncoder().encode(hashString);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+    const msgUint8 = new TextEncoder().encode(hashString);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
     const sha256check = Array.from(new Uint8Array(hashBuffer))
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("");
 
-    // CUERPO DEL MENSAJE
-    const body = {
-      protocol: "V3",
-      apiKey: apiKey,
-      amount: parseFloat(formattedAmount),
-      currency: "EUR",
-      transaction: orderNumber,
-      orderNumber: orderNumber,
-      successUrl: successUrl,
-      cancelUrl: cancelUrl,
-      callbackUrl: `https://academiadetail.com/api/viabill-callback`,
-      sha256check: sha256check,
-      test: true,
-    };
+    // 2. CONSTRUIR FORM DATA (Mucho más compatible que JSON puro)
+    const formData = new URLSearchParams();
+    formData.append("protocol", "V3");
+    formData.append("apiKey", apiKey);
+    formData.append("amount", formattedAmount);
+    formData.append("currency", "EUR");
+    formData.append("transaction", orderNumber);
+    formData.append("orderNumber", orderNumber);
+    formData.append("successUrl", successUrl);
+    formData.append("cancelUrl", cancelUrl);
+    formData.append("callbackUrl", "https://academiadetail.com/api/viabill-callback");
+    formData.append("sha256check", sha256check);
+    formData.append("test", "true");
 
-    console.log("Iniciando petición a ViaBill V3 con claves directas...");
+    console.log("Enviando petición V3 formateada...");
 
     const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded", // Cambio clave de JSON a Form
         Accept: "application/json",
         Authorization: `Basic ${btoa(apiKey + ":")}`,
       },
-      body: JSON.stringify(body),
+      body: formData.toString(),
     });
 
-    const result = await response.json();
-    console.log("Respuesta de ViaBill:", JSON.stringify(result));
+    const responseText = await response.text();
+    console.log("Respuesta bruta:", responseText);
+
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch {
+      result = { raw: responseText };
+    }
 
     if (!response.ok) {
       return new Response(JSON.stringify({ error: "Error ViaBill", details: result }), {
@@ -74,7 +77,6 @@ serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
-    console.error("Error crítico:", e.message);
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
