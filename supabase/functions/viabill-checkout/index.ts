@@ -57,13 +57,11 @@ serve(async (req) => {
 
     console.log("ViaBill payload:", JSON.stringify(payload));
 
-    const auth = btoa(apikey + ":");
-
-    const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
+    const response = await fetch("https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM", {
       method: "POST",
       headers: {
+        "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization": `Basic ${auth}`,
       },
       body: JSON.stringify(payload),
     });
