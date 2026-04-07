@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
@@ -14,9 +15,9 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
 } from "@/components/ui/dialog";
 import {
-  Search, Mail, Phone, MessageCircle,
+  Search, Mail, Phone, MessageCircle, Users,
   GraduationCap, Wrench, Shield, Paintbrush, Car,
-  Clock, CheckCircle2, Save, Trash2,
+  Clock, CheckCircle2, Save, Trash2, StickyNote, Euro,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
@@ -67,6 +68,14 @@ const formacionIcons: Record<string, React.ReactNode> = {
   carrera: <GraduationCap className="h-4 w-4" />,
 };
 
+const inversionColors: Record<string, string> = {
+  menos_500: "bg-slate-100 text-slate-700",
+  "500_1000": "bg-sky-100 text-sky-700",
+  "1000_2000": "bg-indigo-100 text-indigo-700",
+  "2000_5000": "bg-violet-100 text-violet-700",
+  mas_5000: "bg-emerald-100 text-emerald-700",
+};
+
 type ContactSubmission = {
   id: string;
   nombre: string;
@@ -93,11 +102,13 @@ const FORMATION_TABS = [
   { key: "carrera", label: "Carrera" },
 ];
 
-const STATUS_TABS = [
-  { key: "all", label: "Todos" },
-  { key: "pendiente", label: "Pendientes", icon: Clock, color: "text-orange-600" },
-  { key: "contactado", label: "Contactados", icon: CheckCircle2, color: "text-green-600" },
-];
+const formatInversion = (raw: string): string => {
+  if (inversionLabels[raw]) return inversionLabels[raw];
+  return raw.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+};
+
+const getInitials = (nombre: string, apellidos: string) =>
+  `${nombre.charAt(0)}${apellidos.charAt(0)}`.toUpperCase();
 
 const AdminContacts = () => {
   const [activeTab, setActiveTab] = useState("all");
@@ -182,7 +193,6 @@ const AdminContacts = () => {
       return matchTab && matchStatus && matchSearch;
     })
     .sort((a, b) => {
-      // Pendientes first
       if (a.contact_status === "pendiente" && b.contact_status !== "pendiente") return -1;
       if (a.contact_status !== "pendiente" && b.contact_status === "pendiente") return 1;
       return 0;
@@ -193,10 +203,9 @@ const AdminContacts = () => {
       day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit",
     });
 
-  const handleToggleStatus = (e: React.MouseEvent, c: ContactSubmission) => {
-    e.stopPropagation();
-    const newStatus = c.contact_status === "pendiente" ? "contactado" : "pendiente";
-    updateStatusMutation.mutate({ id: c.id, status: newStatus });
+  const handleToggleStatus = (id: string, currentStatus: string) => {
+    const newStatus = currentStatus === "pendiente" ? "contactado" : "pendiente";
+    updateStatusMutation.mutate({ id, status: newStatus });
   };
 
   const openDetail = (c: ContactSubmission) => {
@@ -207,53 +216,86 @@ const AdminContacts = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold">Contactos / Leads</h1>
-          <p className="text-muted-foreground text-sm">
-            {contacts.length} total — <span className="text-orange-600 font-medium">{pendingCount} pendientes</span> · <span className="text-green-600 font-medium">{contactedCount} contactados</span>
-          </p>
+        {/* Header */}
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+            <Users className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Contactos / Leads</h1>
+            <p className="text-muted-foreground text-sm">Gestión de solicitudes de formación</p>
+          </div>
         </div>
 
-        {/* Status filter */}
-        <div className="flex gap-2">
-          {STATUS_TABS.map((tab) => {
-            const Icon = tab.icon;
-            const count = tab.key === "all" ? contacts.length : tab.key === "pendiente" ? pendingCount : contactedCount;
-            return (
+        {/* KPI Cards */}
+        <div className="grid grid-cols-3 gap-4">
+          <Card
+            className={`cursor-pointer transition-all ${statusFilter === "all" ? "ring-2 ring-primary shadow-md" : "hover:shadow-md"}`}
+            onClick={() => setStatusFilter("all")}
+          >
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                <Users className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-3xl font-bold">{contacts.length}</p>
+                <p className="text-sm text-muted-foreground">Total leads</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card
+            className={`cursor-pointer transition-all ${statusFilter === "pendiente" ? "ring-2 ring-orange-400 shadow-md" : "hover:shadow-md"}`}
+            onClick={() => setStatusFilter("pendiente")}
+          >
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
+                <Clock className="h-6 w-6 text-orange-600" />
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-orange-600">{pendingCount}</p>
+                <p className="text-sm text-muted-foreground">Pendientes</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card
+            className={`cursor-pointer transition-all ${statusFilter === "contactado" ? "ring-2 ring-green-400 shadow-md" : "hover:shadow-md"}`}
+            onClick={() => setStatusFilter("contactado")}
+          >
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                <CheckCircle2 className="h-6 w-6 text-green-600" />
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-green-600">{contactedCount}</p>
+                <p className="text-sm text-muted-foreground">Contactados</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Filters bar */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Formation tabs */}
+          <div className="flex gap-1.5 flex-wrap flex-1">
+            {FORMATION_TABS.map((tab) => (
               <Button
                 key={tab.key}
                 size="sm"
-                variant={statusFilter === tab.key ? "default" : "outline"}
-                onClick={() => setStatusFilter(tab.key)}
-                className="gap-1.5"
+                variant={activeTab === tab.key ? "default" : "outline"}
+                onClick={() => setActiveTab(tab.key)}
+                className="gap-1 text-xs h-8"
               >
-                {Icon && <Icon className={`h-4 w-4 ${statusFilter !== tab.key ? tab.color : ""}`} />}
-                {tab.label} ({count})
+                {tab.key !== "all" && formacionIcons[tab.key]}
+                {tab.label}
+                <span className="ml-0.5 opacity-70">({formationCounts[tab.key] ?? 0})</span>
               </Button>
-            );
-          })}
-        </div>
-
-        {/* Formation counters */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-          {FORMATION_TABS.map((tab) => (
-            <Card
-              key={tab.key}
-              className={`cursor-pointer transition-all ${activeTab === tab.key ? "ring-2 ring-primary" : "hover:shadow-md"}`}
-              onClick={() => setActiveTab(tab.key)}
-            >
-              <CardContent className="p-3 text-center">
-                <p className="text-2xl font-bold">{formationCounts[tab.key] ?? 0}</p>
-                <p className="text-xs text-muted-foreground">{tab.label}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Search */}
-        <div className="relative max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Buscar por nombre, email o teléfono..." className="pl-9" value={search} onChange={(e) => setSearch(e.target.value)} />
+            ))}
+          </div>
+          {/* Search */}
+          <div className="relative w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input placeholder="Buscar nombre, email, teléfono..." className="pl-9 h-8 text-sm" value={search} onChange={(e) => setSearch(e.target.value)} />
+          </div>
         </div>
 
         {/* Table */}
@@ -268,14 +310,13 @@ const AdminContacts = () => {
             ) : (
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Estado</TableHead>
+                  <TableRow className="bg-muted/30">
+                    <TableHead className="w-12 text-center">✓</TableHead>
                     <TableHead>Nombre</TableHead>
-                    <TableHead className="hidden md:table-cell">Email</TableHead>
-                    <TableHead className="hidden lg:table-cell">Teléfono</TableHead>
+                    <TableHead className="hidden md:table-cell">Contacto</TableHead>
                     <TableHead>Formación</TableHead>
+                    <TableHead className="hidden lg:table-cell">Inversión</TableHead>
                     <TableHead className="hidden lg:table-cell">Experiencia</TableHead>
-                    <TableHead className="hidden md:table-cell">Inversión</TableHead>
                     <TableHead>Fecha</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -283,38 +324,51 @@ const AdminContacts = () => {
                   {filtered.map((c) => (
                     <TableRow
                       key={c.id}
-                      className={`cursor-pointer ${c.contact_status === "pendiente" ? "bg-orange-50/50 dark:bg-orange-950/10" : ""}`}
+                      className={`cursor-pointer transition-colors ${c.contact_status === "pendiente" ? "bg-orange-50/40 hover:bg-orange-50/70 dark:bg-orange-950/10" : "hover:bg-muted/50"}`}
                       onClick={() => openDetail(c)}
                     >
-                      <TableCell>
-                        <button
-                          onClick={(e) => handleToggleStatus(e, c)}
-                          className="focus:outline-none"
+                      <TableCell className="text-center" onClick={(e) => e.stopPropagation()}>
+                        <Checkbox
+                          checked={c.contact_status === "contactado"}
+                          onCheckedChange={() => handleToggleStatus(c.id, c.contact_status)}
+                          className="transition-all"
                           title={c.contact_status === "pendiente" ? "Marcar como contactado" : "Marcar como pendiente"}
-                        >
-                          {c.contact_status === "pendiente" ? (
-                            <Badge className="bg-orange-100 text-orange-800 hover:bg-orange-200 gap-1 cursor-pointer border-0">
-                              <Clock className="h-3 w-3" /> Pendiente
-                            </Badge>
-                          ) : (
-                            <Badge className="bg-green-100 text-green-800 hover:bg-green-200 gap-1 cursor-pointer border-0">
-                              <CheckCircle2 className="h-3 w-3" /> Contactado
-                            </Badge>
-                          )}
-                        </button>
+                        />
                       </TableCell>
-                      <TableCell className="font-medium">{c.nombre} {c.apellidos}</TableCell>
-                      <TableCell className="hidden md:table-cell">{c.email}</TableCell>
-                      <TableCell className="hidden lg:table-cell">{c.telefono}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2.5">
+                          <div className={`h-8 w-8 rounded-full flex items-center justify-center text-xs font-semibold shrink-0 ${c.contact_status === "pendiente" ? "bg-orange-100 text-orange-700" : "bg-green-100 text-green-700"}`}>
+                            {getInitials(c.nombre, c.apellidos)}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-medium text-sm truncate">
+                              {c.nombre} {c.apellidos}
+                              {c.admin_notes && <StickyNote className="inline h-3 w-3 ml-1 text-amber-500" />}
+                            </p>
+                            <p className="text-xs text-muted-foreground md:hidden truncate">{c.email}</p>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        <div className="text-sm space-y-0.5">
+                          <p className="truncate">{c.email}</p>
+                          <p className="text-xs text-muted-foreground">{c.telefono}</p>
+                        </div>
+                      </TableCell>
                       <TableCell>
                         <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${formacionColors[c.tipo_formacion] || "bg-muted text-foreground"}`}>
                           {formacionIcons[c.tipo_formacion]}
                           {formacionLabels[c.tipo_formacion] || c.tipo_formacion}
                         </span>
                       </TableCell>
-                      <TableCell className="hidden lg:table-cell text-sm">{experienciaLabels[c.experiencia] || c.experiencia}</TableCell>
-                      <TableCell className="hidden md:table-cell text-sm">{inversionLabels[c.inversion] || c.inversion}</TableCell>
-                      <TableCell className="text-sm text-muted-foreground whitespace-nowrap">{formatDate(c.created_at)}</TableCell>
+                      <TableCell className="hidden lg:table-cell">
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${inversionColors[c.inversion] || "bg-muted text-foreground"}`}>
+                          <Euro className="h-3 w-3" />
+                          {formatInversion(c.inversion)}
+                        </span>
+                      </TableCell>
+                      <TableCell className="hidden lg:table-cell text-sm text-muted-foreground">{experienciaLabels[c.experiencia] || c.experiencia}</TableCell>
+                      <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(c.created_at)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -329,77 +383,99 @@ const AdminContacts = () => {
             {selected && (
               <>
                 <DialogHeader>
-                  <DialogTitle>{selected.nombre} {selected.apellidos}</DialogTitle>
-                  <DialogDescription>Recibido el {formatDate(selected.created_at)}</DialogDescription>
+                  <div className="flex items-center gap-3">
+                    <div className={`h-11 w-11 rounded-full flex items-center justify-center text-sm font-bold ${selected.contact_status === "pendiente" ? "bg-orange-100 text-orange-700" : "bg-green-100 text-green-700"}`}>
+                      {getInitials(selected.nombre, selected.apellidos)}
+                    </div>
+                    <div>
+                      <DialogTitle className="text-lg">{selected.nombre} {selected.apellidos}</DialogTitle>
+                      <DialogDescription>Recibido el {formatDate(selected.created_at)}</DialogDescription>
+                    </div>
+                  </div>
                 </DialogHeader>
 
-                <div className="space-y-4 text-sm">
+                <div className="space-y-5 text-sm">
                   {/* Status toggle */}
                   <div className="flex items-center gap-3">
-                    <span className="text-muted-foreground text-xs">Estado:</span>
-                    <Button
-                      size="sm"
-                      variant={selected.contact_status === "pendiente" ? "outline" : "default"}
-                      className={selected.contact_status === "contactado" ? "bg-green-600 hover:bg-green-700 gap-1.5" : "gap-1.5 border-orange-300 text-orange-700"}
-                      onClick={() => {
+                    <Checkbox
+                      checked={selected.contact_status === "contactado"}
+                      onCheckedChange={() => {
                         const newStatus = selected.contact_status === "pendiente" ? "contactado" : "pendiente";
                         updateStatusMutation.mutate({ id: selected.id, status: newStatus });
                         setSelected({ ...selected, contact_status: newStatus, contacted_at: newStatus === "contactado" ? new Date().toISOString() : null });
                       }}
-                    >
-                      {selected.contact_status === "pendiente" ? <><Clock className="h-4 w-4" /> Pendiente — Marcar contactado</> : <><CheckCircle2 className="h-4 w-4" /> Contactado</>}
-                    </Button>
+                    />
+                    <span className="text-sm">
+                      {selected.contact_status === "pendiente" ? (
+                        <span className="text-orange-600 font-medium">Pendiente de contactar</span>
+                      ) : (
+                        <span className="text-green-600 font-medium">Contactado</span>
+                      )}
+                    </span>
+                    {selected.contacted_at && (
+                      <span className="text-xs text-muted-foreground ml-auto">{formatDate(selected.contacted_at)}</span>
+                    )}
                   </div>
-                  {selected.contacted_at && (
-                    <p className="text-xs text-muted-foreground">Contactado el {formatDate(selected.contacted_at)}</p>
-                  )}
 
-                  {/* Contact info */}
-                  <div className="flex flex-wrap gap-2">
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={`mailto:${selected.email}`}><Mail className="h-4 w-4 mr-1" /> {selected.email}</a>
+                  {/* Contact actions */}
+                  <div className="grid grid-cols-3 gap-2">
+                    <Button variant="outline" className="h-12 flex-col gap-0.5" asChild>
+                      <a href={`mailto:${selected.email}`}>
+                        <Mail className="h-5 w-5 text-primary" />
+                        <span className="text-[10px] truncate max-w-full">{selected.email}</span>
+                      </a>
                     </Button>
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={`tel:${selected.telefono}`}><Phone className="h-4 w-4 mr-1" /> {selected.telefono}</a>
+                    <Button variant="outline" className="h-12 flex-col gap-0.5" asChild>
+                      <a href={`tel:${selected.telefono}`}>
+                        <Phone className="h-5 w-5 text-primary" />
+                        <span className="text-[10px]">{selected.telefono}</span>
+                      </a>
                     </Button>
-                    <Button size="sm" variant="outline" asChild>
+                    <Button variant="outline" className="h-12 flex-col gap-0.5" asChild>
                       <a href={`https://wa.me/${selected.telefono.replace(/\s+/g, "").replace(/^\+/, "")}`} target="_blank" rel="noopener noreferrer">
-                        <MessageCircle className="h-4 w-4 mr-1" /> WhatsApp
+                        <MessageCircle className="h-5 w-5 text-green-600" />
+                        <span className="text-[10px]">WhatsApp</span>
                       </a>
                     </Button>
                   </div>
 
                   {/* Details grid */}
-                  <div className="grid grid-cols-2 gap-3 bg-muted/50 rounded-lg p-4">
+                  <div className="grid grid-cols-2 gap-3 bg-muted/40 rounded-xl p-4">
                     <div>
-                      <p className="text-muted-foreground text-xs">Formación</p>
-                      <p className="font-medium">{formacionLabels[selected.tipo_formacion] || selected.tipo_formacion}</p>
+                      <p className="text-muted-foreground text-xs mb-0.5">Formación</p>
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${formacionColors[selected.tipo_formacion] || "bg-muted"}`}>
+                        {formacionIcons[selected.tipo_formacion]}
+                        {formacionLabels[selected.tipo_formacion] || selected.tipo_formacion}
+                      </span>
                     </div>
                     <div>
-                      <p className="text-muted-foreground text-xs">Experiencia</p>
-                      <p className="font-medium">{experienciaLabels[selected.experiencia] || selected.experiencia}</p>
+                      <p className="text-muted-foreground text-xs mb-0.5">Experiencia</p>
+                      <p className="font-medium text-sm">{experienciaLabels[selected.experiencia] || selected.experiencia}</p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground text-xs">Centro propio</p>
-                      <p className="font-medium">{centroLabels[selected.centro_propio] || selected.centro_propio}</p>
+                      <p className="text-muted-foreground text-xs mb-0.5">Centro propio</p>
+                      <p className="font-medium text-sm">{centroLabels[selected.centro_propio] || selected.centro_propio}</p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground text-xs">Inversión</p>
-                      <p className="font-medium">{inversionLabels[selected.inversion] || selected.inversion}</p>
+                      <p className="text-muted-foreground text-xs mb-0.5">Inversión</p>
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${inversionColors[selected.inversion] || "bg-muted"}`}>
+                        <Euro className="h-3 w-3" />
+                        {formatInversion(selected.inversion)}
+                      </span>
                     </div>
                   </div>
 
                   {/* Message */}
                   {selected.mensaje && (
                     <div>
-                      <p className="text-muted-foreground text-xs mb-1">Mensaje</p>
-                      <p className="bg-muted/50 rounded-lg p-3 whitespace-pre-wrap">{selected.mensaje}</p>
+                      <p className="text-muted-foreground text-xs mb-1 font-medium">Mensaje del lead</p>
+                      <p className="bg-muted/40 rounded-lg p-3 whitespace-pre-wrap text-sm">{selected.mensaje}</p>
                     </div>
                   )}
 
                   {/* Admin notes */}
                   <div>
-                    <p className="text-muted-foreground text-xs mb-1">Notas internas</p>
+                    <p className="text-muted-foreground text-xs mb-1 font-medium">Notas internas</p>
                     <Textarea
                       placeholder="Ej: Le envié presupuesto, llamar el lunes..."
                       value={editNotes}
@@ -420,16 +496,11 @@ const AdminContacts = () => {
                   </div>
 
                   {/* Delete */}
-                  <div className="border-t pt-4 mt-4">
+                  <div className="border-t pt-4">
                     {confirmDeleteId === selected.id ? (
                       <div className="flex items-center gap-2">
-                        <p className="text-sm text-destructive font-medium">¿Eliminar este lead permanentemente?</p>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          disabled={deleteMutation.isPending}
-                          onClick={() => deleteMutation.mutate(selected.id)}
-                        >
+                        <p className="text-sm text-destructive font-medium">¿Eliminar permanentemente?</p>
+                        <Button size="sm" variant="destructive" disabled={deleteMutation.isPending} onClick={() => deleteMutation.mutate(selected.id)}>
                           Confirmar
                         </Button>
                         <Button size="sm" variant="outline" onClick={() => setConfirmDeleteId(null)}>
