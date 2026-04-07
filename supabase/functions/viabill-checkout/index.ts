@@ -18,6 +18,18 @@ serve(async (req) => {
     const secret = Deno.env.get("VIABILL_SECRET") ?? "";
     const appUrl = Deno.env.get("NEXT_PUBLIC_APP_URL") ?? "https://academiadetail.com";
 
+    // Debug: log key length and first/last chars to verify it's loaded
+    console.log("VIABILL_API_KEY length:", apikey.length);
+    console.log("VIABILL_API_KEY starts with:", apikey.substring(0, 10));
+    console.log("VIABILL_SECRET length:", secret.length);
+
+    if (!apikey) {
+      return new Response(JSON.stringify({ error: "VIABILL_API_KEY not configured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // md5check con separador #
     const md5string = `${amount}#${currency}#${orderNumber}#${orderNumber}#${apikey}#${secret}`;
     const md5bytes = await stdCrypto.subtle.digest("MD5", new TextEncoder().encode(md5string));
@@ -35,6 +47,9 @@ serve(async (req) => {
       callbackUrl: `${appUrl}/api/viabill-callback`,
       test: "false",
     });
+
+    console.log("Request body:", body.toString());
+    console.log("Authorization header:", `Bearer ${apikey.substring(0, 20)}...`);
 
     const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
       method: "POST",
