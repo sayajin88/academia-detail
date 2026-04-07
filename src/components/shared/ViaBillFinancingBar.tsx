@@ -40,7 +40,7 @@ export function ViaBillFinancingBar() {
             <img
               src={viabillLogo}
               alt="ViaBill - Financiación a plazos"
-              className="h-5 md:h-7 w-auto flex-shrink-0 brightness-0 invert"
+              className="h-5 md:h-7 w-auto flex-shrink-0"
               width={100}
               height={28}
             />
