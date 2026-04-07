@@ -75,6 +75,7 @@ serve(async (req) => {
 
     const apikey = Deno.env.get("VIABILL_API_KEY") ?? "";
     const secret = Deno.env.get("VIABILL_SECRET") ?? "";
+    const appUrl = Deno.env.get("NEXT_PUBLIC_APP_URL") ?? "https://academiadetail.com";
 
     const formattedAmount = parseFloat(amount).toFixed(2);
     const txOrderNumber = orderNumber || `DP-${courseSlug}-${Date.now()}`;
@@ -91,9 +92,9 @@ serve(async (req) => {
       currency,
       transaction,
       orderNumber: txOrderNumber,
-      successUrl: "https://academiadetail.com/pago-exitoso",
-      cancelUrl: "https://academiadetail.com/pago-cancelado",
-      callbackUrl: "https://academiadetail.com/api/viabill-callback",
+      successUrl: `${appUrl}/pago-exitoso`,
+      cancelUrl: `${appUrl}/pago-cancelado`,
+      callbackUrl: `${appUrl}/api/viabill-callback`,
       test: "false",
     });
 
