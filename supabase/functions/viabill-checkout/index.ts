@@ -42,7 +42,7 @@ serve(async (req) => {
     const hashInput = `${formattedAmount}|EUR|${transaction}|${orderNumber}|${apikey}|${secret}`;
     const md5check = createHash('md5').update(hashInput).toString();
 
-    const body = {
+    const formBody = new URLSearchParams({
       apikey,
       md5check,
       amount: formattedAmount,
@@ -52,15 +52,20 @@ serve(async (req) => {
       successUrl: `${origin}/pago-exitoso?curso=${encodeURIComponent(courseSlug)}`,
       cancelUrl: `${origin}/pago-cancelado?curso=${encodeURIComponent(courseSlug)}`,
       callbackUrl: `${origin}/api/viabill-callback`,
-      test: false,
-    };
+      test: 'false',
+    });
 
-    console.log('Initiating ViaBill checkout:', { orderNumber, amount: formattedAmount, course: courseSlug });
+    console.log('Initiating ViaBill checkout:', { orderNumber, amount: formattedAmount, course: courseSlug, apikeyLength: apikey.length });
 
+    // Try multiple auth approaches
+    const basicAuth = btoa(`${apikey}:${secret}`);
     const response = await fetch('https://secure.viabill.com/api/checkout/initiate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Basic ${basicAuth}`,
+      },
+      body: formBody.toString(),
     });
 
     const responseText = await response.text();
