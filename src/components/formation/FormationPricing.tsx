@@ -15,12 +15,14 @@ import {
   Bell,
   Scale,
   ArrowRight,
-  Shield
+  Shield,
+  CreditCard
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FormationDetail } from '@/data/formationDetails';
 import { useCountUp } from '@/hooks/useCountUp';
 import { ViaBillPriceTag } from './ViaBillPriceTag';
+import { FinancingBadge } from '@/components/shared/FinancingBadge';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -138,6 +140,9 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                     </div>
                     <p className="text-sm text-muted-foreground mt-2">Pago único · Financiación disponible</p>
                     <ViaBillPriceTag price={formation.price} />
+                    <div className="mt-4">
+                      <FinancingBadge price={formation.price} variant="prominent" />
+                    </div>
                   </div>
                 )}
               </div>
@@ -196,7 +201,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full mt-3 text-base py-6 font-semibold rounded-xl border-primary/30 hover:border-primary/60 hover:bg-primary/5"
+                  className="w-full mt-3 text-base py-6 font-semibold rounded-xl border-emerald-500/30 hover:border-emerald-500/60 hover:bg-emerald-500/5 text-emerald-400 hover:text-emerald-300 group/vb"
                   onClick={async () => {
                     try {
                       toast.loading('Conectando con ViaBill...', { id: 'viabill' });
@@ -221,7 +226,8 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                     }
                   }}
                 >
-                  💳 Pagar a Plazos con ViaBill
+                  <CreditCard className="w-5 h-5 mr-2 group-hover/vb:scale-110 transition-transform" />
+                  Pagar a Plazos sin Intereses
                 </Button>
               )}
 
