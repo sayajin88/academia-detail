@@ -11,73 +11,64 @@ serve(async (req) => {
   try {
     const { amount, courseSlug } = await req.json();
 
-    // CLAVES DIRECTAS
-    const apiKey =
+    // Credenciales directas
+    const VIA_KEY =
       "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJNRVJDSEFOVCIsIlNZU1RFTSJdLCJ1dWlkIjoiZTllY2NkOTAtMzFjMy0xMWYxLTlhMTctZmIxYmYzYWM4NDZlIiwidHYiOjEsImVudiI6IlBST0RVQ1RJT04iLCJpYXQiOjE3NzU0ODUyOTQsImV4cCI6MjA5MTEwNDQ5NH0.zoKaAtlpck09R9shexWRuANuj8YfdsPfDXz31V3xz10";
-    const secret = "ivxBzMAP7EP5";
+    const VIA_SECRET = "ivxBzMAP7EP5";
 
-    const formattedAmount = parseFloat(amount).toFixed(2);
-    const orderNumber = `ORD${Date.now()}`;
-    const successUrl = `https://academiadetail.com/pago-exitoso`;
-    const cancelUrl = `https://academiadetail.com/pago-cancelado`;
+    const finalAmount = parseFloat(amount).toFixed(2);
+    const orderID = `ORD${Date.now()}`;
+    const urlSuccess = "https://academiadetail.com/pago-exitoso";
+    const urlCancel = "https://academiadetail.com/pago-cancelado";
 
-    // 1. GENERAR HASH (Orden exacto V3)
-    const hashString = `${apiKey}#${formattedAmount}#EUR#${orderNumber}#${orderNumber}#${successUrl}#${cancelUrl}#${secret}`;
-    const msgUint8 = new TextEncoder().encode(hashString);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
-    const sha256check = Array.from(new Uint8Array(hashBuffer))
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
+    // GENERAR HASH (Estrictamente V3)
+    // Orden: apiKey#amount#currency#transaction#orderNumber#successUrl#cancelUrl#secret
+    const stringToHash = `${VIA_KEY}#${finalAmount}#EUR#${orderID}#${orderID}#${urlSuccess}#${urlCancel}#${VIA_SECRET}`;
 
-    // 2. CONSTRUIR FORM DATA (Mucho más compatible que JSON puro)
-    const formData = new URLSearchParams();
-    formData.append("protocol", "V3");
-    formData.append("apiKey", apiKey);
-    formData.append("amount", formattedAmount);
-    formData.append("currency", "EUR");
-    formData.append("transaction", orderNumber);
-    formData.append("orderNumber", orderNumber);
-    formData.append("successUrl", successUrl);
-    formData.append("cancelUrl", cancelUrl);
-    formData.append("callbackUrl", "https://academiadetail.com/api/viabill-callback");
-    formData.append("sha256check", sha256check);
-    formData.append("test", "true");
+    const encoder = new TextEncoder();
+    const data = encoder.encode(stringToHash);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const finalHash = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 
-    console.log("Enviando petición V3 formateada...");
+    // OBJETO DE ENVÍO
+    const requestBody = {
+      protocol: "V3",
+      apiKey: VIA_KEY,
+      amount: parseFloat(finalAmount),
+      currency: "EUR",
+      transaction: orderID,
+      orderNumber: orderID,
+      successUrl: urlSuccess,
+      cancelUrl: urlCancel,
+      callbackUrl: "https://academiadetail.com/api/viabill-callback",
+      sha256check: finalHash,
+      test: true,
+    };
+
+    console.log("--- NUEVO DESPLIEGE DETECTADO ---");
+    console.log("Hash generado con:", stringToHash);
 
     const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded", // Cambio clave de JSON a Form
+        "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Basic ${btoa(apiKey + ":")}`,
+        Authorization: `Basic ${btoa(VIA_KEY + ":")}`,
       },
-      body: formData.toString(),
+      body: JSON.stringify(requestBody),
     });
 
-    const responseText = await response.text();
-    console.log("Respuesta bruta:", responseText);
-
-    let result;
-    try {
-      result = JSON.parse(responseText);
-    } catch {
-      result = { raw: responseText };
-    }
-
-    if (!response.ok) {
-      return new Response(JSON.stringify({ error: "Error ViaBill", details: result }), {
-        status: response.status,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+    const result = await response.json();
+    console.log("Resultado final:", JSON.stringify(result));
 
     return new Response(JSON.stringify(result), {
-      status: 200,
+      status: response.status,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-  } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), {
+  } catch (err) {
+    console.error("Error en función:", err.message);
+    return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
