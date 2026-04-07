@@ -23,67 +23,57 @@ serve(async (req) => {
     const apikey = Deno.env.get("VIABILL_API_KEY") ?? "";
     const secret = Deno.env.get("VIABILL_SECRET") ?? "";
     const appUrl = Deno.env.get("NEXT_PUBLIC_APP_URL") ?? "https://academiadetail.com";
-    const testMode = Deno.env.get("VIABILL_TEST_MODE") === "true";
 
-    const transactionId = transaction || `txn_${Date.now()}`;
-    const successUrl = `${appUrl}/pago-exitoso?orderId=${orderNumber}&transactionId=${transactionId}`;
-    const cancelUrl = `${appUrl}/pago-cancelado?orderId=${orderNumber}&transactionId=${transactionId}`;
-    const callbackUrl = `${appUrl}/api/viabill-callback`;
+    // Ensure amount is a number
+    const numericAmount = Number(amount);
 
-    // Firma SHA256 según documentación oficial ViaBill
-    let signatureString = `${apikey}#${String(amount)}#${currency}#${transactionId}#${orderNumber}#${successUrl}#${cancelUrl}#${secret}`;
-    if (testMode) signatureString += "#true";
+    // Generate unique IDs if not provided
+    const txn = transaction || `txn_${Date.now()}`;
+    const order = orderNumber || `ORD-${Date.now()}`;
 
-    const sha256check = await sha256(signatureString);
+    // SHA256 hash: apikey#amount#currency#transaction#orderNumber#secret
+    const hashString = `${apikey}#${numericAmount}#${currency}#${txn}#${order}#${secret}`;
+    const sha256check = await sha256(hashString);
 
-    // Payload JSON según especificación oficial
-    const payload: any = {
-      protocol: "3.1",
+    console.log("Hash input:", hashString);
+    console.log("SHA256 check:", sha256check);
+
+    const payload = {
       apikey,
-      transaction: transactionId,
-      order_number: orderNumber,
-      amount: String(amount),
+      amount: numericAmount,
       currency,
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      callback_url: callbackUrl,
+      transaction: txn,
+      orderNumber: order,
       sha256check,
+      successUrl: `${appUrl}/pago-exitoso?orderId=${order}`,
+      cancelUrl: `${appUrl}/pago-cancelado?orderId=${order}`,
+      callbackUrl: `${appUrl}/api/viabill-callback`,
     };
 
-    if (testMode) payload.test = true;
-
-    console.log("ViaBill request URL:", "https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM");
     console.log("ViaBill payload:", JSON.stringify(payload));
 
     const response = await fetch("https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM", {
       method: "POST",
       headers: {
-        "Accept": "application/json",
         "Content-Type": "application/json",
       },
-      redirect: "manual",
       body: JSON.stringify(payload),
     });
 
-    const redirectUrl = response.headers.get("location");
     let result;
     try { result = await response.json(); } catch { result = null; }
 
     console.log("ViaBill status:", response.status);
-    console.log("ViaBill redirect:", redirectUrl);
+    console.log("ViaBill response:", JSON.stringify(result));
 
-    if (response.status >= 400) {
+    if (!response.ok) {
       return new Response(JSON.stringify({ error: "Error ViaBill", details: result }), {
         status: response.status,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    return new Response(JSON.stringify({
-      redirectUrl: redirectUrl,
-      transactionId,
-      status: response.status,
-    }), {
+    return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
 
