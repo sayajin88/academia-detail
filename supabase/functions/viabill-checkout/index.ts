@@ -9,9 +9,9 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { amount, courseSlug } = await req.json();
+    const { amount } = await req.json();
 
-    // Credenciales directas
+    // CLAVES DIRECTAS
     const VIA_KEY =
       "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJNRVJDSEFOVCIsIlNZU1RFTSJdLCJ1dWlkIjoiZTllY2NkOTAtMzFjMy0xMWYxLTlhMTctZmIxYmYzYWM4NDZlIiwidHYiOjEsImVudiI6IlBST0RVQ1RJT04iLCJpYXQiOjE3NzU0ODUyOTQsImV4cCI6MjA5MTEwNDQ5NH0.zoKaAtlpck09R9shexWRuANuj8YfdsPfDXz31V3xz10";
     const VIA_SECRET = "ivxBzMAP7EP5";
@@ -21,17 +21,16 @@ serve(async (req) => {
     const urlSuccess = "https://academiadetail.com/pago-exitoso";
     const urlCancel = "https://academiadetail.com/pago-cancelado";
 
-    // GENERAR HASH (Estrictamente V3)
-    // Orden: apiKey#amount#currency#transaction#orderNumber#successUrl#cancelUrl#secret
+    // HASH V3 SIN EL ERROR DEL #TEST
     const stringToHash = `${VIA_KEY}#${finalAmount}#EUR#${orderID}#${orderID}#${urlSuccess}#${urlCancel}#${VIA_SECRET}`;
 
     const encoder = new TextEncoder();
     const data = encoder.encode(stringToHash);
     const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const finalHash = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+    const finalHash = Array.from(new Uint8Array(hashBuffer))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
 
-    // OBJETO DE ENVÍO
     const requestBody = {
       protocol: "V3",
       apiKey: VIA_KEY,
@@ -43,11 +42,10 @@ serve(async (req) => {
       cancelUrl: urlCancel,
       callbackUrl: "https://academiadetail.com/api/viabill-callback",
       sha256check: finalHash,
-      test: true,
+      test: false, // CAMBIADO A FALSE PORQUE TU CLAVE ES DE PRODUCCIÓN
     };
 
-    console.log("--- NUEVO DESPLIEGE DETECTADO ---");
-    console.log("Hash generado con:", stringToHash);
+    console.log("--- INTENTO DE DESPLIEGUE 84 ---");
 
     const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
       method: "POST",
@@ -60,14 +58,11 @@ serve(async (req) => {
     });
 
     const result = await response.json();
-    console.log("Resultado final:", JSON.stringify(result));
-
     return new Response(JSON.stringify(result), {
       status: response.status,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
-    console.error("Error en función:", err.message);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
