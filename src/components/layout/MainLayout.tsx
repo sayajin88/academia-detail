@@ -22,6 +22,7 @@ export function MainLayout({ children }: MainLayoutProps) {
         {children}
       </main>
       <Footer />
+      <ViaBillFinancingBar />
     </div>
   );
 }

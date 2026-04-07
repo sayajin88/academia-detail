@@ -90,6 +90,18 @@ export function Footer() {
               />
               <span className="text-xs text-muted-foreground/70">Partner oficial de productos</span>
             </div>
+            {/* ViaBill financing partner */}
+            <div className="flex items-center gap-2.5 mt-3">
+              <img
+                src={logoViabill}
+                alt="ViaBill - Financiación a plazos sin intereses"
+                className="h-5 w-auto brightness-0 invert opacity-60"
+                loading="lazy"
+                width={120}
+                height={20}
+              />
+              <span className="text-xs text-muted-foreground/70">Financiación a plazos disponible</span>
+            </div>
           </div>
 
           {/* Formaciones */}
