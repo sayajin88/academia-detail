@@ -40,10 +40,7 @@ serve(async (req) => {
 
     // MD5 hash: amount|currency|transaction|orderNumber|apikey|SECRET
     const hashInput = `${formattedAmount}|EUR|${transaction}|${orderNumber}|${apikey}|${secret}`;
-    const encoder = new TextEncoder();
-    const data = encoder.encode(hashInput);
-    const hashBuffer = await stdCrypto.subtle.digest('MD5', data);
-    const md5check = encodeHex(new Uint8Array(hashBuffer));
+    const md5check = createHash('md5').update(hashInput).toString();
 
     const body = {
       apikey,
