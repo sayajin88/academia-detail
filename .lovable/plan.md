@@ -1,42 +1,48 @@
 
 
-## Plan: Hacer la financiación ViaBill más visible y visual
+## Plan: Integrar logos ViaBill y barra sticky de financiación
 
-### Problema actual
-- El widget PriceTag de ViaBill usa `id="viabill-pricetag"` en vez de `class="viabill-pricetag"` (la documentación de ViaBill requiere class para que funcione, y además `id` solo permite una instancia en toda la página)
-- Solo aparece debajo del precio en la página de detalle del curso, con poca visibilidad
-- No aparece en la home ni en la Carrera Negocio
+### Resumen
+Copiar los logos ViaBill al proyecto, integrarlos en el footer, en los badges de financiación, y crear una barra sticky inferior promocional visible en todas las páginas.
 
 ### Cambios
 
-**1. Corregir `ViaBillPriceTag.tsx`**
-- Cambiar `id="viabill-pricetag"` → `class="viabill-pricetag"` para que el script de ViaBill lo detecte correctamente y soporte múltiples instancias
+**1. Copiar logos ViaBill al proyecto**
+- `user-uploads://viabill.png` → `src/assets/brands/viabill.png` (logo morado sobre transparente)
+- `user-uploads://viabill-logo-purple.png` → `src/assets/brands/viabill-logo-purple.png` (logo blanco sobre fondo morado)
 
-**2. Crear componente `FinancingBadge.tsx`**
-- Un badge visual y llamativo que dice "Págalo a plazos" con el logo/icono de ViaBill
-- Diseño: pill/badge con icono de tarjeta de crédito, gradiente sutil, texto "Desde €X/mes" calculado dividiendo el precio entre 4 (ViaBill ofrece 4 cuotas)
-- Animación sutil de entrada (fade-in + scale)
+**2. Nuevo componente: `src/components/shared/ViaBillFinancingBar.tsx`**
+- Barra sticky fija en la parte inferior de la pantalla (above footer)
+- Fondo con gradiente morado ViaBill (#6C28D9 / indigo-600)
+- Logo ViaBill a la izquierda + copy motivacional tipo: *"Financia tu formación · Págalo mientras generas negocio"* o *"Fórmate hoy, paga a plazos · Sin intereses con ViaBill"*
+- Botón CTA que lleva a `/contacto` o hace scroll a formaciones
+- Se oculta si el usuario hace scroll hasta el footer (para no solapar)
+- Botón de cerrar (X) para que no sea intrusivo, con localStorage para recordar
+- Responsive: en móvil, layout vertical más compacto
 
-**3. Añadir financiación en `FormationsGrid.tsx` (Home)**
-- En cada tarjeta de curso (que no sea `comingSoon`), añadir el `FinancingBadge` junto a la fecha/duración
-- Añadir el widget `ViaBillPriceTag` con `data-view="list"` dentro de cada tarjeta
-- Esto hace visible la opción de plazos desde la home
+**3. Integrar barra en `MainLayout.tsx`**
+- Añadir `<ViaBillFinancingBar />` justo antes de `<Footer />`
 
-**4. Mejorar visibilidad en `FormationPricing.tsx`**
-- Convertir la línea "Pago único · Financiación disponible" en un bloque más visual con el `FinancingBadge`
-- Resaltar el botón de ViaBill con un estilo más prominente (gradiente, icono más grande)
+**4. Añadir logo ViaBill en `Footer.tsx`**
+- En la sección de "Brand" del footer (columna izquierda), debajo del partner CarCare Passion
+- Añadir una línea similar: logo ViaBill + texto "Financiación a plazos disponible"
 
-**5. Añadir a `CarreraPricing.tsx`**
-- Incluir `ViaBillPriceTag` debajo del precio
-- Añadir `FinancingBadge` en la tarjeta de precio
+**5. Mejorar `FinancingBadge.tsx`**
+- En la variante `prominent`, reemplazar el icono genérico de CreditCard por el logo real de ViaBill
+- Importar `viabill.png` y usarlo como imagen dentro del badge
 
-### Archivos a modificar
+**6. Añadir logo ViaBill en `FormationsGrid.tsx`**
+- En el badge compact de financiación de cada tarjeta de curso, añadir un mini logo ViaBill (12-14px de alto) junto al texto "Desde €X/mes"
+
+### Archivos
 
 | Archivo | Cambio |
 |---|---|
-| `src/components/formation/ViaBillPriceTag.tsx` | Corregir `id` → `className="viabill-pricetag"`, permitir prop `view` |
-| `src/components/shared/FinancingBadge.tsx` | **Nuevo** — Badge visual "Desde €X/mes" |
-| `src/components/home/FormationsGrid.tsx` | Añadir FinancingBadge + ViaBillPriceTag en cada tarjeta |
-| `src/components/formation/FormationPricing.tsx` | Mejorar visibilidad del bloque de financiación |
-| `src/components/carrera/CarreraPricing.tsx` | Añadir ViaBillPriceTag + FinancingBadge |
+| `src/assets/brands/viabill.png` | **Nuevo** — Logo copiado |
+| `src/assets/brands/viabill-logo-purple.png` | **Nuevo** — Logo copiado |
+| `src/components/shared/ViaBillFinancingBar.tsx` | **Nuevo** — Barra sticky inferior |
+| `src/components/layout/MainLayout.tsx` | Añadir ViaBillFinancingBar |
+| `src/components/layout/Footer.tsx` | Añadir logo ViaBill + texto financiación |
+| `src/components/shared/FinancingBadge.tsx` | Integrar logo ViaBill en variante prominent |
+| `src/components/home/FormationsGrid.tsx` | Mini logo ViaBill en badges de financiación |
 
