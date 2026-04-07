@@ -182,6 +182,7 @@ export function FormationsGrid() {
                       </Link>
                       </div>
                     </div>
+                  </div>
                 </div>
               </article>
             );
