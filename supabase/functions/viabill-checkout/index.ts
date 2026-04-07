@@ -10,18 +10,17 @@ serve(async (req) => {
 
   try {
     const { amount, courseSlug } = await req.json();
-    const apiKey = Deno.env
-      .get(
-        "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJNRVJDSEFOVCIsIlNZU1RFTSJdLCJ1dWlkIjoiZTllY2NkOTAtMzFjMy0xMWYxLTlhMTctZmIxYmYzYWM4NDZlIiwidHYiOjEsImVudiI6IlBST0RVQ1RJT04iLCJpYXQiOjE3NzU0ODUyOTQsImV4cCI6MjA5MTEwNDQ5NH0.zoKaAtlpck09R9shexWRuANuj8YfdsPfDXz31V3xz10",
-      )
-      ?.trim();
-    const secret = Deno.env.get("ivxBzMAP7EP5")?.trim();
+
+    // CLAVES DIRECTAS (Hardcoded para probar)
+    const apiKey =
+      "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJNRVJDSEFOVCIsIlNZU1RFTSJdLCJ1dWlkIjoiZTllY2NkOTAtMzFjMy0xMWYxLTlhMTctZmIxYmYzYWM4NDZlIiwidHYiOjEsImVudiI6IlBST0RVQ1RJT04iLCJpYXQiOjE3NzU0ODUyOTQsImV4cCI6MjA5MTEwNDQ5NH0.zoKaAtlpck09R9shexWRuANuj8YfdsPfDXz31V3xz10";
+    const secret = "ivxBzMAP7EP5";
 
     if (!apiKey || !secret) throw new Error("Credenciales no configuradas");
 
     // Datos formateados
     const formattedAmount = parseFloat(amount).toFixed(2);
-    const orderNumber = `ORD${Date.now()}`; // ID más corto para evitar errores de longitud
+    const orderNumber = `ORD${Date.now()}`;
     const successUrl = `https://academiadetail.com/pago-exitoso`;
     const cancelUrl = `https://academiadetail.com/pago-cancelado`;
 
@@ -33,7 +32,7 @@ serve(async (req) => {
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("");
 
-    // CUERPO DEL MENSAJE (Ordenado igual que el Hash)
+    // CUERPO DEL MENSAJE
     const body = {
       protocol: "V3",
       apiKey: apiKey,
@@ -48,7 +47,7 @@ serve(async (req) => {
       test: true,
     };
 
-    console.log("Iniciando petición a ViaBill V3...");
+    console.log("Iniciando petición a ViaBill V3 con claves directas...");
 
     const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
       method: "POST",
