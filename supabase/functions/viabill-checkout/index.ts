@@ -1,102 +1,106 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
-async function sha256hex(message: string): Promise<string> {
-  const data = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(hashBuffer))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
 
 serve(async (req) => {
-  const cors = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  };
-
+  // Manejo de CORS para llamadas desde el navegador
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: cors });
+    return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const body = await req.json();
-    const amount = Number(body.amount || 297);
-    const currency = "EUR";
-    const orderNumber = `ORD-${Date.now()}`;
-    const transactionId = `TXN-${Date.now()}`;
+    const { amount, courseSlug } = await req.json();
 
-    const apiKey = (Deno.env.get("VIABILL_API_KEY") || "").trim();
-    const secret = (Deno.env.get("VIABILL_SECRET") || "").trim();
-    const testMode = true;
+    // Obtener y limpiar credenciales
+    const apiKey = Deno.env.get("VIABILL_API_KEY")?.trim();
+    const secret = Deno.env.get("VIABILL_SECRET")?.trim();
 
-    const successUrl = "https://academiadetail.com/pago-exitoso";
-    const cancelUrl = "https://academiadetail.com/pago-cancelado";
-    const callbackUrl = "https://academiadetail.com/api/viabill-callback";
-
-    const hashString = `${apiKey}#${amount}#${currency}#${transactionId}#${orderNumber}#${successUrl}#${cancelUrl}#${secret}${testMode ? "#test" : ""}`;
-    const sha256check = await sha256hex(hashString);
-
-    console.log(">>> FORM-URLENCODED VERSION <<<");
-    console.log("apiKey length:", apiKey.length);
-    console.log("secret length:", secret.length);
-    console.log("amount:", amount);
-    console.log("orderNumber:", orderNumber);
-    console.log("transactionId:", transactionId);
-    console.log("sha256check:", sha256check);
-
-    const formData = new URLSearchParams();
-    formData.append("protocol", "V3");
-    formData.append("apikey", apiKey);
-    formData.append("orderNumber", orderNumber);
-    formData.append("amount", String(amount));
-    formData.append("currency", currency);
-    formData.append("transaction", transactionId);
-    formData.append("sha256check", sha256check);
-    formData.append("successUrl", successUrl);
-    formData.append("cancelUrl", cancelUrl);
-    formData.append("callbackUrl", callbackUrl);
-    if (testMode) formData.append("test", "true");
-
-    console.log("form body:", formData.toString());
-
-    const response = await fetch("https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-      body: formData.toString(),
-      redirect: "manual",
-    });
-
-    let result: unknown = null;
-    try {
-      result = await response.json();
-    } catch {
-      result = null;
-    }
-    const redirectUrl = response.headers.get("location");
-
-    console.log("ViaBill status:", response.status);
-    console.log("ViaBill redirect:", redirectUrl);
-    console.log("ViaBill result:", JSON.stringify(result));
-
-    if (response.status >= 400) {
-      return new Response(JSON.stringify({ error: "Error ViaBill", details: result }), {
-        status: response.status,
-        headers: { ...cors, "Content-Type": "application/json" },
+    if (!apiKey || !secret) {
+      console.error("Error: VIABILL_API_KEY o VIABILL_SECRET no configurados en Supabase");
+      return new Response(JSON.stringify({ error: "Configuración de pago incompleta" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    return new Response(JSON.stringify({ redirectUrl: redirectUrl, status: response.status }), {
-      headers: { ...cors, "Content-Type": "application/json" },
+    // 1. Formatear datos según Protocolo V3
+    // El monto debe ser un string con dos decimales (ej: "2997.00")
+    const formattedAmount = parseFloat(amount).toFixed(2);
+    const orderNumber = `ORD-${courseSlug}-${Date.now()}`;
+    const transaction = orderNumber; // Usamos el mismo ID para simplificar
+    const currency = "EUR";
+    const origin = req.headers.get("origin") || "https://academiadetail.com";
+
+    const successUrl = `${origin}/pago-exitoso`;
+    const cancelUrl = `${origin}/pago-cancelado`;
+    const callbackUrl = `${origin}/api/viabill-callback`;
+
+    // 2. Generar Hash SHA256 (Orden estricto V3)
+    // El orden: apiKey#amount#currency#transaction#orderNumber#successUrl#cancelUrl#secret
+    const hashInput = `${apiKey}#${formattedAmount}#${currency}#${transaction}#${orderNumber}#${successUrl}#${cancelUrl}#${secret}`;
+
+    const msgUint8 = new TextEncoder().encode(hashInput);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
+    const sha256check = Array.from(new Uint8Array(hashBuffer))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+
+    // 3. Preparar el Payload JSON
+    const payload = {
+      protocol: "V3",
+      apiKey: apiKey,
+      orderNumber: orderNumber,
+      amount: parseFloat(formattedAmount),
+      currency: currency,
+      transaction: transaction,
+      sha256check: sha256check,
+      successUrl: successUrl,
+      cancelUrl: cancelUrl,
+      callbackUrl: callbackUrl,
+      test: true, // Cambiar a false para producción
+    };
+
+    // 4. Preparar Autenticación Básica (apiKey:Base64)
+    const authHeader = btoa(`${apiKey}:`);
+
+    console.log("--- Iniciando Checkout ViaBill V3 ---");
+    console.log("Order:", orderNumber);
+    console.log("Hash Input:", hashInput);
+
+    // 5. Petición a la API de ViaBill
+    const response = await fetch("https://secure.viabill.com/api/checkout/initiate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Basic ${authHeader}`,
+      },
+      body: JSON.stringify(payload),
     });
-  } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error("ERROR:", msg);
-    return new Response(JSON.stringify({ error: msg }), {
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.error("ViaBill Error Response:", result);
+      return new Response(JSON.stringify({ error: "Error en la pasarela", details: result }), {
+        status: response.status,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Respuesta exitosa (debería contener forwardUrl)
+    return new Response(JSON.stringify(result), {
+      status: 200,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Runtime Error:", error.message);
+    return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: { ...cors, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 });
