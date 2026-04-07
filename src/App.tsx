@@ -37,6 +37,8 @@ const AdminBlog = lazy(() => import("./pages/AdminBlog"));
 const Gracias = lazy(() => import("./pages/Gracias"));
 const MapaSitio = lazy(() => import("./pages/MapaSitio"));
 const CursoDetailingCiudad = lazy(() => import("./pages/CursoDetailingCiudad"));
+const PagoExitoso = lazy(() => import("./pages/PagoExitoso"));
+const PagoCancelado = lazy(() => import("./pages/PagoCancelado"));
 
 const queryClient = new QueryClient();
 
