@@ -19,7 +19,7 @@ export default function PagoExitoso() {
 
   return (
     <>
-      <SEO title="Pago Confirmado | Academia Detail" description="Tu pago ha sido procesado correctamente." noIndex />
+      <SEO title="Pago Confirmado | Academia Detail" description="Tu pago ha sido procesado correctamente." />
       <MainLayout>
         <section className="min-h-[70vh] flex items-center justify-center py-20">
           <div className="container mx-auto px-4 max-w-xl text-center">
