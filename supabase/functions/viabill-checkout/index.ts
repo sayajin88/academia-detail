@@ -103,7 +103,7 @@ serve(async (req) => {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": `Bearer ${apikey}`,
+        "Authorization": apikey,
       },
       body: body.toString(),
     });
