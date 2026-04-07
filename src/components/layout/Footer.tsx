@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import logo from '@/assets/detail-park-logo-white.png';
 import logoCarcarePassion from '@/assets/brands/carcare-passion.png';
+import logoViabill from '@/assets/brands/viabill.png';
 
 const formationLinks = [
   { name: 'Jornada Zero', href: '/jornada-zero-detailing' },
