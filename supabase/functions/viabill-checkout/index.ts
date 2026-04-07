@@ -27,7 +27,7 @@ serve(async (req) => {
 
     const apiKey = (Deno.env.get("VIABILL_API_KEY") || "").trim();
     const secret = (Deno.env.get("VIABILL_SECRET") || "").trim();
-    const testMode = true; // forzado a true para pruebas
+    const testMode = true;
 
     const successUrl = "https://academiadetail.com/pago-exitoso";
     const cancelUrl = "https://academiadetail.com/pago-cancelado";
@@ -36,36 +36,36 @@ serve(async (req) => {
     const hashString = `${apiKey}#${amount}#${currency}#${transactionId}#${orderNumber}#${successUrl}#${cancelUrl}#${secret}${testMode ? "#test" : ""}`;
     const sha256check = await sha256hex(hashString);
 
-    // Log para verificar que este código está desplegado
-    console.log(">>> NUEVO CODIGO DESPLEGADO <<<");
+    console.log(">>> FORM-URLENCODED VERSION <<<");
     console.log("apiKey length:", apiKey.length);
     console.log("secret length:", secret.length);
-    console.log("hashString:", hashString);
+    console.log("amount:", amount);
+    console.log("orderNumber:", orderNumber);
+    console.log("transactionId:", transactionId);
     console.log("sha256check:", sha256check);
 
-    const payload = {
-      protocol: "V3",
-      apiKey: apiKey,
-      orderNumber: orderNumber,
-      amount: amount,
-      currency: currency,
-      transaction: transactionId,
-      sha256check: sha256check,
-      successUrl: successUrl,
-      cancelUrl: cancelUrl,
-      callbackUrl: callbackUrl,
-      test: true,
-    };
+    const formData = new URLSearchParams();
+    formData.append("protocol", "V3");
+    formData.append("apikey", apiKey);
+    formData.append("orderNumber", orderNumber);
+    formData.append("amount", String(amount));
+    formData.append("currency", currency);
+    formData.append("transaction", transactionId);
+    formData.append("sha256check", sha256check);
+    formData.append("successUrl", successUrl);
+    formData.append("cancelUrl", cancelUrl);
+    formData.append("callbackUrl", callbackUrl);
+    if (testMode) formData.append("test", "true");
 
-    console.log("payload:", JSON.stringify(payload));
+    console.log("form body:", formData.toString());
 
     const response = await fetch("https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM", {
       method: "POST",
       headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json",
-        "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: formData.toString(),
       redirect: "manual",
     });
 
