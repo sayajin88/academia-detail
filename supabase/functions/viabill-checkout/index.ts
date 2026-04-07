@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createHash } from "https://deno.land/std@0.91.0/hash/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -39,11 +40,7 @@ serve(async (req) => {
 
     // MD5 hash: amount|currency|transaction|orderNumber|apikey|SECRET
     const hashInput = `${formattedAmount}|EUR|${transaction}|${orderNumber}|${apikey}|${secret}`;
-    const encoder = new TextEncoder();
-    const data = encoder.encode(hashInput);
-    const hashBuffer = await crypto.subtle.digest('MD5', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const md5check = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const md5check = createHash('md5').update(hashInput).toString();
 
     const body = {
       apikey,
