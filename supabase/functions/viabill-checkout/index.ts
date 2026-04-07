@@ -20,7 +20,8 @@ serve(async (req) => {
 
     // md5check con separador #
     const md5string = `${amount}#${currency}#${orderNumber}#${orderNumber}#${apikey}#${secret}`;
-    const md5check = createHash("md5").update(md5string).toString();
+    const md5bytes = await stdCrypto.subtle.digest("MD5", new TextEncoder().encode(md5string));
+    const md5check = new TextDecoder().decode(hexEncode(new Uint8Array(md5bytes)));
 
     const body = new URLSearchParams({
       apikey,
