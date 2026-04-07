@@ -136,7 +136,13 @@ const CarreraPricing = ({ onCTAClick }: CarreraPricingProps) => {
                   <p className="text-gold text-sm md:text-lg">
                     Ahorras €{(valueCount - carreraDetailingData.price).toLocaleString()}
                   </p>
+                  <ViaBillPriceTag price={carreraDetailingData.price} />
                 </div>
+              </div>
+
+              {/* Financing badge */}
+              <div className="relative z-10 px-2 pt-2">
+                <FinancingBadge price={carreraDetailingData.price} variant="prominent" />
               </div>
 
               {/* Benefits */}
