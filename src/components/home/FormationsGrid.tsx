@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { formations } from '@/data/formations';
 import { SectionHeading } from '@/components/shared/SectionHeading';
+import { FinancingBadge } from '@/components/shared/FinancingBadge';
+import { ViaBillPriceTag } from '@/components/formation/ViaBillPriceTag';
 import { 
   ArrowRight, 
   Clock,
