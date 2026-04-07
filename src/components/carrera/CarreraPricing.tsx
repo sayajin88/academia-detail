@@ -4,6 +4,8 @@ import { Crown, Check, Calendar, Users, Award, ArrowRight, Star } from 'lucide-r
 import { carreraDetailingData } from '@/data/carreraDetailingData';
 import { useCountUp } from '@/hooks/useCountUp';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
+import { FinancingBadge } from '@/components/shared/FinancingBadge';
+import { ViaBillPriceTag } from '@/components/formation/ViaBillPriceTag';
 
 interface CarreraPricingProps {
   onCTAClick: () => void;
