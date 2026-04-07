@@ -1,9 +1,8 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { Md5 } from "https://deno.land/std@0.95.0/hash/md5.ts";
 
-async function md5(input: string): Promise<string> {
-  const data = new TextEncoder().encode(input);
-  const hashBuffer = await crypto.subtle.digest("MD5", data);
-  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, "0")).join("");
+function md5(input: string): string {
+  return new Md5().update(input).toString();
 }
 
 const corsHeaders = {
