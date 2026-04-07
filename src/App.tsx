@@ -37,6 +37,8 @@ const AdminBlog = lazy(() => import("./pages/AdminBlog"));
 const Gracias = lazy(() => import("./pages/Gracias"));
 const MapaSitio = lazy(() => import("./pages/MapaSitio"));
 const CursoDetailingCiudad = lazy(() => import("./pages/CursoDetailingCiudad"));
+const PagoExitoso = lazy(() => import("./pages/PagoExitoso"));
+const PagoCancelado = lazy(() => import("./pages/PagoCancelado"));
 
 const queryClient = new QueryClient();
 
@@ -91,6 +93,10 @@ const App = () => (
               <Route path="/curso-detailing-sevilla" element={<CursoDetailingCiudad />} />
               <Route path="/curso-detailing-bilbao" element={<CursoDetailingCiudad />} />
               <Route path="/curso-detailing-:ciudad" element={<CursoDetailingCiudad />} />
+
+              {/* Payment result pages */}
+              <Route path="/pago-exitoso" element={<PagoExitoso />} />
+              <Route path="/pago-cancelado" element={<PagoCancelado />} />
 
               {/* Conversion & Utility Pages */}
               <Route path="/gracias" element={<Gracias />} />

@@ -20,6 +20,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { FormationDetail } from '@/data/formationDetails';
 import { useCountUp } from '@/hooks/useCountUp';
+import { ViaBillPriceTag } from './ViaBillPriceTag';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface FormationPricingProps {
   formation: FormationDetail;
@@ -134,6 +137,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                       <span className="text-base text-muted-foreground font-medium">+ IVA</span>
                     </div>
                     <p className="text-sm text-muted-foreground mt-2">Pago único · Financiación disponible</p>
+                    <ViaBillPriceTag price={formation.price} />
                   </div>
                 )}
               </div>
@@ -186,6 +190,40 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                   </>
                 )}
               </Button>
+
+              {/* ViaBill financing button */}
+              {!isComingSoon && (
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full mt-3 text-base py-6 font-semibold rounded-xl border-primary/30 hover:border-primary/60 hover:bg-primary/5"
+                  onClick={async () => {
+                    try {
+                      toast.loading('Conectando con ViaBill...', { id: 'viabill' });
+                      const { data, error } = await supabase.functions.invoke('viabill-checkout', {
+                        body: {
+                          amount: formation.price,
+                          courseName: formation.title,
+                          courseSlug: formation.slug,
+                        },
+                      });
+                      if (error) throw error;
+                      const url = data?.url || data?.redirectUrl;
+                      if (url) {
+                        toast.dismiss('viabill');
+                        window.location.href = url;
+                      } else {
+                        throw new Error('No se recibió URL de pago');
+                      }
+                    } catch (err: any) {
+                      toast.error('Error al iniciar el pago a plazos. Inténtalo de nuevo.', { id: 'viabill' });
+                      console.error('ViaBill error:', err);
+                    }
+                  }}
+                >
+                  💳 Pagar a Plazos con ViaBill
+                </Button>
+              )}
 
               {/* Social proof / urgency */}
               <div className="mt-5 space-y-3">
