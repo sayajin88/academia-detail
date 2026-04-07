@@ -208,7 +208,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                         },
                       });
                       if (error) throw error;
-                      const url = data?.url || data?.redirectUrl;
+                      const url = data?.redirectUrl || data?.url;
                       if (url) {
                         toast.dismiss('viabill');
                         window.location.href = url;
