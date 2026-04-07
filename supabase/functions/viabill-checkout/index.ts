@@ -59,7 +59,10 @@ serve(async (req) => {
 
     const response = await fetch('https://secure.viabill.com/api/checkout/initiate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Bearer ${apikey}`,
+      },
       body: formBody.toString(),
     });
 
