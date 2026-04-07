@@ -55,13 +55,15 @@ serve(async (req) => {
       test: 'false',
     });
 
-    console.log('Initiating ViaBill checkout:', { orderNumber, amount: formattedAmount, course: courseSlug });
+    console.log('Initiating ViaBill checkout:', { orderNumber, amount: formattedAmount, course: courseSlug, apikeyLength: apikey.length });
 
+    // Try multiple auth approaches
+    const basicAuth = btoa(`${apikey}:${secret}`);
     const response = await fetch('https://secure.viabill.com/api/checkout/initiate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Bearer ${apikey}`,
+        'Authorization': `Basic ${basicAuth}`,
       },
       body: formBody.toString(),
     });
