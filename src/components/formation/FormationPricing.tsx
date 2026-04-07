@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import { FormationDetail } from '@/data/formationDetails';
 import { useCountUp } from '@/hooks/useCountUp';
 import { ViaBillPriceTag } from './ViaBillPriceTag';
+import { FinancingBadge } from '@/components/shared/FinancingBadge';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
