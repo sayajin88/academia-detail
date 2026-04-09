@@ -51,10 +51,20 @@ serve(async (req) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Basic ${btoa(VIA_KEY + ':')}`,
+        Authorization: `Bearer ${VIA_KEY}`,
       },
       body: JSON.stringify(requestBody),
     });
+
+    if (response.status === 401) {
+      const errorBody = await response.text();
+      console.error('ViaBill 401 response:', errorBody);
+      console.error('Authorization header used: Bearer <apikey>');
+      return new Response(errorBody, {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
     const result = await response.json();
     return new Response(JSON.stringify(result), {
