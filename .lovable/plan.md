@@ -1,50 +1,28 @@
 
 
-## ViaBill Integration Fix - Based on Official API Documentation
+## Plan: Quitar botones de pago ViaBill y configurar PriceTag informativo
 
-### Research Findings
+### Resumen
+Eliminar los botones de pago directo con ViaBill de todas las páginas de formaciones y carrera. Mantener únicamente el widget PriceTag informativo (que muestra cuotas mensuales) con el ID correcto de tu tienda, y los badges informativos de financiación.
 
-After reviewing the official ViaBill Merchant API documentation at Stoplight, here are the **critical issues** with the current `viabill-v3-final` Edge Function:
+### Cambios
 
-### Issue 1: Wrong Endpoint URL
-- **Current**: `https://secure.viabill.com/api/checkout/initiate`
-- **Official docs**: `https://secure.viabill.com/api/checkout-authorize/addon/<webshop_name>`
+**1. `index.html` — Corregir script del PriceTag**
+- Cambiar `https://viabill.io/api/pricetag/v2/` por `https://pricetag.viabill.com/script/_ol9NtHA4kQ%3D` (URL con tu ID de tienda específico según la documentación oficial)
 
-The `<webshop_name>` is `CUSTOM` based on the previous URL you were given by support. So the correct URL is:
-`https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM`
+**2. `src/components/formation/ViaBillPriceTag.tsx` — Actualizar PriceTag ID**
+- Cambiar `data-tags` de `_pI9NHA4kQ%3D` a `_ol9NtHA4kQ%3D`
 
-### Issue 2: Wrong Protocol Version
-- **Current**: `"3.1"`
-- **Official docs example**: `"3.0"`
+**3. `src/components/formation/FormationPricing.tsx` — Eliminar botón de pago**
+- Eliminar el bloque completo del botón "Pagar a Plazos sin Intereses" (líneas 199-233) que llama a `viabill-v3-final`
+- Eliminar imports no usados: `supabase`, `toast`, `CreditCard`
+- Mantener el `ViaBillPriceTag` y `FinancingBadge` como información visual
 
-### Issue 3: Wrong Field Names (must be snake_case)
-The docs show all fields in **snake_case**, not camelCase:
-- `order_number` (not `orderNumber`)
-- `success_url` (not `successUrl`)
-- `cancel_url` (not `cancelUrl`)
-- `callback_url` (not `callbackUrl`)
-- `sha256check` stays as is
+**4. `src/components/carrera/CarreraPricing.tsx` — Sin cambios necesarios**
+- Ya no tiene botón de pago directo, solo el PriceTag y FinancingBadge informativos
 
-### Issue 4: No Authorization Header Needed
-The docs only require `Content-Type: application/json` and `User-Agent`. No `Authorization` header of any kind. The `apikey` is sent **in the JSON body only**.
-
-### Issue 5: Response is a 302 Redirect
-The successful response is a **302 redirect**, not a JSON body. The function needs `redirect: "manual"` and must capture the `Location` header.
-
-### Issue 6: Test Mode Hash
-When `test: true`, the hash string appends `#true` (not `#test`). Current code has `test: false` so this is fine, but worth noting.
-
----
-
-### Plan
-
-**Single file change**: `supabase/functions/viabill-v3-final/index.ts`
-
-1. Change endpoint URL to `https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM`
-2. Change protocol from `"3.1"` to `"3.0"`
-3. Change all payload field names to snake_case: `order_number`, `success_url`, `cancel_url`, `callback_url`
-4. Ensure no Authorization header (already removed - good)
-5. Add `redirect: "manual"` to the fetch call
-6. Capture the `Location` header from the 302 response as the redirect URL
-7. Deploy and test
+**5. Componentes informativos que se mantienen tal cual:**
+- `ViaBillPriceTag` — widget oficial que muestra "desde X€/mes"
+- `FinancingBadge` — badge visual con cuotas estimadas
+- `ViaBillFinancingBar` — barra sticky morada informativa
 
