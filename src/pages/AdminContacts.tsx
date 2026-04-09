@@ -208,6 +208,66 @@ const AdminContacts = () => {
     }
   };
 
+  const handleBulkSendDossier = async () => {
+    const targets = filtered.filter((c) => selectedIds.has(c.id) && !c.dossier_email_sent);
+    if (targets.length === 0) {
+      toast({ title: "Sin destinatarios", description: "Los seleccionados ya tienen el dossier enviado.", variant: "destructive" });
+      return;
+    }
+    setBulkSending(true);
+    setBulkProgress({ sent: 0, total: targets.length });
+    let successCount = 0;
+    let failCount = 0;
+    for (const contact of targets) {
+      try {
+        const { error } = await supabase.functions.invoke("send-transactional-email", {
+          body: {
+            templateName: "contact-confirmation",
+            recipientEmail: contact.email,
+            idempotencyKey: `bulk-dossier-${contact.id}`,
+            templateData: {
+              nombre: contact.nombre,
+              formacion: formacionLabels[contact.tipo_formacion] || contact.tipo_formacion,
+            },
+          },
+        });
+        if (error) throw error;
+        await supabase.from("contact_submissions").update({
+          dossier_email_sent: true,
+          dossier_email_sent_at: new Date().toISOString(),
+        }).eq("id", contact.id);
+        successCount++;
+      } catch {
+        failCount++;
+      }
+      setBulkProgress((p) => ({ ...p, sent: p.sent + 1 }));
+    }
+    setBulkSending(false);
+    setSelectedIds(new Set());
+    queryClient.invalidateQueries({ queryKey: ["admin-contacts"] });
+    toast({
+      title: `Envío completado`,
+      description: `${successCount} enviados correctamente${failCount > 0 ? `, ${failCount} fallidos` : ""}`,
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === filtered.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filtered.map((c) => c.id)));
+    }
+  };
+
+  const toggleSelectOne = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
   const pendingCount = contacts.filter((c) => c.contact_status === "pendiente").length;
   const contactedCount = contacts.filter((c) => c.contact_status === "contactado").length;
 
