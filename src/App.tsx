@@ -39,6 +39,7 @@ const MapaSitio = lazy(() => import("./pages/MapaSitio"));
 const CursoDetailingCiudad = lazy(() => import("./pages/CursoDetailingCiudad"));
 const PagoExitoso = lazy(() => import("./pages/PagoExitoso"));
 const PagoCancelado = lazy(() => import("./pages/PagoCancelado"));
+const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
 
 const queryClient = new QueryClient();
 
@@ -137,6 +138,9 @@ const App = () => (
               <Route path="/admin/profiles" element={<AdminProfiles />} />
               <Route path="/admin/contacts" element={<AdminContacts />} />
               <Route path="/admin/blog" element={<AdminBlog />} />
+
+              {/* Unsubscribe */}
+              <Route path="/unsubscribe" element={<Unsubscribe />} />
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
