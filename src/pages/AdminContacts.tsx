@@ -582,6 +582,18 @@ const AdminContacts = () => {
                     </div>
                   )}
 
+                  {/* Resend dossier button */}
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="gap-1.5 w-full"
+                    disabled={resendingDossier}
+                    onClick={() => handleResendDossier(selected)}
+                  >
+                    <FileText className="h-4 w-4" />
+                    {resendingDossier ? "Enviando..." : "Reenviar dossier por email"}
+                  </Button>
+
                   {/* Message */}
                   {selected.mensaje && (
                     <div>
