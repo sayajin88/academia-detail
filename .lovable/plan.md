@@ -1,48 +1,50 @@
 
 
-## Plan: Integrar logos ViaBill y barra sticky de financiación
+## ViaBill Integration Fix - Based on Official API Documentation
 
-### Resumen
-Copiar los logos ViaBill al proyecto, integrarlos en el footer, en los badges de financiación, y crear una barra sticky inferior promocional visible en todas las páginas.
+### Research Findings
 
-### Cambios
+After reviewing the official ViaBill Merchant API documentation at Stoplight, here are the **critical issues** with the current `viabill-v3-final` Edge Function:
 
-**1. Copiar logos ViaBill al proyecto**
-- `user-uploads://viabill.png` → `src/assets/brands/viabill.png` (logo morado sobre transparente)
-- `user-uploads://viabill-logo-purple.png` → `src/assets/brands/viabill-logo-purple.png` (logo blanco sobre fondo morado)
+### Issue 1: Wrong Endpoint URL
+- **Current**: `https://secure.viabill.com/api/checkout/initiate`
+- **Official docs**: `https://secure.viabill.com/api/checkout-authorize/addon/<webshop_name>`
 
-**2. Nuevo componente: `src/components/shared/ViaBillFinancingBar.tsx`**
-- Barra sticky fija en la parte inferior de la pantalla (above footer)
-- Fondo con gradiente morado ViaBill (#6C28D9 / indigo-600)
-- Logo ViaBill a la izquierda + copy motivacional tipo: *"Financia tu formación · Págalo mientras generas negocio"* o *"Fórmate hoy, paga a plazos · Sin intereses con ViaBill"*
-- Botón CTA que lleva a `/contacto` o hace scroll a formaciones
-- Se oculta si el usuario hace scroll hasta el footer (para no solapar)
-- Botón de cerrar (X) para que no sea intrusivo, con localStorage para recordar
-- Responsive: en móvil, layout vertical más compacto
+The `<webshop_name>` is `CUSTOM` based on the previous URL you were given by support. So the correct URL is:
+`https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM`
 
-**3. Integrar barra en `MainLayout.tsx`**
-- Añadir `<ViaBillFinancingBar />` justo antes de `<Footer />`
+### Issue 2: Wrong Protocol Version
+- **Current**: `"3.1"`
+- **Official docs example**: `"3.0"`
 
-**4. Añadir logo ViaBill en `Footer.tsx`**
-- En la sección de "Brand" del footer (columna izquierda), debajo del partner CarCare Passion
-- Añadir una línea similar: logo ViaBill + texto "Financiación a plazos disponible"
+### Issue 3: Wrong Field Names (must be snake_case)
+The docs show all fields in **snake_case**, not camelCase:
+- `order_number` (not `orderNumber`)
+- `success_url` (not `successUrl`)
+- `cancel_url` (not `cancelUrl`)
+- `callback_url` (not `callbackUrl`)
+- `sha256check` stays as is
 
-**5. Mejorar `FinancingBadge.tsx`**
-- En la variante `prominent`, reemplazar el icono genérico de CreditCard por el logo real de ViaBill
-- Importar `viabill.png` y usarlo como imagen dentro del badge
+### Issue 4: No Authorization Header Needed
+The docs only require `Content-Type: application/json` and `User-Agent`. No `Authorization` header of any kind. The `apikey` is sent **in the JSON body only**.
 
-**6. Añadir logo ViaBill en `FormationsGrid.tsx`**
-- En el badge compact de financiación de cada tarjeta de curso, añadir un mini logo ViaBill (12-14px de alto) junto al texto "Desde €X/mes"
+### Issue 5: Response is a 302 Redirect
+The successful response is a **302 redirect**, not a JSON body. The function needs `redirect: "manual"` and must capture the `Location` header.
 
-### Archivos
+### Issue 6: Test Mode Hash
+When `test: true`, the hash string appends `#true` (not `#test`). Current code has `test: false` so this is fine, but worth noting.
 
-| Archivo | Cambio |
-|---|---|
-| `src/assets/brands/viabill.png` | **Nuevo** — Logo copiado |
-| `src/assets/brands/viabill-logo-purple.png` | **Nuevo** — Logo copiado |
-| `src/components/shared/ViaBillFinancingBar.tsx` | **Nuevo** — Barra sticky inferior |
-| `src/components/layout/MainLayout.tsx` | Añadir ViaBillFinancingBar |
-| `src/components/layout/Footer.tsx` | Añadir logo ViaBill + texto financiación |
-| `src/components/shared/FinancingBadge.tsx` | Integrar logo ViaBill en variante prominent |
-| `src/components/home/FormationsGrid.tsx` | Mini logo ViaBill en badges de financiación |
+---
+
+### Plan
+
+**Single file change**: `supabase/functions/viabill-v3-final/index.ts`
+
+1. Change endpoint URL to `https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM`
+2. Change protocol from `"3.1"` to `"3.0"`
+3. Change all payload field names to snake_case: `order_number`, `success_url`, `cancel_url`, `callback_url`
+4. Ensure no Authorization header (already removed - good)
+5. Add `redirect: "manual"` to the fetch call
+6. Capture the `Location` header from the 302 response as the redirect URL
+7. Deploy and test
 
