@@ -21,7 +21,7 @@ export function ViaBillPriceTag({ price, view = 'product' }: ViaBillPriceTagProp
       data-currency="EUR"
       data-language="ES"
       data-country-code="ES"
-      data-tags="_pI9NHA4kQ%3D"
+      data-tags="_ol9NtHA4kQ%3D"
     />
   );
 }

@@ -193,41 +193,6 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                 )}
               </Button>
 
-              {/* ViaBill financing button */}
-              {!isComingSoon && (
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full mt-3 text-base py-6 font-semibold rounded-xl border-emerald-500/30 hover:border-emerald-500/60 hover:bg-emerald-500/5 text-emerald-400 hover:text-emerald-300 group/vb"
-                  onClick={async () => {
-                    try {
-                      toast.loading('Conectando con ViaBill...', { id: 'viabill' });
-                      const orderNumber = `ORD-${formation.slug}-${Date.now()}`;
-                      const { data, error } = await supabase.functions.invoke('viabill-v3-final', {
-                        body: {
-                          amount: formation.price,
-                          orderNumber,
-                          transaction: orderNumber,
-                        },
-                      });
-                      if (error) throw error;
-                      const url = data?.redirectUrl || data?.url;
-                      if (url) {
-                        toast.dismiss('viabill');
-                        window.location.href = url;
-                      } else {
-                        throw new Error('No se recibió URL de pago');
-                      }
-                    } catch (err: any) {
-                      toast.error('Error al iniciar el pago a plazos. Inténtalo de nuevo.', { id: 'viabill' });
-                      console.error('ViaBill error:', err);
-                    }
-                  }}
-                >
-                  <CreditCard className="w-5 h-5 mr-2 group-hover/vb:scale-110 transition-transform" />
-                  Pagar a Plazos sin Intereses
-                </Button>
-              )}
 
               {/* Social proof / urgency */}
               <div className="mt-5 space-y-3">
