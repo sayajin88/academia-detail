@@ -30,42 +30,56 @@ serve(async (req) => {
       .join('');
 
     const requestBody = {
-      protocol: '3.1',
-      apiKey: VIA_KEY,
+      protocol: '3.0',
+      apikey: VIA_KEY,
       amount: finalAmountStr,
       currency: 'EUR',
       transaction: orderID,
-      orderNumber: orderID,
-      successUrl: urlSuccess,
-      cancelUrl: urlCancel,
-      callbackUrl: 'https://academiadetail.com/api/viabill-callback',
+      order_number: orderID,
+      success_url: urlSuccess,
+      cancel_url: urlCancel,
+      callback_url: 'https://academiadetail.com/api/viabill-callback',
       sha256check: finalHash,
       test: false,
     };
 
-    console.log('--- viabill-v3-final protocol 3.1 ---');
+    console.log('--- viabill-v3-final protocol 3.0 snake_case ---');
     console.log('payload:', JSON.stringify(requestBody));
 
-    const response = await fetch('https://secure.viabill.com/api/checkout/initiate', {
+    const response = await fetch('https://secure.viabill.com/api/checkout-authorize/addon/CUSTOM', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'Accept': 'application/json',
       },
+      redirect: 'manual',
       body: JSON.stringify(requestBody),
     });
 
-    if (response.status === 401) {
-      const errorBody = await response.text();
-      console.error('ViaBill 401 response:', errorBody);
-      console.error('Authorization header used: Bearer <apikey>');
-      return new Response(errorBody, {
-        status: 401,
+    console.log('Response status:', response.status);
+    console.log('Response headers:', JSON.stringify(Object.fromEntries(response.headers.entries())));
+
+    // 302 redirect = success, extract Location header
+    if (response.status === 302 || response.status === 301) {
+      const redirectUrl = response.headers.get('location');
+      console.log('Redirect URL:', redirectUrl);
+      return new Response(JSON.stringify({ redirectUrl }), {
+        status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    const result = await response.json();
+    // Non-redirect response — return body for debugging
+    const resultText = await response.text();
+    console.log('Response body:', resultText);
+
+    let result;
+    try {
+      result = JSON.parse(resultText);
+    } catch {
+      result = { raw: resultText };
+    }
+
     return new Response(JSON.stringify(result), {
       status: response.status,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
