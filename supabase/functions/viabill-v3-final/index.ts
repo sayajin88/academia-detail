@@ -51,7 +51,6 @@ serve(async (req) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${VIA_KEY}`,
       },
       body: JSON.stringify(requestBody),
     });
