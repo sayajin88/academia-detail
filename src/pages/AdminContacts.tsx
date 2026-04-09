@@ -98,6 +98,7 @@ type ContactSubmission = {
   followup_email_sent: boolean;
   followup_email_sent_at: string | null;
   tracking_token: string | null;
+  dossier_email_sent_at: string | null;
 };
 
 const FORMATION_TABS = [
