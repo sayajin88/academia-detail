@@ -98,6 +98,7 @@ type ContactSubmission = {
   followup_email_sent: boolean;
   followup_email_sent_at: string | null;
   tracking_token: string | null;
+  dossier_email_sent_at: string | null;
 };
 
 const FORMATION_TABS = [
@@ -123,6 +124,9 @@ const AdminContacts = () => {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<ContactSubmission | null>(null);
   const [editNotes, setEditNotes] = useState("");
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkSending, setBulkSending] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState({ sent: 0, total: 0 });
   const queryClient = useQueryClient();
 
   const { data: contacts = [], isLoading } = useQuery({
@@ -202,6 +206,66 @@ const AdminContacts = () => {
     } finally {
       setResendingDossier(false);
     }
+  };
+
+  const handleBulkSendDossier = async () => {
+    const targets = filtered.filter((c) => selectedIds.has(c.id) && !c.dossier_email_sent);
+    if (targets.length === 0) {
+      toast({ title: "Sin destinatarios", description: "Los seleccionados ya tienen el dossier enviado.", variant: "destructive" });
+      return;
+    }
+    setBulkSending(true);
+    setBulkProgress({ sent: 0, total: targets.length });
+    let successCount = 0;
+    let failCount = 0;
+    for (const contact of targets) {
+      try {
+        const { error } = await supabase.functions.invoke("send-transactional-email", {
+          body: {
+            templateName: "contact-confirmation",
+            recipientEmail: contact.email,
+            idempotencyKey: `bulk-dossier-${contact.id}`,
+            templateData: {
+              nombre: contact.nombre,
+              formacion: formacionLabels[contact.tipo_formacion] || contact.tipo_formacion,
+            },
+          },
+        });
+        if (error) throw error;
+        await supabase.from("contact_submissions").update({
+          dossier_email_sent: true,
+          dossier_email_sent_at: new Date().toISOString(),
+        }).eq("id", contact.id);
+        successCount++;
+      } catch {
+        failCount++;
+      }
+      setBulkProgress((p) => ({ ...p, sent: p.sent + 1 }));
+    }
+    setBulkSending(false);
+    setSelectedIds(new Set());
+    queryClient.invalidateQueries({ queryKey: ["admin-contacts"] });
+    toast({
+      title: `Envío completado`,
+      description: `${successCount} enviados correctamente${failCount > 0 ? `, ${failCount} fallidos` : ""}`,
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === filtered.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filtered.map((c) => c.id)));
+    }
+  };
+
+  const toggleSelectOne = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   };
 
   const pendingCount = contacts.filter((c) => c.contact_status === "pendiente").length;
@@ -353,6 +417,28 @@ const AdminContacts = () => {
           </div>
         </div>
 
+        {/* Bulk action bar */}
+        {selectedIds.size > 0 && (
+          <div className="flex items-center gap-3 bg-primary/5 border border-primary/20 rounded-lg px-4 py-3">
+            <span className="text-sm font-medium">{selectedIds.size} lead{selectedIds.size > 1 ? "s" : ""} seleccionado{selectedIds.size > 1 ? "s" : ""}</span>
+            <Button
+              size="sm"
+              className="gap-1.5"
+              disabled={bulkSending}
+              onClick={handleBulkSendDossier}
+            >
+              <FileText className="h-4 w-4" />
+              <Send className="h-3.5 w-3.5" />
+              {bulkSending
+                ? `Enviando ${bulkProgress.sent}/${bulkProgress.total}...`
+                : "Enviar dossier a seleccionados"}
+            </Button>
+            <Button size="sm" variant="ghost" onClick={() => setSelectedIds(new Set())}>
+              Deseleccionar
+            </Button>
+          </div>
+        )}
+
         {/* Table */}
         <Card>
           <CardContent className="p-0">
@@ -366,6 +452,12 @@ const AdminContacts = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/30">
+                    <TableHead className="w-10 text-center" onClick={(e) => e.stopPropagation()}>
+                      <Checkbox
+                        checked={filtered.length > 0 && selectedIds.size === filtered.length}
+                        onCheckedChange={toggleSelectAll}
+                      />
+                    </TableHead>
                     <TableHead className="w-12 text-center">✓</TableHead>
                     <TableHead>Nombre</TableHead>
                     <TableHead className="hidden md:table-cell">Contacto</TableHead>
@@ -382,6 +474,12 @@ const AdminContacts = () => {
                       className={`cursor-pointer transition-colors ${c.contact_status === "pendiente" ? "bg-orange-50/40 hover:bg-orange-50/70 dark:bg-orange-950/10" : "hover:bg-muted/50"}`}
                       onClick={() => openDetail(c)}
                     >
+                      <TableCell className="text-center" onClick={(e) => e.stopPropagation()}>
+                        <Checkbox
+                          checked={selectedIds.has(c.id)}
+                          onCheckedChange={() => toggleSelectOne(c.id)}
+                        />
+                      </TableCell>
                       <TableCell className="text-center" onClick={(e) => e.stopPropagation()}>
                         <Checkbox
                           checked={c.contact_status === "contactado"}
