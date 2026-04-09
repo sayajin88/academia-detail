@@ -15,12 +15,12 @@ serve(async (req) => {
       'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJNRVJDSEFOVCIsIlNZU1RFTSJdLCJ1dWlkIjoiZTllY2NkOTAtMzFjMy0xMWYxLTlhMTctZmIxYmYzYWM4NDZlIiwidHYiOjEsImVudiI6IlBST0RVQ1RJT04iLCJpYXQiOjE3NzU0ODUyOTQsImV4cCI6MjA5MTEwNDQ5NH0.zoKaAtlpck09R9shexWRuANuj8YfdsPfDXz31V3xz10';
     const VIA_SECRET = 'ivxBzMAP7EP5';
 
-    const finalAmount = parseFloat(amount).toFixed(2);
+    const finalAmountStr = parseFloat(amount).toFixed(2).toString();
     const orderID = 'ORD' + Date.now();
     const urlSuccess = 'https://academiadetail.com/pago-exitoso';
     const urlCancel = 'https://academiadetail.com/pago-cancelado';
 
-    const stringToHash = `${VIA_KEY}#${finalAmount}#EUR#${orderID}#${orderID}#${urlSuccess}#${urlCancel}#${VIA_SECRET}`;
+    const stringToHash = `${VIA_KEY}#${finalAmountStr}#EUR#${orderID}#${orderID}#${urlSuccess}#${urlCancel}#${VIA_SECRET}`;
 
     const encoder = new TextEncoder();
     const data = encoder.encode(stringToHash);
@@ -30,9 +30,9 @@ serve(async (req) => {
       .join('');
 
     const requestBody = {
-      protocol: 'V3',
+      protocol: '3.1',
       apiKey: VIA_KEY,
-      amount: parseFloat(finalAmount),
+      amount: finalAmountStr,
       currency: 'EUR',
       transaction: orderID,
       orderNumber: orderID,
@@ -43,7 +43,7 @@ serve(async (req) => {
       test: false,
     };
 
-    console.log('--- viabill-v3-final Deployment 1 ---');
+    console.log('--- viabill-v3-final protocol 3.1 ---');
     console.log('payload:', JSON.stringify(requestBody));
 
     const response = await fetch('https://secure.viabill.com/api/checkout/initiate', {
