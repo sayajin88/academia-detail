@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { X, ArrowRight } from 'lucide-react';
+import { X, ArrowRight, CreditCard, Clock, ShieldCheck } from 'lucide-react';
 import viabillLogo from '@/assets/brands/viabill-logo-purple.png';
 
 const STORAGE_KEY = 'viabill-bar-dismissed';
+
+const messages = [
+  { icon: CreditCard, text: 'Fórmate hoy, paga a plazos', highlight: 'Sin intereses' },
+  { icon: Clock, text: 'Págalo mientras generas negocio', highlight: 'Desde 50€/mes' },
+  { icon: ShieldCheck, text: 'Financiación 100% segura', highlight: 'Aprobación inmediata' },
+];
 
 export function ViaBillFinancingBar() {
   const [dismissed, setDismissed] = useState(() => {
@@ -11,6 +17,8 @@ export function ViaBillFinancingBar() {
     return localStorage.getItem(STORAGE_KEY) === '1';
   });
   const [atFooter, setAtFooter] = useState(false);
+  const [activeMsg, setActiveMsg] = useState(0);
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +32,17 @@ export function ViaBillFinancingBar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimating(true);
+      setTimeout(() => {
+        setActiveMsg((prev) => (prev + 1) % messages.length);
+        setAnimating(false);
+      }, 400);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
   if (dismissed || atFooter) return null;
 
   const handleClose = () => {
@@ -31,38 +50,61 @@ export function ViaBillFinancingBar() {
     localStorage.setItem(STORAGE_KEY, '1');
   };
 
+  const current = messages[activeMsg];
+  const Icon = current.icon;
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-r from-[#5B21B6] via-[#6C28D9] to-[#7C3AED] shadow-2xl shadow-purple-900/40 border-t border-purple-400/20">
-      <div className="container mx-auto px-4">
+    <div className="fixed bottom-0 left-0 right-0 z-50 overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#3b0764] via-[#5b21b6] to-[#7c3aed]" />
+      <div className="absolute inset-0 bg-[length:200%_100%] animate-[shimmer-bg_3s_linear_infinite] opacity-30"
+        style={{ backgroundImage: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)' }}
+      />
+      {/* Top glow line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-300/60 to-transparent" />
+
+      <div className="container mx-auto px-4 relative">
         <div className="flex items-center justify-between gap-3 py-2.5 md:py-3">
-          {/* Logo + Copy */}
-          <div className="flex items-center gap-3 md:gap-5 flex-1 min-w-0">
-            <img
-              src={viabillLogo}
-              alt="ViaBill - Financiación a plazos"
-              className="h-5 md:h-7 w-auto flex-shrink-0"
-              width={100}
-              height={28}
-            />
-            <div className="hidden sm:block w-px h-6 bg-white/20 flex-shrink-0" />
-            <p className="text-white text-xs md:text-sm font-medium truncate md:whitespace-normal">
-              <span className="font-bold">Fórmate hoy, paga a plazos</span>
-              <span className="hidden md:inline"> · Págalo mientras generas negocio · Sin intereses</span>
-            </p>
+          {/* Logo */}
+          <img
+            src={viabillLogo}
+            alt="ViaBill"
+            className="h-5 md:h-6 w-auto flex-shrink-0 drop-shadow-[0_0_6px_rgba(167,139,250,0.5)]"
+            width={90}
+            height={24}
+          />
+
+          <div className="hidden sm:block w-px h-5 bg-white/20 flex-shrink-0" />
+
+          {/* Rotating message */}
+          <div className="flex-1 min-w-0 overflow-hidden h-6 relative">
+            <div
+              className={`flex items-center gap-2 absolute inset-0 transition-all duration-400 ${
+                animating ? 'opacity-0 -translate-y-3' : 'opacity-100 translate-y-0'
+              }`}
+            >
+              <Icon className="w-4 h-4 text-purple-200 flex-shrink-0" />
+              <p className="text-white text-xs md:text-sm font-medium truncate">
+                {current.text}
+                <span className="ml-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] md:text-xs font-bold bg-white/15 text-purple-100 backdrop-blur-sm border border-white/10">
+                  {current.highlight}
+                </span>
+              </p>
+            </div>
           </div>
 
           {/* CTA + Close */}
           <div className="flex items-center gap-2 flex-shrink-0">
             <Link
               to="/contacto"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-white text-[#6C28D9] text-xs font-bold hover:bg-white/90 transition-colors"
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white text-[#5b21b6] text-xs font-bold shadow-lg shadow-purple-900/30 hover:shadow-purple-900/50 hover:scale-105 transition-all duration-200"
             >
               Infórmate
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <button
               onClick={handleClose}
-              className="p-1.5 rounded-lg hover:bg-white/10 transition-colors text-white/70 hover:text-white"
+              className="p-1.5 rounded-full hover:bg-white/10 transition-colors text-white/60 hover:text-white"
               aria-label="Cerrar barra de financiación"
             >
               <X className="w-4 h-4" />
@@ -70,6 +112,13 @@ export function ViaBillFinancingBar() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes shimmer-bg {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
     </div>
   );
 }
