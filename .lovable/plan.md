@@ -1,22 +1,35 @@
 
 
-## Plan: Configurar Reply-To en todos los emails transaccionales
+## Plan: Envío masivo de dossier desde el listado de leads
 
-### Problema
-Cuando un alumno responde a un email de confirmación o seguimiento, la respuesta no llega a `admin@detailpark.com` porque no hay cabecera Reply-To configurada.
+### Resumen
+Añadir selección múltiple con checkboxes en la tabla de leads y un botón de acción masiva para enviar el dossier informativo a todos los seleccionados. Cada envío actualiza `dossier_email_sent = true` y registra la fecha. El flujo de follow-up automático (a los 2 días) no se ve afectado.
 
-### Solución
-Añadir `reply_to: "admin@detailpark.com"` al payload de envío en `send-transactional-email/index.ts`. Esto aplica automáticamente a todos los templates (confirmación, seguimiento, etc.).
+### Cambios en `src/pages/AdminContacts.tsx`
 
-### Cambios
+1. **Estado de selección múltiple**: Nuevo state `selectedIds: Set<string>` para trackear los leads seleccionados.
 
-**1. `supabase/functions/send-transactional-email/index.ts`**
-- Añadir constante `REPLY_TO = "admin@detailpark.com"`
-- Incluir `reply_to` en el objeto payload que se encola (línea ~313-327)
+2. **Checkbox "Seleccionar todos"** en la cabecera de la tabla (primera columna) — selecciona/deselecciona todos los leads filtrados visibles.
 
-**2. Redesplegar la función**
-- Deploy de `send-transactional-email` para que el cambio surta efecto
+3. **Checkboxes individuales** en cada fila para selección masiva (separados de los checkboxes de estado "contactado/pendiente" existentes — se añade una nueva columna a la izquierda).
 
-### Resultado
-Cualquier respuesta de un alumno a cualquier email enviado por el sistema llegará directamente a `admin@detailpark.com`.
+4. **Barra de acción masiva**: Cuando hay leads seleccionados, aparece una barra encima de la tabla con:
+   - Contador: "X leads seleccionados"
+   - Botón "Enviar dossier a seleccionados" (con icono FileText + Send)
+   - Botón "Deseleccionar todos"
+
+5. **Lógica de envío masivo**: Itera sobre los seleccionados enviando solo el email de confirmación con dossier (template `contact-confirmation`) vía `send-transactional-email`, sin disparar la notificación admin. Tras cada envío exitoso, actualiza `dossier_email_sent = true` y `dossier_email_sent_at = now()` en la tabla `contact_submissions`. Muestra progreso y toast con resultado.
+
+6. **No interfiere con follow-up**: El follow-up automático (`send-followup-email`) busca registros donde `dossier_email_sent = true` y `followup_email_sent = false` con más de 2 días de antigüedad. El envío masivo del dossier marca `dossier_email_sent = true`, lo cual es el comportamiento esperado — el follow-up se activará 2 días después si no han sido contactados.
+
+### Migración de base de datos
+
+Añadir columna `dossier_email_sent_at` (timestamp, nullable) a `contact_submissions` para registrar la fecha exacta del envío del dossier.
+
+### Archivos afectados
+
+| Archivo | Cambio |
+|---|---|
+| `src/pages/AdminContacts.tsx` | Añadir selección múltiple y acción masiva |
+| Migración SQL | Añadir columna `dossier_email_sent_at` |
 
