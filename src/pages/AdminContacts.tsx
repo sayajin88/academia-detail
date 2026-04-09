@@ -175,6 +175,34 @@ const AdminContacts = () => {
   });
 
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [resendingDossier, setResendingDossier] = useState(false);
+
+  const handleResendDossier = async (contact: ContactSubmission) => {
+    setResendingDossier(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-contact-email", {
+        body: {
+          nombre: contact.nombre,
+          apellidos: contact.apellidos,
+          email: contact.email,
+          telefono: contact.telefono,
+          experiencia: contact.experiencia,
+          centro_propio: contact.centro_propio,
+          inversion: contact.inversion,
+          tipo_formacion: contact.tipo_formacion,
+          mensaje: contact.mensaje,
+          source: "contact_page",
+        },
+      });
+      if (error) throw error;
+      toast({ title: "Dossier reenviado", description: `Email enviado a ${contact.email}` });
+      queryClient.invalidateQueries({ queryKey: ["admin-contacts"] });
+    } catch (err: any) {
+      toast({ title: "Error al reenviar", description: err.message, variant: "destructive" });
+    } finally {
+      setResendingDossier(false);
+    }
+  };
 
   const pendingCount = contacts.filter((c) => c.contact_status === "pendiente").length;
   const contactedCount = contacts.filter((c) => c.contact_status === "contactado").length;
