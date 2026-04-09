@@ -124,6 +124,9 @@ const AdminContacts = () => {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<ContactSubmission | null>(null);
   const [editNotes, setEditNotes] = useState("");
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkSending, setBulkSending] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState({ sent: 0, total: 0 });
   const queryClient = useQueryClient();
 
   const { data: contacts = [], isLoading } = useQuery({
