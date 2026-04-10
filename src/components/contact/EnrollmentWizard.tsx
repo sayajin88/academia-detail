@@ -41,6 +41,7 @@ const steps = [
 
 const EnrollmentWizard = () => {
   const navigate = useNavigate();
+  const wizardRef = useRef<HTMLDivElement>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
