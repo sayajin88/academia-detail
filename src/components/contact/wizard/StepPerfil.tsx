@@ -62,6 +62,9 @@ const StepPerfil = ({ form }: StepPerfilProps) => {
   const experiencia = form.watch("experiencia");
   const centro = form.watch("centro_propio");
   const inversion = form.watch("inversion");
+  const { errors } = form.formState;
+
+  const sectionErrorClass = "rounded-xl border-2 border-destructive/50 bg-destructive/5 p-3 -m-3";
 
   return (
     <div className="space-y-8">
@@ -76,8 +79,13 @@ const StepPerfil = ({ form }: StepPerfilProps) => {
 
       {/* Experiencia */}
       <div className="space-y-3">
-        <h3 className="text-lg font-semibold text-foreground">¿Tienes experiencia en Detailing?</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="flex items-center justify-between gap-2">
+          <h3 className="text-lg font-semibold text-foreground">¿Tienes experiencia en Detailing?</h3>
+          {errors.experiencia && (
+            <span className="text-destructive text-xs font-medium whitespace-nowrap animate-in fade-in slide-in-from-right-2">* Selecciona una opción</span>
+          )}
+        </div>
+        <div className={cn("grid grid-cols-1 sm:grid-cols-2 gap-3 transition-all", errors.experiencia && sectionErrorClass)}>
           <OptionCard
             selected={experiencia === "sin_experiencia"}
             onClick={() => form.setValue("experiencia", "sin_experiencia", { shouldValidate: true })}
@@ -97,8 +105,13 @@ const StepPerfil = ({ form }: StepPerfilProps) => {
 
       {/* Centro propio */}
       <div className="space-y-3">
-        <h3 className="text-lg font-semibold text-foreground">¿Tienes centro propio?</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="flex items-center justify-between gap-2">
+          <h3 className="text-lg font-semibold text-foreground">¿Tienes centro propio?</h3>
+          {errors.centro_propio && (
+            <span className="text-destructive text-xs font-medium whitespace-nowrap animate-in fade-in slide-in-from-right-2">* Selecciona una opción</span>
+          )}
+        </div>
+        <div className={cn("grid grid-cols-1 sm:grid-cols-2 gap-3 transition-all", errors.centro_propio && sectionErrorClass)}>
           <OptionCard
             selected={centro === "si"}
             onClick={() => form.setValue("centro_propio", "si", { shouldValidate: true })}
@@ -118,8 +131,13 @@ const StepPerfil = ({ form }: StepPerfilProps) => {
 
       {/* Inversión */}
       <div className="space-y-3">
-        <h3 className="text-lg font-semibold text-foreground">¿Cuánto estás dispuesto a invertir?</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="flex items-center justify-between gap-2">
+          <h3 className="text-lg font-semibold text-foreground">¿Cuánto estás dispuesto a invertir?</h3>
+          {errors.inversion && (
+            <span className="text-destructive text-xs font-medium whitespace-nowrap animate-in fade-in slide-in-from-right-2">* Selecciona una opción</span>
+          )}
+        </div>
+        <div className={cn("grid grid-cols-1 sm:grid-cols-2 gap-3 transition-all", errors.inversion && sectionErrorClass)}>
           {inversionOptions.map((opt) => (
             <OptionCard
               key={opt.value}
