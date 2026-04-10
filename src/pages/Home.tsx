@@ -69,6 +69,9 @@ export default function Home() {
           <CarreraNegocioSection />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
+          <ViaBillInlineCTA />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
           <MontamosTuCentro />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>

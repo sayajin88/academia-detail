@@ -122,6 +122,7 @@ const CarreraDetailing = () => {
         <CarreraBenefits />
         <CarreraROICalculator onCtaClick={handleCTAClick} />
         <CarreraPricing onCTAClick={handleCTAClick} />
+        <ViaBillInlineCTA />
         <JornadaZeroSection />
         <GoogleReviews />
         <CarreraFAQ />

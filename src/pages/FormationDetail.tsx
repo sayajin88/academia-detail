@@ -174,6 +174,7 @@ export default function FormationDetailPage() {
           />
         )}
         <FormationIncludes formation={formation} />
+        <ViaBillInlineCTA />
         <BrandLogosBar
           variant="compact"
           filter={

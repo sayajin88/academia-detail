@@ -210,6 +210,11 @@ export default function BlogPostPage() {
               <BlogDilutionBanner />
               <BlogDirectoryBanner />
 
+              {/* ViaBill financing CTA */}
+              <div className="mt-8">
+                <ViaBillInlineCTA variant="compact" />
+              </div>
+
               {/* Tags */}
               <AnimatedSection animation="fade-up" delay={50}>
                 <div className="mt-10 pt-6 border-t border-border flex flex-wrap gap-2">
