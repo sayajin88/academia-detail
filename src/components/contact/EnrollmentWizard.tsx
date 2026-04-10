@@ -74,7 +74,7 @@ const EnrollmentWizard = () => {
     const valid = await canGoNext();
     if (valid && currentStep < steps.length - 1) {
       setCurrentStep((s) => s + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   };
 
