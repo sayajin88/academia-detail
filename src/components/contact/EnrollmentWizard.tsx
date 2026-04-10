@@ -81,7 +81,7 @@ const EnrollmentWizard = () => {
   const handleBack = () => {
     if (currentStep > 0) {
       setCurrentStep((s) => s - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   };
 
