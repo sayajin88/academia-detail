@@ -23,6 +23,7 @@ const GoogleReviews = lazy(() => import('@/components/shared/GoogleReviews').the
 const HomeFAQ = lazy(() => import('@/components/home/HomeFAQ').then(m => ({ default: m.HomeFAQ })));
 const HomeCTA = lazy(() => import('@/components/home/HomeCTA').then(m => ({ default: m.HomeCTA })));
 const JornadaZeroSection = lazy(() => import('@/components/shared/JornadaZeroSection').then(m => ({ default: m.JornadaZeroSection })));
+const ViaBillInlineCTA = lazy(() => import('@/components/shared/ViaBillInlineCTA').then(m => ({ default: m.ViaBillInlineCTA })));
 
 // Skeleton placeholder para lazy components
 const SectionSkeleton = ({ variant = 'default' }: { variant?: 'default' | 'card' }) => (
@@ -67,6 +68,9 @@ export default function Home() {
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <CarreraNegocioSection />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <ViaBillInlineCTA />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <MontamosTuCentro />
