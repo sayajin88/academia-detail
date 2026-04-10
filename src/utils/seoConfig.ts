@@ -8,6 +8,8 @@ import {
   courseRestauracionSchema,
   courseFormacionProfesionalSchema,
   courseJornadaZeroSchema,
+  BUSINESS_RATING_VALUE,
+  BUSINESS_REVIEW_COUNT,
 } from "@/components/SEO";
 import { homeFaqs } from "@/components/home/HomeFAQ";
 import { carreraDetailingData } from "@/data/carreraDetailingData";
@@ -18,9 +20,13 @@ const BASE_URL = "https://academiadetail.com";
 // ============================================
 // ORGANIZATION SCHEMA COMPLETO CON SAMEAS
 // ============================================
+// Google Maps Place URL canónica (same as SEO.tsx)
+const GOOGLE_MAPS_PLACE_URL = "https://www.google.com/maps/place/Detail+Park+-+Detailing+Car/@38.3451397,-0.4917511,17z/data=!3m1!4b1!4m6!3m5!1s0xd6236e71c3d9553:0x68a39e80e15a6e68!8m2!3d38.3451397!4d-0.4891762!16s%2Fg%2F11h0kgkq3z";
+
 export const organizationSchemaComplete = {
   "@context": "https://schema.org",
   "@type": ["Organization", "EducationalOrganization", "LocalBusiness"],
+  "@id": "https://academiadetail.com/#local-business",
   name: "Detail Park - Academia Detail",
   alternateName: ["Academia Detail", "Detail Park", "Academia Detailing", "Detail Park Academy"],
   url: BASE_URL,
@@ -62,12 +68,13 @@ export const organizationSchemaComplete = {
     "https://facebook.com/detailparkoficial",
     "https://www.tiktok.com/@detailpark",
     "https://www.tiktok.com/@detail_park",
-    "https://www.google.com/maps/place/Detail+Park/",
+    GOOGLE_MAPS_PLACE_URL,
   ],
+  hasMap: GOOGLE_MAPS_PLACE_URL,
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: "4.8",
-    reviewCount: "218",
+    ratingValue: BUSINESS_RATING_VALUE,
+    reviewCount: BUSINESS_REVIEW_COUNT,
     bestRating: "5",
     worstRating: "1",
   },
@@ -77,6 +84,12 @@ export const organizationSchemaComplete = {
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       opens: "09:00",
       closes: "18:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: "Saturday",
+      opens: "09:00",
+      closes: "14:00",
     },
   ],
   areaServed: {
