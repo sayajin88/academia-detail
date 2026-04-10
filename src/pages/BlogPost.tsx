@@ -11,6 +11,7 @@ import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
 import { BlogDirectoryBanner } from '@/components/blog/BlogDirectoryBanner';
 import { RelatedCourses } from '@/components/shared/RelatedCourses';
+import { ViaBillInlineCTA } from '@/components/shared/ViaBillInlineCTA';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
