@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,6 +41,7 @@ const steps = [
 
 const EnrollmentWizard = () => {
   const navigate = useNavigate();
+  const wizardRef = useRef<HTMLDivElement>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,14 +74,14 @@ const EnrollmentWizard = () => {
     const valid = await canGoNext();
     if (valid && currentStep < steps.length - 1) {
       setCurrentStep((s) => s + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   };
 
   const handleBack = () => {
     if (currentStep > 0) {
       setCurrentStep((s) => s - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   };
 
@@ -160,7 +161,7 @@ const EnrollmentWizard = () => {
 
   return (
     <>
-      <div className="w-full max-w-3xl mx-auto">
+      <div ref={wizardRef} className="w-full max-w-3xl mx-auto">
         {/* Step Indicator */}
         <div className="flex items-center justify-between mb-10 px-2">
           {steps.map((step, i) => (
