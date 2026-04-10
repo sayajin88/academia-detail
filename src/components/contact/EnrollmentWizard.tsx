@@ -161,7 +161,7 @@ const EnrollmentWizard = () => {
 
   return (
     <>
-      <div className="w-full max-w-3xl mx-auto">
+      <div ref={wizardRef} className="w-full max-w-3xl mx-auto">
         {/* Step Indicator */}
         <div className="flex items-center justify-between mb-10 px-2">
           {steps.map((step, i) => (
