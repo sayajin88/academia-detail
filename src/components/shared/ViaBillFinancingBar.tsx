@@ -60,31 +60,33 @@ export function ViaBillFinancingBar() {
       <div className="absolute inset-0 bg-[length:200%_100%] animate-[shimmer-bg_3s_linear_infinite] opacity-30"
         style={{ backgroundImage: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)' }}
       />
-      {/* Top glow line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-300/60 to-transparent" />
+      {/* Top glow line — pulsante */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-300/80 to-transparent animate-pulse" />
+      {/* Glow aura */}
+      <div className="absolute -top-3 left-0 right-0 h-6 bg-gradient-to-b from-purple-500/20 to-transparent blur-sm pointer-events-none" />
 
       <div className="container mx-auto px-4 relative">
-        <div className="flex items-center justify-between gap-3 py-2.5 md:py-3">
+        <div className="flex items-center justify-center gap-3 md:gap-4 py-3 md:py-3.5">
           {/* Logo */}
           <img
             src={viabillLogo}
             alt="ViaBill"
-            className="h-5 md:h-6 w-auto flex-shrink-0 drop-shadow-[0_0_6px_rgba(167,139,250,0.5)]"
+            className="h-5 md:h-6 w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(167,139,250,0.6)]"
             width={90}
             height={24}
           />
 
-          <div className="hidden sm:block w-px h-5 bg-white/20 flex-shrink-0" />
+          <div className="w-px h-5 bg-white/25 flex-shrink-0" />
 
-          {/* Rotating message */}
-          <div className="flex-1 min-w-0 overflow-hidden h-6 relative">
+          {/* Rotating message — centrado */}
+          <div className="overflow-hidden h-6 relative min-w-[180px] md:min-w-[280px]">
             <div
-              className={`flex items-center gap-2 absolute inset-0 transition-all duration-400 ${
+              className={`flex items-center gap-2 absolute inset-0 justify-center transition-all duration-400 ${
                 animating ? 'opacity-0 -translate-y-3' : 'opacity-100 translate-y-0'
               }`}
             >
               <Icon className="w-4 h-4 text-purple-200 flex-shrink-0" />
-              <p className="text-white text-xs md:text-sm font-medium truncate">
+              <p className="text-white text-xs md:text-sm font-medium whitespace-nowrap">
                 {current.text}
                 <span className="ml-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] md:text-xs font-bold bg-white/15 text-purple-100 backdrop-blur-sm border border-white/10">
                   {current.highlight}
@@ -93,23 +95,26 @@ export function ViaBillFinancingBar() {
             </div>
           </div>
 
-          {/* CTA + Close */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Link
-              to="/contacto"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white text-[#5b21b6] text-xs font-bold shadow-lg shadow-purple-900/30 hover:shadow-purple-900/50 hover:scale-105 transition-all duration-200"
-            >
-              Infórmate
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-            <button
-              onClick={handleClose}
-              className="p-1.5 rounded-full hover:bg-white/10 transition-colors text-white/60 hover:text-white"
-              aria-label="Cerrar barra de financiación"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+          <div className="hidden sm:block w-px h-5 bg-white/25 flex-shrink-0" />
+
+          {/* CTA — visible en todas las resoluciones */}
+          <Link
+            to="/contacto"
+            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white text-[#5b21b6] text-[11px] md:text-xs font-bold shadow-lg shadow-purple-900/30 hover:shadow-purple-900/50 hover:scale-105 transition-all duration-200 flex-shrink-0"
+          >
+            <span className="hidden sm:inline">Infórmate</span>
+            <span className="sm:hidden">Info</span>
+            <ArrowRight className="w-3 h-3 md:w-3.5 md:h-3.5" />
+          </Link>
+
+          {/* Close */}
+          <button
+            onClick={handleClose}
+            className="p-1 rounded-full hover:bg-white/10 transition-colors text-white/50 hover:text-white flex-shrink-0"
+            aria-label="Cerrar barra de financiación"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
         </div>
       </div>
 
