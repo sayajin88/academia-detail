@@ -417,6 +417,19 @@ export function Navbar() {
 
           {/* Navigation Links */}
           <div className="p-4 space-y-1 overflow-y-auto max-h-[calc(100vh-180px)]" style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)' }}>
+            {/* Highlighted "¿Eres Nuevo?" CTA */}
+            <Link
+              to="/curso-detailing-iniciacion"
+              className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-primary/15 border border-primary/30 text-primary font-semibold mb-2 transition-all duration-200 hover:bg-primary/20"
+            >
+              <Sparkles className="h-5 w-5" />
+              <span>¿Eres Nuevo? Empieza Aquí</span>
+              <span className="relative flex h-2 w-2 ml-auto">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              </span>
+            </Link>
+
             {/* Main Links */}
             <Link
               to="/"

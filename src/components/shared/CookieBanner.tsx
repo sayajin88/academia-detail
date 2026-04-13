@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
+import { Cookie } from 'lucide-react';
 
 const CONSENT_KEY = 'academia-detail-cookie-consent';
 
@@ -17,6 +17,11 @@ export function CookieBanner() {
       enableAnalytics();
     }
   }, []);
+
+  // Dispatch custom event so ViaBillFinancingBar can listen
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('cookie-banner-visibility', { detail: { visible } }));
+  }, [visible]);
 
   const enableAnalytics = () => {
     if (typeof window !== 'undefined' && (window as any).gtag) {
@@ -44,38 +49,25 @@ export function CookieBanner() {
     <div
       role="dialog"
       aria-label="Aviso de cookies"
-      className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 bg-card/95 backdrop-blur-xl border-t border-border shadow-lg"
+      className="fixed bottom-14 left-0 right-0 z-[52] px-3 pb-2 md:px-6 md:pb-3 animate-fade-in"
     >
-      <div className="container mx-auto max-w-4xl flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div className="flex-1">
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Usamos cookies propias y de Google Analytics para mejorar
-            tu experiencia y analizar el tráfico.
-            Puedes aceptarlas o rechazarlas.{' '}
-            <Link
-              to="/politica-privacidad"
-              className="text-primary hover:underline"
-            >
-              Más información
+      <div className="mx-auto max-w-2xl rounded-2xl bg-card/95 backdrop-blur-xl border border-border shadow-2xl shadow-black/30 px-4 py-3 md:px-6 md:py-4">
+        <div className="flex items-center gap-3">
+          <Cookie className="h-5 w-5 text-primary flex-shrink-0 hidden sm:block" />
+          <p className="flex-1 text-xs md:text-sm text-muted-foreground leading-snug">
+            Usamos cookies para mejorar tu experiencia.{' '}
+            <Link to="/politica-privacidad" className="text-primary hover:underline">
+              Más info
             </Link>
           </p>
-        </div>
-
-        <button
-          onClick={handleDecline}
-          className="absolute top-3 right-3 sm:hidden text-muted-foreground hover:text-foreground"
-          aria-label="Cerrar aviso de cookies"
-        >
-          <X className="h-4 w-4" />
-        </button>
-
-        <div className="flex items-center gap-2 shrink-0">
-          <Button onClick={handleAccept} size="sm">
-            Aceptar
-          </Button>
-          <Button onClick={handleDecline} variant="outline" size="sm">
-            Rechazar
-          </Button>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <Button onClick={handleAccept} size="sm" className="text-xs h-8 px-3">
+              Aceptar
+            </Button>
+            <Button onClick={handleDecline} variant="ghost" size="sm" className="text-xs h-8 px-2 text-muted-foreground">
+              Rechazar
+            </Button>
+          </div>
         </div>
       </div>
     </div>
