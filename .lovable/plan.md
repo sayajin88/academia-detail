@@ -1,66 +1,95 @@
 
 
-## Plan: Estrategia ViaBill — CTAs de financiación en todo el sitio + mejora de la barra sticky
+## Propuesta de Mejoras UX/UI — Auditoría Visual Completa
 
-### Diagnóstico actual
-- **ViaBillFinancingBar**: barra sticky inferior con contenido descentrado (logo a la izquierda, mensaje en flex-1, CTA a la derecha — no hay centrado visual real).
-- **FinancingBadge**: componente reutilizable con 3 variantes (compact, default, prominent) — ya existe pero se usa poco.
-- **BlogSidebar**: no menciona financiación.
-- **BlogPostCTA**: no menciona financiación.
-- **BlogCTABanner**: no menciona financiación.
-- **FormationPricing**: ya usa `ViaBillPriceTag` y `FinancingBadge` (bien).
-- **Páginas de blog, Home, Carrera, etc.**: sin CTAs de financiación intermedios.
+### Problemas detectados y mejoras propuestas
 
 ---
 
-### 1. Mejorar la barra sticky `ViaBillFinancingBar`
+### 1. Conflicto de barras superpuestas en la parte inferior
+**Problema**: La barra de cookies, la barra sticky de ViaBill y el botón "Soy Nuevo" compiten por el espacio inferior. En móvil se solapan gravemente: las tres barras apiladas tapan contenido y crean confusión visual.
 
-**Archivo**: `src/components/shared/ViaBillFinancingBar.tsx`
-
-Cambios:
-- Centrar todo el contenido con `justify-center` en lugar de `justify-between`
-- Reorganizar layout: logo + separador + mensaje rotativo + CTA, todo centrado en una fila
-- Añadir efecto de "glow" pulsante en el borde superior (animación de gradiente más visible)
-- Aumentar padding y tamaño tipográfico ligeramente
-- En móvil: centrar también, con el CTA "Infórmate" visible (ahora está oculto en `sm:`)
+**Solución**:
+- Mover la barra de cookies por encima de la barra ViaBill (z-index + bottom offset)
+- Ocultar la barra ViaBill mientras el banner de cookies esté visible
+- En móvil, reducir la barra ViaBill a un formato mínimo (solo icono + "Financia" + flecha) para liberar espacio
+- Coordinar posición del botón "Soy Nuevo" con la barra ViaBill para que no se solapen
 
 ---
 
-### 2. Nuevo componente `ViaBillInlineCTA`
+### 2. Falta de separación visual entre secciones en Home
+**Problema**: Muchas secciones se funden entre sí sin separadores claros. El fondo carbón uniforme hace que la jerarquía visual se pierda.
 
-**Archivo nuevo**: `src/components/shared/ViaBillInlineCTA.tsx`
-
-Un banner inline reutilizable para insertar dentro de contenido. Diseño: franja con gradiente púrpura, logo ViaBill, copy tipo "Financia tu formación desde 50€/mes — Sin intereses", botón "Infórmate". Será un componente autónomo que se puede insertar en cualquier página.
-
----
-
-### 3. Insertar CTAs de financiación en el blog
-
-**Archivo**: `src/pages/BlogPost.tsx`
-- Insertar `<ViaBillInlineCTA />` entre el contenido del artículo y los tags (después de `BlogDirectoryBanner`, antes de tags)
-
-**Archivo**: `src/components/blog/BlogSidebar.tsx`
-- Añadir un `FinancingBadge` variant="prominent" debajo de los botones de CTA del sidebar, con link a `/contacto`
-
-**Archivo**: `src/components/blog/BlogPostCTA.tsx`
-- Añadir mención de financiación ("Financiación disponible desde 50€/mes") con el logo de ViaBill en la columna de texto
+**Solución**:
+- Alternar fondos entre secciones: `bg-background` / `bg-card` (ya definido en el tema pero poco usado)
+- Añadir separadores decorativos tipo gradiente granate sutil entre secciones principales
+- Añadir más `py` (padding vertical) entre bloques densos
 
 ---
 
-### 4. Insertar CTAs en páginas de formación
+### 3. CTA final (HomeCTA) poco diferenciado
+**Problema**: La sección CTA final con fondo granate es correcta, pero los "trust points" en una tarjeta centrada se ven como una lista genérica. Falta impacto visual.
 
-**Archivo**: `src/pages/FormationDetail.tsx`
-- Insertar `<ViaBillInlineCTA />` después de `FormationIncludes` y antes de `BrandLogosBar`
+**Solución**:
+- Convertir los trust points en 3 badges inline con iconos circulares en fila horizontal (en vez de lista vertical)
+- Añadir un countdown o indicador de plazas si aplica
+- Hacer el botón principal más grande con efecto de pulse/glow
 
 ---
 
-### 5. Insertar en Home y Carrera
+### 4. Sección de testimonios sin fotos reales de alumnos
+**Problema**: Los testimonios usan fotos genéricas de eventos grupales. No se ve la cara individual de cada alumno, lo que reduce credibilidad.
 
-**Archivo**: `src/pages/Home.tsx`
-- Insertar `<ViaBillInlineCTA />` como lazy component después de `CarreraNegocioSection`
+**Solución**:
+- Usar avatares con iniciales estilizadas como fallback
+- Añadir un badge visual con la formación que hicieron
+- Considerar un formato de carrusel tipo "stories" en móvil para mayor engagement
 
-**Archivo**: `src/pages/CarreraDetailing.tsx`
-- Insertar `<ViaBillInlineCTA />` después de la sección de pricing de carrera
+---
+
+### 5. Footer denso y sin jerarquía visual
+**Problema**: El footer tiene 5 columnas de texto plano sin diferenciación visual. Los iconos sociales son iguales (2x Instagram) sin etiqueta visible.
+
+**Solución**:
+- Añadir etiquetas bajo los iconos sociales ("@detailpark", "@danidetail", "YouTube")
+- Añadir un mini CTA en el footer ("¿Tienes dudas? Escríbenos por WhatsApp") con botón verde
+- Separar visualmente la sección de partners/financiación del resto
+
+---
+
+### 6. Barra ViaBill: texto rotativo cortado
+**Problema**: En desktop el texto de la barra ViaBill se corta y es difícil de leer durante la transición. Los mensajes son largos para el espacio disponible.
+
+**Solución**:
+- Acortar los mensajes rotativos (máx 40 caracteres)
+- Aumentar la velocidad de transición para que el corte sea menos perceptible
+- Usar un fade suave en vez de slide vertical
+
+---
+
+### 7. Cookie banner sin botones en móvil
+**Problema**: En móvil, el botón "Aceptar" y "Rechazar" quedan debajo del fold del banner. Solo se ve la X para cerrar.
+
+**Solución**:
+- Rediseñar el banner de cookies en móvil: layout compacto con los botones siempre visibles
+- Formato: texto corto en una línea + dos botones alineados a la derecha
+
+---
+
+### 8. Navbar: botón "¿Eres Nuevo?" poco visible en móvil
+**Problema**: En móvil el navbar solo muestra logo + hamburger. El botón "¿Eres Nuevo?" no aparece.
+
+**Solución**:
+- Añadir el CTA "¿Eres Nuevo?" como primer item destacado dentro del menú hamburger móvil, con fondo granate y icono
+
+---
+
+### 9. Transiciones de página sin feedback
+**Problema**: Al navegar entre páginas no hay transición visual. El contenido simplemente aparece, lo que da sensación de "salto".
+
+**Solución**:
+- Añadir un fade-in sutil (200ms) al componente `MainLayout` al montar cada página
+- Mantener simple para no afectar rendimiento
 
 ---
 
@@ -68,12 +97,13 @@ Un banner inline reutilizable para insertar dentro de contenido. Diseño: franja
 
 | Archivo | Cambio |
 |---|---|
-| `src/components/shared/ViaBillFinancingBar.tsx` | Rediseño centrado + efectos visuales mejorados |
-| `src/components/shared/ViaBillInlineCTA.tsx` | **Nuevo** — Banner inline reutilizable de financiación |
-| `src/pages/BlogPost.tsx` | Insertar `ViaBillInlineCTA` en el artículo |
-| `src/components/blog/BlogSidebar.tsx` | Añadir `FinancingBadge` prominent |
-| `src/components/blog/BlogPostCTA.tsx` | Mención de financiación + logo ViaBill |
-| `src/pages/FormationDetail.tsx` | Insertar `ViaBillInlineCTA` |
-| `src/pages/Home.tsx` | Insertar `ViaBillInlineCTA` lazy |
-| `src/pages/CarreraDetailing.tsx` | Insertar `ViaBillInlineCTA` |
+| `src/components/shared/CookieBanner.tsx` | Rediseño móvil compacto, coordinar z-index con ViaBill |
+| `src/components/shared/ViaBillFinancingBar.tsx` | Mensajes más cortos, ocultar si cookies visible, formato mini en móvil |
+| `src/components/shared/SoyNuevoButton.tsx` | Ajustar posición bottom para no solapar con ViaBill |
+| `src/components/home/HomeCTA.tsx` | Trust points en fila horizontal, botón con glow |
+| `src/components/home/TestimonialsSection.tsx` | Badge de formación, avatares con iniciales como fallback |
+| `src/components/layout/Footer.tsx` | Etiquetas en iconos sociales, mini CTA WhatsApp |
+| `src/components/layout/MainLayout.tsx` | Fade-in al montar página |
+| `src/pages/Home.tsx` | Alternar fondos entre secciones (bg-background / bg-card) |
+| `src/components/layout/Navbar.tsx` | CTA "¿Eres Nuevo?" en menú hamburger móvil |
 
