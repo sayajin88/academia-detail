@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Youtube, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import logo from '@/assets/detail-park-logo-white.png';
 import logoCarcarePassion from '@/assets/brands/carcare-passion.png';
 import logoViabill from '@/assets/brands/viabill.png';
@@ -36,9 +37,9 @@ const legalLinks = [
 ];
 
 const socialLinks = [
-  { name: 'Instagram Academia', href: 'https://www.instagram.com/detailparkoficial/', icon: Instagram },
-  { name: 'Instagram Daniel', href: 'https://www.instagram.com/danidetailoficial/', icon: Instagram },
-  { name: 'YouTube', href: 'https://www.youtube.com/@detailpark', icon: Youtube },
+  { name: 'Instagram Academia', href: 'https://www.instagram.com/detailparkoficial/', icon: Instagram, label: '@detailpark' },
+  { name: 'Instagram Daniel', href: 'https://www.instagram.com/danidetailoficial/', icon: Instagram, label: '@danidetail' },
+  { name: 'YouTube', href: 'https://www.youtube.com/@detailpark', icon: Youtube, label: 'YouTube' },
 ];
 
 export function Footer() {
@@ -62,8 +63,10 @@ export function Footer() {
               Potenciada por <span className="font-semibold text-foreground/80">Detail Park</span> ↗
             </a>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Centro de formación líder en detailing profesional, dentro de las instalaciones de Detail Park en Alicante. Aprende de los mejores y transforma tu pasión en profesión.
+              Centro de formación líder en detailing profesional, dentro de las instalaciones de Detail Park en Alicante.
             </p>
+
+            {/* Social links with labels */}
             <div className="flex gap-3 mb-6">
               {socialLinks.map((social) => (
                 <a
@@ -71,36 +74,44 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary hover:border-primary/30 border border-transparent transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="group flex flex-col items-center gap-1.5"
                   aria-label={social.name}
                 >
-                  <social.icon className="h-5 w-5 md:h-6 md:w-6" />
+                  <div className="p-3 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary hover:border-primary/30 border border-transparent transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    <social.icon className="h-5 w-5 md:h-6 md:w-6" />
+                  </div>
+                  <span className="text-[10px] text-muted-foreground/60 group-hover:text-primary/80 transition-colors">
+                    {social.label}
+                  </span>
                 </a>
               ))}
             </div>
-            {/* Car Care Passion - Partner oficial */}
-            <div className="flex items-center gap-2.5">
-              <img
-                src={logoCarcarePassion}
-                alt="Car Care Passion - Partner oficial de productos de detailing"
-                className="h-5 w-auto brightness-0 invert opacity-60"
-                loading="lazy"
-                width={120}
-                height={20}
-              />
-              <span className="text-xs text-muted-foreground/70">Partner oficial de productos</span>
-            </div>
-            {/* ViaBill financing partner */}
-            <div className="flex items-center gap-2.5 mt-3">
-              <img
-                src={logoViabill}
-                alt="ViaBill - Financiación a plazos sin intereses"
-                className="h-5 w-auto brightness-0 invert opacity-60"
-                loading="lazy"
-                width={120}
-                height={20}
-              />
-              <span className="text-xs text-muted-foreground/70">Financiación a plazos disponible</span>
+
+            {/* Partners */}
+            <div className="space-y-3 pt-4 border-t border-border/50">
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground/50 font-semibold">Partners</p>
+              <div className="flex items-center gap-2.5">
+                <img
+                  src={logoCarcarePassion}
+                  alt="Car Care Passion - Partner oficial de productos de detailing"
+                  className="h-5 w-auto brightness-0 invert opacity-60"
+                  loading="lazy"
+                  width={120}
+                  height={20}
+                />
+                <span className="text-xs text-muted-foreground/70">Productos</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <img
+                  src={logoViabill}
+                  alt="ViaBill - Financiación a plazos sin intereses"
+                  className="h-5 w-auto brightness-0 invert opacity-60"
+                  loading="lazy"
+                  width={120}
+                  height={20}
+                />
+                <span className="text-xs text-muted-foreground/70">Financiación</span>
+              </div>
             </div>
           </div>
 
@@ -168,7 +179,7 @@ export function Footer() {
           {/* Contacto */}
           <div>
             <h4 className="font-semibold text-foreground mb-4">Contacto</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3 mb-6">
               <li>
                 <a
                   href="mailto:info@academiadetail.com"
@@ -203,6 +214,17 @@ export function Footer() {
                 </a>
               </li>
             </ul>
+
+            {/* WhatsApp mini CTA */}
+            <div className="p-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20">
+              <p className="text-xs text-muted-foreground mb-2.5">¿Tienes dudas? Escríbenos</p>
+              <Button asChild size="sm" className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white gap-2 font-semibold">
+                <a href="https://wa.me/34622773555" target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
 

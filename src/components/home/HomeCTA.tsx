@@ -22,7 +22,7 @@ export function HomeCTA() {
         }}
       />
 
-      {/* Decorative Circles — ocultos en móvil */}
+      {/* Decorative Circles — hidden on mobile */}
       <div className="hidden md:block absolute top-0 left-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl" style={{ contain: 'paint' }} />
       <div className="hidden md:block absolute bottom-0 right-1/4 w-80 h-80 bg-black/10 rounded-full blur-3xl" style={{ contain: 'paint' }} />
 
@@ -36,18 +36,16 @@ export function HomeCTA() {
             Da el primer paso hacia tu futuro profesional. Únete a la comunidad de detailers que ya han transformado su pasión en profesión.
           </p>
 
-          {/* Trust Points Card */}
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/20 mb-10 max-w-lg mx-auto">
-            <div className="space-y-4">
-              {trustPoints.map((point) => (
-                <div key={point.label} className="flex items-center gap-3 text-white/90">
-                  <div className="p-2 rounded-lg bg-white/10">
-                    <point.icon className="h-5 w-5" />
-                  </div>
-                  <span className="text-base font-medium">{point.label}</span>
+          {/* Trust Points — horizontal badges */}
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-10">
+            {trustPoints.map((point) => (
+              <div key={point.label} className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15">
+                <div className="p-1.5 rounded-full bg-white/15">
+                  <point.icon className="h-4 w-4 text-white" />
                 </div>
-              ))}
-            </div>
+                <span className="text-sm font-semibold text-white whitespace-nowrap">{point.label}</span>
+              </div>
+            ))}
           </div>
 
           {/* CTA Buttons */}
@@ -55,9 +53,11 @@ export function HomeCTA() {
             <Button 
               asChild 
               size="touch" 
-              className="bg-white text-primary hover:bg-white/90 shadow-xl group w-full sm:w-auto text-lg font-bold"
+              className="relative bg-white text-primary hover:bg-white/90 shadow-xl group w-full sm:w-auto text-lg font-bold overflow-hidden"
             >
               <Link to="/contacto">
+                {/* Glow pulse */}
+                <span className="absolute inset-0 rounded-xl bg-white/30 animate-ping opacity-20 pointer-events-none" />
                 Inscríbete Ahora
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>

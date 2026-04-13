@@ -18,7 +18,7 @@ export function MainLayout({ children }: MainLayoutProps) {
         Saltar al contenido
       </a>
       <Navbar />
-      <main role="main" id="main-content" className="flex-1 pt-16 md:pt-20">
+      <main role="main" id="main-content" className="flex-1 pt-16 md:pt-20 animate-fade-in">
         {children}
       </main>
       <Footer />

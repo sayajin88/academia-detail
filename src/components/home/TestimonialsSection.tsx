@@ -83,10 +83,8 @@ const testimonials = [
   },
 ];
 
-// Calculate aggregate rating
 const averageRating = (testimonials.reduce((acc, t) => acc + t.rating, 0) / testimonials.length).toFixed(1);
 
-// Objeto reutilizable para itemReviewed - resuelve errores de Google Search Console
 const itemReviewed = {
   "@type": "EducationalOrganization",
   "name": "Academia Detail",
@@ -107,24 +105,34 @@ const itemReviewed = {
   }
 };
 
-// Array de Reviews individuales, cada una con itemReviewed completo
 const reviewsSchema = testimonials.map((t) => ({
   "@context": "https://schema.org",
   "@type": "Review",
   "itemReviewed": itemReviewed,
-  "author": {
-    "@type": "Person",
-    "name": t.name
-  },
-  "reviewRating": {
-    "@type": "Rating",
-    "ratingValue": t.rating,
-    "bestRating": 5,
-    "worstRating": 1
-  },
+  "author": { "@type": "Person", "name": t.name },
+  "reviewRating": { "@type": "Rating", "ratingValue": t.rating, "bestRating": 5, "worstRating": 1 },
   "reviewBody": t.text,
   "datePublished": t.date
 }));
+
+// Generate initials-based avatar colors
+const avatarColors = [
+  'from-primary to-primary-glow',
+  'from-[#5b21b6] to-[#7c3aed]',
+  'from-[#0d7a5f] to-[#2dd4a8]',
+  'from-[#c44569] to-[#e84393]',
+  'from-[#2d8a9e] to-[#5cbdb9]',
+  'from-[#d4842a] to-[#e8b84a]',
+];
+
+function InitialsAvatar({ name, index }: { name: string; index: number }) {
+  const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2);
+  return (
+    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${avatarColors[index % avatarColors.length]} flex items-center justify-center border-2 border-white/20`}>
+      <span className="text-white font-bold text-sm">{initials}</span>
+    </div>
+  );
+}
 
 export function TestimonialsSection() {
   return (
@@ -134,7 +142,6 @@ export function TestimonialsSection() {
       itemScope 
       itemType="https://schema.org/EducationalOrganization"
     >
-      {/* Schema.org JSON-LD for Review rich snippets - cada Review con itemReviewed */}
       <Helmet>
         {reviewsSchema.map((review, index) => (
           <script key={index} type="application/ld+json">
@@ -150,15 +157,11 @@ export function TestimonialsSection() {
           subtitle="Historias reales de transformación profesional"
         />
 
-        {/* Aggregate Rating Display */}
+        {/* Aggregate Rating */}
         <div className="flex items-center justify-center gap-3 mb-12">
           <div className="flex items-center gap-1" role="img" aria-label={`Valoración media: ${averageRating} de 5 estrellas`}>
             {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                className="h-6 w-6 fill-primary text-primary"
-                aria-hidden="true"
-              />
+              <Star key={i} className="h-6 w-6 fill-primary text-primary" aria-hidden="true" />
             ))}
           </div>
           <span className="text-2xl font-bold text-foreground">{averageRating}</span>
@@ -181,6 +184,11 @@ export function TestimonialsSection() {
                 <Quote className="h-10 w-10" aria-hidden="true" />
               </div>
 
+              {/* Formation Badge — top */}
+              <span className="inline-flex items-center text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full mb-4">
+                {testimonial.formation}
+              </span>
+
               {/* Rating */}
               <div 
                 className="flex gap-1 mb-4" 
@@ -193,11 +201,7 @@ export function TestimonialsSection() {
                 <meta itemProp="ratingValue" content={String(testimonial.rating)} />
                 <meta itemProp="bestRating" content="5" />
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-4 w-4 fill-primary text-primary"
-                    aria-hidden="true"
-                  />
+                  <Star key={i} className="h-4 w-4 fill-primary text-primary" aria-hidden="true" />
                 ))}
               </div>
 
@@ -219,19 +223,12 @@ export function TestimonialsSection() {
 
               {/* Author */}
               <div 
-                className="flex items-center gap-4"
+                className="flex items-center gap-4 pt-4 border-t border-border"
                 itemProp="author" 
                 itemScope 
                 itemType="https://schema.org/Person"
               >
-                <img
-                  src={testimonial.image}
-                  alt={`${testimonial.name} - Alumno certificado en ${testimonial.formation} por Academia Detail`}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-primary/30"
-                  loading="lazy"
-                  width={48}
-                  height={48}
-                />
+                <InitialsAvatar name={testimonial.name} index={index} />
                 <div>
                   <p className="font-semibold text-foreground" itemProp="name">
                     {testimonial.name}
@@ -239,24 +236,16 @@ export function TestimonialsSection() {
                   <p className="text-sm text-muted-foreground flex items-center gap-1">
                     <MapPin className="h-3 w-3" />
                     {testimonial.city}
+                    {(testimonial.role.includes('Propietario') || testimonial.role.includes('Fundador')) && (
+                      <span className="flex items-center gap-1 ml-2 text-primary/70">
+                        <Building2 className="h-3 w-3" />
+                        Emprendedor
+                      </span>
+                    )}
                   </p>
                 </div>
               </div>
 
-              {/* Formation Badge */}
-              <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
-                <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
-                  {testimonial.formation}
-                </span>
-                {testimonial.role.includes('Propietario') || testimonial.role.includes('Fundador') ? (
-                  <span className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Building2 className="h-3 w-3" />
-                    Emprendedor
-                  </span>
-                ) : null}
-              </div>
-
-              {/* Hidden date for schema */}
               <meta itemProp="datePublished" content={testimonial.date} />
             </article>
           ))}

@@ -40,6 +40,13 @@ const SectionSkeleton = ({ variant = 'default' }: { variant?: 'default' | 'card'
   </div>
 );
 
+// Decorative section separator
+const SectionSeparator = () => (
+  <div className="relative h-px">
+    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+  </div>
+);
+
 export default function Home() {
   const homeSEO = useMemo(() => generateHomeSEO(formations, formationDetails), []);
 
@@ -51,59 +58,96 @@ export default function Home() {
         <HomeHero />
         <FormationsGrid />
         
-        {/* Jornada Zero - justo después de formaciones */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <JornadaZeroSection />
-        </Suspense>
+        {/* Jornada Zero */}
+        <div className="bg-card">
+          <Suspense fallback={<SectionSkeleton variant="card" />}>
+            <JornadaZeroSection />
+          </Suspense>
+        </div>
 
-        {/* Componentes below-the-fold - carga diferida */}
+        <SectionSeparator />
+
+        {/* Competitive Comparison */}
         <Suspense fallback={<SectionSkeleton />}>
           <CompetitiveComparison />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <BrandLogosBar variant="full" filter="all" />
-        </Suspense>
+
+        <div className="bg-card">
+          <Suspense fallback={<SectionSkeleton variant="card" />}>
+            <BrandLogosBar variant="full" filter="all" />
+          </Suspense>
+        </div>
+
+        <SectionSeparator />
+
         <Suspense fallback={<SectionSkeleton />}>
           <BusinessSkillsSection />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <CarreraNegocioSection />
-        </Suspense>
+
+        <div className="bg-card">
+          <Suspense fallback={<SectionSkeleton variant="card" />}>
+            <CarreraNegocioSection />
+          </Suspense>
+        </div>
+
         <Suspense fallback={<SectionSkeleton />}>
           <ViaBillInlineCTA />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <MontamosTuCentro />
-        </Suspense>
+
+        <SectionSeparator />
+
+        <div className="bg-card">
+          <Suspense fallback={<SectionSkeleton variant="card" />}>
+            <MontamosTuCentro />
+          </Suspense>
+        </div>
+
         <Suspense fallback={<SectionSkeleton />}>
           <InstructorSection />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <GalleryPreview />
-        </Suspense>
+
+        <div className="bg-card">
+          <Suspense fallback={<SectionSkeleton variant="card" />}>
+            <GalleryPreview />
+          </Suspense>
+        </div>
+
+        <SectionSeparator />
+
         <Suspense fallback={<SectionSkeleton />}>
           <div className="container mx-auto px-4 py-16 md:py-24">
             <DirectoryJoinBanner />
           </div>
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <TestimonialsSection />
-        </Suspense>
+
+        <div className="bg-card">
+          <Suspense fallback={<SectionSkeleton variant="card" />}>
+            <TestimonialsSection />
+          </Suspense>
+        </div>
+
         <Suspense fallback={<SectionSkeleton />}>
           <SuccessStoriesLogos />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <GoogleReviews />
-        </Suspense>
+
+        <div className="bg-card">
+          <Suspense fallback={<SectionSkeleton variant="card" />}>
+            <GoogleReviews />
+          </Suspense>
+        </div>
+
+        <SectionSeparator />
+
         <Suspense fallback={<SectionSkeleton />}>
           <HomeFAQ />
         </Suspense>
+
         <Suspense fallback={<SectionSkeleton />}>
           <HomeCTA />
         </Suspense>
 
         {/* LATAM SEO text block */}
-        <section className="py-8 px-4 text-center text-sm text-muted-foreground">
+        <section className="py-8 px-4 text-center text-sm text-muted-foreground bg-card">
           <p>
             ¿Buscas un <strong>curso de detailing de autos</strong> o
             <strong> curso de car detailing</strong> desde Latinoamérica?
