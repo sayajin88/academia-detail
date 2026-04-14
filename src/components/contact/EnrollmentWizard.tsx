@@ -126,32 +126,25 @@ const EnrollmentWizard = () => {
       console.error("Email send error:", err);
     }
 
-    // Send to n8n webhook
-    try {
-      const webhookResponse = await fetch("https://dlopez88.app.n8n.cloud/webhook/contacto", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombre: data.nombre,
-          apellidos: data.apellidos,
-          email: data.email,
-          telefono: data.telefono,
-          experiencia: data.experiencia,
-          centro_propio: data.centro_propio,
-          inversion: data.inversion,
-          tipo_formacion: data.tipo_formacion,
-          mensaje: data.mensaje || "",
-          source: "contact_page",
-        }),
-      });
-      if (!webhookResponse.ok) {
-        console.error("Webhook error:", webhookResponse.status);
-        toast.error("Tu solicitud se guardó pero hubo un problema al notificar.");
-      }
-    } catch (err) {
-      console.error("Webhook exception:", err);
-      toast.error("Tu solicitud se guardó pero hubo un problema de conexión.");
-    }
+    // Send to n8n webhook (fire-and-forget, silent)
+    fetch("https://dlopez88.app.n8n.cloud/webhook/contacto", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+        email: data.email,
+        telefono: data.telefono,
+        experiencia: data.experiencia,
+        centro_propio: data.centro_propio,
+        inversion: data.inversion,
+        tipo_formacion: data.tipo_formacion,
+        mensaje: data.mensaje || "",
+        source: "contact_page",
+      }),
+    })
+      .then(r => { if (!r.ok) console.warn("Webhook n8n:", r.status); })
+      .catch(err => console.warn("Webhook n8n error:", err));
 
     setIsSubmitting(false);
     form.reset();
