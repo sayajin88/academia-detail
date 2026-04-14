@@ -18,8 +18,9 @@ import {
   Search, Mail, Phone, MessageCircle, Users,
   GraduationCap, Wrench, Shield, Paintbrush, Car,
   Clock, CheckCircle2, Save, Trash2, StickyNote, Euro,
-  Eye, EyeOff, Send, FileText,
+  Eye, EyeOff, Send, FileText, AlertTriangle,
 } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { toast } from "@/hooks/use-toast";
 
 // --- Label maps ---
