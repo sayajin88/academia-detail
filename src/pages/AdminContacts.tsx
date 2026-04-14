@@ -142,6 +142,21 @@ const AdminContacts = () => {
     },
   });
 
+  const { data: dlqCount = 0 } = useQuery({
+    queryKey: ["email-dlq-count"],
+    queryFn: async () => {
+      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+      const { count, error } = await supabase
+        .from("email_send_log")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "dlq")
+        .gte("created_at", sevenDaysAgo);
+      if (error) return 0;
+      return count ?? 0;
+    },
+    refetchInterval: 60000,
+  });
+
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
       const updates: Record<string, any> = { contact_status: status };
