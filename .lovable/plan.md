@@ -1,48 +1,43 @@
 
 
-## Plan: Corregir el error visual del webhook n8n en el formulario de inscripción
-
-### Problema
-El webhook de n8n (`dlopez88.app.n8n.cloud/webhook/contacto`) está devolviendo un error o no respondiendo. El código actual muestra un `toast.error()` al usuario cuando esto ocurre, aunque la solicitud se guardó correctamente en la base de datos y los emails se enviaron sin problema.
+## Diagnóstico: Los emails de dossier nunca se envían
 
 ### Causa raíz
-En `EnrollmentWizard.tsx` (líneas 130-154), el fetch al webhook de n8n tiene dos `toast.error()` que se muestran al usuario cuando el webhook falla. Como el webhook es una notificación secundaria (los datos ya están en la BD y los emails ya se enviaron), este error no debería mostrarse al usuario.
 
-### Solución
+**El dominio de email `notify.academiadetail.com` no está verificado.** La configuración DNS está pendiente, lo que significa que **ningún email** se está enviando realmente — ni dossiers, ni confirmaciones, ni follow-ups, ni notificaciones al admin.
 
-**Archivo**: `src/components/contact/EnrollmentWizard.tsx`
+Todos los emails se encolan correctamente, pero cuando el procesador de cola intenta enviarlos, recibe un error `403: Email domain is not verified` y acaban en la cola de mensajes fallidos (DLQ). Hay **17 emails fallidos** acumulados desde el 9 de abril, todos con el mismo error.
 
-1. **Hacer la llamada al webhook no-bloqueante y silenciosa**: Eliminar los `toast.error()` del bloque del webhook. Solo loguear el error en consola para debugging.
-2. **Ejecutar el webhook en "fire-and-forget"**: Lanzar el fetch sin `await` para que no retrase la redirección a `/gracias`.
-3. **Mantener los logs de consola** para que puedas ver en desarrollo si el webhook falla, pero sin impactar la experiencia del usuario.
+### ¿Por qué la UI dice "enviado"?
 
-### Cambio concreto
+El código marca `dossier_email_sent = true` cuando el email se encola exitosamente. La cola funciona bien — el problema es que el **despachador** no puede entregar los emails porque el dominio no está verificado. Así que la UI muestra "enviado" pero el email nunca llega al destinatario.
 
-```typescript
-// Antes (bloqueante + muestra errores al usuario):
-try {
-  const webhookResponse = await fetch("https://dlopez88.app.n8n.cloud/webhook/contacto", {...});
-  if (!webhookResponse.ok) {
-    toast.error("Tu solicitud se guardó pero hubo un problema al notificar.");
-  }
-} catch (err) {
-  toast.error("Tu solicitud se guardó pero hubo un problema de conexión.");
-}
+### Solución (2 partes)
 
-// Después (fire-and-forget, silencioso):
-fetch("https://dlopez88.app.n8n.cloud/webhook/contacto", {...})
-  .then(r => { if (!r.ok) console.warn("Webhook n8n:", r.status); })
-  .catch(err => console.warn("Webhook n8n error:", err));
-```
+#### Parte 1: Verificar el dominio de email (acción del usuario)
 
-### Resultado
-- El usuario siempre verá la redirección a `/gracias` sin mensajes de error confusos
-- Los datos siguen guardándose en la BD
-- Los emails siguen enviándose
-- El webhook sigue intentándose pero su fallo es invisible para el usuario
+Necesitas completar la configuración DNS de `notify.academiadetail.com` en tu proveedor de dominio. Puedes ver el estado y las instrucciones en **Cloud → Emails → Manage Domains**. Una vez verificado, todos los emails empezarán a enviarse automáticamente.
 
-### Archivo afectado
+#### Parte 2: Mejora de código (para evitar falsos positivos)
+
+Actualmente el sistema marca el dossier como "enviado" en el momento del encolado. Esto es engañoso cuando hay problemas de entrega. Propongo:
+
+**Archivo**: `src/pages/AdminContacts.tsx`
+
+- En `handleBulkSendDossier`: Después de encolar, **no marcar** `dossier_email_sent = true` inmediatamente. En su lugar, marcar un estado intermedio como `dossier_email_sent_at` (timestamp del intento) pero mantener `dossier_email_sent = false` hasta confirmar entrega.
+
+Sin embargo, dado que el sistema de colas es asíncrono y no hay callback de confirmación, la mejora más práctica es:
+
+- Añadir una **verificación previa** antes de encolar: consultar `email_send_log` para ver si hay emails recientes con status `dlq` y mostrar un **aviso al admin** de que hay problemas de entrega pendientes, en lugar de silenciar el error.
+- Mostrar un banner de alerta en el panel de admin cuando haya emails en estado `dlq` recientes.
+
+### Archivos afectados
+
 | Archivo | Cambio |
 |---|---|
-| `src/components/contact/EnrollmentWizard.tsx` | Webhook n8n → fire-and-forget sin toast de error |
+| `src/pages/AdminContacts.tsx` | Añadir banner de alerta cuando hay emails fallidos (DLQ) + aviso visual en el envío de dossier |
+
+### Prioridad inmediata
+
+Lo más urgente es **verificar el dominio DNS**. Sin eso, ningún cambio de código resolverá el problema de entrega. ¿Quieres que te guíe para verificar el dominio en Cloud → Emails?
 
