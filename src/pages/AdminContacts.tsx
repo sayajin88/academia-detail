@@ -18,8 +18,9 @@ import {
   Search, Mail, Phone, MessageCircle, Users,
   GraduationCap, Wrench, Shield, Paintbrush, Car,
   Clock, CheckCircle2, Save, Trash2, StickyNote, Euro,
-  Eye, EyeOff, Send, FileText,
+  Eye, EyeOff, Send, FileText, AlertTriangle,
 } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { toast } from "@/hooks/use-toast";
 
 // --- Label maps ---
@@ -139,6 +140,21 @@ const AdminContacts = () => {
       if (error) throw error;
       return data as ContactSubmission[];
     },
+  });
+
+  const { data: dlqCount = 0 } = useQuery({
+    queryKey: ["email-dlq-count"],
+    queryFn: async () => {
+      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+      const { count, error } = await supabase
+        .from("email_send_log")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "dlq")
+        .gte("created_at", sevenDaysAgo);
+      if (error) return 0;
+      return count ?? 0;
+    },
+    refetchInterval: 60000,
   });
 
   const updateStatusMutation = useMutation({
@@ -315,6 +331,19 @@ const AdminContacts = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
+        {/* DLQ Alert Banner */}
+        {dlqCount > 0 && (
+          <Alert variant="destructive" className="border-red-300 bg-red-50">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Problema de entrega de emails</AlertTitle>
+            <AlertDescription>
+              Hay <strong>{dlqCount}</strong> email{dlqCount > 1 ? "s" : ""} fallido{dlqCount > 1 ? "s" : ""} en los últimos 7 días.
+              El dominio de envío puede no estar verificado. Revisa la configuración en <strong>Cloud → Emails</strong>.
+              Los dossiers marcados como "enviados" podrían no haber llegado al destinatario.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Header */}
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
