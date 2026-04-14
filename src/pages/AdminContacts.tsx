@@ -331,6 +331,19 @@ const AdminContacts = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
+        {/* DLQ Alert Banner */}
+        {dlqCount > 0 && (
+          <Alert variant="destructive" className="border-red-300 bg-red-50">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Problema de entrega de emails</AlertTitle>
+            <AlertDescription>
+              Hay <strong>{dlqCount}</strong> email{dlqCount > 1 ? "s" : ""} fallido{dlqCount > 1 ? "s" : ""} en los últimos 7 días.
+              El dominio de envío puede no estar verificado. Revisa la configuración en <strong>Cloud → Emails</strong>.
+              Los dossiers marcados como "enviados" podrían no haber llegado al destinatario.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Header */}
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
