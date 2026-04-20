@@ -5,7 +5,7 @@ import {
 import type { TemplateEntry } from './registry.ts'
 
 const SITE_NAME = "Detail Park Academy"
-const DOSSIER_URL = "https://drive.google.com/file/d/1BeEtAi-UzlQMsaCEeSiygjj8XWLv1sxN/view?usp=sharing"
+const DOSSIER_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
 const TRACKING_PIXEL_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-email-open"
 const ACADEMY_LOGO_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/email-assets/academia-detail-logo.png"
 const WEB_URL = "https://detailpark.com"
@@ -24,7 +24,7 @@ const ContactConfirmationEmail = ({ nombre, formacion, trackingToken }: ContactC
   return (
     <Html lang="es" dir="ltr">
       <Head />
-      <Preview>Tu Programa Formativo está listo — Academia Detail · Detail Park</Preview>
+      <Preview>{firstName ? `${firstName}, te enviamos el programa formativo que pediste` : 'Te enviamos el programa formativo que pediste'}</Preview>
       <Body style={main}>
         <Container style={container}>
           {/* Header con logo + wordmark */}
@@ -172,7 +172,12 @@ const ValueItem = ({ text }: { text: string }) => (
 
 export const template = {
   component: ContactConfirmationEmail,
-  subject: 'Tu Programa Formativo está listo para descargar',
+  subject: (data: Record<string, any>) => {
+    const first = data.nombre ? String(data.nombre).split(' ')[0] : ''
+    return first
+      ? `${first}, aquí tienes el programa formativo que pediste`
+      : 'Aquí tienes el programa formativo que pediste'
+  },
   displayName: 'Confirmación de contacto con dossier',
   previewData: { nombre: 'Carlos', formacion: 'Detailing Profesional' },
 } satisfies TemplateEntry
