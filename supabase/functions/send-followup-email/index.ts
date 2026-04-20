@@ -28,14 +28,16 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Find submissions from 2+ days ago that haven't received follow-up
+    // Find submissions from 2+ days ago that haven't received follow-up.
+    // Use `dossier_email_sent_at` (intento de envío) en lugar de `dossier_email_sent`,
+    // que ahora solo se marca true cuando hay confirmación real de entrega.
     const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString();
 
     const { data: pendingFollowups, error: queryError } = await supabase
       .from("contact_submissions")
       .select("id, nombre, email, tipo_formacion")
       .eq("followup_email_sent", false)
-      .eq("dossier_email_sent", true)
+      .not("dossier_email_sent_at", "is", null)
       .lt("created_at", twoDaysAgo)
       .limit(50);
 
@@ -71,11 +73,13 @@ const handler = async (req: Request): Promise<Response> => {
           },
         });
 
-        // Mark as sent
+        // Solo guardamos el timestamp del intento. `followup_email_sent = true`
+        // se marcará cuando el email_send_log confirme entrega (status = 'sent').
+        // Así evitamos reenviar al mismo lead repetidamente si el envío falla
+        // pero sin marcar como entregado prematuramente.
         await supabase
           .from("contact_submissions")
           .update({
-            followup_email_sent: true,
             followup_email_sent_at: new Date().toISOString(),
           })
           .eq("id", submission.id);

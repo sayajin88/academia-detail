@@ -225,34 +225,46 @@ const AdminContacts = () => {
   };
 
   const handleBulkSendDossier = async () => {
-    const targets = filtered.filter((c) => selectedIds.has(c.id) && !c.dossier_email_sent);
+    // Permitir reenviar incluso a leads ya marcados como enviados (porque el envío real puede haber fallado).
+    const targets = filtered.filter((c) => selectedIds.has(c.id));
     if (targets.length === 0) {
-      toast({ title: "Sin destinatarios", description: "Los seleccionados ya tienen el dossier enviado.", variant: "destructive" });
+      toast({ title: "Sin destinatarios", description: "Selecciona al menos un lead.", variant: "destructive" });
       return;
     }
     setBulkSending(true);
     setBulkProgress({ sent: 0, total: targets.length });
-    let successCount = 0;
+    let queuedCount = 0;
     let failCount = 0;
     for (const contact of targets) {
       try {
+        // Generar tracking_token si no tiene uno todavía (para el píxel de apertura).
+        let trackingToken = contact.tracking_token;
+        if (!trackingToken) {
+          trackingToken = crypto.randomUUID();
+          await supabase.from("contact_submissions")
+            .update({ tracking_token: trackingToken })
+            .eq("id", contact.id);
+        }
+
         const { error } = await supabase.functions.invoke("send-transactional-email", {
           body: {
             templateName: "contact-confirmation",
             recipientEmail: contact.email,
-            idempotencyKey: `bulk-dossier-${contact.id}`,
+            idempotencyKey: `bulk-dossier-${contact.id}-${Date.now()}`,
             templateData: {
               nombre: contact.nombre,
               formacion: formacionLabels[contact.tipo_formacion] || contact.tipo_formacion,
+              trackingToken,
             },
           },
         });
         if (error) throw error;
+        // Solo guardamos el timestamp del intento. NO marcamos `dossier_email_sent = true`
+        // hasta confirmar entrega vía email_send_log (status = 'sent').
         await supabase.from("contact_submissions").update({
-          dossier_email_sent: true,
           dossier_email_sent_at: new Date().toISOString(),
         }).eq("id", contact.id);
-        successCount++;
+        queuedCount++;
       } catch {
         failCount++;
       }
@@ -262,8 +274,8 @@ const AdminContacts = () => {
     setSelectedIds(new Set());
     queryClient.invalidateQueries({ queryKey: ["admin-contacts"] });
     toast({
-      title: `Envío completado`,
-      description: `${successCount} enviados correctamente${failCount > 0 ? `, ${failCount} fallidos` : ""}`,
+      title: `Envío encolado`,
+      description: `${queuedCount} email${queuedCount === 1 ? "" : "s"} en cola${failCount > 0 ? `, ${failCount} fallidos al encolar` : ""}. La entrega real se confirmará en unos minutos.`,
     });
   };
 
