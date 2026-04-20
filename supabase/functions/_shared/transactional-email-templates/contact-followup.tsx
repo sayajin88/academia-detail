@@ -1,10 +1,13 @@
 import * as React from 'npm:react@18.3.1'
 import {
-  Body, Container, Head, Heading, Html, Preview, Text, Button, Section, Link,
+  Body, Container, Head, Heading, Html, Preview, Text, Button, Section, Hr, Link, Img, Row, Column,
 } from 'npm:@react-email/components@0.0.22'
 import type { TemplateEntry } from './registry.ts'
 
-const SITE_NAME = "Detail Park Academy"
+const DOSSIER_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
+const ACADEMY_LOGO_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/email-assets/academia-detail-logo.png"
+const WEB_URL = "https://detailpark.com"
+const INSTAGRAM_URL = "https://instagram.com/danidetailoficial"
 
 interface ContactFollowupProps {
   nombre?: string
@@ -20,60 +23,122 @@ const ContactFollowupEmail = ({ nombre, formacion }: ContactFollowupProps) => {
   return (
     <Html lang="es" dir="ltr">
       <Head />
-      <Preview>¿Has podido revisar el programa{firstName ? `, ${firstName}` : ''}?</Preview>
+      <Preview>
+        {firstName
+          ? `${firstName}, ¿tienes alguna duda sobre el programa?`
+          : '¿Tienes alguna duda sobre el programa?'}
+      </Preview>
       <Body style={main}>
         <Container style={container}>
+          {/* Header con logo */}
           <Section style={header}>
-            <Heading style={headerTitle}>DETAIL PARK</Heading>
-            <Text style={headerSubtitle}>Academy</Text>
+            <Img
+              src={ACADEMY_LOGO_URL}
+              alt="Academia Detail by Detail Park"
+              width="180"
+              height="auto"
+              style={logoImg}
+            />
+            <Text style={headerTagline}>FORMACIÓN PROFESIONAL EN DETAILING</Text>
           </Section>
 
-          <Section style={content}>
+          {/* Banda de acento */}
+          <Section style={accentBar} />
+
+          {/* Hero */}
+          <Section style={heroSection}>
             <Heading style={h1}>
-              ¿Has podido revisar el programa{firstName ? `, ${firstName}` : ''}?
+              {firstName ? `${firstName}, ¿pudiste echarle un vistazo?` : '¿Pudiste echarle un vistazo?'}
             </Heading>
+            {formacion && (
+              <Text style={formacionLabel}>
+                Sobre el programa de <span style={formacionHighlight}>{formacion}</span>
+              </Text>
+            )}
+          </Section>
 
-            <Text style={text}>
-              Hace un par de días te enviamos toda la información sobre nuestro programa
-              {formacion ? <> de <strong style={{ color: '#8B2332' }}>{formacion}</strong></> : ''}.
-              Queríamos saber si has tenido ocasión de revisarlo.
+          {/* Cuerpo */}
+          <Section style={contentSection}>
+            <Text style={paragraph}>
+              Hace un par de días te enviamos el programa formativo. Quería pasarme por aquí para
+              asegurarme de que te llegó bien y por si te ha quedado alguna duda.
             </Text>
 
-            <Text style={text}>
-              Sabemos que tomar la decisión de invertir en tu formación es importante, así que
-              queremos que tengas toda la información que necesites para dar el paso con confianza.
+            <Text style={paragraph}>
+              Sé que decidir dónde formarte es importante. Si quieres, puedo resolverte cualquier
+              cuestión sin compromiso — desde el contenido del curso hasta opciones de financiación.
             </Text>
 
-            <Section style={financingBox}>
-              <Text style={financingTitle}>¿Sabías que puedes financiar tu formación?</Text>
-              <Text style={financingItem}>💳 <strong>Paga a plazos sin intereses</strong> gracias a nuestra colaboración con ViaBill.</Text>
-              <Text style={financingItem}>📅 Elige el plan que mejor se adapte a ti: <strong>3, 6 o 12 meses</strong>.</Text>
-              <Text style={financingItem}>🎓 Y recuerda: nuestras plazas son limitadas a <strong>3 alumnos por edición</strong> para garantizar atención 1:1.</Text>
+            {/* CTA WhatsApp */}
+            <Section style={ctaSection}>
+              <Button href={`https://wa.me/34622773555?text=${waText}`} style={ctaWhatsapp}>
+                Hablar por WhatsApp
+              </Button>
+              <Text style={ctaHint}>Respondemos en menos de 1 hora · L–S</Text>
             </Section>
 
-            <Text style={text}>
-              Si tienes alguna duda, estaremos encantados de resolverla. Puedes reservar una
-              llamada informativa sin compromiso:
-            </Text>
-
-            <Section style={ctaSection}>
-              <Button href={`https://wa.me/34622773555?text=${waText}`} style={whatsappButton}>
-                💬 Hablar por WhatsApp
-              </Button>
+            {/* Recordatorio dossier */}
+            <Section style={dossierBox}>
+              <Text style={dossierTitle}>¿No encuentras el programa formativo?</Text>
+              <Text style={dossierText}>
+                Aquí lo tienes de nuevo, por si lo necesitas:
+              </Text>
+              <Section style={{ textAlign: 'center', marginTop: '12px' }}>
+                <Link href={DOSSIER_URL} style={dossierLink}>
+                  Ver tipos de formación y precios →
+                </Link>
+              </Section>
             </Section>
-            <Section style={ctaSection}>
-              <Button href="https://academiadetail.com/contacto" style={ctaButton}>
-                📋 Reservar mi plaza
-              </Button>
+
+            {/* Callout exclusividad */}
+            <Section style={calloutBox}>
+              <Text style={calloutText}>
+                <strong style={calloutStrong}>Recordatorio:</strong> nuestras ediciones son
+                de <strong>máximo 3 alumnos</strong> para garantizar atención personalizada.
+                Si tienes una fecha en mente, mejor reservar pronto.
+              </Text>
             </Section>
           </Section>
 
+          {/* Conócenos */}
+          <Section style={socialSection}>
+            <Text style={socialTitle}>Conócenos antes de decidir</Text>
+            <Text style={socialSubtitle}>Visita nuestra web o sigue el día a día del taller</Text>
+
+            <Row style={socialRow}>
+              <Column style={socialCol}>
+                <Link href={WEB_URL} style={socialCard}>
+                  <Text style={socialIcon}>🌐</Text>
+                  <Text style={socialCardTitle}>Detail Park</Text>
+                  <Text style={socialCardSubtitle}>detailpark.com</Text>
+                </Link>
+              </Column>
+              <Column style={socialCol}>
+                <Link href={INSTAGRAM_URL} style={socialCard}>
+                  <Text style={socialIcon}>📷</Text>
+                  <Text style={socialCardTitle}>Instagram</Text>
+                  <Text style={socialCardSubtitle}>@danidetailoficial</Text>
+                </Link>
+              </Column>
+            </Row>
+          </Section>
+
+          {/* Contacto */}
+          <Section style={contactBox}>
+            <Text style={contactTitle}>¿Prefieres otro canal?</Text>
+            <Text style={contactItem}>
+              📞 <Link href="tel:+34622773555" style={link}>+34 622 773 555</Link>
+              {'  ·  '}
+              📧 <Link href="mailto:info@detailpark.com" style={link}>info@detailpark.com</Link>
+            </Text>
+          </Section>
+
+          <Hr style={divider} />
+
+          {/* Footer */}
           <Section style={footer}>
             <Text style={footerTitle}>Estamos aquí para ayudarte</Text>
-            <Text style={footerContact}>
-              📞 <Link href="tel:+34622773555" style={link}>+34 622 773 555</Link> ·
-              📧 <Link href="mailto:info@academiadetail.com" style={link}>info@academiadetail.com</Link>
-            </Text>
+            <Text style={footerText}>El equipo de Academia Detail · Detail Park</Text>
             <Link href="https://academiadetail.com" style={footerLink}>www.academiadetail.com</Link>
           </Section>
         </Container>
@@ -84,30 +149,128 @@ const ContactFollowupEmail = ({ nombre, formacion }: ContactFollowupProps) => {
 
 export const template = {
   component: ContactFollowupEmail,
-  subject: (data: Record<string, any>) =>
-    data.nombre
-      ? `¿Has podido revisar el programa, ${data.nombre.split(' ')[0]}?`
-      : '¿Has podido revisar el programa?',
+  subject: (data: Record<string, any>) => {
+    const first = data.nombre ? String(data.nombre).split(' ')[0] : ''
+    return first
+      ? `${first}, ¿te ha llegado bien el programa?`
+      : '¿Te ha llegado bien el programa?'
+  },
   displayName: 'Seguimiento de contacto (2 días)',
   previewData: { nombre: 'Carlos García', formacion: 'Detailing Profesional' },
 } satisfies TemplateEntry
 
-const main = { backgroundColor: '#ffffff', fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" }
-const container = { maxWidth: '600px', margin: '0 auto' }
-const header = { backgroundColor: '#8B2332', padding: '40px', textAlign: 'center' as const }
-const headerTitle = { margin: '0 0 8px', color: '#FFF', fontSize: '28px', fontWeight: '700' }
-const headerSubtitle = { margin: '0', color: 'rgba(255,255,255,0.9)', fontSize: '14px', letterSpacing: '2px', textTransform: 'uppercase' as const }
-const content = { padding: '40px' }
-const h1 = { margin: '0 0 24px', color: '#111827', fontSize: '22px', fontWeight: '600' }
-const text = { margin: '0 0 20px', color: '#374151', fontSize: '16px', lineHeight: '1.7' }
-const financingBox = { backgroundColor: '#FDF2F4', borderRadius: '12px', border: '1px solid #F5C6CB', padding: '24px', margin: '24px 0' }
-const financingTitle = { margin: '0 0 16px', color: '#111827', fontSize: '16px', fontWeight: '700' }
-const financingItem = { margin: '0 0 12px', color: '#374151', fontSize: '15px', lineHeight: '1.6' }
-const ctaSection = { textAlign: 'center' as const, margin: '0 0 12px' }
-const whatsappButton = { backgroundColor: '#25D366', color: '#FFF', padding: '16px 40px', borderRadius: '8px', fontSize: '16px', fontWeight: '700', textDecoration: 'none' }
-const ctaButton = { backgroundColor: '#8B2332', color: '#FFF', padding: '16px 40px', borderRadius: '8px', fontSize: '16px', fontWeight: '700', textDecoration: 'none' }
-const link = { color: '#8B2332', textDecoration: 'none' }
-const footer = { backgroundColor: '#F9FAFB', padding: '30px 40px', borderTop: '1px solid #E5E7EB', textAlign: 'center' as const }
-const footerTitle = { margin: '0 0 8px', color: '#111827', fontSize: '15px', fontWeight: '600' }
-const footerContact = { margin: '0 0 16px', color: '#6B7280', fontSize: '14px' }
-const footerLink = { color: '#8B2332', fontSize: '13px', textDecoration: 'none' }
+// ===== Styles =====
+const main = {
+  backgroundColor: '#ffffff',
+  fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif",
+  margin: 0,
+  padding: 0,
+}
+const container = { maxWidth: '600px', margin: '0 auto', backgroundColor: '#ffffff' }
+
+// Header
+const header = { padding: '40px 40px 20px', textAlign: 'center' as const, backgroundColor: '#ffffff' }
+const logoImg = { display: 'block', margin: '0 auto 12px', maxWidth: '180px', height: 'auto' }
+const headerTagline = {
+  margin: 0,
+  color: '#6B7280',
+  fontSize: '11px',
+  letterSpacing: '2.5px',
+  fontWeight: 600,
+  textTransform: 'uppercase' as const,
+}
+const accentBar = { height: '4px', backgroundColor: '#8B2332', margin: '0 40px', borderRadius: '2px' }
+
+// Hero
+const heroSection = { padding: '32px 40px 8px', textAlign: 'center' as const }
+const h1 = { margin: '0 0 12px', color: '#111827', fontSize: '24px', fontWeight: 700, lineHeight: '1.3' }
+const formacionLabel = { margin: 0, color: '#6B7280', fontSize: '15px' }
+const formacionHighlight = { color: '#8B2332', fontWeight: 700 }
+
+// Content
+const contentSection = { padding: '24px 40px 8px' }
+const paragraph = { margin: '0 0 18px', color: '#374151', fontSize: '16px', lineHeight: '1.7' }
+
+// CTA
+const ctaSection = { textAlign: 'center' as const, margin: '28px 0 32px' }
+const ctaWhatsapp = {
+  backgroundColor: '#25D366',
+  color: '#FFFFFF',
+  padding: '16px 36px',
+  borderRadius: '10px',
+  fontSize: '16px',
+  fontWeight: 700,
+  textDecoration: 'none',
+  display: 'inline-block',
+  boxShadow: '0 4px 12px rgba(37, 211, 102, 0.25)',
+}
+const ctaHint = { margin: '12px 0 0', color: '#6B7280', fontSize: '13px' }
+
+// Dossier reminder
+const dossierBox = {
+  backgroundColor: '#F9FAFB',
+  borderRadius: '12px',
+  border: '1px solid #E5E7EB',
+  padding: '20px 24px',
+  margin: '0 0 20px',
+  textAlign: 'center' as const,
+}
+const dossierTitle = { margin: '0 0 6px', color: '#111827', fontSize: '15px', fontWeight: 700 }
+const dossierText = { margin: 0, color: '#6B7280', fontSize: '14px' }
+const dossierLink = {
+  color: '#8B2332',
+  fontSize: '15px',
+  fontWeight: 700,
+  textDecoration: 'none',
+}
+
+// Callout
+const calloutBox = {
+  backgroundColor: '#FDF2F4',
+  borderLeft: '4px solid #8B2332',
+  borderRadius: '8px',
+  padding: '18px 20px',
+  margin: '0 0 8px',
+}
+const calloutText = { margin: 0, color: '#374151', fontSize: '15px', lineHeight: '1.6' }
+const calloutStrong = { color: '#8B2332' }
+
+// Social
+const socialSection = { padding: '32px 40px 24px', textAlign: 'center' as const }
+const socialTitle = { margin: '0 0 6px', color: '#111827', fontSize: '17px', fontWeight: 700 }
+const socialSubtitle = { margin: '0 0 20px', color: '#6B7280', fontSize: '14px' }
+const socialRow = { width: '100%' }
+const socialCol = { width: '50%', padding: '0 6px', verticalAlign: 'top' as const }
+const socialCard = {
+  display: 'block',
+  backgroundColor: '#F9FAFB',
+  border: '1px solid #E5E7EB',
+  borderRadius: '12px',
+  padding: '20px 12px',
+  textAlign: 'center' as const,
+  textDecoration: 'none',
+  color: '#111827',
+}
+const socialIcon = { margin: '0 0 6px', fontSize: '24px', lineHeight: '1' }
+const socialCardTitle = { margin: '0 0 2px', color: '#111827', fontSize: '15px', fontWeight: 700 }
+const socialCardSubtitle = { margin: 0, color: '#8B2332', fontSize: '13px', fontWeight: 500 }
+
+// Contact
+const contactBox = {
+  backgroundColor: '#F9FAFB',
+  borderRadius: '12px',
+  border: '1px solid #E5E7EB',
+  padding: '18px 24px',
+  margin: '0 40px 24px',
+  textAlign: 'center' as const,
+}
+const contactTitle = { margin: '0 0 10px', color: '#111827', fontSize: '15px', fontWeight: 700 }
+const contactItem = { margin: 0, color: '#374151', fontSize: '14px', lineHeight: '1.6' }
+const link = { color: '#8B2332', textDecoration: 'none', fontWeight: 600 }
+
+// Divider & footer
+const divider = { borderColor: '#E5E7EB', margin: '8px 40px 24px' }
+const footer = { padding: '0 40px 40px', textAlign: 'center' as const }
+const footerTitle = { margin: '0 0 6px', color: '#111827', fontSize: '15px', fontWeight: 600 }
+const footerText = { margin: '0 0 8px', color: '#6B7280', fontSize: '13px' }
+const footerLink = { color: '#8B2332', fontSize: '13px', textDecoration: 'none', fontWeight: 600 }
