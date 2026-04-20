@@ -1,43 +1,105 @@
 
+## Diagnóstico encontrado
 
-## Diagnóstico: Los emails de dossier nunca se envían
+He revisado la configuración, los logs y el flujo de código del envío de emails/dossieres. Ahora mismo hay dos problemas claros:
 
-### Causa raíz
+1. **La infraestructura de email no está activa**
+   - El dominio de envío sigue en estado **Pending**.
+   - Los últimos envíos terminan en `dlq` con el error **“Emails disabled for this project”**.
+   - Esto significa que los correos se encolan, pero **no salen realmente**.
 
-**El dominio de email `notify.academiadetail.com` no está verificado.** La configuración DNS está pendiente, lo que significa que **ningún email** se está enviando realmente — ni dossiers, ni confirmaciones, ni follow-ups, ni notificaciones al admin.
+2. **El código marca correos como “enviados” demasiado pronto**
+   - `send-contact-email` marca `dossier_email_sent = true` antes de que el envío real ocurra.
+   - `send-followup-email` marca `followup_email_sent = true` justo después de encolar.
+   - `src/pages/AdminContacts.tsx` también marca el dossier como enviado tras encolar el email.
+   - Resultado: el panel muestra “enviado” aunque el correo nunca llegó.
 
-Todos los emails se encolan correctamente, pero cuando el procesador de cola intenta enviarlos, recibe un error `403: Email domain is not verified` y acaban en la cola de mensajes fallidos (DLQ). Hay **17 emails fallidos** acumulados desde el 9 de abril, todos con el mismo error.
+Además, he detectado un tercer problema secundario:
+- El sistema de apertura de dossier (`track-email-open`) existe, pero **no está insertado en las plantillas actuales**, así que el tracking visual de aperturas no es fiable.
 
-### ¿Por qué la UI dice "enviado"?
+## Qué haría para corregirlo
 
-El código marca `dossier_email_sent = true` cuando el email se encola exitosamente. La cola funciona bien — el problema es que el **despachador** no puede entregar los emails porque el dominio no está verificado. Así que la UI muestra "enviado" pero el email nunca llega al destinatario.
+### 1. Corregir la infraestructura de email
+Objetivo: asegurar que el proyecto puede enviar correos de verdad.
 
-### Solución (2 partes)
+- Revisar el estado real del dominio configurado para este proyecto.
+- Revalidar la configuración de emails del proyecto y comprobar si el envío está desactivado a nivel de proyecto.
+- Rehabilitar la infraestructura de emails si está desactivada.
+- Verificar que el procesador de cola y la configuración de envío estén operativos.
+- Confirmar con logs recientes que los estados pasan de `pending` a `sent` y dejan de caer en `dlq`.
 
-#### Parte 1: Verificar el dominio de email (acción del usuario)
+### 2. Corregir la lógica de estado “enviado”
+Objetivo: que el admin vea el estado real y no un falso positivo.
 
-Necesitas completar la configuración DNS de `notify.academiadetail.com` en tu proveedor de dominio. Puedes ver el estado y las instrucciones en **Cloud → Emails → Manage Domains**. Una vez verificado, todos los emails empezarán a enviarse automáticamente.
+Archivos a corregir:
+- `supabase/functions/send-contact-email/index.ts`
+- `supabase/functions/send-followup-email/index.ts`
+- `src/pages/AdminContacts.tsx`
 
-#### Parte 2: Mejora de código (para evitar falsos positivos)
+Cambios propuestos:
+- Dejar de usar `dossier_email_sent = true` y `followup_email_sent = true` inmediatamente tras encolar.
+- Introducir una separación clara entre:
+  - **intentado / en cola**
+  - **enviado realmente**
+  - **fallido**
+- Hacer que el panel admin no trate “encolado” como “entregado”.
+- Evitar actualizar por email cuando se pueda identificar el lead exacto por `id`.
 
-Actualmente el sistema marca el dossier como "enviado" en el momento del encolado. Esto es engañoso cuando hay problemas de entrega. Propongo:
+### 3. Hacer consistente el flujo de dossier desde frontend y backend
+Objetivo: unificar el comportamiento de envío.
 
-**Archivo**: `src/pages/AdminContacts.tsx`
+- Revisar que el envío desde formulario y el reenvío desde admin usen la misma lógica y mismo criterio de estado.
+- Ajustar el envío masivo para que no marque el dossier como enviado si el sistema de correo está caído o deshabilitado.
+- Mejorar el mensaje mostrado al admin para distinguir:
+  - “solicitado”
+  - “encolado”
+  - “entregado”
+  - “fallido”
 
-- En `handleBulkSendDossier`: Después de encolar, **no marcar** `dossier_email_sent = true` inmediatamente. En su lugar, marcar un estado intermedio como `dossier_email_sent_at` (timestamp del intento) pero mantener `dossier_email_sent = false` hasta confirmar entrega.
+### 4. Arreglar el tracking de apertura del dossier
+Objetivo: que los indicadores de apertura del panel vuelvan a tener sentido.
 
-Sin embargo, dado que el sistema de colas es asíncrono y no hay callback de confirmación, la mejora más práctica es:
+- Añadir el píxel de tracking a las plantillas que envían el dossier.
+- Conectar correctamente el `tracking_token` con el email que contiene el dossier.
+- Asegurar que el panel admin solo muestre métricas de apertura cuando el tracking esté realmente activo.
 
-- Añadir una **verificación previa** antes de encolar: consultar `email_send_log` para ver si hay emails recientes con status `dlq` y mostrar un **aviso al admin** de que hay problemas de entrega pendientes, en lugar de silenciar el error.
-- Mostrar un banner de alerta en el panel de admin cuando haya emails en estado `dlq` recientes.
+### 5. Verificar el sistema completo end-to-end
+Objetivo: comprobar el flujo real tras la corrección.
 
-### Archivos afectados
+Haré estas comprobaciones:
+- envío desde formulario público
+- notificación al admin
+- envío del dossier al lead
+- reenvío manual desde `/admin/contacts`
+- envío de follow-up automático
+- revisión de `email_send_log` para confirmar `sent` reales
+- comprobación de que ya no aparecen falsos “enviado”
 
-| Archivo | Cambio |
-|---|---|
-| `src/pages/AdminContacts.tsx` | Añadir banner de alerta cuando hay emails fallidos (DLQ) + aviso visual en el envío de dossier |
+## Resultado esperado
 
-### Prioridad inmediata
+Después de aplicar este plan:
+- los emails volverán a salir realmente
+- el admin dejará de ver estados falsos
+- el envío de dossier y follow-up será coherente
+- el tracking de apertura volverá a reflejar algo real
+- podremos identificar si un lead recibió el dossier, si quedó en cola o si falló
 
-Lo más urgente es **verificar el dominio DNS**. Sin eso, ningún cambio de código resolverá el problema de entrega. ¿Quieres que te guíe para verificar el dominio en Cloud → Emails?
+## Detalles técnicos relevantes
 
+- Estado actual del dominio de envío: **Pending**
+- Estado observado en logs recientes: **32 envíos en `dlq`**
+- Error dominante: **Emails disabled for this project**
+- Tabla de supresión: sin bloqueos recientes, así que **no es un problema de suppression**
+- Código que hoy genera falsos positivos:
+  - `supabase/functions/send-contact-email/index.ts`
+  - `supabase/functions/send-followup-email/index.ts`
+  - `src/pages/AdminContacts.tsx`
+
+## Archivos previstos
+
+- `supabase/functions/send-contact-email/index.ts`
+- `supabase/functions/send-followup-email/index.ts`
+- `supabase/functions/_shared/transactional-email-templates/contact-confirmation.tsx`
+- `src/pages/AdminContacts.tsx`
+
+Si al implementar veo que hace falta guardar estados más precisos de entrega, también propondré una pequeña ampliación del modelo de datos para reflejar mejor el estado real del email.
