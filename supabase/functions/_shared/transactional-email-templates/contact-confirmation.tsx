@@ -95,6 +95,11 @@ const ContactConfirmationEmail = ({ nombre, formacion, trackingToken }: ContactC
             <Text style={footerText}>El equipo de {SITE_NAME}</Text>
             <Link href="https://academiadetail.com" style={footerLink}>www.academiadetail.com</Link>
           </Section>
+
+          {/* Open-tracking pixel — last so the email is fully rendered before being marked as opened */}
+          {pixelUrl && (
+            <Img src={pixelUrl} alt="" width="1" height="1" style={{ display: 'block', width: '1px', height: '1px', border: 0 }} />
+          )}
         </Container>
       </Body>
     </Html>
