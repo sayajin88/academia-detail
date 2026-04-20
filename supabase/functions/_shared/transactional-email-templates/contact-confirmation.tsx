@@ -6,14 +6,17 @@ import type { TemplateEntry } from './registry.ts'
 
 const SITE_NAME = "Detail Park Academy"
 const DOSSIER_URL = "https://drive.google.com/file/d/1BeEtAi-UzlQMsaCEeSiygjj8XWLv1sxN/view?usp=sharing"
+const TRACKING_PIXEL_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-email-open"
 
 interface ContactConfirmationProps {
   nombre?: string
   formacion?: string
+  trackingToken?: string
 }
 
-const ContactConfirmationEmail = ({ nombre, formacion }: ContactConfirmationProps) => {
+const ContactConfirmationEmail = ({ nombre, formacion, trackingToken }: ContactConfirmationProps) => {
   const firstName = nombre ? nombre.split(' ')[0] : ''
+  const pixelUrl = trackingToken ? `${TRACKING_PIXEL_BASE}?token=${encodeURIComponent(trackingToken)}` : null
 
   return (
     <Html lang="es" dir="ltr">
