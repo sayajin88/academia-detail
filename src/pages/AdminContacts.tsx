@@ -569,7 +569,7 @@ const AdminContacts = () => {
                     <TableHead className="hidden md:table-cell">Contacto</TableHead>
                     <TableHead>Formación</TableHead>
                      <TableHead className="hidden lg:table-cell">Inversión</TableHead>
-                    <TableHead className="hidden lg:table-cell">Tracking</TableHead>
+                    <TableHead className="hidden md:table-cell min-w-[260px]">Comunicación</TableHead>
                     <TableHead>Fecha</TableHead>
                   </TableRow>
                 </TableHeader>
