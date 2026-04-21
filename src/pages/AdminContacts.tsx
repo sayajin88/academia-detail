@@ -731,47 +731,16 @@ const AdminContacts = () => {
                     </div>
                   </div>
 
-                  {/* Email tracking */}
-                  {selected.dossier_email_sent && (
-                    <div className="grid grid-cols-2 gap-3 bg-blue-50/50 dark:bg-blue-950/10 rounded-xl p-4">
-                      <div>
-                        <p className="text-muted-foreground text-xs mb-0.5 flex items-center gap-1">
-                          <FileText className="h-3 w-3" /> Dossier
-                        </p>
-                        <div className="flex items-center gap-1.5">
-                          {selected.dossier_opened ? (
-                            <>
-                              <Eye className="h-4 w-4 text-blue-500" />
-                              <span className="text-sm font-medium text-blue-600">Abierto</span>
-                            </>
-                          ) : (
-                            <>
-                              <EyeOff className="h-4 w-4 text-muted-foreground" />
-                              <span className="text-sm font-medium text-muted-foreground">No abierto</span>
-                            </>
-                          )}
-                        </div>
-                        {selected.dossier_opened_at && (
-                          <p className="text-xs text-muted-foreground mt-0.5">{formatDate(selected.dossier_opened_at)}</p>
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-muted-foreground text-xs mb-0.5 flex items-center gap-1">
-                          <Send className="h-3 w-3" /> Follow-up
-                        </p>
-                        {selected.followup_email_sent ? (
-                          <>
-                            <span className="text-sm font-medium text-green-600">Enviado ✓</span>
-                            {selected.followup_email_sent_at && (
-                              <p className="text-xs text-muted-foreground mt-0.5">{formatDate(selected.followup_email_sent_at)}</p>
-                            )}
-                          </>
-                        ) : (
-                          <span className="text-sm font-medium text-muted-foreground">Pendiente</span>
-                        )}
-                      </div>
-                    </div>
-                  )}
+                  {/* Communication timeline */}
+                  <CommunicationTimeline
+                    contact={selected}
+                    dossierLog={getEmailStatus("contact-confirmation", selected.email)}
+                    followupLog={getEmailStatus("contact-followup", selected.email)}
+                    formatDate={formatDate}
+                    onVerifyPixel={() => handleVerifyPixel(selected.tracking_token)}
+                    verifyingPixel={verifyingPixel}
+                    pixelCheckResult={pixelCheckResult}
+                  />
 
                   {/* Resend dossier button */}
                   <Button
