@@ -18,8 +18,9 @@ import {
   Search, Mail, Phone, MessageCircle, Users,
   GraduationCap, Wrench, Shield, Paintbrush, Car,
   Clock, CheckCircle2, Save, Trash2, StickyNote, Euro,
-  Eye, EyeOff, Send, FileText, AlertTriangle,
+  Eye, EyeOff, Send, FileText, AlertTriangle, CheckCheck, XCircle, Hourglass, Activity,
 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { toast } from "@/hooks/use-toast";
 
