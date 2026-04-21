@@ -237,6 +237,30 @@ const AdminContacts = () => {
 
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [resendingDossier, setResendingDossier] = useState(false);
+  const [pixelCheckResult, setPixelCheckResult] = useState<{ ok: boolean; msg: string } | null>(null);
+  const [verifyingPixel, setVerifyingPixel] = useState(false);
+
+  const handleVerifyPixel = async (token: string | null) => {
+    if (!token) {
+      setPixelCheckResult({ ok: false, msg: "Este lead no tiene tracking_token (envío antiguo)." });
+      return;
+    }
+    setVerifyingPixel(true);
+    setPixelCheckResult(null);
+    try {
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/track-email-open?token=${encodeURIComponent(token)}&verify=1`;
+      const res = await fetch(url, { method: "GET", cache: "no-store" });
+      if (res.ok && res.headers.get("content-type")?.includes("image/gif")) {
+        setPixelCheckResult({ ok: true, msg: "Pixel responde correctamente (GIF 1×1 servido)." });
+      } else {
+        setPixelCheckResult({ ok: false, msg: `Respuesta inesperada: ${res.status}` });
+      }
+    } catch (err: any) {
+      setPixelCheckResult({ ok: false, msg: `Error de red: ${err.message}` });
+    } finally {
+      setVerifyingPixel(false);
+    }
+  };
 
   const handleResendDossier = async (contact: ContactSubmission) => {
     setResendingDossier(true);
