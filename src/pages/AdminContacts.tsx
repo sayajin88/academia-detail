@@ -626,26 +626,13 @@ const AdminContacts = () => {
                           {formatInversion(c.inversion)}
                         </span>
                       </TableCell>
-                      <TableCell className="hidden lg:table-cell">
-                        <div className="flex items-center gap-1.5">
-                          {c.dossier_email_sent && (
-                            <span title={c.dossier_opened ? `Abierto: ${c.dossier_opened_at ? formatDate(c.dossier_opened_at) : ''}` : 'No abierto'}>
-                              {c.dossier_opened ? (
-                                <Eye className="h-4 w-4 text-blue-500" />
-                              ) : (
-                                <EyeOff className="h-4 w-4 text-muted-foreground" />
-                              )}
-                            </span>
-                          )}
-                          {c.followup_email_sent && (
-                            <span title={`Follow-up enviado: ${c.followup_email_sent_at ? formatDate(c.followup_email_sent_at) : ''}`}>
-                              <Send className="h-4 w-4 text-green-500" />
-                            </span>
-                          )}
-                          {!c.dossier_email_sent && (
-                            <span className="text-xs text-muted-foreground">—</span>
-                          )}
-                        </div>
+                      <TableCell className="hidden md:table-cell">
+                        <CommunicationChips
+                          contact={c}
+                          dossierLog={getEmailStatus("contact-confirmation", c.email)}
+                          followupLog={getEmailStatus("contact-followup", c.email)}
+                          formatDate={formatDate}
+                        />
                       </TableCell>
                       <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(c.created_at)}</TableCell>
                     </TableRow>
