@@ -158,6 +158,46 @@ const AdminContacts = () => {
     refetchInterval: 60000,
   });
 
+  // Cruce con email_send_log para conocer el estado real de entrega de cada email.
+  // Devolvemos un mapa: `${template}__${email_lowercase}` -> { status, created_at, error_message }
+  // Solo el último estado por message_id (deduplicado).
+  const { data: emailLogMap = {} } = useQuery({
+    queryKey: ["admin-contacts-email-log"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("email_send_log")
+        .select("template_name, recipient_email, status, created_at, error_message, message_id")
+        .in("template_name", ["contact-confirmation", "contact-followup"])
+        .order("created_at", { ascending: false })
+        .limit(2000);
+      if (error) return {} as Record<string, { status: string; created_at: string; error_message: string | null }>;
+      // Deduplicación por message_id (nos quedamos con el más reciente — ya está ordenado desc).
+      const seenMsgIds = new Set<string>();
+      const map: Record<string, { status: string; created_at: string; error_message: string | null }> = {};
+      for (const row of data || []) {
+        if (row.message_id) {
+          if (seenMsgIds.has(row.message_id)) continue;
+          seenMsgIds.add(row.message_id);
+        }
+        const key = `${row.template_name}__${row.recipient_email.toLowerCase()}`;
+        // Solo guardamos el primero que vemos por (template, email) → es el más reciente.
+        if (!map[key]) {
+          map[key] = {
+            status: row.status,
+            created_at: row.created_at,
+            error_message: row.error_message,
+          };
+        }
+      }
+      return map;
+    },
+    refetchInterval: 30000,
+  });
+
+  const getEmailStatus = (template: "contact-confirmation" | "contact-followup", email: string) => {
+    return emailLogMap[`${template}__${email.toLowerCase()}`] || null;
+  };
+
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
       const updates: Record<string, any> = { contact_status: status };
