@@ -817,4 +817,238 @@ const AdminContacts = () => {
   );
 };
 
+// ============================================================================
+// Helper components: CommunicationChips (table row) + CommunicationTimeline (modal)
+// ============================================================================
+
+type EmailLogEntry = { status: string; created_at: string; error_message: string | null } | null;
+
+interface CommProps {
+  contact: ContactSubmission;
+  dossierLog: EmailLogEntry;
+  followupLog: EmailLogEntry;
+  formatDate: (d: string) => string;
+}
+
+const computeStatus = (
+  attemptedAt: string | null,
+  log: EmailLogEntry,
+): { kind: "sent" | "failed" | "pending" | "none"; date: string | null; error: string | null } => {
+  if (log) {
+    if (log.status === "sent") return { kind: "sent", date: log.created_at, error: null };
+    if (log.status === "dlq" || log.status === "failed" || log.status === "bounced")
+      return { kind: "failed", date: log.created_at, error: log.error_message };
+    if (log.status === "pending" || log.status === "suppressed")
+      return { kind: "pending", date: log.created_at, error: log.error_message };
+  }
+  if (attemptedAt) return { kind: "pending", date: attemptedAt, error: null };
+  return { kind: "none", date: null, error: null };
+};
+
+const CommunicationChips = ({ contact, dossierLog, followupLog, formatDate }: CommProps) => {
+  const dossier = computeStatus(contact.dossier_email_sent_at, dossierLog);
+  const followup = computeStatus(contact.followup_email_sent_at, followupLog);
+
+  const renderChip = (
+    label: string,
+    icon: React.ReactNode,
+    status: ReturnType<typeof computeStatus>,
+    extra?: React.ReactNode,
+    extraTooltip?: string,
+  ) => {
+    const colorMap: Record<string, string> = {
+      sent: "bg-green-50 text-green-700 border-green-200",
+      failed: "bg-red-50 text-red-700 border-red-200",
+      pending: "bg-amber-50 text-amber-700 border-amber-200",
+      none: "bg-muted/40 text-muted-foreground border-border",
+    };
+    const statusIcon: Record<string, React.ReactNode> = {
+      sent: <CheckCheck className="h-3 w-3" />,
+      failed: <XCircle className="h-3 w-3" />,
+      pending: <Hourglass className="h-3 w-3" />,
+      none: <span className="text-[10px]">—</span>,
+    };
+    const statusText: Record<string, string> = {
+      sent: "Entregado",
+      failed: "Fallo",
+      pending: "En cola",
+      none: "No enviado",
+    };
+    const tooltipText = status.date
+      ? `${statusText[status.kind]} · ${formatDate(status.date)}${status.error ? ` · ${status.error}` : ""}${extraTooltip ? ` · ${extraTooltip}` : ""}`
+      : `No enviado${extraTooltip ? ` · ${extraTooltip}` : ""}`;
+
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[11px] font-medium ${colorMap[status.kind]}`}>
+            {icon}
+            <span className="hidden xl:inline">{label}</span>
+            {statusIcon[status.kind]}
+            {extra}
+          </span>
+        </TooltipTrigger>
+        <TooltipContent side="top">
+          <p className="text-xs max-w-[260px]"><strong>{label}:</strong> {tooltipText}</p>
+        </TooltipContent>
+      </Tooltip>
+    );
+  };
+
+  const openedExtra = contact.dossier_opened ? (
+    <Eye className="h-3 w-3 text-blue-600" />
+  ) : dossier.kind === "sent" ? (
+    <EyeOff className="h-3 w-3 opacity-50" />
+  ) : null;
+
+  const openedTooltip = contact.dossier_opened && contact.dossier_opened_at
+    ? `Abierto ${formatDate(contact.dossier_opened_at)}`
+    : dossier.kind === "sent" ? "Aún no abierto (o cliente bloquea pixel)" : "";
+
+  return (
+    <TooltipProvider delayDuration={150}>
+      <div className="flex flex-wrap items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+        {renderChip("Dossier", <FileText className="h-3 w-3" />, dossier, openedExtra, openedTooltip)}
+        {renderChip("Follow-up", <Send className="h-3 w-3" />, followup)}
+      </div>
+    </TooltipProvider>
+  );
+};
+
+interface TimelineProps extends CommProps {
+  onVerifyPixel: () => void;
+  verifyingPixel: boolean;
+  pixelCheckResult: { ok: boolean; msg: string } | null;
+}
+
+const CommunicationTimeline = ({
+  contact, dossierLog, followupLog, formatDate, onVerifyPixel, verifyingPixel, pixelCheckResult,
+}: TimelineProps) => {
+  const dossier = computeStatus(contact.dossier_email_sent_at, dossierLog);
+  const followup = computeStatus(contact.followup_email_sent_at, followupLog);
+
+  const followupScheduledAt = contact.dossier_email_sent_at && followup.kind === "none"
+    ? new Date(new Date(contact.dossier_email_sent_at).getTime() + 2 * 24 * 60 * 60 * 1000).toISOString()
+    : null;
+
+  const StatusBadge = ({ kind, label }: { kind: string; label: string }) => {
+    const map: Record<string, string> = {
+      sent: "bg-green-100 text-green-700 border-green-300",
+      failed: "bg-red-100 text-red-700 border-red-300",
+      pending: "bg-amber-100 text-amber-700 border-amber-300",
+      none: "bg-muted text-muted-foreground border-border",
+    };
+    return <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded border ${map[kind]}`}>{label}</span>;
+  };
+
+  type Event = {
+    icon: React.ReactNode;
+    iconBg: string;
+    title: string;
+    date: string | null;
+    badge: React.ReactNode;
+    subtitle?: string;
+    muted?: boolean;
+  };
+
+  const events: Event[] = [
+    {
+      icon: <Send className="h-3.5 w-3.5" />,
+      iconBg: dossier.kind === "sent" ? "bg-green-500" : dossier.kind === "failed" ? "bg-red-500" : dossier.kind === "pending" ? "bg-amber-500" : "bg-muted-foreground/40",
+      title: "Dossier enviado",
+      date: dossier.date,
+      badge:
+        dossier.kind === "sent" ? <StatusBadge kind="sent" label="✓ Entregado" /> :
+        dossier.kind === "failed" ? <StatusBadge kind="failed" label="✗ Fallo de entrega" /> :
+        dossier.kind === "pending" ? <StatusBadge kind="pending" label="⏳ En cola" /> :
+        <StatusBadge kind="none" label="No enviado" />,
+      subtitle: dossier.error ?? undefined,
+      muted: dossier.kind === "none",
+    },
+    {
+      icon: contact.dossier_opened ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />,
+      iconBg: contact.dossier_opened ? "bg-blue-500" : "bg-muted-foreground/40",
+      title: contact.dossier_opened ? "Dossier abierto" : "Dossier sin abrir",
+      date: contact.dossier_opened_at,
+      badge: contact.dossier_opened
+        ? <StatusBadge kind="sent" label="👁 Visto" />
+        : <StatusBadge kind="none" label="—" />,
+      subtitle: !contact.dossier_opened ? "El cliente no cargó el pixel (o lo bloquea su cliente de email)" : undefined,
+      muted: !contact.dossier_opened,
+    },
+    {
+      icon: <Send className="h-3.5 w-3.5" />,
+      iconBg: followup.kind === "sent" ? "bg-green-500" : followup.kind === "failed" ? "bg-red-500" : followup.kind === "pending" ? "bg-amber-500" : "bg-muted-foreground/40",
+      title: followup.kind !== "none" ? "Email de seguimiento (auto)" : "Seguimiento programado",
+      date: followup.date ?? followupScheduledAt,
+      badge:
+        followup.kind === "sent" ? <StatusBadge kind="sent" label="✓ Entregado (auto)" /> :
+        followup.kind === "failed" ? <StatusBadge kind="failed" label="✗ Fallo de entrega" /> :
+        followup.kind === "pending" ? <StatusBadge kind="pending" label="⏳ En cola" /> :
+        followupScheduledAt ? <StatusBadge kind="pending" label="📅 Programado" /> :
+        <StatusBadge kind="none" label="—" />,
+      subtitle: followup.error
+        ? followup.error
+        : (followup.kind === "none" && followupScheduledAt)
+          ? "Se enviará automáticamente 2 días tras el dossier"
+          : undefined,
+      muted: followup.kind === "none" && !followupScheduledAt,
+    },
+  ];
+
+  return (
+    <div className="bg-muted/30 rounded-xl p-4 space-y-3">
+      <div className="flex items-center justify-between">
+        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+          <Activity className="h-3.5 w-3.5" /> Historial de comunicación
+        </h4>
+        {contact.tracking_token && (
+          <Button
+            size="sm"
+            variant="ghost"
+            className="h-7 text-[11px] gap-1"
+            onClick={onVerifyPixel}
+            disabled={verifyingPixel}
+          >
+            <Activity className="h-3 w-3" />
+            {verifyingPixel ? "Verificando..." : "Verificar pixel"}
+          </Button>
+        )}
+      </div>
+
+      <ol className="relative space-y-3 pl-6">
+        {events.map((ev, i) => (
+          <li key={i} className="relative">
+            <span className={`absolute -left-[22px] top-0.5 h-5 w-5 rounded-full flex items-center justify-center text-white shadow-sm ${ev.iconBg} ${ev.muted ? "opacity-60" : ""}`}>
+              {ev.icon}
+            </span>
+            {i < events.length - 1 && (
+              <span className="absolute -left-[12px] top-6 bottom-[-12px] w-px bg-border" />
+            )}
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0 flex-1">
+                <p className={`text-sm font-medium ${ev.muted ? "text-muted-foreground" : ""}`}>{ev.title}</p>
+                {ev.date && <p className="text-[11px] text-muted-foreground">{formatDate(ev.date)}</p>}
+                {ev.subtitle && <p className="text-[11px] text-muted-foreground italic mt-0.5">{ev.subtitle}</p>}
+              </div>
+              <div className="shrink-0">{ev.badge}</div>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      {pixelCheckResult && (
+        <div className={`text-[11px] rounded border px-2 py-1.5 ${pixelCheckResult.ok ? "bg-green-50 border-green-200 text-green-700" : "bg-red-50 border-red-200 text-red-700"}`}>
+          {pixelCheckResult.ok ? "✓ " : "✗ "}{pixelCheckResult.msg}
+        </div>
+      )}
+
+      <p className="text-[10px] text-muted-foreground italic leading-snug">
+        Nota: algunos clientes (Outlook con Privacy Protection, Apple Mail) bloquean los píxeles
+        de seguimiento → "no abierto" puede ser un falso negativo.
+      </p>
+    </div>
+  );
+};
+
 export default AdminContacts;
