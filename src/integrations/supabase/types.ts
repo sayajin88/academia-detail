@@ -146,6 +146,7 @@ export type Database = {
           contact_status: string
           contacted_at: string | null
           created_at: string
+          dossier_clicked_at: string | null
           dossier_email_sent: boolean
           dossier_email_sent_at: string | null
           dossier_opened: boolean
@@ -170,6 +171,7 @@ export type Database = {
           contact_status?: string
           contacted_at?: string | null
           created_at?: string
+          dossier_clicked_at?: string | null
           dossier_email_sent?: boolean
           dossier_email_sent_at?: string | null
           dossier_opened?: boolean
@@ -194,6 +196,7 @@ export type Database = {
           contact_status?: string
           contacted_at?: string | null
           created_at?: string
+          dossier_clicked_at?: string | null
           dossier_email_sent?: boolean
           dossier_email_sent_at?: string | null
           dossier_opened?: boolean

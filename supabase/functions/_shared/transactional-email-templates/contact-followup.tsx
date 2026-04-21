@@ -4,7 +4,8 @@ import {
 } from 'npm:@react-email/components@0.0.22'
 import type { TemplateEntry } from './registry.ts'
 
-const DOSSIER_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
+const DOSSIER_URL_RAW = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
+const DOSSIER_TRACKING_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-dossier-click"
 const ACADEMY_LOGO_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/email-assets/academia-detail-logo.png"
 const WEB_URL = "https://detailpark.com"
 const INSTAGRAM_URL = "https://instagram.com/danidetailoficial"
@@ -12,13 +13,17 @@ const INSTAGRAM_URL = "https://instagram.com/danidetailoficial"
 interface ContactFollowupProps {
   nombre?: string
   formacion?: string
+  trackingToken?: string
 }
 
-const ContactFollowupEmail = ({ nombre, formacion }: ContactFollowupProps) => {
+const ContactFollowupEmail = ({ nombre, formacion, trackingToken }: ContactFollowupProps) => {
   const firstName = nombre ? nombre.split(' ')[0] : ''
   const waText = formacion
     ? `Hola%2C%20estoy%20interesado%20en%20el%20programa%20de%20${encodeURIComponent(formacion)}`
     : 'Hola%2C%20estoy%20interesado%20en%20vuestros%20programas'
+  const dossierUrl = trackingToken
+    ? `${DOSSIER_TRACKING_BASE}?token=${encodeURIComponent(trackingToken)}`
+    : DOSSIER_URL_RAW
 
   return (
     <Html lang="es" dir="ltr">
@@ -84,7 +89,7 @@ const ContactFollowupEmail = ({ nombre, formacion }: ContactFollowupProps) => {
                 Aquí lo tienes de nuevo, por si lo necesitas:
               </Text>
               <Section style={{ textAlign: 'center', marginTop: '12px' }}>
-                <Link href={DOSSIER_URL} style={dossierLink}>
+                <Link href={dossierUrl} style={dossierLink}>
                   Ver tipos de formación y precios →
                 </Link>
               </Section>

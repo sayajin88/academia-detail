@@ -34,7 +34,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { data: pendingFollowups, error: queryError } = await supabase
       .from("contact_submissions")
-      .select("id, nombre, email, tipo_formacion")
+      .select("id, nombre, email, tipo_formacion, tracking_token")
       .eq("followup_email_sent", false)
       .not("dossier_email_sent_at", "is", null)
       .lt("created_at", twoDaysAgo)
@@ -68,7 +68,11 @@ const handler = async (req: Request): Promise<Response> => {
             templateName: "contact-followup",
             recipientEmail: submission.email,
             idempotencyKey: `followup-${submission.id}`,
-            templateData: { nombre: submission.nombre, formacion: formLabel },
+            templateData: {
+              nombre: submission.nombre,
+              formacion: formLabel,
+              trackingToken: submission.tracking_token ?? undefined,
+            },
           },
         });
 
