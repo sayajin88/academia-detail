@@ -5,7 +5,8 @@ import {
 import type { TemplateEntry } from './registry.ts'
 
 const SITE_NAME = "Detail Park Academy"
-const DOSSIER_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
+const DOSSIER_URL_RAW = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
+const DOSSIER_TRACKING_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-dossier-click"
 const TRACKING_PIXEL_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-email-open"
 const ACADEMY_LOGO_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/email-assets/academia-detail-logo.png"
 const WEB_URL = "https://detailpark.com"
@@ -20,6 +21,11 @@ interface ContactConfirmationProps {
 const ContactConfirmationEmail = ({ nombre, formacion, trackingToken }: ContactConfirmationProps) => {
   const firstName = nombre ? nombre.split(' ')[0] : ''
   const pixelUrl = trackingToken ? `${TRACKING_PIXEL_BASE}?token=${encodeURIComponent(trackingToken)}` : null
+  // Si hay tracking token usamos la edge function que registra el clic y redirige (302) al PDF.
+  // Si no, fallback al PDF directo.
+  const dossierUrl = trackingToken
+    ? `${DOSSIER_TRACKING_BASE}?token=${encodeURIComponent(trackingToken)}`
+    : DOSSIER_URL_RAW
 
   return (
     <Html lang="es" dir="ltr">
