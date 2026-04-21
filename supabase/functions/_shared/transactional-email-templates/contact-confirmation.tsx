@@ -77,7 +77,7 @@ const ContactConfirmationEmail = ({ nombre, formacion, trackingToken }: ContactC
 
             {/* CTA principal */}
             <Section style={ctaSection}>
-              <Button href={DOSSIER_URL} style={ctaButton}>
+              <Button href={dossierUrl} style={ctaButton}>
                 Ver tipos de formación y precios
               </Button>
               <Text style={ctaHint}>📥 Acceso inmediato — sin registro</Text>
