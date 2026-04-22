@@ -158,6 +158,24 @@ const AdminContacts = () => {
     refetchInterval: 60000,
   });
 
+  // Detecta si Lovable Emails está desactivado: busca errores recientes
+  // con texto "emails disabled" en email_send_log durante las últimas 24h.
+  // Si aparece, mostramos un banner crítico para que el admin reactive el servicio.
+  const { data: emailsDisabledCount = 0 } = useQuery({
+    queryKey: ["emails-disabled-recent"],
+    queryFn: async () => {
+      const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+      const { count, error } = await supabase
+        .from("email_send_log")
+        .select("*", { count: "exact", head: true })
+        .ilike("error_message", "%emails disabled%")
+        .gte("created_at", oneDayAgo);
+      if (error) return 0;
+      return count ?? 0;
+    },
+    refetchInterval: 60000,
+  });
+
   // Cruce con email_send_log para conocer el estado real de entrega de cada email.
   // Devolvemos un mapa: `${template}__${email_lowercase}` -> { status, created_at, error_message }
   // Solo el último estado por message_id (deduplicado).
@@ -408,6 +426,19 @@ const AdminContacts = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
+        {/* Lovable Emails disabled banner — bloqueante */}
+        {emailsDisabledCount > 0 && (
+          <Alert variant="destructive" className="border-destructive/50 bg-destructive/10">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Lovable Emails está desactivado</AlertTitle>
+            <AlertDescription>
+              Se han detectado <strong>{emailsDisabledCount}</strong> intento{emailsDisabledCount > 1 ? "s" : ""} de envío rechazado{emailsDisabledCount > 1 ? "s" : ""} en las últimas 24h con el error <em>"emails disabled"</em>.
+              Los envíos automáticos (dossiers y seguimientos) están fallando.
+              Reactiva el servicio en <strong>Cloud → Emails</strong> y los reintentos se enviarán solos en el siguiente ciclo.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* DLQ Alert Banner */}
         {dlqCount > 0 && (
           <Alert variant="destructive" className="border-red-300 bg-red-50">
