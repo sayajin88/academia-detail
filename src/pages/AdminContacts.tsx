@@ -158,6 +158,24 @@ const AdminContacts = () => {
     refetchInterval: 60000,
   });
 
+  // Detecta si Lovable Emails está desactivado: busca errores recientes
+  // con texto "emails disabled" en email_send_log durante las últimas 24h.
+  // Si aparece, mostramos un banner crítico para que el admin reactive el servicio.
+  const { data: emailsDisabledCount = 0 } = useQuery({
+    queryKey: ["emails-disabled-recent"],
+    queryFn: async () => {
+      const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+      const { count, error } = await supabase
+        .from("email_send_log")
+        .select("*", { count: "exact", head: true })
+        .ilike("error_message", "%emails disabled%")
+        .gte("created_at", oneDayAgo);
+      if (error) return 0;
+      return count ?? 0;
+    },
+    refetchInterval: 60000,
+  });
+
   // Cruce con email_send_log para conocer el estado real de entrega de cada email.
   // Devolvemos un mapa: `${template}__${email_lowercase}` -> { status, created_at, error_message }
   // Solo el último estado por message_id (deduplicado).
