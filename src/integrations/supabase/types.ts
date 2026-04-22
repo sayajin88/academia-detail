@@ -153,6 +153,7 @@ export type Database = {
           dossier_opened_at: string | null
           email: string
           experiencia: string
+          followup_attempts: number
           followup_email_sent: boolean
           followup_email_sent_at: string | null
           id: string
@@ -178,6 +179,7 @@ export type Database = {
           dossier_opened_at?: string | null
           email: string
           experiencia: string
+          followup_attempts?: number
           followup_email_sent?: boolean
           followup_email_sent_at?: string | null
           id?: string
@@ -203,6 +205,7 @@ export type Database = {
           dossier_opened_at?: string | null
           email?: string
           experiencia?: string
+          followup_attempts?: number
           followup_email_sent?: boolean
           followup_email_sent_at?: string | null
           id?: string
