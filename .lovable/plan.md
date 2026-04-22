@@ -1,76 +1,62 @@
 
 
-## Mejoras al dashboard `/admin/contacts` y verificación de tracking
+## Diagnóstico del error en el email de seguimiento
 
-### Objetivo
-Mostrar de forma clara y siempre visible cuándo se envió el email de seguimiento (followup automático a 2 días), su estado real de entrega, y el estado de apertura del dossier — todo cruzado con `email_send_log` para reflejar la realidad, no solo los flags de la tabla.
+### Causa raíz
+Los 8 fallos en `email_send_log` con `status='dlq'` muestran exactamente el mismo error:
+
+> **"Emails disabled for this project"**
+
+Todos ocurrieron entre el **10 y el 16 de abril**. A partir del **20 de abril**, los envíos vuelven a funcionar correctamente (`status='sent'`). Esto significa que **Lovable Emails estuvo desactivado** durante esa ventana — alguien lo apagó (o se desactivó tras una actualización), y la cron job de `send-followup-email` siguió encolando emails que el dispatcher rechazaba.
+
+El dominio `notify.academiadetail.com` está **verificado y activo** ahora mismo, por eso los envíos posteriores funcionan.
+
+### Problemas detectados
+
+1. **8 leads quedaron sin recibir el email de seguimiento** (todos los del bloque 10–16 abr). En el modal de detalle de `/admin/contacts` aparecen como "Fallo de entrega" pero no se hizo nada para reintentarlos.
+2. **`followup_email_sent_at` se marcó igualmente** en esos leads, así que la cron job nunca volverá a reintentarlos automáticamente — están bloqueados en estado fallido permanente.
+3. **No hay alerta visible** cuando Lovable Emails se desactiva: la cron sigue ejecutándose, los timestamps se marcan, y solo se ve el problema mirando logs manualmente.
 
 ---
 
-### 1. Nueva columna "Comunicación" en la tabla (sustituye a "Tracking")
+## Solución propuesta
 
-Mostrar tres "chips" en cada fila, siempre visibles (no condicionados a `dossier_email_sent`):
+### 1. Reintentar los 8 leads fallidos (one-shot)
+Resetear `followup_email_sent_at = NULL` en `contact_submissions` para los emails del listado fallido (verificando que el email actual de Lovable está activo). En el siguiente ciclo de la cron job (`send-followup-email` corre cada día a las 08:00), se reenviarán automáticamente.
 
-```text
-[Dossier ✓ 18 abr · Abierto 19 abr] [Followup ✓ 20 abr] 
-```
+Leads afectados: `dlopez@escaladetail.com`, `test@viabill.com`, `jdaniellv@hotmail.com`, `pedrocarbila23@gmail.com`, `estefanrodriguez91989@gmail.com`, `gjc@nordvikrentals.com`, `camperwashcarivr@gmail.com`, `mohaaa09@icloud.com`.
 
-- **Dossier**: estado de envío (sent / pending / failed) + fecha · estado de apertura + fecha si aplica.
-- **Followup**: estado de envío (sent / pending / failed / no enviado) + fecha de envío automático.
-- Cada chip es un tooltip con la fecha completa (ej. "Enviado el 20 abr 2026, 09:18").
-- Iconografía: `Send` enviado, `Eye/EyeOff` abierto/no abierto, `AlertTriangle` falló, `Clock` pendiente.
+### 2. Hacer la cron robusta ante fallos futuros (`send-followup-email/index.ts`)
 
-### 2. Modal de detalle — bloque "Historial de comunicación" rediseñado
+Modifico la lógica para que **NO marque `followup_email_sent_at`** si la invocación a `send-transactional-email` devuelve error o si la respuesta indica `emails_disabled`. Cambios concretos:
 
-Sustituyo el grid actual por una **timeline vertical** que siempre se muestra, con tres eventos:
+- Capturar la respuesta de `supabase.functions.invoke()` y comprobar `error` y el body.
+- Si hay error → **no actualizar el timestamp**, log explícito "follow-up failed for X, will retry next cycle", continuar con el siguiente lead.
+- Si éxito → actualizar `followup_email_sent_at` como hasta ahora.
+- Añadir un **límite de reintentos** mediante un nuevo campo `followup_attempts` (integer, default 0) que se incrementa en cada intento fallido — al llegar a 5 se marca como definitivamente fallido para no martillear el sistema.
 
-```text
-●  Dossier enviado          20 abr 2026 · 09:18    ✓ Entregado
-│
-●  Dossier abierto          20 abr 2026 · 09:54    👁 visto
-│
-●  Email de seguimiento     22 abr 2026 · 08:00    ✓ Entregado (auto)
-```
+### 3. Indicador visible en el dashboard cuando Lovable Emails está caído
 
-- Cada evento muestra: icono de estado, etiqueta, fecha/hora exacta, badge de estado real (entregado / fallido / pendiente / no enviado).
-- Si el followup no se ha enviado: línea gris con texto "Programado automáticamente para el [fecha+2días]".
-- Si está fallido en `email_send_log` → badge rojo "Fallo de entrega" con tooltip del error.
+En la cabecera de `/admin/contacts`, añadir un **banner rojo** que aparece sólo si en las últimas 24h hay ≥1 entrada en `email_send_log` con `error_message ILIKE '%emails disabled%'`. Mensaje:
 
-### 3. Cruce con `email_send_log` (fuente de verdad real)
+> ⚠️ Lovable Emails está desactivado. Los envíos automáticos están fallando. Reactívalo en Cloud → Emails.
 
-Añadir una segunda query React Query que trae los últimos estados (deduplicados por `message_id`) de `email_send_log` filtrados por `template_name IN ('contact-confirmation', 'contact-followup')` y por `recipient_email IN (emails de los leads visibles)`.
+Así el problema se ve a simple vista en el dashboard, no hay que ir a buscar logs.
 
-Los chips de la tabla y la timeline del modal usan esta fuente para el badge "entregado / fallido / pendiente". Los flags y timestamps de `contact_submissions` se usan solo para "intento de envío" y para apertura.
-
-### 4. Verificación del tracking de apertura (`track-email-open`)
-
-La revisión muestra que el sistema **funciona correctamente**:
-- El píxel 1×1 GIF se inserta en la plantilla `contact-confirmation.tsx` con la URL `https://…/functions/v1/track-email-open?token=<uuid>`.
-- La edge function actualiza `dossier_opened=true` y `dossier_opened_at` cuando el cliente carga el píxel.
-- Datos reales en BD: varios leads tienen `dossier_opened=true` con timestamp (ej. `vvmaximuss@gmail.com` abierto el 20 abr 09:04).
-
-No hay cambios necesarios en `track-email-open`, pero añadiré:
-- **Botón "Verificar pixel"** en el modal de detalle (admin-only): hace `fetch` a la URL del píxel con el token del lead y muestra "✓ Pixel responde correctamente" / error.
-- Comentario en la plantilla aclarando que algunos clientes (Outlook, Apple Mail con Privacy Protection) bloquean píxeles → puede haber falsos negativos en "no abierto".
-
-### 5. Verificación del tracking del dossier
-
-El dossier es un PDF público en Supabase Storage al que se accede vía `<Button href="…/dossiers/programa-formativo-academia-detail.pdf">`. Actualmente **no hay tracking de clic** sobre el botón — solo de apertura del email.
-
-Propongo (opcional, lo incluyo si me lo confirmas): redirigir el botón a una nueva edge function `track-dossier-click?token=<uuid>` que:
-1. Marca un nuevo campo `dossier_clicked_at` en `contact_submissions` (requiere migración: 1 columna `timestamptz`).
-2. Hace `302 redirect` al PDF real en Storage.
-
-Así sabremos **abierto el email vs. clic real al PDF**, dos métricas distintas. Sin esto, "abierto" solo significa "el cliente cargó imágenes", no "vio el dossier".
+### 4. Re-deploy
+Tras los cambios en `send-followup-email/index.ts`, redesplegar la edge function.
 
 ---
 
 ### Archivos afectados
 
-- `src/pages/AdminContacts.tsx` — nueva columna, nueva query a `email_send_log`, timeline en modal, botón de verificación.
-- *(opcional, si apruebas tracking de clic)* nueva migración + nueva edge function `track-dossier-click` + actualizar `DOSSIER_URL` en `contact-confirmation.tsx` y `contact-followup.tsx` + `supabase/config.toml` con `verify_jwt = false`.
+- **Migración SQL**: añadir columna `followup_attempts integer NOT NULL DEFAULT 0` a `contact_submissions` + reset de `followup_email_sent_at = NULL` para los 8 leads fallidos.
+- **`supabase/functions/send-followup-email/index.ts`**: lógica de detección de fallos, no marcar timestamp si falla, incrementar contador de intentos, frenar tras 5 intentos.
+- **`src/pages/AdminContacts.tsx`**: nuevo banner de aviso cuando Lovable Emails parece estar desactivado (query a `email_send_log` por error_message reciente).
+- **Re-deploy**: `send-followup-email`.
 
-### Decisión que necesito de ti
-
-¿Añado también el **tracking de clic en el botón del dossier** (punto 5) o dejo solo el píxel de apertura del email que ya funciona?
+### Lo que NO hago
+- No toco `track-email-open` ni `track-dossier-click` (funcionan bien).
+- No toco las plantillas de email (el problema no era de contenido, era de infraestructura).
+- No reactivo Lovable Emails desde aquí (ya está activo según `check_email_domain_status`).
 
