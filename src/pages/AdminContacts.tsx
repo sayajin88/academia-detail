@@ -426,6 +426,19 @@ const AdminContacts = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
+        {/* Lovable Emails disabled banner — bloqueante */}
+        {emailsDisabledCount > 0 && (
+          <Alert variant="destructive" className="border-destructive/50 bg-destructive/10">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Lovable Emails está desactivado</AlertTitle>
+            <AlertDescription>
+              Se han detectado <strong>{emailsDisabledCount}</strong> intento{emailsDisabledCount > 1 ? "s" : ""} de envío rechazado{emailsDisabledCount > 1 ? "s" : ""} en las últimas 24h con el error <em>"emails disabled"</em>.
+              Los envíos automáticos (dossiers y seguimientos) están fallando.
+              Reactiva el servicio en <strong>Cloud → Emails</strong> y los reintentos se enviarán solos en el siguiente ciclo.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* DLQ Alert Banner */}
         {dlqCount > 0 && (
           <Alert variant="destructive" className="border-red-300 bg-red-50">
