@@ -16,6 +16,8 @@ const formacionLabels: Record<string, string> = {
   general: "Información General",
 };
 
+const MAX_FOLLOWUP_ATTEMPTS = 5;
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -28,16 +30,16 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     // Find submissions from 2+ days ago that haven't received follow-up.
-    // Use `dossier_email_sent_at` (intento de envío) en lugar de `dossier_email_sent`,
-    // que ahora solo se marca true cuando hay confirmación real de entrega.
+    // Limit retries to MAX_FOLLOWUP_ATTEMPTS to avoid hammering on permanent failures.
     const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString();
 
     const { data: pendingFollowups, error: queryError } = await supabase
       .from("contact_submissions")
-      .select("id, nombre, email, tipo_formacion, tracking_token")
+      .select("id, nombre, email, tipo_formacion, tracking_token, followup_attempts")
       .eq("followup_email_sent", false)
       .not("dossier_email_sent_at", "is", null)
       .lt("created_at", twoDaysAgo)
+      .lt("followup_attempts", MAX_FOLLOWUP_ATTEMPTS)
       .limit(50);
 
     if (queryError) {
@@ -58,47 +60,90 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Found ${pendingFollowups.length} pending follow-ups to send`);
     let sentCount = 0;
+    let failedCount = 0;
 
     for (const submission of pendingFollowups) {
+      const currentAttempts = submission.followup_attempts ?? 0;
+      const nextAttempts = currentAttempts + 1;
+
       try {
         const formLabel = formacionLabels[submission.tipo_formacion] || submission.tipo_formacion;
 
-        await supabase.functions.invoke("send-transactional-email", {
-          body: {
-            templateName: "contact-followup",
-            recipientEmail: submission.email,
-            idempotencyKey: `followup-${submission.id}`,
-            templateData: {
-              nombre: submission.nombre,
-              formacion: formLabel,
-              trackingToken: submission.tracking_token ?? undefined,
+        const { data: invokeData, error: invokeError } = await supabase.functions.invoke(
+          "send-transactional-email",
+          {
+            body: {
+              templateName: "contact-followup",
+              recipientEmail: submission.email,
+              idempotencyKey: `followup-${submission.id}`,
+              templateData: {
+                nombre: submission.nombre,
+                formacion: formLabel,
+                trackingToken: submission.tracking_token ?? undefined,
+              },
             },
-          },
-        });
+          }
+        );
 
-        // Solo guardamos el timestamp del intento. `followup_email_sent = true`
-        // se marcará cuando el email_send_log confirme entrega (status = 'sent').
-        // Así evitamos reenviar al mismo lead repetidamente si el envío falla
-        // pero sin marcar como entregado prematuramente.
+        // Detect failures: invocation error, or response indicates emails disabled / suppressed.
+        // `success: true, queued: true` is the success contract from send-transactional-email.
+        const responseFailed =
+          invokeData &&
+          typeof invokeData === "object" &&
+          (invokeData.error ||
+            (invokeData.success === false && invokeData.reason !== "email_suppressed"));
+
+        if (invokeError || responseFailed) {
+          failedCount++;
+          console.error(
+            `Follow-up FAILED for ${submission.email} (attempt ${nextAttempts}/${MAX_FOLLOWUP_ATTEMPTS})`,
+            { invokeError, invokeData }
+          );
+
+          // Increment attempts but DO NOT set followup_email_sent_at — will retry next cycle.
+          await supabase
+            .from("contact_submissions")
+            .update({ followup_attempts: nextAttempts })
+            .eq("id", submission.id);
+
+          await new Promise((r) => setTimeout(r, 300));
+          continue;
+        }
+
+        // Success path — record attempt timestamp.
+        // followup_email_sent = true se marca cuando el dispatcher confirma entrega
+        // (status = 'sent' en email_send_log).
         await supabase
           .from("contact_submissions")
           .update({
             followup_email_sent_at: new Date().toISOString(),
+            followup_attempts: nextAttempts,
           })
           .eq("id", submission.id);
 
         sentCount++;
-        console.log(`Follow-up enqueued for ${submission.email}`);
+        console.log(`Follow-up enqueued for ${submission.email} (attempt ${nextAttempts})`);
 
-        // Small delay between sends
         await new Promise((r) => setTimeout(r, 300));
       } catch (err) {
+        failedCount++;
         console.error(`Exception sending follow-up to ${submission.email}:`, err);
+
+        // Still increment attempts so we don't loop forever on a poison message.
+        await supabase
+          .from("contact_submissions")
+          .update({ followup_attempts: nextAttempts })
+          .eq("id", submission.id);
       }
     }
 
     return new Response(
-      JSON.stringify({ success: true, sent: sentCount, total: pendingFollowups.length }),
+      JSON.stringify({
+        success: true,
+        sent: sentCount,
+        failed: failedCount,
+        total: pendingFollowups.length,
+      }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   } catch (error: any) {
