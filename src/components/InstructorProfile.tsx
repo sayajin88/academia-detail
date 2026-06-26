@@ -21,7 +21,7 @@ const instructorSchema = {
   ],
   "worksFor": {
     "@type": "EducationalOrganization",
-    "name": "Academia Detailing - Detail Park",
+    "name": "Detail Park - Academia Detail - Detail Park",
     "url": "https://academiadetail.com"
   },
   "knowsAbout": [
