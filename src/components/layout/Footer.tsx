@@ -52,7 +52,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-2">
-              <img src={logo} alt="Academia Detail - Escuela de detailing profesional" className="h-10 w-auto" width={200} height={40} />
+              <img src={logo} alt="Detail Park - Academia Detail · Escuela de detailing profesional" className="h-10 w-auto" width={200} height={40} />
             </Link>
             <a 
               href="https://www.detailpark.com" 
