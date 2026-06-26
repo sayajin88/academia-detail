@@ -75,7 +75,8 @@ const generateAutoBreadcrumbs = (url: string, title: string) => {
 };
 
 // Constantes centralizadas para ratings (actualizar aquí al cambiar)
-export const BUSINESS_RATING_VALUE = "4.8";
+// Fuente: Google Business Profile real de Detail Park (verificable)
+export const BUSINESS_RATING_VALUE = "4.9";
 export const BUSINESS_REVIEW_COUNT = "218";
 
 // Google Maps Place URL canónica (usar Place ID real cuando esté disponible)
