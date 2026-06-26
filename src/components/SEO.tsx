@@ -255,7 +255,7 @@ export const websiteSchema = {
   "@type": "WebSite",
   "@id": "https://academiadetail.com/#website",
   "url": "https://academiadetail.com",
-  "name": "Academia Detail",
+  "name": "Detail Park - Academia Detail",
   "inLanguage": "es",
   "publisher": {
     "@id": "https://academiadetail.com/#organization"
@@ -407,7 +407,7 @@ export const courseDetailingSchema = {
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
-    "name": "Academia Detail",
+    "name": "Detail Park - Academia Detail",
     "url": "https://academiadetail.com"
   },
   "offers": {
@@ -469,7 +469,7 @@ export const courseWrappingSchema = {
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
-    "name": "Academia Detail",
+    "name": "Detail Park - Academia Detail",
     "url": "https://academiadetail.com"
   },
   "offers": {
@@ -530,7 +530,7 @@ export const coursePPFSchema = {
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
-    "name": "Academia Detail",
+    "name": "Detail Park - Academia Detail",
     "url": "https://academiadetail.com"
   },
   "offers": {
@@ -593,7 +593,7 @@ export const courseRestauracionSchema = {
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
-    "name": "Academia Detail",
+    "name": "Detail Park - Academia Detail",
     "url": "https://academiadetail.com"
   },
   "offers": {
@@ -642,7 +642,7 @@ export const courseFormacionProfesionalSchema = {
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
-    "name": "Academia Detail",
+    "name": "Detail Park - Academia Detail",
     "url": "https://academiadetail.com"
   },
   "offers": {
@@ -703,7 +703,7 @@ export const courseJornadaZeroSchema = {
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
-    "name": "Academia Detail",
+    "name": "Detail Park - Academia Detail",
     "url": "https://academiadetail.com"
   },
   "offers": {
