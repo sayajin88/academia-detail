@@ -1,4 +1,4 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const BASE_URL = "https://academiadetail.com";
 
@@ -6,55 +6,72 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Content-Type": "application/xml; charset=utf-8",
+  // Cache 1h on edge, allow stale-while-revalidate for 1 day
+  "Cache-Control": "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
 };
 
-const blogArticles = [
-  { slug: "como-montar-negocio-detailing-rentable", lastmod: "2026-01-15" },
-  { slug: "guia-completa-pulido-coches-profesional", lastmod: "2026-01-08" },
-  { slug: "ppf-vs-ceramico-proteccion-vehiculo", lastmod: "2025-12-20" },
-  { slug: "car-wrapping-todo-necesitas-saber", lastmod: "2025-12-10" },
-  { slug: "5-errores-detailers-principiantes", lastmod: "2025-11-28" },
-  { slug: "cuanto-gana-detailer-profesional-espana", lastmod: "2025-11-15" },
-  { slug: "como-ser-detailer-profesional-guia-formacion", lastmod: "2026-02-05" },
-  { slug: "que-es-ppf-paint-protection-film", lastmod: "2026-02-03" },
-  { slug: "tecnicas-pulido-principiante-experto", lastmod: "2026-02-01" },
-  { slug: "car-wrapping-vs-pintura-mejor-opcion", lastmod: "2026-01-30" },
-  { slug: "como-montar-centro-detailing-inversion", lastmod: "2026-01-28" },
-  { slug: "limpieza-restauracion-cuero-alcantara", lastmod: "2026-01-25" },
-  { slug: "tratamiento-ceramico-ceramic-coating-guia", lastmod: "2026-01-22" },
-  { slug: "errores-detailer-principiante-como-evitarlos", lastmod: "2026-01-20" },
-  { slug: "kit-esencial-detailing-herramientas", lastmod: "2026-01-18" },
-  { slug: "salida-laboral-car-wrapping-sueldo", lastmod: "2026-01-15" },
-  { slug: "plan-negocio-centro-detailing-2026", lastmod: "2026-02-07" },
-  { slug: "detailing-movil-vs-taller-fisico", lastmod: "2026-02-06" },
-  { slug: "cuanto-cuesta-montar-taller-detailing", lastmod: "2026-02-05" },
-  { slug: "como-calcular-tarifas-detailing", lastmod: "2026-02-04" },
-  { slug: "marketing-clientes-vip-detailing", lastmod: "2026-02-03" },
-  { slug: "lavadero-ecologico-detailing-sin-agua", lastmod: "2026-02-02" },
-  { slug: "ppf-servicio-mas-rentable-2026", lastmod: "2026-02-01" },
-  { slug: "licencias-permisos-taller-estetica-automotriz", lastmod: "2026-01-31" },
-  { slug: "como-montar-estudio-car-wrapping", lastmod: "2026-01-30" },
-  { slug: "software-gestion-taller-detailing", lastmod: "2026-01-29" },
-];
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-serve(async (req) => {
+function escapeXml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function toDate(value: string | null | undefined): string {
+  if (!value) return new Date().toISOString().split("T")[0];
+  // Accept both ISO timestamps and YYYY-MM-DD
+  return new Date(value).toISOString().split("T")[0];
+}
+
+Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
-  const today = new Date().toISOString().split("T")[0];
+  const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
+    auth: { persistSession: false },
+  });
+
+  const { data, error } = await supabase
+    .from("blog_posts")
+    .select("slug, updated_at, published_at")
+    .eq("status", "published")
+    .order("updated_at", { ascending: false });
+
+  if (error) {
+    console.error("[blog-sitemap] DB error:", error);
+    return new Response(
+      `<?xml version="1.0" encoding="UTF-8"?>\n<error>${escapeXml(error.message)}</error>`,
+      { status: 500, headers: corsHeaders },
+    );
+  }
+
+  const posts = data ?? [];
+
+  // Index lastmod = most recent post update (fallback to today)
+  const indexLastmod =
+    posts.length > 0
+      ? toDate(posts[0].updated_at ?? posts[0].published_at)
+      : new Date().toISOString().split("T")[0];
 
   let urls = `  <url>
     <loc>${BASE_URL}/blog</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${indexLastmod}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>\n`;
 
-  for (const article of blogArticles) {
+  for (const post of posts) {
+    if (!post.slug) continue;
+    const lastmod = toDate(post.updated_at ?? post.published_at);
     urls += `  <url>
-    <loc>${BASE_URL}/blog/${article.slug}</loc>
-    <lastmod>${article.lastmod}</lastmod>
+    <loc>${BASE_URL}/blog/${escapeXml(post.slug)}</loc>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>\n`;
@@ -64,5 +81,6 @@ serve(async (req) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls}</urlset>`;
 
+  console.log(`[blog-sitemap] Served ${posts.length} posts`);
   return new Response(xml, { headers: corsHeaders });
 });
