@@ -54,7 +54,7 @@ export const galleryImages: GalleryImage[] = [
   { 
     id: '2', 
     src: portfolioLamborghiniHuracan, 
-    alt: 'Pulido profesional Lamborghini Huracán - Coating cerámico de alta gama Academia Detailing', 
+    alt: 'Pulido profesional Lamborghini Huracán - Coating cerámico de alta gama Detail Park - Academia Detail', 
     category: 'detailing', 
     title: 'Lamborghini Huracán', 
     description: 'Pulido completo y coating cerámico' 
@@ -104,7 +104,7 @@ export const galleryImages: GalleryImage[] = [
   { 
     id: '8', 
     src: portfolioAudiR8Yellow, 
-    alt: 'Vinilado Audi R8 amarillo brillante - Curso car wrapping profesional Academia Detailing', 
+    alt: 'Vinilado Audi R8 amarillo brillante - Curso car wrapping profesional Detail Park - Academia Detail', 
     category: 'wrapping', 
     title: 'Audi R8', 
     description: 'Vinilo amarillo brillante completo' 
@@ -220,7 +220,7 @@ export const galleryImages: GalleryImage[] = [
   { 
     id: '22', 
     src: portfolioAlfaRomeo, 
-    alt: 'Restauración pintura clásica Alfa Romeo Giulia - Curso restauración vehículos Academia Detailing', 
+    alt: 'Restauración pintura clásica Alfa Romeo Giulia - Curso restauración vehículos Detail Park - Academia Detail', 
     category: 'restauracion', 
     title: 'Alfa Romeo Giulia', 
     description: 'Restauración de pintura clásica' 
