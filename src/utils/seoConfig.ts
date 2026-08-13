@@ -637,9 +637,9 @@ export const generateHomeSEO = (
   ];
 
   return {
-    title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
+    title: "Cursos de Detailing en Alicante | Detail Park",
     description:
-      "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
+      "Academia de detailing en Alicante. Cursos 100% prácticos de detailing, wrapping, PPF y restauración en taller real. +218 alumnos certificados.",
     // ── KEYWORDS HOME ENRIQUECIDAS ──────────────────────────────────────────
     keywords: `curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso pulido coche certificado, curso tratamiento cerámico, curso coating cerámico coches, aprender aplicar cerámico coche, curso limpiar coches profesional, curso lavado profesional coches, escuela de detailing, academia detailing, academia detailing alicante, curso detailing alicante, curso ppf alicante, curso wrapping alicante, curso detailing comunidad valenciana, cómo montar negocio detailing, cómo montar centro detailing, abrir taller detailing, montar negocio detailing España, negocio detailing rentable, emprender detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso wrapping básico, curso wrapping avanzado, curso vinilado profesional, curso ppf paint protection film, curso pulido carrocería, curso tapizado asientos coches, curso restauración tapicería cuero, qué es el detailing profesional, cuánto cobra un detailer profesional, diferencia detailing lavado normal, salidas laborales detailing, herramientas detailing profesional, ppf vs ceramic coating, precio instalar ppf coche, ${categoryKeywords}`,
     url: "/",
@@ -670,9 +670,9 @@ export const generateHomeSEO = (
 export const seoConfig = {
   // Legacy static fallback - prefer generateHomeSEO()
   home: {
-    title: "Cursos Detailing Profesional en Alicante 2026 | ★4.9 | Academia Detail",
+    title: "Cursos de Detailing en Alicante | Detail Park",
     description:
-      "Academia de detailing líder en Alicante. Cursos 100% prácticos de detailing, car wrapping, PPF y restauración en taller real. +218 alumnos certificados. Plazas limitadas.",
+      "Academia de detailing en Alicante. Cursos 100% prácticos de detailing, wrapping, PPF y restauración en taller real. +218 alumnos certificados.",
     // ── KEYWORDS HOME ENRIQUECIDAS ──────────────────────────────────────────
     keywords:
       "curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso pulido coche certificado, curso tratamiento cerámico, curso coating cerámico coches, aprender aplicar cerámico coche, curso limpiar coches profesional, curso lavado profesional coches, escuela de detailing, academia detailing, academia detailing alicante, curso detailing alicante, curso ppf alicante, curso wrapping alicante, curso detailing comunidad valenciana, cómo montar negocio detailing, cómo montar centro detailing, abrir taller detailing, montar negocio detailing España, negocio detailing rentable, emprender detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso detailing online vs presencial, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso wrapping básico, curso wrapping avanzado, curso vinilado profesional, curso ppf paint protection film, curso pulido carrocería, curso tapizado asientos coches, curso restauración tapicería cuero, qué es el detailing profesional, cuánto cobra un detailer profesional, diferencia detailing lavado normal, salidas laborales detailing, herramientas detailing profesional, ppf vs ceramic coating, precio instalar ppf coche",
@@ -920,9 +920,9 @@ export const seoConfig = {
   },
 
   aboutUs: {
-    title: "Quiénes Somos | Academia Detail | Taller Real desde 2017 | ★4.9",
+    title: "Quiénes Somos | Detail Park - Academia Detail",
     description:
-      "✅ Conoce la historia de Academia Detail. Fundada en 2017, somos el único centro de formación en detailing que vive del taller, no de la formación. ⭐ +7 años de experiencia real.",
+      "Conoce la historia de Detail Park - Academia Detail. Fundada en 2017, el centro de formación en detailing que vive del taller, no de la formación.",
     keywords:
       "quienes somos academia detailing, historia detail park, centro formacion detailing españa, escuela detailing alicante, curso detailing profesional taller real, videos detailing profesional",
     url: "/quienes-somos",
