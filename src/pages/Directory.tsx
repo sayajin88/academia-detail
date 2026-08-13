@@ -204,6 +204,8 @@ const Directory = () => {
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                 )}
                 title={label}
+                aria-label={`Ver como ${label}`}
+                aria-pressed={viewMode === mode}
               >
                 <Icon className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">{label}</span>

@@ -51,6 +51,7 @@ export function DirectoryHero({ searchQuery, onSearchChange, onNearMe, isLocatin
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 value={searchQuery}
+                aria-label="Buscar centros de detailing por ciudad o provincia"
                 onChange={(e) => onSearchChange(e.target.value)}
                 placeholder={locationLabel ? `Buscar en ${locationLabel}...` : 'Buscar por ciudad o provincia...'}
                 className="pl-10 h-12 text-base bg-card border-border"

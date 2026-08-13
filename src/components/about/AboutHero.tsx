@@ -76,7 +76,7 @@ export function AboutHero() {
         <div className="mt-8 flex justify-center">
           <img 
             src={detailParkLogo} 
-            alt="Detail Park logo" 
+            alt="Logotipo de la empresa Detail Park - Academia Detail" 
             className="h-12 md:h-16 w-auto opacity-80"
           />
         </div>
