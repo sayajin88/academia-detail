@@ -714,14 +714,14 @@ const Index = () => {
                   <h4 className="text-lg md:text-xl font-bold text-white mb-2">{course.title}</h4>
                   <p className="text-sm md:text-base text-white/80 mb-3 md:mb-4">{course.description}</p>
                   <Button variant="funnel" size="sm" className="w-full" onClick={openModal}>
-                    RESERVAR PLAZA
+                    Avísame cuando abran plazas
                   </Button>
                 </div>
               ))}
             </div>
             
             <Button variant="hero" size="xl" className="mt-12" onClick={openModal}>
-              Obtén Acceso Ahora
+              Avísame cuando abran plazas
             </Button>
             
             <div className="flex items-center justify-center gap-2 mt-6">
@@ -817,7 +817,7 @@ const Index = () => {
 
           <div className="text-center mt-8 md:mt-12">
             <Button variant="hero" size="xl" onClick={openModal} className="w-full md:w-auto">
-              Obtén Acceso Ahora
+              Avísame cuando abran plazas
             </Button>
             
             <div className="flex items-center justify-center gap-2 mt-6">
@@ -880,16 +880,16 @@ const Index = () => {
             <br/><span className="text-white/90">Detailer Profesional?</span>
           </h2>
           <p className="text-lg md:text-2xl text-white/90 mb-8 md:mb-12 max-w-3xl mx-auto px-2">
-            No dejes pasar esta oportunidad. Los cupos son limitados y la demanda es alta.
+            Las plazas están cerradas por ahora. Apúntate a la lista de espera y te avisaremos en cuanto confirmemos la próxima fecha.
           </p>
           
           <Button variant="glass" size="xl" className="mb-6 md:mb-8 text-lg md:text-2xl py-5 md:py-6 px-10 md:px-16 w-full md:w-auto" onClick={openModal}>
-            Inscribirme Ahora
+            Avísame cuando abran plazas
           </Button>
           
           <div className="flex items-center justify-center gap-2 text-white/80 text-lg">
             <Clock className="w-6 h-6" />
-            <span>Oferta válida por tiempo limitado</span>
+            <span>Próxima convocatoria por confirmar</span>
           </div>
           
           <div className="flex items-center justify-center gap-2 mt-4">
