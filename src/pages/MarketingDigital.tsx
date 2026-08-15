@@ -16,6 +16,7 @@ import {
   MarketingServices,
   MarketingBranding,
   MarketingProcess,
+  MarketingWork,
 } from "@/components/marketing/MarketingSections";
 import { MarketingPacks } from "@/components/marketing/MarketingPacks";
 import { marketingFaqs, waLink } from "@/components/marketing/marketingData";
