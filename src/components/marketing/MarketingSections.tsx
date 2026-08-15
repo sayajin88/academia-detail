@@ -354,3 +354,153 @@ export function MarketingShowcase() {
     </section>
   );
 }
+
+const comparisonRows: { feature: string; landing: string; pro: string; seo: string }[] = [
+  { feature: "Formato", landing: "Landing de 1 página", pro: "Web multi-sección", seo: "Servicio sobre tu web" },
+  { feature: "Precio (sin IVA)", landing: "199€", pro: "889€", seo: "99€" },
+  { feature: "Diseño a medida", landing: "Sí", pro: "Sí", seo: "—" },
+  { feature: "Páginas de servicio independientes", landing: "No", pro: "Sí", seo: "—" },
+  { feature: "Galería de trabajos", landing: "Básica", pro: "Avanzada + reseñas", seo: "—" },
+  { feature: "Blog para posicionar", landing: "No", pro: "Sí", seo: "—" },
+  { feature: "WhatsApp y formulario", landing: "Sí", pro: "Sí + medición", seo: "—" },
+  { feature: "SEO local en Google", landing: "Alta básica", pro: "Estructura lista", seo: "Optimización completa" },
+  { feature: "GEO (ChatGPT, Gemini, Perplexity)", landing: "No", pro: "Base técnica", seo: "Sí" },
+  { feature: "Datos estructurados", landing: "No", pro: "Sí", seo: "Sí" },
+];
+
+export function MarketingCost() {
+  return (
+    <section id="precio-web-detailing" className="py-16 md:py-24 bg-muted/20 border-y border-border/60">
+      <div className="container">
+        <SectionHeading
+          badge="Precios claros"
+          title="¿Cuánto cuesta una página web para un centro de detailing?"
+          subtitle="La respuesta corta, sin rodeos ni presupuestos interminables."
+        />
+
+        <AnimatedSection animation="fade-up">
+          <div className="mx-auto max-w-3xl space-y-4 text-muted-foreground leading-relaxed mb-12">
+            <p>
+              Una <strong className="text-foreground">landing page profesional</strong> para un
+              centro de detailing cuesta <strong className="text-foreground">199€ sin IVA</strong> en
+              pago único: una sola página con tus servicios, tu galería de trabajos y el botón de
+              WhatsApp siempre visible. Es el punto de partida cuando estás arrancando y necesitas
+              existir en digital ya.
+            </p>
+            <p>
+              Una <strong className="text-foreground">web multi-sección completa</strong>, con
+              páginas independientes para detailing, PPF y wrapping, blog y estructura técnica SEO
+              preparada, cuesta <strong className="text-foreground">889€ sin IVA</strong>. Es la
+              opción cuando ya tienes cartera de clientes y quieres competir por posicionamiento en
+              tu ciudad.
+            </p>
+            <p>
+              El servicio de <strong className="text-foreground">SEO + GEO</strong> (auditoría,
+              optimización on page, SEO local y datos estructurados para buscadores de IA) cuesta{" "}
+              <strong className="text-foreground">99€ sin IVA</strong>. Ningún pack tiene cuotas
+              obligatorias ni permanencia: pagas una vez y la web es tuya.
+            </p>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection animation="fade-up" delay={100}>
+          <div className="mx-auto max-w-5xl overflow-x-auto rounded-2xl border border-border/60 bg-card/60">
+            <table className="w-full text-left text-sm">
+              <caption className="sr-only">
+                Comparativa de packs de marketing digital para centros de detailing
+              </caption>
+              <thead>
+                <tr className="border-b border-border/60 bg-foreground/5">
+                  <th scope="col" className="px-4 py-4 font-semibold text-foreground">Qué incluye</th>
+                  <th scope="col" className="px-4 py-4 font-semibold text-foreground">Arranque · 199€</th>
+                  <th scope="col" className="px-4 py-4 font-semibold text-primary">Profesional · 889€</th>
+                  <th scope="col" className="px-4 py-4 font-semibold text-foreground">SEO + GEO · 99€</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonRows.map((row) => (
+                  <tr key={row.feature} className="border-b border-border/40 last:border-0">
+                    <th scope="row" className="px-4 py-3 font-medium text-foreground/90">{row.feature}</th>
+                    <td className="px-4 py-3 text-muted-foreground">{row.landing}</td>
+                    <td className="px-4 py-3 text-foreground/90">{row.pro}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{row.seo}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </AnimatedSection>
+
+        <div className="mt-10 text-center">
+          <Button size="lg" asChild className="shadow-primary">
+            <a
+              href={waLink("Hola, quiero saber qué pack de web y SEO encaja mejor para mi centro de detailing.")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Consultar mi caso por WhatsApp
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </a>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const relatedLinks = [
+  {
+    href: "/formacion-profesional-detailing",
+    title: "Carrera de Detailing Profesional",
+    text: "Fórmate en la técnica y en el negocio antes de montar tu centro.",
+  },
+  {
+    href: "/centros-detailing-espana",
+    title: "Directorio de centros de detailing",
+    text: "Da de alta tu taller y consigue visibilidad en toda España.",
+  },
+  {
+    href: "/blog",
+    title: "Blog de detailing y negocio",
+    text: "Artículos sobre técnica, precios y cómo hacer crecer tu taller.",
+  },
+  {
+    href: "/curso-detailing-iniciacion",
+    title: "Jornada Zero",
+    text: "Primer contacto con el detailing profesional en un taller real.",
+  },
+];
+
+export function MarketingLinks() {
+  return (
+    <section className="py-16 md:py-24">
+      <div className="container">
+        <SectionHeading
+          badge="Sigue explorando"
+          title="Formación y recursos para tu negocio de detailing"
+          subtitle="El marketing acompaña a la técnica. Estos son los siguientes pasos dentro de Detail Park - Academia Detail."
+        />
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {relatedLinks.map((link, i) => (
+            <AnimatedSection key={link.href} delay={i * 80} animation="fade-up">
+              <a
+                href={link.href}
+                className="group block h-full rounded-2xl border border-border/60 bg-card/60 p-6 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
+              >
+                <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                  {link.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{link.text}</p>
+                <span className="mt-4 inline-flex items-center text-sm font-semibold text-primary">
+                  Ver más
+                  <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1" />
+                </span>
+              </a>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
