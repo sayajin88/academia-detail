@@ -49,7 +49,7 @@ export function MarketingServices() {
       <div className="container relative">
         <SectionHeading
           badge="Servicios"
-          title="Todo lo que tu negocio necesita para verse grande"
+          title="Servicios de marketing digital para detailing: web, SEO, GEO y marca"
           subtitle="Una dirección visual y digital coherente: desde la web hasta el logotipo de tu taller."
         />
 
@@ -101,7 +101,7 @@ const brandingItems = [
 
 export function MarketingBranding() {
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden">
+    <section id="marca" className="py-16 md:py-24 relative overflow-hidden">
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           <AnimatedSection animation="slide-left">
@@ -109,7 +109,8 @@ export function MarketingBranding() {
               Identidad de marca
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Un logotipo no es un dibujo. Es tu <span className="gradient-text">precio por hora</span>.
+              Identidad de marca y logotipo para tu{" "}
+              <span className="gradient-text">taller de detailing</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-8">
               La imagen de tu empresa es lo primero que ve un cliente que no te conoce. Trabajamos
@@ -173,11 +174,11 @@ export function MarketingBranding() {
 
 export function MarketingProcess() {
   return (
-    <section className="py-16 md:py-24 bg-muted/20 border-y border-border/60">
+    <section id="proceso" className="py-16 md:py-24 bg-muted/20 border-y border-border/60">
       <div className="container">
         <SectionHeading
           badge="Cómo trabajamos"
-          title="De la primera conversación a tu web publicada"
+          title="Cómo trabajamos: de la primera llamada a tu web publicada"
           subtitle="Un proceso simple y sin tecnicismos. Tú te centras en los coches."
         />
 
@@ -242,11 +243,11 @@ const workPhotos = [
 
 export function MarketingWork() {
   return (
-    <section className="py-16 md:py-24">
+    <section id="contenido" className="py-16 md:py-24">
       <div className="container">
         <SectionHeading
           badge="Contenido propio"
-          title="Así trabajamos con centros de detailing"
+          title="Contenido y fotografía profesional en tu taller"
           subtitle="No usamos bancos de imágenes: creamos el contenido en tu taller, con tus coches y tu equipo."
         />
 
@@ -277,12 +278,12 @@ export function MarketingWork() {
 
 export function MarketingShowcase() {
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden">
+    <section id="disenos" className="py-16 md:py-24 relative overflow-hidden">
       <div className="absolute top-1/3 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
       <div className="container relative">
         <SectionHeading
           badge="Trabajos de referencia"
-          title="Así se ve una web hecha para detailing"
+          title="Diseño web para detailing: así se ve una web que convierte"
           subtitle="Diseño oscuro, foto grande, servicios claros y el botón de contacto siempre a mano. Ni plantillas genéricas ni webs de folleto."
         />
 
