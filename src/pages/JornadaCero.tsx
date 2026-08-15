@@ -188,6 +188,26 @@ const Index = () => {
         </div>
       </nav>
 
+      {/* Aviso: plazas cerradas */}
+      <section className="bg-black/50 border-b border-primary/20 py-6 md:py-8">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto glass-intense rounded-2xl p-5 md:p-7 border border-primary/30 text-center">
+            <Badge className="bg-primary/20 text-primary border-primary/40 mb-3">Plazas cerradas</Badge>
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+              Actualmente no hay plazas disponibles
+            </h2>
+            <p className="text-white/75 text-sm md:text-base max-w-2xl mx-auto mb-4">
+              Estamos cerrando la fecha de la próxima convocatoria del Workshop Jornada Zero.
+              Déjanos tus datos y serás de los primeros en recibir el aviso cuando abramos inscripciones.
+              El precio se mantiene en <strong className="text-white">97 € + IVA</strong> y es descontable de los cursos completos.
+            </p>
+            <Button variant="hero" size="lg" onClick={openModal} className="w-full md:w-auto">
+              Avísame cuando abran plazas
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Problems Section with background video */}
       <section className="relative py-16 md:py-24 overflow-hidden min-h-[50vh] md:min-h-[60vh]">
         {/* Background image for mobile */}
