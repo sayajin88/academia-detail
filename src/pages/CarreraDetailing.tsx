@@ -10,6 +10,7 @@ import CarreraTimeline from '@/components/carrera/CarreraTimeline';
 import CarreraBenefits from '@/components/carrera/CarreraBenefits';
 import CarreraPricing from '@/components/carrera/CarreraPricing';
 import CarreraFAQ from '@/components/carrera/CarreraFAQ';
+import CarreraStickyCTA from '@/components/carrera/CarreraStickyCTA';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { SEO, courseFormacionProfesionalSchema } from '@/components/SEO';
 import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
@@ -110,23 +111,24 @@ const CarreraDetailing = () => {
         `}</style>
         
         <CarreraHero onCTAClick={handleCTAClick} />
-        <CarreraVideoIntro />
         <CarreraFormaciones />
         <CarreraModuloNegocio />
         <CarreraExperienciaReal />
+        <CarreraTimeline />
+        <CarreraVideoIntro />
         <FormationVideoTestimonials 
           videos={carreraVideoTestimonials}
           title="Lo Que Dicen Nuestros Alumnos"
           subtitle="Testimonios reales de profesionales que han transformado su carrera con nuestra formación"
         />
-        <CarreraTimeline />
+        <GoogleReviews />
         <CarreraBenefits />
         <CarreraROICalculator onCtaClick={handleCTAClick} />
         <CarreraPricing onCTAClick={handleCTAClick} />
         <ViaBillInlineCTA />
         <JornadaZeroSection />
-        <GoogleReviews />
         <CarreraFAQ />
+        <CarreraStickyCTA onCTAClick={handleCTAClick} />
 
       </MainLayout>
     </>

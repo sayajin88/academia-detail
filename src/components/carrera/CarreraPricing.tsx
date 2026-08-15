@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Crown, Check, Calendar, Users, Award, ArrowRight, Star } from 'lucide-react';
-import { carreraDetailingData } from '@/data/carreraDetailingData';
+import { carreraDetailingData, formatEuro } from '@/data/carreraDetailingData';
 import { useCountUp } from '@/hooks/useCountUp';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { FinancingBadge } from '@/components/shared/FinancingBadge';
@@ -127,14 +127,20 @@ const CarreraPricing = ({ onCTAClick }: CarreraPricingProps) => {
 
                 {/* Price */}
                 <div className="space-y-2 md:space-y-3">
-                  <p className="text-muted-foreground line-through text-base md:text-xl">
-                    Valor: €{carreraDetailingData.originalValue.toLocaleString()}
+                  <p className="text-muted-foreground text-base md:text-xl">
+                    Los 4 cursos por separado:{' '}
+                    <span className="line-through">
+                      €{formatEuro(carreraDetailingData.coursesTotal)}
+                    </span>
                   </p>
                   <p className="text-4xl md:text-6xl font-monument gold-gradient-text">
                     €{priceCount.toLocaleString()}
                   </p>
-                  <p className="text-gold text-sm md:text-lg">
-                    Ahorras €{(valueCount - carreraDetailingData.price).toLocaleString()}
+                  <p className="text-gold text-sm md:text-lg font-semibold">
+                    Ahorras €{formatEuro(carreraDetailingData.savings)} frente a comprarlos sueltos
+                  </p>
+                  <p className="text-xs md:text-sm text-muted-foreground">
+                    + €{formatEuro(carreraDetailingData.extrasValue)} en negocio y práctica real incluidos
                   </p>
                   <ViaBillPriceTag price={carreraDetailingData.price} />
                 </div>
