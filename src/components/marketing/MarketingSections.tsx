@@ -15,12 +15,12 @@ import mockupWeb3 from "@/assets/marketing/mockup-web-3.jpg.asset.json";
 
 export function MarketingValue() {
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden">
+    <section id="por-que" className="py-16 md:py-24 relative overflow-hidden">
       <div className="absolute top-1/4 -left-24 w-72 h-72 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
       <div className="container relative">
         <SectionHeading
           badge="Por qué importa"
-          title="En este negocio se vende por los ojos"
+          title="Por qué un centro de detailing necesita marketing digital"
           subtitle="Puedes tener el mejor acabado de tu ciudad. Si el cliente no lo ve antes de llamarte, no lo va a pagar."
         />
 
