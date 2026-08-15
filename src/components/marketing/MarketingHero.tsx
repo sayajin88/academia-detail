@@ -23,24 +23,25 @@ export function MarketingHero() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-transparent to-background" aria-hidden="true" />
 
       <div className="container relative">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center">
+          <div className="text-center lg:text-left">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/10 text-primary border border-primary/30 mb-6">
             <Sparkles className="w-3.5 h-3.5 animate-pulse" />
             Marketing digital para centros de detailing
           </span>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] text-foreground mb-6">
+          <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold leading-[1.05] text-foreground mb-6">
             Tu trabajo es espectacular.
             <span className="block gradient-text marketing-shine">Que tu marca también lo sea.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-10">
             Diseño web, SEO, posicionamiento en buscadores de IA e identidad de marca para
             detailers que quieren vivir de esto. Más visibilidad, más confianza y más
             clientes escribiéndote por WhatsApp.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
             <Button size="lg" asChild className="w-full sm:w-auto text-base shadow-primary">
               <a
                 href={waLink("Hola, me interesa el servicio de marketing digital para mi negocio de detailing.")}
