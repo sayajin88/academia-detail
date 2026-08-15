@@ -414,7 +414,7 @@ export const courseDetailingSchema = {
     "@type": "Offer",
     "category": "Paid",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
+    "availability": "https://schema.org/PreOrder",
     "validFrom": "2025-01-01",
     "url": "https://academiadetail.com/curso-detailing-profesional/"
   },
@@ -476,7 +476,7 @@ export const courseWrappingSchema = {
     "@type": "Offer",
     "category": "Paid",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
+    "availability": "https://schema.org/PreOrder",
     "validFrom": "2025-01-01",
     "url": "https://academiadetail.com/curso-vinilado-vehiculos/"
   },
@@ -537,7 +537,7 @@ export const coursePPFSchema = {
     "@type": "Offer",
     "category": "Paid",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
+    "availability": "https://schema.org/PreOrder",
     "validFrom": "2025-01-01",
     "url": "https://academiadetail.com/curso-ppf-proteccion-pintura/"
   },
@@ -600,7 +600,7 @@ export const courseRestauracionSchema = {
     "@type": "Offer",
     "category": "Paid",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
+    "availability": "https://schema.org/PreOrder",
     "validFrom": "2025-01-01",
     "url": "https://academiadetail.com/curso-restauracion-vehiculos/"
   },
@@ -649,7 +649,7 @@ export const courseFormacionProfesionalSchema = {
     "@type": "Offer",
     "category": "Paid",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
+    "availability": "https://schema.org/PreOrder",
     "validFrom": "2025-01-01",
     "url": "https://academiadetail.com/formacion-profesional-detailing/"
   },
@@ -697,7 +697,7 @@ export const courseJornadaZeroSchema = {
   "@type": "Course",
   "@id": "https://academiadetail.com/curso-detailing-iniciacion/#course",
   "name": "Jornada Zero - Iniciación al Detailing Profesional",
-  "description": "Tu primer contacto con el detailing profesional. 1 día intensivo para descubrir si el detailing es tu camino antes de invertir en formación completa. Precio de entrada: €97.",
+  "description": "Tu primer contacto con el detailing profesional. 1 día intensivo para descubrir si el detailing es tu camino antes de invertir en formación completa. Precio de entrada: €97. Plazas cerradas actualmente: próxima convocatoria próximamente.",
   "url": "https://academiadetail.com/curso-detailing-iniciacion/",
   "image": "https://academiadetail.com/og-jornada-zero.jpg",
   "provider": {
@@ -711,7 +711,7 @@ export const courseJornadaZeroSchema = {
     "category": "Paid",
     "price": "97",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
+    "availability": "https://schema.org/PreOrder",
     "validFrom": "2025-01-01",
     "url": "https://academiadetail.com/curso-detailing-iniciacion/"
   },

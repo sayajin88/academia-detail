@@ -827,16 +827,42 @@ export const seoConfig = {
         url: "/jornada-zero-detailing",
         image: `${BASE_URL}/og-jornada-zero.jpg`,
         rating: { value: "4.9", count: "50" },
+        comingSoon: true,
       }),
-      generateEventSchema({
+      // Plazas cerradas: sin fecha confirmada. Se declara como evento
+      // pospuesto en preventa para evitar datos estructurados inconsistentes.
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationEvent",
         name: "Jornada Zero - Experiencia de Inmersión Detailing",
         description:
-          "Tu primer contacto con el detailing profesional. 1 día de experiencia práctica en taller real con herramientas profesionales.",
-        startDate: "2026-03-15T10:00:00+01:00",
-        endDate: "2026-03-15T18:00:00+01:00",
-        price: 97,
-        location: "Academia Detail - Taller 100% Real",
-      }),
+          "Tu primer contacto con el detailing profesional. 1 día de experiencia práctica en taller real. Plazas cerradas actualmente: próxima convocatoria próximamente.",
+        eventStatus: "https://schema.org/EventPostponed",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        location: {
+          "@type": "Place",
+          name: "Academia Detail - Taller 100% Real",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Calle Metalurgias, 13",
+            addressLocality: "Alicante",
+            postalCode: "03008",
+            addressCountry: "ES",
+          },
+        },
+        organizer: {
+          "@type": "Organization",
+          name: "Detail Park - Academia Detail",
+          url: BASE_URL,
+        },
+        offers: {
+          "@type": "Offer",
+          price: "97",
+          priceCurrency: "EUR",
+          availability: "https://schema.org/PreOrder",
+          url: `${BASE_URL}/jornada-zero-detailing`,
+        },
+      },
       generateWebPageSchema({
         name: "Jornada Zero Detailing",
         description: "Experiencia de inmersión de 1 día para probar el detailing profesional",
