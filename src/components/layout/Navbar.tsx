@@ -22,6 +22,7 @@ const formationLinks = [
 const toolLinks = [
   { name: 'Glosario Detailing', href: '/glosario-detailing', icon: BookOpen, description: 'Más de 80 términos técnicos' },
   { name: 'Calcular Diluciones', href: '/calculadora-dilucion-detailing', icon: FlaskConical, description: 'Ratios de mezcla exactos' },
+  { name: 'Marketing para tu Negocio', href: '/marketing-digital-detailing', icon: Rocket, description: 'Web, SEO y marca para detailers' },
 ];
 
 const navLinks = [
