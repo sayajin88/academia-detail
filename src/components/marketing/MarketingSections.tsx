@@ -190,6 +190,79 @@ export function MarketingProcess() {
             </AnimatedSection>
           ))}
         </div>
+
+        <AnimatedSection animation="fade-up" delay={120} className="mt-12">
+          <div className="relative mx-auto max-w-3xl">
+            <div className="absolute -inset-8 bg-primary/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
+            <img
+              src={inboundIllustration.url}
+              alt="Embudo de captación de clientes: web, email y seguimiento automatizado"
+              width={1920}
+              height={984}
+              loading="lazy"
+              decoding="async"
+              className="relative w-full rounded-3xl border border-border/60 bg-card/40 p-4 md:p-8 [filter:saturate(0.8)_contrast(1.05)] mix-blend-luminosity opacity-90 hover:mix-blend-normal hover:opacity-100 transition-all duration-500"
+            />
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+const workPhotos = [
+  {
+    src: instalacionesPhoto,
+    title: "Instalaciones reales",
+    text: "Fotografía profesional de tu taller para que se vea el nivel al que trabajas.",
+  },
+  {
+    src: practicaPhoto,
+    title: "Proceso en acción",
+    text: "Contenido de proceso: lo que más engancha y más confianza genera en redes.",
+  },
+  {
+    src: beforeAfterPhoto,
+    title: "Antes y después",
+    text: "El formato que mejor convierte. Lo montamos y lo publicamos por ti.",
+  },
+  {
+    src: formacionPhoto,
+    title: "Equipo y marca",
+    text: "Fotos de equipo y branding coherente en web, Google y redes sociales.",
+  },
+];
+
+export function MarketingWork() {
+  return (
+    <section className="py-16 md:py-24">
+      <div className="container">
+        <SectionHeading
+          badge="Contenido propio"
+          title="Así trabajamos con centros de detailing"
+          subtitle="No usamos bancos de imágenes: creamos el contenido en tu taller, con tus coches y tu equipo."
+        />
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {workPhotos.map((photo, i) => (
+            <AnimatedSection key={photo.title} delay={i * 80} animation="fade-up">
+              <figure className="group relative h-full rounded-2xl overflow-hidden border border-border/60">
+                <img
+                  src={photo.src}
+                  alt={`${photo.title} — marketing digital para centros de detailing`}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" aria-hidden="true" />
+                <figcaption className="absolute bottom-0 inset-x-0 p-5">
+                  <h3 className="text-base font-semibold text-foreground mb-1">{photo.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{photo.text}</p>
+                </figcaption>
+              </figure>
+            </AnimatedSection>
+          ))}
+        </div>
       </div>
     </section>
   );
