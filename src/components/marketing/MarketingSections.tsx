@@ -5,6 +5,10 @@ import { ArrowRight, Check } from "lucide-react";
 import { valueArguments, services, processSteps, waLink } from "./marketingData";
 import socialIllustration from "@/assets/marketing/social.png.asset.json";
 import inboundIllustration from "@/assets/marketing/inbound.png.asset.json";
+import instalacionesPhoto from "@/assets/instalaciones-curso-ferrari.jpg";
+import practicaPhoto from "@/assets/evento-practica-pulidora-real.jpg";
+import beforeAfterPhoto from "@/assets/before-after-detailing.jpg";
+import formacionPhoto from "@/assets/alumnos-formacion.jpg";
 
 export function MarketingValue() {
   return (
