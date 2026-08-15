@@ -29,6 +29,14 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
+    // DOSSIER PAUSADO: el email de seguimiento hace referencia al dossier y
+    // depende de `dossier_email_sent_at`. Se detiene mientras se actualiza el PDF.
+    console.log("Follow-up emails paused while dossier is being updated.");
+    return new Response(
+      JSON.stringify({ success: true, sent: 0, paused: true }),
+      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+    );
+
     // Find submissions from 2+ days ago that haven't received follow-up.
     // Limit retries to MAX_FOLLOWUP_ATTEMPTS to avoid hammering on permanent failures.
     const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString();
