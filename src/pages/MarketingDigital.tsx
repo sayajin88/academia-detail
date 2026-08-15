@@ -17,6 +17,7 @@ import {
   MarketingBranding,
   MarketingProcess,
   MarketingWork,
+  MarketingShowcase,
 } from "@/components/marketing/MarketingSections";
 import { MarketingPacks } from "@/components/marketing/MarketingPacks";
 import { marketingFaqs, waLink } from "@/components/marketing/marketingData";
@@ -29,6 +30,7 @@ const MarketingDigital = () => {
         <MarketingHero />
         <MarketingValue />
         <MarketingServices />
+        <MarketingShowcase />
         <MarketingPacks />
         <MarketingBranding />
         <MarketingWork />
