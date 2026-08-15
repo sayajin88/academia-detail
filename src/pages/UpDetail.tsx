@@ -198,9 +198,18 @@ export default function UpDetail() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
 
           <div className="relative z-10 container mx-auto px-4 text-center">
-            <Badge className="bg-violet-500/20 text-violet-400 border border-violet-500/30 px-3 md:px-4 py-1.5 text-xs md:text-sm font-semibold mb-4 md:mb-6">
+            <Badge className="bg-violet-500/20 text-violet-400 border border-violet-500/30 px-3 md:px-4 py-1.5 text-xs md:text-sm font-semibold mb-3 md:mb-4">
               🌟 FORMATO COLABORATIVO • MÚLTIPLES EXPERTOS
             </Badge>
+
+            <div className="flex justify-center mb-4 md:mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500/10 px-4 py-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                <span className="text-amber-300 text-xs md:text-sm font-semibold">
+                  Plazas cerradas — próxima edición por confirmar
+                </span>
+              </div>
+            </div>
 
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 md:mb-4 leading-tight">
               Up Detail:{' '}
@@ -506,7 +515,7 @@ export default function UpDetail() {
               </h2>
               
               <p className="text-white/80 text-sm md:text-base mb-2 px-2">
-                Deja tu email y te avisaremos cuando abramos las inscripciones.
+                Las plazas están cerradas y la próxima edición aún no tiene fecha. Déjanos tu email y te avisaremos en cuanto abramos inscripciones.
               </p>
               <p className="text-xs md:text-sm text-violet-400 font-medium mb-6 md:mb-8">
                 💡 Precio confirmado: 349€ + IVA — Si continúas con un curso completo, se descuenta.
@@ -683,7 +692,7 @@ export default function UpDetail() {
             className="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-bold min-h-[48px] text-sm"
             onClick={() => document.getElementById('preregistro')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            🔔 Reservar Aviso — Próximamente
+            🔔 Avísame cuando abran plazas
           </Button>
         </div>
       </div>
