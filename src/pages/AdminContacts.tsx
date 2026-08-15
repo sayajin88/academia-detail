@@ -24,6 +24,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { toast } from "@/hooks/use-toast";
 
+// --- Feature flags ---
+const DOSSIER_SENDING_PAUSED = true; // Pausado mientras se actualiza el PDF del dossier
+
 // --- Label maps ---
 const formacionLabels: Record<string, string> = {
   detailing: "Detailing Profesional",
@@ -439,6 +442,18 @@ const AdminContacts = () => {
           </Alert>
         )}
 
+        {/* Dossier paused banner */}
+        {DOSSIER_SENDING_PAUSED && (
+          <Alert className="border-amber-300 bg-amber-50">
+            <AlertTriangle className="h-4 w-4 text-amber-600" />
+            <AlertTitle>Envío de dossier pausado</AlertTitle>
+            <AlertDescription>
+              El envío automático del dossier está temporalmente desactivado mientras se actualiza el programa formativo.
+              Los nuevos leads seguirán notificando al admin, pero no recibirán el PDF hasta que se reactive.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* DLQ Alert Banner */}
         {dlqCount > 0 && (
           <Alert variant="destructive" className="border-red-300 bg-red-50">
@@ -561,14 +576,12 @@ const AdminContacts = () => {
             <Button
               size="sm"
               className="gap-1.5"
-              disabled={bulkSending}
-              onClick={handleBulkSendDossier}
+              disabled={true}
+              title="Envío de dossier pausado temporalmente"
             >
               <FileText className="h-4 w-4" />
               <Send className="h-3.5 w-3.5" />
-              {bulkSending
-                ? `Enviando ${bulkProgress.sent}/${bulkProgress.total}...`
-                : "Enviar dossier a seleccionados"}
+              Envío de dossier pausado
             </Button>
             <Button size="sm" variant="ghost" onClick={() => setSelectedIds(new Set())}>
               Deseleccionar
@@ -773,16 +786,16 @@ const AdminContacts = () => {
                     pixelCheckResult={pixelCheckResult}
                   />
 
-                  {/* Resend dossier button */}
+                  {/* Resend dossier button — PAUSADO */}
                   <Button
                     size="sm"
                     variant="outline"
                     className="gap-1.5 w-full"
-                    disabled={resendingDossier}
-                    onClick={() => handleResendDossier(selected)}
+                    disabled={true}
+                    title="Envío de dossier pausado temporalmente"
                   >
                     <FileText className="h-4 w-4" />
-                    {resendingDossier ? "Enviando..." : "Reenviar dossier por email"}
+                    Envío de dossier pausado
                   </Button>
 
                   {/* Message */}

@@ -68,25 +68,27 @@ const handler = async (req: Request): Promise<Response> => {
 
     const supabase = createClient(SUPABASE_URL, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
 
-    // Generate tracking token and save the attempt timestamp.
-    // IMPORTANT: do NOT mark dossier_email_sent = true here — that flag should
-    // only be set when the email is *actually delivered* (status = 'sent' in
-    // email_send_log). Marking it true on enqueue creates false positives when
-    // the email infrastructure is down or the domain isn't verified.
-    const trackingToken = crypto.randomUUID();
-    const { error: updateError } = await supabase
-      .from("contact_submissions")
-      .update({
-        tracking_token: trackingToken,
-        dossier_email_sent_at: new Date().toISOString(),
-      })
-      .eq("email", email)
-      .order("created_at", { ascending: false })
-      .limit(1);
-
-    if (updateError) {
-      console.error("Error saving tracking token:", updateError);
-    }
+    // DOSSIER PAUSADO: el envío del dossier al cliente está temporalmente
+    // desactivado mientras se actualiza el PDF del programa formativo.
+    // Se mantiene la notificación al admin y el resto del flujo intacto.
+    //
+    // Cuando se quiera reactivar, descomentar el bloque de abajo y restaurar
+    // el botón de descarga en la plantilla contact-confirmation.tsx.
+    //
+    // const trackingToken = crypto.randomUUID();
+    // const { error: updateError } = await supabase
+    //   .from("contact_submissions")
+    //   .update({
+    //     tracking_token: trackingToken,
+    //     dossier_email_sent_at: new Date().toISOString(),
+    //   })
+    //   .eq("email", email)
+    //   .order("created_at", { ascending: false })
+    //   .limit(1);
+    //
+    // if (updateError) {
+    //   console.error("Error saving tracking token:", updateError);
+    // }
 
     const formLabel = formacionLabels[tipo_formacion] || tipo_formacion;
     const submissionId = crypto.randomUUID();
@@ -100,17 +102,17 @@ const handler = async (req: Request): Promise<Response> => {
       },
     });
 
-    // Send client confirmation with dossier (includes tracking token for open pixel)
-    await supabase.functions.invoke("send-transactional-email", {
-      body: {
-        templateName: "contact-confirmation",
-        recipientEmail: email,
-        idempotencyKey: `contact-confirm-${submissionId}`,
-        templateData: { nombre, formacion: formLabel, trackingToken },
-      },
-    });
+    // DOSSIER PAUSADO: no enviamos la confirmación con dossier al cliente.
+    // await supabase.functions.invoke("send-transactional-email", {
+    //   body: {
+    //     templateName: "contact-confirmation",
+    //     recipientEmail: email,
+    //     idempotencyKey: `contact-confirm-${submissionId}`,
+    //     templateData: { nombre, formacion: formLabel, trackingToken },
+    //   },
+    // });
 
-    console.log("Emails enqueued successfully for:", email);
+    console.log("Admin email enqueued successfully for:", email);
 
     return new Response(
       JSON.stringify({ success: true, message: "Emails enviados correctamente" }),

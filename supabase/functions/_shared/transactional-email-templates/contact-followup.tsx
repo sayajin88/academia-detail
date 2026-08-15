@@ -4,8 +4,9 @@ import {
 } from 'npm:@react-email/components@0.0.22'
 import type { TemplateEntry } from './registry.ts'
 
-const DOSSIER_URL_RAW = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
-const DOSSIER_TRACKING_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-dossier-click"
+// DOSSIER PAUSADO: reactivar si se restablece el enlace al dossier.
+// const DOSSIER_URL_RAW = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
+// const DOSSIER_TRACKING_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-dossier-click"
 const ACADEMY_LOGO_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/email-assets/academia-detail-logo.png"
 const WEB_URL = "https://detailpark.com"
 const INSTAGRAM_URL = "https://instagram.com/danidetailoficial"
@@ -21,9 +22,10 @@ const ContactFollowupEmail = ({ nombre, formacion, trackingToken }: ContactFollo
   const waText = formacion
     ? `Hola%2C%20estoy%20interesado%20en%20el%20programa%20de%20${encodeURIComponent(formacion)}`
     : 'Hola%2C%20estoy%20interesado%20en%20vuestros%20programas'
-  const dossierUrl = trackingToken
-    ? `${DOSSIER_TRACKING_BASE}?token=${encodeURIComponent(trackingToken)}`
-    : DOSSIER_URL_RAW
+  // DOSSIER PAUSADO: enlace al dossier desactivado mientras se actualiza el PDF.
+  // const dossierUrl = trackingToken
+  //   ? `${DOSSIER_TRACKING_BASE}?token=${encodeURIComponent(trackingToken)}`
+  //   : DOSSIER_URL_RAW
 
   return (
     <Html lang="es" dir="ltr">
@@ -65,8 +67,8 @@ const ContactFollowupEmail = ({ nombre, formacion, trackingToken }: ContactFollo
           {/* Cuerpo */}
           <Section style={contentSection}>
             <Text style={paragraph}>
-              Hace un par de días te enviamos el programa formativo. Quería pasarme por aquí para
-              asegurarme de que te llegó bien y por si te ha quedado alguna duda.
+              Hace unos días nos dejaste tus datos porque te interesa formarte con nosotros.
+              Quería pasarme por aquí para ver si te ha quedado alguna duda.
             </Text>
 
             <Text style={paragraph}>
@@ -80,19 +82,6 @@ const ContactFollowupEmail = ({ nombre, formacion, trackingToken }: ContactFollo
                 Hablar por WhatsApp
               </Button>
               <Text style={ctaHint}>Respondemos en menos de 1 hora · L–S</Text>
-            </Section>
-
-            {/* Recordatorio dossier */}
-            <Section style={dossierBox}>
-              <Text style={dossierTitle}>¿No encuentras el programa formativo?</Text>
-              <Text style={dossierText}>
-                Aquí lo tienes de nuevo, por si lo necesitas:
-              </Text>
-              <Section style={{ textAlign: 'center', marginTop: '12px' }}>
-                <Link href={dossierUrl} style={dossierLink}>
-                  Ver tipos de formación y precios →
-                </Link>
-              </Section>
             </Section>
 
             {/* Callout exclusividad */}
@@ -157,10 +146,10 @@ export const template = {
   subject: (data: Record<string, any>) => {
     const first = data.nombre ? String(data.nombre).split(' ')[0] : ''
     return first
-      ? `${first}, ¿te ha llegado bien el programa?`
-      : '¿Te ha llegado bien el programa?'
+      ? `${first}, ¿tienes alguna duda sobre nuestros programas?`
+      : '¿Tienes alguna duda sobre nuestros programas?'
   },
-  displayName: 'Seguimiento de contacto (2 días)',
+  displayName: 'Seguimiento de contacto (2 días) — dossier pausado',
   previewData: { nombre: 'Carlos García', formacion: 'Detailing Profesional' },
 } satisfies TemplateEntry
 
