@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, Search, Bot } from "lucide-react";
 import { waLink } from "./marketingData";
+import heroIllustration from "@/assets/marketing/hero.png.asset.json";
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
