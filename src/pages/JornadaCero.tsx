@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Countdown } from "@/components/Countdown";
+
 import { EventCard } from "@/components/EventCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { FeatureCard } from "@/components/FeatureCard";
