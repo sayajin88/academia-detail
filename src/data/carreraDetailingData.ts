@@ -218,12 +218,12 @@ export const carreraDetailingData = {
 
   faqs: [
     {
-      question: "¿Por qué cuesta €9.997?",
-      answer: "Este programa incluye 4 formaciones completas (valor €2.596), un módulo de negocio exclusivo (valor €2.500), 1 mes de práctica real en nuestro taller (valor €3.500), mentoría durante 6 meses, y un kit de productos premium. El valor total supera los €12.000, pero lo ofrecemos a €9.997 porque queremos formar empresarios de éxito que representen nuestra marca."
+      question: "¿Por qué cuesta €7.997?",
+      answer: "Porque incluye las 4 formaciones técnicas completas del centro, que compradas por separado suman €9.392 (Detailing €2.997 + Car Wrapping Nivel 1 €1.999 + Car Wrapping Nivel 2 €1.999 + PPF €2.397). Al hacerlas juntas dentro de la Carrera pagas €7.997, ahorras €1.395 y además recibes sin coste el Módulo de Negocio (valor €2.500) y 1 mes de práctica real en nuestro taller (valor €3.500). El valor total del programa es de €15.392."
     },
     {
       question: "¿Qué diferencia hay con hacer los cursos por separado?",
-      answer: "Además de ahorrar €2.596 en las formaciones, obtienes el Módulo de Negocio (no disponible por separado), 1 mes completo en nuestro taller trabajando con clientes reales, y la oportunidad de dirigir el negocio. Esta experiencia inmersiva no se puede replicar con cursos individuales."
+      answer: "Ahorras €1.395 directos sobre los €9.392 que suman las 4 formaciones sueltas, y además obtienes el Módulo de Negocio (no disponible por separado), 1 mes completo en nuestro taller trabajando con clientes reales, mentoría de 6 meses y la oportunidad de dirigir el negocio. Esa experiencia inmersiva no se puede replicar con cursos individuales."
     },
     {
       question: "¿Y si no tengo experiencia previa?",
