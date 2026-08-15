@@ -1008,23 +1008,24 @@ export const seoConfig = {
   },
 
   marketingDigital: {
-    title: "Marketing Digital para Detailers | Web, SEO y Marca",
+    title: "Marketing Digital para Detailing | Web, SEO y Marca",
     description:
-      "Diseño web, SEO, posicionamiento en buscadores de IA e identidad de marca para centros de detailing. Packs desde 199€ sin IVA. Consulta por WhatsApp.",
+      "Diseño web, SEO y GEO para centros de detailing. Webs desde 199€ y SEO desde 99€ sin IVA. Más visibilidad en Google y en la IA. Escríbenos por WhatsApp.",
     keywords:
-      "marketing digital detailing, página web para detailer, SEO centro detailing, posicionamiento IA negocios locales, logotipo taller detailing, diseño web detailing",
+      "marketing digital para detailing, diseño web para detailing, página web para taller de detailing, SEO para centros de detailing, posicionamiento web taller de coches, logotipo para taller de detailing, GEO buscadores de IA negocios locales",
     url: "/marketing-digital-detailing",
     schema: [
       localBusinessSchema,
       generateWebPageSchema({
-        name: "Marketing Digital para Negocios de Detailing",
+        name: "Marketing digital para centros de detailing: web, SEO y marca",
         description:
-          "Servicios de diseño web, SEO, GEO para buscadores de IA e identidad de marca para centros y profesionales del detailing.",
+          "Servicios de diseño web, SEO local, GEO para buscadores de IA e identidad de marca para centros y profesionales del detailing en toda España.",
         url: "/marketing-digital-detailing",
       }),
+      marketingServiceSchema,
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
-        { name: "Marketing Digital para Detailers", url: "/marketing-digital-detailing" },
+        { name: "Marketing Digital para Detailing", url: "/marketing-digital-detailing" },
       ]),
       generateFAQSchema(marketingFaqs),
     ],
