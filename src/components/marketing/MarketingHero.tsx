@@ -32,14 +32,22 @@ export function MarketingHero() {
           </span>
 
           <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold leading-[1.05] text-foreground mb-6">
-            Tu trabajo es espectacular.
-            <span className="block gradient-text marketing-shine">Que tu marca también lo sea.</span>
+            Marketing digital para centros de detailing:
+            <span className="block gradient-text marketing-shine">web, SEO y marca</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-10">
-            Diseño web, SEO, posicionamiento en buscadores de IA e identidad de marca para
-            detailers que quieren vivir de esto. Más visibilidad, más confianza y más
-            clientes escribiéndote por WhatsApp.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-6">
+            Tu trabajo es espectacular. Que tu marca también lo sea. Hacemos{" "}
+            <strong className="text-foreground/90 font-semibold">diseño web para detailing</strong>,
+            SEO local, posicionamiento en buscadores de IA (GEO) e identidad de marca para talleres
+            y centros de detailing de toda España.
+          </p>
+
+          <p className="text-base text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-10">
+            Webs desde <strong className="text-foreground/90 font-semibold">199€</strong> y SEO +
+            GEO desde <strong className="text-foreground/90 font-semibold">99€</strong> (sin IVA,
+            pago único). Más visibilidad en Google, más confianza y más clientes escribiéndote por
+            WhatsApp.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
