@@ -136,12 +136,12 @@ const Index = () => {
               className="h-8 md:h-12 lg:h-14 object-contain flex-shrink-0 drop-shadow-lg"
             />
             
-            {/* Countdown */}
-            <div className="flex items-center gap-2 md:gap-4 flex-1 justify-center">
-              <span className="text-sm md:text-base lg:text-lg font-bold hidden sm:inline text-white/90">🔥 Oferta termina en:</span>
-              <div className="scale-90 md:scale-100">
-                <Countdown />
-              </div>
+            {/* Estado de inscripciones */}
+            <div className="flex items-center gap-2 md:gap-3 flex-1 justify-center text-center">
+              <Clock className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-white/90" />
+              <span className="text-[11px] sm:text-sm md:text-base font-bold text-white/95 leading-tight">
+                Inscripciones cerradas — próxima convocatoria por confirmar
+              </span>
             </div>
             
             {/* Botón CTA */}
@@ -151,7 +151,7 @@ const Index = () => {
               className="hidden md:flex text-sm lg:text-base font-bold px-6 lg:px-8 py-3 whitespace-nowrap flex-shrink-0 hover:scale-105 transition-all duration-300 shadow-lg border-2 border-white/30" 
               onClick={openModal}
             >
-              RESERVAR PLAZA
+              Únete a la lista de espera
             </Button>
           </div>
         </div>
