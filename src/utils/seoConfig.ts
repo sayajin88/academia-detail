@@ -668,6 +668,107 @@ export const generateHomeSEO = (
   };
 };
 
+// ============================================
+// SERVICE SCHEMA - MARKETING DIGITAL PARA DETAILING
+// ============================================
+const MARKETING_URL = `${BASE_URL}/marketing-digital-detailing`;
+
+const marketingOffer = (
+  name: string,
+  description: string,
+  price: string,
+  anchor: string,
+) => ({
+  "@type": "Offer",
+  name,
+  description,
+  price,
+  priceCurrency: "EUR",
+  url: `${MARKETING_URL}#${anchor}`,
+  availability: "https://schema.org/InStock",
+  valueAddedTaxIncluded: false,
+  priceSpecification: {
+    "@type": "PriceSpecification",
+    price,
+    priceCurrency: "EUR",
+    valueAddedTaxIncluded: false,
+  },
+  seller: {
+    "@type": "Organization",
+    "@id": "https://academiadetail.com/#local-business",
+    name: "Detail Park - Academia Detail",
+  },
+});
+
+export const marketingServiceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${MARKETING_URL}#service`,
+  name: "Marketing digital para centros de detailing",
+  serviceType: "Diseño web, SEO local, GEO e identidad de marca para detailing",
+  description:
+    "Diseño y desarrollo web, SEO local, posicionamiento en buscadores de IA (GEO), Google Business Profile, redes sociales e identidad de marca para talleres y centros de detailing.",
+  url: MARKETING_URL,
+  provider: {
+    "@type": ["Organization", "ProfessionalService"],
+    "@id": "https://academiadetail.com/#local-business",
+    name: "Detail Park - Academia Detail",
+    url: BASE_URL,
+    telephone: "+34 622 773 555",
+    email: "info@academiadetail.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Calle Metalurgias, 13",
+      addressLocality: "Alicante",
+      addressRegion: "Comunidad Valenciana",
+      postalCode: "03008",
+      addressCountry: "ES",
+    },
+  },
+  areaServed: [
+    { "@type": "Country", name: "España" },
+    { "@type": "City", name: "Alicante" },
+    { "@type": "City", name: "Valencia" },
+    { "@type": "City", name: "Murcia" },
+  ],
+  audience: {
+    "@type": "BusinessAudience",
+    name: "Centros y profesionales del detailing",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Packs de marketing digital para detailing",
+    itemListElement: [
+      marketingOffer(
+        "Página web de arranque",
+        "Landing page profesional de una sola página con galería, formulario y botón de WhatsApp.",
+        "199",
+        "pack-landing",
+      ),
+      marketingOffer(
+        "Página web Profesional",
+        "Web multi-sección con páginas de servicio, blog, galería avanzada y estructura técnica SEO.",
+        "889",
+        "pack-profesional",
+      ),
+      marketingOffer(
+        "SEO + Posicionamiento en buscadores de IA (GEO)",
+        "Auditoría SEO, optimización on page, SEO local, datos estructurados y optimización GEO.",
+        "99",
+        "pack-seo-geo",
+      ),
+    ],
+  },
+  offers: {
+    "@type": "AggregateOffer",
+    priceCurrency: "EUR",
+    lowPrice: "99",
+    highPrice: "889",
+    offerCount: 3,
+    url: `${MARKETING_URL}#packs`,
+  },
+};
+
 export const seoConfig = {
   // Legacy static fallback - prefer generateHomeSEO()
   home: {
