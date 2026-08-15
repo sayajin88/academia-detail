@@ -31,8 +31,13 @@ export const carreraDetailingData = {
   subtitle: "Conviértete en Empresario del Detailing",
   tagline: "El programa más completo del sector: técnica + negocio + experiencia real",
   duration: "1 mes intensivo",
-  price: 9997,
-  originalValue: 18992,
+  price: 7997,
+  // Suma real de los precios públicos de las 4 formaciones por separado
+  originalValue: 9392,
+  coursesTotal: 9392,
+  extrasValue: 6000,
+  totalValue: 15392,
+  savings: 1395,
   spots: 4,
   nextEdition: "Marzo 2026",
   
