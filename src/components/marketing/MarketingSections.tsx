@@ -44,6 +44,21 @@ export function MarketingServices() {
           subtitle="Una dirección visual y digital coherente: desde la web hasta el logotipo de tu taller."
         />
 
+        <AnimatedSection animation="fade-up" className="mb-10">
+          <div className="relative mx-auto max-w-4xl rounded-3xl border border-primary/30 bg-card/50 backdrop-blur-sm p-6 md:p-10 overflow-hidden">
+            <div className="absolute -inset-10 bg-primary/10 blur-3xl pointer-events-none" aria-hidden="true" />
+            <img
+              src={socialIllustration.url}
+              alt="Estrategia de contenidos y redes sociales para un centro de detailing"
+              width={1920}
+              height={984}
+              loading="lazy"
+              decoding="async"
+              className="relative w-full [filter:saturate(0.8)_contrast(1.05)] mix-blend-luminosity opacity-90 hover:mix-blend-normal hover:opacity-100 transition-all duration-500"
+            />
+          </div>
+        </AnimatedSection>
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((service, i) => (
             <AnimatedSection key={service.title} delay={i * 70} animation="fade-up">
