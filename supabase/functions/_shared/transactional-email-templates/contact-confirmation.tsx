@@ -20,12 +20,12 @@ interface ContactConfirmationProps {
 
 const ContactConfirmationEmail = ({ nombre, formacion, trackingToken }: ContactConfirmationProps) => {
   const firstName = nombre ? nombre.split(' ')[0] : ''
-  const pixelUrl = trackingToken ? `${TRACKING_PIXEL_BASE}?token=${encodeURIComponent(trackingToken)}` : null
-  // Si hay tracking token usamos la edge function que registra el clic y redirige (302) al PDF.
-  // Si no, fallback al PDF directo.
-  const dossierUrl = trackingToken
-    ? `${DOSSIER_TRACKING_BASE}?token=${encodeURIComponent(trackingToken)}`
-    : DOSSIER_URL_RAW
+  // DOSSIER PAUSADO: el pixel de apertura y el enlace al dossier se mantienen
+  // comentados mientras se actualiza el PDF. Reactivar junto con el envío.
+  // const pixelUrl = trackingToken ? `${TRACKING_PIXEL_BASE}?token=${encodeURIComponent(trackingToken)}` : null
+  // const dossierUrl = trackingToken
+  //   ? `${DOSSIER_TRACKING_BASE}?token=${encodeURIComponent(trackingToken)}`
+  //   : DOSSIER_URL_RAW
 
   return (
     <Html lang="es" dir="ltr">
@@ -66,28 +66,28 @@ const ContactConfirmationEmail = ({ nombre, formacion, trackingToken }: ContactC
 
             <Text style={paragraph}>
               Gracias por tu interés en formarte con nosotros. Sabemos que elegir dónde invertir
-              en tu futuro profesional es una decisión importante, y queremos que tengas toda la
-              información para tomarla con confianza.
+              en tu futuro profesional es una decisión importante, y queremos acompañarte en
+              cada paso del proceso.
             </Text>
 
             <Text style={paragraph}>
-              Hemos preparado un <strong>dossier completo</strong> con todo lo que necesitas saber
-              sobre nuestros programas: contenido, metodología, certificaciones, precios y mucho más.
+              Nuestro equipo revisará tu solicitud y se pondrá en contacto contigo en breve para
+              resolver todas tus dudas y ayudarte a elegir el programa que mejor se adapte a ti.
             </Text>
 
             {/* CTA principal */}
             <Section style={ctaSection}>
-              <Button href={dossierUrl} style={ctaButton}>
-                Ver tipos de formación y precios
+              <Button href="https://detailpark.com" style={ctaButton}>
+                Visitar la web
               </Button>
-              <Text style={ctaHint}>📥 Acceso inmediato — sin registro</Text>
+              <Text style={ctaHint}>Conoce nuestros programas y el día a día del taller</Text>
             </Section>
 
             {/* Value box */}
             <Section style={valueBox}>
-              <Text style={valueTitle}>¿Qué encontrarás dentro?</Text>
-              <ValueItem text="Programa detallado de cada formación" />
-              <ValueItem text="Metodología práctica en taller real con clientes" />
+              <Text style={valueTitle}>Por qué formarte con nosotros</Text>
+              <ValueItem text="Formación 100% práctica en taller real con clientes" />
+              <ValueItem text="Grupos reducidos: máximo 3 alumnos por edición" />
               <ValueItem text="Certificaciones profesionales incluidas" />
               <ValueItem text="Casos de éxito de alumnos anteriores" />
               <ValueItem text="Opciones de financiación sin intereses" />
@@ -148,10 +148,10 @@ const ContactConfirmationEmail = ({ nombre, formacion, trackingToken }: ContactC
             <Link href="https://academiadetail.com" style={footerLink}>www.academiadetail.com</Link>
           </Section>
 
-          {/* Tracking pixel */}
-          {pixelUrl && (
+          {/* Tracking pixel — DOSSIER PAUSADO */}
+          {/* {pixelUrl && (
             <Img src={pixelUrl} alt="" width="1" height="1" style={pixelStyle} />
-          )}
+          )} */}
         </Container>
       </Body>
     </Html>
@@ -181,10 +181,10 @@ export const template = {
   subject: (data: Record<string, any>) => {
     const first = data.nombre ? String(data.nombre).split(' ')[0] : ''
     return first
-      ? `${first}, aquí tienes el programa formativo que pediste`
-      : 'Aquí tienes el programa formativo que pediste'
+      ? `${first}, hemos recibido tu solicitud`
+      : 'Hemos recibido tu solicitud'
   },
-  displayName: 'Confirmación de contacto con dossier',
+  displayName: 'Confirmación de contacto (dossier pausado)',
   previewData: { nombre: 'Carlos', formacion: 'Detailing Profesional' },
 } satisfies TemplateEntry
 
