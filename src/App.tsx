@@ -40,6 +40,7 @@ const CursoDetailingCiudad = lazy(() => import("./pages/CursoDetailingCiudad"));
 const PagoExitoso = lazy(() => import("./pages/PagoExitoso"));
 const PagoCancelado = lazy(() => import("./pages/PagoCancelado"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
+const MarketingDigital = lazy(() => import("./pages/MarketingDigital"));
 
 const queryClient = new QueryClient();
 
