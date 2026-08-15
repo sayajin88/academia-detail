@@ -111,7 +111,7 @@ export function Navbar() {
         <div className="container mx-auto px-2 md:px-4">
           {/* Glass Container - Dark theme */}
           <div
-            className={`relative flex items-center justify-between transition-all duration-500 ${
+            className={`relative flex items-center justify-between lg:gap-4 transition-all duration-500 ${
               isScrolled
                 ? 'bg-background/90 backdrop-blur-2xl rounded-xl md:rounded-2xl border border-white/10 shadow-lg shadow-black/20 px-3 md:px-6 py-1.5 md:py-3'
                 : 'bg-background/70 backdrop-blur-xl rounded-xl md:rounded-2xl border border-white/10 px-3 md:px-6 py-2 md:py-4'
