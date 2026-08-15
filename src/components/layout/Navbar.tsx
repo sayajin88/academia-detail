@@ -349,6 +349,7 @@ export function Navbar() {
                 </Button>
               </a>
             </div>
+            </div>
 
             {/* Mobile Menu Button */}
             <button
