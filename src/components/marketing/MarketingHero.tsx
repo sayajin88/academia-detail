@@ -61,7 +61,7 @@ export function MarketingHero() {
           </div>
 
           {/* Floating pills */}
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto lg:mx-0">
             {pills.map((pill, i) => (
               <div
                 key={pill.label}
@@ -77,6 +77,21 @@ export function MarketingHero() {
                 </span>
               </div>
             ))}
+          </div>
+          </div>
+
+          {/* Hero illustration */}
+          <div className="relative order-first lg:order-none">
+            <div className="absolute inset-6 bg-primary/25 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
+            <img
+              src={heroIllustration.url}
+              alt="Estrategia de marketing digital y redes sociales para centros de detailing"
+              width={1080}
+              height={960}
+              loading="eager"
+              decoding="async"
+              className="relative w-full max-w-md mx-auto animate-float-gentle drop-shadow-2xl [filter:saturate(0.85)_contrast(1.05)] mix-blend-luminosity opacity-95 hover:mix-blend-normal hover:opacity-100 transition-all duration-500"
+            />
           </div>
         </div>
       </div>
