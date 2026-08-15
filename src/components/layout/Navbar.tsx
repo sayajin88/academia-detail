@@ -155,7 +155,7 @@ export function Navbar() {
             <div className="hidden lg:flex items-center gap-3 ml-auto">
               <div 
                 ref={navRef}
-                className="flex items-center gap-1 relative"
+                className="flex items-center gap-2 relative"
               >
               {/* Animated pill indicator */}
               <div
