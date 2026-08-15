@@ -583,24 +583,24 @@ const Index = () => {
                     </div>
                   </div>
                   
-                  <Button variant="hero" size="xl" onClick={openModal} className="w-full animate-pulse-glow">
-                    RESERVAR MI PLAZA - €97 + IVA
+                  <Button variant="hero" size="xl" onClick={openModal} className="w-full">
+                    Avísame cuando abran plazas
                   </Button>
                   
                   <p className="text-xs text-white/60 mt-4">
-                    ⚡ Solo 10 plazas por edición • Sin compromiso
+                    ⚡ Plazas cerradas • 97 € + IVA al reabrir • Sin compromiso
                   </p>
                 </div>
               </div>
               
-              {/* Urgency Indicators */}
+              {/* Estado de convocatoria */}
               <div className="flex flex-wrap justify-center gap-6 mt-8">
                 <div className="glass-intense rounded-2xl px-6 py-4 border border-primary/30">
                   <div className="flex items-center gap-3">
                     <Clock className="text-primary w-6 h-6" />
                     <div className="text-left">
-                      <div className="text-white/70 text-sm">Próxima Convocatoria</div>
-                      <div className="text-white font-bold">Sábado 17 Enero 2026</div>
+                      <div className="text-white/70 text-sm">Próxima convocatoria</div>
+                      <div className="text-white font-bold">Fecha por confirmar</div>
                     </div>
                   </div>
                 </div>
@@ -609,8 +609,8 @@ const Index = () => {
                   <div className="flex items-center gap-3">
                     <Users className="text-orange-400 w-6 h-6" />
                     <div className="text-left">
-                      <div className="text-white/70 text-sm">Plazas Disponibles</div>
-                      <div className="text-orange-400 font-bold animate-pulse">Solo 4 de 10</div>
+                      <div className="text-white/70 text-sm">Estado de plazas</div>
+                      <div className="text-orange-400 font-bold">Plazas cerradas · Próxima apertura en breve</div>
                     </div>
                   </div>
                 </div>
