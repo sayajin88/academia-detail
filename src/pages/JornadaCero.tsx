@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Countdown } from "@/components/Countdown";
+
 import { EventCard } from "@/components/EventCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { FeatureCard } from "@/components/FeatureCard";
@@ -136,12 +136,12 @@ const Index = () => {
               className="h-8 md:h-12 lg:h-14 object-contain flex-shrink-0 drop-shadow-lg"
             />
             
-            {/* Countdown */}
-            <div className="flex items-center gap-2 md:gap-4 flex-1 justify-center">
-              <span className="text-sm md:text-base lg:text-lg font-bold hidden sm:inline text-white/90">🔥 Oferta termina en:</span>
-              <div className="scale-90 md:scale-100">
-                <Countdown />
-              </div>
+            {/* Estado de inscripciones */}
+            <div className="flex items-center gap-2 md:gap-3 flex-1 justify-center text-center">
+              <Clock className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-white/90" />
+              <span className="text-[11px] sm:text-sm md:text-base font-bold text-white/95 leading-tight">
+                Inscripciones cerradas — próxima convocatoria por confirmar
+              </span>
             </div>
             
             {/* Botón CTA */}
@@ -151,7 +151,7 @@ const Index = () => {
               className="hidden md:flex text-sm lg:text-base font-bold px-6 lg:px-8 py-3 whitespace-nowrap flex-shrink-0 hover:scale-105 transition-all duration-300 shadow-lg border-2 border-white/30" 
               onClick={openModal}
             >
-              RESERVAR PLAZA
+              Únete a la lista de espera
             </Button>
           </div>
         </div>
@@ -187,6 +187,26 @@ const Index = () => {
           </div>
         </div>
       </nav>
+
+      {/* Aviso: plazas cerradas */}
+      <section className="bg-black/50 border-b border-primary/20 py-6 md:py-8">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto glass-intense rounded-2xl p-5 md:p-7 border border-primary/30 text-center">
+            <Badge className="bg-primary/20 text-primary border-primary/40 mb-3">Plazas cerradas</Badge>
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+              Actualmente no hay plazas disponibles
+            </h2>
+            <p className="text-white/75 text-sm md:text-base max-w-2xl mx-auto mb-4">
+              Estamos cerrando la fecha de la próxima convocatoria del Workshop Jornada Zero.
+              Déjanos tus datos y serás de los primeros en recibir el aviso cuando abramos inscripciones.
+              El precio se mantiene en <strong className="text-white">97 € + IVA</strong> y es descontable de los cursos completos.
+            </p>
+            <Button variant="hero" size="lg" onClick={openModal} className="w-full md:w-auto">
+              Avísame cuando abran plazas
+            </Button>
+          </div>
+        </div>
+      </section>
 
       {/* Problems Section with background video */}
       <section className="relative py-16 md:py-24 overflow-hidden min-h-[50vh] md:min-h-[60vh]">
@@ -386,8 +406,8 @@ const Index = () => {
                     </svg>
                   </div>
                   <div className="text-left">
-                    <div className="text-white/70 text-sm">Fecha del Evento</div>
-                    <div className="text-white font-bold text-xl">Sábado 17 Enero 2026</div>
+                    <div className="text-white/70 text-sm">Próxima convocatoria</div>
+                    <div className="text-white font-bold text-xl">Fecha por confirmar</div>
                   </div>
                 </div>
               </div>
@@ -563,24 +583,24 @@ const Index = () => {
                     </div>
                   </div>
                   
-                  <Button variant="hero" size="xl" onClick={openModal} className="w-full animate-pulse-glow">
-                    RESERVAR MI PLAZA - €97 + IVA
+                  <Button variant="hero" size="xl" onClick={openModal} className="w-full">
+                    Avísame cuando abran plazas
                   </Button>
                   
                   <p className="text-xs text-white/60 mt-4">
-                    ⚡ Solo 10 plazas por edición • Sin compromiso
+                    ⚡ Plazas cerradas • 97 € + IVA al reabrir • Sin compromiso
                   </p>
                 </div>
               </div>
               
-              {/* Urgency Indicators */}
+              {/* Estado de convocatoria */}
               <div className="flex flex-wrap justify-center gap-6 mt-8">
                 <div className="glass-intense rounded-2xl px-6 py-4 border border-primary/30">
                   <div className="flex items-center gap-3">
                     <Clock className="text-primary w-6 h-6" />
                     <div className="text-left">
-                      <div className="text-white/70 text-sm">Próxima Convocatoria</div>
-                      <div className="text-white font-bold">Sábado 17 Enero 2026</div>
+                      <div className="text-white/70 text-sm">Próxima convocatoria</div>
+                      <div className="text-white font-bold">Fecha por confirmar</div>
                     </div>
                   </div>
                 </div>
@@ -589,8 +609,8 @@ const Index = () => {
                   <div className="flex items-center gap-3">
                     <Users className="text-orange-400 w-6 h-6" />
                     <div className="text-left">
-                      <div className="text-white/70 text-sm">Plazas Disponibles</div>
-                      <div className="text-orange-400 font-bold animate-pulse">Solo 4 de 10</div>
+                      <div className="text-white/70 text-sm">Estado de plazas</div>
+                      <div className="text-orange-400 font-bold">Plazas cerradas · Próxima apertura en breve</div>
                     </div>
                   </div>
                 </div>
@@ -694,14 +714,14 @@ const Index = () => {
                   <h4 className="text-lg md:text-xl font-bold text-white mb-2">{course.title}</h4>
                   <p className="text-sm md:text-base text-white/80 mb-3 md:mb-4">{course.description}</p>
                   <Button variant="funnel" size="sm" className="w-full" onClick={openModal}>
-                    RESERVAR PLAZA
+                    Avísame cuando abran plazas
                   </Button>
                 </div>
               ))}
             </div>
             
             <Button variant="hero" size="xl" className="mt-12" onClick={openModal}>
-              Obtén Acceso Ahora
+              Avísame cuando abran plazas
             </Button>
             
             <div className="flex items-center justify-center gap-2 mt-6">
@@ -797,7 +817,7 @@ const Index = () => {
 
           <div className="text-center mt-8 md:mt-12">
             <Button variant="hero" size="xl" onClick={openModal} className="w-full md:w-auto">
-              Obtén Acceso Ahora
+              Avísame cuando abran plazas
             </Button>
             
             <div className="flex items-center justify-center gap-2 mt-6">
@@ -860,16 +880,16 @@ const Index = () => {
             <br/><span className="text-white/90">Detailer Profesional?</span>
           </h2>
           <p className="text-lg md:text-2xl text-white/90 mb-8 md:mb-12 max-w-3xl mx-auto px-2">
-            No dejes pasar esta oportunidad. Los cupos son limitados y la demanda es alta.
+            Las plazas están cerradas por ahora. Apúntate a la lista de espera y te avisaremos en cuanto confirmemos la próxima fecha.
           </p>
           
           <Button variant="glass" size="xl" className="mb-6 md:mb-8 text-lg md:text-2xl py-5 md:py-6 px-10 md:px-16 w-full md:w-auto" onClick={openModal}>
-            Inscribirme Ahora
+            Avísame cuando abran plazas
           </Button>
           
           <div className="flex items-center justify-center gap-2 text-white/80 text-lg">
             <Clock className="w-6 h-6" />
-            <span>Oferta válida por tiempo limitado</span>
+            <span>Próxima convocatoria por confirmar</span>
           </div>
           
           <div className="flex items-center justify-center gap-2 mt-4">

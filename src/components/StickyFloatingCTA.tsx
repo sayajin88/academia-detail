@@ -59,13 +59,13 @@ export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
             </div>
             <div className="flex items-center justify-center gap-1 text-xs text-white/80">
               <Users className="w-3 h-3 flex-shrink-0" />
-              <span>Solo quedan {spotsLeft} de 12 plazas</span>
+              <span>Plazas cerradas · Próxima fecha por confirmar</span>
             </div>
           </div>
 
           <Button variant="hero" size="sm" className="w-full group text-base" onClick={onCtaClick}>
             <ShoppingCart className="w-4 h-4 mr-2 group-hover:animate-bounce" />
-            RESERVAR PLAZA
+            Avísame cuando abran plazas
           </Button>
         </div>
       </div>
@@ -81,7 +81,7 @@ export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
             </div>
           </div>
           <Button variant="hero" size="sm" className="shrink-0 min-h-[44px] px-5" onClick={onCtaClick}>
-            RESERVAR
+            Avísame
           </Button>
         </div>
       </div>
