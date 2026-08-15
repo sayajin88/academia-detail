@@ -1006,6 +1006,30 @@ export const seoConfig = {
     ],
   },
 
+  marketingDigital: {
+    title: "Marketing Digital para Detailers | Web, SEO y Marca",
+    description:
+      "Diseño web, SEO, posicionamiento en buscadores de IA e identidad de marca para centros de detailing. Packs desde 199€ sin IVA. Consulta por WhatsApp.",
+    keywords:
+      "marketing digital detailing, página web para detailer, SEO centro detailing, posicionamiento IA negocios locales, logotipo taller detailing, diseño web detailing",
+    url: "/marketing-digital-detailing",
+    schema: [
+      localBusinessSchema,
+      generateWebPageSchema({
+        name: "Marketing Digital para Negocios de Detailing",
+        description:
+          "Servicios de diseño web, SEO, GEO para buscadores de IA e identidad de marca para centros y profesionales del detailing.",
+        url: "/marketing-digital-detailing",
+      }),
+      generateBreadcrumbSchema([
+        { name: "Inicio", url: "/" },
+        { name: "Marketing Digital para Detailers", url: "/marketing-digital-detailing" },
+      ]),
+      generateFAQSchema(marketingFaqs),
+    ],
+  },
+
+
   contact: {
     title: "Contacto | Academia Detail Alicante | Reserva tu Plaza ★4.9",
     description:
