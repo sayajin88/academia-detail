@@ -1,6 +1,6 @@
 import * as React from 'npm:react@18.3.1'
 import {
-  Body, Container, Head, Heading, Html, Preview, Text, Button, Section, Link,
+  Body, Container, Head, Heading, Html, Preview, Text, Button, Section, Link, Row, Column, Hr,
 } from 'npm:@react-email/components@0.0.22'
 import type { TemplateEntry } from './registry.ts'
 
@@ -53,6 +53,22 @@ interface AdminNewLeadProps {
   source?: string
 }
 
+// Lead temperature derived only from data already collected in the form.
+const getTemperature = (inversion: string, experiencia: string, centro: string) => {
+  let score = 0
+  if (inversion === 'mas_5000') score += 3
+  else if (inversion === '2000_5000') score += 2
+  else if (inversion === '500_2000') score += 1
+  if (experiencia === 'con_experiencia') score += 1
+  if (centro === 'si') score += 2
+
+  if (score >= 4) return { label: 'Lead caliente', color: '#8B2332', bg: '#FBEAEC' }
+  if (score >= 2) return { label: 'Lead templado', color: '#8A5A16', bg: '#FDF3E3' }
+  return { label: 'Lead inicial', color: '#3F4551', bg: '#EEF0F3' }
+}
+
+const cleanPhone = (t: string) => t.replace(/[^\d+]/g, '')
+
 const AdminNewLeadEmail = (props: AdminNewLeadProps) => {
   const {
     nombre = '', apellidos = '', email = '', telefono = '',
@@ -60,73 +76,142 @@ const AdminNewLeadEmail = (props: AdminNewLeadProps) => {
     tipo_formacion = '', mensaje = '', source = '',
   } = props
 
-  const fullName = `${nombre} ${apellidos}`.trim()
-  const formLabel = formacionLabels[tipo_formacion] || tipo_formacion
-  const expLabel = experienciaLabels[experiencia] || experiencia
-  const centLabel = centroLabels[centro_propio] || centro_propio
-  const invLabel = inversionLabels[inversion] || inversion
-  const srcLabel = sourceLabels[source] || source
+  const fullName = `${nombre} ${apellidos}`.trim() || 'Sin nombre'
+  const formLabel = formacionLabels[tipo_formacion] || tipo_formacion || 'Sin especificar'
+  const expLabel = experienciaLabels[experiencia] || experiencia || '—'
+  const centLabel = centroLabels[centro_propio] || centro_propio || '—'
+  const invLabel = inversionLabels[inversion] || inversion || '—'
+  const srcLabel = sourceLabels[source] || source || 'Web'
+  const temp = getTemperature(inversion, experiencia, centro_propio)
+  const phone = cleanPhone(telefono)
+
+  const now = new Date()
+  const dateLabel = now.toLocaleDateString('es-ES', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Madrid',
+  })
+  const timeLabel = now.toLocaleTimeString('es-ES', {
+    hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid',
+  })
 
   return (
     <Html lang="es" dir="ltr">
       <Head />
-      <Preview>Nuevo lead: {formLabel} — {fullName}</Preview>
+      <Preview>{`${formLabel} · ${fullName} · ${invLabel}`}</Preview>
       <Body style={main}>
         <Container style={container}>
+          {/* Accent rule */}
+          <Section style={accentBar} />
+
+          {/* Header */}
           <Section style={header}>
-            <Heading style={headerTitle}>Nuevo Lead de Contacto</Heading>
-            <Text style={headerDate}>{new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</Text>
+            <Row>
+              <Column style={{ width: '46px', verticalAlign: 'middle' }}>
+                <Text style={monogram}>AD</Text>
+              </Column>
+              <Column style={{ verticalAlign: 'middle', paddingLeft: '14px' }}>
+                <Text style={brandKicker}>DETAIL PARK · ACADEMIA DETAIL</Text>
+                <Heading style={headerTitle}>Nuevo lead de contacto</Heading>
+              </Column>
+            </Row>
+            <Text style={headerMeta}>{dateLabel} · {timeLabel} h (Madrid)</Text>
           </Section>
 
-          <Section style={content}>
-            {/* Badges */}
-            <Section style={{ marginBottom: '20px' }}>
-              <Text style={badge}>{srcLabel}</Text>
-              <Text style={{ ...badge, backgroundColor: '#8B2332' }}>{formLabel}</Text>
+          {/* Hero: name + training */}
+          <Section style={hero}>
+            <Text style={{ ...chip, color: temp.color, backgroundColor: temp.bg }}>{temp.label}</Text>
+            <Heading as="h2" style={leadName}>{fullName}</Heading>
+            <Text style={leadInterest}>
+              Interesado en <span style={leadInterestStrong}>{formLabel}</span>
+            </Text>
+            <Text style={sourceLine}>Origen: {srcLabel}</Text>
+          </Section>
+
+          {/* Contact + actions */}
+          <Section style={block}>
+            <Text style={eyebrow}>Contacto directo</Text>
+            <Section style={card}>
+              <Row style={contactRow}>
+                <Column style={contactKeyCol}><Text style={contactKey}>Email</Text></Column>
+                <Column><Link href={`mailto:${email}`} style={contactValue}>{email || '—'}</Link></Column>
+              </Row>
+              <Hr style={hairline} />
+              <Row style={contactRow}>
+                <Column style={contactKeyCol}><Text style={contactKey}>Teléfono</Text></Column>
+                <Column><Link href={`tel:${phone}`} style={contactValue}>{telefono || '—'}</Link></Column>
+              </Row>
             </Section>
 
-            {/* Contact Info */}
-            <Section style={infoBox}>
-              <Text style={infoLabel}>Nombre completo</Text>
-              <Text style={infoValue}>{fullName}</Text>
-              <Text style={infoLabel}>Email</Text>
-              <Link href={`mailto:${email}`} style={infoLink}>{email}</Link>
-              <Text style={infoLabel}>Teléfono</Text>
-              <Link href={`tel:${telefono}`} style={infoLink}>{telefono}</Link>
-            </Section>
-
-            {/* Qualification */}
-            <Heading style={sectionTitle}>Cualificación del Lead</Heading>
-            <Section style={infoBox}>
-              <Text style={infoLabel}>Experiencia en Detailing</Text>
-              <Text style={infoValue}>{expLabel}</Text>
-              <Text style={infoLabel}>Centro propio</Text>
-              <Text style={infoValue}>{centLabel}</Text>
-              <Text style={infoLabel}>Inversión en formación</Text>
-              <Text style={infoValue}>{invLabel}</Text>
-              <Text style={infoLabel}>Formación deseada</Text>
-              <Text style={infoValue}>{formLabel}</Text>
-            </Section>
-
-            {mensaje && (
-              <>
-                <Heading style={sectionTitle}>Mensaje</Heading>
-                <Section style={messageBox}>
-                  <Text style={messageText}>{mensaje}</Text>
-                </Section>
-              </>
+            <Row style={{ marginTop: '16px' }}>
+              <Column style={{ paddingRight: '6px' }}>
+                <Button
+                  href={`mailto:${email}?subject=${encodeURIComponent(`Re: ${formLabel} - Detail Park Academia Detail`)}`}
+                  style={btnPrimary}
+                >
+                  Responder por email
+                </Button>
+              </Column>
+              {phone && (
+                <Column style={{ paddingLeft: '6px' }}>
+                  <Button href={`https://wa.me/${phone.replace(/\D/g, '')}`} style={btnSecondary}>
+                    WhatsApp
+                  </Button>
+                </Column>
+              )}
+            </Row>
+            {phone && (
+              <Text style={callLine}>
+                O llama directamente: <Link href={`tel:${phone}`} style={callLink}>{telefono}</Link>
+              </Text>
             )}
+          </Section>
 
-            <Section style={ctaSection}>
-              <Button href={`mailto:${email}?subject=Re: Solicitud de información - Detail Park Academy`} style={ctaButton}>
-                Responder a {nombre}
-              </Button>
+          {/* Qualification grid */}
+          <Section style={block}>
+            <Text style={eyebrow}>Cualificación</Text>
+            <Section style={card}>
+              <Row>
+                <Column style={gridCell}>
+                  <Text style={gridKey}>EXPERIENCIA</Text>
+                  <Text style={gridValue}>{expLabel}</Text>
+                </Column>
+                <Column style={gridCell}>
+                  <Text style={gridKey}>CENTRO PROPIO</Text>
+                  <Text style={gridValue}>{centLabel}</Text>
+                </Column>
+              </Row>
+              <Hr style={hairline} />
+              <Row>
+                <Column style={gridCell}>
+                  <Text style={gridKey}>INVERSIÓN PREVISTA</Text>
+                  <Text style={gridValue}>{invLabel}</Text>
+                </Column>
+                <Column style={gridCell}>
+                  <Text style={gridKey}>FORMACIÓN DESEADA</Text>
+                  <Text style={gridValue}>{formLabel}</Text>
+                </Column>
+              </Row>
             </Section>
           </Section>
 
+          {/* Message */}
+          {mensaje && (
+            <Section style={block}>
+              <Text style={eyebrow}>Mensaje del lead</Text>
+              <Section style={quoteBox}>
+                <Text style={quoteMark}>&ldquo;</Text>
+                <Text style={quoteText}>{mensaje}</Text>
+              </Section>
+            </Section>
+          )}
+
+          {/* Footer */}
           <Section style={footer}>
+            <Text style={footerBrand}>Detail Park · Academia Detail</Text>
             <Text style={footerText}>
-              Este mensaje fue enviado desde el formulario de contacto de Detail Park Academy
+              Notificación automática del formulario de contacto.{' '}
+              <Link href="https://academiadetail.com/admin/contacts" style={footerLink}>
+                Ver todos los leads
+              </Link>
             </Text>
           </Section>
         </Container>
@@ -139,7 +224,7 @@ export const template = {
   component: AdminNewLeadEmail,
   subject: (data: Record<string, any>) => {
     const form = formacionLabels[data.tipo_formacion] || data.tipo_formacion || 'General'
-    return `Nuevo lead: ${form} - ${data.nombre || ''} ${data.apellidos || ''}`
+    return `Nuevo lead: ${form} - ${data.nombre || ''} ${data.apellidos || ''}`.trim()
   },
   displayName: 'Notificación admin — nuevo lead',
   to: ADMIN_EMAIL,
@@ -151,21 +236,92 @@ export const template = {
   },
 } satisfies TemplateEntry
 
-const main = { backgroundColor: '#ffffff', fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" }
-const container = { maxWidth: '600px', margin: '0 auto' }
-const header = { backgroundColor: '#8B2332', padding: '30px 40px' }
-const headerTitle = { margin: '0', color: '#FFF', fontSize: '22px', fontWeight: '700' }
-const headerDate = { margin: '8px 0 0', color: 'rgba(255,255,255,0.85)', fontSize: '14px' }
-const content = { padding: '24px 40px' }
-const badge = { display: 'inline-block' as const, backgroundColor: '#374151', color: '#FFF', padding: '6px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: '600', marginRight: '8px' }
-const infoBox = { backgroundColor: '#F9FAFB', borderRadius: '8px', border: '1px solid #E5E7EB', padding: '20px', marginBottom: '20px' }
-const infoLabel = { color: '#6B7280', fontSize: '13px', margin: '8px 0 2px' }
-const infoValue = { color: '#111827', fontSize: '16px', fontWeight: '500', margin: '0 0 8px' }
-const infoLink = { color: '#8B2332', fontSize: '16px', fontWeight: '500', textDecoration: 'none', display: 'block' as const, marginBottom: '8px' }
-const sectionTitle = { margin: '0 0 12px', color: '#111827', fontSize: '16px', fontWeight: '600' }
-const messageBox = { backgroundColor: '#F9FAFB', borderRadius: '8px', padding: '20px', borderLeft: '4px solid #8B2332', marginBottom: '24px' }
-const messageText = { margin: '0', color: '#374151', fontSize: '15px', lineHeight: '1.6' }
-const ctaSection = { textAlign: 'center' as const, margin: '0 0 24px' }
-const ctaButton = { backgroundColor: '#8B2332', color: '#FFF', padding: '14px 32px', borderRadius: '8px', fontSize: '15px', fontWeight: '600', textDecoration: 'none' }
-const footer = { backgroundColor: '#F9FAFB', padding: '20px 40px', borderTop: '1px solid #E5E7EB', textAlign: 'center' as const }
-const footerText = { margin: '0', color: '#6B7280', fontSize: '12px' }
+/* ---------- styles ---------- */
+const font = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"
+
+const main = { backgroundColor: '#ffffff', fontFamily: font, margin: '0', padding: '0' }
+const container = { maxWidth: '600px', margin: '0 auto', backgroundColor: '#ffffff' }
+
+const accentBar = { height: '4px', backgroundColor: '#8B2332', lineHeight: '4px', fontSize: '0' }
+
+const header = { backgroundColor: '#1a1a1f', padding: '28px 32px 24px' }
+const monogram = {
+  margin: '0',
+  width: '46px',
+  height: '46px',
+  lineHeight: '44px',
+  textAlign: 'center' as const,
+  border: '1px solid rgba(255,255,255,0.28)',
+  borderRadius: '10px',
+  color: '#ffffff',
+  fontSize: '16px',
+  fontWeight: '700',
+  letterSpacing: '1px',
+}
+const brandKicker = { margin: '0 0 4px', color: '#8B2332', fontSize: '10px', fontWeight: '700', letterSpacing: '1.6px' }
+const headerTitle = { margin: '0', color: '#ffffff', fontSize: '20px', fontWeight: '700', letterSpacing: '-0.3px' }
+const headerMeta = { margin: '18px 0 0', color: 'rgba(255,255,255,0.55)', fontSize: '12px', letterSpacing: '0.2px' }
+
+const hero = { padding: '28px 32px 22px', borderBottom: '1px solid #ECEDEF' }
+const chip = {
+  display: 'inline-block' as const,
+  margin: '0 0 12px',
+  padding: '5px 12px',
+  borderRadius: '999px',
+  fontSize: '11px',
+  fontWeight: '700',
+  letterSpacing: '0.8px',
+  textTransform: 'uppercase' as const,
+}
+const leadName = { margin: '0', color: '#1a1a1f', fontSize: '30px', lineHeight: '1.15', fontWeight: '700', letterSpacing: '-0.8px' }
+const leadInterest = { margin: '10px 0 0', color: '#4B5261', fontSize: '15px' }
+const leadInterestStrong = { color: '#8B2332', fontWeight: '700' }
+const sourceLine = { margin: '6px 0 0', color: '#8A909C', fontSize: '12px' }
+
+const block = { padding: '24px 32px 0' }
+const eyebrow = { margin: '0 0 10px', color: '#8A909C', fontSize: '10px', fontWeight: '700', letterSpacing: '1.4px', textTransform: 'uppercase' as const }
+const card = { border: '1px solid #ECEDEF', borderRadius: '12px', padding: '4px 18px', backgroundColor: '#FCFCFD' }
+
+const contactRow = { padding: '0' }
+const contactKeyCol = { width: '92px', verticalAlign: 'middle' as const }
+const contactKey = { margin: '14px 0', color: '#8A909C', fontSize: '13px' }
+const contactValue = { color: '#1a1a1f', fontSize: '15px', fontWeight: '600', textDecoration: 'none', display: 'inline-block' as const, margin: '14px 0' }
+const hairline = { border: 'none', borderTop: '1px solid #ECEDEF', margin: '0' }
+
+const btnPrimary = {
+  display: 'block' as const,
+  backgroundColor: '#8B2332',
+  color: '#ffffff',
+  padding: '13px 18px',
+  borderRadius: '10px',
+  fontSize: '14px',
+  fontWeight: '700',
+  textDecoration: 'none',
+  textAlign: 'center' as const,
+}
+const btnSecondary = {
+  display: 'block' as const,
+  backgroundColor: '#1a1a1f',
+  color: '#ffffff',
+  padding: '13px 18px',
+  borderRadius: '10px',
+  fontSize: '14px',
+  fontWeight: '700',
+  textDecoration: 'none',
+  textAlign: 'center' as const,
+}
+const callLine = { margin: '12px 0 0', color: '#8A909C', fontSize: '12px', textAlign: 'center' as const }
+const callLink = { color: '#8B2332', fontWeight: '600', textDecoration: 'none' }
+
+const gridCell = { width: '50%', verticalAlign: 'top' as const, padding: '14px 10px 14px 0' }
+const gridKey = { margin: '0 0 4px', color: '#8A909C', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }
+const gridValue = { margin: '0', color: '#1a1a1f', fontSize: '15px', fontWeight: '600', lineHeight: '1.35' }
+
+const quoteBox = { backgroundColor: '#FBF7F7', borderLeft: '3px solid #8B2332', borderRadius: '0 12px 12px 0', padding: '16px 20px' }
+const quoteMark = { margin: '0', color: '#8B2332', fontSize: '30px', lineHeight: '20px', fontWeight: '700' }
+const quoteText = { margin: '6px 0 0', color: '#3F4551', fontSize: '15px', lineHeight: '1.65' }
+
+const footer = { marginTop: '28px', backgroundColor: '#1a1a1f', padding: '22px 32px', textAlign: 'center' as const }
+const footerBrand = { margin: '0 0 6px', color: '#ffffff', fontSize: '12px', fontWeight: '700', letterSpacing: '1px' }
+const footerText = { margin: '0', color: 'rgba(255,255,255,0.5)', fontSize: '11px', lineHeight: '1.6' }
+const footerLink = { color: '#C9707C', textDecoration: 'none', fontWeight: '600' }
