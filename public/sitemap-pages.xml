@@ -214,4 +214,13 @@
     <priority>0.1</priority>
   </url>
 
+  <url>
+    <loc>https://academiadetail.com/marketing-digital-detailing</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://academiadetail.com/marketing-digital-detailing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://academiadetail.com/marketing-digital-detailing" />
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

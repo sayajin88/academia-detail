@@ -19,6 +19,7 @@ const quickLinks = [
   { name: 'Glosario Detailing', href: '/glosario-detailing' },
   { name: 'Directorio Detailers', href: '/centros-detailing-espana' },
   { name: 'Calculadora Dilución', href: '/calculadora-dilucion-detailing' },
+  { name: 'Marketing para Detailers', href: '/marketing-digital-detailing' },
   { name: 'Quiénes Somos', href: '/quienes-somos' },
   { name: 'Contacto', href: '/contacto' },
 ];

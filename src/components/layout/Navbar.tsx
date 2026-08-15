@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail, BookOpen, Sparkles, FlaskConical, Settings2, MapPin } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail, BookOpen, Sparkles, FlaskConical, Settings2, MapPin, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import academiaLogo from '@/assets/academia-detail-logo-light.png';
 
@@ -22,6 +22,7 @@ const formationLinks = [
 const toolLinks = [
   { name: 'Glosario Detailing', href: '/glosario-detailing', icon: BookOpen, description: 'Más de 80 términos técnicos' },
   { name: 'Calcular Diluciones', href: '/calculadora-dilucion-detailing', icon: FlaskConical, description: 'Ratios de mezcla exactos' },
+  { name: 'Marketing para tu Negocio', href: '/marketing-digital-detailing', icon: Rocket, description: 'Web, SEO y marca para detailers' },
 ];
 
 const navLinks = [
