@@ -51,27 +51,31 @@ export const carreraDetailingData = {
   includedFormations: [
     {
       name: "Detailing Profesional",
-      value: 3497,
+      value: 2997,
       duration: "4 días",
+      url: "/curso-detailing-profesional",
       highlights: ["Pulido de pintura", "Descontaminación", "Protección cerámica"]
     },
     {
-      name: "Car Wrapping",
-      value: 2499,
-      duration: "2-4 días", 
-      highlights: ["Vinilado completo", "PPF parcial", "Técnicas avanzadas"]
+      name: "Car Wrapping Nivel 1",
+      value: 1999,
+      duration: "2 días",
+      url: "/curso-vinilado-vehiculos",
+      highlights: ["Vinilado completo", "Técnicas de corte", "Acabados profesionales"]
     },
     {
-      name: "PPF Avanzado",
-      value: 2897,
+      name: "Car Wrapping Nivel 2",
+      value: 1999,
       duration: "2 días",
+      url: "/curso-vinilado-vehiculos",
+      highlights: ["Piezas complejas", "Vinilos especiales", "Postformado avanzado"]
+    },
+    {
+      name: "Paint Protection Film",
+      value: 2397,
+      duration: "2 días",
+      url: "/curso-ppf-proteccion-pintura",
       highlights: ["Instalación completa", "Patrones digitales", "Certificación"]
-    },
-    {
-      name: "Restauración Integral",
-      value: 699,
-      duration: "2 días",
-      highlights: ["Faros", "Interiores", "Plásticos", "Tapicería"]
     }
   ] as IncludedFormation[],
 
