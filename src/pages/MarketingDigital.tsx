@@ -18,6 +18,8 @@ import {
   MarketingProcess,
   MarketingWork,
   MarketingShowcase,
+  MarketingCost,
+  MarketingLinks,
 } from "@/components/marketing/MarketingSections";
 import { MarketingPacks } from "@/components/marketing/MarketingPacks";
 import { marketingFaqs, waLink } from "@/components/marketing/marketingData";
@@ -32,14 +34,18 @@ const MarketingDigital = () => {
         <MarketingServices />
         <MarketingShowcase />
         <MarketingPacks />
+        <MarketingCost />
         <MarketingBranding />
         <MarketingWork />
         <MarketingProcess />
 
         {/* FAQ */}
-        <section className="py-16 md:py-24">
+        <section id="faq" className="py-16 md:py-24">
           <div className="container max-w-3xl">
-            <SectionHeading badge="Dudas frecuentes" title="Preguntas frecuentes" />
+            <SectionHeading
+              badge="Dudas frecuentes"
+              title="Preguntas frecuentes sobre marketing digital para detailing"
+            />
             <Accordion type="single" collapsible className="w-full">
               {marketingFaqs.map((faq, i) => (
                 <AccordionItem key={faq.question} value={`item-${i}`} className="border-border/60">
@@ -55,13 +61,16 @@ const MarketingDigital = () => {
           </div>
         </section>
 
+        <MarketingLinks />
+
         {/* Final CTA */}
         <section className="py-16 md:py-24 relative overflow-hidden border-t border-border/60">
           <div className="absolute inset-0 -z-10 marketing-aurora opacity-80" aria-hidden="true" />
           <div className="container relative text-center max-w-3xl">
             <AnimatedSection animation="fade-up">
               <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-5">
-                Que tu marca hable de ti <span className="gradient-text">antes de que llegues</span>
+                Habla con nosotros por WhatsApp{" "}
+                <span className="gradient-text">y te decimos qué pack encaja</span>
               </h2>
               <p className="text-lg text-muted-foreground mb-9">
                 Cuéntanos en un mensaje qué haces y dónde estás. Te decimos qué pack encaja mejor y

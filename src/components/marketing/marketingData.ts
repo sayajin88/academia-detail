@@ -229,4 +229,29 @@ export const marketingFaqs = [
     answer:
       "Una landing de arranque suele estar publicada en pocos días una vez tenemos tus contenidos y fotos. Una web profesional multi-sección requiere más trabajo de estructura y textos; el plazo exacto se define en la propuesta.",
   },
+  {
+    question: "¿Cuánto cuesta una página web para un centro de detailing?",
+    answer:
+      "En nuestro caso, una landing page profesional de una sola página cuesta 199€ sin IVA y una web multi-sección completa 889€ sin IVA, ambas en pago único. El servicio de SEO + GEO para posicionar esa web cuesta 99€ sin IVA. No hay cuotas de mantenimiento obligatorias ni permanencia.",
+  },
+  {
+    question: "¿Cómo consigo más clientes para mi negocio de detailing?",
+    answer:
+      "El camino que mejor funciona en detailing es: una web propia que muestre trabajos reales, la ficha de Google Business Profile bien trabajada con reseñas, contenido de proceso y antes/después en redes, y SEO local para aparecer cuando alguien busca tu servicio en tu ciudad. Todo termina en un botón de WhatsApp fácil de encontrar.",
+  },
+  {
+    question: "¿Cómo hago que mi taller de detailing aparezca en Google?",
+    answer:
+      "Hacen falta tres cosas: una ficha de Google Business Profile verificada y completa, una web con estructura técnica correcta (títulos, descripciones, datos estructurados y velocidad) y contenido que hable de tus servicios y de tu ciudad. Con eso empiezas a aparecer en el mapa y en los resultados de búsqueda locales.",
+  },
+  {
+    question: "¿Se puede aparecer en ChatGPT o Perplexity como negocio local?",
+    answer:
+      "Sí. Los buscadores de IA leen la información estructurada de tu web, tu ficha de Google y las menciones en directorios. Si tus datos (servicios, precios, ubicación, horarios) están publicados de forma clara y marcada con datos estructurados, esos sistemas pueden entenderte y recomendarte. Eso es lo que trabajamos en el pack de SEO + GEO.",
+  },
+  {
+    question: "¿Trabajáis con centros de detailing de toda España?",
+    answer:
+      "Sí. El trabajo se hace en remoto y coordinado por WhatsApp, así que atendemos centros de cualquier punto de España. Estamos en Alicante, por lo que en la Comunidad Valenciana y alrededores también podemos hacer sesiones de contenido presenciales en tu taller.",
+  },
 ];
