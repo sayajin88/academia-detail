@@ -276,7 +276,7 @@ const CarreraHero = ({ onCTAClick }: CarreraHeroProps) => {
                 <div className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full bg-gold/15 border border-gold/40">
                   <TrendingDown className="w-4 h-4 text-gold" />
                   <span className="text-sm font-bold text-gold">
-                    Ahorras {(savingsCount || formatEuro(carreraDetailingData.savings))} €
+                    Ahorras {formatEuro(savingsCount || carreraDetailingData.savings)} €
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
