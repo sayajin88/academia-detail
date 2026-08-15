@@ -937,7 +937,7 @@ export const seoConfig = {
       "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, abrir taller detailing España, montar negocio detailing rentable, emprender detailing, curso completo detailing, programa completo detailing, curso detailing certificación oficial, cómo montar un negocio de detailing desde cero, 4 certificaciones detailing, detailing negocio rentable, aprender detailing desde cero, curso detailing Alicante, formacion profesional detailing España",
     url: "/formacion-profesional-detailing",
     image: `${BASE_URL}/og-carrera-detailing.jpg`,
-    price: "9997",
+    price: "7997",
     schema: [
       localBusinessSchema,
       courseFormacionProfesionalSchema,
@@ -945,7 +945,7 @@ export const seoConfig = {
         name: "Formación Profesional Detailing - Monta tu Centro de Detailing",
         description:
           "Programa premium de formación profesional en detailing. Formación intensiva con 4 certificaciones profesionales: Detailing, Wrapping, PPF y Restauración, más módulo de negocio exclusivo.",
-        price: 9997,
+        price: 7997,
         duration: "P30D",
         url: "/formacion-profesional-detailing",
         image: `${BASE_URL}/og-carrera-detailing.jpg`,
@@ -974,7 +974,7 @@ export const seoConfig = {
         },
         offers: {
           "@type": "Offer",
-          price: "9997",
+          price: "7997",
           priceCurrency: "EUR",
           availability: "https://schema.org/LimitedAvailability",
           validFrom: "2025-01-01",

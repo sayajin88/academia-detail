@@ -96,13 +96,18 @@ const CarreraFormaciones = () => {
         <AnimatedSection delay={0.4}>
           <div className="max-w-2xl mx-auto text-center p-8 rounded-2xl bg-gradient-to-r from-gold/10 via-gold/5 to-gold/10 border border-gold/30">
             <p className="text-lg text-muted-foreground mb-2">
-              Valor total de las formaciones:
+              Comprando estas 4 formaciones por separado pagarías:
             </p>
             <p className="text-4xl font-monument gold-gradient-text mb-4">
               €{totalValue.toLocaleString()}
             </p>
             <p className="text-foreground">
-              <span className="text-gold font-bold">¡Y esto es solo el principio!</span> La Carrera Detailing incluye mucho más...
+              Dentro de la Carrera Detailing las tienes todas por{' '}
+              <span className="text-gold font-bold">
+                €{carreraDetailingData.price.toLocaleString('es-ES')}
+              </span>
+              : ahorras €{carreraDetailingData.savings.toLocaleString('es-ES')} y además incluye el
+              Módulo de Negocio y 1 mes de taller real.
             </p>
           </div>
         </AnimatedSection>
