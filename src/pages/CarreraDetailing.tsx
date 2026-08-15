@@ -110,23 +110,24 @@ const CarreraDetailing = () => {
         `}</style>
         
         <CarreraHero onCTAClick={handleCTAClick} />
-        <CarreraVideoIntro />
         <CarreraFormaciones />
         <CarreraModuloNegocio />
         <CarreraExperienciaReal />
+        <CarreraTimeline />
+        <CarreraVideoIntro />
         <FormationVideoTestimonials 
           videos={carreraVideoTestimonials}
           title="Lo Que Dicen Nuestros Alumnos"
           subtitle="Testimonios reales de profesionales que han transformado su carrera con nuestra formación"
         />
-        <CarreraTimeline />
+        <GoogleReviews />
         <CarreraBenefits />
         <CarreraROICalculator onCtaClick={handleCTAClick} />
         <CarreraPricing onCTAClick={handleCTAClick} />
         <ViaBillInlineCTA />
         <JornadaZeroSection />
-        <GoogleReviews />
         <CarreraFAQ />
+        <CarreraStickyCTA onCTAClick={handleCTAClick} />
 
       </MainLayout>
     </>
