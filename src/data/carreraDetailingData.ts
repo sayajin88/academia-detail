@@ -201,16 +201,19 @@ export const carreraDetailingData = {
   ] as CarreraBenefit[],
 
   valueBreakdown: [
-    { item: "Curso Detailing Profesional", value: 3497 },
-    { item: "Curso Car Wrapping", value: 2499 },
-    { item: "Curso PPF Avanzado", value: 2897 },
-    { item: "Curso Restauración Integral", value: 699 },
+    { item: "Curso Detailing Profesional (4 días)", value: 2997 },
+    { item: "Curso Car Wrapping Nivel 1 (2 días)", value: 1999 },
+    { item: "Curso Car Wrapping Nivel 2 (2 días)", value: 1999 },
+    { item: "Curso Paint Protection Film (2 días)", value: 2397 },
     { item: "Módulo de Negocio Exclusivo", value: 2500 },
-    { item: "1 Mes de Práctica en Taller", value: 3500 },
-    { item: "Mentoría 6 Meses", value: 1500 },
-    { item: "Kit de Productos Premium", value: 800 },
-    { item: "Red de Contactos y Proveedores", value: 500 },
-    { item: "Certificaciones Oficiales (4)", value: 600 }
+    { item: "1 Mes de Práctica en Taller Real", value: 3500 }
+  ],
+
+  extrasIncluded: [
+    "Mentoría 6 meses post-formación",
+    "Kit de productos premium",
+    "Red de contactos y proveedores",
+    "4 certificaciones oficiales"
   ],
 
   faqs: [
