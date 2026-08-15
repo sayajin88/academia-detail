@@ -111,7 +111,7 @@ export function Navbar() {
         <div className="container mx-auto px-2 md:px-4">
           {/* Glass Container - Dark theme */}
           <div
-            className={`relative flex items-center justify-between transition-all duration-500 ${
+            className={`relative flex items-center justify-between lg:gap-4 transition-all duration-500 ${
               isScrolled
                 ? 'bg-background/90 backdrop-blur-2xl rounded-xl md:rounded-2xl border border-white/10 shadow-lg shadow-black/20 px-3 md:px-6 py-1.5 md:py-3'
                 : 'bg-background/70 backdrop-blur-xl rounded-xl md:rounded-2xl border border-white/10 px-3 md:px-6 py-2 md:py-4'
@@ -142,7 +142,7 @@ export function Navbar() {
                 <img 
                   src={academiaLogo} 
                   alt="Academia Detail - Cursos de detailing profesional en España" 
-                  className="h-6 sm:h-7 md:h-8 w-auto transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
+                  className="h-7 sm:h-8 md:h-9 w-auto max-w-[220px] object-contain transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
                   width={229}
                   height={70}
                 />
@@ -151,11 +151,12 @@ export function Navbar() {
               </div>
             </Link>
 
-            {/* Desktop Navigation - Centered */}
-            <div 
-              ref={navRef}
-              className="hidden lg:flex items-center gap-0.5 relative ml-6 xl:ml-8"
-            >
+            {/* Desktop Navigation + CTA group - aligned right */}
+            <div className="hidden lg:flex items-center gap-3 ml-auto">
+              <div 
+                ref={navRef}
+                className="flex items-center gap-2 relative"
+              >
               {/* Animated pill indicator */}
               <div
                 className={`absolute bottom-0 h-0.5 bg-gradient-to-r from-primary via-primary to-primary/50 rounded-full transition-all duration-300 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -166,16 +167,20 @@ export function Navbar() {
                 }}
               />
 
+              {/* Visual separator between logo and menu */}
+              <div className="h-6 w-px bg-white/10 mx-1" aria-hidden="true" />
+
               <Link
                 to="/"
                 data-active={location.pathname === '/'}
-                className={`relative px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                className={`relative inline-flex items-center gap-1.5 px-2 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                   location.pathname === '/' 
                     ? 'text-primary' 
                     : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
                 } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
                 style={{ transitionDelay: '200ms' }}
               >
+                <Home className="h-4 w-4" />
                 Inicio
               </Link>
 
@@ -347,6 +352,7 @@ export function Navbar() {
                   <WhatsAppIcon className="h-4 w-4" />
                 </Button>
               </a>
+            </div>
             </div>
 
             {/* Mobile Menu Button */}
