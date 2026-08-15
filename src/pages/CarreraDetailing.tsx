@@ -10,6 +10,7 @@ import CarreraTimeline from '@/components/carrera/CarreraTimeline';
 import CarreraBenefits from '@/components/carrera/CarreraBenefits';
 import CarreraPricing from '@/components/carrera/CarreraPricing';
 import CarreraFAQ from '@/components/carrera/CarreraFAQ';
+import CarreraStickyCTA from '@/components/carrera/CarreraStickyCTA';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { SEO, courseFormacionProfesionalSchema } from '@/components/SEO';
 import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
