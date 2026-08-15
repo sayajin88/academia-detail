@@ -14,6 +14,7 @@ import {
 import { homeFaqs } from "@/components/home/HomeFAQ";
 import { carreraDetailingData } from "@/data/carreraDetailingData";
 import { faqs as jornadaCeroFaqs } from "@/components/FAQ";
+import { marketingFaqs } from "@/components/marketing/marketingData";
 
 const BASE_URL = "https://academiadetail.com";
 
