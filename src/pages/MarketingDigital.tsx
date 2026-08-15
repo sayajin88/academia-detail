@@ -18,6 +18,8 @@ import {
   MarketingProcess,
   MarketingWork,
   MarketingShowcase,
+  MarketingCost,
+  MarketingLinks,
 } from "@/components/marketing/MarketingSections";
 import { MarketingPacks } from "@/components/marketing/MarketingPacks";
 import { marketingFaqs, waLink } from "@/components/marketing/marketingData";
@@ -32,14 +34,18 @@ const MarketingDigital = () => {
         <MarketingServices />
         <MarketingShowcase />
         <MarketingPacks />
+        <MarketingCost />
         <MarketingBranding />
         <MarketingWork />
         <MarketingProcess />
 
         {/* FAQ */}
-        <section className="py-16 md:py-24">
+        <section id="faq" className="py-16 md:py-24">
           <div className="container max-w-3xl">
-            <SectionHeading badge="Dudas frecuentes" title="Preguntas frecuentes" />
+            <SectionHeading
+              badge="Dudas frecuentes"
+              title="Preguntas frecuentes sobre marketing digital para detailing"
+            />
             <Accordion type="single" collapsible className="w-full">
               {marketingFaqs.map((faq, i) => (
                 <AccordionItem key={faq.question} value={`item-${i}`} className="border-border/60">

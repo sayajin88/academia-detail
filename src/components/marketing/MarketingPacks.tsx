@@ -108,11 +108,12 @@ function PackCard({ pack, index }: { pack: PricedPack; index: number }) {
           )}
 
           <h3
-            className={`font-bold text-foreground mb-1 ${
+            id={`pack-${pack.id}`}
+            className={`font-bold text-foreground mb-1 scroll-mt-28 ${
               featured ? "text-3xl md:text-4xl" : "text-2xl"
             }`}
           >
-            {pack.name}
+            {pack.name} · {pack.price}
           </h3>
           <p className="text-sm text-muted-foreground mb-7">{pack.subtitle}</p>
 
@@ -170,7 +171,7 @@ export function MarketingPacks() {
 
         <SectionHeading
           badge="Packs"
-          title="Todo lo que necesitas para existir en digital"
+          title="Precios y packs de páginas web para detailers (desde 199€)"
           subtitle="Elige el punto de partida. Un solo pago, sin cuotas ni permanencias. Todos los precios son sin IVA."
         />
 
