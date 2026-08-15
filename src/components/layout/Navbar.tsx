@@ -27,6 +27,7 @@ const toolLinks = [
 
 const navLinks = [
   { name: 'Inicio', href: '/', icon: Home },
+  { name: 'Marketing', href: '/marketing-digital-detailing', icon: Rocket },
   { name: 'Quiénes Somos', href: '/quienes-somos', icon: Image },
   { name: 'Blog', href: '/blog', icon: BookOpen },
   { name: 'Directorio', href: '/centros-detailing-espana', icon: MapPin },
