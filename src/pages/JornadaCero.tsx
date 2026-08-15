@@ -648,11 +648,7 @@ const Index = () => {
       <GoogleReviews />
 
       {/* Waiting list / dates FAQ */}
-      <WaitlistFAQ
-        onCtaClick={() =>
-          document.getElementById("lista-espera")?.scrollIntoView({ behavior: "smooth", block: "nearest" })
-        }
-      />
+      <WaitlistFAQ onCtaClick={openModal} />
 
       {/* FAQ Section */}
       <FAQ />
