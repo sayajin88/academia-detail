@@ -259,3 +259,7 @@ export const carreraDetailingData = {
     }
   ]
 };
+
+/** Formats a euro amount with thousand separators (es-ES style, always grouped). */
+export const formatEuro = (value: number): string =>
+  value.toLocaleString('es-ES').replace(/^(\d)(\d{3})$/, '$1.$2');

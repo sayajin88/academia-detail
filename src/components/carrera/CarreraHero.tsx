@@ -12,7 +12,7 @@ import {
   MessageCircle,
   TrendingDown,
 } from 'lucide-react';
-import { carreraDetailingData } from '@/data/carreraDetailingData';
+import { carreraDetailingData, formatEuro } from '@/data/carreraDetailingData';
 import { useCountUp } from '@/hooks/useCountUp';
 import heroImage from '@/assets/formacion-detailing-juan-daniel.jpg';
 
@@ -130,15 +130,15 @@ const CarreraHero = ({ onCTAClick }: CarreraHeroProps) => {
                     Tu inversión
                   </p>
                   <p className="text-4xl font-monument gold-gradient-text leading-none">
-                    {carreraDetailingData.price.toLocaleString('es-ES')} €
+                    {formatEuro(carreraDetailingData.price)} €
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-muted-foreground line-through">
-                    {carreraDetailingData.coursesTotal.toLocaleString('es-ES')} €
+                    {formatEuro(carreraDetailingData.coursesTotal)} €
                   </p>
                   <p className="text-sm font-bold text-gold">
-                    Ahorras {carreraDetailingData.savings.toLocaleString('es-ES')} €
+                    Ahorras {formatEuro(carreraDetailingData.savings)} €
                   </p>
                 </div>
               </div>
@@ -195,7 +195,7 @@ const CarreraHero = ({ onCTAClick }: CarreraHeroProps) => {
                         </p>
                       </div>
                       <span className="flex-shrink-0 text-sm sm:text-base text-muted-foreground line-through decoration-gold/70">
-                        {formation.value.toLocaleString('es-ES')} €
+                        {formatEuro(formation.value)} €
                       </span>
                     </div>
                   </li>
@@ -255,13 +255,13 @@ const CarreraHero = ({ onCTAClick }: CarreraHeroProps) => {
                 <div className="flex items-center justify-between text-sm">
                   <dt className="text-muted-foreground">Valor total del programa</dt>
                   <dd className="text-foreground font-semibold">
-                    {carreraDetailingData.totalValue.toLocaleString('es-ES')} €
+                    {formatEuro(carreraDetailingData.totalValue)} €
                   </dd>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <dt className="text-muted-foreground">Los 4 cursos por separado</dt>
                   <dd className="text-muted-foreground line-through">
-                    {carreraDetailingData.coursesTotal.toLocaleString('es-ES')} €
+                    {formatEuro(carreraDetailingData.coursesTotal)} €
                   </dd>
                 </div>
               </dl>
@@ -271,16 +271,16 @@ const CarreraHero = ({ onCTAClick }: CarreraHeroProps) => {
                   Tu inversión
                 </p>
                 <p className="text-5xl xl:text-6xl font-monument gold-gradient-text leading-none">
-                  {carreraDetailingData.price.toLocaleString('es-ES')} €
+                  {formatEuro(carreraDetailingData.price)} €
                 </p>
                 <div className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full bg-gold/15 border border-gold/40">
                   <TrendingDown className="w-4 h-4 text-gold" />
                   <span className="text-sm font-bold text-gold">
-                    Ahorras {(savingsCount || carreraDetailingData.savings).toLocaleString('es-ES')} €
+                    Ahorras {(savingsCount || formatEuro(carreraDetailingData.savings))} €
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  + {carreraDetailingData.extrasValue.toLocaleString('es-ES')} € en negocio y
+                  + {formatEuro(carreraDetailingData.extrasValue)} € en negocio y
                   práctica real, sin coste adicional
                 </p>
               </div>

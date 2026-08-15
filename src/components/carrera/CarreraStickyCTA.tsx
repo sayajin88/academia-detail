@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
-import { carreraDetailingData } from '@/data/carreraDetailingData';
+import { carreraDetailingData, formatEuro } from '@/data/carreraDetailingData';
 
 interface CarreraStickyCTAProps {
   onCTAClick: () => void;
@@ -32,10 +32,10 @@ const CarreraStickyCTA = ({ onCTAClick }: CarreraStickyCTAProps) => {
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="text-lg font-monument gold-gradient-text leading-none">
-            {carreraDetailingData.price.toLocaleString('es-ES')} €
+            {formatEuro(carreraDetailingData.price)} €
           </p>
           <p className="text-[11px] text-muted-foreground">
-            Ahorras {carreraDetailingData.savings.toLocaleString('es-ES')} €
+            Ahorras {formatEuro(carreraDetailingData.savings)} €
           </p>
         </div>
         <Button

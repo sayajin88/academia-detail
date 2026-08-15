@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Check, Star } from 'lucide-react';
-import { carreraDetailingData } from '@/data/carreraDetailingData';
+import { carreraDetailingData, formatEuro } from '@/data/carreraDetailingData';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 
 const CarreraFormaciones = () => {
@@ -104,9 +104,9 @@ const CarreraFormaciones = () => {
             <p className="text-foreground">
               Dentro de la Carrera Detailing las tienes todas por{' '}
               <span className="text-gold font-bold">
-                €{carreraDetailingData.price.toLocaleString('es-ES')}
+                €{formatEuro(carreraDetailingData.price)}
               </span>
-              : ahorras €{carreraDetailingData.savings.toLocaleString('es-ES')} y además incluye el
+              : ahorras €{formatEuro(carreraDetailingData.savings)} y además incluye el
               Módulo de Negocio y 1 mes de taller real.
             </p>
           </div>
