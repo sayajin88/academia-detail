@@ -14,6 +14,7 @@ import {
 import { homeFaqs } from "@/components/home/HomeFAQ";
 import { carreraDetailingData } from "@/data/carreraDetailingData";
 import { faqs as jornadaCeroFaqs } from "@/components/FAQ";
+import { waitlistFaqs } from "@/components/WaitlistFAQ";
 import { marketingFaqs } from "@/components/marketing/marketingData";
 
 const BASE_URL = "https://academiadetail.com";
@@ -873,7 +874,7 @@ export const seoConfig = {
         { name: "Jornadas Intensivas", url: "/curso-detailing-iniciacion" },
         { name: "Jornada Zero", url: "/jornada-zero-detailing" },
       ]),
-      generateFAQSchema(jornadaCeroFaqs),
+      generateFAQSchema([...waitlistFaqs, ...jornadaCeroFaqs]),
     ],
   },
 
@@ -952,6 +953,7 @@ export const seoConfig = {
         { name: "Jornadas Intensivas", url: "/curso-detailing-iniciacion" },
         { name: "Up Detail", url: "/up-detail-evento" },
       ]),
+      generateFAQSchema(waitlistFaqs),
     ],
   },
 

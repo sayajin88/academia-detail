@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { SEO } from '@/components/SEO';
+import { WaitlistFAQ } from '@/components/WaitlistFAQ';
 import { seoConfig } from '@/utils/seoConfig';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -685,6 +686,13 @@ export default function UpDetail() {
             </div>
           </div>
         </footer>
+
+        {/* Waiting list / dates FAQ */}
+        <WaitlistFAQ
+          onCtaClick={() =>
+            document.getElementById('preregistro')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+          }
+        />
 
         {/* Mobile Sticky CTA */}
         <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-black/90 backdrop-blur-md border-t border-violet-500/20 p-3 safe-area-bottom">

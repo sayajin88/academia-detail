@@ -43,6 +43,7 @@ import { UrgencyTimer } from "@/components/UrgencyTimer";
 import { VideoTestimonials } from "@/components/VideoTestimonials";
 import { TrustSignals } from "@/components/TrustSignals";
 import { FAQ } from "@/components/FAQ";
+import { WaitlistFAQ } from "@/components/WaitlistFAQ";
 import { GoogleReviews } from "@/components/shared/GoogleReviews";
 import { PricingComparison } from "@/components/PricingComparison";
 import { InstructorProfile } from "@/components/InstructorProfile";
@@ -645,6 +646,9 @@ const Index = () => {
 
       {/* Google Reviews */}
       <GoogleReviews />
+
+      {/* Waiting list / dates FAQ */}
+      <WaitlistFAQ onCtaClick={openModal} />
 
       {/* FAQ Section */}
       <FAQ />
