@@ -9,6 +9,9 @@ import instalacionesPhoto from "@/assets/instalaciones-curso-ferrari.jpg";
 import practicaPhoto from "@/assets/evento-practica-pulidora-real.jpg";
 import beforeAfterPhoto from "@/assets/before-after-detailing.jpg";
 import formacionPhoto from "@/assets/alumnos-formacion.jpg";
+import mockupWeb1 from "@/assets/marketing/mockup-web-1.png.asset.json";
+import mockupWeb2 from "@/assets/marketing/mockup-web-2.png.asset.json";
+import mockupWeb3 from "@/assets/marketing/mockup-web-3.jpg.asset.json";
 
 export function MarketingValue() {
   return (
@@ -266,6 +269,85 @@ export function MarketingWork() {
               </figure>
             </AnimatedSection>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function MarketingShowcase() {
+  return (
+    <section className="py-16 md:py-24 relative overflow-hidden">
+      <div className="absolute top-1/3 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+      <div className="container relative">
+        <SectionHeading
+          badge="Trabajos de referencia"
+          title="Así se ve una web hecha para detailing"
+          subtitle="Diseño oscuro, foto grande, servicios claros y el botón de contacto siempre a mano. Ni plantillas genéricas ni webs de folleto."
+        />
+
+        <div className="grid lg:grid-cols-[1.35fr_1fr] gap-6 items-center">
+          <AnimatedSection animation="fade-up">
+            <figure className="relative">
+              <div className="absolute inset-8 bg-primary/20 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
+              <img
+                src={mockupWeb1.url}
+                alt="Mockups de una web de detailing y PPF con diseño oscuro y acentos rojos"
+                loading="lazy"
+                decoding="async"
+                className="relative w-full drop-shadow-2xl"
+              />
+              <figcaption className="mt-4 text-sm text-muted-foreground text-center lg:text-left">
+                Web multi-sección: servicios, galería de trabajos y llamada a la acción en cada pantalla.
+              </figcaption>
+            </figure>
+          </AnimatedSection>
+
+          <div className="grid gap-6">
+            <AnimatedSection animation="fade-up" delay={100}>
+              <figure className="relative">
+                <div className="absolute inset-10 bg-primary/15 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
+                <img
+                  src={mockupWeb2.url}
+                  alt="Pantalla de packs de PPF mostrada en un monitor de escritorio"
+                  loading="lazy"
+                  decoding="async"
+                  className="relative w-full drop-shadow-2xl"
+                />
+                <figcaption className="mt-2 text-sm text-muted-foreground">
+                  Packs de servicio explicados con precio, alcance y presupuesto en un clic.
+                </figcaption>
+              </figure>
+            </AnimatedSection>
+
+            <AnimatedSection animation="fade-up" delay={180}>
+              <figure className="relative rounded-2xl overflow-hidden border border-border/60">
+                <img
+                  src={mockupWeb3.url}
+                  alt="Diseño de página de automoción con secciones de producto y galería"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full object-cover"
+                />
+                <figcaption className="p-4 text-sm text-muted-foreground bg-card/70">
+                  Jerarquía visual tipo marca de automoción: producto grande, texto justo y contraste alto.
+                </figcaption>
+              </figure>
+            </AnimatedSection>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Button size="lg" asChild className="shadow-primary">
+            <a
+              href={waLink("Hola, quiero una web como las que mostráis para mi centro de detailing.")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Quiero una web así
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </a>
+          </Button>
         </div>
       </div>
     </section>

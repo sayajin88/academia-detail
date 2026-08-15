@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, Search, Bot } from "lucide-react";
 import { waLink } from "./marketingData";
-import heroIllustration from "@/assets/marketing/hero.png.asset.json";
+import heroIllustration from "@/assets/marketing/detailing-social.png.asset.json";
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -86,12 +86,12 @@ export function MarketingHero() {
             <div className="absolute inset-6 bg-primary/25 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
             <img
               src={heroIllustration.url}
-              alt="Estrategia de marketing digital y redes sociales para centros de detailing"
-              width={1080}
-              height={960}
+              alt="Detailers puliendo un coche premium rodeados de iconos de redes sociales"
+              width={1024}
+              height={854}
               loading="eager"
               decoding="async"
-              className="relative w-full max-w-md mx-auto animate-float-gentle drop-shadow-2xl [filter:saturate(0.85)_contrast(1.05)] mix-blend-luminosity opacity-95 hover:mix-blend-normal hover:opacity-100 transition-all duration-500"
+              className="relative w-full max-w-lg mx-auto animate-float-gentle drop-shadow-2xl"
             />
           </div>
         </div>
