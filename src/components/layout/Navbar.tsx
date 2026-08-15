@@ -167,16 +167,20 @@ export function Navbar() {
                 }}
               />
 
+              {/* Visual separator between logo and menu */}
+              <div className="h-6 w-px bg-white/10 mx-1" aria-hidden="true" />
+
               <Link
                 to="/"
                 data-active={location.pathname === '/'}
-                className={`relative px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                className={`relative inline-flex items-center gap-1.5 px-2 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                   location.pathname === '/' 
                     ? 'text-primary' 
                     : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
                 } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
                 style={{ transitionDelay: '200ms' }}
               >
+                <Home className="h-4 w-4" />
                 Inicio
               </Link>
 
