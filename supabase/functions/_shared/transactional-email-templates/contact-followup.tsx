@@ -4,8 +4,9 @@ import {
 } from 'npm:@react-email/components@0.0.22'
 import type { TemplateEntry } from './registry.ts'
 
-const DOSSIER_URL_RAW = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
-const DOSSIER_TRACKING_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-dossier-click"
+// DOSSIER PAUSADO: reactivar si se restablece el enlace al dossier.
+// const DOSSIER_URL_RAW = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
+// const DOSSIER_TRACKING_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-dossier-click"
 const ACADEMY_LOGO_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/email-assets/academia-detail-logo.png"
 const WEB_URL = "https://detailpark.com"
 const INSTAGRAM_URL = "https://instagram.com/danidetailoficial"
