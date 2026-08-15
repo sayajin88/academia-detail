@@ -76,6 +76,7 @@ const App = () => (
               <Route path="/curso-restauracion-vehiculos" element={<FormationDetail />} />
               <Route path="/quienes-somos" element={<AboutUs />} />
               <Route path="/contacto" element={<Contact />} />
+              <Route path="/marketing-digital-detailing" element={<MarketingDigital />} />
               <Route path="/glosario-detailing" element={<Glossary />} />
               <Route path="/glosario-detailing/:slug" element={<GlossaryTermPage />} />
               <Route path="/calculadora-dilucion-detailing" element={<CalculadoraDilucion />} />
