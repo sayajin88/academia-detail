@@ -5,7 +5,7 @@ import { TEMPLATES } from '../_shared/transactional-email-templates/registry.ts'
 
 // Configuration baked in at scaffold time — do NOT change these manually.
 // To update, re-run the email domain setup flow.
-const SITE_NAME = "detailing-ignition-landing"
+const SITE_NAME = "Detail Park - Academia Detail"
 const SENDER_DOMAIN = "notify.academiadetail.com"
 const FROM_DOMAIN = "academiadetail.com"
 const REPLY_TO = "admin@detailpark.com"
