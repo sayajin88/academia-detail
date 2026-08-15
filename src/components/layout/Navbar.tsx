@@ -151,11 +151,12 @@ export function Navbar() {
               </div>
             </Link>
 
-            {/* Desktop Navigation - Centered */}
-            <div 
-              ref={navRef}
-              className="hidden lg:flex items-center gap-0.5 relative ml-6 xl:ml-8"
-            >
+            {/* Desktop Navigation + CTA group - aligned right */}
+            <div className="hidden lg:flex items-center gap-3 ml-auto">
+              <div 
+                ref={navRef}
+                className="flex items-center gap-1 relative"
+              >
               {/* Animated pill indicator */}
               <div
                 className={`absolute bottom-0 h-0.5 bg-gradient-to-r from-primary via-primary to-primary/50 rounded-full transition-all duration-300 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
