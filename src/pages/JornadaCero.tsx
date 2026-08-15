@@ -406,8 +406,8 @@ const Index = () => {
                     </svg>
                   </div>
                   <div className="text-left">
-                    <div className="text-white/70 text-sm">Fecha del Evento</div>
-                    <div className="text-white font-bold text-xl">Sábado 17 Enero 2026</div>
+                    <div className="text-white/70 text-sm">Próxima convocatoria</div>
+                    <div className="text-white font-bold text-xl">Fecha por confirmar</div>
                   </div>
                 </div>
               </div>
