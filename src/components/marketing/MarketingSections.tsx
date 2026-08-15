@@ -3,6 +3,8 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { valueArguments, services, processSteps, waLink } from "./marketingData";
+import socialIllustration from "@/assets/marketing/social.png.asset.json";
+import inboundIllustration from "@/assets/marketing/inbound.png.asset.json";
 
 export function MarketingValue() {
   return (
