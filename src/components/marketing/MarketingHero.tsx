@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, Search, Bot } from "lucide-react";
 import { waLink } from "./marketingData";
+import heroIllustration from "@/assets/marketing/hero.png.asset.json";
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -23,24 +24,25 @@ export function MarketingHero() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-transparent to-background" aria-hidden="true" />
 
       <div className="container relative">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center">
+          <div className="text-center lg:text-left">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/10 text-primary border border-primary/30 mb-6">
             <Sparkles className="w-3.5 h-3.5 animate-pulse" />
             Marketing digital para centros de detailing
           </span>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] text-foreground mb-6">
+          <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold leading-[1.05] text-foreground mb-6">
             Tu trabajo es espectacular.
             <span className="block gradient-text marketing-shine">Que tu marca también lo sea.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-10">
             Diseño web, SEO, posicionamiento en buscadores de IA e identidad de marca para
             detailers que quieren vivir de esto. Más visibilidad, más confianza y más
             clientes escribiéndote por WhatsApp.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
             <Button size="lg" asChild className="w-full sm:w-auto text-base shadow-primary">
               <a
                 href={waLink("Hola, me interesa el servicio de marketing digital para mi negocio de detailing.")}
@@ -60,7 +62,7 @@ export function MarketingHero() {
           </div>
 
           {/* Floating pills */}
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto lg:mx-0">
             {pills.map((pill, i) => (
               <div
                 key={pill.label}
@@ -76,6 +78,21 @@ export function MarketingHero() {
                 </span>
               </div>
             ))}
+          </div>
+          </div>
+
+          {/* Hero illustration */}
+          <div className="relative order-first lg:order-none">
+            <div className="absolute inset-6 bg-primary/25 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
+            <img
+              src={heroIllustration.url}
+              alt="Estrategia de marketing digital y redes sociales para centros de detailing"
+              width={1080}
+              height={960}
+              loading="eager"
+              decoding="async"
+              className="relative w-full max-w-md mx-auto animate-float-gentle drop-shadow-2xl [filter:saturate(0.85)_contrast(1.05)] mix-blend-luminosity opacity-95 hover:mix-blend-normal hover:opacity-100 transition-all duration-500"
+            />
           </div>
         </div>
       </div>
