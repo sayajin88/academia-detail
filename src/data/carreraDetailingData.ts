@@ -9,6 +9,7 @@ export interface IncludedFormation {
   name: string;
   value: number;
   duration: string;
+  url?: string;
   highlights: string[];
 }
 
