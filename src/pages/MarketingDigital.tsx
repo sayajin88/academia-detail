@@ -31,6 +31,7 @@ const MarketingDigital = () => {
         <MarketingServices />
         <MarketingPacks />
         <MarketingBranding />
+        <MarketingWork />
         <MarketingProcess />
 
         {/* FAQ */}
