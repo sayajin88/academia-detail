@@ -15,6 +15,9 @@ Allow: /curso-restauracion-vehiculos
 Allow: /quienes-somos
 Allow: /contacto
 
+# Servicios de marketing digital para centros de detailing
+Allow: /marketing-digital-detailing
+
 # Landing pages ciudades
 Allow: /curso-detailing-madrid
 Allow: /curso-detailing-barcelona
