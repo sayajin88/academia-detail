@@ -1,46 +1,56 @@
-import { Link } from 'react-router-dom';
-import { Instagram, Youtube, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import logo from '@/assets/detail-park-logo-white.png';
-import logoCarcarePassion from '@/assets/brands/carcare-passion.png';
-import logoViabill from '@/assets/brands/viabill.png';
+import { Link } from "react-router-dom";
+import { Instagram, Youtube, Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import logo from "@/assets/detail-park-logo-white.png";
+import logoCarcarePassion from "@/assets/brands/carcare-passion.png";
+import logoViabill from "@/assets/brands/viabill.png";
 
 const formationLinks = [
-  { name: 'Jornada Zero', href: '/jornada-zero-detailing' },
-  { name: 'Detailing', href: '/curso-detailing-profesional' },
-  { name: 'Car Wrapping', href: '/curso-vinilado-vehiculos' },
-  { name: 'Paint Protection Film', href: '/curso-ppf-proteccion-pintura' },
-  { name: 'Restauración', href: '/curso-restauracion-vehiculos' },
-  { name: 'Carrera Detailing', href: '/formacion-profesional-detailing' },
+  { name: "Jornada Zero", href: "/jornada-zero-detailing" },
+  { name: "Detailing", href: "/curso-detailing-profesional" },
+  { name: "Car Wrapping", href: "/curso-vinilado-vehiculos" },
+  { name: "Paint Protection Film", href: "/curso-ppf-proteccion-pintura" },
+  { name: "Restauración", href: "/curso-restauracion-vehiculos" },
+  { name: "Carrera Detailing", href: "/formacion-profesional-detailing" },
 ];
 
 const quickLinks = [
-  { name: 'Blog', href: '/blog' },
-  { name: 'Glosario Detailing', href: '/glosario-detailing' },
-  { name: 'Directorio Detailers', href: '/centros-detailing-espana' },
-  { name: 'Calculadora Dilución', href: '/calculadora-dilucion-detailing' },
-  { name: 'Marketing para Detailers', href: '/marketing-digital-detailing' },
-  { name: 'Quiénes Somos', href: '/quienes-somos' },
-  { name: 'Contacto', href: '/contacto' },
+  { name: "Blog", href: "/blog" },
+  { name: "Glosario Detailing", href: "/glosario-detailing" },
+  { name: "Directorio Detailers", href: "/centros-detailing-espana" },
+  { name: "Calculadora Dilución", href: "/calculadora-dilucion-detailing" },
+  { name: "Marketing para Detailers", href: "/marketing-digital-detailing" },
+  { name: "Quiénes Somos", href: "/quienes-somos" },
+  { name: "Contacto", href: "/contacto" },
 ];
 
 const cityLinks = [
-  { name: 'Detailing Madrid', href: '/curso-detailing-madrid' },
-  { name: 'Detailing Barcelona', href: '/curso-detailing-barcelona' },
-  { name: 'Detailing Valencia', href: '/curso-detailing-valencia' },
-  { name: 'Detailing Sevilla', href: '/curso-detailing-sevilla' },
-  { name: 'Detailing Bilbao', href: '/curso-detailing-bilbao' },
+  { name: "Detailing Madrid", href: "/curso-detailing-madrid" },
+  { name: "Detailing Barcelona", href: "/curso-detailing-barcelona" },
+  { name: "Detailing Valencia", href: "/curso-detailing-valencia" },
+  { name: "Detailing Sevilla", href: "/curso-detailing-sevilla" },
+  { name: "Detailing Bilbao", href: "/curso-detailing-bilbao" },
 ];
 
 const legalLinks = [
-  { name: 'Política de Privacidad', href: '/politica-privacidad', key: 'privacidad' },
-  { name: 'Aviso Legal', href: '/politica-privacidad', key: 'aviso-legal' },
+  { name: "Política de Privacidad", href: "/politica-privacidad", key: "privacidad" },
+  { name: "Aviso Legal", href: "/politica-privacidad", key: "aviso-legal" },
 ];
 
 const socialLinks = [
-  { name: 'Instagram Academia', href: 'https://www.instagram.com/detailparkoficial/', icon: Instagram, label: '@detailpark' },
-  { name: 'Instagram Daniel', href: 'https://www.instagram.com/danidetailoficial/', icon: Instagram, label: '@danidetail' },
-  { name: 'YouTube', href: 'https://www.youtube.com/@detailpark', icon: Youtube, label: 'YouTube' },
+  {
+    name: "Instagram Academia",
+    href: "https://www.instagram.com/detailparkoficial/",
+    icon: Instagram,
+    label: "@detailpark",
+  },
+  {
+    name: "Instagram Daniel",
+    href: "https://www.instagram.com/danidetailoficial/",
+    icon: Instagram,
+    label: "@danidetail",
+  },
+  { name: "YouTube", href: "https://www.youtube.com/@detailpark", icon: Youtube, label: "YouTube" },
 ];
 
 export function Footer() {
@@ -53,18 +63,25 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-2">
-              <img src={logo} alt="Detail Park - Academia Detail · Escuela de detailing profesional" className="h-10 w-auto" width={200} height={40} />
+              <img
+                src={logo}
+                alt="Detail Park - Academia Detail · Escuela de detailing profesional"
+                className="h-10 w-auto"
+                width={200}
+                height={40}
+              />
             </Link>
-            <a 
-              href="https://www.detailpark.com" 
-              target="_blank" 
+            <a
+              href="https://www.detailpark.com"
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-block text-xs text-muted-foreground hover:text-primary transition-colors mb-4 tracking-wide"
             >
               Potenciada por <span className="font-semibold text-foreground/80">Detail Park</span> ↗
             </a>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Centro de formación líder en detailing profesional, dentro de las instalaciones de Detail Park en Alicante.
+              Centro de formación líder en detailing profesional, dentro de las instalaciones de Detail Park en
+              Alicante.
             </p>
 
             {/* Social links with labels */}
@@ -86,6 +103,29 @@ export function Footer() {
                   </span>
                 </a>
               ))}
+            </div>
+
+            {/* Para tu negocio: Sistema Detail, el software de gestión de Detail Park */}
+            <div className="space-y-2 mb-6">
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground/50 font-semibold">
+                Para tu negocio
+              </p>
+              <a
+                href="https://sistemadetail.com/"
+                target="_blank"
+                rel="noopener"
+                className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                Sistema Detail · software para centros de detailing ↗
+              </a>
+              <a
+                href="https://sistemadetail.com/calcular-precio-detailing"
+                target="_blank"
+                rel="noopener"
+                className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                Cómo calcular el precio de un detailing ↗
+              </a>
             </div>
 
             {/* Partners */}
@@ -219,7 +259,11 @@ export function Footer() {
             {/* WhatsApp mini CTA */}
             <div className="p-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20">
               <p className="text-xs text-muted-foreground mb-2.5">¿Tienes dudas? Escríbenos</p>
-              <Button asChild size="sm" className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white gap-2 font-semibold">
+              <Button
+                asChild
+                size="sm"
+                className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white gap-2 font-semibold"
+              >
                 <a href="https://wa.me/34622773555" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="h-4 w-4" />
                   WhatsApp
@@ -235,9 +279,7 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Detailing Car & Parking Club S.L. Todos los derechos reservados.
             </p>
-            <p className="text-xs text-muted-foreground/70">
-              Hecho con pasión por el detailing
-            </p>
+            <p className="text-xs text-muted-foreground/70">Hecho con pasión por el detailing</p>
           </div>
         </div>
       </div>
