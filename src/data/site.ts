@@ -29,8 +29,10 @@ export const whatsappLink = (text?: string) =>
   `https://wa.me/${SITE.whatsappNumber}${text ? `?text=${encodeURIComponent(text)}` : ''}`;
 
 export const STATS = {
-  /** Alumnos formados en la academia */
-  alumnos: 218,
+  /** Alumnos formados en la academia (cifra acordada el 27-09-2026 para todas las webs) */
+  alumnos: '500+',
+  /** Proyectos realizados en Detail Park (misma cifra en todas las webs) */
+  proyectos: '+2.000',
   /** Alumnos por grupo como máximo */
   maxAlumnosGrupo: 3,
   /** Valoración de Detail Park (el centro donde se imparten los cursos) en Google */

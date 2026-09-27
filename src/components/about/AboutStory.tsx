@@ -35,7 +35,7 @@ export function AboutStory() {
           <div className="flex max-w-prose flex-col gap-4 text-[0.9375rem] leading-relaxed text-muted-foreground md:text-base">
             <p>
               {SITE.founder} fundó Detail Park en Alicante en 2017. Hoy es un centro de detailing, vinilado y PPF que
-              trabaja cada día con coches de clientes, desde utilitarios hasta deportivos.
+              trabaja cada día con coches de clientes, desde utilitarios hasta deportivos: {STATS.proyectos} proyectos desde 2017.
             </p>
             <p>
               Academia Detail nació para enseñar el oficio tal y como se hace en un centro que vive de ello: con vehículos
