@@ -4,6 +4,12 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
 import { CookieBanner } from "./components/shared/CookieBanner";
+import { useScrollReveal } from "./hooks/useScrollReveal";
+
+function ScrollReveal() {
+  useScrollReveal();
+  return null;
+}
 
 // Avisos emergentes: se cargan aparte para no pesar en la primera carga.
 // Sonner lo usan los formularios públicos; el Toaster de Radix, solo el panel de admin.
@@ -76,6 +82,7 @@ const App = () => (
   <HelmetProvider>
         <BrowserRouter>
           <Toasts />
+          <ScrollReveal />
           <CookieBanner />
           <Suspense fallback={<PageFallback />}>
             <Routes>

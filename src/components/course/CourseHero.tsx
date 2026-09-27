@@ -6,6 +6,7 @@ import { WhatsAppIcon } from '@/components/ds/WhatsAppIcon';
 import { NEXT_EDITION, STATS, whatsappLink } from '@/data/site';
 import { formatPrice } from '@/lib/format';
 import type { FormationDetail } from '@/data/formationDetails';
+import { AccentLast } from '@/components/ds/AccentLast';
 
 interface CourseHeroProps {
   formation: FormationDetail;
@@ -27,19 +28,21 @@ export function CourseHero({ formation, picture, heading, eyebrow, lead, breadcr
   const srcSet = Object.values(picture.sources)[0];
 
   return (
-    <section className="border-b border-border bg-background">
+    <section className="ds-hero border-b border-white/[0.06]">
       <div className="ds-container pt-2">
         <Breadcrumbs items={breadcrumbs} />
       </div>
       <div className="ds-container grid items-center gap-10 pb-14 pt-4 md:pb-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
         <div className="order-2 lg:order-1">
-          <p className="ds-eyebrow mb-4">{eyebrow ?? (comingSoon ? 'Próximamente · Alicante' : 'Curso presencial · Alicante')}</p>
-          <h1 className="ds-h1 text-foreground">{heading ?? formation.name}</h1>
+          <p className="ds-pill mb-5">{eyebrow ?? (comingSoon ? 'Próximamente · Alicante' : 'Curso presencial · Alicante')}</p>
+          <h1 className="ds-h1 text-foreground">
+            <AccentLast text={heading ?? formation.name} />
+          </h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">{lead ?? formation.heroDescription}</p>
 
           <dl className="mt-8 grid max-w-xl grid-cols-3 gap-3">
             {facts.map((f) => (
-              <div key={f.label} className="rounded-lg border border-border bg-card p-3 md:p-4">
+              <div key={f.label} className="ds-glass rounded-xl p-3 md:p-4">
                 <dt className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <f.icon className="h-3.5 w-3.5" aria-hidden="true" />
                   {f.label}
@@ -82,7 +85,7 @@ export function CourseHero({ formation, picture, heading, eyebrow, lead, breadcr
           )}
         </div>
 
-        <div className="order-1 overflow-hidden rounded-xl lg:order-2">
+        <div className="ds-frame order-1 lg:order-2">
           <img
             src={picture.img.src}
             srcSet={srcSet}

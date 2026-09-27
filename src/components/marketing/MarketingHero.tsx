@@ -23,14 +23,14 @@ function Notice({ icon, title, text, className }: { icon: React.ReactNode; title
 
 export function MarketingHero() {
   return (
-    <section className="border-b border-border bg-background">
+    <section className="ds-hero border-b border-white/[0.06]">
       <div className="ds-container pt-2">
         <Breadcrumbs items={[{ name: 'Marketing para detailers', url: '/marketing-digital-detailing' }]} />
       </div>
       <div className="ds-container grid items-center gap-12 pb-14 pt-4 md:pb-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-10">
         <div>
-          <p className="ds-eyebrow mb-4">Marketing digital para centros de detailing</p>
-          <h1 className="ds-h1 text-foreground">Web, SEO y marca para tu centro de detailing</h1>
+          <p className="ds-pill mb-5">Marketing digital para centros de detailing</p>
+          <h1 className="ds-h1 text-foreground">Web, SEO y marca para tu <span className="ds-text-gradient">centro de detailing</span></h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
             Tu trabajo es espectacular; que tu marca también lo sea. Hacemos diseño web, SEO local, posicionamiento en
             buscadores de IA (GEO) e identidad de marca para talleres y centros de detailing de toda España.
@@ -57,7 +57,7 @@ export function MarketingHero() {
 
         {/* Composición: foto real del taller + avisos de redes, Google y WhatsApp */}
         <div className="relative px-2 pb-10 pt-8 sm:px-6 lg:px-0 lg:pl-6">
-          <div className="overflow-hidden rounded-2xl border border-border">
+          <div className="ds-frame">
             <Img
               picture={practicaImg}
               alt="Alumno puliendo un coche con una pulidora DeWalt mientras el formador le guía y otros alumnos graban con el móvil"

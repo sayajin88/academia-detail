@@ -16,14 +16,14 @@ const facts = [
 
 export function AboutHero() {
   return (
-    <section className="border-b border-border bg-background">
+    <section className="ds-hero border-b border-white/[0.06]">
       <div className="ds-container pt-2">
         <Breadcrumbs items={[{ name: 'Quiénes somos', url: '/quienes-somos' }]} />
       </div>
       <div className="ds-container grid items-center gap-10 pb-14 pt-4 md:pb-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
         <div>
-          <p className="ds-eyebrow mb-4">Quiénes somos · Alicante</p>
-          <h1 className="ds-h1 text-foreground">La academia de un taller de detailing en activo</h1>
+          <p className="ds-pill mb-5">Quiénes somos · Alicante</p>
+          <h1 className="ds-h1 text-foreground">La academia de un taller de detailing <span className="ds-text-gradient">en activo</span></h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
             Academia Detail es la escuela de{' '}
             <a href={SITE.detailParkUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand underline underline-offset-4">
@@ -62,7 +62,7 @@ export function AboutHero() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl">
+        <div className="ds-frame">
           <Img
             picture={tallerImg}
             alt="Clase en el taller de Detail Park, con alumnos sentados junto a un Ferrari y el formador explicando el material de pulido"

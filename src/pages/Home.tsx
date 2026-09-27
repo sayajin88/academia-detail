@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <>
       <SEO {...homeSEO} />
-      <MainLayout>
+      <MainLayout overlapHeader>
         <HomeHero />
         <HomeCourses />
         <Suspense fallback={<Placeholder />}>

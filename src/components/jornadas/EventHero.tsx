@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
 import { WhatsAppIcon } from '@/components/ds/WhatsAppIcon';
 import { Img } from '@/components/ds/Img';
+import { AccentLast } from '@/components/ds/AccentLast';
 import { whatsappLink } from '@/data/site';
 import { formatPrice } from '@/lib/format';
 
@@ -36,19 +37,19 @@ interface EventHeroProps {
 export function EventHero({ breadcrumbs, eyebrow, title, lead, facts, price, priceLabel, cta, whatsappText, note, picture, alt }: EventHeroProps) {
   const isAnchor = cta.href.startsWith('#');
   return (
-    <section className="border-b border-border bg-background">
+    <section className="ds-hero border-b border-white/[0.06]">
       <div className="ds-container pt-2">
         <Breadcrumbs items={breadcrumbs} />
       </div>
       <div className="ds-container grid items-center gap-10 pb-14 pt-4 md:pb-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
         <div className="order-2 lg:order-1">
-          <p className="ds-eyebrow mb-4">{eyebrow}</p>
-          <h1 className="ds-h1 text-foreground">{title}</h1>
+          <p className="ds-pill mb-5">{eyebrow}</p>
+          <h1 className="ds-h1 text-foreground">{typeof title === 'string' ? <AccentLast text={title} /> : title}</h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">{lead}</p>
 
           <dl className="mt-8 grid max-w-xl grid-cols-3 gap-3">
             {facts.map((f) => (
-              <div key={f.label} className="rounded-lg border border-border bg-card p-3 md:p-4">
+              <div key={f.label} className="ds-glass rounded-xl p-3 md:p-4">
                 <dt className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <f.icon className="h-3.5 w-3.5" aria-hidden="true" />
                   {f.label}
@@ -96,7 +97,7 @@ export function EventHero({ breadcrumbs, eyebrow, title, lead, facts, price, pri
           {note && <p className="mt-4 text-sm text-muted-foreground">{note}</p>}
         </div>
 
-        <div className="order-1 overflow-hidden rounded-xl lg:order-2">
+        <div className="ds-frame order-1 lg:order-2">
           <Img picture={picture} alt={alt} priority sizes="(min-width: 1024px) 50vw, 100vw" className="aspect-[4/3] lg:aspect-[5/4]" />
         </div>
       </div>

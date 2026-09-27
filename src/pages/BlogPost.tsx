@@ -112,7 +112,7 @@ export default function BlogPostPage() {
           <div className="ds-container grid gap-10 pb-16 pt-4 md:pb-24 lg:grid-cols-[minmax(0,1fr)_240px] lg:gap-16">
             <div className="min-w-0">
               <header className="max-w-[68ch] text-[1.0625rem] md:text-lg">
-                <p className="ds-eyebrow mb-4">{categoryLabel(post.category)}</p>
+                <p className="ds-pill mb-5">{categoryLabel(post.category)}</p>
                 <h1 className="text-[2.25rem] leading-[1.05] text-foreground md:text-[3rem] lg:text-[3.5rem]">{post.title}</h1>
                 <p className="blog-excerpt ds-lead mt-5">{post.excerpt}</p>
                 <div className="mt-6 flex items-center gap-3">

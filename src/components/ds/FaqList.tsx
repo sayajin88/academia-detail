@@ -31,7 +31,7 @@ export function FaqList({ items, withSchema = false }: FaqListProps) {
           </script>
         </Helmet>
       )}
-      <Accordion type="single" collapsible className="mx-auto max-w-3xl divide-y divide-border rounded-xl border border-border bg-card">
+      <Accordion type="single" collapsible className="ds-card ds-reveal mx-auto max-w-3xl divide-y divide-white/[0.06]">
         {items.map((f, i) => (
           <AccordionItem key={f.question} value={`faq-${i}`} className="border-0 px-5 md:px-6">
             <AccordionTrigger className="gap-4 py-5 text-left text-base md:text-[1.0625rem] font-semibold text-foreground hover:no-underline hover:text-brand">

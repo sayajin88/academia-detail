@@ -21,8 +21,8 @@ const NotFound = () => {
       </Helmet>
       <section className="ds-section">
         <div className="ds-narrow flex flex-col items-center text-center">
-          <p className="ds-eyebrow">Error 404</p>
-          <h1 className="ds-h1 mt-4 text-foreground">Esta página no existe</h1>
+          <p className="ds-pill">Error 404</p>
+          <h1 className="ds-h1 mt-4 text-foreground">Esta página <span className="ds-text-gradient">no existe</span></h1>
           <p className="ds-lead mt-5 max-w-xl">
             Puede que la dirección esté mal escrita o que la página se haya movido. Estas son las más visitadas:
           </p>

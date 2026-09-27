@@ -65,7 +65,7 @@ export default function MapaSitio() {
           <Breadcrumbs items={[{ name: 'Mapa del sitio', url: '/mapa-del-sitio' }]} />
         </div>
         <section className="ds-container pb-16 pt-4 md:pb-24">
-          <h1 className="ds-h1 mb-10 text-foreground md:mb-14">Mapa del sitio</h1>
+          <h1 className="ds-h1 mb-10 text-foreground md:mb-14">Mapa del <span className="ds-text-gradient">sitio</span></h1>
           <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {sitemapData.map((section) => (
               <nav key={section.category} aria-label={section.category}>

@@ -8,9 +8,11 @@ interface MainLayoutProps {
   children: ReactNode;
   /** Oculta el botón flotante de WhatsApp (p. ej. si la página ya tiene una barra fija propia) */
   hideWhatsApp?: boolean;
+  /** La primera sección (hero a sangre) pasa por debajo del menú flotante */
+  overlapHeader?: boolean;
 }
 
-export function MainLayout({ children, hideWhatsApp = false }: MainLayoutProps) {
+export function MainLayout({ children, hideWhatsApp = false, overlapHeader = false }: MainLayoutProps) {
   // El aviso de cookies ocupa la parte baja en móvil: mientras se ve, el botón de WhatsApp se aparta.
   const [cookieBanner, setCookieBanner] = useState(
     () => typeof window !== 'undefined' && Boolean((window as Window & { __cookieBannerVisible?: boolean }).__cookieBannerVisible)
@@ -31,7 +33,7 @@ export function MainLayout({ children, hideWhatsApp = false }: MainLayoutProps) 
         Saltar al contenido
       </a>
       <Navbar />
-      <main id="main-content" className="flex-1 pt-16 md:pt-[72px]">
+      <main id="main-content" className={overlapHeader ? "flex-1" : "flex-1 pt-[5.25rem] md:pt-24"}>
         {children}
       </main>
       <Footer />

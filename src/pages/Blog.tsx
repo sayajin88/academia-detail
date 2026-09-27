@@ -112,13 +112,13 @@ export default function Blog() {
         schema={isLoading ? [] : [blogSchema]}
       />
       <MainLayout>
-        <section className="border-b border-border bg-background">
+        <section className="ds-hero border-b border-white/[0.06]">
           <div className="ds-container pt-2">
             <Breadcrumbs items={[{ name: 'Blog', url: '/blog' }]} />
           </div>
           <div className="ds-container pb-10 pt-4 md:pb-14">
-            <p className="ds-eyebrow mb-4">Blog</p>
-            <h1 className="ds-h1 max-w-3xl text-foreground">Blog de detailing profesional</h1>
+            <p className="ds-pill mb-5">Blog</p>
+            <h1 className="ds-h1 max-w-3xl text-foreground">Blog de detailing <span className="ds-text-gradient">profesional</span></h1>
             <p className="ds-lead mt-5 max-w-2xl">
               Guías y consejos sobre pulido, tratamientos cerámicos, PPF, wrapping y cómo montar tu propio negocio de detailing,
               escritos por el equipo de Detail Park.

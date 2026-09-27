@@ -2,8 +2,9 @@ import { Car, Users, Scale, MessageCircle } from 'lucide-react';
 import { Section, SectionHeader } from '@/components/ds/Section';
 import { Img } from '@/components/ds/Img';
 import { STATS } from '@/data/site';
-import alumnaImg from '@/assets/alumna-pulido-concentrada.jpg?w=360;540;720&format=webp&as=picture';
+import alumnaImg from '@/assets/alumna-pulido-concentrada.jpg?w=480;720;960&format=webp&as=picture';
 import practicaImg from '@/assets/practicas-alumnos-detailing-2.jpg?w=360;540;720&format=webp&as=picture';
+import materialImg from '@/assets/material-curso-detailing.jpg?w=480;720;960&format=webp&as=picture';
 
 const reasons = [
   {
@@ -30,37 +31,47 @@ const reasons = [
 
 export function HomeWhy() {
   return (
-    <Section tone="card" aria-labelledby="porque-title">
-      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="overflow-hidden rounded-xl">
-            <Img picture={alumnaImg} alt="Alumna concentrada puliendo con una pulidora DeWalt" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-[3/4]" />
-          </div>
-          <div className="mt-10 overflow-hidden rounded-xl">
-            <Img picture={practicaImg} alt="Alumnos practicando pulido en grupo sobre un coche" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-[3/4]" />
+    <Section tone="card" decor="grid" aria-labelledby="porque-title">
+      <SectionHeader
+        id="porque-title"
+        eyebrow="Por qué Academia Detail"
+        title="Aprendes haciendo,"
+        accent="con alguien al lado"
+        lead="Formación de taller: la teoría justa y el resto con la máquina en la mano, sobre coches de verdad."
+      />
+
+      {/* Mosaico: fotos grandes y los cuatro motivos */}
+      <div className="grid gap-4 md:grid-cols-4 md:grid-rows-[repeat(2,minmax(0,1fr))]">
+        <div className="ds-reveal relative overflow-hidden rounded-2xl border border-white/10 md:col-span-2 md:row-span-2">
+          <Img picture={alumnaImg} alt="Alumna concentrada puliendo con una pulidora DeWalt" sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[4/3] h-full md:aspect-auto" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" aria-hidden="true" />
+          <div className="absolute inset-x-0 bottom-0 p-6">
+            <p className="font-heading text-5xl leading-none text-white">90 %</p>
+            <p className="mt-1 text-sm text-white/80">del curso es práctica sobre vehículos reales</p>
           </div>
         </div>
-        <div>
-          <SectionHeader
-            id="porque-title"
-            align="left"
-            eyebrow="Por qué Academia Detail"
-            title="Aprendes haciendo, con alguien al lado"
-            className="mb-8 md:mb-10"
-          />
-          <ul className="flex flex-col gap-7">
-            {reasons.map((r) => (
-              <li key={r.title} className="flex gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-brand">
-                  <r.icon className="h-5 w-5" aria-hidden="true" />
-                </span>
-                <div>
-                  <h3 className="text-lg font-bold text-foreground">{r.title}</h3>
-                  <p className="mt-1 text-[0.9375rem] leading-relaxed text-muted-foreground">{r.text}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+        {reasons.map((r) => (
+          <div
+            key={r.title}
+            className="ds-card ds-card-hover ds-reveal flex flex-col gap-3 p-6"
+          >
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-primary/30 bg-gradient-to-br from-primary/40 to-primary/5 text-white shadow-[0_8px_24px_-10px_hsl(var(--primary))]">
+              <r.icon className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <div>
+              <h3 className="text-lg font-bold text-foreground">{r.title}</h3>
+              <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted-foreground">{r.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-4">
+        <div className="ds-reveal overflow-hidden rounded-2xl border border-white/10">
+          <Img picture={practicaImg} alt="Alumnos practicando pulido en grupo sobre un coche" sizes="50vw" className="aspect-[16/9] transition-transform duration-700 hover:scale-105" />
+        </div>
+        <div className="ds-reveal overflow-hidden rounded-2xl border border-white/10">
+          <Img picture={materialImg} alt="Pulidoras y material profesional preparados para la formación" sizes="50vw" className="aspect-[16/9] transition-transform duration-700 hover:scale-105" />
         </div>
       </div>
     </Section>

@@ -117,13 +117,20 @@ export function Navbar() {
   return (
     <>
       <header
-        className={cn(
-          'fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300',
-          isScrolled || mobileOpen ? 'border-border bg-background/95 backdrop-blur-md' : 'border-transparent bg-background/70 backdrop-blur-sm'
-        )}
-        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+        className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5 md:pt-4"
+        style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 0.75rem)' }}
       >
-        <nav aria-label="Navegación principal" className="ds-container flex h-16 items-center justify-between gap-6 md:h-[72px]">
+        <nav
+          aria-label="Navegación principal"
+          className={cn(
+            'relative mx-auto flex h-14 max-w-[1240px] items-center justify-between gap-6 rounded-2xl border px-4 transition-[background-color,border-color,box-shadow] duration-300 md:h-16 md:px-6',
+            isScrolled || mobileOpen
+              ? 'border-white/10 bg-background/85 shadow-2xl shadow-black/40 backdrop-blur-xl'
+              : 'border-white/[0.08] bg-background/55 backdrop-blur-lg'
+          )}
+        >
+          {/* Línea de luz burdeos en el borde inferior */}
+          <span className="pointer-events-none absolute inset-x-8 -bottom-px h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent" aria-hidden="true" />
           <Link to="/" className="flex shrink-0 items-center" aria-label="Academia Detail, ir al inicio">
             <img
               src={academiaLogo}
@@ -231,7 +238,7 @@ export function Navbar() {
       <div
         id="mobile-menu"
         className={cn(
-          'fixed inset-x-0 bottom-0 top-16 z-40 flex flex-col bg-background transition-opacity duration-200 lg:hidden',
+          'fixed inset-x-0 bottom-0 top-0 z-40 flex flex-col bg-background pt-[4.75rem] transition-opacity duration-200 lg:hidden',
           mobileOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         )}
         aria-hidden={!mobileOpen}

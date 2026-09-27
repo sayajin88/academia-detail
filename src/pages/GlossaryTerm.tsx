@@ -96,7 +96,7 @@ export default function GlossaryTerm() {
               />
             </div>
             <div className="ds-container pb-10 pt-4 md:pb-14">
-              <p className="ds-eyebrow mb-4">Glosario · {category}</p>
+              <p className="ds-pill mb-5">Glosario · {category}</p>
               <h1 className="ds-h1 max-w-4xl text-foreground">{term.term}</h1>
               <p className="mt-6 max-w-[68ch] text-lg leading-[1.7] text-foreground/90 md:text-xl">{term.definition}</p>
             </div>

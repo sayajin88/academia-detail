@@ -34,22 +34,30 @@ interface BrandStripProps {
 
 /** Logos de marcas con las que se trabaja (en blanco, sin filtros CSS). */
 export function BrandStrip({ group = 'all', title = 'Trabajamos con productos de las marcas líderes, sin estar vinculados a ninguna' }: BrandStripProps) {
-  const list = group === 'all' ? brands : brands.filter((b) => b.groups.includes(group));
+  const list = group === "all" ? brands : brands.filter((b) => b.groups.includes(group));
+  // Carrusel continuo: la lista va duplicada para que el bucle no tenga salto.
+  const loop = [...list, ...list];
   return (
-    <section className="border-y border-border bg-background py-10 md:py-12" aria-label="Marcas con las que trabajamos">
-      <div className="ds-container">
-        <p className="mb-8 text-center text-sm text-muted-foreground">{title}</p>
-        <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-7 md:gap-x-14">
-          {list.map((b) => (
-            <li key={b.name}>
+    <section className="border-y border-white/[0.06] bg-background py-10 md:py-12" aria-label="Marcas con las que trabajamos">
+      <p className="ds-container mb-8 text-center text-sm text-muted-foreground">{title}</p>
+      <div
+        className="relative overflow-hidden"
+        style={{
+          maskImage: "linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)",
+          WebkitMaskImage: "linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)",
+        }}
+      >
+        <ul className="ds-marquee flex w-max items-center gap-14 md:gap-20">
+          {loop.map((b, i) => (
+            <li key={b.name + i} aria-hidden={i >= list.length}>
               <img
                 src={b.src}
-                alt={b.name}
+                alt={i < list.length ? b.name : ""}
                 width={b.w}
                 height={96}
                 loading="lazy"
                 decoding="async"
-                className={b.square ? 'h-11 w-auto opacity-70 md:h-14' : 'h-7 w-auto opacity-70 md:h-9'}
+                className={b.square ? "h-11 w-auto opacity-60 transition-opacity hover:opacity-100 md:h-14" : "h-7 w-auto opacity-60 transition-opacity hover:opacity-100 md:h-9"}
               />
             </li>
           ))}

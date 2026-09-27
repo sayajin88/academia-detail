@@ -68,7 +68,8 @@ function FooterLinkItem({ link }: { link: FooterLink }) {
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card">
+    <footer className="relative border-t border-white/[0.06] bg-card">
+      <div className="ds-hairline absolute inset-x-0 top-0" aria-hidden="true" />
       <div className="ds-container py-12 md:py-16">
         <div className="grid gap-10 lg:grid-cols-[1.3fr_repeat(4,1fr)] lg:gap-8">
           <div className="flex flex-col gap-4">

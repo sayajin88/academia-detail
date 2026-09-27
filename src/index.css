@@ -149,12 +149,140 @@
   .ds-section { @apply py-16 md:py-24; }
   .ds-section-sm { @apply py-12 md:py-16; }
   /* Escala tipográfica */
-  .ds-h1 { @apply text-[2.5rem] md:text-[3.5rem] lg:text-[4rem]; }
-  .ds-h2 { @apply text-[2rem] md:text-[2.75rem]; }
+  .ds-h1 { @apply text-[2.75rem] leading-[0.98] md:text-[4rem] lg:text-[4.75rem]; }
+  .ds-h2 { @apply text-[2.125rem] md:text-[3rem]; }
   .ds-h3 { @apply text-xl md:text-[1.375rem]; }
   .ds-eyebrow { @apply text-xs font-semibold uppercase tracking-[0.14em] text-brand; }
+  /* Antetítulo en píldora con punto (cabeceras de sección) */
+  .ds-pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3.5 py-1.5
+      text-[11px] font-semibold uppercase tracking-[0.16em] text-brand;
+  }
+  .ds-pill::before {
+    content: '';
+    @apply h-1.5 w-1.5 rounded-full bg-brand;
+    box-shadow: 0 0 10px hsl(var(--brand) / 0.9);
+  }
   .ds-lead { @apply text-base md:text-lg text-muted-foreground leading-relaxed; }
-  .ds-card { @apply rounded-xl border border-border bg-card; }
+
+  /* Tarjeta: superficie con leve degradado, borde fino y reacción al pasar el ratón */
+  .ds-card {
+    @apply rounded-2xl border border-white/[0.08] bg-card;
+    background-image: linear-gradient(180deg, hsl(0 0% 100% / 0.035), hsl(0 0% 100% / 0) 60%);
+    box-shadow: 0 1px 0 hsl(0 0% 100% / 0.04) inset, 0 20px 40px -24px hsl(240 20% 2% / 0.8);
+  }
+  .ds-card-hover {
+    @apply transition-[transform,border-color,box-shadow] duration-300;
+  }
+  .ds-card-hover:hover {
+    @apply -translate-y-1 border-primary/50;
+    box-shadow: 0 1px 0 hsl(0 0% 100% / 0.05) inset, 0 28px 60px -28px hsl(var(--primary) / 0.55);
+  }
+
+  /* Cristal (solo en pocos elementos: menú, cifras del hero) */
+  .ds-glass {
+    @apply border border-white/10 bg-white/[0.06] backdrop-blur-md;
+  }
+
+  /* Texto con degradado claro (legible sobre fondo oscuro) */
+  .ds-text-gradient {
+    background-image: linear-gradient(100deg, #f7c3cb 0%, hsl(var(--brand)) 45%, #f09aa7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Botón principal con brillo */
+  .ds-btn-glow {
+    background-image: linear-gradient(180deg, #a52c3f 0%, hsl(var(--primary)) 100%);
+    box-shadow: 0 1px 0 hsl(0 0% 100% / 0.18) inset, 0 12px 30px -10px hsl(var(--primary) / 0.75);
+    @apply transition-[transform,box-shadow,filter] duration-200;
+  }
+  .ds-btn-glow:hover {
+    @apply -translate-y-px;
+    filter: brightness(1.08);
+    box-shadow: 0 1px 0 hsl(0 0% 100% / 0.2) inset, 0 16px 36px -10px hsl(var(--primary) / 0.9);
+  }
+
+  /* Brillos de fondo para dar profundidad a una sección (decorativos) */
+  .ds-glow { @apply relative isolate overflow-clip; }
+  .ds-glow::before,
+  .ds-glow::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 42rem;
+    height: 42rem;
+    border-radius: 9999px;
+    pointer-events: none;
+    background: radial-gradient(closest-side, hsl(var(--primary) / 0.22), transparent);
+  }
+  .ds-glow::before { top: -18rem; right: -14rem; }
+  .ds-glow::after { bottom: -20rem; left: -16rem; background: radial-gradient(closest-side, hsl(var(--primary) / 0.14), transparent); }
+
+  /* Retícula sutil de fondo */
+  .ds-grid-bg { @apply relative isolate; }
+  .ds-grid-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(hsl(0 0% 100% / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 100% / 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 20%, transparent 75%);
+  }
+
+  /* Cabecera de página: luz burdeos arriba a la derecha y retícula muy sutil */
+  .ds-hero {
+    @apply relative isolate bg-background;
+    background-image:
+      radial-gradient(55% 60% at 88% 0%, hsl(var(--primary) / 0.26), transparent 70%),
+      radial-gradient(40% 50% at 0% 100%, hsl(var(--primary) / 0.12), transparent 70%),
+      linear-gradient(hsl(0 0% 100% / 0.028) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 100% / 0.028) 1px, transparent 1px);
+    background-size: auto, auto, 56px 56px, 56px 56px;
+  }
+
+  /* Marco de foto destacado: esquinas grandes, borde fino y brillo burdeos */
+  .ds-frame {
+    @apply relative overflow-hidden rounded-3xl border border-white/10;
+    box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.02), 0 40px 90px -35px hsl(var(--primary) / 0.7);
+  }
+
+  /* Línea de degradado para separar bloques */
+  .ds-hairline {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.6), transparent);
+  }
+}
+
+/* Aparición suave al hacer scroll (ver useScrollReveal): solo se oculta lo que
+   está por debajo de la pantalla al cargar; sin JavaScript todo se ve. */
+.ds-reveal-pending {
+  opacity: 0;
+  transform: translateY(26px) scale(0.985);
+}
+.ds-reveal-in {
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) !important;
+}
+
+/* Carrusel continuo (logos de marcas) */
+@keyframes ds-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ds-marquee {
+  animation: ds-marquee 45s linear infinite;
+}
+.ds-marquee:hover { animation-play-state: paused; }
+
+/* Punto «en vivo» */
+@keyframes ds-ping {
+  75%, 100% { transform: scale(2.2); opacity: 0; }
 }
 
 @layer utilities {

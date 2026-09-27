@@ -88,14 +88,14 @@ export default function Glossary() {
         schema={glossarySeo.schema}
       />
       <MainLayout>
-        <section className="border-b border-border bg-background">
+        <section className="ds-hero border-b border-white/[0.06]">
           <div className="ds-container pt-2">
             <Breadcrumbs items={[{ name: 'Glosario de detailing', url: '/glosario-detailing' }]} />
           </div>
           <div className="ds-container flex flex-col gap-6 pb-10 pt-4 md:pb-14 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="ds-eyebrow mb-4">Glosario · {TOTAL_TERMS} términos</p>
-              <h1 className="ds-h1 max-w-3xl text-foreground">Glosario de detailing profesional</h1>
+              <p className="ds-pill mb-5">Glosario · {TOTAL_TERMS} términos</p>
+              <h1 className="ds-h1 max-w-3xl text-foreground">Glosario de detailing <span className="ds-text-gradient">profesional</span></h1>
               <p className="ds-lead mt-5 max-w-2xl">
                 Los términos que vas a oír en un taller de detailing, explicados en pocas palabras: pulido, protecciones, químicos,
                 herramientas y técnicas.

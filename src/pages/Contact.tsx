@@ -20,14 +20,14 @@ const Contact = () => {
     <>
       <SEO {...seoConfig.contact} />
       <MainLayout>
-        <section className="bg-background pb-16 md:pb-24">
+        <section className="ds-hero pb-16 md:pb-24">
           <div className="ds-container pt-2">
             <Breadcrumbs items={[{ name: 'Contacto', url: '/contacto' }]} />
           </div>
           <div className="ds-container pt-4">
             <div className="mb-10 max-w-2xl md:mb-12">
-              <p className="ds-eyebrow mb-4">Contacto · Alicante</p>
-              <h1 className="ds-h1 text-foreground">Pide información o reserva tu plaza</h1>
+              <p className="ds-pill mb-5">Contacto · Alicante</p>
+              <h1 className="ds-h1 text-foreground">Pide información o reserva <span className="ds-text-gradient">tu plaza</span></h1>
               <p className="ds-lead mt-5">
                 Cuéntanos qué quieres aprender y en qué punto estás, y te respondemos en un plazo de 48 horas laborables. Si
                 lo prefieres,{' '}

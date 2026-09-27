@@ -84,7 +84,7 @@ export default function CalculadoraDilucion() {
         schema={[...seo.schema, webAppSchema]}
       />
       <MainLayout>
-        <section className="bg-background">
+        <section className="ds-hero">
           <div className="ds-container pt-2">
             <Breadcrumbs
               items={[
@@ -94,8 +94,8 @@ export default function CalculadoraDilucion() {
             />
           </div>
           <div className="ds-container pb-8 pt-4 md:pb-10">
-            <p className="ds-eyebrow mb-4">Herramienta gratuita</p>
-            <h1 className="ds-h1 max-w-4xl text-foreground">Calculadora de dilución para productos de detailing</h1>
+            <p className="ds-pill mb-5">Herramienta gratuita</p>
+            <h1 className="ds-h1 max-w-4xl text-foreground">Calculadora de dilución para productos de <span className="ds-text-gradient">detailing</span></h1>
             <p className="ds-lead mt-5 max-w-2xl">
               Elige el tamaño del envase y el ratio que indica el fabricante: te decimos cuántos mililitros de producto y de agua
               necesitas. Sirve para APC, champú, desengrasante, limpiacristales y cualquier otro concentrado.
