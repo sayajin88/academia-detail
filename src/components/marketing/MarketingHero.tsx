@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Globe, Search, Bot } from "lucide-react";
 import { waLink } from "./marketingData";
-import heroIllustration from "@/assets/marketing/detailing-social.png.asset.json";
+// Foto real del taller con avisos de redes y reseñas (sustituye a la ilustración que alojaba Lovable).
+import heroIllustration from "@/assets/marketing/marketing-hero.webp";
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -93,8 +94,8 @@ export function MarketingHero() {
           <div className="relative order-first lg:order-none">
             <div className="absolute inset-6 bg-primary/25 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
             <img
-              src={heroIllustration.url}
-              alt="Detailers puliendo un coche premium rodeados de iconos de redes sociales"
+              src={heroIllustration}
+              alt="Alumnos puliendo un coche en el taller, con avisos de Instagram, Google, WhatsApp y TikTok alrededor"
               width={1024}
               height={854}
               loading="eager"

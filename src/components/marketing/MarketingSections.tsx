@@ -3,15 +3,16 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { valueArguments, services, processSteps, waLink } from "./marketingData";
-import socialIllustration from "@/assets/marketing/social.png.asset.json";
-import inboundIllustration from "@/assets/marketing/inbound.png.asset.json";
+import socialIllustration from "@/assets/marketing/marketing-redes.webp";
+import inboundIllustration from "@/assets/marketing/marketing-embudo.webp";
 import instalacionesPhoto from "@/assets/instalaciones-curso-ferrari.jpg";
 import practicaPhoto from "@/assets/evento-practica-pulidora-real.jpg";
 import beforeAfterPhoto from "@/assets/before-after-detailing.jpg";
 import formacionPhoto from "@/assets/alumnos-formacion.jpg";
-import mockupWeb1 from "@/assets/marketing/mockup-web-1.png.asset.json";
-import mockupWeb2 from "@/assets/marketing/mockup-web-2.png.asset.json";
-import mockupWeb3 from "@/assets/marketing/mockup-web-3.jpg.asset.json";
+// Capturas reales de webs del grupo (Academia Detail y detailpark.com) en marcos de dispositivo.
+import mockupWeb1 from "@/assets/marketing/mockup-academia-portatil-movil.webp";
+import mockupWeb2 from "@/assets/marketing/mockup-detailpark-packs-ppf.webp";
+import mockupWeb3 from "@/assets/marketing/mockup-detailpark-portada.webp";
 
 export function MarketingValue() {
   return (
@@ -57,8 +58,8 @@ export function MarketingServices() {
           <div className="relative mx-auto max-w-4xl rounded-3xl border border-primary/30 bg-card/50 backdrop-blur-sm p-6 md:p-10 overflow-hidden">
             <div className="absolute -inset-10 bg-primary/10 blur-3xl pointer-events-none" aria-hidden="true" />
             <img
-              src={socialIllustration.url}
-              alt="Estrategia de contenidos y redes sociales para un centro de detailing"
+              src={socialIllustration}
+              alt="Tres publicaciones de Instagram de un centro de detailing: antes y después, reel del taller y entrega de un coche"
               width={1920}
               height={984}
               loading="lazy"
@@ -203,8 +204,8 @@ export function MarketingProcess() {
           <div className="relative mx-auto max-w-3xl">
             <div className="absolute -inset-8 bg-primary/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
             <img
-              src={inboundIllustration.url}
-              alt="Embudo de captación de clientes: web, email y seguimiento automatizado"
+              src={inboundIllustration}
+              alt="Embudo de captación: Google y redes, web, presupuesto por WhatsApp, seguimiento y coche en el taller"
               width={1920}
               height={984}
               loading="lazy"
@@ -292,8 +293,10 @@ export function MarketingShowcase() {
             <figure className="relative">
               <div className="absolute inset-8 bg-primary/20 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
               <img
-                src={mockupWeb1.url}
-                alt="Mockups de una web de detailing y PPF con diseño oscuro y acentos rojos"
+                src={mockupWeb1}
+                width={1200}
+                height={750}
+                alt="Web de Academia Detail en portátil y móvil, con diseño oscuro y acentos rojos"
                 loading="lazy"
                 decoding="async"
                 className="relative w-full drop-shadow-2xl"
@@ -309,8 +312,10 @@ export function MarketingShowcase() {
               <figure className="relative">
                 <div className="absolute inset-10 bg-primary/15 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
                 <img
-                  src={mockupWeb2.url}
-                  alt="Pantalla de packs de PPF mostrada en un monitor de escritorio"
+                  src={mockupWeb2}
+                  width={1200}
+                  height={900}
+                  alt="Packs de PPF con precio de detailpark.com en un monitor de escritorio"
                   loading="lazy"
                   decoding="async"
                   className="relative w-full drop-shadow-2xl"
@@ -324,8 +329,10 @@ export function MarketingShowcase() {
             <AnimatedSection animation="fade-up" delay={180}>
               <figure className="relative rounded-2xl overflow-hidden border border-border/60">
                 <img
-                  src={mockupWeb3.url}
-                  alt="Diseño de página de automoción con secciones de producto y galería"
+                  src={mockupWeb3}
+                  width={1200}
+                  height={572}
+                  alt="Portada de detailpark.com con titular grande, foto de producto y llamadas a la acción"
                   loading="lazy"
                   decoding="async"
                   className="w-full object-cover"
