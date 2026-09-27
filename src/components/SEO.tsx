@@ -584,7 +584,7 @@ export const courseFormacionProfesionalSchema = {
   "offers": {
     "@type": "Offer",
     "category": "Paid",
-    "price": "7997",
+    "price": "9997",
     "priceCurrency": "EUR",
     "url": "https://academiadetail.com/formacion-profesional-detailing"
   },

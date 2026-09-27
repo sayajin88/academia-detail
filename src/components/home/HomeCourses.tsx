@@ -50,10 +50,10 @@ const starters = [
   {
     href: '/up-detail-evento',
     name: 'Up Detail',
-    meta: '1 día intensivo · 349 € + IVA',
+    meta: '1 día intensivo · evento puntual',
     image: upDetailImg,
     alt: 'Alumnos en una sesión de formación en las instalaciones de Detail Park',
-    text: 'Aprende lo máximo en el menor tiempo: una demostración intensiva de técnicas profesionales.',
+    text: 'Aprende lo máximo en el menor tiempo: demostraciones y práctica con profesionales, comida incluida.',
   },
 ];
 

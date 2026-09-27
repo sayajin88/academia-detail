@@ -622,7 +622,7 @@ export const seoConfig = {
   jornadasHub: {
     title: "Jornadas de iniciación al detailing en Alicante | Jornada Zero y Up Detail",
     description:
-      "Dos formatos de un día para acercarte al detailing profesional en Detail Park (Alicante): la Jornada Zero (97 € + IVA) y Up Detail (349 € + IVA). Compara y elige.",
+      "Dos formatos de un día para acercarte al detailing profesional en Detail Park (Alicante): la Jornada Zero (97 € + IVA) y Up Detail, un evento puntual intensivo. Compara y elige.",
     keywords:
       "jornada detailing, curso detailing 1 dia, iniciacion detailing, up detail, jornada zero, curso iniciación detailing Alicante, jornada intensiva detailing principiantes, primer paso detailing profesional",
     url: "/curso-detailing-iniciacion",
@@ -646,12 +646,11 @@ export const seoConfig = {
   upDetail: {
     title: "Up Detail: formación intensiva de detailing en 1 día | Alicante",
     description:
-      "Up Detail es un formato para aprender lo máximo en el menor tiempo: demostraciones de detailing profesional en una jornada intensiva en Detail Park (Alicante). 349 € + IVA. Apúntate al aviso.",
+      "Up Detail es un formato para aprender lo máximo en el menor tiempo: demostraciones y práctica de detailing profesional en una jornada intensiva en Detail Park (Alicante), comida incluida. Apúntate al aviso.",
     keywords:
       "up detail, jornada detailing intensiva, demostración detailing, formación detailing 1 día, evento detailing Alicante, masterclass detailing",
     url: "/up-detail-evento",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
-    price: "349",
     schema: [
       localBusinessSchema,
       // Sin EducationEvent mientras no haya fecha (startDate es obligatorio)
@@ -661,20 +660,12 @@ export const seoConfig = {
         "@id": `${BASE_URL}/up-detail-evento/#course`,
         name: "Up Detail",
         description:
-          "Formato de formación intensiva de un día para aprender lo máximo en el menor tiempo: demostraciones de detailing profesional con Daniel López y profesionales invitados en Detail Park.",
+          "Evento puntual de formación intensiva de un día para aprender lo máximo en el menor tiempo: demostraciones de Daniel López y profesionales invitados y práctica sobre vehículos reales en Detail Park. Comida incluida.",
         url: `${BASE_URL}/up-detail-evento`,
         provider: {
           "@type": "EducationalOrganization",
           name: "Detail Park - Academia Detail",
           url: BASE_URL,
-        },
-        offers: {
-          "@type": "Offer",
-          category: "Paid",
-          price: "349",
-          priceCurrency: "EUR",
-          availability: "https://schema.org/PreOrder",
-          url: `${BASE_URL}/up-detail-evento`,
         },
         hasCourseInstance: {
           "@type": "CourseInstance",
@@ -716,7 +707,7 @@ export const seoConfig = {
       "formación profesional detailing, carrera detailing, cómo montar centro detailing, abrir negocio detailing, abrir taller detailing España, emprender detailing, curso completo detailing, programa completo detailing, cómo montar un negocio de detailing desde cero, aprender detailing desde cero, curso detailing wrapping ppf, curso detailing Alicante, formacion profesional detailing España",
     url: "/formacion-profesional-detailing",
     image: `${BASE_URL}/og-carrera-detailing.jpg`,
-    price: "7997",
+    price: "9997",
     schema: [
       localBusinessSchema,
       courseFormacionProfesionalSchema,
@@ -742,7 +733,7 @@ export const seoConfig = {
         },
         offers: {
           "@type": "Offer",
-          price: "7997",
+          price: "9997",
           priceCurrency: "EUR",
           url: `${BASE_URL}/formacion-profesional-detailing`,
         },

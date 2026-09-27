@@ -22,8 +22,8 @@ const options: Record<Key, { href: string; name: string; meta: string; text: str
   'up-detail': {
     href: `/${UP_DETAIL.slug}`,
     name: 'Up Detail',
-    meta: `${UP_DETAIL.duration} · ${formatPrice(UP_DETAIL.price)} + IVA`,
-    text: 'Aprende lo máximo en el menor tiempo: una demostración intensiva de técnicas profesionales.',
+    meta: `${UP_DETAIL.duration} · evento puntual`,
+    text: 'Aprende lo máximo en el menor tiempo: demostraciones y práctica con profesionales, comida incluida.',
     image: upDetailImg,
     alt: 'Alumnos en una sesión de formación en las instalaciones de Detail Park',
   },

@@ -14,7 +14,8 @@ export const JORNADA_ZERO = {
 export const UP_DETAIL = {
   slug: 'up-detail-evento',
   name: 'Up Detail',
-  price: 349,
+  /** Evento puntual: el precio se anuncia con cada edición */
+  priceLabel: 'Por confirmar',
   duration: '1 día intensivo',
 } as const;
 
@@ -30,7 +31,7 @@ export const jornadasHubFaqs: Faq[] = [
   {
     question: '¿Qué diferencia hay entre la Jornada Zero y Up Detail?',
     answer:
-      'La Jornada Zero es un primer contacto con el detailing profesional: pasas el día en el taller de Detail Park con el equipo y practicas sobre un vehículo real. Up Detail es un formato intensivo para aprender lo máximo en el menor tiempo posible; es más una demostración, con Daniel López y profesionales invitados.',
+      'La Jornada Zero es un primer contacto con el detailing profesional: pasas el día en el taller de Detail Park con el equipo y practicas sobre un vehículo real. Up Detail es un evento puntual e intensivo para aprender lo máximo en el menor tiempo: demostraciones de Daniel López y profesionales invitados, y práctica sobre vehículos reales.',
   },
   {
     question: '¿Cuál me conviene si empiezo desde cero?',
@@ -40,7 +41,7 @@ export const jornadasHubFaqs: Faq[] = [
   {
     question: '¿Cuánto cuestan?',
     answer:
-      'La Jornada Zero cuesta 97 € + IVA y Up Detail, 349 € + IVA. En los dos casos, si después haces un curso completo de la academia, el importe se descuenta.',
+      'La Jornada Zero cuesta 97 € + IVA y, si después haces un curso completo de la academia, el importe se descuenta. Up Detail es un evento puntual: su precio se anuncia junto con la fecha de cada edición.',
   },
   {
     question: '¿Cuándo son las próximas fechas?',
@@ -99,12 +100,12 @@ export const upDetailFaqs: Faq[] = [
   {
     question: '¿Qué es Up Detail?',
     answer:
-      'Un formato de formación pensado para aprender lo máximo posible en el menor tiempo posible. Es más una demostración que un curso y se suele hacer de forma intensiva en un día, en Detail Park (Alicante).',
+      'Un evento puntual de formación pensado para aprender lo máximo posible en el menor tiempo posible. Se hace de forma intensiva en un día, en Detail Park (Alicante): los ponentes hacen demostraciones y los asistentes practican sobre vehículos reales. La comida está incluida.',
   },
   {
     question: '¿En qué se diferencia de la Jornada Zero?',
     answer:
-      'La Jornada Zero es un primer contacto para quien empieza de cero, con práctica guiada sobre un vehículo real. Up Detail condensa mucha técnica en una jornada intensiva, en formato de demostración y con profesionales invitados.',
+      'La Jornada Zero es un primer contacto para quien empieza de cero, con práctica guiada sobre un vehículo real. Up Detail condensa mucha técnica en una jornada intensiva, con demostraciones de profesionales invitados y práctica.',
   },
   {
     question: '¿Necesito experiencia previa?',
@@ -114,7 +115,7 @@ export const upDetailFaqs: Faq[] = [
   {
     question: '¿Cuánto cuesta?',
     answer:
-      'Up Detail cuesta 349 € + IVA e incluye la jornada completa y el certificado de asistencia. Si después haces un curso completo de la academia, el importe se descuenta.',
+      'Es un evento puntual y el precio se anuncia junto con la fecha de cada edición. Incluye la jornada completa, la práctica, la comida y el certificado de asistencia.',
   },
   {
     question: '¿Quiénes son los ponentes?',
@@ -124,7 +125,7 @@ export const upDetailFaqs: Faq[] = [
   {
     question: '¿Cuándo es la próxima edición?',
     answer:
-      'Todavía no hay fecha. Apúntate a la lista de aviso de esta página y te escribiremos en cuanto la confirmemos.',
+      'Todavía no hay fecha. Apúntate a la lista de aviso de esta página y te escribiremos en cuanto confirmemos la fecha y el precio.',
   },
   {
     question: '¿Apuntarme a la lista me compromete a algo?',

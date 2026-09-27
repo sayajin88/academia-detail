@@ -22,7 +22,7 @@ export interface CarreraBusinessBlock {
   items: string[];
 }
 
-const PRICE = 7997;
+const PRICE = 9997;
 
 export const carreraDetailingData = {
   slug: 'formacion-profesional-detailing',
@@ -96,7 +96,7 @@ export const carreraDetailingData = {
     },
     {
       question: '¿Qué diferencia hay con hacer los cursos por separado?',
-      answer: `Por separado, los cursos de detailing, wrapping (los dos niveles) y PPF cuestan ${formatPrice(separatePrice)} + IVA. La Carrera incluye esos mismos cursos, la práctica en el taller y el módulo de negocio, que no se ofrece suelto, por ${formatPrice(PRICE)} + IVA.`,
+      answer: `Los cursos de detailing, wrapping (los dos niveles) y PPF se pueden hacer por separado (${formatPrice(separatePrice)} + IVA en total). La Carrera, por ${formatPrice(PRICE)} + IVA, añade a esos cursos un mes completo de práctica en el taller de Detail Park con coches de clientes y el módulo de negocio, que no se ofrecen sueltos.`,
     },
     {
       question: '¿Qué incluye el módulo de negocio?',

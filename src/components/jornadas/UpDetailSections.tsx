@@ -10,7 +10,6 @@ import { Img } from '@/components/ds/Img';
 import { supabase } from '@/integrations/supabase/client';
 import { NEXT_EDITION, SITE } from '@/data/site';
 import { JORNADA_ZERO, UP_DETAIL } from '@/data/jornadas';
-import { formatPrice } from '@/lib/format';
 import danielImg from '@/assets/daniel-lopez-updetail.jpg?w=320;480;640&format=webp&as=picture';
 import leandroImg from '@/assets/leandro-updetail.jpg?w=320;480;640&format=webp&as=picture';
 // Copia en vertical de federica-updetail.jpg (el original depende de la orientación EXIF y se veía girado)
@@ -107,7 +106,13 @@ export function UpDetailVideos() {
 // Tal como se presentan hoy en la página (sin biografías inventadas)
 const speakers = [
   { name: 'Daniel López', role: `${SITE.founderRole}. Organiza Up Detail.`, image: danielImg, alt: 'Daniel López en Detail Park' },
-  { name: 'Leandro', role: 'Academy Pro Detailing. Experto invitado.', image: leandroImg, alt: 'Leandro, experto invitado de Up Detail' },
+  {
+    name: 'Leandro Landete',
+    role: 'Leandro Landete Pro Detailing. Experto invitado.',
+    href: 'https://www.leandrolandeteprodetailing.com/',
+    image: leandroImg,
+    alt: 'Leandro Landete, experto invitado de Up Detail',
+  },
   { name: 'Federica', role: '@la_detailher. Experta invitada.', image: federicaImg, alt: 'Federica, experta invitada de Up Detail' },
 ];
 
@@ -127,6 +132,11 @@ export function UpDetailSpeakers() {
             <div className="p-4 md:p-5">
               <h3 className="text-lg font-bold text-foreground">{s.name}</h3>
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{s.role}</p>
+              {'href' in s && s.href && (
+                <a href={s.href} target="_blank" rel="noopener" className="mt-2 inline-block text-sm font-semibold text-brand underline underline-offset-4">
+                  Ver su academia
+                </a>
+              )}
             </div>
           </li>
         ))}
@@ -160,7 +170,7 @@ export function UpDetailWaitlist() {
   };
 
   const facts = [
-    { icon: Tag, text: `${formatPrice(UP_DETAIL.price)} + IVA` },
+    { icon: Tag, text: `Precio: ${UP_DETAIL.priceLabel.toLowerCase()}` },
     { icon: Clock, text: UP_DETAIL.duration },
     { icon: CalendarDays, text: `Fechas: ${NEXT_EDITION.toLowerCase()}` },
   ];
@@ -190,7 +200,7 @@ export function UpDetailWaitlist() {
               ))}
             </ul>
             <p className="mx-auto mt-4 max-w-md text-muted-foreground">
-              Todavía no hay fecha. Déjanos tu email y te escribimos en cuanto la confirmemos. Si después haces un curso completo, el importe se descuenta.
+              Up Detail es un evento puntual y todavía no hay fecha ni precio. Déjanos tu email y te escribimos en cuanto los confirmemos.
             </p>
             <form onSubmit={submit} className="mx-auto mt-8 grid max-w-md gap-4 text-left">
               <div className="grid gap-1.5">

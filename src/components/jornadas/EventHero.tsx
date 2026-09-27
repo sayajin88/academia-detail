@@ -20,7 +20,9 @@ interface EventHeroProps {
   title: ReactNode;
   lead: ReactNode;
   facts: HeroFact[];
-  price: number;
+  /** Precio en euros; si no hay, se muestra priceLabel */
+  price?: number;
+  priceLabel?: string;
   /** Botón principal: ruta interna (/contacto…) o ancla de la página (#…) */
   cta: { label: string; href: string };
   whatsappText: string;
@@ -31,7 +33,7 @@ interface EventHeroProps {
 }
 
 /** Cabecera de las jornadas de un día. Misma estructura que CourseHero. */
-export function EventHero({ breadcrumbs, eyebrow, title, lead, facts, price, cta, whatsappText, note, picture, alt }: EventHeroProps) {
+export function EventHero({ breadcrumbs, eyebrow, title, lead, facts, price, priceLabel, cta, whatsappText, note, picture, alt }: EventHeroProps) {
   const isAnchor = cta.href.startsWith('#');
   return (
     <section className="border-b border-border bg-background">
@@ -58,7 +60,16 @@ export function EventHero({ breadcrumbs, eyebrow, title, lead, facts, price, cta
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <p className="text-sm text-muted-foreground">
-              <span className="font-heading text-4xl leading-none text-foreground">{formatPrice(price)}</span> + IVA
+              {price !== undefined ? (
+                <>
+                  <span className="font-heading text-4xl leading-none text-foreground">{formatPrice(price)}</span> + IVA
+                </>
+              ) : (
+                <>
+                  <span className="block text-xs">Precio</span>
+                  <span className="text-lg font-semibold text-foreground">{priceLabel}</span>
+                </>
+              )}
             </p>
             <div className="flex flex-col gap-3 sm:ml-4 sm:flex-row">
               <Button asChild size="lg" className="h-12 px-6 text-base font-semibold">

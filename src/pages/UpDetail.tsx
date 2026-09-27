@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import { CalendarDays, Clock, Eye, MessageCircleQuestion, Presentation, Users } from 'lucide-react';
+import { CalendarDays, Clock, Eye, Hand, Presentation, UtensilsCrossed } from 'lucide-react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
@@ -21,9 +21,9 @@ const Placeholder = () => <div className="ds-section" aria-hidden="true" />;
 
 const points = [
   { icon: Presentation, title: 'Demostraciones en directo', text: 'Técnicas profesionales explicadas paso a paso sobre vehículos reales.' },
+  { icon: Hand, title: 'Y lo practicas tú', text: 'Después de ver cada técnica, la pruebas sobre el vehículo con los ponentes al lado.' },
   { icon: Eye, title: 'Varios puntos de vista', text: 'Profesionales invitados con especialidades y formas de trabajar distintas.' },
-  { icon: MessageCircleQuestion, title: 'Tiempo para preguntar', text: 'Resuelves tus dudas con quien lo está haciendo delante de ti.' },
-  { icon: Users, title: 'Contacto con el sector', text: 'Conoces a los ponentes y a otros asistentes con tu misma pasión.' },
+  { icon: UtensilsCrossed, title: 'Comida incluida', text: 'La jornada es completa: comes con los ponentes y el resto de asistentes, y aprovechas para preguntar.' },
 ];
 
 export default function UpDetail() {
@@ -38,13 +38,13 @@ export default function UpDetail() {
           ]}
           eyebrow="Formato intensivo · Alicante"
           title="Up Detail: aprende lo máximo en el menor tiempo"
-          lead="Un formato de formación para aprender todo lo posible en el menor tiempo posible. Es más una demostración que un curso y se suele hacer de forma intensiva en un día, en Detail Park."
+          lead="Un evento puntual para aprender lo máximo en el menor tiempo: demostraciones de profesionales y práctica sobre vehículos reales, en una jornada intensiva en Detail Park con la comida incluida."
           facts={[
             { icon: Clock, label: 'Duración', value: UP_DETAIL.duration },
-            { icon: Presentation, label: 'Formato', value: 'Demostración' },
+            { icon: Presentation, label: 'Formato', value: 'Demostración y práctica' },
             { icon: CalendarDays, label: 'Fechas', value: NEXT_EDITION },
           ]}
-          price={UP_DETAIL.price}
+          priceLabel={UP_DETAIL.priceLabel}
           cta={{ label: 'Avisarme de la fecha', href: '#preregistro' }}
           whatsappText="Hola, quiero información sobre Up Detail."
           picture={heroImg}
@@ -57,11 +57,11 @@ export default function UpDetail() {
               <SectionHeader id="formato-title" align="left" eyebrow="El formato" title="Qué es Up Detail" className="mb-6" />
               <div className="flex flex-col gap-4 text-[0.9375rem] leading-relaxed text-muted-foreground md:text-base">
                 <p>
-                  Durante una jornada intensiva ves de cerca cómo trabajan profesionales del detailing y te explican qué hacen y por qué. Es la
-                  forma de absorber mucha técnica en poco tiempo.
+                  Durante una jornada intensiva ves de cerca cómo trabajan profesionales del detailing, te explican qué hacen y por qué, y
+                  lo practicas tú. Es un evento puntual: cada edición se anuncia con su fecha, sus ponentes y su precio.
                 </p>
                 <p>
-                  Si lo que buscas es empezar desde cero practicando tú, la{' '}
+                  Si prefieres empezar desde cero con calma y en grupo reducido, la{' '}
                   <Link to={`/${JORNADA_ZERO.slug}`} className="font-semibold text-brand underline underline-offset-4">
                     Jornada Zero
                   </Link>{' '}
@@ -93,7 +93,7 @@ export default function UpDetail() {
           <CourseFaq faqs={upDetailFaqs} title="Preguntas sobre Up Detail" />
           <CtaBand
             title="¿Tienes dudas sobre Up Detail?"
-            text="Escríbenos y te contamos cómo es la jornada, quién participa y cuándo será la próxima edición."
+            text="Escríbenos y te contamos cómo es la jornada, quién participa y cuándo será la próxima edición y a qué precio."
             whatsappText="Hola, quiero información sobre Up Detail."
             primaryLabel="Solicitar información"
             primaryHref="/contacto?curso=up-detail-evento"
