@@ -42,6 +42,13 @@ jobs:
         run: supabase link --project-ref "$SUPABASE_PROJECT_REF"
       - name: Apply migrations
         run: supabase db push
+      # Funciones retiradas (pagos con Stripe/ViaBill y la copia temporal de archivos
+      # de la migración). `functions deploy` no borra nada; esto las elimina si quedan.
+      - name: Delete retired edge functions
+        run: |
+          for f in create-checkout stripe-webhook viabill-checkout viabill-v3-final tmp-copiar-archivos; do
+            supabase functions delete "$f" --project-ref "$SUPABASE_PROJECT_REF" || true
+          done
       - name: Deploy edge functions
         run: |
           FNS=$(ls supabase/functions | grep -v -e "^_shared$" | tr '\n' ' ')
