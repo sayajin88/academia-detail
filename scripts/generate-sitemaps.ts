@@ -1,6 +1,6 @@
 // Prebuild script: fetches dynamic sitemap XML from Supabase edge functions
 // and writes them as static files into public/, so the CDN serves them
-// directly at /sitemap-blog.xml, /sitemap-glossary.xml, /sitemap-directory.xml
+// directly at /sitemap-blog.xml, /sitemap-glossary.xml
 // (no Cloudflare Worker rewrite required).
 
 import { writeFileSync } from "node:fs";
@@ -13,7 +13,6 @@ const ANON_KEY =
 const targets = [
   { fn: "blog-sitemap", out: "sitemap-blog.xml" },
   { fn: "glossary-sitemap", out: "sitemap-glossary.xml" },
-  { fn: "directory-sitemap", out: "sitemap-directory.xml" },
 ];
 
 async function run() {

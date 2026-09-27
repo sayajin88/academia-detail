@@ -418,7 +418,7 @@ const ContactForm = () => {
                         <a
                           href="/politica-privacidad"
                           target="_blank"
-                          className="text-primary underline hover:text-primary/80"
+                          className="text-brand underline hover:text-brand/80"
                         >
                           Política de Privacidad
                         </a>
@@ -430,7 +430,7 @@ const ContactForm = () => {
                         portabilidad, limitación y oposición en{" "}
                         <a
                           href="mailto:info@academiadetail.com"
-                          className="text-primary underline hover:text-primary/80"
+                          className="text-brand underline hover:text-brand/80"
                         >
                           info@academiadetail.com
                         </a>

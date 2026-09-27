@@ -58,7 +58,7 @@ export function SoyNuevoButton() {
         />
 
         {/* Icon */}
-        <span className="relative flex items-center justify-center w-7 h-7 rounded-full bg-primary/15 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
+        <span className="relative flex items-center justify-center w-7 h-7 rounded-full bg-primary/15 text-brand transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
           <Sparkles className="w-3.5 h-3.5" />
         </span>
 

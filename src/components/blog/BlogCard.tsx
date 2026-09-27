@@ -39,7 +39,7 @@ export function BlogCard({ post }: BlogCardProps) {
 
         {/* Content */}
         <div className="p-5">
-          <h3 className="text-lg font-bold text-foreground leading-tight mb-2 group-hover:text-primary transition-colors duration-200" style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}>
+          <h3 className="text-lg font-bold text-foreground leading-tight mb-2 group-hover:text-brand transition-colors duration-200" style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}>
             {post.title}
           </h3>
           <p className="text-sm text-muted-foreground line-clamp-2 mb-4 leading-relaxed">

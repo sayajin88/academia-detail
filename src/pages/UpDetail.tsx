@@ -599,7 +599,7 @@ export default function UpDetail() {
             <div className="max-w-3xl mx-auto glass-intense rounded-2xl p-5 md:p-8 border border-primary/20 text-center">
               <h3 className="text-lg md:text-2xl font-bold text-white mb-2 md:mb-3">
                 ¿No quieres esperar? Prueba la{' '}
-                <span className="text-primary">Jornada Zero</span>
+                <span className="text-brand">Jornada Zero</span>
               </h3>
               <p className="text-white/70 text-xs md:text-sm mb-4 md:mb-6 max-w-xl mx-auto">
                 La Jornada Zero está disponible ahora por solo 97€ + IVA, con el equipo de Detail Park. Si decides continuar con un curso completo, el importe se descuenta.

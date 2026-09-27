@@ -32,7 +32,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         <div className="container mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
-              <LayoutDashboard className="h-5 w-5 text-primary" />
+              <LayoutDashboard className="h-5 w-5 text-brand" />
               <span className="font-semibold">Admin Panel</span>
             </div>
             <nav className="flex items-center gap-1">

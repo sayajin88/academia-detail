@@ -18,7 +18,7 @@ const ContactHero = () => {
       <div className="container relative z-10 py-20">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 mb-6">
-            <GraduationCap className="w-4 h-4 text-primary" />
+            <GraduationCap className="w-4 h-4 text-brand" />
             <span className="text-sm font-medium text-white/90">Inscripción abierta</span>
           </div>
           
@@ -39,7 +39,7 @@ const ContactHero = () => {
               { icon: Users, value: "3 max", label: "Alumnos por grupo" },
             ].map((stat) => (
               <div key={stat.label} className="text-center p-3 rounded-xl bg-white/5 backdrop-blur-sm">
-                <stat.icon className="w-5 h-5 text-primary mx-auto mb-1" />
+                <stat.icon className="w-5 h-5 text-brand mx-auto mb-1" />
                 <div className="text-xl font-bold text-white">{stat.value}</div>
                 <div className="text-xs text-white/70">{stat.label}</div>
               </div>

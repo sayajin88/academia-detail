@@ -34,7 +34,7 @@ export function BlogHero({ post }: BlogHeroProps) {
           <span className={`inline-flex w-fit px-3 py-1 text-xs font-semibold rounded-full border ${categoryColors[post.category]}`}>
             {categoryLabels[post.category]}
           </span>
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-full bg-primary/10 text-primary border border-primary/20">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-full bg-primary/10 text-brand border border-primary/20">
             <Sparkles className="h-3 w-3" />
             Destacado
           </span>

@@ -24,7 +24,7 @@ export function GlossaryGrid({ terms }: GlossaryGridProps) {
       {sortedLetters.map((letter) => (
         <section key={letter} id={`letra-${letter}`} className="scroll-mt-28">
           <div className="flex items-center gap-4 mb-5">
-            <span className="text-4xl md:text-5xl font-black text-primary/80 leading-none select-none">
+            <span className="text-4xl md:text-5xl font-black text-brand/80 leading-none select-none">
               {letter}
             </span>
             <div className="flex-1 h-px bg-gradient-to-r from-primary/30 to-transparent" />

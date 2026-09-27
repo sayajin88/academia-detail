@@ -95,7 +95,7 @@ export function TrustSignals() {
               <Card key={index} className="glass-card border-primary/20 hover:border-primary/40 transition-all duration-300">
                 <CardContent className="p-6 text-center">
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Icon className="w-8 h-8 text-primary" />
+                    <Icon className="w-8 h-8 text-brand" />
                   </div>
                   <h3 className="text-white font-bold mb-2">{guarantee.title}</h3>
                   <p className="text-white/80 text-sm">{guarantee.description}</p>

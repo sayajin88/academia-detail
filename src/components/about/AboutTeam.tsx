@@ -65,7 +65,7 @@ export function AboutTeam() {
                 {/* Content */}
                 <div className="p-6 md:p-8">
                   <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
-                  <p className="text-primary text-sm font-medium mb-4">{member.role}</p>
+                  <p className="text-brand text-sm font-medium mb-4">{member.role}</p>
 
                   <p className="text-muted-foreground text-sm leading-relaxed mb-5">
                     {member.description}
@@ -76,7 +76,7 @@ export function AboutTeam() {
                     {member.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="bg-primary/10 text-primary rounded-full px-3 py-1 text-xs font-medium"
+                        className="bg-primary/10 text-brand rounded-full px-3 py-1 text-xs font-medium"
                       >
                         {tag}
                       </span>

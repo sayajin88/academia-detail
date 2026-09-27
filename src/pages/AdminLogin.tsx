@@ -50,7 +50,7 @@ const AdminLogin = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-2">
           <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <Lock className="w-6 h-6 text-primary" />
+            <Lock className="w-6 h-6 text-brand" />
           </div>
           <CardTitle className="text-2xl">Panel de Administración</CardTitle>
           <CardDescription>Acceso restringido a administradores</CardDescription>

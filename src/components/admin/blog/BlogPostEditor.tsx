@@ -231,7 +231,7 @@ export function BlogPostEditor({ postId, onBack }: Props) {
               {/* Basic info card */}
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm flex items-center gap-2"><Type className="h-4 w-4 text-primary" /> Información básica</CardTitle>
+                  <CardTitle className="text-sm flex items-center gap-2"><Type className="h-4 w-4 text-brand" /> Información básica</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
@@ -254,7 +254,7 @@ export function BlogPostEditor({ postId, onBack }: Props) {
               {/* Metadata card */}
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm flex items-center gap-2"><Settings className="h-4 w-4 text-primary" /> Metadatos</CardTitle>
+                  <CardTitle className="text-sm flex items-center gap-2"><Settings className="h-4 w-4 text-brand" /> Metadatos</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-3">
@@ -289,7 +289,7 @@ export function BlogPostEditor({ postId, onBack }: Props) {
               {/* Tags card */}
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm flex items-center gap-2"><Tag className="h-4 w-4 text-primary" /> Etiquetas</CardTitle>
+                  <CardTitle className="text-sm flex items-center gap-2"><Tag className="h-4 w-4 text-brand" /> Etiquetas</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <div className="flex gap-2">
@@ -311,7 +311,7 @@ export function BlogPostEditor({ postId, onBack }: Props) {
               <Card>
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-sm flex items-center gap-2"><LayoutList className="h-4 w-4 text-primary" /> Secciones del artículo</CardTitle>
+                    <CardTitle className="text-sm flex items-center gap-2"><LayoutList className="h-4 w-4 text-brand" /> Secciones del artículo</CardTitle>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm" onClick={generateOutline} disabled={aiLoading || !post.title}>
                         <Sparkles className="h-3.5 w-3.5 mr-1" /> {aiLoading ? 'Generando...' : 'Outline IA'}

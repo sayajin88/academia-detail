@@ -43,7 +43,7 @@ export function AboutPhilosophy() {
       <div className="container">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-brand text-sm font-medium mb-4">
               Nuestra Filosofía
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -63,12 +63,12 @@ export function AboutPhilosophy() {
               <div className="group h-full bg-card border border-border/50 rounded-2xl p-6 md:p-8 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500">
                 {/* Icon */}
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors duration-300">
-                  <pillar.icon className="w-7 h-7 text-primary" />
+                  <pillar.icon className="w-7 h-7 text-brand" />
                 </div>
 
                 {/* Title */}
                 <h3 className="text-xl font-bold mb-1">{pillar.title}</h3>
-                <p className="text-primary text-sm font-medium mb-4">{pillar.subtitle}</p>
+                <p className="text-brand text-sm font-medium mb-4">{pillar.subtitle}</p>
 
                 {/* Description */}
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6">
@@ -79,7 +79,7 @@ export function AboutPhilosophy() {
                 <ul className="space-y-2">
                   {pillar.highlights.map((highlight) => (
                     <li key={highlight} className="flex items-start gap-2 text-sm">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-brand shrink-0 mt-0.5" />
                       <span className="text-foreground/80">{highlight}</span>
                     </li>
                   ))}
@@ -106,7 +106,7 @@ export function AboutPhilosophy() {
 
             <div className="relative z-10">
               <p className="text-2xl md:text-3xl font-bold mb-3">
-                "Somos el <span className="text-primary">único centro de formación</span> en España 
+                "Somos el <span className="text-brand">único centro de formación</span> en España 
                 donde vivimos del Detailing, no de la formación."
               </p>
               <p className="text-muted-foreground max-w-2xl mx-auto">

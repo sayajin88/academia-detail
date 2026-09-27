@@ -64,7 +64,7 @@ function renderContentWithLinks(content: string, links?: BlogLink[]): ReactNode[
             href={matchingLink.href}
             target="_blank"
             rel={relAttr}
-            className="text-primary underline decoration-primary/30 hover:decoration-primary transition-colors font-medium"
+            className="text-brand underline decoration-primary/30 hover:decoration-primary transition-colors font-medium"
           >
             {markerText}
           </a>
@@ -74,7 +74,7 @@ function renderContentWithLinks(content: string, links?: BlogLink[]): ReactNode[
           <Link
             key={linkKey}
             to={matchingLink.href}
-            className="text-primary underline decoration-primary/30 hover:decoration-primary transition-colors font-medium"
+            className="text-brand underline decoration-primary/30 hover:decoration-primary transition-colors font-medium"
             {...(relAttr ? { rel: relAttr } : {})}
           >
             {markerText}
@@ -109,7 +109,7 @@ function BlogDataTable({ table }: { table: NonNullable<BlogSection['table']> }) 
               {table.headers.map((header, i) => (
                 <TableHead
                   key={i}
-                  className="text-xs md:text-sm font-semibold text-primary/90 bg-primary/5 whitespace-nowrap"
+                  className="text-xs md:text-sm font-semibold text-brand/90 bg-primary/5 whitespace-nowrap"
                 >
                   {header}
                 </TableHead>
@@ -172,7 +172,7 @@ export function BlogArticleContent({ sections }: BlogArticleContentProps) {
               className="text-xl md:text-2xl font-bold text-foreground mb-4 scroll-mt-24 flex items-baseline gap-2"
               style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}
             >
-              <span className="text-primary font-bold text-lg md:text-xl shrink-0">
+              <span className="text-brand font-bold text-lg md:text-xl shrink-0">
                 {String(index + 1).padStart(2, '0')}.
               </span>
               {section.title}
@@ -182,7 +182,7 @@ export function BlogArticleContent({ sections }: BlogArticleContentProps) {
                 <p
                   key={i}
                   className={`text-base md:text-lg text-muted-foreground leading-[1.8] ${
-                    i === 0 ? 'first-letter:text-3xl first-letter:font-bold first-letter:text-primary first-letter:float-left first-letter:mr-1.5 first-letter:mt-0.5 first-letter:leading-none' : ''
+                    i === 0 ? 'first-letter:text-3xl first-letter:font-bold first-letter:text-brand first-letter:float-left first-letter:mr-1.5 first-letter:mt-0.5 first-letter:leading-none' : ''
                   }`}
                   style={{ fontFamily: "'Open Sans', sans-serif" }}
                 >

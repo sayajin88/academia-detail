@@ -39,7 +39,7 @@ const GoogleIcon = () => (
 const StarRating = ({ count }: { count: number }) => (
   <div className="flex gap-0.5">
     {[...Array(count)].map((_, i) => (
-      <Star key={i} size={16} className="fill-primary text-primary" />
+      <Star key={i} size={16} className="fill-brand text-brand" />
     ))}
   </div>
 );
@@ -64,13 +64,13 @@ export function GoogleReviews() {
               <span className="text-3xl font-bold text-foreground">4.8</span>
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={20} className="fill-primary text-primary" />
+                  <Star key={i} size={20} className="fill-brand text-brand" />
                 ))}
               </div>
               <span className="text-muted-foreground">(218 reseñas)</span>
             </div>
             <p className="flex items-center text-muted-foreground text-sm">
-              <MapPin size={14} className="mr-1.5 text-primary" />
+              <MapPin size={14} className="mr-1.5 text-brand" />
               C. Metalurgias, 13, 03008 Alicante
             </p>
           </div>
@@ -109,7 +109,7 @@ export function GoogleReviews() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50"
+                className="border-primary/30 text-brand hover:bg-primary/10 hover:border-primary/50"
               >
                 Ver todas las reseñas en Google
                 <ExternalLink size={16} className="ml-2" />

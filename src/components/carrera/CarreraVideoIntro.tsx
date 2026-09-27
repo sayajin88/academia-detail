@@ -49,7 +49,7 @@ const CarreraVideoIntro = () => {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-medium">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-brand text-sm font-medium">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Mensaje del Fundador
             </span>
@@ -139,7 +139,7 @@ const CarreraVideoIntro = () => {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <span className="text-primary">⏱️</span>
+            <span className="text-brand">⏱️</span>
             <span>4 minutos que pueden ahorrarte años de errores</span>
           </p>
         </div>

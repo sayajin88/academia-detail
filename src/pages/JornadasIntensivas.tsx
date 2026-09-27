@@ -50,7 +50,7 @@ export default function JornadasIntensivas() {
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         
         <div className="relative container mx-auto px-4 text-center">
-          <Badge className="bg-primary/10 text-primary border-primary/30 mb-6 text-sm px-4 py-1.5">
+          <Badge className="bg-primary/10 text-brand border-primary/30 mb-6 text-sm px-4 py-1.5">
             🚀 ¿Nuevo en el Detailing? Empieza aquí
           </Badge>
           
@@ -66,7 +66,7 @@ export default function JornadasIntensivas() {
             con herramientas reales y los mejores profesionales del sector.
           </p>
           
-          <p className="text-sm text-primary font-medium">
+          <p className="text-sm text-brand font-medium">
             💡 El importe de cualquier jornada se descuenta de tu curso completo
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function JornadasIntensivas() {
               {/* Content */}
               <div className="p-5 md:p-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <Zap className="h-5 w-5 text-primary" />
+                  <Zap className="h-5 w-5 text-brand" />
                   <h2 className="text-xl md:text-2xl font-bold text-foreground">Jornada Zero</h2>
                 </div>
                 
@@ -125,15 +125,15 @@ export default function JornadasIntensivas() {
                 {/* Details */}
                 <div className="flex flex-wrap gap-3 mb-5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    <CalendarDays className="h-3.5 w-3.5 text-primary" />
+                    <CalendarDays className="h-3.5 w-3.5 text-brand" />
                     Sábado 17 Enero 2026
                   </div>
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    <Clock className="h-3.5 w-3.5 text-primary" />
+                    <Clock className="h-3.5 w-3.5 text-brand" />
                     10:00 - 18:00
                   </div>
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    <Users className="h-3.5 w-3.5 text-primary" />
+                    <Users className="h-3.5 w-3.5 text-brand" />
                     Solo 10 plazas
                   </div>
                 </div>
@@ -219,7 +219,7 @@ export default function JornadasIntensivas() {
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <HelpCircle className="h-5 w-5 text-primary" />
+                <HelpCircle className="h-5 w-5 text-brand" />
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground">Preguntas Frecuentes</h2>
               </div>
               <p className="text-muted-foreground text-sm">

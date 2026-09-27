@@ -87,7 +87,7 @@ export function BlogSectionEditor({ section, index, total, articleTitle, categor
       <CollapsibleTrigger asChild>
         <div className="flex items-center gap-2 px-3 py-2.5 bg-muted/30 hover:bg-muted/50 cursor-pointer transition-colors">
           <GripVertical className="h-4 w-4 text-muted-foreground/50 shrink-0" />
-          <div className="flex items-center justify-center h-6 w-6 rounded-full bg-primary/10 text-primary text-xs font-bold shrink-0">
+          <div className="flex items-center justify-center h-6 w-6 rounded-full bg-primary/10 text-brand text-xs font-bold shrink-0">
             {index + 1}
           </div>
           {isOpen ? <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0" /> : <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />}

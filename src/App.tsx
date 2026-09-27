@@ -23,12 +23,6 @@ const PoliticaPrivacidad = lazy(() => import("./pages/PoliticaPrivacidad"));
 const Glossary = lazy(() => import("./pages/Glossary"));
 const GlossaryTermPage = lazy(() => import("./pages/GlossaryTerm"));
 const CalculadoraDilucion = lazy(() => import("./pages/CalculadoraDilucion"));
-const Directory = lazy(() => import("./pages/Directory"));
-const DirectoryComunidad = lazy(() => import("./pages/DirectoryComunidad"));
-const DirectoryProvincia = lazy(() => import("./pages/DirectoryProvincia"));
-const DirectoryCiudad = lazy(() => import("./pages/DirectoryCiudad"));
-const DetailerPage = lazy(() => import("./pages/DetailerPage"));
-const DirectoryJoin = lazy(() => import("./pages/DirectoryJoin"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 
 const AdminProfiles = lazy(() => import("./pages/AdminProfiles"));
@@ -78,12 +72,6 @@ const App = () => (
               <Route path="/glosario-detailing" element={<Glossary />} />
               <Route path="/glosario-detailing/:slug" element={<GlossaryTermPage />} />
               <Route path="/calculadora-dilucion-detailing" element={<CalculadoraDilucion />} />
-              <Route path="/centros-detailing-espana" element={<Directory />} />
-              <Route path="/centros-detailing-espana/unete" element={<DirectoryJoin />} />
-              <Route path="/centros-detailing-espana/:comunidad/:provincia/:ciudad" element={<DirectoryCiudad />} />
-              <Route path="/centros-detailing-espana/:comunidad/:provincia" element={<DirectoryProvincia />} />
-              <Route path="/centros-detailing-espana/:comunidad" element={<DirectoryComunidad />} />
-              <Route path="/detailer/:slug" element={<DetailerPage />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               
@@ -120,12 +108,6 @@ const App = () => (
               <Route path="/galeria" element={<Navigate to="/quienes-somos" replace />} />
               <Route path="/galeria-detailing" element={<Navigate to="/quienes-somos" replace />} />
               
-              {/* 301 Redirects - Directorio to new SEO slug */}
-              <Route path="/directorio/unete" element={<Navigate to="/centros-detailing-espana/unete" replace />} />
-              <Route path="/directorio/:comunidad/:provincia/:ciudad" element={<DirectoryCiudad />} />
-              <Route path="/directorio/:comunidad/:provincia" element={<DirectoryProvincia />} />
-              <Route path="/directorio/:comunidad" element={<DirectoryComunidad />} />
-              <Route path="/directorio" element={<Navigate to="/centros-detailing-espana" replace />} />
               
               {/* Catch-all for old /formacion/:slug pattern */}
               <Route path="/formacion/:slug" element={<FormationDetail />} />

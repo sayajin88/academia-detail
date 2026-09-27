@@ -1,66 +1,34 @@
-import { useState, useEffect } from 'react';
-import { useParams, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { FormationHero } from '@/components/formation/FormationHero';
-import { FormationAdvantages } from '@/components/formation/FormationAdvantages';
-import { FormationVideoShowcase } from '@/components/formation/FormationVideoShowcase';
-import { FormationPricing } from '@/components/formation/FormationPricing';
-import { FormationLevels } from '@/components/formation/FormationLevels';
-import { FormationContent } from '@/components/formation/FormationContent';
-import { FormationInstructor } from '@/components/formation/FormationInstructor';
-import { FormationModules } from '@/components/formation/FormationModules';
-import { FormationCurriculum } from '@/components/formation/FormationCurriculum';
-import { FormationReglada } from '@/components/formation/FormationReglada';
-import { FormationCertification } from '@/components/formation/FormationCertification';
-import { FormationIncludes } from '@/components/formation/FormationIncludes';
-import { FormationLogistics } from '@/components/formation/FormationLogistics';
-import { FormationFAQ } from '@/components/formation/FormationFAQ';
-import { GoogleReviews } from '@/components/shared/GoogleReviews';
-import { FormationROICalculator } from '@/components/formation/FormationROICalculator';
-import { FormationCTA } from '@/components/formation/FormationCTA';
-import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
-import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
-import { FormationGallery } from '@/components/formation/FormationGallery';
-import { ComingSoonModal } from '@/components/ComingSoonModal';
-import { BrandLogosBar } from '@/components/shared/BrandLogosBar';
-import { getFormationBySlug } from '@/data/formationDetails';
-
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
-import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
+import { getFormationBySlug } from '@/data/formationDetails';
+import { CourseHero } from '@/components/course/CourseHero';
+import { CourseLearn } from '@/components/course/CourseLearn';
+import type { CourseVideo } from '@/components/course/CourseVideos';
+import detailingHero from '@/assets/heroes/hero-detailing.jpg?w=640;960;1280&format=webp&as=picture';
+import wrappingHero from '@/assets/heroes/hero-wrapping.jpg?w=640;960;1280&format=webp&as=picture';
+import ppfHero from '@/assets/heroes/hero-ppf.jpg?w=640;960;1280&format=webp&as=picture';
+import restauracionHero from '@/assets/heroes/hero-restauracion.jpg?w=640;960;1280&format=webp&as=picture';
 
-const breadcrumbItems: Record<string, { name: string; url: string }[]> = {
-  'curso-detailing-profesional': [
-    { name: 'Formaciones', url: '/#formaciones' },
-    { name: 'Curso Detailing Profesional', url: '/curso-detailing-profesional' },
-  ],
-  'curso-vinilado-vehiculos': [
-    { name: 'Formaciones', url: '/#formaciones' },
-    { name: 'Curso Car Wrapping', url: '/curso-vinilado-vehiculos' },
-  ],
-  'curso-ppf-proteccion-pintura': [
-    { name: 'Formaciones', url: '/#formaciones' },
-    { name: 'Curso PPF', url: '/curso-ppf-proteccion-pintura' },
-  ],
-  'curso-restauracion-vehiculos': [
-    { name: 'Formaciones', url: '/#formaciones' },
-    { name: 'Curso Restauración', url: '/curso-restauracion-vehiculos' },
-  ],
+const CourseSyllabus = lazy(() => import('@/components/course/CourseSyllabus').then((m) => ({ default: m.CourseSyllabus })));
+const CourseVideos = lazy(() => import('@/components/course/CourseVideos').then((m) => ({ default: m.CourseVideos })));
+const CourseInstructor = lazy(() => import('@/components/course/CourseInstructor').then((m) => ({ default: m.CourseInstructor })));
+const CoursePricing = lazy(() => import('@/components/course/CoursePricing').then((m) => ({ default: m.CoursePricing })));
+const CourseWaitlist = lazy(() => import('@/components/course/CourseWaitlist').then((m) => ({ default: m.CourseWaitlist })));
+const StudentReviews = lazy(() => import('@/components/ds/StudentReviews').then((m) => ({ default: m.StudentReviews })));
+const BrandStrip = lazy(() => import('@/components/ds/BrandStrip').then((m) => ({ default: m.BrandStrip })));
+const CourseFaq = lazy(() => import('@/components/course/CourseFaq').then((m) => ({ default: m.CourseFaq })));
+const CtaBand = lazy(() => import('@/components/ds/CtaBand').then((m) => ({ default: m.CtaBand })));
+
+const heroBySlug: Record<string, ImagetoolsPicture> = {
+  'curso-detailing-profesional': detailingHero,
+  'curso-vinilado-vehiculos': wrappingHero,
+  'curso-ppf-proteccion-pintura': ppfHero,
+  'curso-restauracion-vehiculos': restauracionHero,
 };
 
-// Video assets for detailing course (vertical 9:16 format)
-import detailCursoVideo from '@/assets/detail-curso-v2.webm';
-import reelFiltro from '@/assets/reel-filtro.webm';
-import reelCursoDetail from '@/assets/reel-curso-detail.webm';
-
-// Detailing course videos array
-const detailingVideos = [
-  { src: detailCursoVideo },
-  { src: reelFiltro },
-  { src: reelCursoDetail },
-];
-
-// Map URL paths to formation slugs
 const pathToSlugMap: Record<string, string> = {
   '/curso-detailing-profesional': 'curso-detailing-profesional',
   '/curso-vinilado-vehiculos': 'curso-vinilado-vehiculos',
@@ -68,138 +36,71 @@ const pathToSlugMap: Record<string, string> = {
   '/curso-restauracion-vehiculos': 'curso-restauracion-vehiculos',
 };
 
-// Video testimonials by formation slug
-const videoTestimonialsBySlug: Record<string, { id: string; title: string; name?: string; role?: string }[]> = {
+// Vídeos del canal de Detail Park grabados en cada curso
+const videosBySlug: Record<string, CourseVideo[]> = {
   'curso-detailing-profesional': [
-    { id: 'GWda5NH90YM', title: 'Mi experiencia en el curso de Detailing', name: 'Alumno Graduado', role: 'Detailer Profesional' },
-    { id: 'iJjIZ4Ja7RA', title: 'Por qué elegí Detail Park para formarme', name: 'Alumno Graduado', role: 'Emprendedor' },
-    { id: 'U1qm6XXaQaE', title: 'Lo que aprendí en la formación de Detailing', name: 'Alumno Graduado', role: 'Técnico Especializado' },
+    { id: 'GWda5NH90YM', title: 'Testimonio de Pedro Cardón, alumno del curso de detailing' },
+    { id: 'iJjIZ4Ja7RA', title: 'Testimonio de Matías, alumno del curso de detailing' },
+    { id: 'U1qm6XXaQaE', title: 'Testimonio de Juan Emilio, alumno del curso de detailing' },
   ],
-  'curso-ppf-proteccion-pintura': [
-    { id: 'xvfLq467Mis', title: 'Mi experiencia en el curso de PPF', name: 'Alumno Graduado', role: 'Especialista PPF' },
-  ],
-  'curso-vinilado-vehiculos': [
-    { id: '0b8VwDTfxe8', title: 'Mi experiencia en el curso de Car Wrapping', name: 'Alumno Graduado', role: 'Especialista Vinilado' },
-  ],
+  'curso-ppf-proteccion-pintura': [{ id: 'xvfLq467Mis', title: 'Curso de Paint Protection Film en Detail Park, Alicante' }],
+  'curso-vinilado-vehiculos': [{ id: '0b8VwDTfxe8', title: 'Curso de wrapping profesional en Alicante' }],
 };
+
+const Placeholder = () => <div className="ds-section" aria-hidden="true" />;
 
 export default function FormationDetailPage() {
   const { slug: paramSlug } = useParams<{ slug: string }>();
   const location = useLocation();
-  const navigate = useNavigate();
-  const [showComingSoonModal, setShowComingSoonModal] = useState(false);
-  
-  // Determine slug from either URL path or route param
   const slug = pathToSlugMap[location.pathname] || paramSlug;
-  
   const formation = slug ? getFormationBySlug(slug) : undefined;
-  const videoTestimonials = slug ? videoTestimonialsBySlug[slug] : undefined;
 
-  // Show coming soon modal on mount if formation is coming soon
-  useEffect(() => {
-    if (formation?.comingSoon) {
-      // Small delay for better UX
-      const timer = setTimeout(() => {
-        setShowComingSoonModal(true);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [formation?.comingSoon]);
+  if (!formation || !slug) return <Navigate to="/" replace />;
 
-  if (!formation) {
-    return <Navigate to="/" replace />;
-  }
-
-  // Generate SEO config for this specific formation (pass full object + video testimonials for rich Schema.org)
-  const formationSEO = seoConfig.getFormationSEO(slug!, formation, videoTestimonials);
-
-  const handleCTAClick = () => {
-    if (formation.comingSoon) {
-      setShowComingSoonModal(true);
-    } else {
-      navigate('/contacto');
-    }
-  };
+  const videos = videosBySlug[slug];
+  const formationSEO = seoConfig.getFormationSEO(slug, formation);
+  const breadcrumbs = [
+    { name: 'Formaciones', url: '/#formaciones' },
+    { name: formation.name, url: `/${slug}` },
+  ];
 
   return (
     <>
-      <SEO {...formationSEO} />
+      <SEO {...formationSEO} noindex={formation.comingSoon} />
       <MainLayout>
-        {slug && breadcrumbItems[slug] && (
-          <div className="container mx-auto px-4 pt-2">
-            <Breadcrumbs items={breadcrumbItems[slug]} />
-          </div>
-        )}
-        <FormationHero formation={formation} onCTAClick={handleCTAClick} />
-        <FormationAdvantages formation={formation} />
-        {slug === 'curso-detailing-profesional' && (
-          <FormationVideoShowcase
-            videos={detailingVideos}
-            badge="Mira lo que aprenderás"
-            title="Domina las Técnicas Profesionales"
-            subtitle="de Detailing Automotriz"
-            ctaText="Quiero Aprender Esto"
-            onCTAClick={handleCTAClick}
-          />
-        )}
-        <FormationPricing formation={formation} onCTAClick={handleCTAClick} />
-        <FormationLevels formation={formation} onCTAClick={handleCTAClick} />
-        <FormationContent formation={formation} />
-        <FormationInstructor formation={formation} />
-        <FormationModules formation={formation} />
-        <FormationCurriculum formation={formation} />
-        <FormationReglada formation={formation} />
-        <FormationCertification formation={formation} />
-        {videoTestimonials && videoTestimonials.length > 0 && (
-          <FormationVideoTestimonials 
-            videos={videoTestimonials}
-            title="Testimonios de Nuestros Alumnos"
-            subtitle="Descubre las experiencias reales de quienes ya se han formado con nosotros"
-          />
-        )}
-        {slug === 'curso-detailing-profesional' && (
-          <FormationGallery 
-            galleryType="detailing"
-            title="Así es Nuestra Formación"
-            subtitle="Imágenes reales de nuestros cursos de Detailing Profesional"
-            badge="Galería"
-          />
-        )}
-        {slug === 'curso-vinilado-vehiculos' && (
-          <FormationGallery 
-            galleryType="wrapping"
-            title="Trabajos de Nuestros Alumnos"
-            subtitle="Resultados reales de proyectos de Car Wrapping realizados durante y después de la formación"
-            badge="Galería"
-          />
-        )}
-        <FormationIncludes formation={formation} />
-        <BrandLogosBar
-          variant="compact"
-          filter={
-            slug === 'curso-detailing-profesional'
-              ? 'detailing'
-              : slug === 'curso-vinilado-vehiculos'
-                ? 'wrapping'
-                : 'all'
-          }
-        />
-        {/* Logistics section for national/international students */}
-        <FormationLogistics showForSlug={slug} />
-        <GoogleReviews />
-        <FormationFAQ formation={formation} />
-        <FormationROICalculator formation={formation} onCTAClick={handleCTAClick} />
-        {slug !== 'curso-detailing-iniciacion' && <JornadaZeroSection />}
-        <FormationCTA formation={formation} onCTAClick={handleCTAClick} />
+        <CourseHero formation={formation} picture={heroBySlug[slug]} breadcrumbs={breadcrumbs} />
+        <CourseLearn formation={formation} />
+        <Suspense fallback={<Placeholder />}>
+          <CourseSyllabus formation={formation} />
+          {formation.comingSoon ? (
+            <CourseWaitlist slug={slug} name={formation.name} />
+          ) : (
+            <>
+              {videos && (
+                <CourseVideos
+                  videos={videos}
+                  {...(slug === 'curso-detailing-profesional' && {
+                    title: 'Lo cuentan nuestros alumnos',
+                    lead: 'Testimonios en vídeo de alumnos del curso, publicados en el canal de Detail Park.',
+                  })}
+                />
+              )}
+              {formation.instructor && <CourseInstructor instructor={formation.instructor} />}
+              <CoursePricing formation={formation} />
+              <BrandStrip group={formation.brandGroup} />
+              <StudentReviews tone="card" />
+              <CourseFaq faqs={formation.faqs} />
+              <CtaBand
+                title="¿Reservamos tu plaza?"
+                text={`Escríbenos y te contamos las próximas fechas del ${formation.name.toLowerCase()}, cómo reservar y las opciones de pago.`}
+                whatsappText={`Hola, quiero información sobre el ${formation.name}.`}
+                primaryLabel="Reservar plaza"
+                primaryHref={`/contacto?curso=${slug}`}
+              />
+            </>
+          )}
+        </Suspense>
       </MainLayout>
-
-      {/* Coming Soon Modal */}
-      <ComingSoonModal
-        open={showComingSoonModal}
-        onOpenChange={setShowComingSoonModal}
-        formationTitle={formation.title}
-        formationSlug={formation.slug}
-      />
     </>
   );
 }

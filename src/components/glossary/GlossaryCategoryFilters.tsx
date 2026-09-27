@@ -34,7 +34,7 @@ export function GlossaryCategoryFilters({ activeCategory, onCategoryChange, coun
             onClick={() => onCategoryChange(cat)}
             className={`flex items-center gap-1.5 px-3 py-2 md:px-4 md:py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
               isActive
-                ? 'bg-primary/20 text-primary border-primary/40 shadow-sm shadow-primary/10'
+                ? 'bg-primary/20 text-brand border-primary/40 shadow-sm shadow-primary/10'
                 : 'bg-card/50 text-muted-foreground border-border hover:border-primary/30 hover:text-foreground'
             }`}
           >

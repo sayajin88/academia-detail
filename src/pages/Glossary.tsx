@@ -108,13 +108,13 @@ const Glossary = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-brand text-sm font-medium mb-6">
               <BookOpen className="h-4 w-4" />
               Glosario Profesional · +{glossaryTerms.length} términos
             </div>
             <h1 className="text-3xl md:text-5xl font-black text-foreground mb-4 leading-tight">
               Glosario de{' '}
-              <span className="text-primary">Detailing Profesional</span>
+              <span className="text-brand">Detailing Profesional</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
               Domina el lenguaje técnico del Car Detailing. Desde PPF hasta descontaminación química, todos los términos que necesitas conocer.
@@ -143,7 +143,7 @@ const Glossary = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 p-3 rounded-lg bg-primary/10 border border-primary/20 mb-4">
-              <Beaker className="h-6 w-6 text-primary" />
+              <Beaker className="h-6 w-6 text-brand" />
             </div>
             <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
               Calculadora de Dilución Interactiva

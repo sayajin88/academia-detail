@@ -76,7 +76,7 @@ export function StickyFloatingCTA({ onCtaClick }: StickyFloatingCTAProps = {}) {
           <div className="flex-1 min-w-0">
             <p className="text-white font-bold text-xs truncate">Jornada Zero</p>
             <div className="flex items-center gap-2">
-              <p className="text-primary text-base font-black">€97 + IVA</p>
+              <p className="text-brand text-base font-black">€97 + IVA</p>
               <span className="text-xs text-white/50 line-through">€599</span>
             </div>
           </div>

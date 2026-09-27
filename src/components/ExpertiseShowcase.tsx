@@ -104,7 +104,7 @@ export function ExpertiseShowcase() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12 max-w-4xl mx-auto">
-          <Badge className="mb-4 bg-primary/20 text-primary border-primary/40">
+          <Badge className="mb-4 bg-primary/20 text-brand border-primary/40">
             Experiencia Real
           </Badge>
           <h2 className="text-4xl md:text-5xl font-black mb-6">
@@ -113,8 +113,8 @@ export function ExpertiseShowcase() {
             Que Vive del Detailing
           </h2>
           <p className="text-xl text-white/80 leading-relaxed">
-            No somos solo formadores, <span className="text-primary font-bold">somos detailers profesionales en activo</span>. 
-            Durante más de <span className="text-primary font-bold">10 años</span>, hemos trabajado con 
+            No somos solo formadores, <span className="text-brand font-bold">somos detailers profesionales en activo</span>. 
+            Durante más de <span className="text-brand font-bold">10 años</span>, hemos trabajado con 
             cientos de vehículos de alta gama, desde McLaren y Ferrari hasta Porsche y Mercedes-AMG. 
             Esta experiencia real en el día a día del detailing es lo que nos diferencia: 
             <span className="text-white font-semibold"> enseñamos lo que hacemos cada día</span>, 
@@ -214,8 +214,8 @@ export function ExpertiseShowcase() {
         <div className="mt-12 max-w-3xl mx-auto text-center">
           <p className="text-lg text-white/90 leading-relaxed">
             Cada día trabajamos con vehículos de lujo y alto rendimiento. 
-            <span className="text-primary font-bold"> Esta experiencia directa</span> es la que 
-            compartimos en nuestra formación, avalada por <span className="text-primary font-bold">cientos de clientes 
+            <span className="text-brand font-bold"> Esta experiencia directa</span> es la que 
+            compartimos en nuestra formación, avalada por <span className="text-brand font-bold">cientos de clientes 
             satisfechos</span> que confían en nosotros para el cuidado de sus vehículos más preciados.
           </p>
         </div>

@@ -28,7 +28,7 @@ export function AboutStats() {
       <div className="container">
         <AnimatedSection>
           <div className="text-center mb-10">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-brand text-sm font-medium mb-4">
               Nuestros Números
             </span>
             <h2 className="text-2xl md:text-3xl font-bold">

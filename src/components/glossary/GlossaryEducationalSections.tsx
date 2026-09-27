@@ -133,17 +133,17 @@ const sections = [
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="bg-background/50 rounded-lg p-4 border border-border/50 text-center">
-            <span className="text-2xl font-monument text-primary">01</span>
+            <span className="text-2xl font-monument text-brand">01</span>
             <h4 className="font-bold text-foreground text-sm mt-1 mb-1">Corte (Compound)</h4>
             <p className="text-xs text-muted-foreground">Eliminación de defectos profundos: arañazos, swirls, hologramas</p>
           </div>
           <div className="bg-background/50 rounded-lg p-4 border border-border/50 text-center">
-            <span className="text-2xl font-monument text-primary">02</span>
+            <span className="text-2xl font-monument text-brand">02</span>
             <h4 className="font-bold text-foreground text-sm mt-1 mb-1">Pulido (Polish)</h4>
             <p className="text-xs text-muted-foreground">Refinado de la superficie y eliminación de marcas del compound</p>
           </div>
           <div className="bg-background/50 rounded-lg p-4 border border-border/50 text-center">
-            <span className="text-2xl font-monument text-primary">03</span>
+            <span className="text-2xl font-monument text-brand">03</span>
             <h4 className="font-bold text-foreground text-sm mt-1 mb-1">Refinado (Jewelling)</h4>
             <p className="text-xs text-muted-foreground">Acabado ultra fino para máximo brillo y claridad de reflejo</p>
           </div>
@@ -240,7 +240,7 @@ export function GlossaryEducationalSections() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-            Fundamentos del <span className="text-primary">Detailing</span>
+            Fundamentos del <span className="text-brand">Detailing</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Antes de explorar el glosario, domina los conceptos fundamentales que todo detallador profesional debe conocer.
@@ -260,7 +260,7 @@ export function GlossaryEducationalSections() {
                   <AccordionTrigger className="hover:no-underline gap-3 py-5">
                     <div className="flex items-center gap-3 text-left">
                       <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-                        <Icon className="h-4.5 w-4.5 text-primary" />
+                        <Icon className="h-4.5 w-4.5 text-brand" />
                       </div>
                       <span className="font-bold text-foreground text-base md:text-lg">
                         {section.title}

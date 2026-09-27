@@ -255,12 +255,12 @@ export function VisualDilutionCalculator() {
     <div className="bg-card/80 backdrop-blur-sm rounded-2xl border border-border shadow-lg p-5 md:p-8">
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-brand text-sm font-medium mb-4">
           <Beaker className="h-4 w-4" />
           Herramienta Interactiva
         </div>
         <h2 className="text-2xl md:text-3xl font-black text-foreground mb-2 leading-tight">
-          Calculadora de <span className="text-primary">Dilución</span>
+          Calculadora de <span className="text-brand">Dilución</span>
         </h2>
         <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
           Calcula la dilución exacta de cualquier producto químico de forma visual e intuitiva

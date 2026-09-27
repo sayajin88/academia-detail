@@ -30,7 +30,7 @@ const OptionCard = ({ selected, onClick, icon: Icon, label, description }: Optio
     <div
       className={cn(
         "w-12 h-12 rounded-lg flex items-center justify-center shrink-0 transition-colors",
-        selected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:text-primary"
+        selected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:text-brand"
       )}
     >
       <Icon className="w-6 h-6" />

@@ -48,7 +48,7 @@ export function AboutGallerySection() {
               href="https://detailpark.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:underline font-medium"
+              className="text-brand hover:underline font-medium"
             >
               Detail Park
             </a>

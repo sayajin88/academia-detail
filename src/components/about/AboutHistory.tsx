@@ -34,7 +34,7 @@ function FounderVideo() {
     <div ref={containerRef} className="order-2 lg:order-1 flex flex-col items-center">
       {/* Title */}
       <div className="text-center mb-4">
-        <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-medium mb-2">
+        <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-brand text-xs font-medium mb-2">
           📹 VÍDEO EXCLUSIVO
         </span>
         <h3 className="text-xl md:text-2xl font-bold">
@@ -133,7 +133,7 @@ export function AboutHistory() {
       <div className="container">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-brand text-sm font-medium mb-4">
               Nuestra Historia
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -163,7 +163,7 @@ export function AboutHistory() {
                 {/* Content Card */}
                 <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                   <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300">
-                    <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-sm font-bold mb-3">
+                    <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-brand text-sm font-bold mb-3">
                       {event.year}
                     </span>
                     <h3 className="text-xl font-bold mb-2">{event.title}</h3>
@@ -175,7 +175,7 @@ export function AboutHistory() {
 
                 {/* Icon Center */}
                 <div className="relative z-10 flex items-center justify-center w-14 h-14 rounded-full bg-primary/20 border-2 border-primary shadow-lg shadow-primary/20">
-                  <event.icon className="w-6 h-6 text-primary" />
+                  <event.icon className="w-6 h-6 text-brand" />
                 </div>
 
                 {/* Spacer for alignment */}
@@ -205,7 +205,7 @@ export function AboutHistory() {
                 </p>
                 <footer className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                    <span className="text-xl font-bold text-primary">JD</span>
+                    <span className="text-xl font-bold text-brand">JD</span>
                   </div>
                   <div>
                     <p className="font-semibold">Juan Daniel</p>

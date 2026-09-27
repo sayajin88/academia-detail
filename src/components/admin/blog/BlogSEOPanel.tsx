@@ -129,7 +129,7 @@ export function BlogSEOPanel({ title, excerpt, slug, tags, sections, category, o
               <CardContent className="space-y-1">
                 {seoResult.internalLinks.map((link, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm">
-                    <ExternalLink className="h-3 w-3 text-primary" />
+                    <ExternalLink className="h-3 w-3 text-brand" />
                     <span className="font-medium">{link.text}</span>
                     <span className="text-muted-foreground">→ {link.href}</span>
                   </div>
@@ -152,7 +152,7 @@ export function BlogSEOPanel({ title, excerpt, slug, tags, sections, category, o
                 <span className="text-xs text-muted-foreground">Enlaces internos sugeridos:</span>
                 <div className="space-y-1 mt-1">
                   {keywords.internalLinks.map((l, i) => (
-                    <div key={i} className="text-sm flex gap-2"><ExternalLink className="h-3 w-3 text-primary mt-0.5" /><span>{l.text} → {l.href}</span></div>
+                    <div key={i} className="text-sm flex gap-2"><ExternalLink className="h-3 w-3 text-brand mt-0.5" /><span>{l.text} → {l.href}</span></div>
                   ))}
                 </div>
               </div>

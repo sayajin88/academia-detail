@@ -6,10 +6,10 @@ export function BlogDilutionBanner() {
     <div className="my-10 rounded-xl border border-border bg-card/50 p-5 md:p-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="flex-shrink-0 p-3 rounded-lg bg-primary/10 border border-primary/20">
-          <Beaker className="h-6 w-6 text-primary" />
+          <Beaker className="h-6 w-6 text-brand" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">
+          <p className="text-xs font-semibold text-brand uppercase tracking-wider mb-1">
             Herramienta Gratuita
           </p>
           <h3 className="text-base font-bold text-foreground mb-1">

@@ -63,7 +63,7 @@ export function GlossaryTermFAQ({ term }: GlossaryTermFAQProps) {
           <Accordion type="single" collapsible>
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`faq-${index}`}>
-                <AccordionTrigger className="text-left text-foreground hover:text-primary">
+                <AccordionTrigger className="text-left text-foreground hover:text-brand">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">

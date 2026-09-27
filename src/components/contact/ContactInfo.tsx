@@ -41,11 +41,11 @@ const ContactInfo = () => {
               className="flex items-start gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors group"
             >
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <item.icon className="w-5 h-5 text-primary" />
+                <item.icon className="w-5 h-5 text-brand" />
               </div>
               <div className="flex-1">
                 <p className="text-sm text-muted-foreground">{item.label}</p>
-                <p className="font-medium group-hover:text-primary transition-colors">
+                <p className="font-medium group-hover:text-brand transition-colors">
                   {item.value}
                 </p>
                 {item.subvalue && (
@@ -83,12 +83,12 @@ const ContactInfo = () => {
             className="h-10 w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity"
           />
           <div className="flex-1">
-            <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+            <p className="text-sm font-semibold text-foreground group-hover:text-brand transition-colors">
               Visita Detail Park
             </p>
             <p className="text-xs text-muted-foreground">www.detailpark.com</p>
           </div>
-          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-brand transition-colors" />
         </a>
 
         <div className="rounded-xl overflow-hidden border border-border">
@@ -109,7 +109,7 @@ const ContactInfo = () => {
           href="https://www.google.com/maps/place/Detail+Park/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 mt-4 text-primary hover:underline"
+          className="inline-flex items-center gap-2 mt-4 text-brand hover:underline"
         >
           <ExternalLink className="w-4 h-4" />
           Abrir en Google Maps

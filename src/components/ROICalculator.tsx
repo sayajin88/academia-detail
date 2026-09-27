@@ -25,7 +25,7 @@ export function ROICalculator({ onCtaClick }: ROICalculatorProps = {}) {
     <Card className="glass-intense border-primary/30 hover-glow">
       <CardHeader className="text-center">
         <CardTitle className="flex items-center justify-center gap-2 text-white">
-          <Calculator className="w-6 h-6 text-primary" />
+          <Calculator className="w-6 h-6 text-brand" />
           Calculadora de ROI
         </CardTitle>
         <p className="text-white/80 text-sm">Calcula cuánto ganarás con tu experiencia práctica</p>
@@ -100,7 +100,7 @@ export function ROICalculator({ onCtaClick }: ROICalculatorProps = {}) {
 
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2">
-            <TrendingUp className="w-5 h-5 text-primary" />
+            <TrendingUp className="w-5 h-5 text-brand" />
             <span className="text-white font-semibold">ROI: {roi}%</span>
           </div>
           <div className="text-sm text-white/80">

@@ -70,13 +70,13 @@ function ValueItem({ item, index, isVisible }: ValueItemProps) {
       <div className="flex items-center gap-4 flex-1">
         <div className="text-3xl group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
         <div className="flex items-center gap-2">
-          <CheckCircle className={`w-5 h-5 text-primary flex-shrink-0 feature-check stagger-${index + 1}`} 
+          <CheckCircle className={`w-5 h-5 text-brand flex-shrink-0 feature-check stagger-${index + 1}`} 
             style={{ animationDelay: `${index * 100 + 200}ms` }}
           />
           <span className="text-white/90 group-hover:text-white transition-colors">{item.item}</span>
         </div>
       </div>
-      <div className="text-primary font-bold text-lg ml-4 group-hover:scale-110 transition-transform">
+      <div className="text-brand font-bold text-lg ml-4 group-hover:scale-110 transition-transform">
         {item.displayValue}
       </div>
     </div>
@@ -139,7 +139,7 @@ export function ValueJustification() {
           <Card className={`glass-intense border-primary/30 transition-all duration-500 ${isVisible ? 'urgent-glow' : ''}`}>
             <CardHeader className="text-center pb-6">
               <CardTitle className="flex items-center justify-center gap-3 text-white text-2xl">
-                <Euro className="w-8 h-8 text-primary animate-pulse" />
+                <Euro className="w-8 h-8 text-brand animate-pulse" />
                 Inversión vs Valor Real
               </CardTitle>
               
@@ -171,8 +171,8 @@ export function ValueJustification() {
               <div className={`mt-8 pt-6 border-t border-white/10 transition-all duration-700 ${showTotal ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-2xl p-8 border-2 border-primary/40 gradient-border-animated relative overflow-hidden">
                   {/* Sparkle decorations */}
-                  <Sparkles className="absolute top-4 left-4 w-6 h-6 text-primary/40 animate-pulse" />
-                  <Sparkles className="absolute bottom-4 right-4 w-6 h-6 text-primary/40 animate-pulse" />
+                  <Sparkles className="absolute top-4 left-4 w-6 h-6 text-brand/40 animate-pulse" />
+                  <Sparkles className="absolute bottom-4 right-4 w-6 h-6 text-brand/40 animate-pulse" />
                   
                   <div className="grid md:grid-cols-3 gap-6 items-center text-center">
                     <div ref={totalRef} className="relative">
@@ -186,9 +186,9 @@ export function ValueJustification() {
                       <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl" />
                       <div className="relative celebration-dots">
                         <div className="text-white/70 text-sm mb-2 flex items-center justify-center gap-2 uppercase tracking-wide">
-                          <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+                          <Sparkles className="w-4 h-4 text-brand animate-pulse" />
                           TÚ PAGAS HOY
-                          <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+                          <Sparkles className="w-4 h-4 text-brand animate-pulse" />
                         </div>
                         <div className="text-6xl font-black gradient-text mb-2 price-animate discount-badge-3d">
                           €{priceCount}
@@ -217,7 +217,7 @@ export function ValueJustification() {
                   🔥 Precio de lanzamiento por tiempo limitado
                 </Badge>
                 <p className="text-white/60 text-sm mt-4">
-                  Después de esta promoción, el precio será de <span className="text-primary font-semibold">€299 + IVA</span>
+                  Después de esta promoción, el precio será de <span className="text-brand font-semibold">€299 + IVA</span>
                 </p>
               </div>
             </CardContent>

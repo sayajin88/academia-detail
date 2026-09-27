@@ -1,274 +1,167 @@
-import { Link } from "react-router-dom";
-import { Instagram, Youtube, Mail, Phone, MapPin, MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import logo from "@/assets/detail-park-logo-white.png";
-import logoCarcarePassion from "@/assets/brands/carcare-passion.png";
+import { Link } from 'react-router-dom';
+import { ChevronDown, Instagram, Youtube, ArrowUpRight } from 'lucide-react';
+import { SITE } from '@/data/site';
+import logo from '@/assets/detail-park-logo-white.png';
 
-const formationLinks = [
-  { name: "Jornada Zero", href: "/jornada-zero-detailing" },
-  { name: "Detailing", href: "/curso-detailing-profesional" },
-  { name: "Car Wrapping", href: "/curso-vinilado-vehiculos" },
-  { name: "Paint Protection Film", href: "/curso-ppf-proteccion-pintura" },
-  { name: "Restauración", href: "/curso-restauracion-vehiculos" },
-  { name: "Carrera Detailing", href: "/formacion-profesional-detailing" },
-];
+interface FooterLink {
+  name: string;
+  href: string;
+  external?: boolean;
+}
 
-const quickLinks = [
-  { name: "Blog", href: "/blog" },
-  { name: "Glosario Detailing", href: "/glosario-detailing" },
-  { name: "Directorio Detailers", href: "/centros-detailing-espana" },
-  { name: "Calculadora Dilución", href: "/calculadora-dilucion-detailing" },
-  { name: "Marketing para Detailers", href: "/marketing-digital-detailing" },
-  { name: "Quiénes Somos", href: "/quienes-somos" },
-  { name: "Contacto", href: "/contacto" },
-];
-
-const cityLinks = [
-  { name: "Detailing Madrid", href: "/curso-detailing-madrid" },
-  { name: "Detailing Barcelona", href: "/curso-detailing-barcelona" },
-  { name: "Detailing Valencia", href: "/curso-detailing-valencia" },
-  { name: "Detailing Sevilla", href: "/curso-detailing-sevilla" },
-  { name: "Detailing Bilbao", href: "/curso-detailing-bilbao" },
-];
-
-const legalLinks = [
-  { name: "Política de Privacidad", href: "/politica-privacidad", key: "privacidad" },
-  { name: "Aviso Legal", href: "/politica-privacidad", key: "aviso-legal" },
-];
-
-const socialLinks = [
+const columns: { title: string; links: FooterLink[] }[] = [
   {
-    name: "Instagram Academia",
-    href: "https://www.instagram.com/detailparkoficial/",
-    icon: Instagram,
-    label: "@detailpark",
+    title: 'Formaciones',
+    links: [
+      { name: 'Curso de Detailing', href: '/curso-detailing-profesional' },
+      { name: 'Curso de Car Wrapping', href: '/curso-vinilado-vehiculos' },
+      { name: 'Curso de PPF', href: '/curso-ppf-proteccion-pintura' },
+      { name: 'Carrera Detailing', href: '/formacion-profesional-detailing' },
+      { name: 'Jornada Zero', href: '/jornada-zero-detailing' },
+      { name: 'Up Detail', href: '/up-detail-evento' },
+    ],
   },
   {
-    name: "Instagram Daniel",
-    href: "https://www.instagram.com/danidetailoficial/",
-    icon: Instagram,
-    label: "@danidetail",
+    title: 'Cursos por ciudad',
+    links: [
+      { name: 'Curso de detailing en Madrid', href: '/curso-detailing-madrid' },
+      { name: 'Curso de detailing en Barcelona', href: '/curso-detailing-barcelona' },
+      { name: 'Curso de detailing en Valencia', href: '/curso-detailing-valencia' },
+      { name: 'Curso de detailing en Sevilla', href: '/curso-detailing-sevilla' },
+      { name: 'Curso de detailing en Bilbao', href: '/curso-detailing-bilbao' },
+    ],
   },
-  { name: "YouTube", href: "https://www.youtube.com/@detailpark", icon: Youtube, label: "YouTube" },
+  {
+    title: 'Recursos',
+    links: [
+      { name: 'Blog', href: '/blog' },
+      { name: 'Glosario de detailing', href: '/glosario-detailing' },
+      { name: 'Calculadora de dilución', href: '/calculadora-dilucion-detailing' },
+      { name: 'Marketing para detailers', href: '/marketing-digital-detailing' },
+      { name: 'Sistema Detail', href: SITE.sistemaDetailUrl, external: true },
+    ],
+  },
+  {
+    title: 'Academia',
+    links: [
+      { name: 'Quiénes somos', href: '/quienes-somos' },
+      { name: 'Contacto', href: '/contacto' },
+      { name: 'Mapa del sitio', href: '/mapa-del-sitio' },
+      { name: 'Privacidad y aviso legal', href: '/politica-privacidad' },
+    ],
+  },
 ];
+
+function FooterLinkItem({ link }: { link: FooterLink }) {
+  const cls = 'inline-flex items-center gap-1 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground';
+  return link.external ? (
+    <a href={link.href} target="_blank" rel="noopener" className={cls}>
+      {link.name}
+      <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+    </a>
+  ) : (
+    <Link to={link.href} className={cls}>
+      {link.name}
+    </Link>
+  );
+}
 
 export function Footer() {
   return (
-    <footer role="contentinfo" className="bg-gradient-to-b from-card to-background/80 border-t border-border relative">
-      {/* Decorative burgundy top line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-      <div className="container mx-auto px-4 py-12 md:py-16 pt-14 md:pt-18">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <Link to="/" className="inline-block mb-2">
-              <img
-                src={logo}
-                alt="Detail Park - Academia Detail · Escuela de detailing profesional"
-                className="h-10 w-auto"
-                width={200}
-                height={40}
-              />
+    <footer className="border-t border-border bg-card">
+      <div className="ds-container py-12 md:py-16">
+        <div className="grid gap-10 lg:grid-cols-[1.3fr_repeat(4,1fr)] lg:gap-8">
+          <div className="flex flex-col gap-4">
+            <Link to="/" aria-label="Academia Detail, ir al inicio">
+              <img src={logo} alt="Detail Park" className="h-10 w-auto" width={200} height={40} />
             </Link>
-            <a
-              href="https://detailpark.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block text-xs text-muted-foreground hover:text-primary transition-colors mb-4 tracking-wide"
-            >
-              Potenciada por <span className="font-semibold text-foreground/80">Detail Park</span> ↗
-            </a>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Centro de formación líder en detailing profesional, dentro de las instalaciones de Detail Park en
-              Alicante.
+            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+              Escuela de detailing profesional en las instalaciones de{' '}
+              <a href={SITE.detailParkUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline-offset-4 hover:underline">
+                Detail Park
+              </a>
+              , en Alicante.
             </p>
-
-            {/* Social links with labels */}
-            <div className="flex gap-3 mb-6">
-              {socialLinks.map((social) => (
+            <address className="not-italic text-sm leading-relaxed text-muted-foreground">
+              <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
+                {SITE.street}
+                <br />
+                {SITE.postalCode} {SITE.city}
+              </a>
+              <br />
+              <a href={SITE.phoneHref} className="font-semibold text-foreground hover:underline">
+                {SITE.phone}
+              </a>
+              <br />
+              <a href={`mailto:${SITE.email}`} className="hover:text-foreground">
+                {SITE.email}
+              </a>
+            </address>
+            <div className="flex gap-2">
+              {SITE.instagram.map((ig) => (
                 <a
-                  key={social.name}
-                  href={social.href}
+                  key={ig.href}
+                  href={ig.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex flex-col items-center gap-1.5"
-                  aria-label={social.name}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:text-foreground"
+                  aria-label={`Instagram ${ig.label}`}
+                  title={ig.label}
                 >
-                  <div className="p-3 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary hover:border-primary/30 border border-transparent transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                    <social.icon className="h-5 w-5 md:h-6 md:w-6" />
-                  </div>
-                  <span className="text-[10px] text-muted-foreground/60 group-hover:text-primary/80 transition-colors">
-                    {social.label}
-                  </span>
+                  <Instagram className="h-5 w-5" />
                 </a>
               ))}
-            </div>
-
-            {/* Para tu negocio: Sistema Detail, el software de gestión de Detail Park */}
-            <div className="space-y-2 mb-6">
-              <p className="text-[10px] uppercase tracking-wider text-muted-foreground/50 font-semibold">
-                Para tu negocio
-              </p>
               <a
-                href="https://sistemadetail.com/"
+                href={SITE.youtube}
                 target="_blank"
-                rel="noopener"
-                className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+                rel="noopener noreferrer"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:text-foreground"
+                aria-label="YouTube de Detail Park"
               >
-                Sistema Detail · software para centros de detailing ↗
-              </a>
-              <a
-                href="https://sistemadetail.com/calcular-precio-detailing"
-                target="_blank"
-                rel="noopener"
-                className="block text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                Cómo calcular el precio de un detailing ↗
+                <Youtube className="h-5 w-5" />
               </a>
             </div>
-
-            {/* Partners */}
-            <div className="space-y-3 pt-4 border-t border-border/50">
-              <p className="text-[10px] uppercase tracking-wider text-muted-foreground/50 font-semibold">Partners</p>
-              <div className="flex items-center gap-2.5">
-                <img
-                  src={logoCarcarePassion}
-                  alt="Car Care Passion - Partner oficial de productos de detailing"
-                  className="h-5 w-auto brightness-0 invert opacity-60"
-                  loading="lazy"
-                  width={120}
-                  height={20}
-                />
-                <span className="text-xs text-muted-foreground/70">Productos</span>
-              </div>
-            </div>
           </div>
 
-          {/* Formaciones */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Formaciones</h4>
-            <ul className="space-y-2.5">
-              {formationLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Escritorio: columnas abiertas */}
+          {columns.map((col) => (
+            <nav key={col.title} aria-label={col.title} className="hidden lg:block">
+              <h2 className="mb-3 font-sans text-sm font-semibold normal-case tracking-normal text-foreground">{col.title}</h2>
+              <ul>
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <FooterLinkItem link={link} />
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Navegación</h4>
-            <ul className="space-y-2.5">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-              {legalLinks.map((link) => (
-                <li key={link.key}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Cursos por ciudad */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Cursos por ciudad</h4>
-            <ul className="space-y-2.5">
-              {cityLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contacto */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Contacto</h4>
-            <ul className="space-y-3 mb-6">
-              <li>
-                <a
-                  href="mailto:info@academiadetail.com"
-                  className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Mail className="h-4 w-4 flex-shrink-0" />
-                  info@academiadetail.com
-                </a>
-              </li>
-              <li>
-                <a
-                  href="tel:+34622773555"
-                  className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Phone className="h-4 w-4 flex-shrink-0" />
-                  +34 622 773 555
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://maps.google.com/?q=Calle+Metalurgias+13+03008+Alicante+España"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                  <span>
-                    Calle Metalurgias, 13
-                    <br />
-                    03008 Alicante, España
-                  </span>
-                </a>
-              </li>
-            </ul>
-
-            {/* WhatsApp mini CTA */}
-            <div className="p-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20">
-              <p className="text-xs text-muted-foreground mb-2.5">¿Tienes dudas? Escríbenos</p>
-              <Button
-                asChild
-                size="sm"
-                className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white gap-2 font-semibold"
-              >
-                <a href="https://wa.me/34622773555" target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="h-4 w-4" />
-                  WhatsApp
-                </a>
-              </Button>
-            </div>
+          {/* Móvil y tableta: columnas plegables */}
+          <div className="divide-y divide-border border-y border-border lg:hidden">
+            {columns.map((col) => (
+              <details key={col.title} className="group">
+                <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-sm font-semibold text-foreground [&::-webkit-details-marker]:hidden">
+                  {col.title}
+                  <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
+                </summary>
+                <ul className="pb-3">
+                  {col.links.map((link) => (
+                    <li key={link.href}>
+                      <FooterLinkItem link={link} />
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-12 pt-8 border-t border-border">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Detailing Car & Parking Club S.L. Todos los derechos reservados.
-            </p>
-            <p className="text-xs text-muted-foreground/70">Hecho con pasión por el detailing</p>
-          </div>
+        <div className="mt-10 flex flex-col gap-2 border-t border-border pt-6 text-xs text-muted-foreground md:flex-row md:justify-between">
+          <p>© {new Date().getFullYear()} {SITE.company}</p>
+          <p>
+            Formación en Alicante para alumnos de toda España y Latinoamérica.
+          </p>
         </div>
       </div>
     </footer>

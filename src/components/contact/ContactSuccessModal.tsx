@@ -100,12 +100,12 @@ const ContactSuccessModal = ({ open, onClose }: ContactSuccessModalProps) => {
             className="flex items-center justify-between p-4 rounded-lg bg-primary/5 border border-primary/20 hover:border-primary/40 transition-all group"
           >
             <div>
-              <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+              <p className="text-sm font-semibold text-foreground group-hover:text-brand transition-colors">
                 Visita Detail Park
               </p>
               <p className="text-xs text-muted-foreground">www.detailpark.com</p>
             </div>
-            <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+            <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-brand transition-colors" />
           </a>
 
           {/* Close button */}

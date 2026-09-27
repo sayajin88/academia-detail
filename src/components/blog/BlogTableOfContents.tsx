@@ -39,7 +39,7 @@ export function BlogTableOfContents({ sections }: BlogTableOfContentsProps) {
     <nav aria-label="Índice de contenidos" className="hidden xl:block sticky top-24">
       <div className="bg-card border border-border rounded-xl p-5">
         <div className="flex items-center gap-2 mb-4">
-          <List className="h-4 w-4 text-primary" />
+          <List className="h-4 w-4 text-brand" />
           <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">En este artículo</span>
         </div>
         <ol className="space-y-1">
@@ -49,7 +49,7 @@ export function BlogTableOfContents({ sections }: BlogTableOfContentsProps) {
                 onClick={() => handleClick(section.id)}
                 className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 leading-snug ${
                   activeId === section.id
-                    ? 'text-primary bg-primary/10 font-medium'
+                    ? 'text-brand bg-primary/10 font-medium'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 }`}
                 style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}

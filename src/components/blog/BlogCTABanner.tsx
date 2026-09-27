@@ -38,7 +38,7 @@ export function BlogCTABanner() {
         <Link to="/contacto" className="flex-shrink-0">
           <Button
             size="sm"
-            className="bg-white text-primary hover:bg-white/90 rounded-lg px-6 text-sm font-bold w-full md:w-auto group"
+            className="bg-white text-brand hover:bg-white/90 rounded-lg px-6 text-sm font-bold w-full md:w-auto group"
           >
             Inscribirme
             <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5" />

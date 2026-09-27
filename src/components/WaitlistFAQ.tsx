@@ -52,7 +52,7 @@ export function WaitlistFAQ({ onCtaClick, ctaLabel = "Avísame cuando abran plaz
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-10 md:mb-14">
             <div className="inline-flex items-center gap-2 glass-card px-6 py-2.5 rounded-full mb-6">
-              <CalendarClock className="w-4 h-4 text-primary" aria-hidden="true" />
+              <CalendarClock className="w-4 h-4 text-brand" aria-hidden="true" />
               <span className="gradient-text font-bold uppercase tracking-wide text-sm">
                 Fechas y lista de avisos
               </span>

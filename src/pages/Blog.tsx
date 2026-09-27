@@ -152,7 +152,7 @@ export default function Blog() {
                   </span>
                   <button
                     onClick={clearFilters}
-                    className="inline-flex items-center gap-1 text-primary hover:text-primary/80 font-medium transition-colors"
+                    className="inline-flex items-center gap-1 text-brand hover:text-brand/80 font-medium transition-colors"
                   >
                     <X className="h-3 w-3" />
                     Limpiar

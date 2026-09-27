@@ -47,7 +47,7 @@ export function BlogPublishPanel({
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-primary" /> Checklist pre-publicación
+            <CheckCircle2 className="h-4 w-4 text-brand" /> Checklist pre-publicación
             <Badge variant="outline" className="ml-auto text-xs">{readyCount}/{checklist.length}</Badge>
           </CardTitle>
         </CardHeader>
@@ -64,7 +64,7 @@ export function BlogPublishPanel({
       {/* Scores */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm flex items-center gap-2"><BarChart3 className="h-4 w-4 text-primary" /> Puntuaciones</CardTitle>
+          <CardTitle className="text-sm flex items-center gap-2"><BarChart3 className="h-4 w-4 text-brand" /> Puntuaciones</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
@@ -103,7 +103,7 @@ export function BlogPublishPanel({
       {/* Related slugs */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm flex items-center gap-2"><Link className="h-4 w-4 text-primary" /> Artículos relacionados</CardTitle>
+          <CardTitle className="text-sm flex items-center gap-2"><Link className="h-4 w-4 text-brand" /> Artículos relacionados</CardTitle>
         </CardHeader>
         <CardContent>
           <Input

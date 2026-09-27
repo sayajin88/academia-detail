@@ -85,7 +85,7 @@ export function AboutHero() {
         <div className="mt-5 flex justify-center">
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/10 border border-primary/20">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm md:text-base font-medium text-primary">
+            <span className="text-sm md:text-base font-medium text-brand">
               Academia Detail · Potenciada por Detail Park
             </span>
           </div>

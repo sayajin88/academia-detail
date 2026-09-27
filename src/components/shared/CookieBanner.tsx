@@ -53,10 +53,10 @@ export function CookieBanner() {
     >
       <div className="mx-auto max-w-2xl rounded-2xl bg-card/95 backdrop-blur-xl border border-border shadow-2xl shadow-black/30 px-4 py-3 md:px-6 md:py-4">
         <div className="flex items-center gap-3">
-          <Cookie className="h-5 w-5 text-primary flex-shrink-0 hidden sm:block" />
+          <Cookie className="h-5 w-5 text-brand flex-shrink-0 hidden sm:block" />
           <p className="flex-1 text-xs md:text-sm text-muted-foreground leading-snug">
             Usamos cookies para mejorar tu experiencia.{' '}
-            <Link to="/politica-privacidad" className="text-primary hover:underline">
+            <Link to="/politica-privacidad" className="text-brand hover:underline">
               Más info
             </Link>
           </p>

@@ -151,7 +151,7 @@ export function VideoTestimonials() {
                   </div>
 
                   <div className="flex items-start gap-3 mb-4">
-                    <Quote className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
+                    <Quote className="w-5 h-5 text-brand flex-shrink-0 mt-1" />
                     <p className="text-white/90 italic text-sm leading-relaxed">"{testimonial.quote}"</p>
                   </div>
 

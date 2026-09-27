@@ -143,7 +143,7 @@ function PricingCard({ option, index, isVisible }: PricingCardProps) {
             <div className="text-white/60 text-sm font-medium">{option.period}</div>
             
             {option.popular && (
-              <div className="flex items-center justify-center gap-2 text-primary text-sm font-semibold">
+              <div className="flex items-center justify-center gap-2 text-brand text-sm font-semibold">
                 <Zap className="w-4 h-4" />
                 <span>Ahorro de €400</span>
                 <Zap className="w-4 h-4" />
@@ -162,7 +162,7 @@ function PricingCard({ option, index, isVisible }: PricingCardProps) {
               >
                 {feature.included ? (
                   <div className="relative">
-                    <CheckCircle className={`w-5 h-5 flex-shrink-0 ${option.popular ? 'text-primary' : 'text-primary/70'}`} />
+                    <CheckCircle className={`w-5 h-5 flex-shrink-0 ${option.popular ? 'text-brand' : 'text-brand/70'}`} />
                     {option.popular && (
                       <div className="absolute inset-0 bg-primary/30 rounded-full blur-sm -z-10" />
                     )}
@@ -250,9 +250,9 @@ export function PricingComparison() {
                 <div key={i} className="w-6 h-6 rounded-full bg-gradient-to-br from-primary/60 to-primary border-2 border-background" />
               ))}
             </div>
-            <Users className="w-4 h-4 text-primary" />
+            <Users className="w-4 h-4 text-brand" />
             <span className="text-white/80 text-sm">
-              <span className="text-primary font-semibold">{viewingCount}</span> personas viendo esto ahora
+              <span className="text-brand font-semibold">{viewingCount}</span> personas viendo esto ahora
             </span>
           </div>
         </div>
@@ -271,8 +271,8 @@ export function PricingComparison() {
         <div className="text-center mt-16">
           <div className="inline-block glass-card px-6 py-4 rounded-xl urgent-glow">
             <p className="text-white/90 text-lg">
-              💡 <strong className="text-primary">Ahorra €300</strong> con el precio de lanzamiento - 
-              <span className="text-primary ml-1">Después será €299</span>
+              💡 <strong className="text-brand">Ahorra €300</strong> con el precio de lanzamiento - 
+              <span className="text-brand ml-1">Después será €299</span>
             </p>
           </div>
         </div>

@@ -62,7 +62,7 @@ const Unsubscribe = () => {
 
         {status === "loading" && (
           <div className="flex flex-col items-center gap-4">
-            <Loader2 className="w-10 h-10 text-primary animate-spin" />
+            <Loader2 className="w-10 h-10 text-brand animate-spin" />
             <p className="text-muted-foreground">Verificando enlace…</p>
           </div>
         )}
@@ -107,7 +107,7 @@ const Unsubscribe = () => {
             <h3 className="text-lg font-semibold text-foreground">Enlace no válido</h3>
             <p className="text-sm text-muted-foreground">
               Este enlace ha caducado o no es válido. Si necesitas ayuda, escríbenos a{" "}
-              <a href="mailto:info@academiadetail.com" className="text-primary hover:underline">
+              <a href="mailto:info@academiadetail.com" className="text-brand hover:underline">
                 info@academiadetail.com
               </a>
             </p>

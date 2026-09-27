@@ -49,7 +49,7 @@ const MarketingDigital = () => {
             <Accordion type="single" collapsible className="w-full">
               {marketingFaqs.map((faq, i) => (
                 <AccordionItem key={faq.question} value={`item-${i}`} className="border-border/60">
-                  <AccordionTrigger className="text-left text-base font-semibold hover:text-primary">
+                  <AccordionTrigger className="text-left text-base font-semibold hover:text-brand">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">

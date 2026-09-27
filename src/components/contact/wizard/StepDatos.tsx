@@ -144,7 +144,7 @@ const StepDatos = ({ form }: StepDatosProps) => {
                   <a
                     href="/politica-privacidad"
                     target="_blank"
-                    className="text-primary underline hover:text-primary/80"
+                    className="text-brand underline hover:text-brand/80"
                   >
                     Política de Privacidad
                   </a>

@@ -59,7 +59,7 @@ export function ExitIntentPopup() {
                 "Garantía de 30 días"
               ].map((feature, index) => (
                 <div key={index} className="flex items-center gap-2 text-white/90">
-                  <CheckCircle className="w-4 h-4 text-primary" />
+                  <CheckCircle className="w-4 h-4 text-brand" />
                   <span className="text-sm">{feature}</span>
                 </div>
               ))}

@@ -172,7 +172,7 @@ export function InstructorProfile() {
 
                   <div className="space-y-6 mb-8">
                     <div className="flex items-start gap-3">
-                      <Award className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                      <Award className="w-6 h-6 text-brand flex-shrink-0 mt-1" />
                       <div>
                         <h4 className="text-lg font-bold text-white mb-2">+15 Años de Experiencia</h4>
                         <p className="text-white/80" itemProp="description">
@@ -183,7 +183,7 @@ export function InstructorProfile() {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                      <CheckCircle className="w-6 h-6 text-brand flex-shrink-0 mt-1" />
                       <div>
                         <h4 className="text-lg font-bold text-white mb-2">Certificaciones Internacionales</h4>
                         <p className="text-white/80">
@@ -194,7 +194,7 @@ export function InstructorProfile() {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <Users className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                      <Users className="w-6 h-6 text-brand flex-shrink-0 mt-1" />
                       <div>
                         <h4 className="text-lg font-bold text-white mb-2">Metodología de Enseñanza Única</h4>
                         <p className="text-white/80">
@@ -242,7 +242,7 @@ export function InstructorProfile() {
                     "{testimonial.text}"
                   </p>
                   <div itemProp="author" itemScope itemType="https://schema.org/Person">
-                    <p className="text-primary font-semibold" itemProp="name">
+                    <p className="text-brand font-semibold" itemProp="name">
                       {testimonial.author}
                     </p>
                     <p className="text-white/60 text-sm">{testimonial.role}</p>

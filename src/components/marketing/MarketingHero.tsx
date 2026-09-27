@@ -27,7 +27,7 @@ export function MarketingHero() {
       <div className="container relative">
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center">
           <div className="text-center lg:text-left">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/10 text-primary border border-primary/30 mb-6">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/10 text-brand border border-primary/30 mb-6">
             <Sparkles className="w-3.5 h-3.5 animate-pulse" />
             Marketing digital para centros de detailing
           </span>
@@ -79,7 +79,7 @@ export function MarketingHero() {
                 style={{ animationDelay: `${i * 600}ms` }}
               >
                 <span className="w-10 h-10 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center shrink-0">
-                  <pill.icon className="w-5 h-5 text-primary" />
+                  <pill.icon className="w-5 h-5 text-brand" />
                 </span>
                 <span className="text-left">
                   <span className="block text-sm font-semibold text-foreground">{pill.label}</span>

@@ -47,7 +47,7 @@ export function BlogMediaPanel({ imageUrl, imageAlt, authorImage, onImageChange,
     <div className="space-y-6">
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm flex items-center gap-2"><ImageIcon className="h-4 w-4 text-primary" /> Imagen principal</CardTitle>
+          <CardTitle className="text-sm flex items-center gap-2"><ImageIcon className="h-4 w-4 text-brand" /> Imagen principal</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           {imageUrl ? (
@@ -90,7 +90,7 @@ export function BlogMediaPanel({ imageUrl, imageAlt, authorImage, onImageChange,
 
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm flex items-center gap-2"><User className="h-4 w-4 text-primary" /> Imagen del autor</CardTitle>
+          <CardTitle className="text-sm flex items-center gap-2"><User className="h-4 w-4 text-brand" /> Imagen del autor</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center gap-4">

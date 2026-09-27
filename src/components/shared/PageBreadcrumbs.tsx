@@ -58,7 +58,7 @@ export function PageBreadcrumbs({ items }: PageBreadcrumbsProps) {
               <BreadcrumbLink asChild>
                 <Link 
                   to="/" 
-                  className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
+                  className="flex items-center gap-1.5 text-muted-foreground hover:text-brand transition-colors"
                 >
                   <Home className="w-4 h-4" />
                   <span className="hidden sm:inline">Inicio</span>
@@ -76,7 +76,7 @@ export function PageBreadcrumbs({ items }: PageBreadcrumbsProps) {
                     <BreadcrumbLink asChild>
                       <Link 
                         to={item.href}
-                        className="text-muted-foreground hover:text-primary transition-colors"
+                        className="text-muted-foreground hover:text-brand transition-colors"
                       >
                         {item.label}
                       </Link>

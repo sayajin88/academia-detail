@@ -40,7 +40,7 @@ export function JornadaZeroSection() {
             {/* Content Column */}
             <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center">
               {/* Badge */}
-              <span className="inline-flex items-center self-start px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/10 text-primary border border-primary/30 mb-4">
+              <span className="inline-flex items-center self-start px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/10 text-brand border border-primary/30 mb-4">
                 ¿Nuevo en el Detailing?
               </span>
 
@@ -64,7 +64,7 @@ export function JornadaZeroSection() {
                     key={item.label}
                     className="flex items-center gap-3 sm:flex-col sm:items-center sm:text-center p-3 rounded-xl bg-muted/50 border border-border/50"
                   >
-                    <div className="p-2 rounded-lg bg-primary/10 text-primary flex-shrink-0">
+                    <div className="p-2 rounded-lg bg-primary/10 text-brand flex-shrink-0">
                       <item.icon className="h-5 w-5" />
                     </div>
                     <div>

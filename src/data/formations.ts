@@ -16,8 +16,6 @@ export interface Formation {
   icon: string;
   highlights: string[];
   comingSoon?: boolean;
-  alumnosCertificados?: number;
-  proximaFecha?: string;
 }
 
 export const formations: Formation[] = [
@@ -37,8 +35,6 @@ export const formations: Formation[] = [
       'Presupuestación y gestión de clientes',
       'Visión de negocio rentable'
     ],
-    alumnosCertificados: 280,
-    proximaFecha: 'Febrero 2026'
   },
   {
     id: 'curso-vinilado-vehiculos',
@@ -56,8 +52,6 @@ export const formations: Formation[] = [
       'Captación de clientes premium',
       'Márgenes de beneficio elevados'
     ],
-    alumnosCertificados: 145,
-    proximaFecha: 'Marzo 2026'
   },
   {
     id: 'curso-ppf-proteccion-pintura',
@@ -75,8 +69,6 @@ export const formations: Formation[] = [
       'Presupuestación de alto valor',
       'Servicio premium de alta rentabilidad'
     ],
-    alumnosCertificados: 95,
-    proximaFecha: 'Febrero 2026'
   },
   {
     id: 'curso-restauracion-vehiculos',

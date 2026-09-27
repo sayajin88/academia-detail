@@ -212,17 +212,17 @@ export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps =
                     </h4>
                     <div className="flex items-center justify-center gap-2 mb-4">
                       <span className="text-white/80">Compatibilidad del curso:</span>
-                      <span className="text-primary font-bold">{quizResult.courseMatch}%</span>
+                      <span className="text-brand font-bold">{quizResult.courseMatch}%</span>
                     </div>
                   </div>
 
                   <div className="space-y-4 mb-8">
                     <div className="glass-card p-4 rounded-lg">
                       <h5 className="font-semibold text-white mb-2 flex items-center gap-2">
-                        <DollarSign className="w-5 h-5 text-primary" />
+                        <DollarSign className="w-5 h-5 text-brand" />
                         Potencial de Ingresos
                       </h5>
-                      <p className="text-primary font-bold text-lg">{quizResult.earnPotential}</p>
+                      <p className="text-brand font-bold text-lg">{quizResult.earnPotential}</p>
                     </div>
 
                     <div className="glass-card p-4 rounded-lg">
@@ -230,7 +230,7 @@ export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps =
                       <ul className="space-y-2">
                         {quizResult.recommendations.map((rec, index) => (
                           <li key={index} className="flex items-center gap-2 text-white/80">
-                            <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                            <CheckCircle className="w-4 h-4 text-brand flex-shrink-0" />
                             <span className="text-sm">{rec}</span>
                           </li>
                         ))}
@@ -279,7 +279,7 @@ export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps =
                       onChange={(e) => setRoiInputs({...roiInputs, pricePerCar: parseInt(e.target.value)})}
                       className="flex-1"
                     />
-                    <span className="text-primary font-bold text-lg w-16">€{roiInputs.pricePerCar}</span>
+                    <span className="text-brand font-bold text-lg w-16">€{roiInputs.pricePerCar}</span>
                   </div>
                 </div>
 
@@ -296,7 +296,7 @@ export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps =
                       onChange={(e) => setRoiInputs({...roiInputs, carsPerWeek: parseInt(e.target.value)})}
                       className="flex-1"
                     />
-                    <span className="text-primary font-bold text-lg w-16">{roiInputs.carsPerWeek}</span>
+                    <span className="text-brand font-bold text-lg w-16">{roiInputs.carsPerWeek}</span>
                   </div>
                 </div>
               </div>
@@ -306,11 +306,11 @@ export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps =
                 <div className="grid grid-cols-2 gap-4">
                   <div className="glass-card p-4 rounded-lg text-center">
                     <div className="text-white/70 text-sm">Semanal</div>
-                    <div className="text-primary font-bold text-xl">€{roi.weekly.toLocaleString()}</div>
+                    <div className="text-brand font-bold text-xl">€{roi.weekly.toLocaleString()}</div>
                   </div>
                   <div className="glass-card p-4 rounded-lg text-center">
                     <div className="text-white/70 text-sm">Mensual</div>
-                    <div className="text-primary font-bold text-xl">€{roi.monthly.toLocaleString()}</div>
+                    <div className="text-brand font-bold text-xl">€{roi.monthly.toLocaleString()}</div>
                   </div>
                 </div>
 
@@ -324,18 +324,18 @@ export const AdvancedInteractives = ({ onCtaClick }: AdvancedInteractivesProps =
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
                         <div className="text-white/70">ROI del Curso</div>
-                        <div className="text-primary font-bold">{roi.roi.toLocaleString()}%</div>
+                        <div className="text-brand font-bold">{roi.roi.toLocaleString()}%</div>
                       </div>
                       <div>
                         <div className="text-white/70">Recuperación</div>
-                        <div className="text-primary font-bold">{roi.paybackDays} días</div>
+                        <div className="text-brand font-bold">{roi.paybackDays} días</div>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-primary/10 border border-primary/30 rounded-lg p-4">
-                  <div className="flex items-center gap-2 text-primary text-sm font-semibold mb-2">
+                  <div className="flex items-center gap-2 text-brand text-sm font-semibold mb-2">
                     <TrendingUp className="w-4 h-4" />
                     Proyección Conservative
                   </div>

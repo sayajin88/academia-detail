@@ -34,7 +34,7 @@ export function GlossaryAlphabetNav({ letters, activeLetter, availableLetters }:
                 isActive
                   ? 'bg-primary text-primary-foreground shadow-md shadow-primary/30 scale-110'
                   : isAvailable
-                    ? 'text-foreground/70 hover:bg-primary/10 hover:text-primary'
+                    ? 'text-foreground/70 hover:bg-primary/10 hover:text-brand'
                     : 'text-muted-foreground/30 cursor-not-allowed'
               }`}
               aria-label={`Ir a la letra ${letter}`}
@@ -63,7 +63,7 @@ export function GlossaryAlphabetNav({ letters, activeLetter, availableLetters }:
                 isActive
                   ? 'bg-primary text-primary-foreground shadow-md shadow-primary/30'
                   : isAvailable
-                    ? 'text-foreground/70 hover:bg-primary/10 hover:text-primary'
+                    ? 'text-foreground/70 hover:bg-primary/10 hover:text-brand'
                     : 'text-muted-foreground/30 cursor-not-allowed'
               }`}
               aria-label={`Ir a la letra ${letter}`}

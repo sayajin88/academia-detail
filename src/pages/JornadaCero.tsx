@@ -171,15 +171,15 @@ const Index = () => {
                 Up Detail
                 <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-[10px] py-0 px-1.5">Nuevo</Badge>
               </Link>
-              <Link to="/curso-detailing-profesional" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors text-sm">
+              <Link to="/curso-detailing-profesional" className="flex items-center gap-2 text-white/70 hover:text-brand transition-colors text-sm">
                 <GraduationCap className="w-4 h-4" />
                 Cursos Completos
               </Link>
-              <Link to="/formacion-profesional-detailing" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors text-sm">
+              <Link to="/formacion-profesional-detailing" className="flex items-center gap-2 text-white/70 hover:text-brand transition-colors text-sm">
                 <Trophy className="w-4 h-4" />
                 Carrera Detailing
               </Link>
-              <Link to="/contacto" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors text-sm">
+              <Link to="/contacto" className="flex items-center gap-2 text-white/70 hover:text-brand transition-colors text-sm">
                 <Mail className="w-4 h-4" />
                 Contacto
               </Link>
@@ -192,7 +192,7 @@ const Index = () => {
       <section className="bg-black/50 border-b border-primary/20 py-6 md:py-8">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto glass-intense rounded-2xl p-5 md:p-7 border border-primary/30 text-center">
-            <Badge className="bg-primary/20 text-primary border-primary/40 mb-3">Plazas cerradas</Badge>
+            <Badge className="bg-primary/20 text-brand border-primary/40 mb-3">Plazas cerradas</Badge>
             <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
               Actualmente no hay plazas disponibles
             </h2>
@@ -239,7 +239,7 @@ const Index = () => {
               Jornada Zero: <span className="gradient-text">Tu Primera Inmersión</span> en el Detailing Profesional
             </h1>
             <p className="text-base md:text-lg text-white/90 max-w-3xl mx-auto mb-6">
-              <strong className="text-primary">No arriesgues miles de euros sin saber si es para ti.</strong> Por solo €97 + IVA, accede a un taller 100% real, usa herramientas profesionales y descubre si tienes mentalidad de empresario.
+              <strong className="text-brand">No arriesgues miles de euros sin saber si es para ti.</strong> Por solo €97 + IVA, accede a un taller 100% real, usa herramientas profesionales y descubre si tienes mentalidad de empresario.
             </p>
             
             {/* Three Key Points */}
@@ -297,9 +297,9 @@ const Index = () => {
                 ¿No estás seguro de invertir en formación completa?
               </h2>
               <p className="text-white/80 mb-4">
-                La Jornada Zero te permite <strong className="text-primary">probar antes de comprometerte</strong>. Por solo €97 + IVA, vive un día en nuestro taller, practica con vehículos reales y decide con conocimiento de causa.
+                La Jornada Zero te permite <strong className="text-brand">probar antes de comprometerte</strong>. Por solo €97 + IVA, vive un día en nuestro taller, practica con vehículos reales y decide con conocimiento de causa.
               </p>
-              <p className="text-sm text-primary font-semibold">
+              <p className="text-sm text-brand font-semibold">
                 ✨ Si después quieres continuar, este importe se descuenta de cualquier curso completo.
               </p>
             </div>
@@ -342,7 +342,7 @@ const Index = () => {
                 </Button>
               </Link>
               <Link to="/formacion-profesional-detailing">
-                <Button variant="outline" size="sm" className="border-primary/30 text-primary hover:bg-primary/10">
+                <Button variant="outline" size="sm" className="border-primary/30 text-brand hover:bg-primary/10">
                   Carrera Detailing Completa
                   <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
@@ -401,7 +401,7 @@ const Index = () => {
               <div className="glass-intense rounded-2xl px-8 py-4 border border-primary/30">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-6 h-6 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
@@ -415,7 +415,7 @@ const Index = () => {
               <div className="glass-intense rounded-2xl px-8 py-4 border border-primary/30">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-6 h-6 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
@@ -561,7 +561,7 @@ const Index = () => {
                 
                 <div className="glass-intense rounded-2xl p-8 border-2 border-primary text-center">
                   <div className="text-white/60 line-through text-xl mb-2">€199</div>
-                  <div className="text-5xl font-black text-primary mb-2">€97</div>
+                  <div className="text-5xl font-black text-brand mb-2">€97</div>
                   <div className="text-white/80 text-sm mb-6">+ IVA • Oferta limitada</div>
                   
                   <div className="space-y-3 text-left mb-6">
@@ -597,7 +597,7 @@ const Index = () => {
               <div className="flex flex-wrap justify-center gap-6 mt-8">
                 <div className="glass-intense rounded-2xl px-6 py-4 border border-primary/30">
                   <div className="flex items-center gap-3">
-                    <Clock className="text-primary w-6 h-6" />
+                    <Clock className="text-brand w-6 h-6" />
                     <div className="text-left">
                       <div className="text-white/70 text-sm">Próxima convocatoria</div>
                       <div className="text-white font-bold">Fecha por confirmar</div>
@@ -774,7 +774,7 @@ const Index = () => {
               }
             ].map((bonus, index) => (
               <div key={index} className="glass-intense rounded-xl md:rounded-2xl p-6 md:p-8 hover-glow transition-all duration-500 hover:scale-105">
-                <div className="text-primary font-bold text-xs md:text-sm mb-2">{bonus.bonus}</div>
+                <div className="text-brand font-bold text-xs md:text-sm mb-2">{bonus.bonus}</div>
                 <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4">{bonus.title}</h3>
                 <img 
                   src={bonus.image} 
@@ -936,11 +936,11 @@ const Index = () => {
             <div className="text-center">
               <h4 className="text-white font-semibold mb-4">Explora</h4>
               <div className="flex flex-col gap-2">
-                <Link to="/" className="text-white/60 hover:text-primary transition-colors text-sm">Inicio</Link>
-                <Link to="/curso-detailing-profesional" className="text-white/60 hover:text-primary transition-colors text-sm">Cursos de Detailing</Link>
-                <Link to="/formacion-profesional-detailing" className="text-white/60 hover:text-primary transition-colors text-sm">Carrera Detailing Completa</Link>
-                <Link to="/quienes-somos" className="text-white/60 hover:text-primary transition-colors text-sm">Quiénes Somos</Link>
-                <Link to="/contacto" className="text-white/60 hover:text-primary transition-colors text-sm">Contacto</Link>
+                <Link to="/" className="text-white/60 hover:text-brand transition-colors text-sm">Inicio</Link>
+                <Link to="/curso-detailing-profesional" className="text-white/60 hover:text-brand transition-colors text-sm">Cursos de Detailing</Link>
+                <Link to="/formacion-profesional-detailing" className="text-white/60 hover:text-brand transition-colors text-sm">Carrera Detailing Completa</Link>
+                <Link to="/quienes-somos" className="text-white/60 hover:text-brand transition-colors text-sm">Quiénes Somos</Link>
+                <Link to="/contacto" className="text-white/60 hover:text-brand transition-colors text-sm">Contacto</Link>
               </div>
             </div>
             
@@ -951,7 +951,7 @@ const Index = () => {
                 Descubre nuestros cursos completos y la Carrera Detailing.
               </p>
               <Link to="/formacion-profesional-detailing">
-                <Button variant="outline" size="sm" className="border-primary/30 text-primary hover:bg-primary/10">
+                <Button variant="outline" size="sm" className="border-primary/30 text-brand hover:bg-primary/10">
                   Ver Programa Completo
                 </Button>
               </Link>

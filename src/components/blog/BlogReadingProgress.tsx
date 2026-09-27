@@ -15,7 +15,7 @@ export function BlogReadingProgress({ progress, readingTime }: BlogReadingProgre
   return (
     <div className="bg-card border border-border rounded-xl p-5">
       <div className="flex items-center gap-2 mb-3">
-        <BookOpen className="h-4 w-4 text-primary" />
+        <BookOpen className="h-4 w-4 text-brand" />
         <span className="text-sm font-semibold text-foreground">Progreso de Lectura</span>
       </div>
 

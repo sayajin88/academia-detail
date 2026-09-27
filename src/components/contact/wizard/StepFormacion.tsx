@@ -79,7 +79,7 @@ const StepFormacion = ({ form }: StepFormacionProps) => {
               <div
                 className={cn(
                   "w-14 h-14 rounded-xl flex items-center justify-center transition-colors",
-                  isSelected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:text-primary"
+                  isSelected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:text-brand"
                 )}
               >
                 <f.icon className="w-7 h-7" />

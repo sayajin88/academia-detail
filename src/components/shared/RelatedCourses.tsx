@@ -28,7 +28,7 @@ export function RelatedCourses({
             to={course.url}
             className="group flex items-center gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary/30 hover:bg-primary/5 transition-all"
           >
-            <ArrowRight className="h-5 w-5 text-primary shrink-0 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="h-5 w-5 text-brand shrink-0 group-hover:translate-x-1 transition-transform" />
             <div>
               <p className="font-semibold text-foreground text-sm">{course.name}</p>
               <p className="text-xs text-muted-foreground">{course.description}</p>

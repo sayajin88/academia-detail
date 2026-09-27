@@ -75,7 +75,7 @@ export function MarketingServices() {
               <article className="marketing-card group relative h-full rounded-2xl border border-border/60 bg-card/70 p-6 overflow-hidden transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
                 <div className="flex items-start justify-between mb-5">
                   <span className="w-12 h-12 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center">
-                    <service.icon className="w-6 h-6 text-primary" />
+                    <service.icon className="w-6 h-6 text-brand" />
                   </span>
                   <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-foreground/5 text-muted-foreground border border-border/60">
                     {service.tag}
@@ -106,7 +106,7 @@ export function MarketingBranding() {
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           <AnimatedSection animation="slide-left">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 bg-primary/10 text-primary border border-primary/30">
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 bg-primary/10 text-brand border border-primary/30">
               Identidad de marca
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
@@ -122,7 +122,7 @@ export function MarketingBranding() {
               {brandingItems.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <span className="w-5 h-5 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-primary" />
+                    <Check className="w-3 h-3 text-brand" />
                   </span>
                   <span className="text-foreground/90">{item}</span>
                 </li>
@@ -156,7 +156,7 @@ export function MarketingBranding() {
                   >
                     <span
                       className={`text-xs font-semibold uppercase tracking-wider ${
-                        i === 1 ? "text-primary" : "text-muted-foreground"
+                        i === 1 ? "text-brand" : "text-muted-foreground"
                       }`}
                     >
                       {block.title}
@@ -187,7 +187,7 @@ export function MarketingProcess() {
           {processSteps.map((step, i) => (
             <AnimatedSection key={step.step} delay={i * 90} animation="fade-up">
               <div className="relative h-full rounded-2xl border border-border/60 bg-card/70 p-6 overflow-hidden">
-                <span className="absolute -top-3 -right-2 text-6xl font-black text-primary/10 select-none">
+                <span className="absolute -top-3 -right-2 text-6xl font-black text-brand/10 select-none">
                   {step.step}
                 </span>
                 <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-primary text-primary-foreground text-sm font-bold mb-4">
@@ -420,7 +420,7 @@ export function MarketingCost() {
                 <tr className="border-b border-border/60 bg-foreground/5">
                   <th scope="col" className="px-4 py-4 font-semibold text-foreground">Qué incluye</th>
                   <th scope="col" className="px-4 py-4 font-semibold text-foreground">Arranque · 199€</th>
-                  <th scope="col" className="px-4 py-4 font-semibold text-primary">Profesional · 889€</th>
+                  <th scope="col" className="px-4 py-4 font-semibold text-brand">Profesional · 889€</th>
                   <th scope="col" className="px-4 py-4 font-semibold text-foreground">SEO + GEO · 99€</th>
                 </tr>
               </thead>
@@ -495,11 +495,11 @@ export function MarketingLinks() {
                 href={link.href}
                 className="group block h-full rounded-2xl border border-border/60 bg-card/60 p-6 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
               >
-                <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-brand transition-colors">
                   {link.title}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{link.text}</p>
-                <span className="mt-4 inline-flex items-center text-sm font-semibold text-primary">
+                <span className="mt-4 inline-flex items-center text-sm font-semibold text-brand">
                   Ver más
                   <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1" />
                 </span>

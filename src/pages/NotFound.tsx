@@ -26,7 +26,7 @@ const NotFound = () => {
         />
         
         {/* 404 Number */}
-        <h1 className="text-8xl md:text-9xl font-black text-primary mb-4 leading-none">
+        <h1 className="text-8xl md:text-9xl font-black text-brand mb-4 leading-none">
           404
         </h1>
         
@@ -59,15 +59,15 @@ const NotFound = () => {
         <div className="mt-12 pt-8 border-t border-border/50">
           <p className="text-sm text-muted-foreground mb-4">¿Buscas formación en detailing?</p>
           <div className="flex flex-wrap justify-center gap-4 text-sm">
-            <Link to="/curso-detailing-iniciacion" className="text-primary hover:underline">
+            <Link to="/curso-detailing-iniciacion" className="text-brand hover:underline">
               Jornada Zero
             </Link>
             <span className="text-muted-foreground">•</span>
-            <Link to="/curso-detailing-profesional" className="text-primary hover:underline">
+            <Link to="/curso-detailing-profesional" className="text-brand hover:underline">
               Cursos Detailing
             </Link>
             <span className="text-muted-foreground">•</span>
-            <Link to="/formacion-profesional-detailing" className="text-primary hover:underline">
+            <Link to="/formacion-profesional-detailing" className="text-brand hover:underline">
               Carrera Completa
             </Link>
           </div>

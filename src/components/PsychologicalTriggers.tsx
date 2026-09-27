@@ -56,7 +56,7 @@ export const PsychologicalTriggers = () => {
             {/* Countdown Timer */}
             <div className="glass-intense rounded-2xl p-8 mb-8 animate-pulse-glow">
               <div className="flex items-center justify-center gap-2 mb-4">
-                <Clock className="w-6 h-6 text-primary animate-pulse" />
+                <Clock className="w-6 h-6 text-brand animate-pulse" />
                 <Badge variant="destructive" className="animate-bounce">OFERTA DE LANZAMIENTO</Badge>
               </div>
               
@@ -74,7 +74,7 @@ export const PsychologicalTriggers = () => {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div className="glass-card p-3 rounded-lg">
-                  <div className="text-primary font-bold text-lg">€199</div>
+                  <div className="text-brand font-bold text-lg">€199</div>
                   <div className="text-white/70 text-sm">Precio Lanzamiento</div>
                 </div>
                 <div className="glass-card p-3 rounded-lg">
@@ -82,11 +82,11 @@ export const PsychologicalTriggers = () => {
                   <div className="text-white/70 text-sm">Precio Mercado</div>
                 </div>
                 <div className="glass-card p-3 rounded-lg">
-                  <div className="text-primary font-bold text-lg">67%</div>
+                  <div className="text-brand font-bold text-lg">67%</div>
                   <div className="text-white/70 text-sm">Descuento</div>
                 </div>
                 <div className="glass-card p-3 rounded-lg">
-                  <div className="text-primary font-bold text-lg">{spotsLeft}</div>
+                  <div className="text-brand font-bold text-lg">{spotsLeft}</div>
                   <div className="text-white/70 text-sm">Plazas Reales</div>
                 </div>
               </div>
@@ -100,7 +100,7 @@ export const PsychologicalTriggers = () => {
             {/* Real Spots Info */}
             <div className="glass-card rounded-lg p-6">
               <h4 className="text-white font-bold mb-4 flex items-center justify-center gap-2">
-                <Users className="w-5 h-5 text-primary" />
+                <Users className="w-5 h-5 text-brand" />
                 Disponibilidad Real
               </h4>
               
@@ -155,15 +155,15 @@ export const PsychologicalTriggers = () => {
               
               <div className="text-left space-y-3 mb-6">
                 <div className="flex items-start gap-3 text-white/80">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
                   <span className="text-sm">Proceso simple: envía un email a <strong className="text-white">info@detailpark.com</strong> con tu número de inscripción</span>
                 </div>
                 <div className="flex items-start gap-3 text-white/80">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
                   <span className="text-sm">Devolución procesada en 5-7 días hábiles</span>
                 </div>
                 <div className="flex items-start gap-3 text-white/80">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
                   <span className="text-sm">Debes haber asistido al menos al 80% de la jornada</span>
                 </div>
               </div>

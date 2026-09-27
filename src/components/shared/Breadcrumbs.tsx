@@ -12,10 +12,10 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
-    <nav aria-label="Breadcrumb" className="py-3">
-      <ol className="flex items-center gap-1.5 text-sm text-muted-foreground flex-wrap">
+    <nav aria-label="Miga de pan" className="py-3">
+      <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-[13px] text-muted-foreground md:text-sm">
         <li className="flex items-center gap-1.5">
-          <Link to="/" className="hover:text-primary transition-colors flex items-center gap-1">
+          <Link to="/" className="hover:text-brand transition-colors flex items-center gap-1">
             <Home className="h-3.5 w-3.5" />
             <span>Inicio</span>
           </Link>
@@ -30,7 +30,7 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
               </span>
             ) : (
               <>
-                <Link to={item.url} className="hover:text-primary transition-colors">
+                <Link to={item.url} className="hover:text-brand transition-colors">
                   {item.name}
                 </Link>
                 <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />

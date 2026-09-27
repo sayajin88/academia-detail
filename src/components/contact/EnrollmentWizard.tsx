@@ -196,7 +196,7 @@ const EnrollmentWizard = () => {
               key={step.id}
               className={cn(
                 "text-xs font-medium transition-colors",
-                i <= currentStep ? "text-primary" : "text-muted-foreground",
+                i <= currentStep ? "text-brand" : "text-muted-foreground",
                 i === 0 ? "text-left" : i === steps.length - 1 ? "text-right" : "text-center",
                 "flex-1 last:flex-initial"
               )}

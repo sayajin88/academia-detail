@@ -116,7 +116,7 @@ export const OptimizedHero = () => {
             
             {/* Event Date Badge */}
             <div className="inline-flex items-center gap-3 glass-intense border-2 border-primary/60 rounded-2xl px-6 md:px-10 py-4 md:py-6 mb-4 animate-pulse shadow-[0_0_30px_rgba(239,68,68,0.4)]">
-              <Calendar className="w-5 h-5 md:w-8 md:h-8 text-primary" />
+              <Calendar className="w-5 h-5 md:w-8 md:h-8 text-brand" />
               <span className="text-white text-lg md:text-3xl lg:text-4xl font-bold">Sábado 17 Enero 2026</span>
             </div>
             
@@ -130,15 +130,15 @@ export const OptimizedHero = () => {
           </p>
           <div className="flex flex-col md:flex-row flex-wrap justify-center gap-3 md:gap-4 text-sm md:text-base text-white/80">
             <div className="flex items-center justify-center gap-2">
-              <Users className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+              <Users className="w-4 h-4 md:w-5 md:h-5 text-brand" />
               <span>Perfecto para iniciarse</span>
             </div>
             <div className="flex items-center justify-center gap-2">
-              <Award className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+              <Award className="w-4 h-4 md:w-5 md:h-5 text-brand" />
               <span>Primera toma de contacto</span>
             </div>
             <div className="flex items-center justify-center gap-2">
-              <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+              <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-brand" />
               <span>Decide tu camino</span>
             </div>
           </div>

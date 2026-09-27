@@ -29,7 +29,7 @@ export function SocialProofBar() {
       <div className="glass-card border-primary/30 px-6 py-3 rounded-full animate-fade-in">
         <div className="flex items-center gap-3 text-sm">
           <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-          <Users className="w-4 h-4 text-primary" />
+          <Users className="w-4 h-4 text-brand" />
           <span className="text-white font-semibold">{registeredCount}</span>
           <span className="text-white/80">personas ya han reservado su plaza</span>
         </div>

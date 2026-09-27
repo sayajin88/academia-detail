@@ -57,7 +57,7 @@ export function GlossaryRelatedCourses({ term }: GlossaryRelatedCoursesProps) {
                 <p className="text-sm text-muted-foreground mb-3">Duración: {course.duration}</p>
                 <Link
                   to={course.href}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:underline"
                 >
                   Ver curso <ArrowRight className="w-4 h-4" />
                 </Link>

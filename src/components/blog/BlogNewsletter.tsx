@@ -53,7 +53,7 @@ export function BlogNewsletter({ variant = 'standalone' }: BlogNewsletterProps) 
   if (isSuccess) {
     return (
       <div className={`bg-primary/5 border border-primary/20 rounded-xl p-6 md:p-8 text-center ${variant === 'inline' ? '' : 'max-w-2xl mx-auto'}`}>
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary mb-3">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-brand mb-3">
           <Check className="h-6 w-6" />
         </div>
         <h4 className="text-lg font-bold text-foreground mb-1" style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}>
@@ -67,7 +67,7 @@ export function BlogNewsletter({ variant = 'standalone' }: BlogNewsletterProps) 
   return (
     <div className={`bg-card border border-border rounded-xl p-6 md:p-8 ${variant === 'inline' ? '' : 'max-w-2xl mx-auto'}`}>
       <div className="flex items-center gap-2 mb-3">
-        <div className="p-2 rounded-lg bg-primary/10 text-primary">
+        <div className="p-2 rounded-lg bg-primary/10 text-brand">
           <Mail className="h-5 w-5" />
         </div>
         <h4 className="text-lg font-bold text-foreground" style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}>

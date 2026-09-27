@@ -60,7 +60,7 @@ export default function MapaSitio() {
                       <li key={link.url}>
                         <Link
                           to={link.url}
-                          className="text-muted-foreground hover:text-primary transition-colors text-sm flex items-center gap-2"
+                          className="text-muted-foreground hover:text-brand transition-colors text-sm flex items-center gap-2"
                         >
                           <span aria-hidden="true">→</span>
                           {link.name}

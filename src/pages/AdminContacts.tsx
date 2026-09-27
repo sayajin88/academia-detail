@@ -470,7 +470,7 @@ const AdminContacts = () => {
         {/* Header */}
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Users className="h-5 w-5 text-primary" />
+            <Users className="h-5 w-5 text-brand" />
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Contactos / Leads</h1>
@@ -486,7 +486,7 @@ const AdminContacts = () => {
           >
             <CardContent className="p-4 flex items-center gap-4">
               <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                <Users className="h-6 w-6 text-primary" />
+                <Users className="h-6 w-6 text-brand" />
               </div>
               <div>
                 <p className="text-3xl font-bold">{contacts.length}</p>
@@ -731,13 +731,13 @@ const AdminContacts = () => {
                   <div className="grid grid-cols-3 gap-2">
                     <Button variant="outline" className="h-12 flex-col gap-0.5" asChild>
                       <a href={`mailto:${selected.email}`}>
-                        <Mail className="h-5 w-5 text-primary" />
+                        <Mail className="h-5 w-5 text-brand" />
                         <span className="text-[10px] truncate max-w-full">{selected.email}</span>
                       </a>
                     </Button>
                     <Button variant="outline" className="h-12 flex-col gap-0.5" asChild>
                       <a href={`tel:${selected.telefono}`}>
-                        <Phone className="h-5 w-5 text-primary" />
+                        <Phone className="h-5 w-5 text-brand" />
                         <span className="text-[10px]">{selected.telefono}</span>
                       </a>
                     </Button>

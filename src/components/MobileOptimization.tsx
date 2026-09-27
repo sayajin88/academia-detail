@@ -66,7 +66,7 @@ export const MobileOptimization = ({ isOpen, onToggle, onCtaClick }: MobileMenuP
                 <a
                   key={item.label}
                   href={item.href}
-                  className="block py-3 px-4 text-white hover:text-primary transition-colors rounded-lg hover:bg-white/5"
+                  className="block py-3 px-4 text-white hover:text-brand transition-colors rounded-lg hover:bg-white/5"
                   onClick={onToggle}
                 >
                   {item.label}

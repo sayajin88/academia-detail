@@ -365,7 +365,7 @@ export default function CursoDetailingCiudad() {
         <section className="relative py-16 md:py-24 bg-gradient-to-br from-background via-background to-primary/5">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6 bg-primary/10 text-primary border border-primary/30">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6 bg-primary/10 text-brand border border-primary/30">
                 <MapPin className="h-3.5 w-3.5" />
                 Formación de detailing en {data.nombre}
               </span>
@@ -380,19 +380,19 @@ export default function CursoDetailingCiudad() {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Train className="h-4 w-4 text-primary" />
+                  <Train className="h-4 w-4 text-brand" />
                   {data.tiempoTren}
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Clock className="h-4 w-4 text-primary" />
+                  <Clock className="h-4 w-4 text-brand" />
                   En coche: {data.tiempoCoche}
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Users className="h-4 w-4 text-primary" />
+                  <Users className="h-4 w-4 text-brand" />
                   Máx. 3 alumnos
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Star className="h-4 w-4 text-primary" />
+                  <Star className="h-4 w-4 text-brand" />
                   4.9/5 — +218 alumnos
                 </div>
               </div>
@@ -439,17 +439,17 @@ export default function CursoDetailingCiudad() {
             {/* Datos locales */}
             <div className="grid md:grid-cols-3 gap-6 mb-12">
               <div className="bg-card border border-border rounded-xl p-6 text-center">
-                <BarChart3 className="h-8 w-8 text-primary mx-auto mb-3" />
+                <BarChart3 className="h-8 w-8 text-brand mx-auto mb-3" />
                 <p className="text-3xl font-bold text-foreground mb-1">{data.datosLocales.centrosDetailing}</p>
                 <p className="text-sm text-muted-foreground">Centros de detailing en {data.nombre}</p>
               </div>
               <div className="bg-card border border-border rounded-xl p-6 text-center">
-                <Target className="h-8 w-8 text-primary mx-auto mb-3" />
+                <Target className="h-8 w-8 text-brand mx-auto mb-3" />
                 <p className="text-3xl font-bold text-foreground mb-1">{data.datosLocales.ticketMedio}</p>
                 <p className="text-sm text-muted-foreground">Ticket medio por servicio</p>
               </div>
               <div className="bg-card border border-border rounded-xl p-6 text-center">
-                <TrendingUp className="h-8 w-8 text-primary mx-auto mb-3" />
+                <TrendingUp className="h-8 w-8 text-brand mx-auto mb-3" />
                 <p className="text-3xl font-bold text-foreground mb-1">+{data.datosLocales.crecimientoAnual}</p>
                 <p className="text-sm text-muted-foreground">Crecimiento anual de demanda</p>
               </div>
@@ -465,7 +465,7 @@ export default function CursoDetailingCiudad() {
                   <div key={servicio.nombre}>
                     <div className="flex justify-between text-sm mb-1">
                       <span className="text-foreground font-medium">{servicio.nombre}</span>
-                      <span className="text-primary font-semibold">{servicio.porcentaje}%</span>
+                      <span className="text-brand font-semibold">{servicio.porcentaje}%</span>
                     </div>
                     <div className="w-full bg-muted rounded-full h-2.5">
                       <div
@@ -490,7 +490,7 @@ export default function CursoDetailingCiudad() {
                 {data.zonasNegocio.map((zona) => (
                   <span
                     key={zona}
-                    className="px-3 py-1.5 rounded-full text-sm bg-primary/10 text-primary border border-primary/20"
+                    className="px-3 py-1.5 rounded-full text-sm bg-primary/10 text-brand border border-primary/20"
                   >
                     {zona}
                   </span>
@@ -525,7 +525,7 @@ export default function CursoDetailingCiudad() {
         {/* Alumnos de la ciudad */}
         <section className="py-16 md:py-20">
           <div className="container mx-auto px-4 text-center max-w-2xl">
-            <p className="text-5xl md:text-6xl font-bold text-primary mb-4">{data.alumnosGraduados}</p>
+            <p className="text-5xl md:text-6xl font-bold text-brand mb-4">{data.alumnosGraduados}</p>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
               alumnos de {data.nombre} ya se han formado con nosotros
             </h2>
@@ -546,7 +546,7 @@ export default function CursoDetailingCiudad() {
                 <details key={i} className="bg-card border border-border rounded-xl p-6 group">
                   <summary className="text-lg font-semibold text-foreground cursor-pointer list-none flex items-center justify-between">
                     {faq.question}
-                    <span className="ml-2 text-primary transition-transform group-open:rotate-45 text-xl font-bold">+</span>
+                    <span className="ml-2 text-brand transition-transform group-open:rotate-45 text-xl font-bold">+</span>
                   </summary>
                   <p className="mt-4 text-muted-foreground leading-relaxed">
                     {faq.answer}

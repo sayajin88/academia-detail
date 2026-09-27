@@ -94,7 +94,7 @@ export function BlogShareButtons({ title, url }: BlogShareButtonsProps) {
           aria-label="Copiar enlace"
           className={`p-2 min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg border transition-all duration-200 ${
             copied
-              ? 'bg-primary/10 border-primary/30 text-primary'
+              ? 'bg-primary/10 border-primary/30 text-brand'
               : 'bg-card border-border text-muted-foreground hover:border-primary/30 hover:text-foreground'
           }`}
         >

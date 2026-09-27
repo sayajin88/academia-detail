@@ -46,7 +46,7 @@ export function BlogPostCTA() {
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <stat.icon className="h-5 w-5 text-primary mx-auto mb-1.5" />
+                  <stat.icon className="h-5 w-5 text-brand mx-auto mb-1.5" />
                   <div className="text-lg font-bold text-foreground">{stat.value}</div>
                   <div className="text-[11px] text-muted-foreground leading-tight">{stat.label}</div>
                 </div>
@@ -69,7 +69,7 @@ export function BlogPostCTA() {
             {/* Testimonial overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-6">
               <div className="bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4">
-                <Quote className="h-4 w-4 text-primary mb-2" />
+                <Quote className="h-4 w-4 text-brand mb-2" />
                 <p className="text-sm text-muted-foreground italic leading-relaxed mb-2">
                   "La formación en Academia Detail cambió mi vida profesional. Hoy tengo mi propio taller con una facturación que nunca imaginé."
                 </p>

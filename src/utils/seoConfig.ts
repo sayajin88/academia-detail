@@ -9,7 +9,7 @@ import {
   courseFormacionProfesionalSchema,
   courseJornadaZeroSchema,
 } from "@/components/SEO";
-import { homeFaqs } from "@/components/home/HomeFAQ";
+import { homeFaqs } from "@/data/homeContent";
 import { carreraDetailingData } from "@/data/carreraDetailingData";
 import { faqs as jornadaCeroFaqs } from "@/components/FAQ";
 import { waitlistFaqs } from "@/components/WaitlistFAQ";
@@ -21,7 +21,7 @@ const BASE_URL = "https://academiadetail.com";
 // ORGANIZATION SCHEMA COMPLETO CON SAMEAS
 // ============================================
 // Google Maps Place URL canónica (same as SEO.tsx)
-const GOOGLE_MAPS_PLACE_URL = "https://www.google.com/maps/place/Detail+Park+-+Detailing+Car/@38.3451397,-0.4917511,17z/data=!3m1!4b1!4m6!3m5!1s0xd6236e71c3d9553:0x68a39e80e15a6e68!8m2!3d38.3451397!4d-0.4891762!16s%2Fg%2F11h0kgkq3z";
+const GOOGLE_MAPS_PLACE_URL = "https://www.google.com/maps/place/Detail+Park/@38.3377617,-0.5168395,17z/data=!4m6!3m5!1s0xd623648a719504f:0xd9b48559af87cfc6!8m2!3d38.3377617!4d-0.5168395";
 
 export const organizationSchemaComplete = {
   "@context": "https://schema.org",
@@ -56,8 +56,8 @@ export const organizationSchemaComplete = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 38.3452,
-    longitude: -0.4892,
+    latitude: 38.3377617,
+    longitude: -0.5168395,
   },
   sameAs: [
     "http://www.detailpark.com/",
@@ -254,23 +254,6 @@ export const generateCourseSchemaEnhanced = (course: {
     seller: { "@type": "Organization", name: "Detail Park - Academia Detail" },
   };
 
-  if (course.originalPrice && course.originalPrice > course.price) {
-    offers.priceSpecification = [
-      {
-        "@type": "UnitPriceSpecification",
-        priceType: "https://schema.org/SalePrice",
-        price: course.price,
-        priceCurrency: "EUR",
-      },
-      {
-        "@type": "UnitPriceSpecification",
-        priceType: "https://schema.org/ListPrice",
-        price: course.originalPrice,
-        priceCurrency: "EUR",
-      },
-    ];
-  }
-
   // Build teaches from real data or fallback
   const teaches =
     course.whatYouLearn && course.whatYouLearn.length > 0
@@ -302,13 +285,6 @@ export const generateCourseSchemaEnhanced = (course: {
     },
     offers: offers,
     hasCourseInstance: courseInstances,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: course.rating?.value || "4.9",
-      reviewCount: course.rating?.count || "50",
-      bestRating: "5",
-      worstRating: "1",
-    },
     coursePrerequisites: "Sin experiencia previa necesaria",
     educationalCredentialAwarded: credential.name,
     occupationalCredentialAwarded: credential,
@@ -634,7 +610,7 @@ export const generateHomeSEO = (
   return {
     title: "Cursos de Detailing en Alicante | Detail Park",
     description:
-      "Academia de detailing en Alicante. Cursos 100% prácticos de detailing, wrapping, PPF y restauración en taller real. +218 alumnos certificados.",
+      "Academia de detailing en Alicante. Cursos 100 % prácticos de detailing, pulido, tratamiento cerámico, wrapping y PPF en un taller real. 218 alumnos formados.",
     // ── KEYWORDS HOME ENRIQUECIDAS ──────────────────────────────────────────
     keywords: `curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso pulido coche certificado, curso tratamiento cerámico, curso coating cerámico coches, aprender aplicar cerámico coche, curso limpiar coches profesional, curso lavado profesional coches, escuela de detailing, academia detailing, academia detailing alicante, curso detailing alicante, curso ppf alicante, curso wrapping alicante, curso detailing comunidad valenciana, cómo montar negocio detailing, cómo montar centro detailing, abrir taller detailing, montar negocio detailing España, negocio detailing rentable, emprender detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso wrapping básico, curso wrapping avanzado, curso vinilado profesional, curso ppf paint protection film, curso pulido carrocería, curso tapizado asientos coches, curso restauración tapicería cuero, qué es el detailing profesional, cuánto cobra un detailer profesional, diferencia detailing lavado normal, salidas laborales detailing, herramientas detailing profesional, ppf vs ceramic coating, precio instalar ppf coche, ${categoryKeywords}`,
     url: "/",
@@ -768,7 +744,7 @@ export const seoConfig = {
   home: {
     title: "Cursos de Detailing en Alicante | Detail Park",
     description:
-      "Academia de detailing en Alicante. Cursos 100% prácticos de detailing, wrapping, PPF y restauración en taller real. +218 alumnos certificados.",
+      "Academia de detailing en Alicante. Cursos 100 % prácticos de detailing, pulido, tratamiento cerámico, wrapping y PPF en un taller real. 218 alumnos formados.",
     // ── KEYWORDS HOME ENRIQUECIDAS ──────────────────────────────────────────
     keywords:
       "curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso pulido coche certificado, curso tratamiento cerámico, curso coating cerámico coches, aprender aplicar cerámico coche, curso limpiar coches profesional, curso lavado profesional coches, escuela de detailing, academia detailing, academia detailing alicante, curso detailing alicante, curso ppf alicante, curso wrapping alicante, curso detailing comunidad valenciana, cómo montar negocio detailing, cómo montar centro detailing, abrir taller detailing, montar negocio detailing España, negocio detailing rentable, emprender detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, curso detailing online vs presencial, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso wrapping básico, curso wrapping avanzado, curso vinilado profesional, curso ppf paint protection film, curso pulido carrocería, curso tapizado asientos coches, curso restauración tapicería cuero, qué es el detailing profesional, cuánto cobra un detailer profesional, diferencia detailing lavado normal, salidas laborales detailing, herramientas detailing profesional, ppf vs ceramic coating, precio instalar ppf coche",
@@ -1267,13 +1243,6 @@ export const seoConfig = {
       "curso-restauracion-vehiculos": "Curso Restauración Vehículos",
     };
 
-    const courseRatings: Record<string, { value: string; count: string }> = {
-      "curso-detailing-profesional": { value: "4.9", count: "127" },
-      "curso-vinilado-vehiculos": { value: "4.8", count: "89" },
-      "curso-ppf-proteccion-pintura": { value: "4.9", count: "67" },
-      "curso-restauracion-vehiculos": { value: "4.7", count: "45" },
-    };
-
     const coursePrices: Record<string, string> = {
       "curso-detailing-profesional": "2997",
       "curso-vinilado-vehiculos": "1999",
@@ -1323,7 +1292,6 @@ export const seoConfig = {
           duration: formation.duration,
           url: `/${normalizedSlug}`,
           image: imageUrl,
-          rating: courseRatings[normalizedSlug],
           // Rich data from formation
           modules: formation.modules,
           whatYouLearn: formation.whatYouLearn,

@@ -34,8 +34,8 @@ export function FormationVideoTestimonials({
         <AnimatedSection>
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
-              <Play className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Video Testimonios</span>
+              <Play className="w-4 h-4 text-brand" />
+              <span className="text-sm font-medium text-brand">Video Testimonios</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-glow">
@@ -101,7 +101,7 @@ export function FormationVideoTestimonials({
                   {video.name && (
                     <p className="text-sm text-muted-foreground">
                       {video.name}
-                      {video.role && <span className="text-primary"> • {video.role}</span>}
+                      {video.role && <span className="text-brand"> • {video.role}</span>}
                     </p>
                   )}
                 </div>

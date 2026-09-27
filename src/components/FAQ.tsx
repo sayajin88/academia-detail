@@ -65,7 +65,7 @@ export function FAQ() {
           <Card className="glass-card border-white/10">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-white">
-                <HelpCircle className="w-6 h-6 text-primary" />
+                <HelpCircle className="w-6 h-6 text-brand" />
                 Preguntas y Respuestas
               </CardTitle>
             </CardHeader>
@@ -73,7 +73,7 @@ export function FAQ() {
               <Accordion type="single" collapsible className="space-y-4">
                 {faqs.map((faq, index) => (
                   <AccordionItem key={index} value={`item-${index}`} className="border-b border-white/10">
-                    <AccordionTrigger className="text-white hover:text-primary text-left">
+                    <AccordionTrigger className="text-white hover:text-brand text-left">
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-white/80 pt-4">

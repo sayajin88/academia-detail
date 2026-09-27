@@ -1,607 +1,316 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Zap, Car, GraduationCap, Palette, ShieldCheck, Wrench, Home, Image, Mail, BookOpen, Sparkles, FlaskConical, Settings2, MapPin, Rocket } from 'lucide-react';
+import { ChevronDown, ArrowUpRight, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { SITE } from '@/data/site';
+import { cn } from '@/lib/utils';
 import academiaLogo from '@/assets/academia-detail-logo-light.png';
 
-// WhatsApp Icon Component
-const WhatsAppIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-);
+interface NavItem {
+  name: string;
+  href: string;
+  description?: string;
+  badge?: string;
+}
 
-const formationLinks = [
-  { name: 'Detailing', href: '/curso-detailing-profesional', icon: Car, description: 'Técnicas profesionales' },
-  { name: 'Car Wrapping', href: '/curso-vinilado-vehiculos', icon: Palette, description: 'Vinilado de vehículos' },
-  { name: 'Paint Protection Film', href: '/curso-ppf-proteccion-pintura', icon: ShieldCheck, description: 'Protección de pintura' },
-  { name: 'Restauración', href: '/curso-restauracion-vehiculos', icon: Wrench, description: 'Recuperación integral' },
-  { name: 'Carrera Detailing', href: '/formacion-profesional-detailing', icon: GraduationCap, description: 'Programa completo' },
+const courseLinks: NavItem[] = [
+  { name: 'Curso de Detailing', href: '/curso-detailing-profesional', description: 'Pulido y tratamiento cerámico · 4 días' },
+  { name: 'Curso de Car Wrapping', href: '/curso-vinilado-vehiculos', description: 'Vinilado y cambio de color' },
+  { name: 'Curso de PPF', href: '/curso-ppf-proteccion-pintura', description: 'Film de protección de pintura' },
+  { name: 'Carrera Detailing', href: '/formacion-profesional-detailing', description: 'Programa completo con módulo de negocio' },
+  { name: 'Restauración', href: '/curso-restauracion-vehiculos', description: 'Cuero, tapicerías y clásicos', badge: 'Próximamente' },
 ];
 
-const toolLinks = [
-  { name: 'Glosario Detailing', href: '/glosario-detailing', icon: BookOpen, description: 'Más de 80 términos técnicos' },
-  { name: 'Calcular Diluciones', href: '/calculadora-dilucion-detailing', icon: FlaskConical, description: 'Ratios de mezcla exactos' },
-  { name: 'Marketing para tu Negocio', href: '/marketing-digital-detailing', icon: Rocket, description: 'Web, SEO y marca para detailers' },
+const starterLinks: NavItem[] = [
+  { name: 'Jornada Zero', href: '/jornada-zero-detailing', description: 'Tu primer día de detailing' },
+  { name: 'Up Detail', href: '/up-detail-evento', description: 'Formación intensiva en 1 día' },
 ];
 
-const navLinks = [
-  { name: 'Inicio', href: '/', icon: Home },
-  { name: 'Marketing', href: '/marketing-digital-detailing', icon: Rocket },
-  { name: 'Quiénes Somos', href: '/quienes-somos', icon: Image },
-  { name: 'Blog', href: '/blog', icon: BookOpen },
-  { name: 'Directorio', href: '/centros-detailing-espana', icon: MapPin },
-  { name: 'Inscribirse', href: '/contacto', icon: Mail },
+const resourceLinks: NavItem[] = [
+  { name: 'Glosario de detailing', href: '/glosario-detailing', description: 'Más de 80 términos explicados' },
+  { name: 'Calculadora de dilución', href: '/calculadora-dilucion-detailing', description: 'Proporciones exactas de mezcla' },
+  { name: 'Marketing para detailers', href: '/marketing-digital-detailing', description: 'Web, SEO y marca para tu centro' },
 ];
+
+const plainLinks: NavItem[] = [
+  { name: 'Quiénes somos', href: '/quienes-somos' },
+  { name: 'Blog', href: '/blog' },
+];
+
+type MenuKey = 'cursos' | 'recursos' | null;
+
+function DropdownLink({ item }: { item: NavItem }) {
+  return (
+    <Link
+      to={item.href}
+      role="menuitem"
+      className="flex flex-col gap-0.5 rounded-lg px-3 py-2.5 transition-colors hover:bg-white/5 focus-visible:bg-white/5 focus-visible:outline-none"
+    >
+      <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+        {item.name}
+        {item.badge && (
+          <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">{item.badge}</span>
+        )}
+      </span>
+      {item.description && <span className="text-[13px] text-muted-foreground">{item.description}</span>}
+    </Link>
+  );
+}
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isFormationsOpen, setIsFormationsOpen] = useState(false);
-  const [isToolsOpen, setIsToolsOpen] = useState(false);
-  const [mobileFormationsOpen, setMobileFormationsOpen] = useState(false);
-  const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(true); // Eliminado delay de 100ms — visible inmediatamente
+  const [open, setOpen] = useState<MenuKey>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSection, setMobileSection] = useState<MenuKey>(null);
   const location = useLocation();
-  const navRef = useRef<HTMLDivElement>(null);
-  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const closeTimer = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-    setIsFormationsOpen(false);
-    setIsToolsOpen(false);
-    setMobileFormationsOpen(false);
-    setMobileToolsOpen(false);
+    setOpen(null);
+    setMobileOpen(false);
+    setMobileSection(null);
   }, [location.pathname]);
 
-  // Update pill position based on active link — usando rAF para evitar layout síncronos
   useEffect(() => {
-    const updatePill = () => {
-      requestAnimationFrame(() => {
-        if (!navRef.current) return;
-        
-        const activeLink = navRef.current.querySelector('[data-active="true"]') as HTMLElement;
-        if (activeLink) {
-          const navRect = navRef.current.getBoundingClientRect();
-          const linkRect = activeLink.getBoundingClientRect();
-          setPillStyle({
-            left: linkRect.left - navRect.left,
-            width: linkRect.width,
-            opacity: 1,
-          });
-        } else {
-          setPillStyle(prev => ({ ...prev, opacity: 0 }));
-        }
-      });
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
     };
+  }, [mobileOpen]);
 
-    updatePill();
-    window.addEventListener('resize', updatePill);
-    return () => window.removeEventListener('resize', updatePill);
-  }, [location.pathname]);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(null);
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
-  const isActive = (href: string) => {
-    if (href === '/') return location.pathname === '/';
-    return location.pathname.startsWith(href);
+  const isActive = (href: string) => (href === '/' ? location.pathname === '/' : location.pathname.startsWith(href));
+  const coursesActive = [...courseLinks, ...starterLinks].some((l) => isActive(l.href)) || location.pathname.startsWith('/curso-');
+  const resourcesActive = resourceLinks.some((l) => isActive(l.href));
+
+  const openMenu = (key: MenuKey) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpen(key);
+  };
+  const scheduleClose = () => {
+    closeTimer.current = setTimeout(() => setOpen(null), 120);
   };
 
-  const isFormationsActive = formationLinks.some(link => location.pathname === link.href) || 
-                             location.pathname.includes('/curso-');
-
-  const isToolsActive = toolLinks.some(link => isActive(link.href));
+  const topLinkClass = (active: boolean) =>
+    cn(
+      'inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+      active ? 'text-brand' : 'text-foreground/85 hover:text-foreground'
+    );
 
   return (
     <>
-      <nav
-        role="navigation"
-        aria-label="Navegación principal"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'py-1.5 md:py-2' : 'py-2 md:py-4'
-        } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
-        style={{ transitionProperty: 'opacity, transform, padding', paddingTop: 'max(env(safe-area-inset-top), 0.375rem)' }}
+      <header
+        className={cn(
+          'fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300',
+          isScrolled || mobileOpen ? 'border-border bg-background/95 backdrop-blur-md' : 'border-transparent bg-background/70 backdrop-blur-sm'
+        )}
+        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div className="container mx-auto px-2 md:px-4">
-          {/* Glass Container - Dark theme */}
-          <div
-            className={`relative flex items-center justify-between lg:gap-4 transition-all duration-500 ${
-              isScrolled
-                ? 'bg-background/90 backdrop-blur-2xl rounded-xl md:rounded-2xl border border-white/10 shadow-lg shadow-black/20 px-3 md:px-6 py-1.5 md:py-3'
-                : 'bg-background/70 backdrop-blur-xl rounded-xl md:rounded-2xl border border-white/10 px-3 md:px-6 py-2 md:py-4'
-            }`}
-          >
-            {/* Animated border gradient */}
-            <div className={`absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden pointer-events-none transition-opacity duration-1000 delay-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-              <div 
-                className="absolute inset-0 opacity-30 overflow-hidden"
+        <nav aria-label="Navegación principal" className="ds-container flex h-16 items-center justify-between gap-6 md:h-[72px]">
+          <Link to="/" className="flex shrink-0 items-center" aria-label="Academia Detail, ir al inicio">
+            <img
+              src={academiaLogo}
+              alt="Academia Detail"
+              className="h-7 w-auto brightness-0 invert md:h-8"
+              width={229}
+              height={70}
+            />
+          </Link>
+
+          {/* Escritorio */}
+          <div className="hidden items-center gap-1 lg:flex">
+            <div className="relative" onMouseEnter={() => openMenu('cursos')} onMouseLeave={scheduleClose}>
+              <button
+                type="button"
+                className={topLinkClass(coursesActive)}
+                aria-expanded={open === 'cursos'}
+                aria-haspopup="true"
+                onClick={() => setOpen(open === 'cursos' ? null : 'cursos')}
               >
-                <div 
-                  className="absolute inset-0 w-[200%]"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent 25%, hsl(var(--primary) / 0.3) 50%, transparent 75%)',
-                    animation: 'shimmer-border 3s linear infinite',
-                    willChange: 'transform',
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Logo */}
-            <Link 
-              to="/" 
-              className={`flex items-center relative z-10 group transition-all duration-500 delay-100 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
-            >
-              <div className="relative flex flex-col flex-shrink-0">
-                <img 
-                  src={academiaLogo} 
-                  alt="Academia Detail - Cursos de detailing profesional en España" 
-                  className="h-7 sm:h-8 md:h-9 w-auto max-w-[220px] object-contain transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
-                  width={229}
-                  height={70}
-                />
-                {/* Logo glow on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-primary/20" />
-              </div>
-            </Link>
-
-            {/* Desktop Navigation + CTA group - aligned right */}
-            <div className="hidden lg:flex items-center gap-3 ml-auto">
-              <div 
-                ref={navRef}
-                className="flex items-center gap-2 relative"
-              >
-              {/* Animated pill indicator */}
-              <div
-                className={`absolute bottom-0 h-0.5 bg-gradient-to-r from-primary via-primary to-primary/50 rounded-full transition-all duration-300 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-                style={{
-                  left: pillStyle.left,
-                  width: pillStyle.width,
-                  opacity: isLoaded ? pillStyle.opacity : 0,
-                }}
-              />
-
-              {/* Visual separator between logo and menu */}
-              <div className="h-6 w-px bg-white/10 mx-1" aria-hidden="true" />
-
-              <Link
-                to="/"
-                data-active={location.pathname === '/'}
-                className={`relative inline-flex items-center gap-1.5 px-2 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                  location.pathname === '/' 
-                    ? 'text-primary' 
-                    : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
-                } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
-                style={{ transitionDelay: '200ms' }}
-              >
-                <Home className="h-4 w-4" />
-                Inicio
-              </Link>
-
-              {/* Formaciones Dropdown */}
-              <div
-                className={`relative transition-all duration-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
-                style={{ transitionDelay: '250ms' }}
-                onMouseEnter={() => setIsFormationsOpen(true)}
-                onMouseLeave={() => setIsFormationsOpen(false)}
-              >
-                <button
-                  data-active={isFormationsActive}
-                  aria-expanded={isFormationsOpen}
-                  aria-haspopup="true"
-                  className={`flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                    isFormationsActive
-                      ? 'text-primary'
-                      : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
-                  }`}
-                >
-                  Formaciones
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform duration-300 ${isFormationsOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
-
-                {/* Dropdown Menu - Dark theme */}
-                <div 
-                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-300 ${
-                    isFormationsOpen 
-                      ? 'opacity-100 translate-y-0 pointer-events-auto' 
-                      : 'opacity-0 -translate-y-2 pointer-events-none'
-                  }`}
-                >
-                  <div role="menu" className="relative bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-3 min-w-[280px]">
-                    {/* Dropdown accent */}
-                    <div className="absolute -inset-px bg-gradient-to-b from-primary/10 to-transparent rounded-2xl pointer-events-none" aria-hidden="true" />
-                    
-                    <div className="relative space-y-1">
-                      {formationLinks.map((link, index) => (
-                        <Link
-                          key={link.href}
-                          to={link.href}
-                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group hover:bg-white/5"
-                          style={{ animationDelay: `${index * 50}ms` }}
-                        >
-                          <div className="p-2 rounded-lg transition-colors duration-200 bg-white/5 text-foreground/50 group-hover:bg-primary/10 group-hover:text-primary">
-                            <link.icon className="h-4 w-4" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-foreground">
-                              {link.name}
-                            </p>
-                            <p className="text-xs text-foreground/50">{link.description}</p>
-                          </div>
-                        </Link>
+                Formaciones
+                <ChevronDown className={cn('h-4 w-4 transition-transform', open === 'cursos' && 'rotate-180')} aria-hidden="true" />
+              </button>
+              {open === 'cursos' && (
+                <div className="absolute left-1/2 top-full w-[600px] -translate-x-1/2 pt-2">
+                  <div role="menu" className="grid grid-cols-[1.35fr_1fr] gap-2 rounded-xl border border-border bg-card p-3 shadow-2xl shadow-black/40">
+                    <div>
+                      <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">Cursos</p>
+                      {courseLinks.map((item) => (
+                        <DropdownLink key={item.href} item={item} />
                       ))}
+                    </div>
+                    <div className="rounded-lg bg-background/60 p-1">
+                      <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">Si empiezas desde cero</p>
+                      {starterLinks.map((item) => (
+                        <DropdownLink key={item.href} item={item} />
+                      ))}
+                      <Link
+                        to="/curso-detailing-iniciacion"
+                        role="menuitem"
+                        className="mx-3 mt-2 inline-flex items-center gap-1 text-[13px] font-semibold text-brand hover:underline"
+                      >
+                        Comparar las dos jornadas
+                        <ArrowUpRight className="h-3.5 w-3.5 rotate-45" aria-hidden="true" />
+                      </Link>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
+            </div>
 
-              {/* Herramientas Dropdown */}
-              <div
-                className={`relative transition-all duration-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
-                style={{ transitionDelay: '300ms' }}
-                onMouseEnter={() => setIsToolsOpen(true)}
-                onMouseLeave={() => setIsToolsOpen(false)}
+            <div className="relative" onMouseEnter={() => openMenu('recursos')} onMouseLeave={scheduleClose}>
+              <button
+                type="button"
+                className={topLinkClass(resourcesActive)}
+                aria-expanded={open === 'recursos'}
+                aria-haspopup="true"
+                onClick={() => setOpen(open === 'recursos' ? null : 'recursos')}
               >
-                <button
-                  data-active={isToolsActive}
-                  aria-expanded={isToolsOpen}
-                  aria-haspopup="true"
-                  className={`flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                    isToolsActive
-                      ? 'text-primary'
-                      : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
-                  }`}
-                >
-                  Herramientas
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform duration-300 ${isToolsOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
-
-                {/* Dropdown Menu */}
-                <div 
-                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-300 ${
-                    isToolsOpen 
-                      ? 'opacity-100 translate-y-0 pointer-events-auto' 
-                      : 'opacity-0 -translate-y-2 pointer-events-none'
-                  }`}
-                >
-                  <div role="menu" className="relative bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-3 min-w-[280px]">
-                    <div className="absolute -inset-px bg-gradient-to-b from-primary/10 to-transparent rounded-2xl pointer-events-none" aria-hidden="true" />
-                    
-                    <div className="relative space-y-1">
-                      {toolLinks.map((link, index) => (
-                        <Link
-                          key={link.href}
-                          to={link.href}
-                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 group hover:bg-white/5"
-                          style={{ animationDelay: `${index * 50}ms` }}
-                        >
-                          <div className="p-2 rounded-lg transition-colors duration-200 bg-white/5 text-foreground/50 group-hover:bg-primary/10 group-hover:text-primary">
-                            <link.icon className="h-4 w-4" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-foreground">
-                              {link.name}
-                            </p>
-                            <p className="text-xs text-foreground/50">{link.description}</p>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
+                Recursos
+                <ChevronDown className={cn('h-4 w-4 transition-transform', open === 'recursos' && 'rotate-180')} aria-hidden="true" />
+              </button>
+              {open === 'recursos' && (
+                <div className="absolute left-1/2 top-full w-[300px] -translate-x-1/2 pt-2">
+                  <div role="menu" className="rounded-xl border border-border bg-card p-2 shadow-2xl shadow-black/40">
+                    {resourceLinks.map((item) => (
+                      <DropdownLink key={item.href} item={item} />
+                    ))}
                   </div>
                 </div>
-              </div>
-
-              {navLinks.slice(1).map((link, index) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  data-active={isActive(link.href)}
-                  className={`relative px-2.5 py-2 text-[13px] font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-500 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                    isActive(link.href)
-                      ? 'text-primary'
-                      : 'text-foreground/80 hover:text-foreground hover:bg-white/5'
-                  } ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
-                  style={{ transitionDelay: `${350 + index * 50}ms` }}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              )}
             </div>
 
-            {/* Desktop CTA Buttons */}
-            <div className={`hidden lg:flex items-center gap-2 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`} style={{ transitionDelay: '450ms' }}>
-              {/* ¿Eres Nuevo? Button - animated */}
-              <Link to="/curso-detailing-iniciacion" className="group relative">
-                {/* Glow ring */}
-                <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-primary via-primary to-primary/50 opacity-50 blur-sm group-hover:opacity-80 transition-opacity duration-500 animate-pulse" />
-                <Button 
-                  size="sm"
-                  className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-4 py-2 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 gap-2"
-                >
-                  <Sparkles className="h-3.5 w-3.5" />
-                  ¿Eres Nuevo?
-                  {/* Live dot */}
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-foreground opacity-75" />
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary-foreground" />
-                  </span>
-                </Button>
-              </Link>
-
-              {/* WhatsApp Button - compact icon, far right */}
-              <a 
-                href="https://wa.me/34622773555"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Contactar por WhatsApp"
-              >
-                <Button 
-                  size="icon"
-                  className="bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-lg shadow-md shadow-[#25D366]/20 transition-all duration-300 hover:shadow-lg hover:shadow-[#25D366]/30 hover:scale-105 h-9 w-9"
-                >
-                  <WhatsAppIcon className="h-4 w-4" />
-                </Button>
-              </a>
-            </div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden relative z-10 p-2 text-foreground transition-colors hover:text-primary"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-            >
-              <div className="relative w-6 h-6">
-                <span 
-                  className={`absolute left-0 w-6 h-0.5 bg-current transition-all duration-300 ${
-                    isMobileMenuOpen ? 'top-3 rotate-45' : 'top-1'
-                  }`} 
-                />
-                <span 
-                  className={`absolute left-0 top-3 w-6 h-0.5 bg-current transition-all duration-300 ${
-                    isMobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
-                  }`} 
-                />
-                <span 
-                  className={`absolute left-0 w-6 h-0.5 bg-current transition-all duration-300 ${
-                    isMobileMenuOpen ? 'top-3 -rotate-45' : 'top-5'
-                  }`} 
-                />
-              </div>
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu Overlay */}
-      <div 
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${
-          isMobileMenuOpen 
-            ? 'opacity-100 pointer-events-auto' 
-            : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        {/* Backdrop */}
-        <div 
-          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-        
-        {/* Menu Panel - Dark theme */}
-        <div 
-          className={`absolute top-0 right-0 h-full w-full max-w-sm bg-background/95 backdrop-blur-xl border-l border-white/10 shadow-2xl transition-transform duration-500 ease-out ${
-            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-white/10">
-            <div className="flex flex-col">
-              <img 
-                src={academiaLogo} 
-                alt="Academia Detail - Cursos de detailing profesional en España" 
-                className="h-10 w-auto brightness-0 invert"
-                width={229}
-                height={70}
-              />
-            </div>
-            <button
-              className="p-2 text-foreground/60 hover:text-primary transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Cerrar menú de navegación"
-            >
-              <X className="h-6 w-6" />
-            </button>
-          </div>
-
-          {/* Navigation Links */}
-          <div className="p-4 space-y-1 overflow-y-auto max-h-[calc(100vh-180px)]" style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)' }}>
-            {/* Highlighted "¿Eres Nuevo?" CTA */}
-            <Link
-              to="/curso-detailing-iniciacion"
-              className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-primary/15 border border-primary/30 text-primary font-semibold mb-2 transition-all duration-200 hover:bg-primary/20"
-            >
-              <Sparkles className="h-5 w-5" />
-              <span>¿Eres Nuevo? Empieza Aquí</span>
-              <span className="relative flex h-2 w-2 ml-auto">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-              </span>
-            </Link>
-
-            {/* Main Links */}
-            <Link
-              to="/"
-              className={`flex items-center gap-3 px-4 py-4 rounded-xl transition-all duration-200 min-h-[52px] ${
-                location.pathname === '/' 
-                  ? 'bg-primary/10 text-primary' 
-                  : 'text-foreground/70 hover:bg-white/5 hover:text-foreground'
-              }`}
-              style={{ animationDelay: '100ms' }}
-            >
-              <Home className="h-5 w-5" />
-              <span className="font-medium">Inicio</span>
-            </Link>
-
-            {/* Formaciones Accordion */}
-            <div className="space-y-1">
-              <button
-                onClick={() => setMobileFormationsOpen(!mobileFormationsOpen)}
-                className={`flex items-center justify-between w-full px-4 py-4 rounded-xl transition-all duration-200 min-h-[52px] ${
-                  isFormationsActive 
-                    ? 'bg-primary/10 text-primary' 
-                    : 'text-foreground/70 hover:bg-white/5 hover:text-foreground'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <GraduationCap className="h-5 w-5" />
-                  <span className="font-medium">Formaciones</span>
-                </div>
-                <ChevronDown 
-                  className={`h-5 w-5 transition-transform duration-300 ${
-                    mobileFormationsOpen ? 'rotate-180' : ''
-                  }`} 
-                />
-              </button>
-
-              {/* Sub-links */}
-              <div 
-                className={`overflow-hidden transition-all duration-300 ${
-                  mobileFormationsOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'
-                }`}
-              >
-                <div className="pl-4 space-y-1 pt-1">
-                  {formationLinks.map((link, index) => (
-                    <Link
-                      key={link.href}
-                      to={link.href}
-                      className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
-                        location.pathname === link.href
-                          ? 'bg-white/10 text-foreground font-medium'
-                          : 'text-foreground/50 hover:text-foreground hover:bg-white/5'
-                      }`}
-                      style={{ animationDelay: `${(index + 2) * 50}ms` }}
-                    >
-                      <link.icon className="h-4 w-4" />
-                      <span>{link.name}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Herramientas Accordion */}
-            <div className="space-y-1">
-              <button
-                onClick={() => setMobileToolsOpen(!mobileToolsOpen)}
-                className={`flex items-center justify-between w-full px-4 py-4 rounded-xl transition-all duration-200 min-h-[52px] ${
-                  isToolsActive 
-                    ? 'bg-primary/10 text-primary' 
-                    : 'text-foreground/70 hover:bg-white/5 hover:text-foreground'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Settings2 className="h-5 w-5" />
-                  <span className="font-medium">Herramientas</span>
-                </div>
-                <ChevronDown 
-                  className={`h-5 w-5 transition-transform duration-300 ${
-                    mobileToolsOpen ? 'rotate-180' : ''
-                  }`} 
-                />
-              </button>
-
-              {/* Sub-links */}
-              <div 
-                className={`overflow-hidden transition-all duration-300 ${
-                  mobileToolsOpen ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'
-                }`}
-              >
-                <div className="pl-4 space-y-1 pt-1">
-                  {toolLinks.map((link, index) => (
-                    <Link
-                      key={link.href}
-                      to={link.href}
-                      className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
-                        location.pathname === link.href
-                          ? 'bg-white/10 text-foreground font-medium'
-                          : 'text-foreground/50 hover:text-foreground hover:bg-white/5'
-                      }`}
-                      style={{ animationDelay: `${(index + 2) * 50}ms` }}
-                    >
-                      <link.icon className="h-4 w-4" />
-                      <span>{link.name}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Rest of nav links */}
-            {navLinks.slice(1).map((link, index) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                  isActive(link.href)
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-foreground/70 hover:bg-white/5 hover:text-foreground'
-                }`}
-                style={{ animationDelay: `${(index + 8) * 50}ms` }}
-              >
-                <link.icon className="h-5 w-5" />
-                <span className="font-medium">{link.name}</span>
+            {plainLinks.map((item) => (
+              <Link key={item.href} to={item.href} className={topLinkClass(isActive(item.href))}>
+                {item.name}
               </Link>
             ))}
+
+            <a href={SITE.sistemaDetailUrl} target="_blank" rel="noopener" className={topLinkClass(false)}>
+              Sistema Detail
+              <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+            </a>
+
+            <Button asChild className="ml-3 h-10 px-5 font-semibold">
+              <Link to="/contacto">Inscríbete</Link>
+            </Button>
           </div>
 
-          {/* Mobile CTA */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-background/90 backdrop-blur-xl">
-            <div className="flex gap-2">
-              {/* WhatsApp Button */}
-              <a 
-                href="https://wa.me/34622773555"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Contactar por WhatsApp"
+          {/* Móvil */}
+          <button
+            type="button"
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground lg:hidden"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+          >
+            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </nav>
+      </header>
+
+      {/* Menú móvil a pantalla completa, bajo la cabecera */}
+      <div
+        id="mobile-menu"
+        className={cn(
+          'fixed inset-x-0 bottom-0 top-16 z-40 flex flex-col bg-background transition-opacity duration-200 lg:hidden',
+          mobileOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
+        )}
+        aria-hidden={!mobileOpen}
+      >
+        <div className="flex-1 overflow-y-auto px-4 pb-6 pt-2">
+          <Link
+            to="/curso-detailing-iniciacion"
+            className="mb-3 flex items-center justify-between rounded-xl border border-primary/40 bg-primary/10 px-4 py-3.5"
+          >
+            <span>
+              <span className="block text-sm font-semibold text-foreground">¿Empiezas desde cero?</span>
+              <span className="block text-[13px] text-muted-foreground">Jornada Zero y Up Detail, en un día</span>
+            </span>
+            <ArrowUpRight className="h-4 w-4 rotate-45 text-brand" aria-hidden="true" />
+          </Link>
+
+          {([
+            ['cursos', 'Formaciones', [...courseLinks, ...starterLinks]],
+            ['recursos', 'Recursos', resourceLinks],
+          ] as [MenuKey, string, NavItem[]][]).map(([key, label, items]) => (
+            <div key={key} className="border-b border-border">
+              <button
+                type="button"
+                className="flex w-full items-center justify-between py-4 text-base font-semibold text-foreground"
+                aria-expanded={mobileSection === key}
+                onClick={() => setMobileSection(mobileSection === key ? null : key)}
               >
-                <Button 
-                  size="icon"
-                  className="bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-xl shadow-lg h-12 w-12"
-                >
-                  <WhatsAppIcon className="h-5 w-5" />
-                </Button>
-              </a>
-
-              {/* ¿Eres Nuevo? Button */}
-              <Link to="/curso-detailing-iniciacion" className="flex-1 group relative">
-                <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-primary via-primary to-primary/50 opacity-50 blur-sm animate-pulse" />
-                <Button 
-                  className="relative w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 rounded-xl shadow-lg gap-2"
-                >
-                  <Sparkles className="h-5 w-5" />
-                  ¿Eres Nuevo?
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-foreground opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-foreground" />
-                  </span>
-                </Button>
-              </Link>
+                {label}
+                <ChevronDown className={cn('h-5 w-5 text-muted-foreground transition-transform', mobileSection === key && 'rotate-180')} aria-hidden="true" />
+              </button>
+              {mobileSection === key && (
+                <ul className="pb-3">
+                  {items.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        to={item.href}
+                        className={cn(
+                          'flex items-center gap-2 rounded-lg px-3 py-2.5 text-[0.9375rem]',
+                          isActive(item.href) ? 'bg-white/5 text-brand' : 'text-foreground/85'
+                        )}
+                      >
+                        {item.name}
+                        {item.badge && <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] text-muted-foreground">{item.badge}</span>}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-          </div>
+          ))}
+
+          {plainLinks.map((item) => (
+            <Link
+              key={item.href}
+              to={item.href}
+              className={cn('block border-b border-border py-4 text-base font-semibold', isActive(item.href) ? 'text-brand' : 'text-foreground')}
+            >
+              {item.name}
+            </Link>
+          ))}
+          <a
+            href={SITE.sistemaDetailUrl}
+            target="_blank"
+            rel="noopener"
+            className="flex items-center justify-between border-b border-border py-4 text-base font-semibold text-foreground"
+          >
+            <span>
+              Sistema Detail
+              <span className="block text-[13px] font-normal text-muted-foreground">Software de gestión para centros de detailing</span>
+            </span>
+            <ArrowUpRight className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+          </a>
+        </div>
+        <div className="border-t border-border p-4" style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)' }}>
+          <Button asChild size="lg" className="h-12 w-full text-base font-semibold">
+            <Link to="/contacto">Inscríbete o pide información</Link>
+          </Button>
         </div>
       </div>
-
-      {/* shimmer-border keyframes moved to index.css */}
     </>
   );
 }

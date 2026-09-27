@@ -26,8 +26,11 @@ const REDIRECTS: Record<string, string> = {
   "/formacion/detailing-profesional": "/formacion-profesional-detailing",
   "/galeria": "/quienes-somos",
   "/galeria-detailing": "/quienes-somos",
-  "/directorio": "/centros-detailing-espana",
-  "/directorio/unete": "/centros-detailing-espana/unete",
+  // El directorio se retiró (sept. 2026): sus URL van a la portada.
+  "/directorio": "/",
+  "/directorio/unete": "/",
+  "/centros-detailing-espana": "/",
+  "/centros-detailing-espana/unete": "/",
   "/admin/applications": "/admin/profiles",
 };
 
@@ -38,7 +41,7 @@ const STATIC_ROUTES = new Set([
   "/formacion-profesional-detailing", "/curso-detailing-profesional", "/curso-vinilado-vehiculos",
   "/curso-ppf-proteccion-pintura", "/curso-restauracion-vehiculos", "/quienes-somos", "/contacto",
   "/marketing-digital-detailing", "/glosario-detailing", "/calculadora-dilucion-detailing",
-  "/centros-detailing-espana", "/centros-detailing-espana/unete", "/blog", "/gracias",
+  "/blog", "/gracias",
   "/mapa-del-sitio", "/politica-privacidad", "/unsubscribe",
   "/curso-detailing-madrid", "/curso-detailing-barcelona", "/curso-detailing-valencia",
   "/curso-detailing-sevilla", "/curso-detailing-bilbao",
@@ -69,21 +72,13 @@ async function classify(path: string, env: Env): Promise<Verdict> {
   if (STATIC_ROUTES.has(path)) return { status: 200 };
 
   let m: RegExpMatchArray | null;
-  // /directorio/<comunidad>[/<provincia>[/<ciudad>]] → nueva ruta del directorio
-  if ((m = path.match(/^\/directorio(\/[^/]+(?:\/[^/]+){0,2})$/))) {
-    return { redirect: `/centros-detailing-espana${m[1]}` };
-  }
+  // Directorio retirado: cualquier página suya (y las fichas de centros) → portada.
+  if (/^\/(directorio|centros-detailing-espana|detailer)(\/[^/]+){1,3}$/.test(path)) return { redirect: "/" };
   // Ciudades sin página propia: la app ya las mandaba al curso principal.
   if (/^\/curso-detailing-[a-z-]+$/.test(path)) return { redirect: "/curso-detailing-profesional" };
-  // El directorio genera sus páginas con los datos; no se validan una a una.
-  if (/^\/centros-detailing-espana(\/[^/]+){1,3}$/.test(path)) return { status: 200 };
 
   if ((m = path.match(/^\/blog\/([a-z0-9-]+)$/))) {
     const ok = await existsInSupabase(env, "blog_posts", `slug=eq.${m[1]}&status=eq.published`);
-    return { status: ok ? 200 : 404 };
-  }
-  if ((m = path.match(/^\/detailer\/([a-z0-9-]+)$/))) {
-    const ok = await existsInSupabase(env, "detailer_profiles", `slug=eq.${m[1]}&is_published=eq.true`);
     return { status: ok ? 200 : 404 };
   }
   // El glosario es estático y todos sus términos están pre-renderizados.

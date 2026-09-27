@@ -63,7 +63,7 @@ export default function PoliticaPrivacidad() {
               {/* Derechos */}
               <section>
                 <h2 className="text-xl font-semibold text-foreground mb-3">6. Tus Derechos</h2>
-                <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, portabilidad, limitación y oposición enviando un email a <a href="mailto:info@academiadetail.com" className="text-primary hover:underline">info@academiadetail.com</a> indicando tu nombre completo y el derecho que deseas ejercer.</p>
+                <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, portabilidad, limitación y oposición enviando un email a <a href="mailto:info@academiadetail.com" className="text-brand hover:underline">info@academiadetail.com</a> indicando tu nombre completo y el derecho que deseas ejercer.</p>
                 <p className="mt-2">Asimismo, puedes presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD) si consideras que tus derechos no han sido atendidos correctamente.</p>
               </section>
 

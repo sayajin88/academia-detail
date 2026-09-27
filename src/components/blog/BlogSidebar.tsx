@@ -79,7 +79,7 @@ export function BlogSidebar({ readProgress, readingTime }: BlogSidebarProps) {
             <div className="mt-4 pt-4 border-t border-border space-y-2.5">
               {benefits.map((benefit) => (
                 <div key={benefit} className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <CheckCircle className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-brand shrink-0 mt-0.5" />
                   {benefit}
                 </div>
               ))}
@@ -95,7 +95,7 @@ export function BlogSidebar({ readProgress, readingTime }: BlogSidebarProps) {
                     to={course.href}
                     className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 group"
                   >
-                    <course.icon className="h-4 w-4 text-primary/60 group-hover:text-primary transition-colors" />
+                    <course.icon className="h-4 w-4 text-brand/60 group-hover:text-brand transition-colors" />
                     {course.name}
                   </Link>
                 ))}

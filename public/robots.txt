@@ -34,10 +34,6 @@ Allow: /glosario-detailing
 Allow: /glosario-detailing/
 Allow: /calculadora-dilucion-detailing
 
-# Directorio
-Allow: /centros-detailing-espana/
-Allow: /centros-detailing-espana/unete
-
 # Blog
 Allow: /blog
 Allow: /blog/

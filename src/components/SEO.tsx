@@ -10,6 +10,8 @@ interface SEOProps {
   schema?: object | object[];
   canonical?: string;
   price?: string;
+  /** Página que no debe indexarse (p. ej. curso en preparación) */
+  noindex?: boolean;
 }
 
 const BASE_URL = 'https://academiadetail.com';
@@ -63,11 +65,11 @@ const generateAutoBreadcrumbs = (url: string, title: string) => {
 
 // Constantes centralizadas para ratings (actualizar aquí al cambiar)
 // Fuente: Google Business Profile real de Detail Park (verificable)
-export const BUSINESS_RATING_VALUE = "4.9";
+export const BUSINESS_RATING_VALUE = "4.8";
 export const BUSINESS_REVIEW_COUNT = "218";
 
 // Google Maps Place URL canónica (usar Place ID real cuando esté disponible)
-const GOOGLE_MAPS_PLACE_URL = "https://www.google.com/maps/place/Detail+Park+-+Detailing+Car/@38.3451397,-0.4917511,17z/data=!3m1!4b1!4m6!3m5!1s0xd6236e71c3d9553:0x68a39e80e15a6e68!8m2!3d38.3451397!4d-0.4891762!16s%2Fg%2F11h0kgkq3z";
+const GOOGLE_MAPS_PLACE_URL = "https://www.google.com/maps/place/Detail+Park/@38.3377617,-0.5168395,17z/data=!4m6!3m5!1s0xd623648a719504f:0xd9b48559af87cfc6!8m2!3d38.3377617!4d-0.5168395";
 
 // LocalBusiness Schema with complete business data for local SEO - Emphasizing REAL WORKSHOP
 export const localBusinessSchema = {
@@ -101,8 +103,8 @@ export const localBusinessSchema = {
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 38.3452,
-    "longitude": -0.4892
+    "latitude": 38.3377617,
+    "longitude": -0.5168395
   },
   "openingHoursSpecification": [
     {
@@ -122,8 +124,8 @@ export const localBusinessSchema = {
     "@type": "GeoCircle",
     "geoMidpoint": {
       "@type": "GeoCoordinates",
-      "latitude": 38.3452,
-      "longitude": -0.4892
+      "latitude": 38.3377617,
+      "longitude": -0.5168395
     },
     "geoRadius": "50000"
   },
@@ -146,29 +148,6 @@ export const localBusinessSchema = {
     "bestRating": "5",
     "worstRating": "1"
   },
-  "review": [
-    {
-      "@type": "Review",
-      "author": { "@type": "Person", "name": "Sergio F." },
-      "datePublished": "2025-09-12",
-      "reviewBody": "La mejor inversión que he hecho. Formación 100% práctica en taller real con coches de clientes. En 2 meses ya tenía mi propio centro funcionando.",
-      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
-    },
-    {
-      "@type": "Review",
-      "author": { "@type": "Person", "name": "Gerardo E." },
-      "datePublished": "2025-11-03",
-      "reviewBody": "Lo que diferencia a Detail Park es que aprendes negocio además de técnica. Daniel te enseña a presupuestar, captar clientes y escalar. Imprescindible.",
-      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
-    },
-    {
-      "@type": "Review",
-      "author": { "@type": "Person", "name": "Federica M." },
-      "datePublished": "2025-07-20",
-      "reviewBody": "Vine desde Italia para formarme aquí. Las instalaciones, el equipo y la metodología son de otro nivel. Totalmente recomendable.",
-      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
-    }
-  ],
   "knowsAbout": [
     "Detailing Profesional",
     "Gestión de Negocio Detailing",
@@ -267,6 +246,7 @@ export const SEO = ({
   schema,
   canonical,
   price,
+  noindex = false,
 }: SEOProps) => {
   const fullUrl = url ? `${BASE_URL}${url}` : BASE_URL;
   const canonicalUrl = canonical ? `${BASE_URL}${canonical}` : fullUrl;
@@ -342,7 +322,7 @@ export const SEO = ({
       <meta name="twitter:image:alt" content={`${title} - Academia Detail`} />
 
       {/* Additional SEO Tags */}
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
       <meta name="author" content="Academia Detail - Formación Detailing España" />
       <meta name="geo.region" content="ES" />
       <meta name="geo.placename" content="Alicante, España" />
@@ -420,14 +400,7 @@ export const courseDetailingSchema = {
     "Presupuestación de servicios detailing"
   ],
   "educationalLevel": "Beginner to Professional",
-  "inLanguage": "es",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "218",
-    "bestRating": "5",
-    "worstRating": "1"
-  }
+  "inLanguage": "es"
 };
 
 export const courseWrappingSchema = {
@@ -481,14 +454,7 @@ export const courseWrappingSchema = {
     "Gestión de clientes VIP"
   ],
   "educationalLevel": "Beginner to Professional",
-  "inLanguage": "es",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "202",
-    "bestRating": "5",
-    "worstRating": "1"
-  }
+  "inLanguage": "es"
 };
 
 export const coursePPFSchema = {
@@ -544,14 +510,7 @@ export const coursePPFSchema = {
   ],
   "timeRequired": "P2D",
   "educationalLevel": "Beginner to Professional",
-  "inLanguage": "es",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "202",
-    "bestRating": "5",
-    "worstRating": "1"
-  }
+  "inLanguage": "es"
 };
 
 export const courseRestauracionSchema = {
@@ -659,14 +618,7 @@ export const courseFormacionProfesionalSchema = {
   "numberOfCredits": 4,
   "timeRequired": "P1M",
   "educationalLevel": "Professional",
-  "inLanguage": "es",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "218",
-    "bestRating": "5",
-    "worstRating": "1"
-  }
+  "inLanguage": "es"
 };
 
 export const courseJornadaZeroSchema = {

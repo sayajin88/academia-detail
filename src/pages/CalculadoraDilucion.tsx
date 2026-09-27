@@ -107,13 +107,13 @@ const CalculadoraDilucion = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-brand text-sm font-medium mb-6">
               <Beaker className="h-4 w-4" />
               Herramienta Gratuita e Interactiva
             </div>
             <h1 className="text-3xl md:text-5xl font-black text-foreground mb-4 leading-tight">
               Calculadora de Dilución para{' '}
-              <span className="text-primary">Productos de Detailing</span>
+              <span className="text-brand">Productos de Detailing</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Calcula la mezcla exacta de cualquier producto químico de car detailing. 
@@ -209,14 +209,14 @@ const CalculadoraDilucion = () => {
                     <tr className="bg-card/80 border-b border-border">
                       <th className="text-left py-3.5 px-4 font-semibold text-foreground">
                         <div className="flex items-center gap-2">
-                          <Droplets className="h-4 w-4 text-primary" />
+                          <Droplets className="h-4 w-4 text-brand" />
                           Tipo de Producto
                         </div>
                       </th>
                       <th className="text-center py-3.5 px-4 font-semibold text-foreground">Ratio Común</th>
                       <th className="text-left py-3.5 px-4 font-semibold text-foreground hidden md:table-cell">
                         <div className="flex items-center gap-2">
-                          <Shield className="h-4 w-4 text-primary" />
+                          <Shield className="h-4 w-4 text-brand" />
                           Uso Recomendado
                         </div>
                       </th>
@@ -227,7 +227,7 @@ const CalculadoraDilucion = () => {
                       <tr key={i} className={`border-b border-border/50 ${i % 2 === 0 ? 'bg-card/30' : 'bg-transparent'} hover:bg-primary/5 transition-colors`}>
                         <td className="py-3 px-4 font-medium text-foreground">{row.product}</td>
                         <td className="py-3 px-4 text-center">
-                          <span className="inline-flex px-2.5 py-1 rounded-full bg-primary/10 text-primary font-semibold text-xs border border-primary/20">
+                          <span className="inline-flex px-2.5 py-1 rounded-full bg-primary/10 text-brand font-semibold text-xs border border-primary/20">
                             {row.ratio}
                           </span>
                         </td>
@@ -253,7 +253,7 @@ const CalculadoraDilucion = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-brand text-xs font-medium mb-4">
                   <HelpCircle className="h-3.5 w-3.5" />
                   Preguntas Frecuentes
                 </div>
@@ -265,7 +265,7 @@ const CalculadoraDilucion = () => {
               <Accordion type="single" collapsible className="space-y-3">
                 {dilutionFAQs.map((faq, i) => (
                   <AccordionItem key={i} value={`faq-${i}`} className="bg-card/50 border border-border rounded-xl px-5 data-[state=open]:border-primary/30">
-                    <AccordionTrigger className="text-left font-semibold text-foreground hover:text-primary text-sm md:text-base py-4">
+                    <AccordionTrigger className="text-left font-semibold text-foreground hover:text-brand text-sm md:text-base py-4">
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">

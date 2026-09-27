@@ -31,7 +31,7 @@ export function BlogCardOverlay({ post }: BlogCardOverlayProps) {
       <div className="flex flex-col flex-1 p-4">
         <Link to={`/blog/${post.slug}`} className="block flex-1">
           <h3
-            className="text-foreground font-bold text-sm md:text-[15px] leading-snug line-clamp-2 mb-2 group-hover:text-primary transition-colors"
+            className="text-foreground font-bold text-sm md:text-[15px] leading-snug line-clamp-2 mb-2 group-hover:text-brand transition-colors"
             style={{ fontFamily: "'Open Sans', sans-serif" }}
           >
             {post.title}

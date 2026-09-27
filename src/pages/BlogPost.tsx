@@ -9,7 +9,6 @@ import { BlogShareButtons } from '@/components/blog/BlogShareButtons';
 import { BlogRelatedPosts } from '@/components/blog/BlogRelatedPosts';
 import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
-import { BlogDirectoryBanner } from '@/components/blog/BlogDirectoryBanner';
 import { RelatedCourses } from '@/components/shared/RelatedCourses';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
@@ -179,7 +178,7 @@ export default function BlogPostPage() {
                 />
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <User className="h-3.5 w-3.5 text-primary" />
+                    <User className="h-3.5 w-3.5 text-brand" />
                     <span className="text-sm font-semibold text-foreground">{post.author.name}</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -209,7 +208,6 @@ export default function BlogPostPage() {
 
               {/* Dilution Calculator Banner */}
               <BlogDilutionBanner />
-              <BlogDirectoryBanner />
 
               {/* Tags */}
               <AnimatedSection animation="fade-up" delay={50}>

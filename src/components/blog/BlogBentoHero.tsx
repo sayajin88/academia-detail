@@ -31,7 +31,7 @@ export function BlogBentoHero({ featuredPost }: BlogBentoHeroProps) {
             <span className={`px-3 py-1 text-[11px] font-semibold rounded-full border ${categoryColors[featuredPost.category]}`}>
               {categoryLabels[featuredPost.category]}
             </span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-full bg-primary/20 text-primary border border-primary/30">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-full bg-primary/20 text-brand border border-primary/30">
               <Sparkles className="h-3 w-3" />
               Destacado
             </span>
@@ -51,7 +51,7 @@ export function BlogBentoHero({ featuredPost }: BlogBentoHeroProps) {
             {featuredPost.excerpt}
           </p>
 
-          <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3 transition-all">
+          <span className="inline-flex items-center gap-2 text-sm font-semibold text-brand group-hover:gap-3 transition-all">
             Leer Reportaje
             <ArrowRight className="h-4 w-4" />
           </span>

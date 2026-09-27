@@ -98,7 +98,7 @@ export default function GlossaryTerm() {
       <section className="pt-8 pb-10 bg-gradient-to-b from-card to-background">
         <div className="container mx-auto px-4">
           <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link to="/glosario-detailing" className="hover:text-primary transition-colors">
+            <Link to="/glosario-detailing" className="hover:text-brand transition-colors">
               Glosario
             </Link>
             <span>/</span>
@@ -119,7 +119,7 @@ export default function GlossaryTerm() {
       <section className="py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="flex items-start gap-4 bg-card border border-border/60 rounded-xl p-6 md:p-8">
-            <BookOpen className="w-6 h-6 text-primary shrink-0 mt-1" />
+            <BookOpen className="w-6 h-6 text-brand shrink-0 mt-1" />
             <div>
               <h2 className="text-xl font-bold text-foreground mb-3">Definición</h2>
               <p className="text-muted-foreground leading-relaxed text-[15px]">{term.definition}</p>
@@ -132,7 +132,7 @@ export default function GlossaryTerm() {
       <section className="py-12 bg-card">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="flex items-start gap-4">
-            <Layers className="w-6 h-6 text-primary shrink-0 mt-1" />
+            <Layers className="w-6 h-6 text-brand shrink-0 mt-1" />
             <div>
               <h2 className="text-xl font-bold text-foreground mb-3">Proceso Relacionado</h2>
               <p className="text-muted-foreground leading-relaxed text-[15px]">
@@ -147,7 +147,7 @@ export default function GlossaryTerm() {
       <section className="py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="flex items-start gap-4">
-            <Wrench className="w-6 h-6 text-primary shrink-0 mt-1" />
+            <Wrench className="w-6 h-6 text-brand shrink-0 mt-1" />
             <div>
               <h2 className="text-xl font-bold text-foreground mb-3">Herramientas Necesarias</h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -190,7 +190,7 @@ export default function GlossaryTerm() {
         <div className="container mx-auto px-4">
           <Link
             to="/glosario-detailing"
-            className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+            className="inline-flex items-center gap-2 text-brand hover:underline font-medium"
           >
             <ArrowLeft className="w-4 h-4" /> Volver al Glosario
           </Link>
