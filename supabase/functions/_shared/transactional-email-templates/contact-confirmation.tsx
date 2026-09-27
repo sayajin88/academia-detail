@@ -6,10 +6,10 @@ import type { TemplateEntry } from './registry.ts'
 
 const SITE_NAME = "Detail Park Academy"
 // DOSSIER PAUSADO: reactivar estas constantes cuando se restaure el envío del dossier.
-// const DOSSIER_URL_RAW = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
-// const DOSSIER_TRACKING_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-dossier-click"
-// const TRACKING_PIXEL_BASE = "https://ncsatssbhqicptmivmqk.supabase.co/functions/v1/track-email-open"
-const ACADEMY_LOGO_URL = "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/email-assets/academia-detail-logo.png"
+// const DOSSIER_URL_RAW = "https://kvsrmbutyqyaaaukvgll.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf"
+// const DOSSIER_TRACKING_BASE = "https://kvsrmbutyqyaaaukvgll.supabase.co/functions/v1/track-dossier-click"
+// const TRACKING_PIXEL_BASE = "https://kvsrmbutyqyaaaukvgll.supabase.co/functions/v1/track-email-open"
+const ACADEMY_LOGO_URL = "https://kvsrmbutyqyaaaukvgll.supabase.co/storage/v1/object/public/blog-images/email-assets/academia-detail-logo.png"
 const WEB_URL = "https://detailpark.com"
 const INSTAGRAM_URL = "https://instagram.com/danidetailoficial"
 

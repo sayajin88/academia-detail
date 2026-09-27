@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import { formations } from '@/data/formations';
 import { SectionHeading } from '@/components/shared/SectionHeading';
-import { FinancingBadge } from '@/components/shared/FinancingBadge';
-import { ViaBillPriceTag } from '@/components/formation/ViaBillPriceTag';
 import { 
   ArrowRight, 
   Clock,
@@ -143,13 +141,6 @@ export function FormationsGrid() {
                     )}
 
                     <div className="flex flex-col items-start gap-3 mt-auto">
-                      {/* Financing badge for non-coming-soon courses */}
-                      {!isComingSoon && (
-                        <div className="flex flex-col gap-2">
-                          <FinancingBadge price={index === 0 ? 2997 : index === 1 ? 2497 : 1997} variant="compact" />
-                          <ViaBillPriceTag price={index === 0 ? 2997 : index === 1 ? 2497 : 1997} view="list" />
-                        </div>
-                      )}
                       <div className="flex items-end justify-between gap-4 w-full">
                         <div className="flex flex-col gap-1.5">
                           {isComingSoon ? (

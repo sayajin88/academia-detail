@@ -6,9 +6,9 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const SUPABASE_URL = "https://ncsatssbhqicptmivmqk.supabase.co";
+const SUPABASE_URL = "https://kvsrmbutyqyaaaukvgll.supabase.co";
 const ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jc2F0c3NiaHFpY3B0bWl2bXFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNTYyODEsImV4cCI6MjA3NzczMjI4MX0.fz9ljLhnYi_9HTP3sC1-ez8u7sytkCQUT2ouUgQ2I80";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c3JtYnV0eXF5YWFhdWt2Z2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTEzNzYsImV4cCI6MjEwNjA4NzM3Nn0.xcjvTQSWt-KTaYeerrfIzXiCiA8w8dTeRAFufIPj28I";
 
 const targets = [
   { fn: "blog-sitemap", out: "sitemap-blog.xml" },

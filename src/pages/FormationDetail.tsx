@@ -16,7 +16,6 @@ import { FormationIncludes } from '@/components/formation/FormationIncludes';
 import { FormationLogistics } from '@/components/formation/FormationLogistics';
 import { FormationFAQ } from '@/components/formation/FormationFAQ';
 import { GoogleReviews } from '@/components/shared/GoogleReviews';
-import { ViaBillInlineCTA } from '@/components/shared/ViaBillInlineCTA';
 import { FormationROICalculator } from '@/components/formation/FormationROICalculator';
 import { FormationCTA } from '@/components/formation/FormationCTA';
 import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
@@ -175,7 +174,6 @@ export default function FormationDetailPage() {
           />
         )}
         <FormationIncludes formation={formation} />
-        <ViaBillInlineCTA />
         <BrandLogosBar
           variant="compact"
           filter={

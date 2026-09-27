@@ -4,8 +4,6 @@ import { Crown, Check, Calendar, Users, Award, ArrowRight, Star } from 'lucide-r
 import { carreraDetailingData, formatEuro } from '@/data/carreraDetailingData';
 import { useCountUp } from '@/hooks/useCountUp';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
-import { FinancingBadge } from '@/components/shared/FinancingBadge';
-import { ViaBillPriceTag } from '@/components/formation/ViaBillPriceTag';
 
 interface CarreraPricingProps {
   onCTAClick: () => void;
@@ -142,13 +140,7 @@ const CarreraPricing = ({ onCTAClick }: CarreraPricingProps) => {
                   <p className="text-xs md:text-sm text-muted-foreground">
                     + €{formatEuro(carreraDetailingData.extrasValue)} en negocio y práctica real incluidos
                   </p>
-                  <ViaBillPriceTag price={carreraDetailingData.price} />
                 </div>
-              </div>
-
-              {/* Financing badge */}
-              <div className="relative z-10 px-2 pt-2">
-                <FinancingBadge price={carreraDetailingData.price} variant="prominent" />
               </div>
 
               {/* Benefits */}
@@ -197,10 +189,6 @@ const CarreraPricing = ({ onCTAClick }: CarreraPricingProps) => {
                   <span className="sm:hidden">Reservar Plaza</span>
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                
-                <p className="text-center text-muted-foreground text-xs md:text-sm mt-3 md:mt-4">
-                  Financiación disponible hasta 12 meses
-                </p>
               </div>
 
               {/* Urgency Footer */}

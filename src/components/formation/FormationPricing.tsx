@@ -20,8 +20,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { FormationDetail } from '@/data/formationDetails';
 import { useCountUp } from '@/hooks/useCountUp';
-import { ViaBillPriceTag } from './ViaBillPriceTag';
-import { FinancingBadge } from '@/components/shared/FinancingBadge';
 
 interface FormationPricingProps {
   formation: FormationDetail;
@@ -135,11 +133,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                       </span>
                       <span className="text-base text-muted-foreground font-medium">+ IVA</span>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-2">Pago único · Financiación disponible</p>
-                    <ViaBillPriceTag price={formation.price} />
-                    <div className="mt-4">
-                      <FinancingBadge price={formation.price} variant="prominent" />
-                    </div>
+                    <p className="text-sm text-muted-foreground mt-2">Pago único</p>
                   </div>
                 )}
               </div>

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { Phone, ArrowRight, GraduationCap, Car, Palette, ShieldCheck, Star, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BlogReadingProgress } from './BlogReadingProgress';
-import { FinancingBadge } from '@/components/shared/FinancingBadge';
 import cursoDetailing from '@/assets/curso-detailing-4.jpg';
 
 const courses = [
@@ -104,11 +103,6 @@ export function BlogSidebar({ readProgress, readingTime }: BlogSidebarProps) {
             </div>
           </div>
         </div>
-
-        {/* ViaBill Financing */}
-        <Link to="/contacto" className="block">
-          <FinancingBadge price={2000} months={4} variant="prominent" className="w-full" />
-        </Link>
 
         {/* Reading Progress Widget */}
         {readProgress !== undefined && readingTime && (

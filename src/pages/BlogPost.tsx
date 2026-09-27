@@ -11,7 +11,6 @@ import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
 import { BlogDirectoryBanner } from '@/components/blog/BlogDirectoryBanner';
 import { RelatedCourses } from '@/components/shared/RelatedCourses';
-import { ViaBillInlineCTA } from '@/components/shared/ViaBillInlineCTA';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
 import { getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
@@ -210,11 +209,6 @@ export default function BlogPostPage() {
               {/* Dilution Calculator Banner */}
               <BlogDilutionBanner />
               <BlogDirectoryBanner />
-
-              {/* ViaBill financing CTA */}
-              <div className="mt-8">
-                <ViaBillInlineCTA variant="compact" />
-              </div>
 
               {/* Tags */}
               <AnimatedSection animation="fade-up" delay={50}>

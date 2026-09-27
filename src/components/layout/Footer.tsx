@@ -3,7 +3,6 @@ import { Instagram, Youtube, Mail, Phone, MapPin, MessageCircle } from "lucide-r
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/detail-park-logo-white.png";
 import logoCarcarePassion from "@/assets/brands/carcare-passion.png";
-import logoViabill from "@/assets/brands/viabill.png";
 
 const formationLinks = [
   { name: "Jornada Zero", href: "/jornada-zero-detailing" },
@@ -141,17 +140,6 @@ export function Footer() {
                   height={20}
                 />
                 <span className="text-xs text-muted-foreground/70">Productos</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <img
-                  src={logoViabill}
-                  alt="ViaBill - Financiación a plazos sin intereses"
-                  className="h-5 w-auto brightness-0 invert opacity-60"
-                  loading="lazy"
-                  width={120}
-                  height={20}
-                />
-                <span className="text-xs text-muted-foreground/70">Financiación</span>
               </div>
             </div>
           </div>

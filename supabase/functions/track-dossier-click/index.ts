@@ -1,7 +1,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2.78.0";
 
 const DOSSIER_PDF_URL =
-  "https://ncsatssbhqicptmivmqk.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf";
+  "https://kvsrmbutyqyaaaukvgll.supabase.co/storage/v1/object/public/blog-images/dossiers/programa-formativo-academia-detail.pdf";
 
 const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);

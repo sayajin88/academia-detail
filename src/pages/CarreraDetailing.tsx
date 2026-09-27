@@ -14,7 +14,6 @@ import CarreraStickyCTA from '@/components/carrera/CarreraStickyCTA';
 import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
 import { SEO, courseFormacionProfesionalSchema } from '@/components/SEO';
 import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
-import { ViaBillInlineCTA } from '@/components/shared/ViaBillInlineCTA';
 import { seoConfig } from '@/utils/seoConfig';
 import { GoogleReviews } from '@/components/shared/GoogleReviews';
 
@@ -125,7 +124,6 @@ const CarreraDetailing = () => {
         <CarreraBenefits />
         <CarreraROICalculator onCtaClick={handleCTAClick} />
         <CarreraPricing onCTAClick={handleCTAClick} />
-        <ViaBillInlineCTA />
         <JornadaZeroSection />
         <CarreraFAQ />
         <CarreraStickyCTA onCTAClick={handleCTAClick} />

@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
-import { ViaBillFinancingBar } from '@/components/shared/ViaBillFinancingBar';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -22,7 +21,6 @@ export function MainLayout({ children }: MainLayoutProps) {
         {children}
       </main>
       <Footer />
-      <ViaBillFinancingBar />
     </div>
   );
 }

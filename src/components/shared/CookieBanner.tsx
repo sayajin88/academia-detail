@@ -18,7 +18,7 @@ export function CookieBanner() {
     }
   }, []);
 
-  // Dispatch custom event so ViaBillFinancingBar can listen
+  // Dispatch custom event so other floating bars can listen
   useEffect(() => {
     window.dispatchEvent(new CustomEvent('cookie-banner-visibility', { detail: { visible } }));
   }, [visible]);

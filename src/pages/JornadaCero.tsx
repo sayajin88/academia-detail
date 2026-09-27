@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -47,8 +47,6 @@ import { WaitlistFAQ } from "@/components/WaitlistFAQ";
 import { GoogleReviews } from "@/components/shared/GoogleReviews";
 import { PricingComparison } from "@/components/PricingComparison";
 import { InstructorProfile } from "@/components/InstructorProfile";
-import { RegistrationModal } from "@/components/RegistrationModal";
-import { useRegistrationModal } from "@/hooks/useRegistrationModal";
 import { ExpertiseShowcase } from "@/components/ExpertiseShowcase";
 import { ValueJustification } from "@/components/ValueJustification";
 import { SEO, courseJornadaZeroSchema } from "@/components/SEO";
@@ -100,18 +98,20 @@ function DeferredYouTubeBackground() {
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { isOpen, openModal, closeModal } = useRegistrationModal();
+  const navigate = useNavigate();
+  // Sin pago online: las reservas entran como solicitud de información.
+  const irAContacto = () => navigate("/contacto");
 
   return (
     <>
       <SEO {...seoConfig.jornadaCero} />
       <div className="min-h-screen animated-bg">
       {/* Enhanced Interactive Components */}
-      <StickyFloatingCTA onCtaClick={openModal} />
+      <StickyFloatingCTA onCtaClick={irAContacto} />
       <MobileOptimization 
         isOpen={mobileMenuOpen} 
         onToggle={() => setMobileMenuOpen(!mobileMenuOpen)}
-        onCtaClick={openModal}
+        onCtaClick={irAContacto}
       />
       
       {/* Mobile Menu Button */}
@@ -150,7 +150,7 @@ const Index = () => {
               variant="glass" 
               size="lg" 
               className="hidden md:flex text-sm lg:text-base font-bold px-6 lg:px-8 py-3 whitespace-nowrap flex-shrink-0 hover:scale-105 transition-all duration-300 shadow-lg border-2 border-white/30" 
-              onClick={openModal}
+              onClick={irAContacto}
             >
               Únete a la lista de espera
             </Button>
@@ -202,7 +202,7 @@ const Index = () => {
               Déjanos tus datos y serás de los primeros en recibir el aviso cuando abramos inscripciones.
               El precio se mantiene en <strong className="text-white">97 € + IVA</strong> y es descontable de los cursos completos.
             </p>
-            <Button variant="hero" size="lg" onClick={openModal} className="w-full md:w-auto">
+            <Button variant="hero" size="lg" onClick={irAContacto} className="w-full md:w-auto">
               Avísame cuando abran plazas
             </Button>
           </div>
@@ -584,7 +584,7 @@ const Index = () => {
                     </div>
                   </div>
                   
-                  <Button variant="hero" size="xl" onClick={openModal} className="w-full">
+                  <Button variant="hero" size="xl" onClick={irAContacto} className="w-full">
                     Avísame cuando abran plazas
                   </Button>
                   
@@ -623,7 +623,7 @@ const Index = () => {
 
       {/* Advanced Interactive Components - Hidden on mobile */}
       <div className="hidden lg:block">
-        <AdvancedInteractives onCtaClick={openModal} />
+        <AdvancedInteractives onCtaClick={irAContacto} />
       </div>
 
       {/* Video Testimonials */}
@@ -648,7 +648,7 @@ const Index = () => {
       <GoogleReviews />
 
       {/* Waiting list / dates FAQ */}
-      <WaitlistFAQ onCtaClick={openModal} />
+      <WaitlistFAQ onCtaClick={irAContacto} />
 
       {/* FAQ Section */}
       <FAQ />
@@ -717,14 +717,14 @@ const Index = () => {
                   />
                   <h4 className="text-lg md:text-xl font-bold text-white mb-2">{course.title}</h4>
                   <p className="text-sm md:text-base text-white/80 mb-3 md:mb-4">{course.description}</p>
-                  <Button variant="funnel" size="sm" className="w-full" onClick={openModal}>
+                  <Button variant="funnel" size="sm" className="w-full" onClick={irAContacto}>
                     Avísame cuando abran plazas
                   </Button>
                 </div>
               ))}
             </div>
             
-            <Button variant="hero" size="xl" className="mt-12" onClick={openModal}>
+            <Button variant="hero" size="xl" className="mt-12" onClick={irAContacto}>
               Avísame cuando abran plazas
             </Button>
             
@@ -820,7 +820,7 @@ const Index = () => {
           </div>
 
           <div className="text-center mt-8 md:mt-12">
-            <Button variant="hero" size="xl" onClick={openModal} className="w-full md:w-auto">
+            <Button variant="hero" size="xl" onClick={irAContacto} className="w-full md:w-auto">
               Avísame cuando abran plazas
             </Button>
             
@@ -887,7 +887,7 @@ const Index = () => {
             Las plazas están cerradas por ahora. Apúntate a la lista de espera y te avisaremos en cuanto confirmemos la próxima fecha.
           </p>
           
-          <Button variant="glass" size="xl" className="mb-6 md:mb-8 text-lg md:text-2xl py-5 md:py-6 px-10 md:px-16 w-full md:w-auto" onClick={openModal}>
+          <Button variant="glass" size="xl" className="mb-6 md:mb-8 text-lg md:text-2xl py-5 md:py-6 px-10 md:px-16 w-full md:w-auto" onClick={irAContacto}>
             Avísame cuando abran plazas
           </Button>
           
@@ -973,7 +973,6 @@ const Index = () => {
       </footer>
 
       {/* Registration Modal */}
-      <RegistrationModal isOpen={isOpen} onClose={closeModal} />
     </div>
     </>
   );

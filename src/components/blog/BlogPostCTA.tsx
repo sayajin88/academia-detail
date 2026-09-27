@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Star, Headphones, Quote, CreditCard } from 'lucide-react';
+import { ArrowRight, Users, Star, Headphones, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import portfolioFerrari from '@/assets/portfolio-ferrari.png';
-import viabillLogo from '@/assets/brands/viabill-logo-purple.png';
 
 const stats = [
   { icon: Users, value: '+500', label: 'Alumnos Certificados' },
@@ -28,13 +27,6 @@ export function BlogPostCTA() {
               Aprende de profesionales con más de 15 años de experiencia en el sector. 
               Formación 100% práctica en taller real con vehículos de alta gama.
             </p>
-
-            {/* ViaBill financing mention */}
-            <div className="flex items-center gap-2 mb-5 px-3 py-2 rounded-lg bg-[#6C28D9]/10 border border-[#6C28D9]/20 w-fit">
-              <CreditCard className="w-4 h-4 text-[#6C28D9]" />
-              <span className="text-xs font-semibold text-[#6C28D9]">Financiación disponible desde 50€/mes</span>
-              <img src={viabillLogo} alt="ViaBill" className="h-3 w-auto opacity-70" width={40} height={12} />
-            </div>
 
             <div className="flex flex-wrap gap-3 mb-8">
               <Link to="/contacto">
