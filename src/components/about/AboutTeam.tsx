@@ -1,93 +1,72 @@
-import { AnimatedSection } from '@/components/shared/AnimatedSection';
-import { SectionHeading } from '@/components/shared/SectionHeading';
-import danielImg from '@/assets/daniel-lopez-team.jpg';
-import sergioImg from '@/assets/sergio-felipe.jpg';
-import gerardoImg from '@/assets/gerardo-espinosa.jpg';
+import { Instagram } from 'lucide-react';
+import { Section, SectionHeader } from '@/components/ds/Section';
+import { Img } from '@/components/ds/Img';
+import { SITE } from '@/data/site';
+import danielImg from '@/assets/daniel-lopez-team.jpg?w=240;400&format=webp&as=picture';
+// La foto original lleva la orientación en EXIF (8): se gira aquí para que salga derecha.
+import sergioImg from '@/assets/sergio-felipe.jpg?rotate=270&w=240;400&format=webp&as=picture';
 
-const teamMembers = [
+interface Member {
+  name: string;
+  role: string;
+  picture: ImagetoolsPicture;
+  alt: string;
+  text: string;
+  instagram?: { label: string; href: string };
+}
+
+const team: Member[] = [
   {
-    name: 'Daniel López',
-    role: 'Fundador & Instructor Principal',
-    image: danielImg,
-    alt: 'Daniel López - Fundador e instructor principal de Academia Detail y Detail Park',
-    description:
-      'Fundador de Detail Park y Academia Detail, Daniel combina más de 12 años de experiencia en detailing profesional con una visión empresarial única. Ha trabajado con marcas como Ferrari, Lamborghini y Porsche. Su metodología une la perfección técnica con la mentalidad de negocio rentable.',
-    tags: ['Detailing', 'Gestión de Negocio', 'Instructor Principal'],
+    name: SITE.founder,
+    role: `${SITE.founderRole} · más de ${SITE.founderYears} años en el detailing profesional`,
+    picture: danielImg,
+    alt: `${SITE.founder}, fundador de Detail Park y formador de Academia Detail`,
+    text: 'Dirige Detail Park y da los cursos en persona. Todo lo que enseña es lo que se hace en el taller: técnica, producto y también cómo presupuestar y organizar el trabajo.',
+    instagram: SITE.instagram[1],
   },
   {
     name: 'Sergio Felipe',
-    role: 'Instructor & Gestor de Centro',
-    image: sergioImg,
-    alt: 'Sergio Felipe - Instructor de detailing y gestión de centros en Academia Detail',
-    description:
-      'Experto en detailing con amplia experiencia práctica. Sergio domina la metodología de un centro de detailing y sabe gestionar todas sus áreas: desde la operativa diaria hasta la atención al cliente. Su visión de negocio complementa su técnica impecable.',
-    tags: ['Detailing', 'Gestión de Centro', 'Atención al Cliente'],
-  },
-  {
-    name: 'Gerardo Espinosa',
-    role: 'Especialista en Wrapping & PPF',
-    image: gerardoImg,
-    alt: 'Gerardo Espinosa - Especialista en wrapping y PPF en Academia Detail',
-    description:
-      'Referente en rotulación, wrapping y PPF (Paint Protection Film). Gerardo es reconocido como uno de los profesionales con más expertis del sector. Su pasión por el detalle y la perfección en cada instalación le convierten en un instructor excepcional.',
-    tags: ['Wrapping', 'PPF', 'Rotulación'],
+    role: 'Formador y gestor de centro',
+    picture: sergioImg,
+    alt: 'Sergio Felipe, formador y gestor de centro en Detail Park',
+    text: 'Conoce a fondo la metodología de un centro de detailing y todas sus áreas, desde la operativa diaria del taller hasta la atención al cliente.',
   },
 ];
 
 export function AboutTeam() {
   return (
-    <section className="py-16 md:py-24 bg-background">
-      <div className="container">
-        <AnimatedSection>
-          <SectionHeading
-            badge="Nuestro Equipo"
-            title="Los Profesionales que Te Forman"
-            subtitle="Conoce a los instructores que comparten su experiencia real contigo en cada formación."
-          />
-        </AnimatedSection>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {teamMembers.map((member, index) => (
-            <AnimatedSection key={member.name} delay={index * 150}>
-              <div className="group h-full bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500">
-                {/* Photo */}
-                <div className="aspect-[4/5] overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.alt}
-                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                    loading="lazy"
-                    width={400}
-                    height={500}
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="p-6 md:p-8">
-                  <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
-                  <p className="text-brand text-sm font-medium mb-4">{member.role}</p>
-
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-                    {member.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {member.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-primary/10 text-brand rounded-full px-3 py-1 text-xs font-medium"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-      </div>
-    </section>
+    <Section aria-labelledby="equipo-title">
+      <SectionHeader
+        id="equipo-title"
+        eyebrow="El equipo"
+        title="Quién te va a formar"
+        lead="El equipo de Detail Park que imparte los cursos y resuelve tus dudas."
+      />
+      <ul className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
+        {team.map((m) => (
+          <li key={m.name} className="ds-card grid grid-cols-[112px_1fr] gap-4 p-4 sm:grid-cols-[160px_1fr] sm:gap-5 sm:p-5">
+            <div className="overflow-hidden rounded-lg">
+              <Img picture={m.picture} alt={m.alt} sizes="160px" className="aspect-[4/5] h-full object-top" />
+            </div>
+            <div className="flex min-w-0 flex-col gap-2">
+              <h3 className="ds-h3 font-bold text-foreground">{m.name}</h3>
+              <p className="text-sm font-semibold leading-snug text-brand">{m.role}</p>
+              <p className="text-[0.9375rem] leading-relaxed text-muted-foreground">{m.text}</p>
+              {m.instagram && (
+                <a
+                  href={m.instagram.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto inline-flex items-center gap-1.5 pt-1 text-sm text-muted-foreground hover:text-foreground"
+                >
+                  <Instagram className="h-4 w-4" aria-hidden="true" />
+                  {m.instagram.label}
+                </a>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }

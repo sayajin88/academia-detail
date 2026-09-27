@@ -21,26 +21,15 @@
     
     <!-- La precarga de la portada la añade HomeHero (Helmet) y el pre-renderizado la copia aquí. -->
     
-    <!-- Preconnects para rendimiento -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Preconnect a YouTube para el video background (solo desktop) -->
-    <link rel="preconnect" href="https://www.youtube-nocookie.com" media="(min-width: 768px)">
-    <link rel="preconnect" href="https://i.ytimg.com" media="(min-width: 768px)">
-    
-    <!-- Fonts - NO BLOQUEANTE (media=print -> swap on load) -->
-    <link 
-      rel="stylesheet" 
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600;700&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    </noscript>
+    <!-- Fuentes propias (sin Google Fonts): se precargan las dos que se ven al abrir -->
+    <link rel="preload" href="/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/open-sans-latin-var.woff2" as="font" type="font/woff2" crossorigin>
     
     <!-- CSS Crítico Inline - Expandido para above-the-fold -->
     <style>
+      @font-face { font-family: 'Bebas Neue'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/bebas-neue-latin.woff2) format('woff2'); }
+      @font-face { font-family: 'Open Sans'; font-style: normal; font-weight: 300 800; font-display: swap; src: url(/fonts/open-sans-latin-var.woff2) format('woff2'); }
+      @font-face { font-family: 'Open Sans'; font-style: italic; font-weight: 300 800; font-display: swap; src: url(/fonts/open-sans-latin-var-italic.woff2) format('woff2'); }
       :root {
         --background: 240 10% 11%;
         --foreground: 0 0% 98%;
@@ -90,11 +79,11 @@
     
     <!-- Web App Manifest -->
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#ef4444">
+    <meta name="theme-color" content="#1a1a1f">
     
     <!-- Meta básicos (serán sobrescritos por React Helmet) -->
     <title>Cursos de Detailing Profesional | Detail Park - Academia Detail</title>
-    <meta name="description" content="Formación profesional en detailing, car wrapping, PPF y restauración de vehículos en Alicante. Cursos 100% prácticos en taller real con máximo 3 alumnos.">
+    <meta name="description" content="Cursos de detailing, pulido, tratamiento cerámico, wrapping y PPF en Alicante. Formación 100 % práctica en un taller real, con un máximo de 3 alumnos por grupo.">
     <meta name="keywords" content="curso detailing profesional, formación car wrapping, curso PPF España, academia detailing Alicante, certificación detailing, curso vinilado vehículos, protección pintura PPF">
     <meta name="author" content="Detail Park - Academia Detail" />
     
@@ -104,15 +93,15 @@
     <!-- Geo tags para SEO local - Alicante -->
     <meta name="geo.region" content="ES-A" />
     <meta name="geo.placename" content="Alicante" />
-    <meta name="geo.position" content="38.3452;-0.4892" />
-    <meta name="ICBM" content="38.3452, -0.4892" />
+    <meta name="geo.position" content="38.3377617;-0.5168395" />
+    <meta name="ICBM" content="38.3377617, -0.5168395" />
     <meta name="language" content="Spanish">
     
     <!-- Open Graph / Facebook (fallback for non-JS crawlers) -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://academiadetail.com/">
     <meta property="og:title" content="Cursos de Detailing Profesional | Detail Park - Academia Detail">
-    <meta property="og:description" content="Formación profesional en detailing, car wrapping, PPF y restauración de vehículos en Alicante. Cursos 100% prácticos en taller real con máximo 3 alumnos.">
+    <meta property="og:description" content="Cursos de detailing, pulido, tratamiento cerámico, wrapping y PPF en Alicante. Formación 100 % práctica en un taller real, con un máximo de 3 alumnos por grupo.">
     <meta property="og:image" content="https://academiadetail.com/og-image.png">
     <meta property="og:locale" content="es_ES">
     <meta property="og:site_name" content="Detail Park - Academia Detail">
@@ -121,7 +110,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://academiadetail.com/">
     <meta name="twitter:title" content="Cursos de Detailing Profesional | Detail Park - Academia Detail">
-    <meta name="twitter:description" content="Formación profesional en detailing, car wrapping, PPF y restauración de vehículos en Alicante. Cursos 100% prácticos en taller real con máximo 3 alumnos.">
+    <meta name="twitter:description" content="Cursos de detailing, pulido, tratamiento cerámico, wrapping y PPF en Alicante. Formación 100 % práctica en un taller real, con un máximo de 3 alumnos por grupo.">
     <meta name="twitter:image" content="https://academiadetail.com/og-image.png">
     <meta name="twitter:site" content="@detailpark">
     <meta name="twitter:creator" content="@detailpark">
@@ -144,7 +133,7 @@
           "height": 512
         },
         "image": "https://academiadetail.com/og-image.png",
-        "description": "Formación profesional en detailing, car wrapping, PPF y restauración de vehículos en Alicante. Cursos 100% prácticos en taller real con máximo 3 alumnos.",
+        "description": "Cursos de detailing, pulido, tratamiento cerámico, wrapping y PPF en Alicante. Formación 100 % práctica en un taller real, con un máximo de 3 alumnos por grupo.",
         "telephone": "+34 622 773 555",
         "email": "info@academiadetail.com",
         "address": {
@@ -157,8 +146,8 @@
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": 38.3452,
-          "longitude": -0.4892
+          "latitude": 38.3377617,
+          "longitude": -0.5168395
         },
         "openingHoursSpecification": [
           {
@@ -195,126 +184,39 @@
     <noscript>
       <div style="max-width:1100px;margin:0 auto;padding:24px;font-family:'Open Sans',system-ui,sans-serif;color:#fff;background:#1a1a1f;">
         <header style="border-bottom:1px solid #333;padding-bottom:16px;margin-bottom:24px;">
-          <p style="margin:0;font-size:14px;color:#bbb;">Detail Park - Academia Detail · CIF B75683300 · Alicante, España</p>
+          <p style="margin:0;font-size:14px;color:#bbb;">Academia Detail · Detail Park · Calle Metalurgias 13, 03008 Alicante · +34 622 773 555</p>
           <nav aria-label="Navegación principal" style="margin-top:12px;">
             <a href="/" style="color:#fff;margin-right:16px;">Inicio</a>
-            <a href="/formaciones" style="color:#fff;margin-right:16px;">Formaciones</a>
-            <a href="/carrera-detailing" style="color:#fff;margin-right:16px;">Carrera Detailing</a>
-            <a href="/centros-detailing-espana" style="color:#fff;margin-right:16px;">Directorio</a>
+            <a href="/curso-detailing-profesional" style="color:#fff;margin-right:16px;">Curso de detailing</a>
+            <a href="/formacion-profesional-detailing" style="color:#fff;margin-right:16px;">Carrera Detailing</a>
             <a href="/blog" style="color:#fff;margin-right:16px;">Blog</a>
             <a href="/glosario-detailing" style="color:#fff;margin-right:16px;">Glosario</a>
-            <a href="/sobre-nosotros" style="color:#fff;margin-right:16px;">Sobre nosotros</a>
+            <a href="/quienes-somos" style="color:#fff;margin-right:16px;">Quiénes somos</a>
             <a href="/contacto" style="color:#fff;">Contacto</a>
           </nav>
         </header>
-
         <main>
-          <h1 style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1.1;margin:0 0 16px;">
-            Academia Detail — Cursos profesionales de Detailing, Car Wrapping y PPF
-          </h1>
+          <h1 style="font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1.1;margin:0 0 16px;">Cursos de detailing profesional en un taller real</h1>
           <p style="font-size:18px;line-height:1.5;color:#ddd;max-width:720px;">
-            Centro de formación líder en detailing profesional en España. Cursos 100% prácticos
-            impartidos en taller real con un máximo de 3 alumnos por grupo. Más de 218 alumnos
-            certificados, valoración media ★4.9 en Google. Inscripciones abiertas todo el año en
-            Alicante.
+            Academia Detail es la escuela de Detail Park en Alicante. Cursos presenciales y prácticos de detailing, pulido,
+            tratamiento cerámico, car wrapping y PPF, con un máximo de 3 alumnos por grupo. 218 alumnos formados.
           </p>
-
-          <section style="margin-top:32px;">
-            <h2 style="font-size:24px;border-left:4px solid #8B2332;padding-left:12px;">Nuestras formaciones principales</h2>
-
-            <article style="margin-top:20px;">
-              <h3 style="font-size:20px;margin:0 0 8px;"><a href="/curso-detailing-profesional" style="color:#fff;">Curso de Detailing Profesional</a></h3>
-              <p style="font-size:16px;line-height:1.6;color:#ddd;margin:0;">
-                Formación intensiva de 4 días en taller real, enfocada en el detailing de automoción de alto nivel.
-                Incluye descontaminación química y mecánica, corrección de pintura con pulidora rotativa y orbital,
-                aplicación de protecciones cerámicas, limpieza profunda de interiores y acabados profesionales.
-                Diseñado para quienes quieren trabajar como detailers o abrir su propio centro.
-                Más información en <a href="/curso-detailing-profesional" style="color:#fff;">/curso-detailing-profesional</a>.
-              </p>
-            </article>
-
-            <article style="margin-top:20px;">
-              <h3 style="font-size:20px;margin:0 0 8px;"><a href="/curso-vinilado-vehiculos" style="color:#fff;">Curso de Car Wrapping (Vinilado de Vehículos)</a></h3>
-              <p style="font-size:16px;line-height:1.6;color:#ddd;margin:0;">
-                Curso práctico de vinilado integral de 2 a 4 días donde aprenderás a envolver vehículos completos
-                con vinilo de fundición. Trabajarás técnicas avanzadas de estiramiento, post-heating, gestión de
-                curvas complejas, parachoques, retrovisores y manillas. Material y vehículos reales incluidos.
-                Más información en <a href="/curso-vinilado-vehiculos" style="color:#fff;">/curso-vinilado-vehiculos</a>.
-              </p>
-            </article>
-
-            <article style="margin-top:20px;">
-              <h3 style="font-size:20px;margin:0 0 8px;"><a href="/curso-ppf-proteccion-pintura" style="color:#fff;">Curso de PPF (Paint Protection Film)</a></h3>
-              <p style="font-size:16px;line-height:1.6;color:#ddd;margin:0;">
-                Especialización en instalación de film de protección de pintura, el servicio premium más demandado
-                del sector. Aprenderás a cortar con plotter, preparar superficies, instalar PPF en frontales,
-                capós, paragolpes y vehículos completos, y a gestionar bordes y curvas con acabado invisible.
-                Más información en <a href="/curso-ppf-proteccion-pintura" style="color:#fff;">/curso-ppf-proteccion-pintura</a>.
-              </p>
-            </article>
-
-            <article style="margin-top:20px;">
-              <h3 style="font-size:20px;margin:0 0 8px;"><a href="/curso-restauracion-vehiculos" style="color:#fff;">Curso de Restauración de Vehículos</a></h3>
-              <p style="font-size:16px;line-height:1.6;color:#ddd;margin:0;">
-                Formación orientada a la restauración estética de vehículos clásicos y de uso diario: recuperación
-                de pinturas envejecidas, eliminación de oxidación superficial, lijado en húmedo, restauración de
-                ópticas y plásticos exteriores, y devolución del brillo original mediante pulido multi-paso.
-                Más información en <a href="/curso-restauracion-vehiculos" style="color:#fff;">/curso-restauracion-vehiculos</a>.
-              </p>
-            </article>
-
-            <article style="margin-top:20px;">
-              <h3 style="font-size:20px;margin:0 0 8px;"><a href="/jornada-cero" style="color:#fff;">Jornada Zero — Introducción al Detailing (97€)</a></h3>
-              <p style="font-size:16px;line-height:1.6;color:#ddd;margin:0;">
-                Jornada de iniciación de un día por 97€, pensada para quienes quieren descubrir el detailing
-                antes de comprometerse con una formación completa. Incluye lavado seguro, descontaminación
-                básica, introducción al pulido y aplicación de protección. Plazas limitadas a 3 alumnos por sesión.
-              </p>
-            </article>
-
-            <article style="margin-top:20px;">
-              <h3 style="font-size:20px;margin:0 0 8px;"><a href="/up-detail" style="color:#fff;">Up Detail — Reciclaje Profesional (349€)</a></h3>
-              <p style="font-size:16px;line-height:1.6;color:#ddd;margin:0;">
-                Programa de actualización para detailers en activo: nuevas tecnologías de coatings, productos
-                de última generación, técnicas de corrección eficiente y optimización del flujo de trabajo en taller.
-              </p>
-            </article>
-
-            <article style="margin-top:20px;">
-              <h3 style="font-size:20px;margin:0 0 8px;"><a href="/carrera-detailing" style="color:#fff;">Carrera Detailing Profesional</a></h3>
-              <p style="font-size:16px;line-height:1.6;color:#ddd;margin:0;">
-                Itinerario formativo completo que combina detailing, wrapping, PPF y un módulo de negocio para
-                montar y rentabilizar tu propio centro. La vía recomendada para profesionalizarse desde cero.
-              </p>
-            </article>
-          </section>
-
-
-          <section style="margin-top:32px;">
-            <h2 style="font-size:24px;border-left:4px solid #8B2332;padding-left:12px;">Recursos y autoridad técnica</h2>
-            <ul style="line-height:1.8;font-size:16px;">
-              <li><a href="/blog" style="color:#fff;">Blog especializado en detailing</a> — artículos técnicos y guías profesionales.</li>
-              <li><a href="/glosario-detailing" style="color:#fff;">Glosario de detailing</a> — terminología técnica explicada.</li>
-              <li><a href="/calculadora-dilucion" style="color:#fff;">Calculadora de dilución</a> — herramienta gratuita para profesionales.</li>
-              <li><a href="/centros-detailing-espana" style="color:#fff;">Directorio de centros de detailing en España</a> — encuentra detailers certificados cerca de ti.</li>
-            </ul>
-          </section>
-
-          <section style="margin-top:32px;">
-            <h2 style="font-size:24px;border-left:4px solid #8B2332;padding-left:12px;">Contacto</h2>
-            <p style="font-size:16px;line-height:1.6;">
-              Solicita información sobre cualquiera de nuestros cursos en
-              <a href="/contacto" style="color:#fff;">academiadetail.com/contacto</a>.
-              Atendemos consultas de toda España y alumnos internacionales de Latinoamérica
-              (México, Colombia, Argentina, Chile).
-            </p>
-          </section>
-
-          <p style="margin-top:32px;padding:16px;background:#2a2a30;border-radius:8px;font-size:14px;color:#ccc;">
-            <strong>Aviso:</strong> esta web requiere JavaScript para mostrar la experiencia interactiva
-            completa (vídeos, wizard de inscripción, mapa de centros y calculadoras). Por favor, habilita
-            JavaScript en tu navegador para acceder a todo el contenido.
-          </p>
+          <h2 style="font-size:24px;margin-top:32px;">Formaciones</h2>
+          <ul style="line-height:1.9;font-size:16px;">
+            <li><a href="/curso-detailing-profesional" style="color:#fff;">Curso de detailing profesional</a> — 4 días: corrección de pintura, pulido, tratamiento cerámico e interiores.</li>
+            <li><a href="/curso-vinilado-vehiculos" style="color:#fff;">Curso de car wrapping</a> — 2 a 4 días: vinilado y cambio de color.</li>
+            <li><a href="/curso-ppf-proteccion-pintura" style="color:#fff;">Curso de PPF</a> — 2 días: instalación de film de protección de pintura.</li>
+            <li><a href="/formacion-profesional-detailing" style="color:#fff;">Carrera Detailing</a> — todas las especialidades y un módulo de negocio.</li>
+            <li><a href="/jornada-zero-detailing" style="color:#fff;">Jornada Zero</a> — un día para empezar desde cero.</li>
+            <li><a href="/up-detail-evento" style="color:#fff;">Up Detail</a> — formación intensiva de un día.</li>
+          </ul>
+          <h2 style="font-size:24px;margin-top:32px;">Recursos</h2>
+          <ul style="line-height:1.9;font-size:16px;">
+            <li><a href="/blog" style="color:#fff;">Blog de detailing</a></li>
+            <li><a href="/glosario-detailing" style="color:#fff;">Glosario de detailing</a></li>
+            <li><a href="/calculadora-dilucion-detailing" style="color:#fff;">Calculadora de dilución</a></li>
+          </ul>
+          <p style="margin-top:32px;font-size:16px;">Pide información en <a href="/contacto" style="color:#fff;">academiadetail.com/contacto</a> o en el +34 622 773 555.</p>
         </main>
       </div>
     </noscript>

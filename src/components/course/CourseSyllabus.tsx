@@ -11,7 +11,7 @@ export function CourseSyllabus({ formation }: { formation: FormationDetail }) {
         title="Módulo a módulo"
         lead={`${formation.modules.length} módulos en ${formation.durationShort}, siempre con la teoría justa y el resto sobre el coche.`}
       />
-      <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ol className={`grid gap-4 sm:grid-cols-2 ${formation.modules.length % 3 === 0 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'}`}>
         {formation.modules.map((m, i) => (
           <li key={m.title} className="rounded-xl border border-border bg-background p-5 md:p-6">
             <span className="font-heading text-3xl leading-none text-brand">{String(i + 1).padStart(2, '0')}</span>

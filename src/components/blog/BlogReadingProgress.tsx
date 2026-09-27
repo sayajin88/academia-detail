@@ -1,41 +1,40 @@
-import { BookOpen, Clock } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
+import { RefObject, useEffect, useRef } from 'react';
 
-interface BlogReadingProgressProps {
-  progress: number;
-  readingTime: string;
-}
+/**
+ * Barra fina de progreso de lectura. Sin estado de React: un único listener
+ * pasivo, agrupado con requestAnimationFrame, que solo cambia un `transform`.
+ */
+export function BlogReadingProgress({ targetRef }: { targetRef: RefObject<HTMLElement> }) {
+  const barRef = useRef<HTMLDivElement>(null);
 
-export function BlogReadingProgress({ progress, readingTime }: BlogReadingProgressProps) {
-  // Extract minutes from readingTime string like "15 min"
-  const totalMinutes = parseInt(readingTime) || 10;
-  const remainingMinutes = Math.max(1, Math.round(totalMinutes * (1 - progress / 100)));
-  const clampedProgress = Math.min(100, Math.max(0, Math.round(progress)));
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const el = targetRef.current;
+      const bar = barRef.current;
+      if (!el || !bar) return;
+      const rect = el.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const progress = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 1;
+      bar.style.transform = `scaleX(${progress})`;
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [targetRef]);
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5">
-      <div className="flex items-center gap-2 mb-3">
-        <BookOpen className="h-4 w-4 text-brand" />
-        <span className="text-sm font-semibold text-foreground">Progreso de Lectura</span>
-      </div>
-
-      <div className="space-y-3">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Completado</span>
-          <span className="font-bold text-foreground">{clampedProgress}%</span>
-        </div>
-
-        <Progress value={clampedProgress} className="h-2 bg-primary/20" />
-
-        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-          <Clock className="h-3.5 w-3.5" />
-          {clampedProgress >= 95 ? (
-            <span>¡Lectura completada!</span>
-          ) : (
-            <span>~{remainingMinutes} min restantes</span>
-          )}
-        </div>
-      </div>
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px]" aria-hidden="true">
+      <div ref={barRef} className="h-full origin-left bg-brand" style={{ transform: 'scaleX(0)' }} />
     </div>
   );
 }

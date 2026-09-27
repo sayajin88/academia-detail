@@ -1,36 +1,40 @@
-import { BlogCategory, categoryLabels } from '@/data/blogPosts';
+import { cn } from '@/lib/utils';
+import { BLOG_CATEGORY_LABELS } from './blogUtils';
 
 interface BlogCategoriesProps {
-  activeCategory: BlogCategory | null;
-  onCategoryChange: (category: BlogCategory | null) => void;
+  categories: string[];
+  activeCategory: string | null;
+  onCategoryChange: (category: string | null) => void;
+  counts: Record<string, number>;
 }
 
-const categories: (BlogCategory | null)[] = [null, 'detailing', 'ppf', 'wrapping', 'negocios'];
-
-export function BlogCategories({ activeCategory, onCategoryChange }: BlogCategoriesProps) {
+/** Filtro por categoría (chips). */
+export function BlogCategories({ categories, activeCategory, onCategoryChange, counts }: BlogCategoriesProps) {
+  const items: (string | null)[] = [null, ...categories];
   return (
-    <nav
-      aria-label="Filtrar por categoría"
-      className="relative flex items-center gap-1 overflow-x-auto scrollbar-hide pb-1 -mb-1"
-    >
-      {categories.map((cat) => (
-        <button
-          key={cat ?? 'all'}
-          onClick={() => onCategoryChange(cat)}
-          className={`relative px-3.5 py-2 min-h-[36px] text-sm font-medium whitespace-nowrap transition-colors duration-200 rounded-lg ${
-            activeCategory === cat
-              ? 'text-brand bg-primary/10'
-              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-          }`}
-        >
-          {cat ? categoryLabels[cat] : 'Todos'}
-          {activeCategory === cat && (
-            <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-primary rounded-full" />
-          )}
-        </button>
-      ))}
-      {/* Fade gradient indicator for horizontal scroll on mobile */}
-      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent sm:hidden" aria-hidden="true" />
-    </nav>
+    <div role="group" aria-label="Filtrar por categoría" className="flex flex-wrap gap-2">
+      {items.map((cat) => {
+        const active = activeCategory === cat;
+        return (
+          <button
+            key={cat ?? 'all'}
+            type="button"
+            onClick={() => onCategoryChange(cat)}
+            aria-pressed={active}
+            className={cn(
+              'inline-flex min-h-[40px] items-center gap-1.5 rounded-full border px-4 text-sm font-semibold transition-colors',
+              active
+                ? 'border-primary bg-primary text-primary-foreground'
+                : 'border-border bg-card text-muted-foreground hover:border-white/25 hover:text-foreground',
+            )}
+          >
+            {cat ? BLOG_CATEGORY_LABELS[cat] ?? cat : 'Todos'}
+            <span className={cn('text-xs font-normal', active ? 'text-white/80' : 'text-muted-foreground')}>
+              {cat ? counts[cat] ?? 0 : counts.all}
+            </span>
+          </button>
+        );
+      })}
+    </div>
   );
 }

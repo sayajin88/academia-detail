@@ -9,11 +9,12 @@ import {
   courseFormacionProfesionalSchema,
   courseJornadaZeroSchema,
 } from "@/components/SEO";
-import { homeFaqs } from "@/data/homeContent";
 import { carreraDetailingData } from "@/data/carreraDetailingData";
-import { faqs as jornadaCeroFaqs } from "@/components/FAQ";
-import { waitlistFaqs } from "@/components/WaitlistFAQ";
+import { jornadaZeroFaqs, jornadasHubFaqs, upDetailFaqs, JORNADAS_HUB_NAME } from "@/data/jornadas";
 import { marketingFaqs } from "@/components/marketing/marketingData";
+
+import { generateFAQSchema, generateBreadcrumbSchema, generateWebPageSchema, generateHomeSEO } from "./seoCore";
+export { generateFAQSchema, generateBreadcrumbSchema, generateWebPageSchema, generateHomeSEO };
 
 const BASE_URL = "https://academiadetail.com";
 
@@ -399,67 +400,6 @@ export const generateEventSchema = (event: {
   performer: instructorSchema,
 });
 
-// ============================================
-// FAQ SCHEMA GENERATOR
-// ============================================
-export const generateFAQSchema = (faqs: { question: string; answer: string }[]) => ({
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: faq.answer,
-    },
-  })),
-});
-
-// ============================================
-// BREADCRUMB SCHEMA GENERATOR
-// ============================================
-export const generateBreadcrumbSchema = (items: { name: string; url: string }[]) => ({
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: items.map((item, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    name: item.name,
-    item: `${BASE_URL}${item.url}`,
-  })),
-});
-
-// ============================================
-// WEBPAGE SCHEMA WITH SPEAKABLE (VOICE SEARCH)
-// ============================================
-export const generateWebPageSchema = (page: { name: string; description: string; url: string; image?: string }) => ({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: page.name,
-  description: page.description,
-  url: `${BASE_URL}${page.url}`,
-  isPartOf: {
-    "@type": "WebSite",
-    name: "Detail Park - Academia Detail",
-    url: BASE_URL,
-  },
-  ...(page.image && {
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: page.image,
-      width: 1200,
-      height: 630,
-    },
-  }),
-  speakable: {
-    "@type": "SpeakableSpecification",
-    cssSelector: ["h1", ".hero-description", ".section-heading"],
-  },
-  mainEntity: {
-    "@type": "EducationalOrganization",
-    name: "Detail Park - Academia Detail",
-  },
-});
 
 // ============================================
 // IMAGE OBJECT SCHEMA
@@ -512,130 +452,6 @@ const slugMapping: Record<string, string> = {
 
 const normalizeSlug = (slug: string): string => {
   return slugMapping[slug] || slug;
-};
-
-// ============================================
-// SEO CONFIG POR PÁGINA
-// ============================================
-
-// Dynamic home SEO generator - builds schemas from real formation data
-export const generateHomeSEO = (
-  formations: {
-    id: string;
-    title: string;
-    shortTitle: string;
-    description: string;
-    href: string;
-    alumnosCertificados?: number;
-  }[],
-  details: Record<string, FormationDetail>,
-) => {
-  // Aggregate dynamic keywords from all course categories
-  const categoryKeywords = Object.values(details)
-    .map((d) => {
-      const words = d.title
-        .toLowerCase()
-        .split(/\s+/)
-        .filter((w) => w.length > 3);
-      return words.slice(0, 3).join(", ");
-    })
-    .join(", ");
-
-  const totalAlumnos = formations.reduce((sum, f) => sum + (f.alumnosCertificados || 0), 0);
-
-  // Build ItemList of courses dynamically from real data
-  const courseItemList = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Cursos de Detailing Profesional",
-    numberOfItems: formations.length,
-    itemListElement: formations.map((f, i) => {
-      const detail = details[f.id];
-      return {
-        "@type": "ListItem",
-        position: i + 1,
-        name: detail?.title || f.title,
-        item: {
-          "@type": "Course",
-          name: detail?.title || f.title,
-          url: `${BASE_URL}${f.href}`,
-          description: detail?.description || f.description,
-          provider: { "@type": "Organization", name: "Detail Park - Academia Detail", sameAs: BASE_URL },
-          ...(detail && {
-            offers: {
-              "@type": "Offer",
-              price: String(detail.price),
-              priceCurrency: "EUR",
-              availability: detail.comingSoon
-                ? "https://schema.org/PreOrder"
-                : "https://schema.org/LimitedAvailability",
-            },
-            ...(detail.modules &&
-              detail.modules.length > 0 && {
-                hasPart: detail.modules.map((mod, mi) => ({
-                  "@type": "Course",
-                  name: mod.title,
-                  position: mi + 1,
-                })),
-              }),
-          }),
-        },
-      };
-    }),
-  };
-
-  // Navigation schema from real formation slugs
-  const navItems = [
-    ...formations.map((f, i) => ({
-      "@type": "ListItem" as const,
-      position: i + 1,
-      name: f.shortTitle || f.title,
-      url: `${BASE_URL}${f.href}`,
-    })),
-    {
-      "@type": "ListItem" as const,
-      position: formations.length + 1,
-      name: "Formación Profesional Completa",
-      url: `${BASE_URL}/formacion-profesional-detailing`,
-    },
-    {
-      "@type": "ListItem" as const,
-      position: formations.length + 2,
-      name: "Jornada Zero - Experiencia Inmersión",
-      url: `${BASE_URL}/curso-detailing-iniciacion`,
-    },
-    { "@type": "ListItem" as const, position: formations.length + 3, name: "Contacto", url: `${BASE_URL}/contacto` },
-  ];
-
-  return {
-    title: "Cursos de Detailing en Alicante | Detail Park",
-    description:
-      "Academia de detailing en Alicante. Cursos 100 % prácticos de detailing, pulido, tratamiento cerámico, wrapping y PPF en un taller real. 218 alumnos formados.",
-    // ── KEYWORDS HOME ENRIQUECIDAS ──────────────────────────────────────────
-    keywords: `curso detailing, curso detailing intensivo, curso de pulido de coches, curso pulido profesional, curso pulido coche certificado, curso tratamiento cerámico, curso coating cerámico coches, aprender aplicar cerámico coche, curso limpiar coches profesional, curso lavado profesional coches, escuela de detailing, academia detailing, academia detailing alicante, curso detailing alicante, curso ppf alicante, curso wrapping alicante, curso detailing comunidad valenciana, cómo montar negocio detailing, cómo montar centro detailing, abrir taller detailing, montar negocio detailing España, negocio detailing rentable, emprender detailing, cómo montar lavadero de coches, formación detailing España, aprender detailing desde cero, bolsa empleo detailing, certificación oficial detailing, financiar curso detailing, curso detailing Madrid, curso detailing Barcelona, curso de detailing, curso de car detailing, curso de detailing de autos, academia detailing latinoamerica, curso wrapping básico, curso wrapping avanzado, curso vinilado profesional, curso ppf paint protection film, curso pulido carrocería, curso tapizado asientos coches, curso restauración tapicería cuero, qué es el detailing profesional, cuánto cobra un detailer profesional, diferencia detailing lavado normal, salidas laborales detailing, herramientas detailing profesional, ppf vs ceramic coating, precio instalar ppf coche, ${categoryKeywords}`,
-    url: "/",
-    price: details["curso-detailing-profesional"]?.price
-      ? String(details["curso-detailing-profesional"].price)
-      : "2997",
-    schema: [
-      localBusinessSchema,
-      websiteSchema,
-      {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        name: "Navegación Principal - Academia Detail",
-        itemListElement: navItems,
-      },
-      courseItemList,
-      generateWebPageSchema({
-        name: "Cursos de Detailing Profesional en España",
-        description: "Formación 100% práctica en taller real con visión de negocio",
-        url: "/",
-      }),
-      generateBreadcrumbSchema([{ name: "Inicio", url: "/" }]),
-      generateFAQSchema(homeFaqs),
-    ],
-  };
 };
 
 // ============================================
@@ -777,190 +593,145 @@ export const seoConfig = {
   },
 
   jornadaCero: {
-    title: "Jornada Zero Detailing — Iniciación 1 Día desde 97€ | Alicante",
+    title: "Jornada Zero: iniciación al detailing en 1 día | Alicante",
     description:
-      "Tu primer contacto con el detailing profesional por solo 97€. 1 día intensivo en taller real en Alicante. Descubre si el detailing es tu camino antes de invertir más.",
+      "Tu primer día de detailing profesional en el taller de Detail Park (Alicante): práctica sobre un vehículo real, material, comida y certificado. 97 € + IVA, descontables de un curso completo.",
     keywords:
-      "jornada zero detailing, probar detailing barato, experiencia detailing inmersión, curso detailing económico, primer contacto detailing profesional, prueba antes de invertir detailing, curso detailing 1 día, curso iniciación detailing, jornada intensiva detailing principiantes, detailing iniciación Alicante, aprender detailing 1 día",
+      "jornada zero detailing, curso detailing 1 día, curso iniciación detailing, iniciación detailing Alicante, primer contacto detailing profesional, aprender detailing desde cero, jornada detailing principiantes",
     url: "/jornada-zero-detailing",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
     price: "97",
     schema: [
       localBusinessSchema,
+      // Un solo Course; sin EducationEvent mientras no haya fecha (startDate es obligatorio)
       courseJornadaZeroSchema,
-      generateCourseSchemaEnhanced({
-        name: "Jornada Zero - Experiencia de Inmersión Detailing",
-        description:
-          "Tu primer contacto con el detailing profesional en un taller 100% real. 1 día de experiencia práctica para descubrir si tienes mentalidad de empresario.",
-        price: 97,
-        duration: "P1D",
-        url: "/jornada-zero-detailing",
-        image: `${BASE_URL}/og-jornada-zero.jpg`,
-        rating: { value: "4.9", count: "50" },
-        comingSoon: true,
-      }),
-      // Plazas cerradas: sin fecha confirmada. Se declara como evento
-      // pospuesto en preventa para evitar datos estructurados inconsistentes.
-      {
-        "@context": "https://schema.org",
-        "@type": "EducationEvent",
-        name: "Jornada Zero - Experiencia de Inmersión Detailing",
-        description:
-          "Tu primer contacto con el detailing profesional. 1 día de experiencia práctica en taller real. Plazas cerradas actualmente: próxima convocatoria próximamente.",
-        eventStatus: "https://schema.org/EventPostponed",
-        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-        location: {
-          "@type": "Place",
-          name: "Academia Detail - Taller 100% Real",
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "Calle Metalurgias, 13",
-            addressLocality: "Alicante",
-            postalCode: "03008",
-            addressCountry: "ES",
-          },
-        },
-        organizer: {
-          "@type": "Organization",
-          name: "Detail Park - Academia Detail",
-          url: BASE_URL,
-        },
-        offers: {
-          "@type": "Offer",
-          price: "97",
-          priceCurrency: "EUR",
-          availability: "https://schema.org/PreOrder",
-          url: `${BASE_URL}/jornada-zero-detailing`,
-        },
-      },
       generateWebPageSchema({
-        name: "Jornada Zero Detailing",
-        description: "Experiencia de inmersión de 1 día para probar el detailing profesional",
+        name: "Jornada Zero",
+        description: "Jornada de iniciación de un día para descubrir el detailing profesional en el taller de Detail Park",
         url: "/jornada-zero-detailing",
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
-        { name: "Jornadas Intensivas", url: "/curso-detailing-iniciacion" },
+        { name: JORNADAS_HUB_NAME, url: "/curso-detailing-iniciacion" },
         { name: "Jornada Zero", url: "/jornada-zero-detailing" },
       ]),
-      generateFAQSchema([...waitlistFaqs, ...jornadaCeroFaqs]),
+      generateFAQSchema(jornadaZeroFaqs),
     ],
   },
 
   jornadasHub: {
-    title: "Jornadas Intensivas de Detailing 2026 | Jornada Zero y Up Detail | Academia Detail",
+    title: "Jornadas de iniciación al detailing en Alicante | Jornada Zero y Up Detail",
     description:
-      "🚀 Descubre el detailing en 1 día: Jornada Zero o Up Detail. Dos formatos, múltiples expertos, desde 97€ + IVA. ✅ Certificado incluido. ➤ Elige tu jornada.",
+      "Dos formatos de un día para acercarte al detailing profesional en Detail Park (Alicante): la Jornada Zero (97 € + IVA) y Up Detail (349 € + IVA). Compara y elige.",
     keywords:
-      "jornada detailing, curso detailing 1 dia, iniciacion detailing, experiencia detailing, up detail, jornada zero, formacion detailing barata, curso iniciación detailing Alicante, jornada intensiva detailing principiantes, primer paso detailing profesional",
+      "jornada detailing, curso detailing 1 dia, iniciacion detailing, up detail, jornada zero, curso iniciación detailing Alicante, jornada intensiva detailing principiantes, primer paso detailing profesional",
     url: "/curso-detailing-iniciacion",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
     price: "97",
     schema: [
       localBusinessSchema,
       generateWebPageSchema({
-        name: "Jornadas Intensivas de Detailing",
-        description: "Dos formatos de jornada intensiva para descubrir el detailing profesional",
+        name: "Jornadas de iniciación al detailing",
+        description: "Jornada Zero y Up Detail: dos formatos de un día para descubrir el detailing profesional",
         url: "/curso-detailing-iniciacion",
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
-        { name: "Jornadas Intensivas", url: "/curso-detailing-iniciacion" },
+        { name: JORNADAS_HUB_NAME, url: "/curso-detailing-iniciacion" },
       ]),
+      generateFAQSchema(jornadasHubFaqs),
     ],
   },
 
   upDetail: {
-    title: "Up Detail - Jornada con Expertos de Detailing | Próximamente | Academia Detail",
+    title: "Up Detail: formación intensiva de detailing en 1 día | Alicante",
     description:
-      "🌟 Up Detail reúne a los mejores formadores de detailing del país en una jornada intensiva. 97€ + IVA. ✅ Múltiples expertos, certificado oficial. ➤ Reserva tu aviso.",
+      "Up Detail es un formato para aprender lo máximo en el menor tiempo: demostraciones de detailing profesional en una jornada intensiva en Detail Park (Alicante). 349 € + IVA. Apúntate al aviso.",
     keywords:
-      "up detail, jornada detailing expertos, formacion detailing colaborativa, masterclass detailing, evento detailing profesional, formadores detailing españa",
+      "up detail, jornada detailing intensiva, demostración detailing, formación detailing 1 día, evento detailing Alicante, masterclass detailing",
     url: "/up-detail-evento",
     image: `${BASE_URL}/og-jornada-zero.jpg`,
-    price: "97",
+    price: "349",
     schema: [
       localBusinessSchema,
+      // Sin EducationEvent mientras no haya fecha (startDate es obligatorio)
       {
         "@context": "https://schema.org",
-        "@type": "EducationEvent",
-        name: "Up Detail - Jornada con Expertos de Detailing",
+        "@type": "Course",
+        "@id": `${BASE_URL}/up-detail-evento/#course`,
+        name: "Up Detail",
         description:
-          "Jornada intensiva de detailing con múltiples expertos reconocidos a nivel nacional e internacional.",
-        eventStatus: "https://schema.org/EventPostponed",
-        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-        location: {
-          "@type": "Place",
-          name: "Academia Detail - Taller 100% Real",
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "Calle Metalurgias, 13",
-            addressLocality: "Alicante",
-            postalCode: "03008",
-            addressCountry: "ES",
-          },
-        },
-        organizer: {
-          "@type": "Organization",
+          "Formato de formación intensiva de un día para aprender lo máximo en el menor tiempo: demostraciones de detailing profesional con Daniel López y profesionales invitados en Detail Park.",
+        url: `${BASE_URL}/up-detail-evento`,
+        provider: {
+          "@type": "EducationalOrganization",
           name: "Detail Park - Academia Detail",
           url: BASE_URL,
         },
         offers: {
           "@type": "Offer",
-          price: "97",
+          category: "Paid",
+          price: "349",
           priceCurrency: "EUR",
           availability: "https://schema.org/PreOrder",
+          url: `${BASE_URL}/up-detail-evento`,
         },
+        hasCourseInstance: {
+          "@type": "CourseInstance",
+          courseMode: "onsite",
+          courseWorkload: "P1D",
+          location: {
+            "@type": "Place",
+            name: "Detail Park",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Calle Metalurgias, 13",
+              addressLocality: "Alicante",
+              postalCode: "03008",
+              addressCountry: "ES",
+            },
+          },
+        },
+        inLanguage: "es",
       },
       generateWebPageSchema({
-        name: "Up Detail - Jornada con Expertos",
-        description: "Jornada intensiva de detailing con múltiples expertos reconocidos",
+        name: "Up Detail",
+        description: "Formación intensiva de detailing en un día, en formato de demostración",
         url: "/up-detail-evento",
       }),
       generateBreadcrumbSchema([
         { name: "Inicio", url: "/" },
-        { name: "Jornadas Intensivas", url: "/curso-detailing-iniciacion" },
+        { name: JORNADAS_HUB_NAME, url: "/curso-detailing-iniciacion" },
         { name: "Up Detail", url: "/up-detail-evento" },
       ]),
-      generateFAQSchema(waitlistFaqs),
+      generateFAQSchema(upDetailFaqs),
     ],
   },
 
   carreraDetailing: {
-    title: "Formación Profesional Detailing | 4 Certificaciones + Negocio | Alicante",
+    title: "Formación Profesional de Detailing, Wrapping y PPF | Alicante",
     description:
-      "El programa de detailing más completo de España. 1 mes intensivo, 4 certificaciones, módulo de negocio y mentoría. Aprende técnica y cómo montar tu propio centro. Alicante.",
+      "Carrera Detailing: un mes en un taller real de Alicante con los cursos de detailing, car wrapping y PPF, práctica con coches de clientes y módulo de negocio.",
     keywords:
-      "formación profesional detailing, cómo montar centro detailing, cómo montar lavadero de coches profesional, abrir negocio detailing, abrir taller detailing España, montar negocio detailing rentable, emprender detailing, curso completo detailing, programa completo detailing, curso detailing certificación oficial, cómo montar un negocio de detailing desde cero, 4 certificaciones detailing, detailing negocio rentable, aprender detailing desde cero, curso detailing Alicante, formacion profesional detailing España",
+      "formación profesional detailing, carrera detailing, cómo montar centro detailing, abrir negocio detailing, abrir taller detailing España, emprender detailing, curso completo detailing, programa completo detailing, cómo montar un negocio de detailing desde cero, aprender detailing desde cero, curso detailing wrapping ppf, curso detailing Alicante, formacion profesional detailing España",
     url: "/formacion-profesional-detailing",
     image: `${BASE_URL}/og-carrera-detailing.jpg`,
     price: "7997",
     schema: [
       localBusinessSchema,
       courseFormacionProfesionalSchema,
-      generateCourseSchemaEnhanced({
-        name: "Formación Profesional Detailing - Monta tu Centro de Detailing",
-        description:
-          "Programa premium de formación profesional en detailing. Formación intensiva con 4 certificaciones profesionales: Detailing, Wrapping, PPF y Restauración, más módulo de negocio exclusivo.",
-        price: 7997,
-        duration: "P30D",
-        url: "/formacion-profesional-detailing",
-        image: `${BASE_URL}/og-carrera-detailing.jpg`,
-        rating: { value: "4.9", count: "89" },
-      }),
-      // EducationalOccupationalProgram - More specific than Course for full programs
       {
         "@context": "https://schema.org",
         "@type": "EducationalOccupationalProgram",
-        name: "Formación Profesional Detailing - Monta tu Centro",
+        name: "Carrera Detailing - Formación profesional de detailing",
         description:
-          "Programa completo de 1 mes para montar tu propio centro de detailing. Incluye 4 certificaciones profesionales (Detailing, Wrapping, PPF, Restauración) más módulo de negocio exclusivo con plan de negocio personalizado.",
+          "Programa de 1 mes en Detail Park (Alicante): cursos de detailing, car wrapping (dos niveles) y PPF, práctica en el taller con coches de clientes y módulo de negocio.",
         url: `${BASE_URL}/formacion-profesional-detailing`,
-        timeToComplete: "P30D",
+        timeToComplete: "P1M",
         occupationalCredentialAwarded: {
           "@type": "EducationalOccupationalCredential",
           credentialCategory: "certificate",
-          name: "4 Certificaciones Profesionales de Detailing",
+          name: "Certificado de Detail Park de cada especialidad",
         },
         programPrerequisites: "Sin experiencia previa necesaria",
         provider: {
@@ -973,38 +744,14 @@ export const seoConfig = {
           "@type": "Offer",
           price: "7997",
           priceCurrency: "EUR",
-          availability: "https://schema.org/LimitedAvailability",
-          validFrom: "2025-01-01",
-          priceValidUntil: "2026-12-31",
+          url: `${BASE_URL}/formacion-profesional-detailing`,
         },
         hasCourse: [
-          { "@type": "Course", name: "Detailing Profesional", url: `${BASE_URL}/curso-detailing-profesional` },
-          { "@type": "Course", name: "Car Wrapping Profesional", url: `${BASE_URL}/curso-vinilado-vehiculos` },
-          { "@type": "Course", name: "PPF Protección Pintura", url: `${BASE_URL}/curso-ppf-proteccion-pintura` },
-          { "@type": "Course", name: "Restauración de Vehículos", url: `${BASE_URL}/curso-restauracion-vehiculos` },
+          { "@type": "Course", name: "Curso de Detailing Profesional", url: `${BASE_URL}/curso-detailing-profesional` },
+          { "@type": "Course", name: "Curso de Car Wrapping", url: `${BASE_URL}/curso-vinilado-vehiculos` },
+          { "@type": "Course", name: "Curso de PPF", url: `${BASE_URL}/curso-ppf-proteccion-pintura` },
         ],
       },
-      // VideoObject schemas for testimonial videos on this page
-      ...generateVideoObjectSchemas([
-        {
-          id: "GWda5NH90YM",
-          title: "Testimonio Alumno - Mi experiencia en la Carrera de Detailing",
-          name: "Alumno Graduado",
-          uploadDate: "2025-03-15",
-        },
-        {
-          id: "iJjIZ4Ja7RA",
-          title: "Testimonio Alumno - Cómo monté mi negocio tras la formación",
-          name: "Alumno Graduado",
-          uploadDate: "2025-04-20",
-        },
-        {
-          id: "U1qm6XXaQaE",
-          title: "Testimonio Alumno - La formación que cambió mi carrera",
-          name: "Alumno Graduado",
-          uploadDate: "2025-05-10",
-        },
-      ]),
       generateWebPageSchema({
         name: "Carrera Profesional de Detailing",
         description: "Formación completa de 1 mes para montar tu centro de detailing",
@@ -1021,7 +768,7 @@ export const seoConfig = {
   aboutUs: {
     title: "Quiénes Somos | Detail Park - Academia Detail",
     description:
-      "Conoce la historia de Detail Park - Academia Detail. Fundada en 2017, el centro de formación en detailing que vive del taller, no de la formación.",
+      "Academia Detail es la escuela de Detail Park, un centro de detailing, wrapping y PPF en Alicante desde 2017. Conoce al equipo, las instalaciones y cómo formamos.",
     keywords:
       "quienes somos academia detailing, historia detail park, centro formacion detailing españa, escuela detailing alicante, curso detailing profesional taller real, videos detailing profesional",
     url: "/quienes-somos",
@@ -1032,13 +779,13 @@ export const seoConfig = {
         "@type": "AboutPage",
         name: "Quiénes Somos - Academia Detail",
         description:
-          "Historia y filosofía de Academia Detail. Fundada en 2017, somos el único centro de formación donde vivimos del detailing profesional.",
+          "Historia, equipo e instalaciones de Academia Detail, la escuela de Detail Park (Alicante, desde 2017).",
         url: `${BASE_URL}/quienes-somos`,
         mainEntity: organizationSchemaComplete,
       },
       generateWebPageSchema({
         name: "Quiénes Somos - Academia Detail",
-        description: "Historia y filosofía de la academia de detailing líder en España",
+        description: "Historia, equipo e instalaciones de Academia Detail en Alicante",
         url: "/quienes-somos",
       }),
       generateBreadcrumbSchema([
@@ -1108,7 +855,7 @@ export const seoConfig = {
   marketingDigital: {
     title: "Marketing Digital para Detailing | Web, SEO y Marca",
     description:
-      "Diseño web, SEO y GEO para centros de detailing. Webs desde 199€ y SEO desde 99€ sin IVA. Más visibilidad en Google y en la IA. Escríbenos por WhatsApp.",
+      "Diseño web, SEO y GEO para centros de detailing. Webs desde 199 € y SEO desde 99 € + IVA, pago único. Más visibilidad en Google y en la IA. Escríbenos por WhatsApp.",
     keywords:
       "marketing digital para detailing, diseño web para detailing, página web para taller de detailing, SEO para centros de detailing, posicionamiento web taller de coches, logotipo para taller de detailing, GEO buscadores de IA negocios locales",
     url: "/marketing-digital-detailing",
@@ -1131,9 +878,9 @@ export const seoConfig = {
 
 
   contact: {
-    title: "Contacto | Academia Detail Alicante | Reserva tu Plaza ★4.9",
+    title: "Contacto | Academia Detail Alicante | Reserva tu plaza",
     description:
-      "✅ Contacta con Academia Detail en Alicante. Información sobre cursos de detailing en taller real, wrapping, PPF y restauración. ➤ Reserva tu plaza ahora - Respuesta en 24h.",
+      "Pide información o reserva tu plaza en los cursos de detailing, wrapping y PPF de Academia Detail en Alicante. Te respondemos en 48 horas laborables, o escríbenos por WhatsApp.",
     keywords:
       "academia detailing Alicante, cursos detailing Valencia, formación detailing España, contacto academia detailing, reservar curso detailing taller real",
     url: "/contacto",

@@ -1,56 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, X } from 'lucide-react';
 
 interface BlogSearchProps {
   onSearch: (query: string) => void;
+  initialValue?: string;
+  placeholder?: string;
+  label?: string;
 }
 
-export function BlogSearch({ onSearch }: BlogSearchProps) {
-  const [query, setQuery] = useState('');
-  const [expanded, setExpanded] = useState(false);
+/** Buscador con espera de 250 ms para no filtrar en cada pulsación. */
+export function BlogSearch({
+  onSearch,
+  initialValue = '',
+  placeholder = 'Buscar artículos',
+  label = 'Buscar en el blog',
+}: BlogSearchProps) {
+  const [query, setQuery] = useState(initialValue);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onSearch(query);
-    }, 300);
+    const timer = setTimeout(() => onSearch(query), 250);
     return () => clearTimeout(timer);
   }, [query, onSearch]);
 
   return (
-    <div role="search" className="relative">
-      {/* Mobile: icon toggle */}
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
-        aria-label="Buscar artículos"
-      >
-        <Search className="h-4.5 w-4.5" />
-      </button>
-
-      {/* Desktop: always visible | Mobile: expandable */}
-      <div className={`${expanded ? 'absolute right-0 top-0 w-[260px] z-10' : 'hidden'} md:block`}>
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
-          <input
-            type="search"
-            placeholder="Buscar artículos..."
-            aria-label="Buscar artículos en el blog"
-            autoComplete="off"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-full md:w-56 lg:w-64 pl-9 pr-9 py-2 bg-muted/30 border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 focus:bg-card transition-all"
-          />
-          {(query || expanded) && (
-            <button
-              onClick={() => { setQuery(''); setExpanded(false); }}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="Limpiar búsqueda"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
-        </div>
-      </div>
+    <div role="search" className="relative w-full">
+      <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+      <input
+        type="search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder={placeholder}
+        aria-label={label}
+        autoComplete="off"
+        className="h-11 w-full rounded-lg border border-border bg-card pl-10 pr-10 text-[0.9375rem] text-foreground placeholder:text-muted-foreground focus:border-white/40 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+      />
+      {query && (
+        <button
+          type="button"
+          onClick={() => setQuery('')}
+          aria-label="Borrar búsqueda"
+          className="absolute right-1.5 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground hover:text-foreground"
+        >
+          <X className="h-4 w-4" aria-hidden="true" />
+        </button>
+      )}
     </div>
   );
 }

@@ -1,15 +1,15 @@
+import { lazy, Suspense } from 'react';
+import { Link } from 'react-router-dom';
+import { AlertTriangle, Scale } from 'lucide-react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { SEO } from '@/components/SEO';
+import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
+import { Section, SectionHeader } from '@/components/ds/Section';
 import { seoConfig } from '@/utils/seoConfig';
 import { VisualDilutionCalculator } from '@/components/glossary/VisualDilutionCalculator';
-import { AnimatedSection } from '@/components/shared/AnimatedSection';
-import { Beaker, AlertTriangle, TrendingUp, Shield, Droplets, HelpCircle } from 'lucide-react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+
+const FaqList = lazy(() => import('@/components/ds/FaqList').then((m) => ({ default: m.FaqList })));
+const CtaBand = lazy(() => import('@/components/ds/CtaBand').then((m) => ({ default: m.CtaBand })));
 
 const BASE_URL = 'https://academiadetail.com';
 
@@ -53,259 +53,159 @@ const dilutionTable = [
   { product: 'Limpiador de Llantas (ácido/alcalino)', ratio: '1:3 – 1:5', use: 'Limpieza de llantas con suciedad incrustada de polvo de freno' },
 ];
 
-const CalculadoraDilucion = () => {
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Calculadora de Dilución para Detailing',
+  description: 'Herramienta interactiva gratuita para calcular la dilución exacta de productos químicos de car detailing profesional.',
+  url: `${BASE_URL}/calculadora-dilucion-detailing`,
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Web',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  creator: { '@type': 'Organization', name: 'Academia Detail', url: BASE_URL },
+  browserRequirements: 'Requires JavaScript. Requires HTML5.',
+  softwareVersion: '1.0',
+  inLanguage: 'es',
+};
+
+const Placeholder = () => <div className="ds-section" aria-hidden="true" />;
+
+export default function CalculadoraDilucion() {
   const seo = seoConfig.calculadoraDilucion;
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": dilutionFAQs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  };
-
-  const webAppSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Calculadora de Dilución para Detailing",
-    "description": "Herramienta interactiva gratuita para calcular la dilución exacta de productos químicos de car detailing profesional.",
-    "url": `${BASE_URL}/calculadora-dilucion-detailing`,
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "EUR"
-    },
-    "creator": {
-      "@type": "Organization",
-      "name": "Academia Detail",
-      "url": BASE_URL
-    },
-    "browserRequirements": "Requires JavaScript. Requires HTML5.",
-    "softwareVersion": "1.0",
-    "inLanguage": "es"
-  };
-
   return (
-    <MainLayout>
+    <>
+      {/* El marcado FAQPage lo añade FaqList (una sola vez) */}
       <SEO
         title={seo.title}
         description={seo.description}
         keywords={seo.keywords}
         url={seo.url}
-        schema={[...seo.schema, faqSchema, webAppSchema]}
+        schema={[...seo.schema, webAppSchema]}
       />
-
-      {/* Hero */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-brand text-sm font-medium mb-6">
-              <Beaker className="h-4 w-4" />
-              Herramienta Gratuita e Interactiva
-            </div>
-            <h1 className="text-3xl md:text-5xl font-black text-foreground mb-4 leading-tight">
-              Calculadora de Dilución para{' '}
-              <span className="text-brand">Productos de Detailing</span>
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Calcula la mezcla exacta de cualquier producto químico de car detailing. 
-              Ratios visuales para APC, champú, desengrasante, limpiacristales y más. 
-              Sin errores, sin desperdiciar producto.
+      <MainLayout>
+        <section className="bg-background">
+          <div className="ds-container pt-2">
+            <Breadcrumbs
+              items={[
+                { name: 'Glosario', url: '/glosario-detailing' },
+                { name: 'Calculadora de dilución', url: '/calculadora-dilucion-detailing' },
+              ]}
+            />
+          </div>
+          <div className="ds-container pb-8 pt-4 md:pb-10">
+            <p className="ds-eyebrow mb-4">Herramienta gratuita</p>
+            <h1 className="ds-h1 max-w-4xl text-foreground">Calculadora de dilución para productos de detailing</h1>
+            <p className="ds-lead mt-5 max-w-2xl">
+              Elige el tamaño del envase y el ratio que indica el fabricante: te decimos cuántos mililitros de producto y de agua
+              necesitas. Sirve para APC, champú, desengrasante, limpiacristales y cualquier otro concentrado.
             </p>
           </div>
-        </div>
-      </section>
+          <div id="calculadora" className="ds-container scroll-mt-20 pb-16 md:pb-24">
+            <VisualDilutionCalculator />
+          </div>
+        </section>
 
-      {/* Calculator */}
-      <section id="calculadora" className="pb-16 md:pb-20">
-        <div className="container mx-auto px-4">
-          <VisualDilutionCalculator />
-        </div>
-      </section>
-
-      {/* Educational Content: Cómo Diluir */}
-      <AnimatedSection animation="fade-up">
-        <section className="py-16 bg-card/30 border-y border-border/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
-                Cómo Diluir Productos de Detailing Correctamente
-              </h2>
-
-              <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
-                <p>
-                  La dilución correcta de los productos químicos es una de las habilidades fundamentales que todo <strong className="text-foreground">detailer profesional</strong> debe dominar. 
-                  No se trata solo de añadir agua a un producto: un ratio de mezcla incorrecto puede arruinar una superficie, desperdiciar producto costoso o incluso poner en riesgo tu salud.
+        <Section tone="card" width="narrow" aria-labelledby="como-diluir-title">
+          <SectionHeader
+            id="como-diluir-title"
+            align="left"
+            eyebrow="Guía rápida"
+            title="Cómo diluir productos de detailing correctamente"
+            className="mb-8 md:mb-10"
+          />
+          <div className="space-y-5 text-[1.0625rem] leading-[1.75] text-foreground/85 md:text-lg">
+            <p>
+              La dilución correcta de los productos químicos es una de las habilidades fundamentales que todo{' '}
+              <strong className="font-semibold text-foreground">detailer profesional</strong> debe dominar. No se trata solo de añadir
+              agua a un producto: un ratio de mezcla incorrecto puede arruinar una superficie, desperdiciar producto costoso o incluso
+              poner en riesgo tu salud.
+            </p>
+            <div className="grid gap-4 py-2 md:grid-cols-2">
+              <div className="rounded-xl border border-border bg-background p-5">
+                <h3 className="flex items-center gap-2 text-base font-bold text-foreground">
+                  <AlertTriangle className="h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
+                  Por qué importa la dilución exacta
+                </h3>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
+                  Un producto demasiado concentrado puede atacar la pintura, decolorar plásticos o dañar cuero. Muchos APC profesionales
+                  tienen un pH alcalino que, sin diluir, puede grabar la superficie de forma permanente. Además, los productos
+                  concentrados generan más residuo y son más difíciles de aclarar, dejando marcas visibles al secarse.
                 </p>
-
-                <div className="grid md:grid-cols-2 gap-6 not-prose my-8">
-                  <div className="bg-card/50 rounded-xl border border-border p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 rounded-lg bg-destructive/10">
-                        <AlertTriangle className="h-5 w-5 text-destructive" />
-                      </div>
-                      <h3 className="font-bold text-foreground text-lg">Por qué importa la dilución exacta</h3>
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      Un producto demasiado concentrado puede atacar la pintura, decolorar plásticos o dañar cuero. 
-                      Muchos APC profesionales tienen un pH alcalino que, sin diluir, puede grabar la superficie de forma permanente. 
-                      Además, los productos concentrados generan más residuo y son más difíciles de aclarar, dejando marcas visibles al secarse.
-                    </p>
-                  </div>
-
-                  <div className="bg-card/50 rounded-xl border border-border p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 rounded-lg bg-accent/20">
-                        <TrendingUp className="h-5 w-5 text-accent-foreground" />
-                      </div>
-                      <h3 className="font-bold text-foreground text-lg">Consecuencias de una dilución incorrecta</h3>
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      Si diluyes demasiado, el producto pierde poder de limpieza y necesitarás varias pasadas —lo que consume más tiempo y más producto del necesario. 
-                      Si usas muy poco agua, además del riesgo de daño, estás tirando dinero: un litro de APC concentrado puede rendir hasta 100 litros diluido. 
-                      Dominar los ratios es dominar la rentabilidad de tu taller.
-                    </p>
-                  </div>
-                </div>
-
-                <p>
-                  En el <strong className="text-foreground">detailing profesional</strong>, cada producto tiene un ratio recomendado por el fabricante, 
-                  pero la experiencia te enseña a ajustar según el nivel de suciedad, el tipo de superficie y las condiciones ambientales. 
-                  Nuestra calculadora de dilución te permite visualizar y calcular esas proporciones al instante, 
-                  tanto para los presets más comunes como para ratios personalizados.
+              </div>
+              <div className="rounded-xl border border-border bg-background p-5">
+                <h3 className="flex items-center gap-2 text-base font-bold text-foreground">
+                  <Scale className="h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
+                  Consecuencias de una dilución incorrecta
+                </h3>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
+                  Si diluyes demasiado, el producto pierde poder de limpieza y necesitarás varias pasadas, lo que consume más tiempo y
+                  más producto del necesario. Si usas muy poca agua, además del riesgo de daño, estás tirando dinero: un litro de APC
+                  concentrado puede rendir hasta 100 litros diluido.
                 </p>
               </div>
             </div>
+            <p>
+              En el <strong className="font-semibold text-foreground">detailing profesional</strong>, cada producto tiene un ratio
+              recomendado por el fabricante, pero la experiencia te enseña a ajustar según el nivel de suciedad, el tipo de superficie y
+              las condiciones ambientales. Si algún término no te suena, búscalo en el{' '}
+              <Link to="/glosario-detailing" className="font-semibold text-brand underline decoration-brand/50 underline-offset-4 hover:decoration-brand">
+                glosario de detailing
+              </Link>
+              .
+            </p>
           </div>
-        </section>
-      </AnimatedSection>
+        </Section>
 
-      {/* Ratio Table */}
-      <AnimatedSection animation="fade-up" delay={100}>
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-10">
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                  Tabla de Ratios de Dilución por Producto
-                </h2>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Referencia rápida con los ratios de dilución más utilizados en un taller de detailing profesional. 
-                  Estos valores son orientativos — consulta siempre la ficha técnica de tu producto.
-                </p>
-              </div>
-
-              <div className="overflow-x-auto rounded-xl border border-border">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="bg-card/80 border-b border-border">
-                      <th className="text-left py-3.5 px-4 font-semibold text-foreground">
-                        <div className="flex items-center gap-2">
-                          <Droplets className="h-4 w-4 text-brand" />
-                          Tipo de Producto
-                        </div>
-                      </th>
-                      <th className="text-center py-3.5 px-4 font-semibold text-foreground">Ratio Común</th>
-                      <th className="text-left py-3.5 px-4 font-semibold text-foreground hidden md:table-cell">
-                        <div className="flex items-center gap-2">
-                          <Shield className="h-4 w-4 text-brand" />
-                          Uso Recomendado
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dilutionTable.map((row, i) => (
-                      <tr key={i} className={`border-b border-border/50 ${i % 2 === 0 ? 'bg-card/30' : 'bg-transparent'} hover:bg-primary/5 transition-colors`}>
-                        <td className="py-3 px-4 font-medium text-foreground">{row.product}</td>
-                        <td className="py-3 px-4 text-center">
-                          <span className="inline-flex px-2.5 py-1 rounded-full bg-primary/10 text-brand font-semibold text-xs border border-primary/20">
-                            {row.ratio}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground hidden md:table-cell">{row.use}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <p className="text-xs text-muted-foreground mt-4 text-center italic">
-                ⚠️ Los ratios indicados son orientativos y pueden variar según la marca y la formulación del producto. 
-                Consulta siempre la ficha técnica del fabricante antes de usar cualquier producto químico.
-              </p>
-            </div>
-          </div>
-        </section>
-      </AnimatedSection>
-
-      {/* FAQ */}
-      <AnimatedSection animation="fade-up" delay={150}>
-        <section className="py-16 bg-card/30 border-y border-border/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-brand text-xs font-medium mb-4">
-                  <HelpCircle className="h-3.5 w-3.5" />
-                  Preguntas Frecuentes
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                  Preguntas Frecuentes sobre Dilución de Productos
-                </h2>
-              </div>
-
-              <Accordion type="single" collapsible className="space-y-3">
-                {dilutionFAQs.map((faq, i) => (
-                  <AccordionItem key={i} value={`faq-${i}`} className="bg-card/50 border border-border rounded-xl px-5 data-[state=open]:border-primary/30">
-                    <AccordionTrigger className="text-left font-semibold text-foreground hover:text-brand text-sm md:text-base py-4">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
+        <Section aria-labelledby="tabla-ratios-title">
+          <SectionHeader
+            id="tabla-ratios-title"
+            eyebrow="Referencia"
+            title="Tabla de ratios de dilución por producto"
+            lead="Los ratios más utilizados en un taller de detailing. Son orientativos: consulta siempre la ficha técnica de tu producto."
+          />
+          <div className="mx-auto max-w-4xl overflow-x-auto rounded-xl border border-border">
+            <table className="w-full border-collapse text-left text-[0.9375rem] leading-snug">
+              <thead className="bg-card">
+                <tr>
+                  <th scope="col" className="border-b border-border px-4 py-3 font-semibold text-foreground">Producto</th>
+                  <th scope="col" className="whitespace-nowrap border-b border-border px-4 py-3 font-semibold text-foreground">Ratio habitual</th>
+                  <th scope="col" className="hidden border-b border-border px-4 py-3 font-semibold text-foreground md:table-cell">Uso</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dilutionTable.map((row) => (
+                  <tr key={row.product} className="border-b border-border last:border-0">
+                    <td className="px-4 py-3 align-top">
+                      <span className="font-semibold text-foreground">{row.product}</span>
+                      <span className="mt-1 block text-sm text-muted-foreground md:hidden">{row.use}</span>
+                    </td>
+                    <td className="px-4 py-3 align-top font-semibold tabular-nums text-foreground">{row.ratio}</td>
+                    <td className="hidden px-4 py-3 align-top text-muted-foreground md:table-cell">{row.use}</td>
+                  </tr>
                 ))}
-              </Accordion>
-            </div>
+              </tbody>
+            </table>
           </div>
-        </section>
-      </AnimatedSection>
-
-      {/* CTA */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-            ¿Quieres dominar estas técnicas en la práctica?
-          </h2>
-          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            En Academia Detail aprenderás a usar todos estos productos de forma profesional, en un taller real con vehículos de alta gama.
+          <p className="mx-auto mt-4 max-w-4xl text-sm text-muted-foreground">
+            Los ratios pueden variar según la marca y la formulación. Consulta siempre la ficha técnica del fabricante antes de usar
+            cualquier producto químico.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="/curso-detailing-profesional"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
-            >
-              Ver cursos disponibles
-            </a>
-            <a
-              href="/contacto"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-card border border-border text-foreground font-semibold hover:border-primary/30 transition-colors"
-            >
-              Solicitar información
-            </a>
-          </div>
-        </div>
-      </section>
-    </MainLayout>
-  );
-};
+        </Section>
 
-export default CalculadoraDilucion;
+        <Suspense fallback={<Placeholder />}>
+          <Section tone="card" aria-labelledby="faq-title">
+            <SectionHeader id="faq-title" eyebrow="Preguntas frecuentes" title="Preguntas sobre la dilución de productos" />
+            <FaqList items={dilutionFAQs} withSchema />
+          </Section>
+          <CtaBand
+            title="¿Quieres aprenderlo en el taller?"
+            text="En el curso de detailing trabajas con productos profesionales y aprendes a elegir y diluir cada uno según la superficie y la suciedad."
+            primaryLabel="Ver el curso de detailing"
+            primaryHref="/curso-detailing-profesional"
+          />
+        </Suspense>
+      </MainLayout>
+    </>
+  );
+}

@@ -1,23 +1,20 @@
-import { useParams, Navigate, Link } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { ArrowLeft, Check } from 'lucide-react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { SEO } from '@/components/SEO';
-import { Badge } from '@/components/ui/badge';
-import { GlossaryTermFAQ, generateFAQs } from '@/components/glossary/GlossaryTermFAQ';
+import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
+import { Section, SectionHeader } from '@/components/ds/Section';
 import { GlossaryRelatedCourses } from '@/components/glossary/GlossaryRelatedCourses';
-import { GlossaryTermCard } from '@/components/glossary/GlossaryTermCard';
-import {
-  getTermBySlug,
-  generateSlug,
-  glossaryTerms,
-  categoryLabels,
-  categoryColors,
-  type GlossaryCategory,
-} from '@/data/glossaryData';
-import { BookOpen, Wrench, Layers, ArrowLeft } from 'lucide-react';
+import { getTermBySlug, glossaryTerms, categoryLabels, type GlossaryCategory } from '@/data/glossaryData';
+
+const GlossaryTermFAQ = lazy(() => import('@/components/glossary/GlossaryTermFAQ').then((m) => ({ default: m.GlossaryTermFAQ })));
+const GlossaryTermCard = lazy(() => import('@/components/glossary/GlossaryTermCard').then((m) => ({ default: m.GlossaryTermCard })));
+const CtaBand = lazy(() => import('@/components/ds/CtaBand').then((m) => ({ default: m.CtaBand })));
 
 const BASE_URL = 'https://academiadetail.com';
 
-// Contextual process descriptions by category
+// Cómo encaja cada categoría en el trabajo del taller
 const categoryProcesses: Record<GlossaryCategory, string> = {
   exterior:
     'El cuidado exterior profesional sigue un flujo de trabajo sistemático: prelavado con espuma activa, lavado seguro con método de dos cubos, descontaminación química y mecánica, corrección de pintura mediante pulido en varias etapas, y aplicación de protección final (sellador, cera o recubrimiento cerámico).',
@@ -33,7 +30,6 @@ const categoryProcesses: Record<GlossaryCategory, string> = {
     'Las técnicas de detailing profesional se ejecutan siguiendo protocolos precisos de velocidad, presión y movimiento. Cada técnica requiere práctica supervisada para dominar variables como la temperatura de la superficie, el tipo de pintura y el nivel de defecto a corregir.',
 };
 
-// Contextual tools by category
 const categoryToolsList: Record<GlossaryCategory, string[]> = {
   exterior: ['Pulidora DA / Rotativa', 'Pads de corte y acabado', 'Foam cannon', 'Toallas de microfibra', 'Clay bar', 'Medidor de espesor'],
   interior: ['Cepillos de cerdas suaves', 'Extractor de tapicerías', 'Tornador neumático', 'Vaporizadora', 'Aspirador profesional'],
@@ -43,20 +39,17 @@ const categoryToolsList: Record<GlossaryCategory, string[]> = {
   tecnicas: ['Pulidora orbital aleatoria', 'Medidor de espesor de pintura', 'Luces de inspección halógenas/LED', 'Panel de test', 'Cinta de carrocero'],
 };
 
+const Placeholder = () => <div className="ds-section" aria-hidden="true" />;
+
 export default function GlossaryTerm() {
   const { slug } = useParams<{ slug: string }>();
   const term = slug ? getTermBySlug(slug) : undefined;
 
-  if (!term) {
-    return <Navigate to="/glosario-detailing" replace />;
-  }
+  if (!term) return <Navigate to="/glosario-detailing" replace />;
 
-  const faqs = generateFAQs(term);
-  const relatedTerms = glossaryTerms
-    .filter(t => t.category === term.category && t.term !== term.term)
-    .slice(0, 6);
-
+  const relatedTerms = glossaryTerms.filter((t) => t.category === term.category && t.term !== term.term).slice(0, 6);
   const termUrl = `/glosario-detailing/${slug}`;
+  const category = categoryLabels[term.category];
 
   const definedTermSchema = {
     '@context': 'https://schema.org',
@@ -71,131 +64,101 @@ export default function GlossaryTerm() {
     url: `${BASE_URL}${termUrl}`,
   };
 
-  const faqSchema = {
+  const breadcrumbSchema = {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map(faq => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: BASE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Glosario de Detailing', item: `${BASE_URL}/glosario-detailing` },
+      { '@type': 'ListItem', position: 3, name: term.term, item: `${BASE_URL}${termUrl}` },
+    ],
   };
 
   return (
-    <MainLayout>
+    <>
+      {/* El marcado FAQPage lo añade la lista de preguntas (una sola vez) */}
       <SEO
         title={`${term.term} – Glosario Detailing | Academia Detail`}
         description={term.definition.slice(0, 155)}
         url={termUrl}
-        schema={[definedTermSchema, faqSchema]}
-        keywords={`${term.term}, detailing, ${categoryLabels[term.category]}, glosario detailing`}
+        schema={[definedTermSchema, breadcrumbSchema]}
+        keywords={`${term.term}, detailing, ${category}, glosario detailing`}
       />
+      <MainLayout>
+        <article>
+          <header className="border-b border-border bg-background">
+            <div className="ds-container pt-2">
+              <Breadcrumbs
+                items={[
+                  { name: 'Glosario', url: '/glosario-detailing' },
+                  { name: term.term, url: termUrl },
+                ]}
+              />
+            </div>
+            <div className="ds-container pb-10 pt-4 md:pb-14">
+              <p className="ds-eyebrow mb-4">Glosario · {category}</p>
+              <h1 className="ds-h1 max-w-4xl text-foreground">{term.term}</h1>
+              <p className="mt-6 max-w-[68ch] text-lg leading-[1.7] text-foreground/90 md:text-xl">{term.definition}</p>
+            </div>
+          </header>
 
-      {/* Hero compacto */}
-      <section className="pt-8 pb-10 bg-gradient-to-b from-card to-background">
-        <div className="container mx-auto px-4">
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link to="/glosario-detailing" className="hover:text-brand transition-colors">
-              Glosario
-            </Link>
-            <span>/</span>
-            <span className="text-foreground">{term.term}</span>
-          </nav>
-          <div className="flex items-center gap-3 mb-3">
-            <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${categoryColors[term.category]}`}>
-              {categoryLabels[term.category]}
-            </span>
-          </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-            {term.term}
-          </h1>
-        </div>
-      </section>
+          <div className="ds-section-sm bg-background">
+            <div className="ds-container">
+              <div className="max-w-[68ch] text-[1.0625rem] leading-[1.75] text-foreground/85 md:text-lg">
+                <h2 className="mb-3 text-[1.75rem] leading-[1.1] text-foreground md:text-[2rem]">En el trabajo del taller</h2>
+                <p>{categoryProcesses[term.category]}</p>
 
-      {/* Definición */}
-      <section className="py-12">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="flex items-start gap-4 bg-card border border-border/60 rounded-xl p-6 md:p-8">
-            <BookOpen className="w-6 h-6 text-brand shrink-0 mt-1" />
-            <div>
-              <h2 className="text-xl font-bold text-foreground mb-3">Definición</h2>
-              <p className="text-muted-foreground leading-relaxed text-[15px]">{term.definition}</p>
+                <h2 className="mb-4 mt-10 text-[1.75rem] leading-[1.1] text-foreground md:text-[2rem]">Herramientas habituales</h2>
+                <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                  {categoryToolsList[term.category].map((tool) => (
+                    <li key={tool} className="flex gap-3">
+                      <Check className="mt-1.5 h-4 w-4 shrink-0 text-brand" aria-hidden="true" />
+                      {tool}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-12">
+                  <GlossaryRelatedCourses term={term} />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </article>
 
-      {/* Proceso relacionado */}
-      <section className="py-12 bg-card">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="flex items-start gap-4">
-            <Layers className="w-6 h-6 text-brand shrink-0 mt-1" />
-            <div>
-              <h2 className="text-xl font-bold text-foreground mb-3">Proceso Relacionado</h2>
-              <p className="text-muted-foreground leading-relaxed text-[15px]">
-                {categoryProcesses[term.category]}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+        <Suspense fallback={<Placeholder />}>
+          <Section tone="card" aria-labelledby="faq-title">
+            <SectionHeader id="faq-title" eyebrow="Preguntas frecuentes" title={`Preguntas sobre ${term.term}`} />
+            <GlossaryTermFAQ term={term} />
+          </Section>
 
-      {/* Herramientas necesarias */}
-      <section className="py-12">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="flex items-start gap-4">
-            <Wrench className="w-6 h-6 text-brand shrink-0 mt-1" />
-            <div>
-              <h2 className="text-xl font-bold text-foreground mb-3">Herramientas Necesarias</h2>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {categoryToolsList[term.category].map(tool => (
-                  <li key={tool} className="flex items-center gap-2 text-muted-foreground text-[15px]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                    {tool}
-                  </li>
+          {relatedTerms.length > 0 && (
+            <Section aria-labelledby="relacionados-title">
+              <SectionHeader
+                id="relacionados-title"
+                eyebrow={category}
+                title="Términos relacionados"
+              />
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedTerms.map((t) => (
+                  <GlossaryTermCard key={t.term} term={t} />
                 ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+              </div>
+              <div className="mt-8 flex justify-center">
+                <Link
+                  to="/glosario-detailing"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-brand underline-offset-4 hover:underline"
+                >
+                  <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                  Volver al glosario completo
+                </Link>
+              </div>
+            </Section>
+          )}
 
-      {/* FAQ */}
-      <GlossaryTermFAQ term={term} />
-
-      {/* Cursos relacionados */}
-      <GlossaryRelatedCourses term={term} />
-
-      {/* Términos relacionados */}
-      {relatedTerms.length > 0 && (
-        <section className="py-12 bg-card">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
-              Términos Relacionados
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
-              {relatedTerms.map(t => (
-                <GlossaryTermCard key={t.term} term={t} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Volver */}
-      <section className="py-8">
-        <div className="container mx-auto px-4">
-          <Link
-            to="/glosario-detailing"
-            className="inline-flex items-center gap-2 text-brand hover:underline font-medium"
-          >
-            <ArrowLeft className="w-4 h-4" /> Volver al Glosario
-          </Link>
-        </div>
-      </section>
-    </MainLayout>
+          <CtaBand />
+        </Suspense>
+      </MainLayout>
+    </>
   );
 }

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import academiaLogo from "@/assets/academia-detail-logo-light.png";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Loader2, MailX } from "lucide-react";
@@ -52,13 +54,15 @@ const Unsubscribe = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-card border border-border rounded-2xl p-8 text-center shadow-lg">
-        {/* Logo */}
-        <div className="mb-6">
-          <h2 className="text-xl font-bold text-foreground">DETAIL PARK</h2>
-          <p className="text-xs tracking-[3px] text-muted-foreground uppercase">Academy</p>
-        </div>
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <Helmet>
+        <title>Darse de baja | Academia Detail</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <div className="ds-card w-full max-w-md p-6 text-center md:p-8">
+        <Link to="/" className="mb-8 inline-block" aria-label="Academia Detail, ir al inicio">
+          <img src={academiaLogo} alt="Academia Detail" className="mx-auto h-8 w-auto brightness-0 invert" />
+        </Link>
 
         {status === "loading" && (
           <div className="flex flex-col items-center gap-4">
@@ -70,9 +74,9 @@ const Unsubscribe = () => {
         {status === "valid" && (
           <div className="flex flex-col items-center gap-4">
             <MailX className="w-12 h-12 text-muted-foreground" />
-            <h3 className="text-lg font-semibold text-foreground">¿Deseas darte de baja?</h3>
-            <p className="text-sm text-muted-foreground">
-              Ya no recibirás emails de Detail Park Academy. Esta acción no se puede deshacer.
+            <h1 className="font-heading text-3xl uppercase text-foreground">¿Deseas darte de baja?</h1>
+            <p className="text-[0.9375rem] leading-relaxed text-muted-foreground">
+              Ya no recibirás emails de Academia Detail. Esta acción no se puede deshacer.
             </p>
             <Button onClick={handleUnsubscribe} disabled={submitting} variant="destructive" className="mt-2">
               {submitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
@@ -83,9 +87,9 @@ const Unsubscribe = () => {
 
         {status === "success" && (
           <div className="flex flex-col items-center gap-4">
-            <CheckCircle className="w-12 h-12 text-green-500" />
-            <h3 className="text-lg font-semibold text-foreground">Te has dado de baja</h3>
-            <p className="text-sm text-muted-foreground">
+            <CheckCircle className="w-12 h-12 text-brand" aria-hidden="true" />
+            <h1 className="font-heading text-3xl uppercase text-foreground">Te has dado de baja</h1>
+            <p className="text-[0.9375rem] leading-relaxed text-muted-foreground">
               No recibirás más emails de nuestra parte. Si cambias de opinión, contacta con nosotros.
             </p>
           </div>
@@ -94,8 +98,8 @@ const Unsubscribe = () => {
         {status === "already" && (
           <div className="flex flex-col items-center gap-4">
             <CheckCircle className="w-12 h-12 text-muted-foreground" />
-            <h3 className="text-lg font-semibold text-foreground">Ya estás dado de baja</h3>
-            <p className="text-sm text-muted-foreground">
+            <h1 className="font-heading text-3xl uppercase text-foreground">Ya estás dado de baja</h1>
+            <p className="text-[0.9375rem] leading-relaxed text-muted-foreground">
               Tu dirección de email ya fue eliminada de nuestra lista.
             </p>
           </div>
@@ -104,8 +108,8 @@ const Unsubscribe = () => {
         {(status === "invalid" || status === "error") && (
           <div className="flex flex-col items-center gap-4">
             <XCircle className="w-12 h-12 text-destructive" />
-            <h3 className="text-lg font-semibold text-foreground">Enlace no válido</h3>
-            <p className="text-sm text-muted-foreground">
+            <h1 className="font-heading text-3xl uppercase text-foreground">Enlace no válido</h1>
+            <p className="text-[0.9375rem] leading-relaxed text-muted-foreground">
               Este enlace ha caducado o no es válido. Si necesitas ayuda, escríbenos a{" "}
               <a href="mailto:info@academiadetail.com" className="text-brand hover:underline">
                 info@academiadetail.com

@@ -34,16 +34,23 @@ const formacionLabels: Record<string, string> = {
   ppf: "PPF – Protección de Pintura",
   restauracion: "Restauración de Vehículos",
   carrera: "Carrera Profesional Completa",
+  carrera_completa: "Carrera Detailing",
+  jornada_zero: "Jornada Zero",
+  up_detail: "Up Detail",
+  general: "Consulta general",
 };
 
 const experienciaLabels: Record<string, string> = {
-  sin_experiencia: "No, soy nuevo en el sector",
+  sin_experiencia: "Empieza desde cero",
+  con_experiencia: "Ya tiene experiencia",
   basico: "Nivel básico (lavado, limpieza interior)",
   intermedio: "Nivel intermedio (pulido, corrección)",
   avanzado: "Nivel avanzado (PPF, wrapping, cerámicos)",
 };
 
 const inversionLabels: Record<string, string> = {
+  hasta_500: "Hasta 500 €",
+  "500_2000": "500 € – 2.000 €",
   menos_500: "Menos de 500 €",
   "500_1000": "500 € – 1.000 €",
   "1000_2000": "1.000 € – 2.000 €",
@@ -52,6 +59,8 @@ const inversionLabels: Record<string, string> = {
 };
 
 const centroLabels: Record<string, string> = {
+  si: "Sí, ya tiene centro o taller",
+  no: "Todavía no",
   si_tengo: "Sí, ya tengo un centro / taller",
   quiero_montar: "Quiero montar uno",
   no_interesa: "No, busco trabajar para otros",
@@ -64,6 +73,9 @@ const formacionColors: Record<string, string> = {
   ppf: "bg-green-100 text-green-800",
   restauracion: "bg-amber-100 text-amber-800",
   carrera: "bg-rose-100 text-rose-800",
+  carrera_completa: "bg-rose-100 text-rose-800",
+  jornada_zero: "bg-orange-100 text-orange-800",
+  up_detail: "bg-teal-100 text-teal-800",
 };
 
 const formacionIcons: Record<string, React.ReactNode> = {
@@ -72,6 +84,7 @@ const formacionIcons: Record<string, React.ReactNode> = {
   ppf: <Shield className="h-4 w-4" />,
   restauracion: <Car className="h-4 w-4" />,
   carrera: <GraduationCap className="h-4 w-4" />,
+  carrera_completa: <GraduationCap className="h-4 w-4" />,
 };
 
 const inversionColors: Record<string, string> = {
@@ -112,7 +125,9 @@ const FORMATION_TABS = [
   { key: "wrapping", label: "Wrapping" },
   { key: "ppf", label: "PPF" },
   { key: "restauracion", label: "Restauración" },
-  { key: "carrera", label: "Carrera" },
+  { key: "carrera_completa", label: "Carrera" },
+  { key: "jornada_zero", label: "Jornada Zero" },
+  { key: "up_detail", label: "Up Detail" },
 ];
 
 const formatInversion = (raw: string): string => {

@@ -1,114 +1,85 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { GalleryImage } from '@/data/galleryData';
+import type { GalleryImage } from '@/data/galleryData';
 
 interface ImageLightboxProps {
-  image: GalleryImage | null;
   images: GalleryImage[];
+  /** Foto abierta (null = cerrado) */
+  index: number | null;
   onClose: () => void;
-  onNavigate: (image: GalleryImage) => void;
+  onNavigate: (index: number) => void;
 }
 
-export function ImageLightbox({ image, images, onClose, onNavigate }: ImageLightboxProps) {
-  const currentIndex = image ? images.findIndex((img) => img.id === image.id) : -1;
+const navButton =
+  'absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white';
 
-  const handlePrevious = useCallback(() => {
-    if (currentIndex > 0) {
-      onNavigate(images[currentIndex - 1]);
-    }
-  }, [currentIndex, images, onNavigate]);
+/** Visor de fotos a pantalla completa (teclado: flechas y Esc). */
+export function ImageLightbox({ images, index, onClose, onNavigate }: ImageLightboxProps) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const image = index === null ? null : images[index];
 
-  const handleNext = useCallback(() => {
-    if (currentIndex < images.length - 1) {
-      onNavigate(images[currentIndex + 1]);
-    }
-  }, [currentIndex, images, onNavigate]);
+  const prev = useCallback(() => {
+    if (index !== null && index > 0) onNavigate(index - 1);
+  }, [index, onNavigate]);
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') handlePrevious();
-      if (e.key === 'ArrowRight') handleNext();
-    },
-    [onClose, handlePrevious, handleNext]
-  );
+  const next = useCallback(() => {
+    if (index !== null && index < images.length - 1) onNavigate(index + 1);
+  }, [index, images.length, onNavigate]);
 
   useEffect(() => {
-    if (image) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
-    }
+    if (index === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    closeRef.current?.focus();
     return () => {
       document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keydown', onKey);
     };
-  }, [image, handleKeyDown]);
+  }, [index, onClose, prev, next]);
 
-  if (!image) return null;
+  if (!image || index === null) return null;
+  const srcSet = Object.values(image.picture.sources)[0];
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-label={image.caption}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
       onClick={onClose}
     >
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
-        aria-label="Cerrar"
-      >
-        <X className="h-6 w-6" />
+      <button ref={closeRef} type="button" onClick={onClose} className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-3 text-white hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Cerrar">
+        <X className="h-6 w-6" aria-hidden="true" />
       </button>
 
-      {/* Navigation buttons */}
-      {currentIndex > 0 && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handlePrevious();
-          }}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
-          aria-label="Anterior"
-        >
-          <ChevronLeft className="h-8 w-8" />
+      {index > 0 && (
+        <button type="button" onClick={(e) => { e.stopPropagation(); prev(); }} className={`${navButton} left-2 md:left-4`} aria-label="Foto anterior">
+          <ChevronLeft className="h-7 w-7" aria-hidden="true" />
+        </button>
+      )}
+      {index < images.length - 1 && (
+        <button type="button" onClick={(e) => { e.stopPropagation(); next(); }} className={`${navButton} right-2 md:right-4`} aria-label="Foto siguiente">
+          <ChevronRight className="h-7 w-7" aria-hidden="true" />
         </button>
       )}
 
-      {currentIndex < images.length - 1 && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleNext();
-          }}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
-          aria-label="Siguiente"
-        >
-          <ChevronRight className="h-8 w-8" />
-        </button>
-      )}
-
-      {/* Image container */}
-      <div
-        className="relative max-w-[90vw] max-h-[85vh] flex flex-col items-center"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <figure className="flex max-h-full max-w-5xl flex-col items-center" onClick={(e) => e.stopPropagation()}>
         <img
-          src={image.src}
+          src={image.picture.img.src}
+          srcSet={srcSet}
+          sizes="90vw"
           alt={image.alt}
-          className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl"
+          className="max-h-[78vh] w-auto max-w-full rounded-lg object-contain"
         />
-        
-        {/* Image info */}
-        <div className="mt-4 text-center">
-          <h3 className="text-xl font-bold text-white">{image.title}</h3>
-          {image.description && (
-            <p className="text-white/70 mt-1">{image.description}</p>
-          )}
-          <p className="text-white/50 text-sm mt-2">
-            {currentIndex + 1} / {images.length}
-          </p>
-        </div>
-      </div>
+        <figcaption className="mt-4 text-center text-sm text-white/80">
+          {image.caption} <span className="ml-2 text-white/50">{index + 1} / {images.length}</span>
+        </figcaption>
+      </figure>
     </div>
   );
 }

@@ -60,5 +60,3 @@
 /sitemap-glossary.xml
   Cache-Control: public, max-age=86400
 
-/sitemap-directory.xml
-  Cache-Control: public, max-age=86400

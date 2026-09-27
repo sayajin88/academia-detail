@@ -31,6 +31,8 @@ const formacionLabels: Record<string, string> = {
   restauracion: "Restauración",
   negocio: "Negocio",
   carrera_completa: "Carrera Completa",
+  jornada_zero: "Jornada Zero",
+  up_detail: "Up Detail",
   general: "Información General",
   sin_especificar: "Sin especificar",
 };

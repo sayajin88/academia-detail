@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Cookie } from 'lucide-react';
 
 const CONSENT_KEY = 'academia-detail-cookie-consent';
 
@@ -20,6 +19,7 @@ export function CookieBanner() {
 
   // Dispatch custom event so other floating bars can listen
   useEffect(() => {
+    (window as Window & { __cookieBannerVisible?: boolean }).__cookieBannerVisible = visible;
     window.dispatchEvent(new CustomEvent('cookie-banner-visibility', { detail: { visible } }));
   }, [visible]);
 
@@ -49,25 +49,23 @@ export function CookieBanner() {
     <div
       role="dialog"
       aria-label="Aviso de cookies"
-      className="fixed bottom-14 left-0 right-0 z-[52] px-3 pb-2 md:px-6 md:pb-3 animate-fade-in"
+      className="fixed inset-x-3 bottom-3 z-[52] md:inset-x-auto md:bottom-6 md:left-6 md:max-w-md"
+      style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
-      <div className="mx-auto max-w-2xl rounded-2xl bg-card/95 backdrop-blur-xl border border-border shadow-2xl shadow-black/30 px-4 py-3 md:px-6 md:py-4">
-        <div className="flex items-center gap-3">
-          <Cookie className="h-5 w-5 text-brand flex-shrink-0 hidden sm:block" />
-          <p className="flex-1 text-xs md:text-sm text-muted-foreground leading-snug">
-            Usamos cookies para mejorar tu experiencia.{' '}
-            <Link to="/politica-privacidad" className="text-brand hover:underline">
-              Más info
-            </Link>
-          </p>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Button onClick={handleAccept} size="sm" className="text-xs h-8 px-3">
-              Aceptar
-            </Button>
-            <Button onClick={handleDecline} variant="ghost" size="sm" className="text-xs h-8 px-2 text-muted-foreground">
-              Rechazar
-            </Button>
-          </div>
+      <div className="rounded-xl border border-border bg-card p-4 shadow-2xl shadow-black/40">
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          Usamos cookies de analítica para saber qué páginas se visitan. Solo se activan si las aceptas.{' '}
+          <Link to="/politica-privacidad" className="text-brand underline underline-offset-4">
+            Más información sobre cookies
+          </Link>
+        </p>
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          <Button onClick={handleDecline} variant="outline" size="sm" className="h-10 font-semibold">
+            Rechazar
+          </Button>
+          <Button onClick={handleAccept} size="sm" className="h-10 font-semibold">
+            Aceptar
+          </Button>
         </div>
       </div>
     </div>

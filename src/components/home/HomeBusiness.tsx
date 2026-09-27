@@ -38,7 +38,7 @@ export function HomeBusiness() {
         </Link>
         <p className="max-w-xl text-sm text-muted-foreground">
           Y cuando abras, gestiona tu centro con{' '}
-          <a href={SITE.sistemaDetailUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-0.5 font-semibold text-foreground underline-offset-4 hover:underline">
+          <a href={SITE.sistemaDetailUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-0.5 font-semibold text-foreground underline underline-offset-4">
             Sistema Detail
             <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
           </a>

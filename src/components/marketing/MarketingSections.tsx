@@ -1,513 +1,200 @@
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import { AnimatedSection } from "@/components/shared/AnimatedSection";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
-import { valueArguments, services, processSteps, waLink } from "./marketingData";
-import socialIllustration from "@/assets/marketing/marketing-redes.webp";
-import inboundIllustration from "@/assets/marketing/marketing-embudo.webp";
-import instalacionesPhoto from "@/assets/instalaciones-curso-ferrari.jpg";
-import practicaPhoto from "@/assets/evento-practica-pulidora-real.jpg";
-import beforeAfterPhoto from "@/assets/before-after-detailing.jpg";
-import formacionPhoto from "@/assets/alumnos-formacion.jpg";
-// Capturas reales de webs del grupo (Academia Detail y detailpark.com) en marcos de dispositivo.
-import mockupWeb1 from "@/assets/marketing/mockup-academia-portatil-movil.webp";
-import mockupWeb2 from "@/assets/marketing/mockup-detailpark-packs-ppf.webp";
-import mockupWeb3 from "@/assets/marketing/mockup-detailpark-portada.webp";
+import { Link } from 'react-router-dom';
+import { ArrowDown, ArrowRight } from 'lucide-react';
+import { Section, SectionHeader } from '@/components/ds/Section';
+import { FaqList } from '@/components/ds/FaqList';
+import { funnelSteps, services, processSteps, marketingFaqs } from './marketingData';
+// Capturas reales de detailpark.com (la web del centro donde se imparten los cursos) en marcos de dispositivo.
+import mockupPacks from '@/assets/marketing/mockup-detailpark-packs-ppf.webp';
+import mockupPortada from '@/assets/marketing/mockup-detailpark-portada.webp';
 
-export function MarketingValue() {
+/** Embudo de captación en HTML: horizontal en escritorio, vertical en móvil. */
+export function MarketingFunnel() {
   return (
-    <section id="por-que" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute top-1/4 -left-24 w-72 h-72 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="container relative">
-        <SectionHeading
-          badge="Por qué importa"
-          title="Por qué un centro de detailing necesita marketing digital"
-          subtitle="Puedes tener el mejor acabado de tu ciudad. Si el cliente no lo ve antes de llamarte, no lo va a pagar."
-        />
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {valueArguments.map((item, i) => (
-            <AnimatedSection key={item.title} delay={i * 80} animation="fade-up">
-              <article className="group h-full glass-card rounded-2xl border border-border/60 p-6 transition-all duration-300 hover:border-primary/40 hover:-translate-y-1">
-                <span className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center mb-5 shadow-primary transition-transform duration-300 group-hover:scale-110">
-                  <item.icon className="w-6 h-6 text-primary-foreground" />
-                </span>
-                <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
-              </article>
-            </AnimatedSection>
-          ))}
-        </div>
-      </div>
-    </section>
+    <Section tone="card" id="por-que" aria-labelledby="porque-title">
+      <SectionHeader
+        id="porque-title"
+        eyebrow="Por qué importa"
+        title="Por qué un centro de detailing necesita marketing digital"
+        lead="En detailing vendes un resultado visual. Si el cliente no ve tu trabajo antes de escribirte, no lo va a pagar. Así llega hoy un cliente a tu taller:"
+      />
+      <ol className="flex flex-col items-stretch gap-2 lg:flex-row">
+        {funnelSteps.map((step, i) => (
+          <li key={step.title} className="flex flex-col items-center gap-2 lg:flex-1 lg:flex-row">
+            <div className="ds-card flex w-full flex-1 flex-col self-stretch bg-background p-5">
+              <p className="ds-eyebrow">
+                {String(i + 1).padStart(2, '0')} · {step.eyebrow}
+              </p>
+              <h3 className="mt-2 font-heading text-[1.75rem] font-normal uppercase leading-none tracking-[0.02em] text-foreground">{step.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+              <ul className="mt-4 hidden flex-wrap gap-2 sm:flex lg:flex-col">
+                {step.items.map((item) => (
+                  <li key={item} className="rounded-md border border-border bg-card px-2.5 py-1.5 text-[13px] font-semibold text-foreground/90">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <ArrowDown className="h-5 w-5 shrink-0 text-brand lg:hidden" aria-hidden="true" />
+            <ArrowRight className="hidden h-5 w-5 shrink-0 text-brand lg:block" aria-hidden="true" />
+          </li>
+        ))}
+        <li className="flex lg:w-40">
+          <div className="flex w-full flex-col justify-center rounded-xl bg-primary p-5 text-white">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">05 · Reservan</p>
+            <p className="mt-2 font-heading text-[1.75rem] uppercase leading-none">Coche en tu taller</p>
+          </div>
+        </li>
+      </ol>
+    </Section>
   );
 }
 
 export function MarketingServices() {
   return (
-    <section id="servicios" className="py-16 md:py-24 bg-muted/20 border-y border-border/60 relative overflow-hidden">
-      <div className="absolute inset-0 marketing-grid opacity-10 pointer-events-none" aria-hidden="true" />
-      <div className="container relative">
-        <SectionHeading
-          badge="Servicios"
-          title="Servicios de marketing digital para detailing: web, SEO, GEO y marca"
-          subtitle="Una dirección visual y digital coherente: desde la web hasta el logotipo de tu taller."
-        />
-
-        <AnimatedSection animation="fade-up" className="mb-10">
-          <div className="relative mx-auto max-w-4xl rounded-3xl border border-primary/30 bg-card/50 backdrop-blur-sm p-6 md:p-10 overflow-hidden">
-            <div className="absolute -inset-10 bg-primary/10 blur-3xl pointer-events-none" aria-hidden="true" />
-            <img
-              src={socialIllustration}
-              alt="Tres publicaciones de Instagram de un centro de detailing: antes y después, reel del taller y entrega de un coche"
-              width={1920}
-              height={984}
-              loading="lazy"
-              decoding="async"
-              className="relative w-full [filter:saturate(0.8)_contrast(1.05)] mix-blend-luminosity opacity-90 hover:mix-blend-normal hover:opacity-100 transition-all duration-500"
-            />
-          </div>
-        </AnimatedSection>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {services.map((service, i) => (
-            <AnimatedSection key={service.title} delay={i * 70} animation="fade-up">
-              <article className="marketing-card group relative h-full rounded-2xl border border-border/60 bg-card/70 p-6 overflow-hidden transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
-                <div className="flex items-start justify-between mb-5">
-                  <span className="w-12 h-12 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center">
-                    <service.icon className="w-6 h-6 text-brand" />
-                  </span>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-foreground/5 text-muted-foreground border border-border/60">
-                    {service.tag}
-                  </span>
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">{service.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
-              </article>
-            </AnimatedSection>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const brandingItems = [
-  "Logotipo profesional y versiones para todos los usos",
-  "Paleta de colores y tipografías propias",
-  "Rotulación de local y vehículo",
-  "Plantillas para Instagram, TikTok y presupuestos",
-  "Manual de marca para que todo sea coherente",
-];
-
-export function MarketingBranding() {
-  return (
-    <section id="marca" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="container">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
-          <AnimatedSection animation="slide-left">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 bg-primary/10 text-brand border border-primary/30">
-              Identidad de marca
-            </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Identidad de marca y logotipo para tu{" "}
-              <span className="gradient-text">taller de detailing</span>
-            </h2>
-            <p className="text-muted-foreground text-lg mb-8">
-              La imagen de tu empresa es lo primero que ve un cliente que no te conoce. Trabajamos
-              tu identidad completa para que tu negocio transmita el nivel de trabajo que realmente
-              haces.
-            </p>
-            <ul className="space-y-3 mb-8">
-              {brandingItems.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-brand" />
-                  </span>
-                  <span className="text-foreground/90">{item}</span>
-                </li>
-              ))}
-            </ul>
-            <Button size="lg" asChild>
-              <a
-                href={waLink("Hola, me interesa el diseño de logotipo e identidad de marca para mi negocio de detailing.")}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Pedir presupuesto de marca
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </a>
-            </Button>
-          </AnimatedSection>
-
-          <AnimatedSection animation="slide-right" delay={120}>
-            <div className="relative">
-              <div className="absolute -inset-6 bg-primary/10 blur-3xl rounded-full pointer-events-none" />
-              <div className="relative grid grid-cols-2 gap-4">
-                {[
-                  { title: "Antes", text: "Logo genérico, fotos oscuras, sin web. El cliente regatea el precio." },
-                  { title: "Después", text: "Marca reconocible, fotos cuidadas y web propia. El cliente acepta el presupuesto." },
-                ].map((block, i) => (
-                  <div
-                    key={block.title}
-                    className={`glass-card rounded-2xl p-6 border ${
-                      i === 1 ? "border-primary/40 animate-glow-border" : "border-border/60"
-                    }`}
-                  >
-                    <span
-                      className={`text-xs font-semibold uppercase tracking-wider ${
-                        i === 1 ? "text-brand" : "text-muted-foreground"
-                      }`}
-                    >
-                      {block.title}
-                    </span>
-                    <p className="mt-3 text-sm text-foreground/85 leading-relaxed">{block.text}</p>
-                  </div>
-                ))}
-              </div>
+    <Section id="servicios" aria-labelledby="servicios-title">
+      <SectionHeader
+        id="servicios-title"
+        eyebrow="Servicios"
+        title="Web, SEO, GEO y marca para detailing"
+        lead="Una dirección visual y digital coherente: desde la web hasta el logotipo de tu taller."
+      />
+      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((s) => (
+          <li key={s.title} className="ds-card flex gap-4 p-5 sm:flex-col md:p-6">
+            <div className="flex shrink-0 items-start justify-between gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/15 text-brand">
+                <s.icon className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <span className="hidden rounded-full border border-border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground sm:inline">
+                {s.tag}
+              </span>
             </div>
-          </AnimatedSection>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function MarketingProcess() {
-  return (
-    <section id="proceso" className="py-16 md:py-24 bg-muted/20 border-y border-border/60">
-      <div className="container">
-        <SectionHeading
-          badge="Cómo trabajamos"
-          title="Cómo trabajamos: de la primera llamada a tu web publicada"
-          subtitle="Un proceso simple y sin tecnicismos. Tú te centras en los coches."
-        />
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {processSteps.map((step, i) => (
-            <AnimatedSection key={step.step} delay={i * 90} animation="fade-up">
-              <div className="relative h-full rounded-2xl border border-border/60 bg-card/70 p-6 overflow-hidden">
-                <span className="absolute -top-3 -right-2 text-6xl font-black text-brand/10 select-none">
-                  {step.step}
-                </span>
-                <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-primary text-primary-foreground text-sm font-bold mb-4">
-                  {i + 1}
-                </span>
-                <h3 className="text-base font-semibold text-foreground mb-2">{step.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-
-        <AnimatedSection animation="fade-up" delay={120} className="mt-12">
-          <div className="relative mx-auto max-w-3xl">
-            <div className="absolute -inset-8 bg-primary/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
-            <img
-              src={inboundIllustration}
-              alt="Embudo de captación: Google y redes, web, presupuesto por WhatsApp, seguimiento y coche en el taller"
-              width={1920}
-              height={984}
-              loading="lazy"
-              decoding="async"
-              className="relative w-full rounded-3xl border border-border/60 bg-card/40 p-4 md:p-8 [filter:saturate(0.8)_contrast(1.05)] mix-blend-luminosity opacity-90 hover:mix-blend-normal hover:opacity-100 transition-all duration-500"
-            />
-          </div>
-        </AnimatedSection>
-      </div>
-    </section>
-  );
-}
-
-const workPhotos = [
-  {
-    src: instalacionesPhoto,
-    title: "Instalaciones reales",
-    text: "Fotografía profesional de tu taller para que se vea el nivel al que trabajas.",
-  },
-  {
-    src: practicaPhoto,
-    title: "Proceso en acción",
-    text: "Contenido de proceso: lo que más engancha y más confianza genera en redes.",
-  },
-  {
-    src: beforeAfterPhoto,
-    title: "Antes y después",
-    text: "El formato que mejor convierte. Lo montamos y lo publicamos por ti.",
-  },
-  {
-    src: formacionPhoto,
-    title: "Equipo y marca",
-    text: "Fotos de equipo y branding coherente en web, Google y redes sociales.",
-  },
-];
-
-export function MarketingWork() {
-  return (
-    <section id="contenido" className="py-16 md:py-24">
-      <div className="container">
-        <SectionHeading
-          badge="Contenido propio"
-          title="Contenido y fotografía profesional en tu taller"
-          subtitle="No usamos bancos de imágenes: creamos el contenido en tu taller, con tus coches y tu equipo."
-        />
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {workPhotos.map((photo, i) => (
-            <AnimatedSection key={photo.title} delay={i * 80} animation="fade-up">
-              <figure className="group relative h-full rounded-2xl overflow-hidden border border-border/60">
-                <img
-                  src={photo.src}
-                  alt={`${photo.title} — marketing digital para centros de detailing`}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" aria-hidden="true" />
-                <figcaption className="absolute bottom-0 inset-x-0 p-5">
-                  <h3 className="text-base font-semibold text-foreground mb-1">{photo.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{photo.text}</p>
-                </figcaption>
-              </figure>
-            </AnimatedSection>
-          ))}
-        </div>
-      </div>
-    </section>
+            <div>
+              <h3 className="text-lg font-bold text-foreground">{s.title}</h3>
+              <p className="mt-1 text-[0.9375rem] leading-relaxed text-muted-foreground">{s.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }
 
 export function MarketingShowcase() {
   return (
-    <section id="disenos" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute top-1/3 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
-      <div className="container relative">
-        <SectionHeading
-          badge="Trabajos de referencia"
-          title="Diseño web para detailing: así se ve una web que convierte"
-          subtitle="Diseño oscuro, foto grande, servicios claros y el botón de contacto siempre a mano. Ni plantillas genéricas ni webs de folleto."
-        />
-
-        <div className="grid lg:grid-cols-[1.35fr_1fr] gap-6 items-center">
-          <AnimatedSection animation="fade-up">
-            <figure className="relative">
-              <div className="absolute inset-8 bg-primary/20 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
-              <img
-                src={mockupWeb1}
-                width={1200}
-                height={750}
-                alt="Web de Academia Detail en portátil y móvil, con diseño oscuro y acentos rojos"
-                loading="lazy"
-                decoding="async"
-                className="relative w-full drop-shadow-2xl"
-              />
-              <figcaption className="mt-4 text-sm text-muted-foreground text-center lg:text-left">
-                Web multi-sección: servicios, galería de trabajos y llamada a la acción en cada pantalla.
-              </figcaption>
-            </figure>
-          </AnimatedSection>
-
-          <div className="grid gap-6">
-            <AnimatedSection animation="fade-up" delay={100}>
-              <figure className="relative">
-                <div className="absolute inset-10 bg-primary/15 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
-                <img
-                  src={mockupWeb2}
-                  width={1200}
-                  height={900}
-                  alt="Packs de PPF con precio de detailpark.com en un monitor de escritorio"
-                  loading="lazy"
-                  decoding="async"
-                  className="relative w-full drop-shadow-2xl"
-                />
-                <figcaption className="mt-2 text-sm text-muted-foreground">
-                  Packs de servicio explicados con precio, alcance y presupuesto en un clic.
-                </figcaption>
-              </figure>
-            </AnimatedSection>
-
-            <AnimatedSection animation="fade-up" delay={180}>
-              <figure className="relative rounded-2xl overflow-hidden border border-border/60">
-                <img
-                  src={mockupWeb3}
-                  width={1200}
-                  height={572}
-                  alt="Portada de detailpark.com con titular grande, foto de producto y llamadas a la acción"
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full object-cover"
-                />
-                <figcaption className="p-4 text-sm text-muted-foreground bg-card/70">
-                  Jerarquía visual tipo marca de automoción: producto grande, texto justo y contraste alto.
-                </figcaption>
-              </figure>
-            </AnimatedSection>
-          </div>
-        </div>
-
-        <div className="mt-12 text-center">
-          <Button size="lg" asChild className="shadow-primary">
-            <a
-              href={waLink("Hola, quiero una web como las que mostráis para mi centro de detailing.")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Quiero una web así
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </a>
-          </Button>
-        </div>
+    <Section tone="card" id="disenos" aria-labelledby="disenos-title">
+      <SectionHeader
+        id="disenos-title"
+        eyebrow="Trabajo de referencia"
+        title="Así se ve una web de detailing que convierte"
+        lead="Capturas de detailpark.com, la web de nuestro propio centro: foto grande, servicios claros con precio orientativo y el contacto siempre a mano."
+      />
+      <div className="grid items-center gap-8 lg:grid-cols-2">
+        <figure>
+          <img
+            src={mockupPortada}
+            width={1200}
+            height={572}
+            alt="Portada de detailpark.com con titular grande, botones de presupuesto y WhatsApp y valoración de Google"
+            loading="lazy"
+            decoding="async"
+            className="h-auto w-full rounded-xl border border-border"
+          />
+          <figcaption className="mt-3 text-sm text-muted-foreground">
+            Portada: qué hace el centro, dónde está y cómo pedir presupuesto, en la primera pantalla.
+          </figcaption>
+        </figure>
+        <figure>
+          <img
+            src={mockupPacks}
+            width={1200}
+            height={900}
+            alt="Sección de packs de PPF de detailpark.com con tres opciones y precio orientativo, en un monitor"
+            loading="lazy"
+            decoding="async"
+            className="mx-auto h-auto w-full max-w-lg"
+          />
+          <figcaption className="mt-3 text-sm text-muted-foreground">
+            Packs de servicio con precio orientativo, alcance y presupuesto en un clic.
+          </figcaption>
+        </figure>
       </div>
-    </section>
+    </Section>
   );
 }
 
-const comparisonRows: { feature: string; landing: string; pro: string; seo: string }[] = [
-  { feature: "Formato", landing: "Landing de 1 página", pro: "Web multi-sección", seo: "Servicio sobre tu web" },
-  { feature: "Precio (sin IVA)", landing: "199€", pro: "889€", seo: "99€" },
-  { feature: "Diseño a medida", landing: "Sí", pro: "Sí", seo: "—" },
-  { feature: "Páginas de servicio independientes", landing: "No", pro: "Sí", seo: "—" },
-  { feature: "Galería de trabajos", landing: "Básica", pro: "Avanzada + reseñas", seo: "—" },
-  { feature: "Blog para posicionar", landing: "No", pro: "Sí", seo: "—" },
-  { feature: "WhatsApp y formulario", landing: "Sí", pro: "Sí + medición", seo: "—" },
-  { feature: "SEO local en Google", landing: "Alta básica", pro: "Estructura lista", seo: "Optimización completa" },
-  { feature: "GEO (ChatGPT, Gemini, Perplexity)", landing: "No", pro: "Base técnica", seo: "Sí" },
-  { feature: "Datos estructurados", landing: "No", pro: "Sí", seo: "Sí" },
-];
-
-export function MarketingCost() {
+export function MarketingProcess() {
   return (
-    <section id="precio-web-detailing" className="py-16 md:py-24 bg-muted/20 border-y border-border/60">
-      <div className="container">
-        <SectionHeading
-          badge="Precios claros"
-          title="¿Cuánto cuesta una página web para un centro de detailing?"
-          subtitle="La respuesta corta, sin rodeos ni presupuestos interminables."
-        />
+    <Section tone="card" id="proceso" aria-labelledby="proceso-title">
+      <SectionHeader
+        id="proceso-title"
+        eyebrow="Cómo trabajamos"
+        title="De la primera llamada a tu web publicada"
+        lead="Un proceso simple y sin tecnicismos. Tú te centras en los coches."
+      />
+      <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {processSteps.map((step, i) => (
+          <li key={step.step} className="ds-card flex gap-4 bg-background p-5 sm:flex-col md:p-6">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">{i + 1}</span>
+            <div>
+              <h3 className="text-lg font-bold text-foreground">{step.title}</h3>
+              <p className="mt-1 text-[0.9375rem] leading-relaxed text-muted-foreground">{step.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </Section>
+  );
+}
 
-        <AnimatedSection animation="fade-up">
-          <div className="mx-auto max-w-3xl space-y-4 text-muted-foreground leading-relaxed mb-12">
-            <p>
-              Una <strong className="text-foreground">landing page profesional</strong> para un
-              centro de detailing cuesta <strong className="text-foreground">199€ sin IVA</strong> en
-              pago único: una sola página con tus servicios, tu galería de trabajos y el botón de
-              WhatsApp siempre visible. Es el punto de partida cuando estás arrancando y necesitas
-              existir en digital ya.
-            </p>
-            <p>
-              Una <strong className="text-foreground">web multi-sección completa</strong>, con
-              páginas independientes para detailing, PPF y wrapping, blog y estructura técnica SEO
-              preparada, cuesta <strong className="text-foreground">889€ sin IVA</strong>. Es la
-              opción cuando ya tienes cartera de clientes y quieres competir por posicionamiento en
-              tu ciudad.
-            </p>
-            <p>
-              El servicio de <strong className="text-foreground">SEO + GEO</strong> (auditoría,
-              optimización on page, SEO local y datos estructurados para buscadores de IA) cuesta{" "}
-              <strong className="text-foreground">99€ sin IVA</strong>. Ningún pack tiene cuotas
-              obligatorias ni permanencia: pagas una vez y la web es tuya.
-            </p>
-          </div>
-        </AnimatedSection>
-
-        <AnimatedSection animation="fade-up" delay={100}>
-          <div className="mx-auto max-w-5xl overflow-x-auto rounded-2xl border border-border/60 bg-card/60">
-            <table className="w-full text-left text-sm">
-              <caption className="sr-only">
-                Comparativa de packs de marketing digital para centros de detailing
-              </caption>
-              <thead>
-                <tr className="border-b border-border/60 bg-foreground/5">
-                  <th scope="col" className="px-4 py-4 font-semibold text-foreground">Qué incluye</th>
-                  <th scope="col" className="px-4 py-4 font-semibold text-foreground">Arranque · 199€</th>
-                  <th scope="col" className="px-4 py-4 font-semibold text-brand">Profesional · 889€</th>
-                  <th scope="col" className="px-4 py-4 font-semibold text-foreground">SEO + GEO · 99€</th>
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonRows.map((row) => (
-                  <tr key={row.feature} className="border-b border-border/40 last:border-0">
-                    <th scope="row" className="px-4 py-3 font-medium text-foreground/90">{row.feature}</th>
-                    <td className="px-4 py-3 text-muted-foreground">{row.landing}</td>
-                    <td className="px-4 py-3 text-foreground/90">{row.pro}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{row.seo}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </AnimatedSection>
-
-        <div className="mt-10 text-center">
-          <Button size="lg" asChild className="shadow-primary">
-            <a
-              href={waLink("Hola, quiero saber qué pack de web y SEO encaja mejor para mi centro de detailing.")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Consultar mi caso por WhatsApp
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </a>
-          </Button>
-        </div>
-      </div>
-    </section>
+export function MarketingFaq() {
+  return (
+    <Section id="faq" aria-labelledby="faq-title">
+      <SectionHeader id="faq-title" eyebrow="Dudas frecuentes" title="Preguntas frecuentes sobre marketing para detailing" />
+      {/* El marcado FAQPage ya lo emite seoConfig.marketingDigital */}
+      <FaqList items={marketingFaqs} />
+    </Section>
   );
 }
 
 const relatedLinks = [
   {
-    href: "/formacion-profesional-detailing",
-    title: "Carrera de Detailing Profesional",
-    text: "Fórmate en la técnica y en el negocio antes de montar tu centro.",
+    href: '/formacion-profesional-detailing',
+    title: 'Carrera Detailing',
+    text: 'Fórmate en la técnica y en el negocio antes de montar tu centro.',
   },
   {
-    href: "/centros-detailing-espana",
-    title: "Directorio de centros de detailing",
-    text: "Da de alta tu taller y consigue visibilidad en toda España.",
+    href: '/jornada-zero-detailing',
+    title: 'Jornada Zero',
+    text: 'Primer contacto con el detailing profesional en un taller real.',
   },
   {
-    href: "/blog",
-    title: "Blog de detailing y negocio",
-    text: "Artículos sobre técnica, precios y cómo hacer crecer tu taller.",
-  },
-  {
-    href: "/curso-detailing-iniciacion",
-    title: "Jornada Zero",
-    text: "Primer contacto con el detailing profesional en un taller real.",
+    href: '/blog',
+    title: 'Blog de detailing y negocio',
+    text: 'Artículos sobre técnica, precios y cómo hacer crecer tu taller.',
   },
 ];
 
 export function MarketingLinks() {
   return (
-    <section className="py-16 md:py-24">
-      <div className="container">
-        <SectionHeading
-          badge="Sigue explorando"
-          title="Formación y recursos para tu negocio de detailing"
-          subtitle="El marketing acompaña a la técnica. Estos son los siguientes pasos dentro de Detail Park - Academia Detail."
-        />
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {relatedLinks.map((link, i) => (
-            <AnimatedSection key={link.href} delay={i * 80} animation="fade-up">
-              <a
-                href={link.href}
-                className="group block h-full rounded-2xl border border-border/60 bg-card/60 p-6 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
-              >
-                <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-brand transition-colors">
-                  {link.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{link.text}</p>
-                <span className="mt-4 inline-flex items-center text-sm font-semibold text-brand">
-                  Ver más
-                  <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1" />
-                </span>
-              </a>
-            </AnimatedSection>
-          ))}
-        </div>
-      </div>
-    </section>
+    <Section tone="card" size="sm" aria-labelledby="explorar-title">
+      <h2 id="explorar-title" className="mb-6 text-center font-sans text-lg font-bold normal-case tracking-normal text-foreground">
+        Formación y recursos para tu negocio de detailing
+      </h2>
+      <ul className="grid gap-3 md:grid-cols-3 md:gap-4">
+        {relatedLinks.map((l) => (
+          <li key={l.href}>
+            <Link to={l.href} className="group ds-card flex h-full flex-col bg-background p-4 transition-colors md:p-5 hover:border-primary/60">
+              <span className="font-bold text-foreground group-hover:text-brand">{l.title}</span>
+              <span className="mt-1 flex-1 text-sm leading-relaxed text-muted-foreground">{l.text}</span>
+              <span className="mt-3 hidden items-center gap-1 text-sm font-semibold text-brand md:inline-flex">
+                Ver más
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }

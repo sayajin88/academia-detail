@@ -1,6 +1,6 @@
 # Academia Detail (Detail Park) - Información Completa
 
-> Centro de formación profesional en detailing automotriz operando en un taller 100% real con clientes de alta gama en Alicante, España. Formamos detailers profesionales y empresarios del sector desde 2017. 218 reseñas en Google con 4,9/5.
+> Centro de formación profesional en detailing automotriz operando en un taller 100% real con clientes de alta gama en Alicante, España. Formamos detailers profesionales y empresarios del sector desde 2017. Detail Park tiene una valoración de 4,8/5 con 218 opiniones en Google. 218 alumnos formados.
 
 ---
 
@@ -8,7 +8,7 @@
 
 - **URL:** https://academiadetail.com/curso-detailing-iniciacion
 - **Duración:** 1 día (8 horas)
-- **Precio:** 97€
+- **Precio:** 97 € + IVA (se descuenta si después haces un curso completo)
 - **Dirigido a:** Personas sin experiencia que quieren descubrir si el detailing profesional es para ellas
 - **Qué incluye:** Inmersión completa en un taller operativo real, práctica con herramientas profesionales, contacto directo con vehículos de clientes
 - **Certificación:** No (es una experiencia de descubrimiento)
@@ -27,7 +27,7 @@
 
 - **URL:** https://academiadetail.com/curso-detailing-profesional
 - **Duración:** 4 días intensivos (32 horas)
-- **Alumnos certificados:** 280+
+- **Precio:** 2.997 € + IVA
 - **Dirigido a:** Principiantes y profesionales que quieran dominar las técnicas de corrección y protección de pintura
 - **Qué aprenderás:**
   - Corrección de pintura en vehículos reales de clientes
@@ -75,7 +75,7 @@
 
 ---
 
-## Curso Restauración de Vehículos
+## Curso Restauración de Vehículos (próximamente)
 
 - **URL:** https://academiadetail.com/curso-restauracion-vehiculos
 - **Duración:** 2 días
@@ -92,22 +92,22 @@
 
 - **URL:** https://academiadetail.com/formacion-profesional-detailing
 - **Duración:** 1 mes intensivo
-- **Descripción:** El programa más completo del sector. No sales siendo un técnico, sales siendo un empresario del detailing.
+- **Precio:** 7.997 € + IVA
+- **Descripción:** Programa completo para dedicarse al detailing: las tres especialidades técnicas más un módulo de negocio.
 - **Incluye:**
-  - Todas las formaciones: Detailing + Wrapping + PPF + Restauración
-  - Prácticas en taller real con clientes reales de Detail Park
-  - Módulo de Negocio Exclusivo: márgenes, captación, escalado, marketing
-  - Mentoría empresarial durante 6 meses post-formación
-  - Red de empresarios: acceso a comunidad de alumni exitosos
-  - 4 certificaciones profesionales (una por especialidad)
+  - Curso de Detailing Profesional (4 días), Car Wrapping (niveles principiante y avanzado) y PPF (2 días)
+  - Práctica en el taller de Detail Park con coches de clientes
+  - Módulo de negocio: precios y márgenes, captación de clientes, organización del taller y crecimiento
+  - Certificado de Detail Park de cada especialidad
 
 ---
 
 ## Evento Up Detail
 
 - **URL:** https://academiadetail.com/up-detail-evento
-- **Descripción:** Evento exclusivo de networking y formación avanzada para profesionales y emprendedores del sector del detailing automotriz. Incluye ponencias, demostraciones en vivo y oportunidades de conexión con otros profesionales del sector.
-- **Dirigido a:** Profesionales del detailing, propietarios de centros y emprendedores que quieran hacer crecer su negocio.
+- **Descripción:** Formato de formación intensiva de 1 día, a modo de demostración: una forma de aprender lo máximo posible en el menor tiempo posible.
+- **Precio:** 349 € + IVA
+- **Fechas:** próximamente
 
 ---
 
@@ -167,20 +167,18 @@ Sí, ofrecemos opciones de financiación y pago fraccionado. Contacta con nosotr
 Trabajamos con marcas líderes del sector: Rupes, Flex, Menzerna, Gtechniq, Gyeon, Chemical Guys, Meguiar's para detailing. 3M, Avery Dennison, Hexis para wrapping. STEK para PPF.
 
 ### ¿Cuántos alumnos han pasado por Academia Detail?
-218 alumnos certificados, con una valoración media de 4,9/5 en Google (218 reseñas).
+218 alumnos formados. Detail Park, el centro donde se imparten los cursos, tiene una valoración de 4,8/5 con 218 opiniones en Google.
 
 ### ¿Hay alojamiento disponible para alumnos de fuera de Alicante?
-No gestionamos alojamiento directamente, pero orientamos a los alumnos sobre opciones cercanas al centro. Muchos de nuestros alumnos vienen de toda España y de Latinoamérica.
+Sí: ayudamos a los alumnos de fuera a gestionar el alojamiento cerca del taller. Muchos de nuestros alumnos vienen de toda España y de Latinoamérica.
 
 ---
 
 ## Recursos Educativos Gratuitos
 
 - **Blog:** https://academiadetail.com/blog - Artículos sobre técnicas de detailing, estrategias de negocio y tendencias del sector.
-- **Glosario:** https://academiadetail.com/glosario-detailing - Más de 100 términos técnicos del detailing profesional con definiciones completas.
+- **Glosario:** https://academiadetail.com/glosario-detailing - Más de 80 términos técnicos del detailing profesional con definiciones completas.
 - **Calculadora de Dilución:** https://academiadetail.com/calculadora-dilucion-detailing - Herramienta interactiva para calcular ratios de dilución.
-- **Directorio de Centros:** https://academiadetail.com/centros-detailing-espana - Directorio de centros de detailing certificados en toda España.
-- **Únete al Directorio:** https://academiadetail.com/centros-detailing-espana/unete - Formulario para que centros de detailing soliciten aparecer en el directorio profesional.
 
 ---
 

@@ -1,78 +1,41 @@
+import { cn } from '@/lib/utils';
+
 interface GlossaryAlphabetNavProps {
   letters: string[];
   activeLetter: string | null;
   availableLetters: string[];
 }
 
+/** Índice alfabético fijo bajo la cabecera mientras se recorre la lista. */
 export function GlossaryAlphabetNav({ letters, activeLetter, availableLetters }: GlossaryAlphabetNavProps) {
-  const scrollToLetter = (letter: string) => {
-    const element = document.getElementById(`letra-${letter}`);
-    if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
-    }
-  };
-
   return (
-    <>
-      {/* Desktop - Sticky sidebar */}
-      <nav
-        aria-label="Navegación alfabética"
-        className="hidden lg:flex flex-col gap-1 sticky top-24"
-      >
+    <nav aria-label="Índice alfabético" className="-mx-4 overflow-x-auto px-4 scrollbar-hide md:mx-0 md:px-0">
+      <ol className="flex min-w-max gap-1 md:min-w-0 md:justify-between">
         {letters.map((letter) => {
-          const isAvailable = availableLetters.includes(letter);
-          const isActive = activeLetter === letter;
-
+          const available = availableLetters.includes(letter);
+          const active = activeLetter === letter;
           return (
-            <button
-              key={letter}
-              onClick={() => isAvailable && scrollToLetter(letter)}
-              disabled={!isAvailable}
-              className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-bold transition-all duration-200 ${
-                isActive
-                  ? 'bg-primary text-primary-foreground shadow-md shadow-primary/30 scale-110'
-                  : isAvailable
-                    ? 'text-foreground/70 hover:bg-primary/10 hover:text-brand'
-                    : 'text-muted-foreground/30 cursor-not-allowed'
-              }`}
-              aria-label={`Ir a la letra ${letter}`}
-            >
-              {letter}
-            </button>
+            <li key={letter}>
+              {available ? (
+                <a
+                  href={`#letra-${letter}`}
+                  aria-current={active ? 'location' : undefined}
+                  className={cn(
+                    'flex h-9 w-9 items-center justify-center rounded-md text-sm font-bold transition-colors',
+                    active ? 'bg-primary text-primary-foreground' : 'text-foreground hover:bg-white/[0.06] hover:text-brand',
+                  )}
+                >
+                  {letter}
+                </a>
+              ) : (
+                <span className="flex h-9 w-9 items-center justify-center text-sm font-bold text-muted-foreground/40" aria-hidden="true">
+                  {letter}
+                </span>
+              )}
+            </li>
           );
         })}
-      </nav>
-
-      {/* Mobile - Horizontal scroll */}
-      <nav
-        aria-label="Navegación alfabética"
-        className="lg:hidden flex gap-1 overflow-x-auto pb-2 scrollbar-hide"
-      >
-        {letters.map((letter) => {
-          const isAvailable = availableLetters.includes(letter);
-          const isActive = activeLetter === letter;
-
-          return (
-            <button
-              key={letter}
-              onClick={() => isAvailable && scrollToLetter(letter)}
-              disabled={!isAvailable}
-              className={`flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-lg text-sm font-bold transition-all duration-200 ${
-                isActive
-                  ? 'bg-primary text-primary-foreground shadow-md shadow-primary/30'
-                  : isAvailable
-                    ? 'text-foreground/70 hover:bg-primary/10 hover:text-brand'
-                    : 'text-muted-foreground/30 cursor-not-allowed'
-              }`}
-              aria-label={`Ir a la letra ${letter}`}
-            >
-              {letter}
-            </button>
-          );
-        })}
-      </nav>
-    </>
+      </ol>
+    </nav>
   );
 }

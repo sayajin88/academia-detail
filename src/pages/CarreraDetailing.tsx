@@ -1,136 +1,56 @@
-import { useNavigate } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
-import CarreraHero from '@/components/carrera/CarreraHero';
-import CarreraVideoIntro from '@/components/carrera/CarreraVideoIntro';
-import CarreraFormaciones from '@/components/carrera/CarreraFormaciones';
-import CarreraModuloNegocio from '@/components/carrera/CarreraModuloNegocio';
-import CarreraExperienciaReal from '@/components/carrera/CarreraExperienciaReal';
-import CarreraROICalculator from '@/components/carrera/CarreraROICalculator';
-import CarreraTimeline from '@/components/carrera/CarreraTimeline';
-import CarreraBenefits from '@/components/carrera/CarreraBenefits';
-import CarreraPricing from '@/components/carrera/CarreraPricing';
-import CarreraFAQ from '@/components/carrera/CarreraFAQ';
-import CarreraStickyCTA from '@/components/carrera/CarreraStickyCTA';
-import { FormationVideoTestimonials } from '@/components/formation/FormationVideoTestimonials';
-import { SEO, courseFormacionProfesionalSchema } from '@/components/SEO';
-import { JornadaZeroSection } from '@/components/shared/JornadaZeroSection';
+import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
-import { GoogleReviews } from '@/components/shared/GoogleReviews';
+import { CourseHero } from '@/components/course/CourseHero';
+import { CarreraProgram } from '@/components/carrera/CarreraProgram';
+import { carreraCourse, carreraDetailingData } from '@/data/carreraDetailingData';
+import heroImg from '@/assets/evento-practica-pulidora.jpg?w=640;960;1280&format=webp&as=picture';
 
-const carreraVideoTestimonials = [
-  { id: 'GWda5NH90YM', title: 'Mi experiencia en la Carrera de Detailing', name: 'Alumno Graduado', role: 'Empresario Detailing' },
-  { id: 'iJjIZ4Ja7RA', title: 'Cómo monté mi negocio tras la formación', name: 'Alumno Graduado', role: 'Emprendedor' },
-  { id: 'U1qm6XXaQaE', title: 'La formación que cambió mi carrera', name: 'Alumno Graduado', role: 'Profesional Independiente' },
+// Por debajo de la primera pantalla: carga diferida para no retrasar el LCP.
+const CarreraBusiness = lazy(() => import('@/components/carrera/CarreraBusiness').then((m) => ({ default: m.CarreraBusiness })));
+const CourseInstructor = lazy(() => import('@/components/course/CourseInstructor').then((m) => ({ default: m.CourseInstructor })));
+const CoursePricing = lazy(() => import('@/components/course/CoursePricing').then((m) => ({ default: m.CoursePricing })));
+const StudentReviews = lazy(() => import('@/components/ds/StudentReviews').then((m) => ({ default: m.StudentReviews })));
+const CourseFaq = lazy(() => import('@/components/course/CourseFaq').then((m) => ({ default: m.CourseFaq })));
+const CtaBand = lazy(() => import('@/components/ds/CtaBand').then((m) => ({ default: m.CtaBand })));
+
+const Placeholder = () => <div className="ds-section" aria-hidden="true" />;
+
+const breadcrumbs = [
+  { name: 'Formaciones', url: '/#formaciones' },
+  { name: 'Carrera Detailing', url: '/formacion-profesional-detailing' },
 ];
 
-const CarreraDetailing = () => {
-  const navigate = useNavigate();
-
-  const handleCTAClick = () => {
-    navigate('/contacto');
-  };
-
+export default function CarreraDetailing() {
+  const { slug } = carreraDetailingData;
   return (
     <>
       <SEO {...seoConfig.carreraDetailing} />
       <MainLayout>
-        {/* Gold Premium Styles */}
-        <style>{`
-          .gold-gradient-text {
-            background: linear-gradient(135deg, hsl(45 93% 47%), hsl(45 93% 67%), hsl(45 93% 47%));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-          }
-          
-          .gold-spotlight {
-            position: relative;
-          }
-          
-          .gold-spotlight::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(
-              600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-              hsl(45 93% 47% / 0.15),
-              transparent 40%
-            );
-            pointer-events: none;
-            border-radius: inherit;
-          }
-          
-          .gold-border-animated {
-            position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            padding: 2px;
-            background: linear-gradient(
-              var(--angle, 0deg),
-              hsl(45 93% 47%),
-              hsl(45 93% 67%),
-              hsl(45 93% 37%),
-              hsl(45 93% 47%)
-            );
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotate-gold-border 4s linear infinite;
-            pointer-events: none;
-          }
-          
-          @keyframes rotate-gold-border {
-            to {
-              --angle: 360deg;
-            }
-          }
-          
-          @property --angle {
-            syntax: '<angle>';
-            initial-value: 0deg;
-            inherits: false;
-          }
-          
-          .shimmer-badge-gold {
-            background: linear-gradient(
-              90deg,
-              transparent 0%,
-              hsl(45 93% 67% / 0.3) 50%,
-              transparent 100%
-            );
-            background-size: 200% 100%;
-            animation: shimmer-gold 2s infinite;
-          }
-          
-          @keyframes shimmer-gold {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-          }
-        `}</style>
-        
-        <CarreraHero onCTAClick={handleCTAClick} />
-        <CarreraFormaciones />
-        <CarreraModuloNegocio />
-        <CarreraExperienciaReal />
-        <CarreraTimeline />
-        <CarreraVideoIntro />
-        <FormationVideoTestimonials 
-          videos={carreraVideoTestimonials}
-          title="Lo Que Dicen Nuestros Alumnos"
-          subtitle="Testimonios reales de profesionales que han transformado su carrera con nuestra formación"
+        <CourseHero
+          formation={carreraCourse}
+          picture={heroImg}
+          breadcrumbs={breadcrumbs}
+          eyebrow="Carrera Detailing · 1 mes en Alicante"
+          heading="Formación profesional de detailing"
         />
-        <GoogleReviews />
-        <CarreraBenefits />
-        <CarreraROICalculator onCtaClick={handleCTAClick} />
-        <CarreraPricing onCTAClick={handleCTAClick} />
-        <JornadaZeroSection />
-        <CarreraFAQ />
-        <CarreraStickyCTA onCTAClick={handleCTAClick} />
-
+        <CarreraProgram />
+        <Suspense fallback={<Placeholder />}>
+          <CarreraBusiness />
+          {carreraCourse.instructor && <CourseInstructor instructor={carreraCourse.instructor} />}
+          <CoursePricing formation={carreraCourse} />
+          <StudentReviews tone="card" />
+          <CourseFaq faqs={carreraDetailingData.faqs} title="Preguntas sobre la Carrera Detailing" />
+          <CtaBand
+            title="¿Hablamos de tu Carrera Detailing?"
+            text="Escríbenos y te contamos el calendario de la próxima edición, cómo reservar tu plaza y las opciones de pago."
+            whatsappText="Hola, quiero información sobre la Carrera Detailing."
+            primaryLabel="Pedir información"
+            primaryHref={`/contacto?curso=${slug}`}
+          />
+        </Suspense>
       </MainLayout>
     </>
   );
-};
-
-export default CarreraDetailing;
+}

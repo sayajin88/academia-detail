@@ -1,6 +1,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Layers, FlaskConical, Sparkles, Wrench, Shield, Armchair } from 'lucide-react';
+import { Section, SectionHeader } from '@/components/ds/Section';
 
 const sections = [
   {
@@ -102,16 +103,16 @@ const sections = [
           La descontaminación profesional se ejecuta en dos fases secuenciales para preparar la superficie antes de cualquier corrección o protección:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-background/50 rounded-lg p-4 border border-border/50">
-            <h4 className="font-monument text-foreground text-sm uppercase tracking-wider mb-2">Fase 1 — Química</h4>
+          <div className="rounded-lg border border-border bg-background p-4">
+            <h4 className="text-sm font-bold text-foreground mb-2">Fase 1 — Química</h4>
             <ul className="text-sm text-muted-foreground space-y-1.5">
               <li>• <strong className="text-foreground">Eliminadores de hierro</strong> (Iron Remover): reaccionan con partículas férricas incrustadas</li>
               <li>• <strong className="text-foreground">Disolventes de alquitrán</strong>: eliminan residuos de asfalto y brea</li>
               <li>• <strong className="text-foreground">Limpiadores ácidos</strong>: para depósitos minerales y cal</li>
             </ul>
           </div>
-          <div className="bg-background/50 rounded-lg p-4 border border-border/50">
-            <h4 className="font-monument text-foreground text-sm uppercase tracking-wider mb-2">Fase 2 — Mecánica</h4>
+          <div className="rounded-lg border border-border bg-background p-4">
+            <h4 className="text-sm font-bold text-foreground mb-2">Fase 2 — Mecánica</h4>
             <ul className="text-sm text-muted-foreground space-y-1.5">
               <li>• <strong className="text-foreground">Clay Bar</strong>: barra de arcilla sintética para arrastrar contaminantes adheridos</li>
               <li>• <strong className="text-foreground">Lubricación</strong>: imprescindible para evitar marring durante el proceso</li>
@@ -132,18 +133,18 @@ const sections = [
           La corrección de pintura sigue un proceso de tres etapas progresivas, cada una con un nivel decreciente de abrasividad:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="bg-background/50 rounded-lg p-4 border border-border/50 text-center">
-            <span className="text-2xl font-monument text-brand">01</span>
+          <div className="rounded-lg border border-border bg-background p-4 text-center">
+            <span className="font-heading text-2xl text-brand">01</span>
             <h4 className="font-bold text-foreground text-sm mt-1 mb-1">Corte (Compound)</h4>
             <p className="text-xs text-muted-foreground">Eliminación de defectos profundos: arañazos, swirls, hologramas</p>
           </div>
-          <div className="bg-background/50 rounded-lg p-4 border border-border/50 text-center">
-            <span className="text-2xl font-monument text-brand">02</span>
+          <div className="rounded-lg border border-border bg-background p-4 text-center">
+            <span className="font-heading text-2xl text-brand">02</span>
             <h4 className="font-bold text-foreground text-sm mt-1 mb-1">Pulido (Polish)</h4>
             <p className="text-xs text-muted-foreground">Refinado de la superficie y eliminación de marcas del compound</p>
           </div>
-          <div className="bg-background/50 rounded-lg p-4 border border-border/50 text-center">
-            <span className="text-2xl font-monument text-brand">03</span>
+          <div className="rounded-lg border border-border bg-background p-4 text-center">
+            <span className="font-heading text-2xl text-brand">03</span>
             <h4 className="font-bold text-foreground text-sm mt-1 mb-1">Refinado (Jewelling)</h4>
             <p className="text-xs text-muted-foreground">Acabado ultra fino para máximo brillo y claridad de reflejo</p>
           </div>
@@ -190,7 +191,7 @@ const sections = [
             <TableRow>
               <TableCell className="font-medium text-foreground">Coating Cerámico (SiO₂)</TableCell>
               <TableCell>2–5+ años</TableCell>
-              <TableCell>Máxima dureza (9H Mohs), hidrofobicidad extrema, protección UV</TableCell>
+              <TableCell>Dureza 9H (escala del lápiz, no Mohs), gran hidrofobicidad y protección UV</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium text-foreground">Grafeno</TableCell>
@@ -212,16 +213,16 @@ const sections = [
           El detallado interior va más allá de la limpieza estética: incluye la sanitización del habitáculo para eliminar bacterias, hongos y olores persistentes.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-background/50 rounded-lg p-4 border border-border/50">
-            <h4 className="font-monument text-foreground text-sm uppercase tracking-wider mb-2">Técnicas de Sanitización</h4>
+          <div className="rounded-lg border border-border bg-background p-4">
+            <h4 className="text-sm font-bold text-foreground mb-2">Técnicas de Sanitización</h4>
             <ul className="text-sm text-muted-foreground space-y-1.5">
               <li>• <strong className="text-foreground">Ozono (O₃)</strong>: destruye microorganismos y neutraliza olores a nivel molecular</li>
               <li>• <strong className="text-foreground">Vapor seco</strong>: limpieza profunda sin productos químicos</li>
               <li>• <strong className="text-foreground">Limpiadores enzimáticos</strong>: descomponen materia orgánica causante de olores</li>
             </ul>
           </div>
-          <div className="bg-background/50 rounded-lg p-4 border border-border/50">
-            <h4 className="font-monument text-foreground text-sm uppercase tracking-wider mb-2">Materiales Especiales</h4>
+          <div className="rounded-lg border border-border bg-background p-4">
+            <h4 className="text-sm font-bold text-foreground mb-2">Materiales Especiales</h4>
             <ul className="text-sm text-muted-foreground space-y-1.5">
               <li>• <strong className="text-foreground">Alcántara</strong>: microfibra sintética que requiere cepillado con cerdas suaves</li>
               <li>• <strong className="text-foreground">Cuero</strong>: limpieza con pH neutro + acondicionamiento para evitar agrietamiento</li>
@@ -234,48 +235,32 @@ const sections = [
   },
 ];
 
+/** Conceptos básicos (acordeón cerrado para no alargar la página). */
 export function GlossaryEducationalSections() {
   return (
-    <section className="py-10 md:py-14">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-            Fundamentos del <span className="text-brand">Detailing</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Antes de explorar el glosario, domina los conceptos fundamentales que todo detallador profesional debe conocer.
-          </p>
-        </div>
-
-        <div className="max-w-4xl mx-auto">
-          <Accordion type="multiple" className="space-y-3">
-            {sections.map((section) => {
-              const Icon = section.icon;
-              return (
-                <AccordionItem
-                  key={section.id}
-                  value={section.id}
-                  className="border border-border/60 rounded-xl bg-card/50 px-5 data-[state=open]:border-primary/30 transition-colors"
-                >
-                  <AccordionTrigger className="hover:no-underline gap-3 py-5">
-                    <div className="flex items-center gap-3 text-left">
-                      <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-                        <Icon className="h-4.5 w-4.5 text-brand" />
-                      </div>
-                      <span className="font-bold text-foreground text-base md:text-lg">
-                        {section.title}
-                      </span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-5 pt-1">
-                    {section.content}
-                  </AccordionContent>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
-        </div>
-      </div>
-    </section>
+    <Section tone="card" aria-labelledby="fundamentos-title">
+      <SectionHeader
+        id="fundamentos-title"
+        eyebrow="Para empezar"
+        title="Fundamentos del detailing"
+        lead="Los conceptos que conviene tener claros antes de entrar en la terminología: capas de pintura, pH, descontaminación, corrección, protección e interiores."
+      />
+      <Accordion type="multiple" className="mx-auto max-w-3xl divide-y divide-border rounded-xl border border-border bg-background">
+        {sections.map((section) => {
+          const Icon = section.icon;
+          return (
+            <AccordionItem key={section.id} value={section.id} className="border-0 px-5 md:px-6">
+              <AccordionTrigger className="gap-4 py-5 text-left hover:no-underline hover:text-brand">
+                <span className="flex items-center gap-3 text-base font-semibold text-foreground md:text-[1.0625rem]">
+                  <Icon className="h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
+                  {section.title}
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="pb-6 text-[0.9375rem] leading-relaxed">{section.content}</AccordionContent>
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
+    </Section>
   );
 }

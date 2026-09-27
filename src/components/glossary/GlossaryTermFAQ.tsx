@@ -1,15 +1,6 @@
 import type { GlossaryTerm, GlossaryCategory } from '@/data/glossaryData';
 import { categoryLabels } from '@/data/glossaryData';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-
-interface GlossaryTermFAQProps {
-  term: GlossaryTerm;
-}
+import { FaqList } from '@/components/ds/FaqList';
 
 const categoryActionVerbs: Record<GlossaryCategory, string> = {
   exterior: 'se trata o corrige',
@@ -50,30 +41,7 @@ export function generateFAQs(term: GlossaryTerm) {
   ];
 }
 
-export function GlossaryTermFAQ({ term }: GlossaryTermFAQProps) {
-  const faqs = generateFAQs(term);
-
-  return (
-    <section className="py-12 bg-card">
-      <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
-          Preguntas Frecuentes sobre {term.term}
-        </h2>
-        <div className="max-w-3xl">
-          <Accordion type="single" collapsible>
-            {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`faq-${index}`}>
-                <AccordionTrigger className="text-left text-foreground hover:text-brand">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </div>
-    </section>
-  );
+/** Preguntas del término. Genera el marcado FAQPage (una sola vez en la página). */
+export function GlossaryTermFAQ({ term }: { term: GlossaryTerm }) {
+  return <FaqList items={generateFAQs(term)} withSchema />;
 }

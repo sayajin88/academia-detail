@@ -1,94 +1,75 @@
-import { useState, useEffect, useRef } from 'react';
-import { SectionHeading } from '@/components/shared/SectionHeading';
-import heroImage from '@/assets/heroes/hero-galeria.jpg';
-import detailParkLogo from '@/assets/detail-park-logo-white.png';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
+import { Img } from '@/components/ds/Img';
+import { SITE, STATS } from '@/data/site';
+import tallerImg from '@/assets/instalaciones-curso-ferrari.jpg?w=560;840;1200&format=webp&as=picture';
+
+const rating = STATS.googleRating.toLocaleString('es-ES', { minimumFractionDigits: 1 });
+
+const facts = [
+  { value: String(STATS.alumnos), label: 'alumnos formados' },
+  { value: String(STATS.maxAlumnosGrupo), label: 'alumnos por grupo, como máximo' },
+  { value: `+${SITE.founderYears}`, label: 'años de experiencia del formador' },
+];
 
 export function AboutHero() {
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  // Lazy load video only when section is visible
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShouldLoadVideo(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // YouTube video ID and start time
-  const videoId = 'ByRhg2kYD-A';
-  const startSeconds = 39;
-
   return (
-    <section ref={sectionRef} className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
-      {/* Fallback Background Image - shown until video loads */}
-      <div 
-        className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`}
-        style={{ backgroundImage: `url(${heroImage})` }}
-      />
+    <section className="border-b border-border bg-background">
+      <div className="ds-container pt-2">
+        <Breadcrumbs items={[{ name: 'Quiénes somos', url: '/quienes-somos' }]} />
+      </div>
+      <div className="ds-container grid items-center gap-10 pb-14 pt-4 md:pb-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
+        <div>
+          <p className="ds-eyebrow mb-4">Quiénes somos · Alicante</p>
+          <h1 className="ds-h1 text-foreground">La academia de un taller de detailing en activo</h1>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            Academia Detail es la escuela de{' '}
+            <a href={SITE.detailParkUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand underline underline-offset-4">
+              Detail Park
+            </a>
+            , un centro de detailing, wrapping y PPF de Alicante que trabaja cada día con coches de clientes. Enseñamos lo
+            mismo que hacemos en el taller, con las mismas máquinas y los mismos productos.
+          </p>
 
-      {/* YouTube Video Background */}
-      {shouldLoadVideo && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <iframe
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] md:w-[200%] md:h-[200%] min-w-[100vw] min-h-[100vh]"
-            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=${startSeconds}&enablejsapi=1`}
-            title="Background Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen={false}
-            onLoad={() => setIsVideoLoaded(true)}
-            style={{ 
-              border: 'none',
-              pointerEvents: 'none'
-            }}
-          />
-        </div>
-      )}
-      
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/85 to-background" />
-      
-      {/* Decorative elements */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-primary-glow/10 rounded-full blur-3xl" />
-
-      <div className="container relative z-10">
-        <SectionHeading
-          badge="Desde 2017"
-          title="Quiénes Somos"
-          subtitle="Nacidos del taller, no del aula. Somos el único centro de formación en España que vive de verdad del Detailing, no de la formación."
-          titleAs="h1"
-        />
-        
-        {/* Logo Detail Park */}
-        <div className="mt-8 flex justify-center">
-          <img 
-            src={detailParkLogo} 
-            alt="Logotipo de la empresa Detail Park - Academia Detail" 
-            className="h-12 md:h-16 w-auto opacity-80"
-          />
-        </div>
-        
-        {/* Tagline diferenciador */}
-        <div className="mt-5 flex justify-center">
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/10 border border-primary/20">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm md:text-base font-medium text-brand">
-              Academia Detail · Potenciada por Detail Park
+          <dl className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-border pt-6">
+            {facts.map((f) => (
+              <div key={f.label}>
+                <dt className="sr-only">{f.label}</dt>
+                <dd className="font-heading text-3xl leading-none text-foreground md:text-4xl">{f.value}</dd>
+                <dd className="mt-1 text-xs leading-snug text-muted-foreground md:text-sm">{f.label}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-5 flex items-center gap-2 text-sm text-muted-foreground">
+            <Star className="h-4 w-4 fill-gold text-gold" aria-hidden="true" />
+            <span>
+              <strong className="text-foreground">{rating}</strong> en Google · {STATS.googleReviews} opiniones de Detail Park
             </span>
+          </p>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg" className="h-12 px-7 text-base font-semibold">
+              <Link to="/#formaciones">
+                Ver los cursos
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="h-12 px-7 text-base font-semibold">
+              <Link to="/contacto">Solicitar información</Link>
+            </Button>
           </div>
+        </div>
+
+        <div className="overflow-hidden rounded-xl">
+          <Img
+            picture={tallerImg}
+            alt="Clase en el taller de Detail Park, con alumnos sentados junto a un Ferrari y el formador explicando el material de pulido"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="aspect-[4/3] lg:aspect-[5/4]"
+            priority
+          />
         </div>
       </div>
     </section>

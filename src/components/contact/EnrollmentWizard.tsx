@@ -1,49 +1,53 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+// Formulario de contacto en una sola pantalla (antes era un asistente de 4 pasos).
+// El envío (tabla, función de correo y webhook) no ha cambiado.
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Form } from "@/components/ui/form";
+import { Loader2, Send } from "lucide-react";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import ContactSuccessModal from "./ContactSuccessModal";
-import StepFormacion from "./wizard/StepFormacion";
-import StepPerfil from "./wizard/StepPerfil";
-import StepDatos from "./wizard/StepDatos";
-import StepResumen from "./wizard/StepResumen";
+import { SITE } from "@/data/site";
+import {
+  CENTRO_OPTIONS,
+  ChoiceGroup,
+  EXPERIENCIA_OPTIONS,
+  INTEREST_OPTIONS,
+  INVERSION_OPTIONS,
+} from "./ContactFields";
 
 const contactSchema = z.object({
-  nombre: z.string().trim().min(1, "El nombre es obligatorio").max(50),
-  apellidos: z.string().trim().min(1, "Los apellidos son obligatorios").max(100),
-  email: z.string().trim().email("Introduce un email válido").max(255),
-  telefono: z.string().trim().min(9, "Introduce un teléfono válido").max(20),
-  experiencia: z.string({ required_error: "Selecciona tu nivel de experiencia" }).min(1, "Selecciona tu nivel"),
-  centro_propio: z.string({ required_error: "Indica si tienes centro propio" }).min(1, "Selecciona una opción"),
-  inversion: z.string({ required_error: "Selecciona tu presupuesto" }).min(1, "Selecciona tu presupuesto"),
-  tipo_formacion: z.string({ required_error: "Selecciona el tipo de formación" }).min(1, "Selecciona una formación"),
-  mensaje: z.string().trim().min(1, "El mensaje es obligatorio").max(1000),
+  tipo_formacion: z.string().min(1, "Elige qué te interesa"),
+  nombre: z.string().trim().min(1, "Escribe tu nombre").max(50, "Máximo 50 caracteres"),
+  apellidos: z.string().trim().min(1, "Escribe tus apellidos").max(100, "Máximo 100 caracteres"),
+  email: z.string().trim().email("Revisa el email").max(255),
+  telefono: z.string().trim().min(9, "Revisa el teléfono").max(20),
+  experiencia: z.string().min(1, "Elige una opción"),
+  centro_propio: z.string().min(1, "Elige una opción"),
+  inversion: z.string().min(1, "Elige una opción"),
+  mensaje: z.string().trim().max(1000, "Máximo 1000 caracteres"),
   acepto_privacidad: z.boolean().refine((val) => val === true, {
-    message: "Debes aceptar la política de privacidad",
+    message: "Necesitamos tu permiso para responderte",
   }),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-const steps = [
-  { id: 1, label: "Formación", fields: ["tipo_formacion"] as const },
-  { id: 2, label: "Perfil", fields: ["experiencia", "centro_propio", "inversion"] as const },
-  { id: 3, label: "Datos", fields: ["nombre", "apellidos", "email", "telefono", "mensaje", "acepto_privacidad"] as const },
-  { id: 4, label: "Resumen", fields: [] as const },
-];
+interface EnrollmentWizardProps {
+  /** Valor de `tipo_formacion` preseleccionado (desde `?curso=`) */
+  initialInterest?: string;
+}
 
-const EnrollmentWizard = () => {
+const inputClass = "h-12 text-base";
+
+const EnrollmentWizard = ({ initialInterest }: EnrollmentWizardProps) => {
   const navigate = useNavigate();
-  const wizardRef = useRef<HTMLDivElement>(null);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<ContactFormData>({
@@ -56,34 +60,17 @@ const EnrollmentWizard = () => {
       experiencia: "",
       centro_propio: "",
       inversion: "",
-      tipo_formacion: "",
+      tipo_formacion: initialInterest ?? "",
       mensaje: "",
       acepto_privacidad: false,
     },
     mode: "onTouched",
   });
 
-  const canGoNext = async () => {
-    const fieldsToValidate = steps[currentStep].fields as readonly string[];
-    if (fieldsToValidate.length === 0) return true;
-    const result = await form.trigger(fieldsToValidate as any);
-    return result;
-  };
-
-  const handleNext = async () => {
-    const valid = await canGoNext();
-    if (valid && currentStep < steps.length - 1) {
-      setCurrentStep((s) => s + 1);
-      wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-  };
-
-  const handleBack = () => {
-    if (currentStep > 0) {
-      setCurrentStep((s) => s - 1);
-      wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-  };
+  // Si cambia ?curso= sin recargar (otro enlace con la página ya abierta), se actualiza la selección.
+  useEffect(() => {
+    if (initialInterest) form.setValue("tipo_formacion", initialInterest);
+  }, [initialInterest, form]);
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
@@ -148,111 +135,165 @@ const EnrollmentWizard = () => {
 
     setIsSubmitting(false);
     form.reset();
-    setCurrentStep(0);
     navigate('/gracias');
   };
 
   return (
-    <>
-      <div ref={wizardRef} className="w-full max-w-3xl mx-auto">
-        {/* Step Indicator */}
-        <div className="flex items-center justify-between mb-10 px-2">
-          {steps.map((step, i) => (
-            <div key={step.id} className="flex items-center flex-1 last:flex-initial">
-              <button
-                type="button"
-                onClick={() => {
-                  if (i < currentStep) setCurrentStep(i);
-                }}
-                disabled={i > currentStep}
-                className={cn(
-                  "w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all shrink-0",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                  i < currentStep
-                    ? "bg-primary text-primary-foreground cursor-pointer"
-                    : i === currentStep
-                    ? "bg-primary text-primary-foreground ring-4 ring-primary/20"
-                    : "bg-muted text-muted-foreground cursor-not-allowed"
-                )}
-              >
-                {i < currentStep ? <Check className="w-5 h-5" /> : step.id}
-              </button>
-              {i < steps.length - 1 && (
-                <div
-                  className={cn(
-                    "h-0.5 flex-1 mx-2 rounded-full transition-colors",
-                    i < currentStep ? "bg-primary" : "bg-border"
-                  )}
-                />
-              )}
-            </div>
-          ))}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="grid gap-5">
+        <FormField
+          control={form.control}
+          name="tipo_formacion"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>¿Qué te interesa?</FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger className={inputClass}>
+                    <SelectValue placeholder="Elige un curso o tipo de consulta" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {INTEREST_OPTIONS.map((o) => (
+                    <SelectItem key={o.value} value={o.value} className="py-2.5">
+                      {o.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-x-5">
+          <FormField
+            control={form.control}
+            name="nombre"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nombre</FormLabel>
+                <FormControl>
+                  <Input autoComplete="given-name" className={inputClass} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="apellidos"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Apellidos</FormLabel>
+                <FormControl>
+                  <Input autoComplete="family-name" className={inputClass} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
-        {/* Step Labels (mobile hidden, desktop visible) */}
-        <div className="hidden sm:flex items-center justify-between mb-8 px-2">
-          {steps.map((step, i) => (
-            <span
-              key={step.id}
-              className={cn(
-                "text-xs font-medium transition-colors",
-                i <= currentStep ? "text-brand" : "text-muted-foreground",
-                i === 0 ? "text-left" : i === steps.length - 1 ? "text-right" : "text-center",
-                "flex-1 last:flex-initial"
-              )}
-            >
-              {step.label}
-            </span>
-          ))}
+        <div className="grid gap-5 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="telefono"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Teléfono</FormLabel>
+                <FormControl>
+                  <Input type="tel" inputMode="tel" autoComplete="tel" className={inputClass} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" autoComplete="email" className={inputClass} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
-        {/* Form */}
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="bg-card border border-border rounded-2xl p-6 md:p-10 shadow-[var(--shadow-card)]">
-              {currentStep === 0 && <StepFormacion form={form} />}
-              {currentStep === 1 && <StepPerfil form={form} />}
-              {currentStep === 2 && <StepDatos form={form} />}
-              {currentStep === 3 && <StepResumen form={form} isSubmitting={isSubmitting} />}
-            </div>
-
-            {/* Navigation Buttons */}
-            {currentStep < 3 && (
-              <div className="flex items-center justify-between mt-6">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={handleBack}
-                  disabled={currentStep === 0}
-                  className={cn(currentStep === 0 && "invisible")}
-                >
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Anterior
-                </Button>
-                <Button type="button" onClick={handleNext} size="lg" className="min-w-[160px]">
-                  Siguiente
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="experiencia"
+            render={({ field }) => (
+              <ChoiceGroup name={field.name} legend="¿Tienes experiencia en detailing?" options={EXPERIENCIA_OPTIONS} value={field.value} onChange={field.onChange} />
             )}
-
-            {currentStep === 3 && (
-              <div className="flex justify-start mt-6">
-                <Button type="button" variant="ghost" onClick={handleBack}>
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Anterior
-                </Button>
-              </div>
+          />
+          <FormField
+            control={form.control}
+            name="centro_propio"
+            render={({ field }) => (
+              <ChoiceGroup name={field.name} legend="¿Tienes centro o taller propio?" options={CENTRO_OPTIONS} value={field.value} onChange={field.onChange} />
             )}
-          </form>
-        </Form>
-      </div>
+          />
+        </div>
 
-      <ContactSuccessModal
-        open={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
-      />
-    </>
+        <FormField
+          control={form.control}
+          name="inversion"
+          render={({ field }) => (
+            <ChoiceGroup name={field.name} legend="¿Cuánto quieres invertir en formación?" options={INVERSION_OPTIONS} value={field.value} onChange={field.onChange} columns={4} />
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="mensaje"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Mensaje <span className="font-normal text-muted-foreground">(opcional)</span>
+              </FormLabel>
+              <FormControl>
+                <Textarea placeholder="Fechas que te vienen bien, dudas sobre el curso…" className="min-h-[96px] resize-y text-base" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="acepto_privacidad"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start gap-3 space-y-0">
+              <FormControl>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} className="mt-0.5 h-5 w-5 !min-h-0 !min-w-0" />
+              </FormControl>
+              <div className="grid gap-1">
+                <FormLabel className="cursor-pointer text-sm font-normal leading-relaxed text-muted-foreground">
+                  He leído y acepto la{" "}
+                  <Link to="/politica-privacidad" target="_blank" className="text-brand underline underline-offset-2">
+                    política de privacidad
+                  </Link>
+                  . Autorizo a Academia Detail a tratar mis datos (RGPD y LOPDGDD) para gestionar mi solicitud y enviarme
+                  información sobre sus formaciones. Puedo ejercer mis derechos en {SITE.email}.
+                </FormLabel>
+                <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" size="lg" className="h-12 w-full text-base font-semibold" disabled={isSubmitting}>
+          {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
+          {isSubmitting ? "Enviando…" : "Enviar solicitud"}
+        </Button>
+      </form>
+    </Form>
   );
 };
 

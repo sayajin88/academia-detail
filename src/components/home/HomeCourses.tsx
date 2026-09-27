@@ -146,7 +146,7 @@ export function HomeCourses() {
           ))}
         </div>
         <p className="mt-6 text-sm text-muted-foreground">
-          Próximamente: <Link to="/curso-restauracion-vehiculos" className="font-semibold text-foreground underline-offset-4 hover:underline">curso de restauración</Link> de cuero, tapicerías y coches clásicos.
+          Próximamente: <Link to="/curso-restauracion-vehiculos" className="font-semibold text-foreground underline underline-offset-4">curso de restauración</Link> de cuero, tapicerías y coches clásicos.
         </p>
       </div>
     </Section>

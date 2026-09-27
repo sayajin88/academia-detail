@@ -1,7 +1,9 @@
 import { useState, useMemo, useCallback } from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Input } from '@/components/ui/input';
-import { Droplets, Copy, Check, Beaker, FlaskConical } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Copy, Check, FlaskConical } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 /* ── Ratio presets ─────────────────────────────────────────── */
 const RATIO_PRESETS = [
@@ -14,21 +16,30 @@ const RATIO_PRESETS = [
 
 /* ── Strength helpers ──────────────────────────────────────── */
 function getStrengthInfo(percent: number) {
-  if (percent >= 20) return { label: 'Concentración extrema', color: 'hsl(0 80% 55%)', barColor: 'from-red-500 to-orange-500' };
-  if (percent >= 8)  return { label: 'Concentración fuerte', color: 'hsl(25 90% 55%)', barColor: 'from-orange-500 to-amber-500' };
-  if (percent >= 5)  return { label: 'Uso general', color: 'hsl(45 90% 50%)', barColor: 'from-amber-400 to-yellow-400' };
-  if (percent >= 2)  return { label: 'Concentración suave', color: 'hsl(140 60% 45%)', barColor: 'from-green-500 to-emerald-400' };
-  return { label: 'Muy diluido', color: 'hsl(160 60% 40%)', barColor: 'from-emerald-500 to-teal-400' };
+  if (percent >= 20) return { label: 'Concentración extrema' };
+  if (percent >= 8) return { label: 'Concentración fuerte' };
+  if (percent >= 5) return { label: 'Uso general' };
+  if (percent >= 2) return { label: 'Concentración suave' };
+  return { label: 'Muy diluido' };
 }
 
-/* ── Animated Spray Bottle SVG ────────────────────────────── */
+// Colores del sistema: producto en burdeos (relleno) y agua en gris claro
+const PRODUCT_FILL = '#8B2332';
+const PRODUCT_TEXT = '#E07A88';
+const WATER_FILL = 'hsl(210 10% 72%)';
+const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+/** 90.9 → «90,9» (coma decimal) */
+const formatMl = (n: number) => n.toLocaleString('es-ES', { maximumFractionDigits: 1 });
+
+/* ── Spray bottle SVG ──────────────────────────────────────── */
 function SprayBottle({ productHeight, waterHeight, productMl, waterMl }: {
   productHeight: number;
   waterHeight: number;
   productMl: number;
   waterMl: number;
 }) {
-  // Bottle body area: y from 110 to 310 (200px height usable)
+  // Cuerpo de la botella: y de 110 a 310 (200 px útiles)
   const bodyTop = 110;
   const bodyBottom = 310;
   const bodyLeft = 55;
@@ -39,150 +50,63 @@ function SprayBottle({ productHeight, waterHeight, productMl, waterMl }: {
   const productY = waterY - productHeight;
 
   return (
-    <div className="relative flex items-center justify-center">
-      <svg
-        viewBox="0 0 250 370"
-        className="w-full max-w-[220px] md:max-w-[260px] h-auto drop-shadow-lg"
-        role="img"
-        aria-label={`Botella con ${productMl} ml de producto y ${waterMl} ml de agua`}
-      >
-        <defs>
-          {/* Clip path for liquid inside the bottle body */}
-          <clipPath id="bottleBodyClip">
-            <rect x={bodyLeft} y={bodyTop} width={bodyWidth} height={bodyBottom - bodyTop} rx="12" />
-          </clipPath>
-          {/* Wave pattern for product surface */}
-          <pattern id="wavePattern" x="0" y="0" width="60" height="8" patternUnits="userSpaceOnUse">
-            <path
-              d="M0,4 Q15,-2 30,4 T60,4"
-              fill="none"
-              stroke="hsl(36 90% 60%)"
-              strokeWidth="1.5"
-              opacity="0.5"
-              className="animate-[wave_3s_ease-in-out_infinite]"
-            />
-          </pattern>
-        </defs>
+    <svg
+      viewBox="0 0 250 340"
+      className="h-auto w-full"
+      role="img"
+      aria-label={`Botella con ${formatMl(productMl)} ml de producto y ${formatMl(waterMl)} ml de agua`}
+    >
+      <defs>
+        <clipPath id="bottleBodyClip">
+          <rect x={bodyLeft} y={bodyTop} width={bodyWidth} height={bodyBottom - bodyTop} rx="12" />
+        </clipPath>
+      </defs>
 
-        {/* ── Bottle outline ── */}
-        {/* Spray head / nozzle */}
-        <rect x="95" y="10" width="60" height="18" rx="4" fill="hsl(240 8% 20%)" stroke="hsl(240 6% 30%)" strokeWidth="1.5" />
-        <rect x="155" y="14" width="30" height="10" rx="3" fill="hsl(240 8% 22%)" stroke="hsl(240 6% 30%)" strokeWidth="1" />
-        {/* Trigger */}
-        <path d="M155 28 L165 28 L168 60 L152 65 L150 45 Z" fill="hsl(240 8% 22%)" stroke="hsl(240 6% 30%)" strokeWidth="1.5" />
-        {/* Neck */}
-        <rect x="100" y="28" width="50" height="30" rx="4" fill="hsl(240 8% 18%)" stroke="hsl(240 6% 28%)" strokeWidth="1.5" />
-        {/* Neck-to-body transition */}
-        <path d="M100 58 L55 105 L55 110 L195 110 L195 105 L150 58 Z" fill="hsl(240 8% 16%)" stroke="hsl(240 6% 28%)" strokeWidth="1.5" fillOpacity="0.6" />
-        {/* Main body */}
-        <rect x={bodyLeft} y={bodyTop} width={bodyWidth} height={bodyBottom - bodyTop} rx="12" fill="hsl(240 8% 14%)" stroke="hsl(240 6% 28%)" strokeWidth="2" fillOpacity="0.4" />
-        {/* Bottom base */}
-        <rect x="50" y={bodyBottom} width="150" height="20" rx="6" fill="hsl(240 8% 18%)" stroke="hsl(240 6% 28%)" strokeWidth="1.5" />
+      {/* Pulverizador */}
+      <rect x="95" y="10" width="60" height="18" rx="4" fill="hsl(240 8% 20%)" stroke="hsl(240 6% 30%)" strokeWidth="1.5" />
+      <rect x="155" y="14" width="30" height="10" rx="3" fill="hsl(240 8% 22%)" stroke="hsl(240 6% 30%)" strokeWidth="1" />
+      <path d="M155 28 L165 28 L168 60 L152 65 L150 45 Z" fill="hsl(240 8% 22%)" stroke="hsl(240 6% 30%)" strokeWidth="1.5" />
+      <rect x="100" y="28" width="50" height="30" rx="4" fill="hsl(240 8% 18%)" stroke="hsl(240 6% 28%)" strokeWidth="1.5" />
+      <path d="M100 58 L55 105 L55 110 L195 110 L195 105 L150 58 Z" fill="hsl(240 8% 16%)" stroke="hsl(240 6% 28%)" strokeWidth="1.5" fillOpacity="0.6" />
+      {/* Cuerpo y base */}
+      <rect x={bodyLeft} y={bodyTop} width={bodyWidth} height={bodyBottom - bodyTop} rx="12" fill="hsl(240 8% 14%)" stroke="hsl(240 6% 30%)" strokeWidth="2" fillOpacity="0.4" />
+      <rect x="50" y={bodyBottom} width="150" height="20" rx="6" fill="hsl(240 8% 18%)" stroke="hsl(240 6% 28%)" strokeWidth="1.5" />
 
-        {/* ── Liquids (clipped to body) ── */}
-        <g clipPath="url(#bottleBodyClip)">
-          {/* Water layer (bottom) */}
-          <rect
-            x={bodyLeft}
-            y={waterY}
-            width={bodyWidth}
-            height={waterHeight}
-            fill="#60a5fa"
-            opacity="0.75"
-            style={{ transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}
-          />
+      {/* Líquidos */}
+      <g clipPath="url(#bottleBodyClip)">
+        <rect x={bodyLeft} y={waterY} width={bodyWidth} height={waterHeight} fill={WATER_FILL} opacity="0.35" style={{ transition: `all 0.5s ${EASE}` }} />
+        <rect x={bodyLeft} y={productY} width={bodyWidth} height={productHeight} fill={PRODUCT_FILL} style={{ transition: `all 0.5s ${EASE}` }} />
+      </g>
 
-          {/* Product layer (top of water) */}
-          <rect
-            x={bodyLeft}
-            y={productY}
-            width={bodyWidth}
-            height={productHeight}
-            fill="#f59e0b"
-            opacity="0.85"
-            style={{ transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}
-          />
+      {/* Cantidades dentro de la botella */}
+      {productHeight > 18 && (
+        <text x={bodyLeft + bodyWidth / 2} y={productY + productHeight / 2 + 5} textAnchor="middle" fontSize="14" fontWeight="700" fill="white">
+          {formatMl(productMl)} ml
+        </text>
+      )}
+      {waterHeight > 18 && (
+        <text x={bodyLeft + bodyWidth / 2} y={waterY + waterHeight / 2 + 5} textAnchor="middle" fontSize="14" fontWeight="700" fill="white">
+          {formatMl(waterMl)} ml
+        </text>
+      )}
 
-          {/* Wave effect on product surface */}
-          {productHeight > 4 && (
-            <rect
-              x={bodyLeft}
-              y={productY - 4}
-              width={bodyWidth}
-              height="8"
-              fill="url(#wavePattern)"
-              style={{ transition: 'y 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}
-            />
-          )}
-
-          {/* Decorative bubbles in water zone */}
-          {waterHeight > 30 && (
-            <>
-              <circle cx="90" cy={waterY + waterHeight * 0.3} r="3" fill="#93c5fd" opacity="0.4" className="animate-[floatBubble_4s_ease-in-out_infinite]" />
-              <circle cx="140" cy={waterY + waterHeight * 0.6} r="2" fill="#93c5fd" opacity="0.3" className="animate-[floatBubble_5s_ease-in-out_infinite_0.5s]" />
-              <circle cx="170" cy={waterY + waterHeight * 0.4} r="2.5" fill="#93c5fd" opacity="0.35" className="animate-[floatBubble_4.5s_ease-in-out_infinite_1s]" />
-            </>
-          )}
-        </g>
-
-        {/* ── Labels inside bottle ── */}
-        {productHeight > 18 && (
-          <text
-            x={bodyLeft + bodyWidth / 2}
-            y={productY + productHeight / 2 + 4}
-            textAnchor="middle"
-            fontSize="11"
-            fontWeight="700"
-            fill="white"
-            style={{ transition: 'y 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}
-          >
-            {productMl} ml
-          </text>
-        )}
-        {waterHeight > 18 && (
-          <text
-            x={bodyLeft + bodyWidth / 2}
-            y={waterY + waterHeight / 2 + 4}
-            textAnchor="middle"
-            fontSize="11"
-            fontWeight="700"
-            fill="white"
-            style={{ transition: 'y 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}
-          >
-            {waterMl} ml
-          </text>
-        )}
-
-        {/* ── Side legends ── */}
-        {productHeight > 8 && (
-          <>
-            <line x1="200" y1={productY + productHeight / 2} x2="215" y2={productY + productHeight / 2} stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="3 2" style={{ transition: 'y1 0.6s cubic-bezier(0.22, 1, 0.36, 1), y2 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }} />
-            <text x="218" y={productY + productHeight / 2 + 4} fontSize="9" fill="#f59e0b" fontWeight="600" style={{ transition: 'y 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}>Producto</text>
-          </>
-        )}
-        {waterHeight > 8 && (
-          <>
-            <line x1="200" y1={waterY + waterHeight / 2} x2="215" y2={waterY + waterHeight / 2} stroke="#60a5fa" strokeWidth="1.5" strokeDasharray="3 2" style={{ transition: 'y1 0.6s cubic-bezier(0.22, 1, 0.36, 1), y2 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }} />
-            <text x="218" y={waterY + waterHeight / 2 + 4} fontSize="9" fill="#60a5fa" fontWeight="600" style={{ transition: 'y 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}>Agua</text>
-          </>
-        )}
-
-        {/* Measurement marks on left side */}
-        {[0.25, 0.5, 0.75].map((pct) => {
-          const markY = bodyBottom - (bodyBottom - bodyTop) * pct;
-          return (
-            <g key={pct}>
-              <line x1="48" y1={markY} x2={bodyLeft} y2={markY} stroke="hsl(240 6% 35%)" strokeWidth="1" />
-              <text x="44" y={markY + 3} textAnchor="end" fontSize="8" fill="hsl(210 5% 55%)">{Math.round(pct * 100)}%</text>
-            </g>
-          );
-        })}
-      </svg>
-    </div>
+      {/* Marcas de nivel */}
+      {[0.25, 0.5, 0.75].map((pct) => {
+        const markY = bodyBottom - (bodyBottom - bodyTop) * pct;
+        return (
+          <g key={pct}>
+            <line x1="44" y1={markY} x2={bodyLeft} y2={markY} stroke="hsl(240 6% 40%)" strokeWidth="1" />
+            <text x="40" y={markY + 4} textAnchor="end" fontSize="11" fill="hsl(210 5% 70%)">{Math.round(pct * 100)}%</text>
+          </g>
+        );
+      })}
+    </svg>
   );
 }
 
-/* ── Main Calculator Component ────────────────────────────── */
+const labelClass = 'mb-3 block text-sm font-semibold text-foreground';
+
+/* ── Calculadora ───────────────────────────────────────────── */
 export function VisualDilutionCalculator() {
   const [capacity, setCapacity] = useState(1000);
   const [ratioProduct, setRatioProduct] = useState(1);
@@ -192,7 +116,7 @@ export function VisualDilutionCalculator() {
   const [customWater, setCustomWater] = useState('10');
   const [copied, setCopied] = useState(false);
 
-  // Derived calculations
+  // Cálculos
   const calc = useMemo(() => {
     const totalParts = ratioProduct + ratioWater;
     const volumePerPart = capacity / totalParts;
@@ -238,6 +162,20 @@ export function VisualDilutionCalculator() {
     setCapacity(Math.min(5000, Math.max(100, n)));
   }, []);
 
+  // Mientras se escribe se guarda el texto tal cual (para poder teclear «500»
+  // sin que «5» salte a 100); el valor se aplica si ya está en rango y, al
+  // salir del campo, con el mismo límite de 100-5.000 ml de siempre.
+  const [capacityDraft, setCapacityDraft] = useState<string | null>(null);
+  const handleCapacityDraft = useCallback((val: string) => {
+    setCapacityDraft(val);
+    const n = parseInt(val);
+    if (n >= 100 && n <= 5000) setCapacity(n);
+  }, []);
+  const commitCapacityDraft = useCallback(() => {
+    if (capacityDraft !== null) handleCapacityInput(capacityDraft);
+    setCapacityDraft(null);
+  }, [capacityDraft, handleCapacityInput]);
+
   const copyRecipe = useCallback(async () => {
     const text = `🧪 Receta de Dilución\n━━━━━━━━━━━━━━━━━━\nEnvase: ${capacity} ml\nRatio: ${ratioProduct}:${ratioWater}\n\n✅ Producto: ${calc.productVolume} ml\n💧 Agua: ${calc.waterVolume} ml\n\nGenerado con Academia Detail`;
     try {
@@ -251,217 +189,186 @@ export function VisualDilutionCalculator() {
 
   const isPresetActive = (p: number, w: number) => !isCustom && ratioProduct === p && ratioWater === w;
 
-  return (
-    <div className="bg-card/80 backdrop-blur-sm rounded-2xl border border-border shadow-lg p-5 md:p-8">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-brand text-sm font-medium mb-4">
-          <Beaker className="h-4 w-4" />
-          Herramienta Interactiva
-        </div>
-        <h2 className="text-2xl md:text-3xl font-black text-foreground mb-2 leading-tight">
-          Calculadora de <span className="text-brand">Dilución</span>
-        </h2>
-        <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
-          Calcula la dilución exacta de cualquier producto químico de forma visual e intuitiva
-        </p>
-      </div>
+  const optionClass = (active: boolean) =>
+    cn(
+      'flex min-h-[60px] flex-col items-center justify-center gap-1 rounded-lg border px-2 font-bold transition-colors',
+      active ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-background text-foreground hover:border-white/30',
+    );
 
-      {/* Main Layout: Controls + Bottle */}
-      <div className="flex flex-col md:flex-row gap-8 md:gap-10">
-        {/* ── LEFT: Controls ── */}
-        <div className="flex-1 space-y-6">
-          {/* A. Capacity Slider */}
+  return (
+    <div className="ds-card p-4 sm:p-5 md:p-8">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-12 lg:gap-y-8">
+        {/* 1. Controles */}
+        <div className="space-y-8">
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">
-              Capacidad del envase
+            <label htmlFor="capacidad-envase" className={labelClass}>
+              1. Capacidad del envase
             </label>
-            <div className="flex items-center gap-4 mb-3">
-              <div className="flex-1">
-                <Slider
-                  value={[capacity]}
-                  onValueChange={([v]) => setCapacity(v)}
-                  min={100}
-                  max={5000}
-                  step={50}
-                  aria-label="Capacidad total del envase en mililitros"
-                  className="py-2"
-                />
-              </div>
-              <div className="flex items-baseline gap-1 flex-shrink-0">
+            <div className="flex items-center gap-4">
+              <Slider
+                value={[capacity]}
+                onValueChange={([v]) => setCapacity(v)}
+                min={100}
+                max={5000}
+                step={50}
+                aria-label="Capacidad total del envase en mililitros"
+                className="flex-1 py-2"
+              />
+              <div className="flex shrink-0 items-center gap-2">
                 <Input
+                  id="capacidad-envase"
                   type="number"
-                  value={capacity}
-                  onChange={(e) => handleCapacityInput(e.target.value)}
-                  className="w-20 h-10 text-center text-lg font-bold bg-muted border-border"
+                  inputMode="numeric"
+                  value={capacityDraft ?? capacity}
+                  onChange={(e) => handleCapacityDraft(e.target.value)}
+                  onBlur={commitCapacityDraft}
+                  onKeyDown={(e) => e.key === 'Enter' && commitCapacityDraft()}
+                  className="h-11 w-24 bg-background text-center text-lg font-bold"
                   min={100}
                   max={5000}
                   step={50}
-                  aria-label="Capacidad en mililitros"
                 />
-                <span className="text-muted-foreground text-sm font-medium">ml</span>
+                <span className="text-sm text-muted-foreground">ml</span>
               </div>
             </div>
-            <div className="flex justify-between text-xs text-muted-foreground">
+            <div className="mt-2 flex justify-between text-xs text-muted-foreground">
               <span>100 ml</span>
-              <span>5000 ml</span>
+              <span>5.000 ml</span>
             </div>
           </div>
 
-          {/* B. Ratio Grid */}
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">
-              Ratio de dilución
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {RATIO_PRESETS.map((preset) => (
-                <button
-                  key={preset.label}
-                  onClick={() => selectPreset(preset.product, preset.water)}
-                  aria-pressed={isPresetActive(preset.product, preset.water)}
-                  className={`min-h-[56px] rounded-xl border-2 font-bold text-base transition-all duration-200 flex flex-col items-center justify-center gap-0.5 ${
-                    isPresetActive(preset.product, preset.water)
-                      ? 'bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-500/25 scale-[1.03]'
-                      : 'bg-card border-border text-foreground hover:border-blue-400/50 hover:bg-card/80'
-                  }`}
-                >
-                  <span className="text-lg leading-none">{preset.label}</span>
-                  <span className={`text-[10px] uppercase tracking-wide ${isPresetActive(preset.product, preset.water) ? 'text-blue-100' : 'text-muted-foreground'}`}>
-                    {preset.tag}
-                  </span>
-                </button>
-              ))}
-
-              {/* Custom button */}
-              <button
-                onClick={handleCustomToggle}
-                aria-pressed={isCustom}
-                className={`min-h-[56px] rounded-xl border-2 font-bold text-base transition-all duration-200 flex flex-col items-center justify-center gap-0.5 ${
-                  isCustom
-                    ? 'bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-500/25 scale-[1.03]'
-                    : 'bg-card border-border text-foreground hover:border-blue-400/50 hover:bg-card/80'
-                }`}
-              >
-                <FlaskConical className="h-4 w-4" />
-                <span className={`text-[10px] uppercase tracking-wide ${isCustom ? 'text-blue-100' : 'text-muted-foreground'}`}>
-                  Custom
+            <p id="ratio-label" className={labelClass}>
+              2. Ratio de dilución <span className="font-normal text-muted-foreground">(producto : agua)</span>
+            </p>
+            <div role="group" aria-labelledby="ratio-label" className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+              {RATIO_PRESETS.map((preset) => {
+                const active = isPresetActive(preset.product, preset.water);
+                return (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => selectPreset(preset.product, preset.water)}
+                    aria-pressed={active}
+                    className={optionClass(active)}
+                  >
+                    <span className="text-lg leading-none">{preset.label}</span>
+                    <span className={cn('text-[11px] font-semibold uppercase tracking-wide', active ? 'text-white/85' : 'text-muted-foreground')}>
+                      {preset.tag}
+                    </span>
+                  </button>
+                );
+              })}
+              <button type="button" onClick={handleCustomToggle} aria-pressed={isCustom} className={optionClass(isCustom)}>
+                <FlaskConical className="h-4 w-4" aria-hidden="true" />
+                <span className={cn('text-[11px] font-semibold uppercase tracking-wide', isCustom ? 'text-white/85' : 'text-muted-foreground')}>
+                  Otro
                 </span>
               </button>
             </div>
 
-            {/* Custom ratio inputs */}
             {isCustom && (
-              <div className="mt-3 flex items-center gap-2 p-3 rounded-xl bg-muted/50 border border-border animate-fade-in">
+              <div className="mt-3 flex flex-wrap items-center gap-2 rounded-lg border border-border bg-background p-3">
                 <Input
                   type="number"
+                  inputMode="numeric"
                   value={customProduct}
                   onChange={(e) => handleCustomProductChange(e.target.value)}
-                  className="w-16 h-9 text-center font-bold bg-card border-border"
+                  className="h-10 w-20 bg-card text-center font-bold"
                   min={1}
                   aria-label="Partes de producto"
                 />
-                <span className="text-muted-foreground font-bold">:</span>
+                <span className="font-bold text-muted-foreground">:</span>
                 <Input
                   type="number"
+                  inputMode="numeric"
                   value={customWater}
                   onChange={(e) => handleCustomWaterChange(e.target.value)}
-                  className="w-16 h-9 text-center font-bold bg-card border-border"
+                  className="h-10 w-20 bg-card text-center font-bold"
                   min={1}
                   aria-label="Partes de agua"
                 />
-                <span className="text-muted-foreground text-xs ml-1">(producto : agua)</span>
+                <span className="text-sm text-muted-foreground">partes de producto : partes de agua</span>
               </div>
             )}
           </div>
+        </div>
 
-          {/* C. Educational Translator */}
-          <div className="p-4 rounded-xl bg-muted/40 border border-border/50 space-y-3">
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              <span className="text-lg mr-1">💡</span>
-              <strong className="text-foreground">Traducción:</strong>{' '}
-              Una dilución{' '}
-              <span className="text-blue-400 font-bold">{ratioProduct}:{ratioWater}</span>{' '}
-              significa que por cada{' '}
-              <span className="text-amber-400 font-semibold">{ratioProduct} {ratioProduct === 1 ? 'tapón' : 'tapones'} de producto</span>,
-              debes añadir{' '}
-              <span className="text-blue-400 font-semibold">{ratioWater} {ratioWater === 1 ? 'tapón' : 'tapones'} de agua</span>.
-            </p>
-
-            {/* Strength bar */}
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs text-muted-foreground uppercase tracking-wider">Potencia</span>
-                <span className="text-xs font-semibold" style={{ color: strengthInfo.color }}>
-                  {strengthInfo.label}
-                </span>
-              </div>
-              <div className="h-2.5 w-full rounded-full bg-muted overflow-hidden">
-                <div
-                  className={`h-full rounded-full bg-gradient-to-r ${strengthInfo.barColor}`}
-                  style={{
-                    width: `${Math.min(100, Math.max(5, calc.strengthPercent * 2))}%`,
-                    transition: 'width 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
-                  }}
-                />
-              </div>
+        {/* 2. Resultado (a la derecha en escritorio; justo debajo de los controles en móvil) */}
+        <div className="lg:row-span-2">
+          <div className="rounded-xl border border-border bg-background p-4 sm:p-5 md:p-6 lg:sticky lg:top-24">
+            <p className="ds-eyebrow">Resultado</p>
+            <div className="mt-4 grid grid-cols-[minmax(0,1fr)_112px] items-center gap-4 sm:grid-cols-[minmax(0,1fr)_180px] md:gap-6 xl:grid-cols-[minmax(0,1fr)_200px]">
+              <dl className="space-y-4" aria-live="polite">
+                <div>
+                  <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: PRODUCT_FILL }} aria-hidden="true" />
+                    Añade de producto
+                  </dt>
+                  <dd className="mt-1 font-heading text-[2.75rem] leading-none text-foreground md:text-5xl">
+                    {formatMl(calc.productVolume)} <span className="font-sans text-lg font-semibold text-muted-foreground">ml</span>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: WATER_FILL, opacity: 0.6 }} aria-hidden="true" />
+                    Rellena con agua
+                  </dt>
+                  <dd className="mt-1 font-heading text-[2.75rem] leading-none text-foreground md:text-5xl">
+                    {formatMl(calc.waterVolume)} <span className="font-sans text-lg font-semibold text-muted-foreground">ml</span>
+                  </dd>
+                </div>
+                <div className="border-t border-border pt-3 text-sm text-muted-foreground">
+                  Envase de {capacity} ml · ratio {ratioProduct}:{ratioWater}
+                </div>
+              </dl>
+              <SprayBottle
+                productHeight={calc.productHeight}
+                waterHeight={calc.waterHeight}
+                productMl={calc.productVolume}
+                waterMl={calc.waterVolume}
+              />
             </div>
+            <Button type="button" variant="outline" onClick={copyRecipe} className="mt-5 h-11 w-full font-semibold">
+              {copied ? (
+                <>
+                  <Check className="h-4 w-4 text-brand" aria-hidden="true" />
+                  Receta copiada
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4" aria-hidden="true" />
+                  Copiar la receta
+                </>
+              )}
+            </Button>
           </div>
         </div>
 
-        {/* ── RIGHT: Animated Bottle ── */}
-        <div className="flex-1 flex items-center justify-center md:pl-4">
-          <SprayBottle
-            productHeight={calc.productHeight}
-            waterHeight={calc.waterHeight}
-            productMl={calc.productVolume}
-            waterMl={calc.waterVolume}
-          />
-        </div>
-      </div>
-
-      {/* ── BOTTOM: Results ── */}
-      <div className="mt-8 pt-6 border-t border-border/50">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-          {/* Product result */}
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-amber-500/10 border border-amber-500/25">
-            <div className="h-10 w-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-              <Droplets className="h-5 w-5 text-amber-400" />
+        {/* 3. Explicación */}
+        <div className="rounded-xl border border-border bg-background p-5">
+          <p className="text-[0.9375rem] leading-relaxed text-muted-foreground">
+            <strong className="text-foreground">Qué significa:</strong> una dilución{' '}
+            <strong className="text-foreground">{ratioProduct}:{ratioWater}</strong> quiere decir que por cada{' '}
+            <strong className="text-foreground">{ratioProduct} {ratioProduct === 1 ? 'tapón' : 'tapones'} de producto</strong> debes añadir{' '}
+            <strong className="text-foreground">{ratioWater} {ratioWater === 1 ? 'tapón' : 'tapones'} de agua</strong>.
+          </p>
+          <div className="mt-4">
+            <div className="mb-2 flex flex-wrap items-center justify-between gap-x-4 text-sm">
+              <span className="text-muted-foreground">Potencia de la mezcla</span>
+              <span className="font-semibold text-foreground">{strengthInfo.label}</span>
             </div>
-            <div>
-              <p className="text-xs text-amber-400/80 uppercase tracking-wider font-semibold">Añade</p>
-              <p className="text-xl md:text-2xl font-bold text-amber-400">{calc.productVolume} ml <span className="text-sm font-normal text-amber-400/70">de Producto</span></p>
-            </div>
-          </div>
-
-          {/* Water result */}
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-blue-400/10 border border-blue-400/25">
-            <div className="h-10 w-10 rounded-lg bg-blue-400/20 flex items-center justify-center flex-shrink-0">
-              <Droplets className="h-5 w-5 text-blue-400" />
-            </div>
-            <div>
-              <p className="text-xs text-blue-400/80 uppercase tracking-wider font-semibold">Rellena con</p>
-              <p className="text-xl md:text-2xl font-bold text-blue-400">{calc.waterVolume} ml <span className="text-sm font-normal text-blue-400/70">de Agua</span></p>
+            <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+              <div
+                className="h-full rounded-full bg-brand"
+                style={{
+                  width: `${Math.min(100, Math.max(5, calc.strengthPercent * 2))}%`,
+                  transition: `width 0.5s ${EASE}`,
+                }}
+              />
             </div>
           </div>
         </div>
-
-        {/* Copy button */}
-        <button
-          onClick={copyRecipe}
-          className="w-full sm:w-auto mx-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-muted hover:bg-muted/80 border border-border text-foreground font-semibold text-sm transition-all duration-200 hover:border-primary/30"
-        >
-          {copied ? (
-            <>
-              <Check className="h-4 w-4 text-green-400" />
-              <span className="text-green-400">¡Copiado!</span>
-            </>
-          ) : (
-            <>
-              <Copy className="h-4 w-4" />
-              Copiar Receta al Portapapeles
-            </>
-          )}
-        </button>
       </div>
     </div>
   );

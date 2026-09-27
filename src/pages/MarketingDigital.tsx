@@ -1,28 +1,21 @@
-import { MainLayout } from "@/components/layout/MainLayout";
-import { SEO } from "@/components/SEO";
-import { seoConfig } from "@/utils/seoConfig";
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import { AnimatedSection } from "@/components/shared/AnimatedSection";
-import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { MarketingHero } from "@/components/marketing/MarketingHero";
-import {
-  MarketingValue,
-  MarketingServices,
-  MarketingBranding,
-  MarketingProcess,
-  MarketingWork,
-  MarketingShowcase,
-  MarketingCost,
-  MarketingLinks,
-} from "@/components/marketing/MarketingSections";
-import { MarketingPacks } from "@/components/marketing/MarketingPacks";
-import { marketingFaqs, waLink } from "@/components/marketing/marketingData";
+import { lazy, Suspense } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { SEO } from '@/components/SEO';
+import { seoConfig } from '@/utils/seoConfig';
+import { MarketingHero } from '@/components/marketing/MarketingHero';
+
+// Por debajo de la primera pantalla: carga diferida para no retrasar el LCP.
+const sections = () => import('@/components/marketing/MarketingSections');
+const MarketingFunnel = lazy(() => sections().then((m) => ({ default: m.MarketingFunnel })));
+const MarketingServices = lazy(() => sections().then((m) => ({ default: m.MarketingServices })));
+const MarketingShowcase = lazy(() => sections().then((m) => ({ default: m.MarketingShowcase })));
+const MarketingProcess = lazy(() => sections().then((m) => ({ default: m.MarketingProcess })));
+const MarketingFaq = lazy(() => sections().then((m) => ({ default: m.MarketingFaq })));
+const MarketingLinks = lazy(() => sections().then((m) => ({ default: m.MarketingLinks })));
+const MarketingPacks = lazy(() => import('@/components/marketing/MarketingPacks').then((m) => ({ default: m.MarketingPacks })));
+const CtaBand = lazy(() => import('@/components/ds/CtaBand').then((m) => ({ default: m.CtaBand })));
+
+const Placeholder = () => <div className="ds-section" aria-hidden="true" />;
 
 const MarketingDigital = () => {
   return (
@@ -30,64 +23,22 @@ const MarketingDigital = () => {
       <SEO {...seoConfig.marketingDigital} />
       <MainLayout>
         <MarketingHero />
-        <MarketingValue />
-        <MarketingServices />
-        <MarketingShowcase />
-        <MarketingPacks />
-        <MarketingCost />
-        <MarketingBranding />
-        <MarketingWork />
-        <MarketingProcess />
-
-        {/* FAQ */}
-        <section id="faq" className="py-16 md:py-24">
-          <div className="container max-w-3xl">
-            <SectionHeading
-              badge="Dudas frecuentes"
-              title="Preguntas frecuentes sobre marketing digital para detailing"
-            />
-            <Accordion type="single" collapsible className="w-full">
-              {marketingFaqs.map((faq, i) => (
-                <AccordionItem key={faq.question} value={`item-${i}`} className="border-border/60">
-                  <AccordionTrigger className="text-left text-base font-semibold hover:text-brand">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </section>
-
-        <MarketingLinks />
-
-        {/* Final CTA */}
-        <section className="py-16 md:py-24 relative overflow-hidden border-t border-border/60">
-          <div className="absolute inset-0 -z-10 marketing-aurora opacity-80" aria-hidden="true" />
-          <div className="container relative text-center max-w-3xl">
-            <AnimatedSection animation="fade-up">
-              <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-5">
-                Habla con nosotros por WhatsApp{" "}
-                <span className="gradient-text">y te decimos qué pack encaja</span>
-              </h2>
-              <p className="text-lg text-muted-foreground mb-9">
-                Cuéntanos en un mensaje qué haces y dónde estás. Te decimos qué pack encaja mejor y
-                qué resultados puedes esperar. Sin compromiso.
-              </p>
-              <Button size="lg" asChild className="text-base shadow-primary">
-                <a
-                  href={waLink("Hola, quiero información sobre los servicios de marketing digital para mi negocio de detailing.")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Hablar por WhatsApp
-                </a>
-              </Button>
-            </AnimatedSection>
-          </div>
-        </section>
+        <Suspense fallback={<Placeholder />}>
+          <MarketingFunnel />
+          <MarketingServices />
+          <MarketingShowcase />
+          <MarketingPacks />
+          <MarketingProcess />
+          <MarketingFaq />
+          <MarketingLinks />
+          <CtaBand
+            title="¿Qué pack encaja con tu centro?"
+            text="Cuéntanos en un mensaje qué haces y dónde estás, y te decimos qué pack encaja mejor y qué puedes esperar. Sin compromiso."
+            whatsappText="Hola, quiero información sobre los servicios de marketing digital para mi negocio de detailing."
+            primaryLabel="Enviar una consulta"
+            primaryHref="/contacto?curso=general"
+          />
+        </Suspense>
       </MainLayout>
     </>
   );

@@ -3,7 +3,7 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { HomeHero } from '@/components/home/HomeHero';
 import { HomeCourses } from '@/components/home/HomeCourses';
 import { SEO } from '@/components/SEO';
-import { generateHomeSEO } from '@/utils/seoConfig';
+import { generateHomeSEO } from '@/utils/seoCore';
 import { formations } from '@/data/formations';
 import { formationDetails } from '@/data/formationDetails';
 

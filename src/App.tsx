@@ -1,12 +1,24 @@
 import { lazy, Suspense } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import type { ComponentType } from "react";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
 import { CookieBanner } from "./components/shared/CookieBanner";
+
+// Avisos emergentes: se cargan aparte para no pesar en la primera carga.
+// Sonner lo usan los formularios públicos; el Toaster de Radix, solo el panel de admin.
+const Sonner = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
+const AdminToaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
+
+function Toasts() {
+  const { pathname } = useLocation();
+  return (
+    <Suspense fallback={null}>
+      <Sonner />
+      {pathname.startsWith("/admin") && <AdminToaster />}
+    </Suspense>
+  );
+}
 
 // Lazy-loaded pages — code splitting por ruta
 const JornadasIntensivas = lazy(() => import("./pages/JornadasIntensivas"));
@@ -16,8 +28,8 @@ const FormationDetail = lazy(() => import("./pages/FormationDetail"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
 const Contact = lazy(() => import("./pages/Contact"));
 const CarreraDetailing = lazy(() => import("./pages/CarreraDetailing"));
-const Blog = lazy(() => import("./pages/Blog"));
-const BlogPostPage = lazy(() => import("./pages/BlogPost"));
+const Blog = withQuery(() => import("./pages/Blog"));
+const BlogPostPage = withQuery(() => import("./pages/BlogPost"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PoliticaPrivacidad = lazy(() => import("./pages/PoliticaPrivacidad"));
 const Glossary = lazy(() => import("./pages/Glossary"));
@@ -26,15 +38,29 @@ const CalculadoraDilucion = lazy(() => import("./pages/CalculadoraDilucion"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 
 const AdminProfiles = lazy(() => import("./pages/AdminProfiles"));
-const AdminContacts = lazy(() => import("./pages/AdminContacts"));
-const AdminBlog = lazy(() => import("./pages/AdminBlog"));
+const AdminContacts = withQuery(() => import("./pages/AdminContacts"));
+const AdminBlog = withQuery(() => import("./pages/AdminBlog"));
 const Gracias = lazy(() => import("./pages/Gracias"));
 const MapaSitio = lazy(() => import("./pages/MapaSitio"));
 const CursoDetailingCiudad = lazy(() => import("./pages/CursoDetailingCiudad"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
 const MarketingDigital = lazy(() => import("./pages/MarketingDigital"));
 
-const queryClient = new QueryClient();
+// Páginas que usan React Query: se envuelven con su proveedor al cargarse.
+function withQuery(load: () => Promise<{ default: ComponentType }>) {
+  return lazy(() =>
+    Promise.all([load(), import("@/lib/query")]).then(([page, q]) => {
+      const Page = page.default;
+      return {
+        default: () => (
+          <q.QueryProvider>
+            <Page />
+          </q.QueryProvider>
+        ),
+      };
+    })
+  );
+}
 
 // Branded loading fallback for Suspense — shows spinner instead of blank screen
 const PageFallback = () => (
@@ -48,11 +74,8 @@ const PageFallback = () => (
 
 const App = () => (
   <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
         <BrowserRouter>
+          <Toasts />
           <CookieBanner />
           <Suspense fallback={<PageFallback />}>
             <Routes>
@@ -127,8 +150,6 @@ const App = () => (
             </Routes>
           </Suspense>
         </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
   </HelmetProvider>
 );
 

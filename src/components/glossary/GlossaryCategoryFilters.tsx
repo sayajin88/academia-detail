@@ -1,6 +1,6 @@
-import { Car, Armchair, Shield, Wrench, FlaskConical, Cog } from 'lucide-react';
 import type { GlossaryCategory } from '@/data/glossaryData';
 import { categoryLabels } from '@/data/glossaryData';
+import { cn } from '@/lib/utils';
 
 interface GlossaryCategoryFiltersProps {
   activeCategory: GlossaryCategory | 'all';
@@ -8,41 +8,28 @@ interface GlossaryCategoryFiltersProps {
   counts: Record<string, number>;
 }
 
-const categoryIcons: Record<GlossaryCategory, React.ElementType> = {
-  exterior: Car,
-  interior: Armchair,
-  protecciones: Shield,
-  herramientas: Wrench,
-  quimicos: FlaskConical,
-  tecnicas: Cog,
-};
+const categories: (GlossaryCategory | 'all')[] = ['all', 'exterior', 'interior', 'protecciones', 'herramientas', 'quimicos', 'tecnicas'];
 
 export function GlossaryCategoryFilters({ activeCategory, onCategoryChange, counts }: GlossaryCategoryFiltersProps) {
-  const categories: (GlossaryCategory | 'all')[] = ['all', 'exterior', 'interior', 'protecciones', 'herramientas', 'quimicos', 'tecnicas'];
-
   return (
-    <div className="flex flex-wrap justify-center gap-2">
+    <div role="group" aria-label="Filtrar por categoría" className="-mx-4 flex gap-2 overflow-x-auto px-4 scrollbar-hide sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
       {categories.map((cat) => {
-        const isActive = activeCategory === cat;
-        const Icon = cat !== 'all' ? categoryIcons[cat] : null;
-        const label = cat === 'all' ? 'Todos' : categoryLabels[cat];
-        const count = cat === 'all' ? counts['all'] : (counts[cat] || 0);
-
+        const active = activeCategory === cat;
         return (
           <button
             key={cat}
+            type="button"
             onClick={() => onCategoryChange(cat)}
-            className={`flex items-center gap-1.5 px-3 py-2 md:px-4 md:py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
-              isActive
-                ? 'bg-primary/20 text-brand border-primary/40 shadow-sm shadow-primary/10'
-                : 'bg-card/50 text-muted-foreground border-border hover:border-primary/30 hover:text-foreground'
-            }`}
+            aria-pressed={active}
+            className={cn(
+              'inline-flex min-h-[40px] shrink-0 items-center gap-1.5 rounded-full border px-4 text-sm font-semibold transition-colors',
+              active
+                ? 'border-primary bg-primary text-primary-foreground'
+                : 'border-border bg-card text-muted-foreground hover:border-white/25 hover:text-foreground',
+            )}
           >
-            {Icon && <Icon className="h-3.5 w-3.5" />}
-            <span>{label}</span>
-            <span className={`text-xs px-1.5 py-0.5 rounded-full ${isActive ? 'bg-primary/30' : 'bg-muted/50'}`}>
-              {count}
-            </span>
+            {cat === 'all' ? 'Todos' : categoryLabels[cat]}
+            <span className={cn('text-xs font-normal', active ? 'text-white/80' : 'text-muted-foreground')}>{counts[cat] ?? 0}</span>
           </button>
         );
       })}

@@ -1,79 +1,54 @@
-import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import { Button } from "@/components/ui/button";
-import { Home, ArrowLeft } from "lucide-react";
-import detailParkLogo from "@/assets/detail-park-logo-white.png";
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { ArrowRight } from 'lucide-react';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { Button } from '@/components/ui/button';
+
+const suggestions = [
+  { name: 'Curso de detailing profesional', url: '/curso-detailing-profesional' },
+  { name: 'Carrera Detailing', url: '/formacion-profesional-detailing' },
+  { name: 'Jornada Zero', url: '/jornada-zero-detailing' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Mapa del sitio', url: '/mapa-del-sitio' },
+];
 
 const NotFound = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
+    <MainLayout>
       <Helmet>
         <title>Página no encontrada | Academia Detail</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
-
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse delay-1000" />
-      
-      <div className="relative z-10 text-center px-4 max-w-lg mx-auto">
-        {/* Logo */}
-        <img 
-          src={detailParkLogo} 
-          alt="Detail Park Academy" 
-          className="h-12 md:h-14 mx-auto mb-8 opacity-80"
-        />
-        
-        {/* 404 Number */}
-        <h1 className="text-8xl md:text-9xl font-black text-brand mb-4 leading-none">
-          404
-        </h1>
-        
-        {/* Error Message */}
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-          Página no encontrada
-        </h2>
-        
-        <p className="text-muted-foreground mb-8 text-base md:text-lg leading-relaxed">
-          Lo sentimos, la página que buscas no existe o ha sido movida a otra ubicación.
-        </p>
-        
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button asChild size="lg" className="w-full sm:w-auto">
-            <Link to="/">
-              <Home className="h-4 w-4 mr-2" />
-              Volver al Inicio
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
-            <Link to="/contacto">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Contactar
-            </Link>
-          </Button>
-        </div>
-        
-        {/* Helpful links */}
-        <div className="mt-12 pt-8 border-t border-border/50">
-          <p className="text-sm text-muted-foreground mb-4">¿Buscas formación en detailing?</p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            <Link to="/curso-detailing-iniciacion" className="text-brand hover:underline">
-              Jornada Zero
-            </Link>
-            <span className="text-muted-foreground">•</span>
-            <Link to="/curso-detailing-profesional" className="text-brand hover:underline">
-              Cursos Detailing
-            </Link>
-            <span className="text-muted-foreground">•</span>
-            <Link to="/formacion-profesional-detailing" className="text-brand hover:underline">
-              Carrera Completa
-            </Link>
+      <section className="ds-section">
+        <div className="ds-narrow flex flex-col items-center text-center">
+          <p className="ds-eyebrow">Error 404</p>
+          <h1 className="ds-h1 mt-4 text-foreground">Esta página no existe</h1>
+          <p className="ds-lead mt-5 max-w-xl">
+            Puede que la dirección esté mal escrita o que la página se haya movido. Estas son las más visitadas:
+          </p>
+          <ul className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3">
+            {suggestions.map((s) => (
+              <li key={s.url}>
+                <Link to={s.url} className="text-[0.9375rem] font-semibold text-brand underline-offset-4 hover:underline">
+                  {s.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-10 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
+            <Button asChild size="lg" className="h-12 px-7 text-base font-semibold">
+              <Link to="/">
+                Volver al inicio
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="h-12 px-7 text-base font-semibold">
+              <Link to="/contacto">Contactar</Link>
+            </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </MainLayout>
   );
 };
 

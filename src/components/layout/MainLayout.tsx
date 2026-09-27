@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { whatsappLink } from '@/data/site';
@@ -11,6 +11,16 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children, hideWhatsApp = false }: MainLayoutProps) {
+  // El aviso de cookies ocupa la parte baja en móvil: mientras se ve, el botón de WhatsApp se aparta.
+  const [cookieBanner, setCookieBanner] = useState(
+    () => typeof window !== 'undefined' && Boolean((window as Window & { __cookieBannerVisible?: boolean }).__cookieBannerVisible)
+  );
+  useEffect(() => {
+    const onChange = (e: Event) => setCookieBanner(Boolean((e as CustomEvent<{ visible: boolean }>).detail?.visible));
+    window.addEventListener('cookie-banner-visibility', onChange);
+    return () => window.removeEventListener('cookie-banner-visibility', onChange);
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Enlace para saltar al contenido (teclado y lectores de pantalla) */}
@@ -25,7 +35,7 @@ export function MainLayout({ children, hideWhatsApp = false }: MainLayoutProps) 
         {children}
       </main>
       <Footer />
-      {!hideWhatsApp && (
+      {!hideWhatsApp && !cookieBanner && (
         <a
           href={whatsappLink('Hola, quiero información sobre los cursos de Academia Detail.')}
           target="_blank"

@@ -24,13 +24,14 @@ const URL_NAME_MAP: Record<string, string> = {
   'curso-ppf-proteccion-pintura': 'Curso PPF',
   'curso-restauracion-vehiculos': 'Curso Restauración',
   'formacion-profesional-detailing': 'Carrera Detailing',
-  'curso-detailing-iniciacion': 'Jornada Zero',
+  'curso-detailing-iniciacion': 'Jornadas de iniciación',
+  'jornada-zero-detailing': 'Jornada Zero',
+  'up-detail-evento': 'Up Detail',
   'quienes-somos': 'Quiénes Somos',
   'contacto': 'Contacto',
   'galeria': 'Galería',
   'glosario-detailing': 'Glosario de Detailing',
   'calculadora-dilucion-detailing': 'Calculadora de Dilución',
-  'centros-detailing-espana': 'Centros Detailing España',
   'blog': 'Blog',
 };
 
@@ -157,8 +158,7 @@ export const localBusinessSchema = {
     "Captación de Clientes VIP",
     "Cálculo de Márgenes de Beneficio",
     "Escalado de Negocios de Detailing",
-    "Formación Práctica en Taller Real",
-    "Mentoría Empresarial Detailing"
+    "Formación Práctica en Taller Real"
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -169,7 +169,7 @@ export const localBusinessSchema = {
         "itemOffered": {
           "@type": "Course",
           "name": "Jornada Zero - Experiencia de Inmersión",
-          "description": "Tu primer contacto con el detailing profesional por solo €97. Prueba antes de invertir."
+          "description": "Un día para empezar en el detailing profesional con el equipo de Detail Park (97 € + IVA)."
         }
       },
       {
@@ -571,10 +571,10 @@ export const courseFormacionProfesionalSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
   "@id": "https://academiadetail.com/formacion-profesional-detailing/#course",
-  "name": "Formación Profesional Detailing - Programa Completo",
-  "description": "Programa completo de 1 mes con 4 certificaciones profesionales: Detailing, Car Wrapping, PPF y Restauración. Incluye módulo exclusivo de negocio y mentoría empresarial.",
-  "url": "https://academiadetail.com/formacion-profesional-detailing/",
-  "image": "https://academiadetail.com/og-detailing-profesional.jpg",
+  "name": "Carrera Detailing - Formación profesional de detailing",
+  "description": "Programa de 1 mes en Detail Park (Alicante) con los cursos de detailing, car wrapping (dos niveles) y PPF, práctica en el taller con coches de clientes y módulo de negocio.",
+  "url": "https://academiadetail.com/formacion-profesional-detailing",
+  "image": "https://academiadetail.com/og-carrera-detailing.jpg",
   "provider": {
     "@type": "EducationalOrganization",
     "@id": "https://academiadetail.com/#organization",
@@ -584,10 +584,9 @@ export const courseFormacionProfesionalSchema = {
   "offers": {
     "@type": "Offer",
     "category": "Paid",
+    "price": "7997",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/PreOrder",
-    "validFrom": "2025-01-01",
-    "url": "https://academiadetail.com/formacion-profesional-detailing/"
+    "url": "https://academiadetail.com/formacion-profesional-detailing"
   },
   "hasCourseInstance": {
     "@type": "CourseInstance",
@@ -607,15 +606,13 @@ export const courseFormacionProfesionalSchema = {
     "inLanguage": "es"
   },
   "teaches": [
-    "Detailing profesional completo",
-    "Car wrapping e instalación de vinilos",
+    "Corrección de pintura, pulido y tratamientos cerámicos",
+    "Car wrapping e instalación de vinilo",
     "Instalación de PPF",
-    "Restauración de vehículos",
-    "Cómo montar y escalar un negocio de detailing",
-    "Captación de clientes de alta gama",
-    "Presupuestación y márgenes de beneficio"
+    "Precios, márgenes y presupuestos",
+    "Captación y atención de clientes",
+    "Organización de un taller de detailing"
   ],
-  "numberOfCredits": 4,
   "timeRequired": "P1M",
   "educationalLevel": "Professional",
   "inLanguage": "es"
@@ -624,10 +621,10 @@ export const courseFormacionProfesionalSchema = {
 export const courseJornadaZeroSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
-  "@id": "https://academiadetail.com/curso-detailing-iniciacion/#course",
+  "@id": "https://academiadetail.com/jornada-zero-detailing/#course",
   "name": "Jornada Zero - Iniciación al Detailing Profesional",
-  "description": "Tu primer contacto con el detailing profesional. 1 día intensivo para descubrir si el detailing es tu camino antes de invertir en formación completa. Precio de entrada: €97. Plazas cerradas actualmente: próxima convocatoria próximamente.",
-  "url": "https://academiadetail.com/curso-detailing-iniciacion/",
+  "description": "Tu primer contacto con el detailing profesional: un día en el taller de Detail Park (Alicante) practicando sobre un vehículo real, con material, comida y certificado de asistencia. 97 € + IVA, descontables de un curso completo. Próxima edición: próximamente.",
+  "url": "https://academiadetail.com/jornada-zero-detailing",
   "image": "https://academiadetail.com/og-jornada-zero.jpg",
   "provider": {
     "@type": "EducationalOrganization",
@@ -642,12 +639,12 @@ export const courseJornadaZeroSchema = {
     "priceCurrency": "EUR",
     "availability": "https://schema.org/PreOrder",
     "validFrom": "2025-01-01",
-    "url": "https://academiadetail.com/curso-detailing-iniciacion/"
+    "url": "https://academiadetail.com/jornada-zero-detailing"
   },
   "hasCourseInstance": {
     "@type": "CourseInstance",
     "courseMode": "onsite",
-    "courseWorkload": "PT10H",
+    "courseWorkload": "PT8H",
     "location": {
       "@type": "Place",
       "name": "Detail Park",

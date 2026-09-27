@@ -1,109 +1,96 @@
-import { useParams, Navigate } from 'react-router-dom';
-import { Calendar, Clock, User } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { lazy, Suspense, useMemo, useRef } from 'react';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { SEO } from '@/components/SEO';
+import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
 import { BlogArticleContent } from '@/components/blog/BlogArticleContent';
-import { BlogSidebar } from '@/components/blog/BlogSidebar';
+import { BlogTableOfContents } from '@/components/blog/BlogTableOfContents';
+import { BlogReadingProgress } from '@/components/blog/BlogReadingProgress';
 import { BlogShareButtons } from '@/components/blog/BlogShareButtons';
-import { BlogRelatedPosts } from '@/components/blog/BlogRelatedPosts';
-import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
-import { BlogDilutionBanner } from '@/components/blog/BlogDilutionBanner';
-import { RelatedCourses } from '@/components/shared/RelatedCourses';
-import { AnimatedSection } from '@/components/shared/AnimatedSection';
-import { PageBreadcrumbs } from '@/components/shared/PageBreadcrumbs';
-import { getRelatedPosts, categoryLabels, categoryColors } from '@/data/blogPosts';
-import { useDbBlogPost } from '@/hooks/useBlogPosts';
+import { CoursePromo, courseForBlogCategory } from '@/components/blog/BlogPostCTA';
+import { categoryLabel, formatPostDate, getSectionAnchors, pickRelatedPosts } from '@/components/blog/blogUtils';
+import { useBlogPosts, useDbBlogPost } from '@/hooks/useBlogPosts';
+import { SITE } from '@/data/site';
+
+const BlogRelatedPosts = lazy(() => import('@/components/blog/BlogRelatedPosts').then((m) => ({ default: m.BlogRelatedPosts })));
+const CtaBand = lazy(() => import('@/components/ds/CtaBand').then((m) => ({ default: m.CtaBand })));
 
 const BASE_URL = 'https://academiadetail.com';
 
 export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: post, isLoading } = useDbBlogPost(slug);
-  const [readProgress, setReadProgress] = useState(0);
+  const { posts } = useBlogPosts();
   const articleRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!articleRef.current) return;
-      const el = articleRef.current;
-      const top = el.offsetTop;
-      const height = el.offsetHeight;
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const progress = Math.min(100, Math.max(0, ((scrollY - top + windowHeight * 0.3) / height) * 100));
-      setReadProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const anchors = useMemo(() => (post ? getSectionAnchors(post.sections) : []), [post]);
+  const related = useMemo(() => (post ? pickRelatedPosts(post, posts) : []), [post, posts]);
 
   if (isLoading) {
-    return <MainLayout><div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" /></div></MainLayout>;
+    return (
+      <MainLayout>
+        <div className="ds-container min-h-[70vh] py-24" aria-busy="true" aria-label="Cargando artículo" />
+      </MainLayout>
+    );
   }
 
-  if (!post) {
-    return <Navigate to="/blog" replace />;
-  }
+  if (!post) return <Navigate to="/blog" replace />;
 
-  const relatedPosts = getRelatedPosts(post);
   const fullUrl = `/blog/${post.slug}`;
-
-  const postImage = post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`;
+  const postImage = post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image || '/og-image.png'}`;
+  const toc = post.sections.map((s, i) => ({ id: anchors[i], title: s.title }));
+  const isFounder = post.author.name === SITE.founder;
+  const updatedAt = (post as { updatedAt?: string }).updatedAt;
 
   const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": post.title,
-    "description": post.excerpt,
-    "image": postImage,
-    "datePublished": post.publishedAt,
-    "dateModified": (post as any).updatedAt || post.publishedAt,
-    "author": {
-      "@type": "Person",
-      "name": post.author.name,
-      "jobTitle": post.author.role,
-      "worksFor": { "@type": "Organization", "name": "Academia Detail" }
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: postImage,
+    datePublished: post.publishedAt,
+    dateModified: updatedAt || post.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: post.author.name,
+      jobTitle: post.author.role,
+      worksFor: { '@type': 'Organization', name: 'Academia Detail' },
     },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Academia Detail",
-      "url": BASE_URL,
-      "logo": { "@type": "ImageObject", "url": `${BASE_URL}/og-image.png` }
+    publisher: {
+      '@type': 'Organization',
+      name: 'Academia Detail',
+      url: BASE_URL,
+      logo: { '@type': 'ImageObject', url: `${BASE_URL}/og-image.png` },
     },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": `${BASE_URL}${fullUrl}` },
-    "isPartOf": { "@type": "Blog", "@id": `${BASE_URL}/blog`, "name": "Blog de Academia Detail" },
-    "articleSection": categoryLabels[post.category],
-    "wordCount": post.sections.reduce((acc, s) => acc + s.content.split(/\s+/).length, 0),
-    "keywords": post.tags.join(', '),
-    "speakable": {
-      "@type": "SpeakableSpecification",
-      "cssSelector": ["h1", ".blog-excerpt"]
-    }
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE_URL}${fullUrl}` },
+    isPartOf: { '@type': 'Blog', '@id': `${BASE_URL}/blog`, name: 'Blog de Academia Detail' },
+    articleSection: categoryLabel(post.category),
+    wordCount: post.sections.reduce((acc, s) => acc + s.content.split(/\s+/).length, 0),
+    keywords: post.tags.join(', '),
+    speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '.blog-excerpt'] },
   };
 
   const personSchema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": post.author.name,
-    "jobTitle": post.author.role,
-    "worksFor": { "@type": "Organization", "name": "Academia Detail", "url": BASE_URL },
-    "sameAs": ["https://www.instagram.com/danidetailoficial/"]
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: post.author.name,
+    jobTitle: post.author.role,
+    worksFor: { '@type': 'Organization', name: 'Academia Detail', url: BASE_URL },
+    sameAs: ['https://www.instagram.com/danidetailoficial/'],
   };
 
   const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": BASE_URL },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${BASE_URL}/blog` },
-      { "@type": "ListItem", "position": 3, "name": post.title, "item": `${BASE_URL}${fullUrl}` }
-    ]
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: BASE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE_URL}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `${BASE_URL}${fullUrl}` },
+    ],
   };
 
   return (
-    <MainLayout>
+    <>
       <SEO
         // Marca solo si cabe: Google corta los títulos de más de ~60 caracteres.
         title={post.title.length <= 42 ? `${post.title} | Academia Detail` : post.title}
@@ -114,147 +101,101 @@ export default function BlogPostPage() {
         image={postImage}
         schema={[articleSchema, breadcrumbSchema, personSchema]}
       />
+      <MainLayout>
+        <BlogReadingProgress targetRef={articleRef} />
 
-      {/* Reading progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-[60] h-0.5 bg-transparent">
-        <div
-          className="h-full bg-primary transition-[width] duration-150 ease-out"
-          style={{ width: `${readProgress}%` }}
-        />
-      </div>
+        <article ref={articleRef} className="bg-background">
+          <div className="ds-container pt-2">
+            <Breadcrumbs items={[{ name: 'Blog', url: '/blog' }, { name: post.title, url: fullUrl }]} />
+          </div>
 
-      <article ref={articleRef}>
-        {/* Immersive Hero */}
-        <AnimatedSection animation="fade-in" duration="fast">
-          <header className="relative w-full overflow-hidden">
-            {/* Background image */}
-            <div className="absolute inset-0 min-h-[420px] md:min-h-[500px]">
-              <img
-                src={post.image}
-                alt={post.imageAlt}
-                className="w-full h-full object-cover"
-                fetchPriority="high"
-                loading="eager"
-                width={1200}
-                height={630}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent" />
-            </div>
+          <div className="ds-container grid gap-10 pb-16 pt-4 md:pb-24 lg:grid-cols-[minmax(0,1fr)_240px] lg:gap-16">
+            <div className="min-w-0">
+              <header className="max-w-[68ch] text-[1.0625rem] md:text-lg">
+                <p className="ds-eyebrow mb-4">{categoryLabel(post.category)}</p>
+                <h1 className="text-[2.25rem] leading-[1.05] text-foreground md:text-[3rem] lg:text-[3.5rem]">{post.title}</h1>
+                <p className="blog-excerpt ds-lead mt-5">{post.excerpt}</p>
+                <div className="mt-6 flex items-center gap-3">
+                  <img
+                    src={post.author.image}
+                    alt=""
+                    width={44}
+                    height={44}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-11 w-11 shrink-0 rounded-full object-cover"
+                  />
+                  <p className="text-sm leading-snug text-muted-foreground">
+                    <span className="block font-semibold text-foreground">{post.author.name}</span>
+                    <time dateTime={post.publishedAt}>{formatPostDate(post.publishedAt)}</time>
+                    <span aria-hidden="true"> · </span>
+                    {post.readingTime} de lectura
+                  </p>
+                </div>
+              </header>
 
-            {/* Hero content */}
-            <div className="relative container mx-auto px-4 pt-32 md:pt-44 pb-10 md:pb-14 min-h-[420px] md:min-h-[500px] flex flex-col justify-end">
-              {/* Breadcrumbs */}
-              <div className="absolute top-28 md:top-36 left-4 right-4">
-                <PageBreadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: post.title }]} />
-              </div>
-              <div className="flex items-center gap-2.5 mb-5">
-                <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full border ${categoryColors[post.category]}`}>
-                  {categoryLabels[post.category]}
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-muted/60 text-foreground/80 border border-border/50 backdrop-blur-sm">
-                  <Clock className="h-3 w-3" />
-                  {post.readingTime}
-                </span>
-              </div>
-
-              {/* Title */}
-              <h1
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5 max-w-3xl"
-                style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}
-              >
-                {post.title}
-              </h1>
-
-              {/* Author info */}
-              <div className="flex items-center gap-3">
+              {post.image && (
                 <img
-                  src={post.author.image}
-                  alt={post.author.name}
-                  className="w-10 h-10 md:w-11 md:h-11 rounded-full object-cover border-2 border-primary/30"
-                  width={44}
-                  height={44}
-                  loading="lazy"
+                  src={post.image}
+                  alt={post.imageAlt}
+                  width={1200}
+                  height={675}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="mt-8 aspect-[16/9] w-full rounded-xl bg-muted object-cover"
                 />
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <User className="h-3.5 w-3.5 text-brand" />
-                    <span className="text-sm font-semibold text-foreground">{post.author.name}</span>
+              )}
+
+              <div className="mt-8 lg:hidden">
+                <BlogTableOfContents items={toc} variant="collapsible" />
+              </div>
+
+              <div className="mt-10">
+                <BlogArticleContent sections={post.sections} anchors={anchors} />
+              </div>
+
+              <div className="mt-12 max-w-[68ch] space-y-8 text-[1.0625rem] md:text-lg">
+                <CoursePromo course={courseForBlogCategory(post.category)} />
+
+                <div className="flex flex-col gap-6 border-t border-border pt-8">
+                  <div className="flex items-start gap-4">
+                    <img
+                      src={post.author.image}
+                      alt=""
+                      width={64}
+                      height={64}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-16 w-16 shrink-0 rounded-full object-cover"
+                    />
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">Escrito por</p>
+                      <p className="mt-1 font-bold text-foreground">{post.author.name}</p>
+                      <p className="text-sm text-muted-foreground">{isFounder ? SITE.founderRole : post.author.role}</p>
+                      {isFounder && (
+                        <Link to="/quienes-somos" className="mt-2 inline-block text-sm font-semibold text-brand underline underline-offset-4">
+                          Conoce al equipo
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span>{post.author.role}</span>
-                    <span>·</span>
-                    <time dateTime={post.publishedAt}>
-                      {new Date(post.publishedAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
-                    </time>
-                  </div>
+                  <BlogShareButtons title={post.title} url={fullUrl} />
                 </div>
               </div>
             </div>
-          </header>
-        </AnimatedSection>
 
-        {/* Body: 2-column layout */}
-        <div className="container mx-auto px-4 pt-8 md:pt-12 pb-16 md:pb-24">
-          <div className="flex gap-8 lg:gap-12">
-            {/* Main content */}
-            <div className="flex-1 min-w-0">
-              <AnimatedSection animation="fade-up" delay={100}>
-                <BlogShareButtons title={post.title} url={fullUrl} />
-              </AnimatedSection>
-              <div className="mt-8">
-                <BlogArticleContent sections={post.sections} />
-              </div>
-
-              {/* Dilution Calculator Banner */}
-              <BlogDilutionBanner />
-
-              {/* Tags */}
-              <AnimatedSection animation="fade-up" delay={50}>
-                <div className="mt-10 pt-6 border-t border-border flex flex-wrap gap-2">
-                  {post.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 text-xs bg-muted text-muted-foreground rounded-full border border-border">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              </AnimatedSection>
-
-              {/* Share again at bottom */}
-              <div className="mt-6">
-                <BlogShareButtons title={post.title} url={fullUrl} />
-              </div>
-
-              {/* Related courses */}
-              <RelatedCourses
-                courses={[
-                  { name: 'Curso Detailing Profesional', url: '/curso-detailing-profesional', description: 'Pulido, cerámico y negocio' },
-                  { name: 'Curso Car Wrapping', url: '/curso-vinilado-vehiculos', description: 'Vinilado profesional de vehículos' },
-                  { name: 'Curso PPF', url: '/curso-ppf-proteccion-pintura', description: 'Protección de pintura PPF' },
-                ]}
-              />
-
-              {/* CTA section (replaces newsletter) */}
-              <BlogPostCTA />
-
-              {/* Related posts */}
-              <AnimatedSection animation="fade-up" delay={150}>
-                <BlogRelatedPosts posts={relatedPosts} />
-              </AnimatedSection>
-            </div>
-
-            {/* Sidebar - right (desktop) */}
-            <div className="hidden lg:block w-80 flex-shrink-0">
-              <BlogSidebar readProgress={readProgress} readingTime={post.readingTime} />
-            </div>
+            <aside className="hidden lg:block">
+              <BlogTableOfContents items={toc} />
+            </aside>
           </div>
+        </article>
 
-          {/* Mobile sidebar (after content) */}
-          <div className="lg:hidden mt-12">
-            <BlogSidebar readProgress={readProgress} readingTime={post.readingTime} />
-          </div>
-        </div>
-      </article>
-    </MainLayout>
+        <Suspense fallback={<div className="ds-section" aria-hidden="true" />}>
+          <BlogRelatedPosts posts={related} />
+          <CtaBand />
+        </Suspense>
+      </MainLayout>
+    </>
   );
 }

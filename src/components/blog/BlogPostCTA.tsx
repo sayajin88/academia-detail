@@ -1,87 +1,108 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Star, Headphones, Quote } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { AnimatedSection } from '@/components/shared/AnimatedSection';
-import portfolioFerrari from '@/assets/portfolio-ferrari.png';
+import { Img } from '@/components/ds/Img';
+import { formationDetails } from '@/data/formationDetails';
+import { STATS } from '@/data/site';
+import { formatPrice } from '@/lib/format';
+import { normalizeCategory } from './blogUtils';
+import detailingImg from '@/assets/heroes/hero-detailing.jpg?w=480;720;960&format=webp&as=picture';
+import wrappingImg from '@/assets/heroes/hero-wrapping.jpg?w=480;720;960&format=webp&as=picture';
+import ppfImg from '@/assets/heroes/hero-ppf.jpg?w=480;720;960&format=webp&as=picture';
+import restauracionImg from '@/assets/heroes/hero-restauracion.jpg?w=480;720;960&format=webp&as=picture';
+import carreraImg from '@/assets/instalaciones-curso-ferrari.jpg?w=480;720;960&format=webp&as=picture';
 
-const stats = [
-  { icon: Users, value: '218', label: 'Alumnos Certificados' },
-  { icon: Star, value: '98%', label: 'Satisfacción' },
-  { icon: Headphones, value: '24/7', label: 'Soporte Continuo' },
-];
+export type PromoCourse =
+  | 'curso-detailing-profesional'
+  | 'curso-vinilado-vehiculos'
+  | 'curso-ppf-proteccion-pintura'
+  | 'curso-restauracion-vehiculos'
+  | 'formacion-profesional-detailing';
 
-export function BlogPostCTA() {
+const COURSES: Record<PromoCourse, { name: string; image: ImagetoolsPicture; alt: string; text: string; duration?: string }> = {
+  'curso-detailing-profesional': {
+    name: 'Curso de Detailing Profesional',
+    image: detailingImg,
+    alt: 'Alumno puliendo la carrocería de un coche negro con una pulidora roto-orbital',
+    text: 'Corrección de pintura, pulido con rotativa y roto-orbital, tratamiento cerámico e interiores, con coches reales en el taller.',
+  },
+  'curso-vinilado-vehiculos': {
+    name: 'Curso de Car Wrapping',
+    image: wrappingImg,
+    alt: 'Alumno instalando vinilo en la carrocería de un coche',
+    text: 'Vinilado y cambio de color: tensión, calor, curvas, recortes y acabado de bordes.',
+  },
+  'curso-ppf-proteccion-pintura': {
+    name: 'Curso de PPF',
+    image: ppfImg,
+    alt: 'Instalación de film de protección de pintura en el frontal de un coche azul',
+    text: 'Instalación de film de protección de pintura: corte, colocación en húmedo y zonas complejas.',
+  },
+  'curso-restauracion-vehiculos': {
+    name: 'Curso de Restauración',
+    image: restauracionImg,
+    alt: 'Restauración del interior de un vehículo',
+    text: 'Restauración de cuero, tapicerías y coches clásicos.',
+  },
+  'formacion-profesional-detailing': {
+    name: 'Carrera Detailing',
+    image: carreraImg,
+    alt: 'Alumnos en las instalaciones de Detail Park junto a un Ferrari rojo',
+    text: 'Todas las especialidades más un módulo de negocio: precios, captación de clientes y cómo montar tu propio centro.',
+    duration: 'Programa completo',
+  },
+};
+
+/** Curso que mejor encaja con la categoría de un artículo. */
+export function courseForBlogCategory(category: string): PromoCourse {
+  switch (normalizeCategory(category)) {
+    case 'ppf':
+      return 'curso-ppf-proteccion-pintura';
+    case 'wrapping':
+      return 'curso-vinilado-vehiculos';
+    case 'negocios':
+      return 'formacion-profesional-detailing';
+    default:
+      return 'curso-detailing-profesional';
+  }
+}
+
+interface CoursePromoProps {
+  course: PromoCourse;
+  eyebrow?: string;
+  className?: string;
+}
+
+/** Único bloque promocional de artículos y fichas: el curso relacionado. */
+export function CoursePromo({ course, eyebrow = 'Aprende a hacerlo en el taller', className }: CoursePromoProps) {
+  const info = COURSES[course];
+  const detail = formationDetails[course];
+  const comingSoon = detail?.comingSoon;
+  const meta = [
+    detail?.durationShort ?? info.duration,
+    comingSoon ? 'Próximamente' : detail ? `${formatPrice(detail.price)} + IVA` : null,
+    comingSoon ? null : `Máx. ${STATS.maxAlumnosGrupo} alumnos por grupo`,
+  ].filter(Boolean);
+
   return (
-    <AnimatedSection animation="fade-up" delay={100}>
-      <div className="mt-12 bg-card/50 border border-border rounded-2xl overflow-hidden">
-        <div className="grid md:grid-cols-2 gap-0">
-          {/* Left: text + CTAs */}
-          <div className="p-8 md:p-12 flex flex-col justify-center">
-            <h3
-              className="text-2xl md:text-3xl font-bold text-foreground mb-3"
-              style={{ fontFamily: "'Open Sans', sans-serif", textTransform: 'none', letterSpacing: 'normal' }}
-            >
-              ¿Listo para Dominar el Detailing?
-            </h3>
-            <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-6">
-              Aprende de profesionales con más de 15 años de experiencia en el sector. 
-              Formación 100% práctica en taller real con vehículos de alta gama.
-            </p>
-
-            <div className="flex flex-wrap gap-3 mb-8">
-              <Link to="/contacto">
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 py-5 group">
-                  Inscribirme en Formación
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <Link to="/centros-detailing-espana/unete">
-                <Button variant="outline" className="border-border text-foreground hover:bg-muted rounded-xl px-6 py-5">
-                  Únete al Directorio
-                </Button>
-              </Link>
-            </div>
-
-            {/* Stats row */}
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border">
-              {stats.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <stat.icon className="h-5 w-5 text-brand mx-auto mb-1.5" />
-                  <div className="text-lg font-bold text-foreground">{stat.value}</div>
-                  <div className="text-[11px] text-muted-foreground leading-tight">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: image + testimonial */}
-          <div className="relative hidden md:flex flex-col">
-            <div className="flex-1 relative overflow-hidden">
-              <img
-                src={portfolioFerrari}
-                alt="Trabajo profesional de detailing en Ferrari"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-            </div>
-            
-            {/* Testimonial overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <div className="bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4">
-                <Quote className="h-4 w-4 text-brand mb-2" />
-                <p className="text-sm text-muted-foreground italic leading-relaxed mb-2">
-                  "La formación en Academia Detail cambió mi vida profesional. Hoy tengo mi propio taller con una facturación que nunca imaginé."
-                </p>
-                <div className="text-xs">
-                  <span className="font-semibold text-foreground">Leandro M.</span>
-                  <span className="text-muted-foreground"> · Alumno Promoción 2025</span>
-                </div>
-              </div>
-            </div>
-          </div>
+    <aside className={`ds-card grid overflow-hidden sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] ${className ?? ''}`} aria-label="Curso relacionado">
+      <div className="aspect-[16/9] overflow-hidden sm:aspect-auto">
+        <Img picture={info.image} alt={info.alt} sizes="(min-width: 640px) 280px, 100vw" className="h-full" />
+      </div>
+      <div className="flex flex-col gap-3 p-5 md:p-6">
+        <p className="ds-eyebrow">{eyebrow}</p>
+        <p className="ds-h3 font-bold text-foreground">{info.name}</p>
+        <p className="text-[0.9375rem] leading-relaxed text-muted-foreground">{info.text}</p>
+        <p className="text-sm text-muted-foreground">{meta.join(' · ')}</p>
+        <div className="mt-1">
+          <Button asChild className="h-11 px-5 font-semibold">
+            <Link to={`/${course}`}>
+              {course === 'formacion-profesional-detailing' ? 'Ver el programa' : 'Ver el curso'}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </Button>
         </div>
       </div>
-    </AnimatedSection>
+    </aside>
   );
 }

@@ -5,49 +5,41 @@ import {
   Instagram,
   MapPin,
   PenTool,
-  Eye,
-  Smartphone,
-  Star,
-  Timer,
   type LucideIcon,
 } from "lucide-react";
 
-export const WHATSAPP_NUMBER = "34622773555";
-
-/** Builds a WhatsApp deep link with a pre-filled message */
-export const waLink = (message: string) =>
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-export interface ValueArgument {
-  icon: LucideIcon;
+/** Cómo llega un cliente al taller (diagrama del embudo, en HTML). */
+export interface FunnelStep {
+  eyebrow: string;
   title: string;
   description: string;
+  items: string[];
 }
 
-export const valueArguments: ValueArgument[] = [
+export const funnelSteps: FunnelStep[] = [
   {
-    icon: Eye,
-    title: "Se compra por los ojos",
-    description:
-      "En detailing vendes un resultado visual. Si tus fotos, tu web y tu marca no están a la altura de tu trabajo, el cliente asume que tu acabado tampoco lo estará.",
+    eyebrow: "Te encuentran",
+    title: "Google y redes",
+    description: "Búsquedas locales, ficha de empresa y contenido en Instagram y TikTok.",
+    items: ["«detailing cerca de mí»", "Reel de antes y después"],
   },
   {
-    icon: Timer,
-    title: "Te juzgan en segundos",
-    description:
-      "El cliente decide si te escribe o sigue buscando en el primer vistazo. Una presencia digital ordenada transmite precio alto y profesionalidad antes de hablar contigo.",
+    eyebrow: "Te conocen",
+    title: "Tu web",
+    description: "Servicios con precio orientativo, trabajos reales y reseñas.",
+    items: ["Packs de PPF y cerámico", "Galería de trabajos"],
   },
   {
-    icon: Smartphone,
-    title: "Todo pasa en el móvil",
-    description:
-      "Tu cliente te busca desde el móvil, mira fotos, mira reseñas y escribe por WhatsApp. Si ese camino tiene fricción, pierdes el trabajo sin enterarte.",
+    eyebrow: "Te escriben",
+    title: "Presupuesto",
+    description: "Formulario o WhatsApp en un clic, desde el móvil.",
+    items: ["Mensaje por WhatsApp", "Solicitud con fotos"],
   },
   {
-    icon: Star,
-    title: "Si no apareces, no existes",
-    description:
-      "Google, Google Maps y ahora también ChatGPT o Gemini recomiendan negocios. Sin web ni contenido posicionado, simplemente no estás en esa conversación.",
+    eyebrow: "No se enfrían",
+    title: "Seguimiento",
+    description: "Respuesta rápida y recordatorios hasta que reservan.",
+    items: ["Email de confirmación", "Recordatorio a los 3 días"],
   },
 ];
 
@@ -104,24 +96,25 @@ export const services: ServiceItem[] = [
 ];
 
 export interface Pack {
+  /** Ancla `#pack-<id>` (la usa el marcado Offer de seoConfig) */
   id: string;
   name: string;
   subtitle: string;
-  price: string;
-  oldPrice: string;
-  badge?: string;
-  popular?: boolean;
+  /** Euros, sin IVA, pago único */
+  price: number;
+  /** Etiqueta neutra para orientar la elección */
+  label: string;
+  featured?: boolean;
   features: string[];
 }
 
-export const webPacks: Pack[] = [
+export const packs: Pack[] = [
   {
     id: "landing",
     name: "Página web de arranque",
     subtitle: "Landing page de una sola página",
-    price: "199€",
-    oldPrice: "299€",
-    badge: "Para empezar",
+    price: 199,
+    label: "Para empezar",
     features: [
       "Landing page profesional de una sola página",
       "Diseño a medida con tu identidad visual",
@@ -133,12 +126,11 @@ export const webPacks: Pack[] = [
   },
   {
     id: "profesional",
-    name: "Página web Profesional",
+    name: "Página web profesional",
     subtitle: "Web multi-sección para negocios en crecimiento",
-    price: "889€",
-    oldPrice: "1299€",
-    badge: "Más completo",
-    popular: true,
+    price: 889,
+    label: "La más completa",
+    featured: true,
     features: [
       "Web completa con múltiples secciones y servicios",
       "Páginas de servicio independientes (detailing, PPF, wrapping…)",
@@ -149,17 +141,12 @@ export const webPacks: Pack[] = [
       "Formularios, WhatsApp y medición de contactos",
     ],
   },
-];
-
-export const growthPacks: Pack[] = [
   {
     id: "seo-geo",
-    name: "SEO + Posicionamiento en buscadores de IA",
+    name: "SEO + posicionamiento en buscadores de IA",
     subtitle: "Para que te encuentren en Google y en la IA",
-    price: "99€",
-    oldPrice: "279€",
-    badge: "Potencia tu web",
-    popular: true,
+    price: 99,
+    label: "Para tu web actual",
     features: [
       "Auditoría SEO completa de tu web actual",
       "Optimización de títulos, descripciones y estructura",

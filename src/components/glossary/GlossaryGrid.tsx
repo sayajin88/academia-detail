@@ -1,42 +1,44 @@
 import type { GlossaryTerm } from '@/data/glossaryData';
 import { getTermsByLetter } from '@/data/glossaryData';
-import { GlossaryTermCard } from './GlossaryTermCard';
+import { GlossaryTermRow } from './GlossaryTermCard';
 
 interface GlossaryGridProps {
   terms: GlossaryTerm[];
 }
 
+/** Términos agrupados por letra, en columnas (1 en móvil, 2 en tableta, 3 en escritorio). */
 export function GlossaryGrid({ terms }: GlossaryGridProps) {
-  const grouped = getTermsByLetter(terms);
-  const sortedLetters = Object.keys(grouped).sort();
-
   if (terms.length === 0) {
     return (
-      <div className="text-center py-16">
-        <p className="text-xl text-muted-foreground">No se encontraron términos</p>
-        <p className="text-sm text-muted-foreground/60 mt-2">Prueba con otro término o categoría</p>
+      <div className="ds-card px-6 py-12 text-center">
+        <p className="text-lg font-semibold text-foreground">No hay términos con esa búsqueda</p>
+        <p className="mt-1 text-sm text-muted-foreground">Prueba con otra palabra o elige «Todos».</p>
       </div>
     );
   }
 
+  const grouped = getTermsByLetter(terms);
+  const letters = Object.keys(grouped).sort();
+
   return (
-    <div className="space-y-10">
-      {sortedLetters.map((letter) => (
-        <section key={letter} id={`letra-${letter}`} className="scroll-mt-28">
-          <div className="flex items-center gap-4 mb-5">
-            <span className="text-4xl md:text-5xl font-black text-brand/80 leading-none select-none">
-              {letter}
-            </span>
-            <div className="flex-1 h-px bg-gradient-to-r from-primary/30 to-transparent" />
-            <span className="text-xs text-muted-foreground/50 font-medium">
-              {grouped[letter].length} {grouped[letter].length === 1 ? 'término' : 'términos'}
-            </span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="gap-5 sm:columns-2 lg:columns-3">
+      {letters.map((letter) => (
+        <section
+          key={letter}
+          id={`letra-${letter}`}
+          aria-labelledby={`letra-${letter}-title`}
+          className="ds-card mb-4 scroll-mt-40 overflow-hidden break-inside-avoid md:mb-5"
+        >
+          <h2 id={`letra-${letter}-title`} className="border-b border-border px-4 py-2 text-3xl text-brand md:px-5">
+            {letter}
+          </h2>
+          <ul className="divide-y divide-border">
             {grouped[letter].map((term) => (
-              <GlossaryTermCard key={term.term} term={term} />
+              <li key={term.term}>
+                <GlossaryTermRow term={term} />
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       ))}
     </div>

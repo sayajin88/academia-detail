@@ -1,251 +1,134 @@
+import { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight, Tag } from 'lucide-react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { SEO } from '@/components/SEO';
 import { seoConfig } from '@/utils/seoConfig';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Users, Zap, CalendarDays, Clock, HelpCircle } from 'lucide-react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
+import { SectionHeader } from '@/components/ds/Section';
+import { Img } from '@/components/ds/Img';
+import { NEXT_EDITION } from '@/data/site';
+import { JORNADA_ZERO, JORNADAS_HUB_NAME, UP_DETAIL } from '@/data/jornadas';
+import { formatPrice } from '@/lib/format';
+import jornadaZeroImg from '@/assets/evento-grupo-coche-rojo.jpg?w=480;720;960&format=webp&as=picture';
+import upDetailImg from '@/assets/evento-clase-completa.jpg?w=480;720;960&format=webp&as=picture';
 
-// Images
-import danielLopezInstructor from '@/assets/daniel-lopez-instructor.webp';
-import leandroImg from '@/assets/leandro-curso-detailing.jpg';
-import federicaImg from '@/assets/federica-curso-detailing.jpg';
-import eventoGrupo from '@/assets/evento-grupo-coche-rojo.jpg';
-import eventoAlumnos from '@/assets/evento-alumnos-atentos.jpg';
+const JornadasFaq = lazy(() => import('@/components/jornadas/JornadasFaq').then((m) => ({ default: m.JornadasFaq })));
+const CtaBand = lazy(() => import('@/components/ds/CtaBand').then((m) => ({ default: m.CtaBand })));
 
-const hubFaqs = [
+const Placeholder = () => <div className="ds-section" aria-hidden="true" />;
+
+const formats = [
   {
-    question: '¿Cuál es la diferencia entre Jornada Zero y Up Detail?',
-    answer: 'La Jornada Zero es una experiencia de inmersión con el equipo de Detail Park, ideal para tu primer contacto con el detailing. Up Detail es un formato colaborativo donde se reúnen varios expertos reconocidos a nivel nacional e internacional para ofrecer una visión más amplia del sector.'
+    href: `/${JORNADA_ZERO.slug}`,
+    name: JORNADA_ZERO.name,
+    eyebrow: 'Para empezar desde cero',
+    text: 'Tu primer contacto con el detailing profesional, con el equipo de Detail Park. Practicas sobre un vehículo real y descubres si esto es para ti.',
+    image: jornadaZeroImg,
+    alt: 'Grupo de alumnos alrededor de un coche rojo en el taller de Detail Park',
+    cta: 'Ver la Jornada Zero',
+    rows: [
+      { label: 'Formato', value: 'Práctica guiada en el taller' },
+      { label: 'Duración', value: `${JORNADA_ZERO.duration}, ${JORNADA_ZERO.schedule}` },
+      { label: 'Para quién', value: 'Quien nunca ha trabajado en un taller' },
+      { label: 'Precio', value: `${formatPrice(JORNADA_ZERO.price)} + IVA` },
+      { label: 'Próxima edición', value: NEXT_EDITION },
+    ],
   },
   {
-    question: '¿Tienen el mismo precio?',
-    answer: 'Cada formato tiene su propio precio adaptado a la experiencia que ofrece. La Jornada Zero cuesta 97€ + IVA y Up Detail 349€ + IVA. En ambos casos, el importe se descuenta si continúas con un curso completo.'
-  },
-  {
-    question: '¿Cuál me conviene más si soy principiante?',
-    answer: 'Ambas son perfectas para principiantes. La Jornada Zero te da una base sólida con el equipo de Detail Park. Up Detail te ofrece la perspectiva de varios profesionales reconocidos.'
-  },
-  {
-    question: '¿El importe se descuenta de un curso completo?',
-    answer: 'Sí, en ambos casos. Si decides continuar con cualquier curso completo de la academia, el importe de la jornada se descuenta íntegramente.'
+    href: `/${UP_DETAIL.slug}`,
+    name: UP_DETAIL.name,
+    eyebrow: 'Para aprender mucho en poco tiempo',
+    text: 'Un formato intensivo para aprender lo máximo en el menor tiempo posible: demostraciones de técnicas profesionales con Daniel López y expertos invitados.',
+    image: upDetailImg,
+    alt: 'Alumnos en una sesión de formación en las instalaciones de Detail Park',
+    cta: 'Ver Up Detail',
+    rows: [
+      { label: 'Formato', value: 'Demostración intensiva' },
+      { label: 'Duración', value: UP_DETAIL.duration },
+      { label: 'Para quién', value: 'Quien quiere ver mucha técnica de golpe' },
+      { label: 'Precio', value: `${formatPrice(UP_DETAIL.price)} + IVA` },
+      { label: 'Próxima edición', value: NEXT_EDITION },
+    ],
   },
 ];
 
 export default function JornadasIntensivas() {
   return (
-    <MainLayout>
+    <>
       <SEO {...seoConfig.jornadasHub} />
-
-      {/* Hero Section */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-        
-        <div className="relative container mx-auto px-4 text-center">
-          <Badge className="bg-primary/10 text-brand border-primary/30 mb-6 text-sm px-4 py-1.5">
-            🚀 ¿Nuevo en el Detailing? Empieza aquí
-          </Badge>
-          
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
-            Jornadas Intensivas de{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-glow">
-              Detailing Profesional
-            </span>
-          </h1>
-          
-          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto mb-4">
-            Dos formatos diseñados para que descubras el detailing profesional en un solo día, 
-            con herramientas reales y los mejores profesionales del sector.
-          </p>
-          
-          <p className="text-sm text-brand font-medium">
-            💡 El importe de cualquier jornada se descuenta de tu curso completo
-          </p>
-        </div>
-      </section>
-
-      {/* Cards Section */}
-      <section className="py-8 md:py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
-            
-            {/* Jornada Zero Card */}
-            <div className="relative group rounded-2xl border-2 border-primary/30 bg-card overflow-hidden shadow-lg shadow-primary/5 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
-              {/* Accent line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary-glow to-primary" />
-              
-              {/* Image */}
-              <div className="relative h-56 md:h-64 overflow-hidden">
-                <img 
-                  src={eventoGrupo} 
-                  alt="Jornada Zero - Equipo Detail Park en acción" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
-                
-                {/* Instructor avatar */}
-                <div className="absolute bottom-3 left-4 flex items-center gap-3">
-                  <img 
-                    src={danielLopezInstructor} 
-                    alt="Daniel López" 
-                    className="w-12 h-12 rounded-full border-2 border-primary object-cover"
-                  />
-                  <div>
-                    <p className="text-foreground font-semibold text-sm">Daniel López</p>
-                    <p className="text-muted-foreground text-xs">Detail Park</p>
-                  </div>
-                </div>
-                
-                {/* Price badge */}
-                <div className="absolute top-3 right-3 bg-primary text-primary-foreground px-3 py-1.5 rounded-lg font-bold text-sm shadow-lg">
-                  97€ <span className="text-xs font-normal opacity-90">+ IVA</span>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-5 md:p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Zap className="h-5 w-5 text-brand" />
-                  <h2 className="text-xl md:text-2xl font-bold text-foreground">Jornada Zero</h2>
-                </div>
-                
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                  Tu primera inmersión en el detailing con el equipo de Detail Park. Un día intensivo para descubrir si tienes mente de empresario.
-                </p>
-
-                {/* Details */}
-                <div className="flex flex-wrap gap-3 mb-5">
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    <CalendarDays className="h-3.5 w-3.5 text-brand" />
-                    Sábado 17 Enero 2026
-                  </div>
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    <Clock className="h-3.5 w-3.5 text-brand" />
-                    10:00 - 18:00
-                  </div>
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    <Users className="h-3.5 w-3.5 text-brand" />
-                    Solo 10 plazas
-                  </div>
-                </div>
-
-                <Button asChild variant="hero" size="lg" className="w-full">
-                  <Link to="/jornada-zero-detailing">
-                    Ver Jornada Zero
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-
-            {/* Up Detail Card */}
-            <div className="relative group rounded-2xl border-2 border-border bg-card overflow-hidden shadow-lg hover:shadow-xl hover:border-violet-500/20 transition-all duration-300 hover:-translate-y-1">
-              {/* Accent line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-600 via-purple-500 to-violet-600" />
-              
-              {/* Image */}
-              <div className="relative h-56 md:h-64 overflow-hidden">
-                <img 
-                  src={eventoAlumnos} 
-                  alt="Up Detail - Formación colaborativa con expertos" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
-                
-                {/* Expert avatars */}
-                <div className="absolute bottom-3 left-4 flex items-center">
-                  <div className="flex -space-x-2">
-                    <img src={danielLopezInstructor} alt="Daniel López" className="w-10 h-10 rounded-full border-2 border-card object-cover" />
-                    <img src={leandroImg} alt="Leandro" className="w-10 h-10 rounded-full border-2 border-card object-cover" />
-                    <img src={federicaImg} alt="Federica" className="w-10 h-10 rounded-full border-2 border-card object-cover" />
-                    <div className="w-10 h-10 rounded-full border-2 border-card bg-muted flex items-center justify-center text-xs text-muted-foreground font-semibold">+</div>
-                  </div>
-                  <span className="ml-3 text-muted-foreground text-xs">Expertos invitados</span>
-                </div>
-                
-                {/* Coming soon badge */}
-                <div className="absolute top-3 right-3 bg-violet-600/90 text-white px-3 py-1.5 rounded-lg font-bold text-sm shadow-lg">
-                  Próximamente
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-5 md:p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Users className="h-5 w-5 text-violet-500" />
-                  <h2 className="text-xl md:text-2xl font-bold text-foreground">Up Detail</h2>
-                </div>
-                
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                  Formación colaborativa con los mejores expertos a nivel nacional. Una jornada donde varios profesionales comparten su conocimiento.
-                </p>
-
-                {/* Details */}
-                <div className="flex flex-wrap gap-3 mb-5">
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    <CalendarDays className="h-3.5 w-3.5 text-violet-500" />
-                    Fecha por confirmar
-                  </div>
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
-                    349€ <span className="text-xs">+ IVA</span>
-                  </div>
-                </div>
-
-                <Button asChild variant="outline" size="lg" className="w-full border-violet-500/30 text-violet-500 hover:bg-violet-500/10 hover:text-violet-400">
-                  <Link to="/up-detail-evento">
-                    Descubrir Up Detail
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+      <MainLayout>
+        <section className="ds-section bg-background pt-0 md:pt-0" aria-labelledby="jornadas-title">
+          <div className="ds-container pt-2">
+            <Breadcrumbs items={[{ name: JORNADAS_HUB_NAME, url: '/curso-detailing-iniciacion' }]} />
           </div>
-        </div>
-      </section>
+          <div className="ds-container pt-6 md:pt-10">
+            <SectionHeader
+              as="h1"
+              id="jornadas-title"
+              eyebrow="Jornadas de un día · Alicante"
+              title="Jornadas de iniciación al detailing"
+              lead="Dos formatos de un día para acercarte al detailing profesional en el taller de Detail Park antes de apuntarte a un curso completo."
+            />
 
-      {/* FAQ Section */}
-      <section className="py-12 md:py-20 bg-muted/20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <HelpCircle className="h-5 w-5 text-brand" />
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Preguntas Frecuentes</h2>
-              </div>
-              <p className="text-muted-foreground text-sm">
-                Todo lo que necesitas saber sobre nuestras jornadas intensivas
+            <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
+              {formats.map((f, i) => (
+                <article key={f.href} className="ds-card flex flex-col overflow-hidden">
+                  <Link to={f.href} tabIndex={-1} aria-hidden="true" className="block aspect-[16/10] overflow-hidden">
+                    <Img picture={f.image} alt="" sizes="(min-width: 768px) 480px, 100vw" className="h-full" priority={i === 0} />
+                  </Link>
+                  <div className="flex flex-1 flex-col p-6 md:p-8">
+                    <p className="ds-eyebrow">{f.eyebrow}</p>
+                    <h2 className="mt-2 font-heading text-3xl uppercase text-foreground md:text-4xl">{f.name}</h2>
+                    <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">{f.text}</p>
+                    <dl className="mt-6 flex-1 divide-y divide-border border-y border-border">
+                      {f.rows.map((r) => (
+                        <div key={r.label} className="flex items-baseline justify-between gap-4 py-2.5 text-sm">
+                          <dt className="shrink-0 text-muted-foreground">{r.label}</dt>
+                          <dd className="text-right font-semibold text-foreground">{r.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                    <Button asChild size="lg" className="mt-6 h-12 w-full text-base font-semibold">
+                      <Link to={f.href}>
+                        {f.cta}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                    </Button>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mx-auto mt-8 flex max-w-5xl flex-col gap-3 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+              <p className="flex items-start gap-2">
+                <Tag className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden="true" />
+                En las dos, si después haces un curso completo, el importe de la jornada se descuenta.
+              </p>
+              <p>
+                ¿Ya lo tienes claro?{' '}
+                <Link to="/curso-detailing-profesional" className="font-semibold text-brand underline underline-offset-4">
+                  Curso de detailing
+                </Link>{' '}
+                o{' '}
+                <Link to="/formacion-profesional-detailing" className="font-semibold text-brand underline underline-offset-4">
+                  Carrera Detailing
+                </Link>
               </p>
             </div>
-
-            <Accordion type="single" collapsible className="space-y-3">
-              {hubFaqs.map((faq, index) => (
-                <AccordionItem 
-                  key={index} 
-                  value={`faq-${index}`}
-                  className="bg-card border border-border rounded-xl px-5 data-[state=open]:border-primary/30"
-                >
-                  <AccordionTrigger className="text-left text-sm md:text-base font-medium text-foreground hover:no-underline py-4">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
           </div>
-        </div>
-      </section>
-    </MainLayout>
+        </section>
+
+        <Suspense fallback={<Placeholder />}>
+          <JornadasFaq />
+          <CtaBand
+            title="¿No sabes cuál elegir?"
+            text="Cuéntanos de dónde partes y qué quieres conseguir, y te decimos qué jornada o curso encaja contigo."
+            whatsappText="Hola, quiero información sobre las jornadas de iniciación (Jornada Zero / Up Detail)."
+          />
+        </Suspense>
+      </MainLayout>
+    </>
   );
 }

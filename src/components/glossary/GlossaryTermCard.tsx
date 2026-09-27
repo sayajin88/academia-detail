@@ -1,27 +1,38 @@
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import type { GlossaryTerm } from '@/data/glossaryData';
-import { categoryLabels, categoryColors, categoryBorderLeft, generateSlug } from '@/data/glossaryData';
+import { generateSlug } from '@/data/glossaryData';
 
 interface GlossaryTermCardProps {
   term: GlossaryTerm;
 }
 
+/** Tarjeta compacta: término, definición en dos líneas y enlace a su ficha. */
 export function GlossaryTermCard({ term }: GlossaryTermCardProps) {
   return (
-    <Link to={`/glosario-detailing/${generateSlug(term.term)}`} className="block">
-      <article className={`group bg-card/80 border border-border/60 rounded-xl p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 transition-all duration-300 border-l-[3px] ${categoryBorderLeft[term.category]}`}>
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <h3 className="font-monument text-foreground text-lg tracking-wide leading-tight group-hover:text-brand transition-colors">
-            {term.term}
-          </h3>
-          <span className={`text-xs font-medium px-2.5 py-1 rounded-full border whitespace-nowrap ${categoryColors[term.category]}`}>
-            {categoryLabels[term.category]}
-          </span>
-        </div>
-        <p className="text-[15px] text-muted-foreground leading-relaxed">
-          {term.definition}
-        </p>
-      </article>
+    <Link
+      to={`/glosario-detailing/${generateSlug(term.term)}`}
+      className="ds-card group flex h-full flex-col gap-2 p-5 transition-colors hover:border-white/25"
+    >
+      <h3 className="text-base font-bold text-foreground group-hover:text-brand">{term.term}</h3>
+      <p className="line-clamp-2 flex-1 text-sm leading-relaxed text-muted-foreground">{term.definition}</p>
+      <span className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-brand">
+        Ver definición
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+      </span>
+    </Link>
+  );
+}
+
+/** Fila de la lista del glosario (dentro del bloque de cada letra). */
+export function GlossaryTermRow({ term }: GlossaryTermCardProps) {
+  return (
+    <Link
+      to={`/glosario-detailing/${generateSlug(term.term)}`}
+      className="group block px-4 py-2 transition-colors hover:bg-white/[0.04] md:px-5 md:py-3"
+    >
+      <span className="block text-[0.9375rem] font-semibold text-foreground group-hover:text-brand">{term.term}</span>
+      <span className="mt-0.5 line-clamp-1 text-sm leading-relaxed text-muted-foreground md:line-clamp-2">{term.definition}</span>
     </Link>
   );
 }

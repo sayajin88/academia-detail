@@ -77,7 +77,7 @@ export function Footer() {
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
               Escuela de detailing profesional en las instalaciones de{' '}
-              <a href={SITE.detailParkUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline-offset-4 hover:underline">
+              <a href={SITE.detailParkUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4">
                 Detail Park
               </a>
               , en Alicante.

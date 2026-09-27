@@ -1,96 +1,85 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { SEO } from '@/components/SEO';
+import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
 import { seoConfig } from '@/utils/seoConfig';
 import { GlossarySearch } from '@/components/glossary/GlossarySearch';
 import { GlossaryCategoryFilters } from '@/components/glossary/GlossaryCategoryFilters';
 import { GlossaryAlphabetNav } from '@/components/glossary/GlossaryAlphabetNav';
 import { GlossaryGrid } from '@/components/glossary/GlossaryGrid';
-import { GlossaryEducationalSections } from '@/components/glossary/GlossaryEducationalSections';
-import { glossaryTerms, getAvailableLetters } from '@/data/glossaryData';
+import { glossaryTerms } from '@/data/glossaryData';
 import type { GlossaryCategory } from '@/data/glossaryData';
-import { BookOpen } from 'lucide-react';
-import heroGlosario from '@/assets/heroes/hero-glosario.jpg';
-import { Beaker, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { STATS } from '@/data/site';
+
+const GlossaryEducationalSections = lazy(() =>
+  import('@/components/glossary/GlossaryEducationalSections').then((m) => ({ default: m.GlossaryEducationalSections })),
+);
+const CtaBand = lazy(() => import('@/components/ds/CtaBand').then((m) => ({ default: m.CtaBand })));
 
 const ALL_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const TOTAL_TERMS = glossaryTerms.length;
 
-const Glossary = () => {
+const normalize = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const matches = (q: string) => (t: (typeof glossaryTerms)[number]) => normalize(`${t.term} ${t.definition}`).includes(q);
+
+export default function Glossary() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<GlossaryCategory | 'all'>('all');
   const [activeLetter, setActiveLetter] = useState<string | null>(null);
+  const location = useLocation();
 
-  const filteredTerms = useMemo(() => {
-    let result = glossaryTerms;
+  const searched = useMemo(() => {
+    const q = normalize(searchQuery.trim());
+    return q ? glossaryTerms.filter(matches(q)) : glossaryTerms;
+  }, [searchQuery]);
 
-    if (activeCategory !== 'all') {
-      result = result.filter(t => t.category === activeCategory);
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      result = result.filter(t =>
-        t.term.toLowerCase().includes(q) || t.definition.toLowerCase().includes(q)
-      );
-    }
-
-    return result;
-  }, [searchQuery, activeCategory]);
-
-  const availableLetters = useMemo(() => {
-    return [...new Set(filteredTerms.map(t => t.letter))].sort();
-  }, [filteredTerms]);
+  const filteredTerms = useMemo(
+    () => (activeCategory === 'all' ? searched : searched.filter((t) => t.category === activeCategory)),
+    [searched, activeCategory],
+  );
 
   const counts = useMemo(() => {
-    const base = searchQuery.trim()
-      ? glossaryTerms.filter(t => {
-          const q = searchQuery.toLowerCase().trim();
-          return t.term.toLowerCase().includes(q) || t.definition.toLowerCase().includes(q);
-        })
-      : glossaryTerms;
-
-    const result: Record<string, number> = { all: base.length };
-    base.forEach(t => {
+    const result: Record<string, number> = { all: searched.length };
+    searched.forEach((t) => {
       result[t.category] = (result[t.category] || 0) + 1;
     });
     return result;
-  }, [searchQuery]);
+  }, [searched]);
 
-  const handleSearch = useCallback((query: string) => {
-    setSearchQuery(query);
-  }, []);
+  const availableLetters = useMemo(() => [...new Set(filteredTerms.map((t) => t.letter))].sort(), [filteredTerms]);
+  const letterKey = availableLetters.join('');
 
-  const handleCategoryChange = useCallback((cat: GlossaryCategory | 'all') => {
-    setActiveCategory(cat);
-  }, []);
+  const handleSearch = useCallback((query: string) => setSearchQuery(query), []);
 
-  // Track active letter on scroll
+  // Letra activa del índice: la última cuyo bloque ya ha pasado bajo la barra fija
   useEffect(() => {
-    const handleScroll = () => {
-      const allLetters = getAvailableLetters();
-      let current: string | null = null;
+    if (typeof IntersectionObserver === 'undefined') return;
+    const els = letterKey.split('').map((l) => document.getElementById(`letra-${l}`)).filter((el): el is HTMLElement => !!el);
+    const observer = new IntersectionObserver(
+      () => {
+        let current: string | null = null;
+        for (const el of els) if (el.getBoundingClientRect().top <= 180) current = el.id.replace('letra-', '');
+        setActiveLetter(current);
+      },
+      { rootMargin: '-140px 0px -60% 0px' },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [letterKey]);
 
-      for (const letter of allLetters) {
-        const el = document.getElementById(`letra-${letter}`);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 150) {
-            current = letter;
-          }
-        }
-      }
-      setActiveLetter(current);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Enlaces desde el blog del tipo /glosario-detailing#letra-C
+  useEffect(() => {
+    if (!location.hash.startsWith('#letra-')) return;
+    const el = document.getElementById(location.hash.slice(1));
+    if (el) requestAnimationFrame(() => el.scrollIntoView({ block: 'start' }));
+  }, [location.hash]);
 
   const glossarySeo = seoConfig.glossary;
 
   return (
-    <MainLayout>
+    <>
       <SEO
         title={glossarySeo.title}
         description={glossarySeo.description}
@@ -98,127 +87,64 @@ const Glossary = () => {
         url={glossarySeo.url}
         schema={glossarySeo.schema}
       />
-
-      {/* Hero with background image */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroGlosario})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-brand text-sm font-medium mb-6">
-              <BookOpen className="h-4 w-4" />
-              Glosario Profesional · +{glossaryTerms.length} términos
-            </div>
-            <h1 className="text-3xl md:text-5xl font-black text-foreground mb-4 leading-tight">
-              Glosario de{' '}
-              <span className="text-brand">Detailing Profesional</span>
-            </h1>
-            <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Domina el lenguaje técnico del Car Detailing. Desde PPF hasta descontaminación química, todos los términos que necesitas conocer.
-            </p>
-
-            {/* Search */}
-            <GlossarySearch onSearch={handleSearch} />
-
-            {/* Category Filters */}
-            <div className="mt-6">
-              <GlossaryCategoryFilters
-                activeCategory={activeCategory}
-                onCategoryChange={handleCategoryChange}
-                counts={counts}
-              />
-            </div>
+      <MainLayout>
+        <section className="border-b border-border bg-background">
+          <div className="ds-container pt-2">
+            <Breadcrumbs items={[{ name: 'Glosario de detailing', url: '/glosario-detailing' }]} />
           </div>
-        </div>
-      </section>
-
-      {/* Educational Sections */}
-      <GlossaryEducationalSections />
-
-      {/* Dilution Calculator Banner */}
-      <section className="py-12 bg-card/30 border-y border-border/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 p-3 rounded-lg bg-primary/10 border border-primary/20 mb-4">
-              <Beaker className="h-6 w-6 text-brand" />
+          <div className="ds-container flex flex-col gap-6 pb-10 pt-4 md:pb-14 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="ds-eyebrow mb-4">Glosario · {TOTAL_TERMS} términos</p>
+              <h1 className="ds-h1 max-w-3xl text-foreground">Glosario de detailing profesional</h1>
+              <p className="ds-lead mt-5 max-w-2xl">
+                Los términos que vas a oír en un taller de detailing, explicados en pocas palabras: pulido, protecciones, químicos,
+                herramientas y técnicas.
+              </p>
             </div>
-            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
-              Calculadora de Dilución Interactiva
-            </h2>
-            <p className="text-muted-foreground mb-6 text-sm">
-              Calcula la mezcla exacta de cualquier producto de detailing con nuestra herramienta visual gratuita.
-            </p>
             <Link
               to="/calculadora-dilucion-detailing"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
+              className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-brand underline-offset-4 hover:underline"
             >
-              Usar Calculadora
-              <ArrowRight className="h-4 w-4" />
+              Calculadora de dilución de productos
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Main Content */}
-      <section className="pb-20">
-        <div className="container mx-auto px-4">
-          {/* Mobile Alphabet Nav */}
-          <div className="mb-6 lg:hidden">
-            <GlossaryAlphabetNav
-              letters={ALL_LETTERS}
-              activeLetter={activeLetter}
-              availableLetters={availableLetters}
-            />
-          </div>
-
-          <div className="flex gap-8">
-            {/* Desktop Alphabet Nav */}
-            <aside className="hidden lg:block w-12 flex-shrink-0">
-              <GlossaryAlphabetNav
-                letters={ALL_LETTERS}
-                activeLetter={activeLetter}
-                availableLetters={availableLetters}
-              />
-            </aside>
-
-            {/* Terms Grid */}
-            <div className="flex-1 min-w-0">
-              <GlossaryGrid terms={filteredTerms} />
+        <section className="bg-background pb-16 pt-8 md:pb-24 md:pt-10" aria-label="Términos del glosario">
+          <div className="ds-container">
+            <div className="flex flex-col gap-4">
+              <div className="sm:max-w-md">
+                <GlossarySearch onSearch={handleSearch} />
+              </div>
+              <GlossaryCategoryFilters activeCategory={activeCategory} onCategoryChange={setActiveCategory} counts={counts} />
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-card/50 border-t border-border">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-            ¿Quieres dominar estas técnicas en la práctica?
-          </h2>
-          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            En Academia Detail aprenderás todos estos conceptos de forma práctica en un taller real con vehículos de alta gama.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="/curso-detailing-profesional"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
-            >
-              Ver cursos disponibles
-            </a>
-            <a
-              href="/contacto"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-card border border-border text-foreground font-semibold hover:border-primary/30 transition-colors"
-            >
-              Solicitar información
-            </a>
+          <div className="sticky top-16 z-30 mt-6 border-y border-border bg-background/95 py-2 backdrop-blur md:top-[72px]">
+            <div className="ds-container">
+              <GlossaryAlphabetNav letters={ALL_LETTERS} activeLetter={activeLetter} availableLetters={availableLetters} />
+            </div>
           </div>
-        </div>
-      </section>
-    </MainLayout>
-  );
-};
 
-export default Glossary;
+          <div className="ds-container mt-8">
+            <p className="mb-5 text-sm text-muted-foreground" aria-live="polite">
+              {filteredTerms.length === TOTAL_TERMS
+                ? `${TOTAL_TERMS} términos`
+                : `${filteredTerms.length} de ${TOTAL_TERMS} términos`}
+            </p>
+            <GlossaryGrid terms={filteredTerms} />
+          </div>
+        </section>
+
+        <Suspense fallback={<div className="ds-section" aria-hidden="true" />}>
+          <GlossaryEducationalSections />
+          <CtaBand
+            title="¿Quieres aprenderlo en la práctica?"
+            text={`En los cursos de Academia Detail trabajas estos conceptos con coches reales en el taller de Detail Park, en grupos de ${STATS.maxAlumnosGrupo} alumnos como máximo.`}
+          />
+        </Suspense>
+      </MainLayout>
+    </>
+  );
+}

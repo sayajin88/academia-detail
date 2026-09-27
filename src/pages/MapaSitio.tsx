@@ -1,35 +1,53 @@
 import { Link } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { SEO } from '@/components/SEO';
+import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
 
 const sitemapData = [
   {
-    category: 'Cursos de Detailing',
+    category: 'Cursos',
     links: [
-      { name: 'Curso Detailing Profesional', url: '/curso-detailing-profesional' },
-      { name: 'Curso Car Wrapping', url: '/curso-vinilado-vehiculos' },
-      { name: 'Curso PPF Paint Protection Film', url: '/curso-ppf-proteccion-pintura' },
-      { name: 'Curso Restauración de Vehículos', url: '/curso-restauracion-vehiculos' },
-      { name: 'Formación Profesional Detailing', url: '/formacion-profesional-detailing' },
-      { name: 'Jornada Zero — Iniciación', url: '/jornada-zero-detailing' },
-      { name: 'Jornadas Intensivas', url: '/curso-detailing-iniciacion' },
+      { name: 'Curso de detailing profesional', url: '/curso-detailing-profesional' },
+      { name: 'Curso de car wrapping', url: '/curso-vinilado-vehiculos' },
+      { name: 'Curso de PPF (protección de pintura)', url: '/curso-ppf-proteccion-pintura' },
+      { name: 'Carrera Detailing (formación completa)', url: '/formacion-profesional-detailing' },
+      { name: 'Curso de restauración (próximamente)', url: '/curso-restauracion-vehiculos' },
+    ],
+  },
+  {
+    category: 'Si empiezas desde cero',
+    links: [
+      { name: 'Jornada Zero', url: '/jornada-zero-detailing' },
+      { name: 'Up Detail', url: '/up-detail-evento' },
+      { name: 'Comparar las dos jornadas', url: '/curso-detailing-iniciacion' },
+    ],
+  },
+  {
+    category: 'Cursos por ciudad',
+    links: [
+      { name: 'Curso de detailing en Madrid', url: '/curso-detailing-madrid' },
+      { name: 'Curso de detailing en Barcelona', url: '/curso-detailing-barcelona' },
+      { name: 'Curso de detailing en Valencia', url: '/curso-detailing-valencia' },
+      { name: 'Curso de detailing en Sevilla', url: '/curso-detailing-sevilla' },
+      { name: 'Curso de detailing en Bilbao', url: '/curso-detailing-bilbao' },
     ],
   },
   {
     category: 'Recursos',
     links: [
-      { name: 'Blog de Detailing', url: '/blog' },
-      { name: 'Glosario de Detailing', url: '/glosario-detailing' },
-      { name: 'Calculadora de Dilución', url: '/calculadora-dilucion-detailing' },
-      { name: 'Directorio Centros Detailing España', url: '/centros-detailing-espana' },
+      { name: 'Blog', url: '/blog' },
+      { name: 'Glosario de detailing', url: '/glosario-detailing' },
+      { name: 'Calculadora de dilución', url: '/calculadora-dilucion-detailing' },
+      { name: 'Marketing para detailers', url: '/marketing-digital-detailing' },
     ],
   },
   {
-    category: 'Academia Detail',
+    category: 'Academia',
     links: [
-      { name: 'Quiénes Somos', url: '/quienes-somos' },
+      { name: 'Inicio', url: '/' },
+      { name: 'Quiénes somos', url: '/quienes-somos' },
       { name: 'Contacto', url: '/contacto' },
-      { name: 'Política de Privacidad', url: '/politica-privacidad' },
+      { name: 'Privacidad y aviso legal', url: '/politica-privacidad' },
     ],
   },
 ];
@@ -38,39 +56,31 @@ export default function MapaSitio() {
   return (
     <>
       <SEO
-        title="Mapa del Sitio | Academia Detail"
-        description="Navega por todas las páginas de Academia Detail: cursos de detailing, blog, glosario, directorio y más."
+        title="Mapa del sitio | Academia Detail"
+        description="Todas las páginas de Academia Detail: cursos de detailing, wrapping y PPF, jornadas de iniciación, blog, glosario y herramientas."
         url="/mapa-del-sitio"
       />
       <MainLayout>
-        <section className="py-16 md:py-24">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-10">
-              Mapa del Sitio
-            </h1>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {sitemapData.map((section) => (
-                <div key={section.category}>
-                  <h2 className="text-lg font-semibold text-foreground mb-4 border-b border-border pb-2">
-                    {section.category}
-                  </h2>
-                  <ul className="space-y-2">
-                    {section.links.map((link) => (
-                      <li key={link.url}>
-                        <Link
-                          to={link.url}
-                          className="text-muted-foreground hover:text-brand transition-colors text-sm flex items-center gap-2"
-                        >
-                          <span aria-hidden="true">→</span>
-                          {link.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+        <div className="ds-container pt-2">
+          <Breadcrumbs items={[{ name: 'Mapa del sitio', url: '/mapa-del-sitio' }]} />
+        </div>
+        <section className="ds-container pb-16 pt-4 md:pb-24">
+          <h1 className="ds-h1 mb-10 text-foreground md:mb-14">Mapa del sitio</h1>
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {sitemapData.map((section) => (
+              <nav key={section.category} aria-label={section.category}>
+                <h2 className="mb-4 border-b border-border pb-2 font-sans text-base font-bold normal-case tracking-normal text-foreground">{section.category}</h2>
+                <ul className="flex flex-col gap-2.5">
+                  {section.links.map((link) => (
+                    <li key={link.url}>
+                      <Link to={link.url} className="text-[0.9375rem] text-muted-foreground underline-offset-4 hover:text-brand hover:underline">
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
           </div>
         </section>
       </MainLayout>
