@@ -49,7 +49,8 @@ type Action =
   | "improve-section";
 
 function getPrompt(action: Action, data: Record<string, unknown>): { system: string; user: string } {
-  const base = SITE_CONTEXT;
+  // El modelo no conoce la fecha: sin ella pone años pasados en títulos y datos.
+  const base = SITE_CONTEXT + `\nFecha actual: ${new Date().toISOString().slice(0, 10)}. Si mencionas un año, usa el actual.\n`;
 
   switch (action) {
     case "generate-outline":
