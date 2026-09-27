@@ -47,7 +47,7 @@ export const newBlogPosts: BlogPost[] = [
         title: 'La formación que necesitas para ser Detailer',
         content: 'A diferencia de otras profesiones, el detailing no cuenta aún con una titulación oficial reglada en España. Esto significa que la formación proviene de academias especializadas y de la experiencia directa en taller. Sin embargo, esto no significa que cualquier formación valga: la diferencia entre un curso de calidad y uno mediocre puede marcar tu carrera para siempre.\n\nUna formación de calidad debe incluir: práctica real sobre vehículos de clientes (no sobre paneles de prueba), supervisión directa de instructores con experiencia demostrable en el sector, conocimiento teórico sobre química de productos, tipos de pintura y materiales, y un módulo de negocio que te enseñe a rentabilizar tu inversión en formación.\n\nEl centro donde te formes también importa. Un taller equipado con las últimas herramientas profesionales, como los que encontrarás en [[Detail Park]], te permite aprender con el mismo equipamiento que usarás en tu carrera profesional. Formarte con herramientas obsoletas es un error que muchos principiantes pagan caro.',
         links: [
-          { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true }
+          { text: 'Detail Park', href: 'https://detailpark.com/', rel: 'follow', external: true }
         ]
       },
       {
@@ -158,7 +158,7 @@ export const newBlogPosts: BlogPost[] = [
         title: 'El futuro del PPF y por qué formarte ahora',
         content: 'El mercado del PPF está experimentando un crecimiento exponencial. Según datos del sector, la demanda de instalaciones de PPF ha crecido un 35% interanual en los últimos tres años en España, y la tendencia se acelera.\n\nLos fabricantes de automóviles premium están empezando a ofrecer PPF de fábrica como opción en sus configuradores, lo que normaliza el producto ante el consumidor final y amplía el mercado potencial. Esto significa más clientes buscando instaladores cualificados.\n\nSin embargo, la oferta de instaladores profesionales formados sigue siendo muy inferior a la demanda. Es un cuello de botella que representa una oportunidad enorme para quienes se formen ahora. Un instalador de PPF certificado puede empezar a trabajar con una cartera de clientes casi inmediata.\n\nEn [[Detail Park]] contamos con las instalaciones y el equipamiento más avanzado de España para la formación en PPF, incluyendo plotters de corte de última generación y cabinas de aplicación con control de temperatura y humedad. Si el PPF es tu vocación, este es el momento de formarte.',
         links: [
-          { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true }
+          { text: 'Detail Park', href: 'https://detailpark.com/', rel: 'follow', external: true }
         ]
       }
     ],
@@ -167,8 +167,8 @@ export const newBlogPosts: BlogPost[] = [
   {
     id: '9',
     slug: 'tecnicas-pulido-principiante-experto',
-    title: 'Técnicas de Pulido en 3 Pasos: De Principiante a Detallador Experto',
-    excerpt: 'Aprende técnicas de pulido profesional en 3 pasos. De principiante a experto con las mejores pulidoras y productos del mercado.',
+    title: 'Técnicas de Pulido en 3 Pasos: de Principiante a Experto',
+    excerpt: 'Aprende a pulir un coche en 3 pasos, de principiante a experto: qué pulidora, pads y productos usar en cada fase para un acabado profesional.',
     category: 'detailing',
     author: defaultAuthor,
     publishedAt: '2026-02-01',
@@ -204,7 +204,7 @@ export const newBlogPosts: BlogPost[] = [
         title: 'Después del pulido: proteger el resultado',
         content: 'Un pulido sin protección posterior es un trabajo a medias. Has eliminado la capa de barniz dañada y ahora la superficie está más expuesta que nunca. Necesitas sellar y proteger.\n\nLas opciones de protección post-pulido son: cera carnauba (protección de 1-3 meses, brillo cálido y profundo), sellante sintético (protección de 3-6 meses, más duradero que la cera), [[coating cerámico]] (protección de 2-5 años, la opción más duradera y profesional), o PPF para protección física definitiva.\n\nAntes de aplicar cualquier protección, limpia la superficie con un limpiador de panel (IPA al 20% o un panel wipe específico). Esto elimina residuos de compound y aceites que impedirían la adhesión correcta de la protección.\n\nPara clientes que buscan el máximo valor, la combinación ganadora es: corrección de pintura + coating cerámico profesional. Este paquete puede facturarse entre 800€ y 2.000€ dependiendo del tamaño del vehículo y el nivel de corrección necesario. Aprende a ofrecer estos servicios integrales en [[Detail Park]], donde te formamos para maximizar el valor de cada trabajo.',
         links: [
-          { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true },
+          { text: 'Detail Park', href: 'https://detailpark.com/', rel: 'follow', external: true },
           { text: 'coating cerámico', href: '/glosario-detailing#letra-C', rel: 'follow' }
         ]
       }
@@ -214,8 +214,8 @@ export const newBlogPosts: BlogPost[] = [
   {
     id: '10',
     slug: 'car-wrapping-vs-pintura-mejor-opcion',
-    title: 'Car Wrapping o Pintar el Coche: ¿Cuál es la mejor opción en 2026?',
-    excerpt: 'Car Wrapping vs Pintura: ventajas, costes y durabilidad. Descubre cuál es la mejor opción para cambiar el color de tu coche en 2026.',
+    title: 'Wrapping o Pintar el Coche: Precios, Duración y Cuál Elegir',
+    excerpt: 'Comparamos wrapping y pintura: cuánto cuesta cada opción, cuánto dura, cómo afecta al valor del coche y cuál te conviene según tu caso.',
     category: 'wrapping',
     author: defaultAuthor,
     publishedAt: '2026-01-28',
@@ -267,7 +267,7 @@ export const newBlogPosts: BlogPost[] = [
         title: 'El wrapping como profesión en 2026',
         content: 'Si este artículo te ha despertado el interés por el car wrapping, debes saber que es una de las profesiones con más futuro en el sector automotriz. La demanda de instaladores profesionales supera ampliamente la oferta, y un buen instalador puede facturar entre 4.000€ y 8.000€ mensuales como autónomo.\n\nLa formación es clave: un wrapping mal instalado no solo queda mal estéticamente, sino que puede dañar la pintura al retirarse. La diferencia entre un profesional formado y un aficionado es evidente para cualquier cliente, y los clientes que invierten 3.000-5.000€ en un wrapping exigen un resultado impecable.\n\nEn [[Detail Park]] formamos instaladores de wrapping profesional con las mejores marcas de vinilo del mercado, practicando sobre vehículos reales y aprendiendo las técnicas que marcan la diferencia: conformado perfecto en curvas, sellado de bordes que dura años, y acabados invisibles en juntas y recortes.',
         links: [
-          { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true }
+          { text: 'Detail Park', href: 'https://detailpark.com/', rel: 'follow', external: true }
         ]
       }
     ],
@@ -382,7 +382,7 @@ export const newBlogPosts: BlogPost[] = [
         title: 'Restauración de cuero dañado: técnicas avanzadas',
         content: 'Cuando el cuero presenta daños más allá de la suciedad —decoloración, grietas superficiales, manchas profundas o desgaste en las zonas de fricción—, se requieren técnicas de restauración más avanzadas.\n\nPara decoloración y desgaste de color: existen tintes y pigmentos profesionales específicos para cuero automotriz que permiten re-colorear las zonas afectadas. El proceso requiere: lijar suavemente la zona (con lija de grano 800-1000), aplicar un promotor de adherencia, teñir con el color exacto (se puede mezclar para conseguir la tonalidad precisa), y sellar con un acabado protector.\n\nPara grietas superficiales: se utiliza un relleno flexible de cuero (leather filler) que se aplica en capas finas, se lija entre capas, y se termina con pigmento del color correspondiente.\n\nEstas técnicas avanzadas requieren práctica y formación específica. Un error en la restauración de un asiento de cuero de un Porsche o un Mercedes AMG puede costar miles de euros. Por eso es fundamental formarse con profesionales que dominen estas técnicas, como los instructores de [[Detail Park]].',
         links: [
-          { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true }
+          { text: 'Detail Park', href: 'https://detailpark.com/', rel: 'follow', external: true }
         ]
       },
       {
@@ -501,7 +501,7 @@ export const newBlogPosts: BlogPost[] = [
         title: 'Error 4: Saltarse la descontaminación',
         content: 'Lanzarse a pulir sin una descontaminación previa es un camino seguro hacia arañazos nuevos. La superficie de cualquier coche, por limpio que parezca, está cubierta de partículas microscópicas de contaminación industrial, óxido de frenos, resina de árboles y otros contaminantes que se incrustan en el barniz.\n\nSi empiezas a pulir con estas partículas en la superficie, las arrastrarás con el pad creando arañazos nuevos mientras intentas eliminar los viejos. Es contraproducente y frustrante.\n\nEl proceso correcto siempre incluye: prelavado con espuma, lavado a mano con manopla, descontaminación con clay bar (arcilla) o guante descontaminante, y desengrasado con IPA o panel wipe. Solo entonces la superficie está lista para la pulidora.\n\nEn [[Detail Park]], cada alumno aprende este protocolo completo de preparación antes de tocar una pulidora. Es la base sobre la que se construye todo lo demás.',
         links: [
-          { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true }
+          { text: 'Detail Park', href: 'https://detailpark.com/', rel: 'follow', external: true }
         ]
       },
       {
@@ -574,7 +574,7 @@ export const newBlogPosts: BlogPost[] = [
         title: 'Presupuesto total del kit inicial',
         content: 'Vamos a poner números reales al kit completo de un detailer que empieza en 2026:\n\nKit básico (mínimo para empezar a trabajar): pulidora DA (300€), set de pads (60€), 3 compounds (90€), medidor de espesor (80€), linterna inspección (40€), productos de lavado (80€), microfibras (60€), varios (50€). Total: ~760€.\n\nKit profesional (para ofrecer un servicio completo): pulidora DA + rotativa (700€), set completo de pads (150€), 5-6 compounds/polish (180€), medidor profesional (300€), iluminación LED (400€), productos completos (250€), microfibras premium (120€), cerámicos (200€), varios (200€). Total: ~2.500€.\n\nKit premium (para un centro completo): todo lo anterior + pulidora mini (600€), aspiradora profesional (400€), vaporizadora (500€), hidrolimpiadora (600€), espumadora (200€), mob de trabajo completo (500€). Total: ~5.300€.\n\nRecuerda: no necesitas comprar todo de golpe. Empieza con el kit básico, amortízalo con los primeros trabajos, y reinvierte en mejoras progresivas. En [[Detail Park]] asesoramos a nuestros alumnos sobre las mejores opciones según su presupuesto y objetivos.',
         links: [
-          { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true }
+          { text: 'Detail Park', href: 'https://detailpark.com/', rel: 'follow', external: true }
         ]
       }
     ],
@@ -619,7 +619,7 @@ export const newBlogPosts: BlogPost[] = [
         title: 'Cómo formarse en Car Wrapping profesional',
         content: 'La formación en wrapping profesional debe ser 100% práctica sobre vehículos reales. No existen atajos: el vinilado se aprende vinilando. Un curso de calidad debe incluir:\n\nPráctica sobre vehículos completos (no solo paneles sueltos), uso de múltiples marcas y acabados de vinilo (cada uno tiene comportamiento diferente), técnicas de conformado en zonas complejas (retrovisores, spoilers, molduras), técnicas de recorte preciso y sellado de bordes, preparación correcta de la superficie antes de la instalación, y gestión de proyectos y presupuestación.\n\nEn [[Detail Park]] contamos con las instalaciones más avanzadas de España para la formación en wrapping: cabinas con temperatura controlada, herramientas profesionales de última generación, y un flujo constante de vehículos reales de clientes para practicar.\n\nLa formación típica requiere un mínimo de 5 días intensivos (40 horas) para adquirir las bases, aunque la maestría se alcanza con la experiencia continua. Muchos de nuestros alumnos empiezan a trabajar como aprendices en talleres de wrapping inmediatamente después de la formación, acelerando su curva de aprendizaje.',
         links: [
-          { text: 'Detail Park', href: 'https://www.detailpark.es', rel: 'follow', external: true }
+          { text: 'Detail Park', href: 'https://detailpark.com/', rel: 'follow', external: true }
         ]
       },
       {

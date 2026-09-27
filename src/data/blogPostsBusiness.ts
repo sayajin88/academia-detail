@@ -75,7 +75,7 @@ export const businessBlogPosts: BlogPost[] = [
         title: "Punto de equilibrio y proyección de ingresos",
         content:
           "El punto de equilibrio es el momento en que tus ingresos cubren todos tus gastos. Para un centro de detailing con costes fijos de 3.000€/mes y un ticket medio de 350€ con un margen bruto del 85%, necesitas aproximadamente 10-11 servicios al mes para cubrir gastos. Eso son 2-3 coches por semana.\n\nProyección conservadora para el primer año: meses 1-3 (arranque), facturación de 2.500-4.000€/mes con inversión fuerte en marketing local y captación de primeros clientes. Meses 4-6 (consolidación), facturación de 5.000-8.000€/mes con clientes recurrentes y primeras recomendaciones. Meses 7-12 (crecimiento), facturación de 8.000-15.000€/mes incorporando servicios de mayor valor como PPF y wrapping.\n\nLa clave para acelerar este proceso es diversificar servicios desde el principio. Un centro que solo ofrece pulido tiene un techo de facturación limitado. Un centro que combina detailing, PPF, cerámicos y wrapping multiplica su ticket medio por 3 o 4. En [[Detail Park]] puedes ver cómo un centro profesional diversificado gestiona su cartera de servicios.",
-        links: [{ text: "Detail Park", href: "https://www.detailpark.es", rel: "follow", external: true }],
+        links: [{ text: "Detail Park", href: "https://detailpark.com/", rel: "follow", external: true }],
       },
       {
         id: "plan-accion-primer-ano",
@@ -125,7 +125,7 @@ export const businessBlogPosts: BlogPost[] = [
         title: "El taller físico: autoridad, espacio y capacidad de crecimiento",
         content:
           "Un taller físico te da algo que el modelo móvil nunca podrá: autoridad de marca, un entorno controlado y capacidad de escalar. Cuando un cliente entra en un taller profesional con buena iluminación, equipamiento a la vista y un espacio impoluto, la confianza se genera instantáneamente.\n\nEl taller te permite ofrecer todos los servicios del catálogo: detailing, PPF, wrapping, tratamientos cerámicos e incluso restauración completa. Un entorno con control de temperatura, humedad y polvo es imprescindible para instalaciones de PPF y wrapping de calidad profesional.\n\nLa capacidad de producción se multiplica: con 2-3 bahías de trabajo puedes gestionar 4-8 vehículos simultáneamente, y la contratación de empleados te libera de la ejecución para enfocarte en la gestión y el crecimiento del negocio.\n\nLa inversión es mayor (15.000-40.000€), pero el retorno potencial también lo es. Los centros profesionales como [[Detail Park]] demuestran que un taller bien gestionado puede facturar cifras de seis dígitos anuales.",
-        links: [{ text: "Detail Park", href: "https://www.detailpark.es", rel: "follow", external: true }],
+        links: [{ text: "Detail Park", href: "https://detailpark.com/", rel: "follow", external: true }],
       },
       {
         id: "comparativa-inversion",
@@ -222,7 +222,7 @@ export const businessBlogPosts: BlogPost[] = [
         title: "Desglose de inversión por niveles: básico, medio y premium",
         content:
           "Nivel básico (empezar cuanto antes): pulidora DA (350€), hidrolimpiadora (500€), aspiradora (400€), medidor de espesor (200€), kit de pads y productos (400€), iluminación básica LED (500€), mobiliario básico (500€), marketing inicial (500€). Total: 3.350€. Ideal para modelo móvil o garaje propio.\n\nNivel medio (taller profesional estándar): todo lo anterior más pulidora rotativa (350€), sistema de iluminación profesional (1.500€), sistema de extracción (1.000€), lavabo profesional con osmosis (800€), estantería y organización profesional (600€), señalización y decoración del taller (500€), y alquiler + acondicionamiento (5.000€). Total: 13.600€.\n\nNivel premium (centro de referencia): todo lo anterior más elevador de columnas (3.500€), cabina de aplicación de PPF/wrapping (2.500€), plotter de corte para PPF (3.000€), vaporizadora profesional (800€), y equipamiento de wrapping completo (1.500€). Total: 24.900€.\n\nLa recomendación de [[Detail Park]] es empezar en nivel medio y escalar a premium conforme generas beneficios. Invertir todo de golpe sin experiencia es arriesgado.",
-        links: [{ text: "Detail Park", href: "https://www.detailpark.es", rel: "follow", external: true }],
+        links: [{ text: "Detail Park", href: "https://detailpark.com/", rel: "follow", external: true }],
         table: {
           headers: ["Nivel", "Equipamiento clave", "Inversión total"],
           rows: [
@@ -276,7 +276,7 @@ export const businessBlogPosts: BlogPost[] = [
         title: "El error más común: cobrar por tiempo en vez de por valor",
         content:
           'El error número uno de los detailers que empiezan es calcular sus precios basándose en las horas que tardan. "Si tardo 6 horas y quiero ganar 20€/hora, cobro 120€." Este razonamiento te condena a la mediocridad financiera.\n\nEl cliente no paga por tu tiempo: paga por la transformación de su vehículo. Un pulido que deja un coche como recién salido del concesionario vale 400-600€ independientemente de si tardas 4 o 8 horas. Lo que vendes es el resultado, no las horas que inviertes.\n\nPiensa en un dentista: no cobra por hora, cobra por procedimiento. Una endodoncia tiene un precio fijo independientemente del tiempo que lleve. El detailing profesional funciona igual. Tu formación, tu experiencia, tus herramientas y la calidad de tu trabajo determinan tu precio, no el reloj.\n\nEn [[Detail Park]] los precios se basan en el valor entregado al cliente, no en el tiempo invertido. Esa mentalidad es la que separa a un profesional rentable de un aficionado que malvive.',
-        links: [{ text: "Detail Park", href: "https://www.detailpark.es", rel: "follow", external: true }],
+        links: [{ text: "Detail Park", href: "https://detailpark.com/", rel: "follow", external: true }],
       },
       {
         id: "coste-hora-real",
@@ -381,7 +381,7 @@ export const businessBlogPosts: BlogPost[] = [
         content:
           "Cuando hablamos de marketing para detailing profesional, [[Detail Park]] es el ejemplo a seguir. Su presencia digital demuestra que un centro de detailing puede construir una marca premium que atrae a los clientes más exigentes del mercado.\n\nLo que Detail Park hace bien y que deberías replicar: fotografía de nivel editorial de cada trabajo, portfolio online que funciona como carta de presentación, contenido educativo que posiciona al equipo como expertos, y una estética de marca coherente en todos los canales.\n\nLa lección más importante es esta: el marketing no es un gasto, es una inversión. Un centro que dedica el 10% de su facturación a marketing crece exponencialmente más rápido que uno que lo considera un coste innecesario.\n\nSi quieres aprender a implementar estas estrategias desde el principio de tu carrera, nuestro módulo de negocio en la [[formación profesional]] cubre todas las herramientas de marketing digital, gestión de redes sociales y captación de clientes VIP que necesitas para despegar.",
         links: [
-          { text: "Detail Park", href: "https://www.detailpark.es", rel: "follow", external: true },
+          { text: "Detail Park", href: "https://detailpark.com/", rel: "follow", external: true },
           { text: "formación profesional", href: "/formacion-profesional-detailing", rel: "follow" },
         ],
       },
@@ -508,7 +508,7 @@ export const businessBlogPosts: BlogPost[] = [
         title: "Cómo posicionarte como instalador de PPF en tu zona",
         content:
           'Formarte en PPF es solo la mitad de la ecuación. La otra mitad es posicionarte como el instalador de referencia en tu zona, y para eso necesitas una estrategia de marketing específica.\n\nContenido específico de PPF: crea una sección dedicada al PPF en tu web y redes sociales. Publica vídeos del proceso de instalación (los time-lapse de PPF son hipnóticos), muestra resultados de pruebas de impacto (comparativa con/sin PPF), y comparte testimonios de clientes satisfechos.\n\nSEO local orientado a PPF: optimiza tu web para términos como "instalador PPF [tu ciudad]", "protección de pintura PPF [tu zona]" y "cuánto cuesta PPF [tu ciudad]". La competencia en SEO para PPF es mínima en la mayoría de ciudades.\n\nAlianzas con concesionarios premium: los concesionarios de Porsche, BMW, Mercedes y Audi son los primeros que deberías visitar. Muchos ofrecen PPF a sus clientes pero no tienen instalador propio.\n\nEn [[Detail Park]] puedes ver cómo un centro profesional posiciona su servicio de PPF como una solución premium que atrae a los propietarios más exigentes del mercado.',
-        links: [{ text: "Detail Park", href: "https://www.detailpark.es", rel: "follow", external: true }],
+        links: [{ text: "Detail Park", href: "https://detailpark.com/", rel: "follow", external: true }],
       },
     ],
     relatedSlugs: [
@@ -629,7 +629,7 @@ export const businessBlogPosts: BlogPost[] = [
         title: "Plan de lanzamiento para un estudio de wrapping",
         content:
           'El lanzamiento de tu estudio de wrapping debe generar impacto visual inmediato. A diferencia del detailing, donde el resultado es "dejar el coche como nuevo", el wrapping transforma radicalmente la apariencia del vehículo, lo que genera contenido viral de forma natural.\n\nAntes del lanzamiento (mes -1): vinila tu propio vehículo o el de un amigo con un color llamativo. Será tu tarjeta de visita rodante y tu primer caso de portfolio. Documenta todo el proceso en vídeo.\n\nSemana de lanzamiento: ofrece 3-5 wrapping a precio coste (solo materiales) a cambio de permiso para fotografiar, grabar y publicar el proceso. Selecciona vehículos vistosos (deportivos, SUV premium) que generen impacto visual.\n\nPrimer mes: publica un Reel diario mostrando el proceso y los resultados. Utiliza hashtags locales y etiqueta las marcas de vinilo. Los fabricantes suelen repostear contenido de instaladores, lo que amplifica tu alcance.\n\nSegundo mes en adelante: establece tus precios regulares, ofrece descuentos por referidos, y contacta con talleres de tuning y concesionarios que puedan derivarte clientes.\n\nFormar parte de la comunidad de profesionales de [[Detail Park]] te da visibilidad y credibilidad desde el primer día.',
-        links: [{ text: "Detail Park", href: "https://www.detailpark.es", rel: "follow", external: true }],
+        links: [{ text: "Detail Park", href: "https://detailpark.com/", rel: "follow", external: true }],
       },
     ],
     relatedSlugs: [

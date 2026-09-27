@@ -32,14 +32,13 @@ import {
 
 // Images
 import detailParkLogo from '@/assets/detail-park-logo.webp';
-import logoLeandroLandete from '@/assets/brands/leandro-landete-academy.png';
 import logoStek from '@/assets/brands/stek-automotive.png';
 import logoCarcarePassion from '@/assets/brands/carcare-passion.png';
 import detailParkLogoWhite from '@/assets/detail-park-logo-white.png';
 import danielLopezUpdetail from '@/assets/daniel-lopez-updetail.jpg';
 import leandroUpdetail from '@/assets/leandro-updetail.jpg';
 import federicaUpdetail from '@/assets/federica-updetail.jpg';
-import eventoGrupo from '@/assets/evento-grupo-formacion.jpg';
+import eventoGrupo from '@/assets/evento-grupo-detailing.jpg';
 import eventoClase from '@/assets/evento-clase-completa.jpg';
 import eventoAlumnos from '@/assets/evento-alumnos-atencion.jpg';
 import heroUpDetail from '@/assets/evento-instructor-explicando.jpg';
@@ -632,7 +631,7 @@ export default function UpDetail() {
               Nuestros Partners y Colaboradores
             </p>
             <div className="flex items-center justify-center gap-8 md:gap-14 flex-wrap">
-              <img src={logoLeandroLandete} alt="Leandro Landete Academy - Colaborador formativo" className="h-7 md:h-10 w-auto brightness-0 invert opacity-50 hover:opacity-100 transition-opacity duration-300" />
+              <span className="font-monument text-xl md:text-3xl leading-none tracking-wide text-foreground opacity-50 hover:opacity-100 transition-opacity duration-300" aria-label="Leandro Landete Academy - Colaborador formativo">LEANDRO LANDETE ACADEMY</span>
               <img src={logoStek} alt="STEK Automotive - Instaladores oficiales" className="h-7 md:h-10 w-auto brightness-0 invert opacity-50 hover:opacity-100 transition-opacity duration-300" />
               <img src={logoCarcarePassion} alt="Car Care Passion - Partner oficial de productos" className="h-7 md:h-10 w-auto brightness-0 invert opacity-50 hover:opacity-100 transition-opacity duration-300" />
             </div>

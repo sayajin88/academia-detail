@@ -1,3 +1,4 @@
+import danielLopez from '@/assets/daniel-lopez-instructor.webp';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { blogPosts as staticPosts, BlogPost, BlogCategory, getPostBySlug as staticGetBySlug } from '@/data/blogPosts';
@@ -34,7 +35,8 @@ function dbPostToBlogPost(db: DbBlogPost): BlogPost {
     author: {
       name: db.author_name,
       role: db.author_role,
-      image: db.author_image || '',
+      // Sin foto propia: la del instructor, para no mostrar una imagen rota.
+      image: db.author_image || danielLopez,
     },
     publishedAt: db.published_at,
     readingTime: db.reading_time,

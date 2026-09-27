@@ -4,7 +4,7 @@ import { PlayCircle, Star, Users, Award, TrendingUp, Calendar } from "lucide-rea
 import { useState, useEffect } from "react";
 import heroDetailing from "@/assets/hero-detailing.jpg";
 import detailParkLogo from "@/assets/detail-park-logo.webp";
-import mobileHeroBg from "@/assets/mobile-hero-bg.jpg";
+import mobileHeroBg from "@/assets/heroes/hero-home-mobile-720.webp";
 
 export const OptimizedHero = () => {
   const [videoPlaying, setVideoPlaying] = useState(false);

@@ -3,8 +3,15 @@ import { ChevronDown, Mail, Gauge } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState, useEffect, useRef, useCallback } from "react";
-import heroImage from "@/assets/heroes/hero-home.jpg";
-import mobileHeroImage from "@/assets/mobile-hero-bg.jpg";
+import { Helmet } from "react-helmet-async";
+import heroImage1280 from "@/assets/heroes/hero-home-1280.webp";
+import heroImage1920 from "@/assets/heroes/hero-home-1920.webp";
+import mobileHero720 from "@/assets/heroes/hero-home-mobile-720.webp";
+import mobileHero1080 from "@/assets/heroes/hero-home-mobile-1080.webp";
+
+// Portada en WebP y a la medida de cada pantalla (en móvil, recorte vertical).
+const MOBILE_SRCSET = `${mobileHero720} 720w, ${mobileHero1080} 1080w`;
+const DESKTOP_SRCSET = `${heroImage1280} 1280w, ${heroImage1920} 1920w`;
 
 // Declaración global para la YouTube IFrame API
 declare global {
@@ -125,12 +132,17 @@ export function HomeHero() {
 
   return (
     <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      {/* Precarga de la portada: el pre-renderizado la copia a la cabecera de la home. */}
+      <Helmet>
+        <link rel="preload" as="image" type="image/webp" media="(max-width: 767px)" imageSrcSet={MOBILE_SRCSET} imageSizes="100vw" fetchPriority="high" />
+        <link rel="preload" as="image" type="image/webp" media="(min-width: 768px)" imageSrcSet={DESKTOP_SRCSET} imageSizes="100vw" fetchPriority="high" />
+      </Helmet>
       {/* Fallback image — visible hasta que el vídeo esté listo */}
       <picture className={`transition-opacity duration-700 ${videoReady ? 'opacity-0' : 'opacity-100'}`}>
-        <source media="(max-width: 767px)" srcSet={mobileHeroImage} />
-        <source media="(min-width: 768px)" srcSet={heroImage} />
+        <source media="(max-width: 767px)" type="image/webp" srcSet={MOBILE_SRCSET} sizes="100vw" />
+        <source media="(min-width: 768px)" type="image/webp" srcSet={DESKTOP_SRCSET} sizes="100vw" />
         <img
-          src={heroImage}
+          src={heroImage1920}
           alt="Curso de detailing profesional - Formación práctica en taller real Alicante"
           className="absolute inset-0 w-full h-full object-cover"
           fetchPriority="high"

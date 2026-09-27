@@ -106,7 +106,8 @@ export default function BlogPostPage() {
   return (
     <MainLayout>
       <SEO
-        title={`${post.title} | Blog Academia Detail`}
+        // Marca solo si cabe: Google corta los títulos de más de ~60 caracteres.
+        title={post.title.length <= 42 ? `${post.title} | Academia Detail` : post.title}
         description={post.excerpt}
         keywords={post.tags.join(', ')}
         url={fullUrl}

@@ -94,7 +94,7 @@ const ContactSuccessModal = ({ open, onClose }: ContactSuccessModalProps) => {
 
           {/* Detail Park link */}
           <a
-            href="https://www.detailpark.com"
+            href="https://detailpark.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-between p-4 rounded-lg bg-primary/5 border border-primary/20 hover:border-primary/40 transition-all group"

@@ -1,12 +1,12 @@
+# Cabeceras de seguridad para toda la web (las enviaba Lovable; se recuperan tras la migración)
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
 # Cache headers para optimización de PageSpeed
 # Assets estáticos - cache agresivo (1 año)
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.css
   Cache-Control: public, max-age=31536000, immutable
 
 /*.webp

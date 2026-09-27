@@ -8,8 +8,6 @@ import {
   courseRestauracionSchema,
   courseFormacionProfesionalSchema,
   courseJornadaZeroSchema,
-  BUSINESS_RATING_VALUE,
-  BUSINESS_REVIEW_COUNT,
 } from "@/components/SEO";
 import { homeFaqs } from "@/components/home/HomeFAQ";
 import { carreraDetailingData } from "@/data/carreraDetailingData";
@@ -73,13 +71,8 @@ export const organizationSchemaComplete = {
     GOOGLE_MAPS_PLACE_URL,
   ],
   hasMap: GOOGLE_MAPS_PLACE_URL,
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: BUSINESS_RATING_VALUE,
-    reviewCount: BUSINESS_REVIEW_COUNT,
-    bestRating: "5",
-    worstRating: "1",
-  },
+  // La valoración va solo en localBusinessSchema (mismo @id): si se repite, Google
+  // fusiona la entidad con dos valoraciones y marca «varias puntuaciones agregadas».
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
@@ -1114,9 +1107,9 @@ export const seoConfig = {
   },
 
   calculadoraDilucion: {
-    title: "Calculadora Dilución Detailing ⚗️ Ratios Exactos",
+    title: "Calculadora y Tabla de Diluciones para Detailing",
     description:
-      "✅ Calcula la dilución exacta de cualquier producto de car detailing. Ratios de mezcla visual para APC, champú, desengrasante y más. ➤ Herramienta gratuita e interactiva.",
+      "Calcula la dilución exacta de APC, champú o desengrasante: ratios 1:10, 1:20, 1:50 y más, con las medidas en ml de producto y agua. Herramienta gratuita.",
     keywords:
       "calculadora dilución detailing, ratio mezcla productos limpieza coche, como diluir productos detailing, tabla diluciones detailing, proporción agua producto limpieza, calculadora mezcla química coche, dilución APC detailing, ratio champú coche",
     url: "/calculadora-dilucion-detailing",
@@ -1243,21 +1236,21 @@ export const seoConfig = {
 
     const formationTitles: Record<string, string> = {
       "curso-detailing-profesional":
-        "Curso Detailing Intensivo [4 Días] | Pulido + Cerámico | Certificación + Bolsa Empleo ★4.9",
-      "curso-vinilado-vehiculos": "Curso Wrapping Intensivo [2-4 Días] | Vinilado Profesional | Certificación ★4.8",
-      "curso-ppf-proteccion-pintura": "Curso PPF Paint Protection Film en Alicante | Formación Presencial",
-      "curso-restauracion-vehiculos": "Curso Restauración de Vehículos en Alicante | Técnicas Avanzadas",
+        "Curso de Detailing Profesional: Pulido y Cerámico en 4 Días",
+      "curso-vinilado-vehiculos": "Curso de Wrapping y Vinilado de Coches | 2-4 Días",
+      "curso-ppf-proteccion-pintura": "Curso de PPF: Instalación de Film de Protección | Alicante",
+      "curso-restauracion-vehiculos": "Curso de Restauración de Vehículos en Taller Real | Alicante",
     };
 
     const formationDescriptions: Record<string, string> = {
       "curso-detailing-profesional":
-        "🔥 Curso detailing intensivo: pulido profesional y tratamiento cerámico en 4 días. ✅ Aprende desde cero en taller real. Certificación oficial + Bolsa empleo. ⭐ 4.9/5. Solo 3 plazas — ¡Reserva ahora!",
+        "Curso de detailing presencial de 4 días: pulido profesional y tratamiento cerámico en taller real. Grupos de 3 alumnos, certificación y bolsa de empleo.",
       "curso-vinilado-vehiculos":
-        "🔥 Curso wrapping intensivo: instalación de vinilo y cambio de color en 2-4 días. ✅ Desde cero en taller real. Certificación oficial + Bolsa empleo. ⭐ 4.8/5. ➤ ¡Plazas limitadas!",
+        "Aprende wrapping y vinilado de coches en 2-4 días en un taller real de Alicante: cambio de color y técnica profesional, con certificación y bolsa de empleo.",
       "curso-ppf-proteccion-pintura":
-        "Formación intensiva de 2 días en instalación profesional de PPF en Alicante. Aprende a proteger pintura de alta gama con láminas de protección. Práctica real en taller.",
+        "Formación presencial de 2 días en instalación de PPF (paint protection film) en Alicante. Práctica sobre coches reales de alta gama y certificación.",
       "curso-restauracion-vehiculos":
-        "Aprende técnicas avanzadas de restauración de vehículos clásicos y dañados en Alicante. Corrección de pintura, recuperación de interiores y tratamientos en taller real.",
+        "Restauración de vehículos en taller real: corrección de pintura, recuperación de interiores y tratamientos avanzados. Formación presencial en Alicante.",
     };
 
     const formationImages: Record<string, string> = {

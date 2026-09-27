@@ -71,7 +71,7 @@ export function Footer() {
               />
             </Link>
             <a
-              href="https://www.detailpark.com"
+              href="https://detailpark.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block text-xs text-muted-foreground hover:text-primary transition-colors mb-4 tracking-wide"

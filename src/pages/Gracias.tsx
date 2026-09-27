@@ -22,7 +22,6 @@ export default function Gracias() {
         title="¡Solicitud Recibida! | Academia Detail"
         description="Tu solicitud ha sido recibida correctamente. Nos pondremos en contacto contigo en menos de 24 horas."
         url="/gracias"
-        disableHreflang
       />
       <MainLayout>
         <section className="py-20 md:py-28">

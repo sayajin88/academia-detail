@@ -108,9 +108,14 @@ const DetailerPage = () => {
   const provinciaSlug = slugify(detailer.province);
   const ciudadSlug = slugify(detailer.city);
 
+  // Webs guardadas sin protocolo («midominio.es») se tratarían como rutas internas.
+  const websiteUrl = detailer.website_url && !/^https?:\/\//i.test(detailer.website_url)
+    ? `https://${detailer.website_url}`
+    : detailer.website_url;
+
   const sameAs = [
     detailer.instagram_handle && `https://instagram.com/${detailer.instagram_handle}`,
-    detailer.website_url,
+    websiteUrl,
   ].filter(Boolean);
 
   const jsonLd = {
@@ -132,7 +137,7 @@ const DetailerPage = () => {
       geo: { '@type': 'GeoCoordinates', latitude: detailer.latitude, longitude: detailer.longitude },
     }),
     ...(detailer.phone && { telephone: detailer.phone }),
-    ...(detailer.website_url && { url: detailer.website_url }),
+    ...(websiteUrl && { url: websiteUrl }),
     priceRange: 'EUR',
     areaServed: { '@type': 'City', name: detailer.city },
     ...(sameAs.length > 0 && { sameAs }),
@@ -306,8 +311,8 @@ const DetailerPage = () => {
                     <Button variant="outline" className="w-full gap-2 text-sm"><Phone className="h-4 w-4" />Llamar</Button>
                   </a>
                 )}
-                {detailer.website_url && (
-                  <a href={detailer.website_url} target="_blank" rel="noopener noreferrer" className="flex-1">
+                {websiteUrl && (
+                  <a href={websiteUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
                     <Button variant="outline" className="w-full gap-2 text-sm"><Globe className="h-4 w-4" />Web</Button>
                   </a>
                 )}

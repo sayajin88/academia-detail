@@ -3,7 +3,7 @@ import { Star, Quote, MapPin, Building2 } from 'lucide-react';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import eventoAlumnosClase from '@/assets/evento-alumnos-clase.jpg';
 import eventoAlumnosAtencion from '@/assets/evento-alumnos-atencion.jpg';
-import eventoGrupoFormacion from '@/assets/evento-grupo-formacion.jpg';
+import eventoGrupoFormacion from '@/assets/evento-grupo-detailing.jpg';
 import eventoGrupoDetailing from '@/assets/evento-grupo-detailing.jpg';
 import eventoClaseCompleta from '@/assets/evento-clase-completa.jpg';
 import certificadosGrupal from '@/assets/certificados-grupal-curso-detailing.jpg';
@@ -85,9 +85,11 @@ const testimonials = [
 
 const averageRating = (testimonials.reduce((acc, t) => acc + t.rating, 0) / testimonials.length).toFixed(1);
 
+// Referencia a la entidad principal del negocio (lleva la única valoración agregada).
 const itemReviewed = {
   "@type": "EducationalOrganization",
-  "name": "Academia Detail",
+  "@id": "https://academiadetail.com/#local-business",
+  "name": "Detail Park - Academia Detail",
   "url": "https://academiadetail.com",
   "image": "https://academiadetail.com/og-image.png",
   "sameAs": [
@@ -95,14 +97,7 @@ const itemReviewed = {
     "https://www.instagram.com/danidetailoficial/",
     "https://www.youtube.com/@detailpark",
     "https://www.google.com/maps/place/Detail+Park/"
-  ],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": averageRating,
-    "reviewCount": String(testimonials.length),
-    "bestRating": "5",
-    "worstRating": "1"
-  }
+  ]
 };
 
 const reviewsSchema = testimonials.map((t) => ({

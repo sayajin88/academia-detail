@@ -45,7 +45,7 @@ export function AboutGallerySection() {
           <p className="text-sm text-muted-foreground text-center max-w-md">
             Academia Detail está potenciada por{' '}
             <a
-              href="https://www.detailpark.com"
+              href="https://detailpark.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline font-medium"

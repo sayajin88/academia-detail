@@ -1,4 +1,4 @@
-import { useParams, Navigate, Link } from 'react-router-dom';
+import { useParams, useLocation, Navigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { SEO } from '@/components/SEO';
@@ -314,7 +314,11 @@ const cityData: Record<string, CityInfo> = {
 };
 
 export default function CursoDetailingCiudad() {
-  const { ciudad } = useParams<{ ciudad: string }>();
+  // Las rutas son fijas (/curso-detailing-madrid…) y no traen :ciudad: se saca de la URL.
+  // Antes ciudad llegaba vacío y todas las ciudades redirigían al curso principal.
+  const params = useParams<{ ciudad: string }>();
+  const { pathname } = useLocation();
+  const ciudad = params.ciudad ?? pathname.replace(/^\/curso-detailing-/, "").replace(/\/$/, "");
 
   const data = ciudad ? cityData[ciudad] : undefined;
 
@@ -344,7 +348,7 @@ export default function CursoDetailingCiudad() {
       <SEO
         title={data.seoTitle}
         description={data.seoDescription}
-        url={`https://academiadetail.com/curso-detailing-${ciudad}`}
+        url={`/curso-detailing-${ciudad}`}
         keywords={data.seoKeywords}
       />
       <Helmet>

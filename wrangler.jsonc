@@ -6,11 +6,21 @@
   // www.academiadetail.com no se sirve aquí: lo redirige a la raíz una regla de Cloudflare.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "academia-detail",
-  "compatibility_date": "2026-09-27",
+  "compatibility_date": "2026-09-18",
+  // El Worker solo atiende las URL que no son un archivo del build: redirecciones
+  // 301 de URL antiguas, 404 reales y la SPA para rutas no pre-renderizadas.
+  "main": "worker/index.ts",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application",
+    "binding": "ASSETS",
+    "not_found_handling": "none",
     "html_handling": "auto-trailing-slash"
+  },
+  // Valores públicos (los mismos que lleva el frontend) para comprobar si existe un
+  // artículo o un detailer antes de responder 404.
+  "vars": {
+    "SUPABASE_URL": "https://kvsrmbutyqyaaaukvgll.supabase.co",
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c3JtYnV0eXF5YWFhdWt2Z2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTEzNzYsImV4cCI6MjEwNjA4NzM3Nn0.xcjvTQSWt-KTaYeerrfIzXiCiA8w8dTeRAFufIPj28I"
   },
   "routes": [{ "pattern": "academiadetail.com", "custom_domain": true }],
   "workers_dev": true,

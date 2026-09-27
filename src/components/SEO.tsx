@@ -9,24 +9,11 @@ interface SEOProps {
   type?: 'website' | 'article' | 'product';
   schema?: object | object[];
   canonical?: string;
-  disableHreflang?: boolean;
   price?: string;
 }
 
 const BASE_URL = 'https://academiadetail.com';
 const DEFAULT_IMAGE = 'https://academiadetail.com/og-image.png';
-
-// Hreflang configuration for international SEO
-const HREFLANG_REGIONS = [
-  { lang: 'es-ES', label: 'España' },
-  { lang: 'es-MX', label: 'México' },
-  { lang: 'es-AR', label: 'Argentina' },
-  { lang: 'es-CO', label: 'Colombia' },
-  { lang: 'es-CL', label: 'Chile' },
-  { lang: 'es-PE', label: 'Perú' },
-  { lang: 'es', label: 'Spanish (General)' },
-  { lang: 'x-default', label: 'Default' },
-];
 
 // URL to readable name mapping for auto-breadcrumbs
 const URL_NAME_MAP: Record<string, string> = {
@@ -279,7 +266,6 @@ export const SEO = ({
   type = 'website',
   schema,
   canonical,
-  disableHreflang = false,
   price,
 }: SEOProps) => {
   const fullUrl = url ? `${BASE_URL}${url}` : BASE_URL;
@@ -316,15 +302,6 @@ export const SEO = ({
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
 
-      {/* Hreflang Tags for International SEO */}
-      {!disableHreflang && HREFLANG_REGIONS.map(({ lang }) => (
-        <link 
-          key={lang}
-          rel="alternate" 
-          hrefLang={lang} 
-          href={canonicalUrl} 
-        />
-      ))}
 
       {/* Open Graph / Facebook - Enhanced with dimensions */}
       <meta property="og:type" content={type} />

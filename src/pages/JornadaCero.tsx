@@ -54,7 +54,6 @@ import { seoConfig } from "@/utils/seoConfig";
 
 // Import images
 import detailParkLogo from "@/assets/detail-park-logo.webp";
-import logoLeandroLandete from "@/assets/brands/leandro-landete-academy.png";
 import logoStek from "@/assets/brands/stek-automotive.png";
 import logoCarcarePassion from "@/assets/brands/carcare-passion.png";
 import detailParkLogoWhite from "@/assets/detail-park-logo-white.png";
@@ -914,7 +913,7 @@ const Index = () => {
             Nuestros Partners y Colaboradores
           </p>
           <div className="flex items-center justify-center gap-8 md:gap-14 flex-wrap">
-            <img src={logoLeandroLandete} alt="Leandro Landete Academy - Colaborador formativo" className="h-7 md:h-10 w-auto brightness-0 invert opacity-50 hover:opacity-100 transition-opacity duration-300" />
+            <span className="font-monument text-xl md:text-3xl leading-none tracking-wide text-foreground opacity-50 hover:opacity-100 transition-opacity duration-300" aria-label="Leandro Landete Academy - Colaborador formativo">LEANDRO LANDETE ACADEMY</span>
             <img src={logoStek} alt="STEK Automotive - Instaladores oficiales" className="h-7 md:h-10 w-auto brightness-0 invert opacity-50 hover:opacity-100 transition-opacity duration-300" />
             <img src={logoCarcarePassion} alt="Car Care Passion - Partner oficial de productos" className="h-7 md:h-10 w-auto brightness-0 invert opacity-50 hover:opacity-100 transition-opacity duration-300" />
           </div>

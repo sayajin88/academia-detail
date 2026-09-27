@@ -167,7 +167,7 @@ export const blogPosts: BlogPost[] = [
         title: 'Formación profesional: la base de un negocio de detailing exitoso',
         content: 'Emprender en detailing sin formación profesional es como abrir un restaurante sin saber cocinar. La técnica se puede aprender por YouTube, pero el conocimiento real —la sensibilidad del tacto sobre la pintura, la lectura del estado del barniz, la gestión de clientes exigentes— solo se adquiere con práctica supervisada por profesionales experimentados.\n\nUna [[formación en detailing profesional]] te ahorra meses de prueba y error, te evita errores costosos (un barniz traspasado puede costar 2.000€ de repintado) y te da la confianza y el certificado que tus futuros clientes valoran. Además, una buena formación incluye módulos de negocio que te enseñan a presupuestar, captar clientes y escalar tu centro.\n\nSi estás decidido a montar tu negocio de detailing en 2026, el primer paso no es alquilar un local ni comprar equipamiento: es formarte con los mejores. [[Contacta con nosotros]] y te ayudaremos a diseñar tu plan de formación y de negocio personalizado.',
         links: [
-          { text: 'formación en detailing profesional', href: '/formacion/detailing-profesional' },
+          { text: 'formación en detailing profesional', href: '/formacion-profesional-detailing' },
           { text: 'Contacta con nosotros', href: '/contacto' }
         ]
       }

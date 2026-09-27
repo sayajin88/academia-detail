@@ -72,7 +72,7 @@ const ContactInfo = () => {
 
         {/* Detail Park Banner */}
         <a
-          href="https://www.detailpark.com"
+          href="https://detailpark.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 hover:border-primary/40 transition-all group mb-6"
