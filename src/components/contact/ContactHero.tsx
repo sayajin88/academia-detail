@@ -35,7 +35,7 @@ const ContactHero = () => {
           <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
             {[
               { icon: Clock, value: "48h", label: "Te contactamos" },
-              { icon: MessageCircle, value: "500+", label: "Alumnos formados" },
+              { icon: MessageCircle, value: "218", label: "Alumnos formados" },
               { icon: Users, value: "3 max", label: "Alumnos por grupo" },
             ].map((stat) => (
               <div key={stat.label} className="text-center p-3 rounded-xl bg-white/5 backdrop-blur-sm">

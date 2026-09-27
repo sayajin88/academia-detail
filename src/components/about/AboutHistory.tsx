@@ -122,7 +122,7 @@ const timelineEvents = [
   {
     year: 'Hoy',
     title: 'Centro de Referencia',
-    description: 'Somos el único centro de formación donde vivimos del Detailing. Más de 200 alumnos formados y un taller activo que demuestra cada día que nuestro modelo funciona.',
+    description: 'Somos el único centro de formación donde vivimos del Detailing. 218 alumnos formados y un taller activo que demuestra cada día que nuestro modelo funciona.',
     icon: Award,
   },
 ];

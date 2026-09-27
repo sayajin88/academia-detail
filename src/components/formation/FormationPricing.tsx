@@ -224,7 +224,7 @@ export function FormationPricing({ formation, onCTAClick }: FormationPricingProp
                       <span className="text-border">·</span>
                       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                         <Shield className="w-3.5 h-3.5 text-primary" />
-                        <span>+500 alumnos formados</span>
+                        <span>218 alumnos formados</span>
                       </div>
                     </div>
                   </>

@@ -7,7 +7,7 @@ import instructorImage from '@/assets/instructor-daniel-principal.png';
 const stats = [
   { icon: Calendar, value: '12+', label: 'Años de Experiencia' },
   { icon: Car, value: '15.000+', label: 'Vehículos Trabajados' },
-  { icon: Users, value: '500+', label: 'Alumnos Formados' },
+  { icon: Users, value: '218', label: 'Alumnos Formados' },
   { icon: Award, value: '4', label: 'Certificaciones' },
 ];
 

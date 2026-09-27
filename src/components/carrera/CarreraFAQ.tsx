@@ -53,7 +53,7 @@ const CarreraFAQ = () => {
             ¿Tienes más preguntas? Estamos aquí para ayudarte.
           </p>
           <a 
-            href="https://wa.me/34623456950?text=Hola,%20quiero%20información%20sobre%20la%20Carrera%20Detailing"
+            href="https://wa.me/34622773555?text=Hola,%20quiero%20información%20sobre%20la%20Carrera%20Detailing"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gold/10 border border-gold/30 text-gold hover:bg-gold/20 transition-colors"

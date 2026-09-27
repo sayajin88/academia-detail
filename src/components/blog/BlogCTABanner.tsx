@@ -29,7 +29,7 @@ export function BlogCTABanner() {
             </span>
             <span className="inline-flex items-center gap-1 text-[10px] font-medium text-primary-foreground/60 bg-white/10 rounded-full px-2.5 py-1 border border-white/10">
               <Users className="h-3 w-3" />
-              +500 Alumnos
+              218 Alumnos
             </span>
           </div>
         </div>

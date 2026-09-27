@@ -1244,7 +1244,7 @@ export const seoConfig = {
 
     const formationDescriptions: Record<string, string> = {
       "curso-detailing-profesional":
-        "Curso de detailing presencial de 4 días: pulido profesional y tratamiento cerámico en taller real. Grupos de 3 alumnos, certificación y bolsa de empleo.",
+        "Curso de detailing presencial de 4 días desde 2.997 € + IVA: pulido profesional y cerámico en taller real, grupos de 3 alumnos, certificación y bolsa de empleo.",
       "curso-vinilado-vehiculos":
         "Aprende wrapping y vinilado de coches en 2-4 días en un taller real de Alicante: cambio de color y técnica profesional, con certificación y bolsa de empleo.",
       "curso-ppf-proteccion-pintura":

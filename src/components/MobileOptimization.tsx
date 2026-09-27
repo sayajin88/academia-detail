@@ -99,7 +99,7 @@ export const MobileOptimization = ({ isOpen, onToggle, onCtaClick }: MobileMenuP
                   ))}
                 </div>
                 <div className="text-white font-bold">4.9/5</div>
-                <div className="text-white/70 text-sm">+800 estudiantes</div>
+                <div className="text-white/70 text-sm">218 alumnos</div>
               </div>
             </div>
           </div>

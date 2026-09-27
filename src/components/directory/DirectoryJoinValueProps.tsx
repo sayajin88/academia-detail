@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const metrics = [
   { value: "+15.000", label: "visitas/mes en nuestras webs", icon: TrendingUp },
   { value: "Top 1", label: "en Google en detailing España", icon: Search },
-  { value: "+500", label: "alumnos certificados activos", icon: BadgeCheck },
+  { value: "218", label: "alumnos certificados", icon: BadgeCheck },
 ];
 
 const advantages = [

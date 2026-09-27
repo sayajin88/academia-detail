@@ -3,7 +3,7 @@ import { ArrowRight, Phone, Mail, Users, Clock, ShieldCheck } from 'lucide-react
 import { Button } from '@/components/ui/button';
 
 const trustPoints = [
-  { icon: Users, label: '+500 alumnos formados' },
+  { icon: Users, label: '218 alumnos formados' },
   { icon: Clock, label: 'Respuesta en 24h' },
   { icon: ShieldCheck, label: 'Sin compromiso' },
 ];

@@ -216,7 +216,7 @@ export function HomeHero() {
           <div className="max-w-4xl mx-auto px-2">
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-4 md:gap-6">
               {[
-                { value: "500+", label: "Alumnos", sublabel: "Certificados" },
+                { value: "218", label: "Alumnos", sublabel: "Certificados" },
                 { value: "100%", label: "Presencial", sublabel: "y Práctico" },
                 { value: "3", label: "Máx Alumnos", sublabel: "por Grupo" },
                 { value: "92%", label: "Práctica", sublabel: "Real" },

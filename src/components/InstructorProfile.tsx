@@ -137,7 +137,7 @@ export function InstructorProfile() {
                         </div>
                         <span className="text-white font-bold">4.9/5</span>
                       </div>
-                      <p className="text-white/80 text-sm mt-1">+2,000 estudiantes</p>
+                      <p className="text-white/80 text-sm mt-1">218 alumnos</p>
                     </div>
                   </div>
                 </div>

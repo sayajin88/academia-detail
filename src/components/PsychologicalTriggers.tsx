@@ -156,7 +156,7 @@ export const PsychologicalTriggers = () => {
               <div className="text-left space-y-3 mb-6">
                 <div className="flex items-start gap-3 text-white/80">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Proceso simple: envía un email a <strong className="text-white">garantia@detailpark.es</strong> con tu número de inscripción</span>
+                  <span className="text-sm">Proceso simple: envía un email a <strong className="text-white">info@detailpark.com</strong> con tu número de inscripción</span>
                 </div>
                 <div className="flex items-start gap-3 text-white/80">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />

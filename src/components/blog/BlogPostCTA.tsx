@@ -5,7 +5,7 @@ import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import portfolioFerrari from '@/assets/portfolio-ferrari.png';
 
 const stats = [
-  { icon: Users, value: '+500', label: 'Alumnos Certificados' },
+  { icon: Users, value: '218', label: 'Alumnos Certificados' },
   { icon: Star, value: '98%', label: 'Satisfacción' },
   { icon: Headphones, value: '24/7', label: 'Soporte Continuo' },
 ];
