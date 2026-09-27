@@ -1,8 +1,9 @@
 {
   // Web de Academia Detail en Cloudflare (Workers con assets estáticos).
-  // Fase 1 (27-09-2026): solo en workers.dev, con el backend todavía en Lovable Cloud.
-  // academiadetail.com sigue sirviéndolo Lovable hasta el corte; entonces se añade aquí:
-  //   "routes": [{ "pattern": "academiadetail.com", "custom_domain": true }, ...]
+  // Dominio de producción asignado en el corte del 27-09-2026 (custom domain).
+  // Marcha atrás: quitar la ruta y recrear en Cloudflare DNS el registro de
+  // academiadetail.com que apuntaba a Lovable (ver ESTADO/memoria del corte).
+  // www.academiadetail.com no se sirve aquí: lo redirige a la raíz una regla de Cloudflare.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "academia-detail",
   "compatibility_date": "2026-09-27",
@@ -11,6 +12,7 @@
     "not_found_handling": "single-page-application",
     "html_handling": "auto-trailing-slash"
   },
+  "routes": [{ "pattern": "academiadetail.com", "custom_domain": true }],
   "workers_dev": true,
   "preview_urls": true,
   "observability": { "enabled": true }
