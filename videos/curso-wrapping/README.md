@@ -47,3 +47,33 @@ npm i
 npm run dev                                   # Remotion Studio
 npx remotion render CursoWrapping out/curso-wrapping.mp4
 ```
+
+---
+
+## Versión 2 · `CursoWrappingV2` (~59 s) — la actual
+
+Entregable: `entregables/curso-wrapping-v2-final.mp4`. Código en `src/v2/`.
+
+Cambios respecto a la v1: voz femenina (ElevenLabs v3, «Clara Doménech»), música neoclásica
+con textura de vinilo antiguo, hook de dolor, temario detallado por nivel, 20 % de descuento
+al hacer los dos niveles, fotos y vídeo reales de cursos de wrapping (Google Drive:
+«2. Cursos y Formaciones Detail Park»), efectos 3D (tarjetas con grosor y giro, carrusel 3D,
+texto extruido) y transición de vinilo que se despega.
+
+> ¿Otro lunes en un trabajo que no te llena… y que no te lleva a ninguna parte? Hay un oficio que puede cambiarlo todo.
+> El car wrapping no para de crecer… y puedes ejercerlo en casi cualquier parte del mundo.
+> En Academia Detail lo aprendes en dos niveles de dos días, en un taller real.
+> Nivel principiante: tipos y calidades de vinilo, preparación y desmontaje, metodología de corte, tensado con calor… y cómo presupuestar al cliente.
+> Nivel avanzado: cromados, retrovisores y paragolpes, interiores de puerta, sellado y bordes invisibles.
+> Cada nivel, 1.999 euros más IVA. Y si haces los dos… tienes un veinte por ciento de descuento.
+> Material, comida y certificado incluidos. Máximo tres alumnos por grupo.
+> Y no vivimos de la formación: vivimos de nuestros clientes. Más de dos mil proyectos lo demuestran.
+> Plazas limitadas. Reserva la tuya en academiadetail.com.
+
+Recursos de `public/`: `v2/` (fotos y vídeo de alumnos de los cursos de wrapping, clips de stock
+de Magnific: despertador y oficinista aburrido), `audio/vo-v2.mp3`, `audio/music-v2.mp3`,
+`audio/alarm.mp3`, `audio/stamp.mp3`. Tiempos de cada palabra en `src/v2/cues.ts`.
+
+```bash
+npx remotion render CursoWrappingV2 out/curso-wrapping-v2.mp4
+```
