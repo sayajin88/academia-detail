@@ -16,13 +16,13 @@ import { ZoomIn } from "../lib/fx";
 import { CUE } from "../cues";
 
 /**
- * 31,2–38,6 s · «Y lo más importante: no vivimos de la formación. Vivimos de nuestros
+ * 31,2–38,65 s · «Y lo más importante: no vivimos de la formación. Vivimos de nuestros
  * clientes. Más de dos mil proyectos en Detail Park lo demuestran.»
  */
 export const Prueba: React.FC = () => {
   const t = useTime();
-  const partB = t >= 33.85;
-  const partC = t >= 35.5;
+  const partB = t >= CUE.clientes;
+  const partC = t >= 35.7;
   const s = shake(t, CUE.demuestran, 24, 0.4);
 
   if (!partC) {
@@ -31,7 +31,7 @@ export const Prueba: React.FC = () => {
         <PhotoBg
           src="img/daniel-detailpark.jpg"
           start={31.2}
-          end={35.6}
+          end={35.8}
           fromScale={1.05}
           toScale={1.25}
           fromY={0}
@@ -54,7 +54,7 @@ export const Prueba: React.FC = () => {
           </AbsoluteFill>
         ) : (
           <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-end", paddingBottom: 400, textAlign: "center" }}>
-            <Slam at={33.9} size={170} from={1.5}>
+            <Slam at={CUE.clientes + 0.02} size={170} from={1.5}>
               VIVIMOS DE NUESTROS
             </Slam>
             <div style={{ marginTop: 10 }}>
@@ -72,11 +72,11 @@ export const Prueba: React.FC = () => {
 
   const stamp = ramp(t, [CUE.demuestran, CUE.demuestran + 0.3], [0, 1], outBack);
   return (
-    <ZoomIn at={35.5}>
+    <ZoomIn at={35.7}>
       <AbsoluteFill style={{ translate: `${s.x}px ${s.y}px` }}>
-        <PhotoBg src="img/taller.jpg" start={35.5} end={38.7} fromScale={1.35} toScale={1.15} fromX={80} toX={-60} position="40% 50%" dim={0.55} />
+        <PhotoBg src="img/taller.jpg" start={35.7} end={38.7} fromScale={1.35} toScale={1.15} fromX={80} toX={-60} position="40% 50%" dim={0.55} />
         <Scrim top={0.85} bottom={0.9} />
-        <div style={{ position: "absolute", top: 240, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: popIn(t, 35.55, 0.4) }}>
+        <div style={{ position: "absolute", top: 240, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: popIn(t, 35.72, 0.4) }}>
           <Img src={staticFile("img/detailpark-logo-white.png")} style={{ width: 560 }} />
         </div>
         <AbsoluteFill style={{ alignItems: "center", paddingTop: 520, textAlign: "center" }}>

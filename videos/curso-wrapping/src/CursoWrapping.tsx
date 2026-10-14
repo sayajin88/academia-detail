@@ -29,7 +29,7 @@ const Soundtrack: React.FC = () => {
             interpolate(
               fr,
               [0, 6, vo(0.3), vo(CUE.voEnd), vo(CUE.voEnd) + 10, total - 25, total - 1],
-              [0, 0.55, 0.2, 0.2, 0.5, 0.5, 0],
+              [0, 0.55, 0.24, 0.24, 0.5, 0.5, 0],
               { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
             )
           }
@@ -49,7 +49,7 @@ const Soundtrack: React.FC = () => {
       {hasFile("audio/impact.mp3") &&
         [CUE.esVinilo, CUE.precioEnd, CUE.demuestran, CUE.voEnd].map((c) => (
           <Sequence key={c} from={vo(c) - 1} durationInFrames={60} name="Impacto">
-            <Audio src={staticFile("audio/impact.mp3")} volume={0.55} />
+            <Audio src={staticFile("audio/impact.mp3")} volume={0.4} />
           </Sequence>
         ))}
       {hasFile("audio/vinyl.mp3") &&

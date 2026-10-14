@@ -7,20 +7,20 @@ import { CUE } from "../cues";
 
 const URL_TEXT = "academiadetail.com";
 
-/** 38,6–43,4 s · «Reserva tu plaza en academiadetail.com» + cierre con logos. */
+/** 38,65–43,4 s · «Reserva tu plaza en academiadetail.com» + cierre con logos. */
 export const Cta: React.FC = () => {
   const t = useTime();
   const endCard = t >= CUE.voEnd;
 
-  const phone = ramp(t, [38.6, 39.2], [0, 1], outExpo);
-  const scroll = ramp(t, [38.8, 41.6], [0, 3300], (n) => n * n * (3 - 2 * n));
+  const phone = ramp(t, [38.65, 39.25], [0, 1], outExpo);
+  const scroll = ramp(t, [38.85, 41.5], [0, 3300], (n) => n * n * (3 - 2 * n));
   const typed = Math.floor(ramp(t, [CUE.url, CUE.url + 0.8], [0, URL_TEXT.length], (n) => n));
   const caret = Math.floor(t * 4) % 2 === 0;
-  const press = t > 41.1 && t < 41.3 ? 0.94 : 1;
+  const press = t > 41.0 && t < 41.2 ? 0.94 : 1;
 
   if (!endCard) {
     return (
-      <ZoomIn at={38.6}>
+      <ZoomIn at={38.65}>
         <BrandBackdrop glowY="60%" />
         <AbsoluteFill style={{ alignItems: "center", paddingTop: 230, textAlign: "center" }}>
           <Slam at={CUE.reserva} size={180} from={1.6}>

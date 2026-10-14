@@ -1,7 +1,6 @@
 /**
  * Tiempos (en segundos de la voz en off) de cada palabra clave.
- * Hasta el segundo 33 salen de la alineación palabra a palabra de la locución;
- * a partir de ahí son estimaciones sobre la misma locución (ajustar si hace falta).
+ * Salen de la alineación palabra a palabra de la locución (public/audio/vo.mp3).
  */
 export const CUE = {
   // Hook
@@ -48,19 +47,19 @@ export const CUE = {
   maximo: 29.34,
   tres: 29.74,
   alumnos: 30.05,
-  // Prueba real (estimado desde 33 s)
-  importante: 31.3,
-  noVivimos: 32.29,
+  // Prueba real
+  importante: 31.36,
+  noVivimos: 32.36,
   formacion: 33.1,
-  clientes: 33.9,
-  clientesWord: 34.85,
-  masDe: 35.65,
-  proyectos: 36.35,
-  detailPark: 36.95,
-  demuestran: 37.65,
+  clientes: 33.84,
+  clientesWord: 34.76,
+  masDe: 35.76,
+  proyectos: 36.46,
+  detailPark: 37.2,
+  demuestran: 38.04,
   // CTA
-  reserva: 38.7,
-  url: 39.7,
+  reserva: 38.72,
+  url: 39.84,
   voEnd: 41.6,
 } as const;
 
@@ -73,11 +72,11 @@ export const SCENES = {
   avanzado: [19.0, 23.15],
   precio: [23.15, 26.42],
   incluye: [26.42, 31.2],
-  prueba: [31.2, 38.6],
-  cta: [38.6, 43.4],
+  prueba: [31.2, 38.65],
+  cta: [38.65, 43.4],
 } as const;
 
 /** Cortes con destello y «whoosh». */
 export const CUTS = [
-  1.42, 2.5, 4.5, 7.7, 10.9, 14.55, 19.0, 23.15, 26.42, 29.2, 31.2, 33.85, 35.5, 38.6, 41.6,
+  1.42, 2.5, 4.5, 7.7, 10.9, 14.55, 19.0, 23.15, 26.42, 29.2, 31.2, 33.84, 35.7, 38.65, 41.6,
 ];
