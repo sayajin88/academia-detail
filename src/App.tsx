@@ -70,7 +70,7 @@ function withQuery(load: () => Promise<{ default: ComponentType }>) {
 
 // Branded loading fallback for Suspense — shows spinner instead of blank screen
 const PageFallback = () => (
-  <div className="min-h-screen bg-background flex items-center justify-center">
+  <div data-page-fallback className="min-h-screen bg-background flex items-center justify-center">
     <div className="flex flex-col items-center gap-4">
       <div className="w-10 h-10 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
       <span className="text-sm text-muted-foreground">Cargando…</span>
@@ -103,6 +103,7 @@ const App = () => (
               <Route path="/glosario-detailing/:slug" element={<GlossaryTermPage />} />
               <Route path="/calculadora-dilucion-detailing" element={<CalculadoraDilucion />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/pagina/:page" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               
               {/* City Landing Pages */}

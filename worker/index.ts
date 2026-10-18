@@ -77,6 +77,9 @@ async function classify(path: string, env: Env): Promise<Verdict> {
   // Ciudades sin página propia: la app ya las mandaba al curso principal.
   if (/^\/curso-detailing-[a-z-]+$/.test(path)) return { redirect: "/curso-detailing-profesional" };
 
+  // Páginas de la lista del blog (están pre-renderizadas; esto cubre las nuevas hasta la
+  // siguiente recompilación). Si sobra una, la app la manda a /blog.
+  if (/^\/blog\/pagina\/[2-9]\d*$|^\/blog\/pagina\/1\d+$/.test(path)) return { status: 200 };
   if ((m = path.match(/^\/blog\/([a-z0-9-]+)$/))) {
     const ok = await existsInSupabase(env, "blog_posts", `slug=eq.${m[1]}&status=eq.published`);
     return { status: ok ? 200 : 404 };
@@ -106,8 +109,10 @@ export default {
       return Response.redirect(new URL(verdict.redirect + url.search, url).toString(), 301);
     }
 
-    // La SPA (index.html): React pinta la página, o la de «no encontrada» con noindex.
-    const shell = await env.ASSETS.fetch(new Request(new URL("/", url), request));
+    // La SPA vacía (_shell.html, sin pre-renderizar): React pinta la página, o la de «no
+    // encontrada» con noindex. No vale index.html: lleva dentro la portada pre-renderizada.
+    let shell = await env.ASSETS.fetch(new Request(new URL("/_shell", url), request));
+    if (!shell.ok) shell = await env.ASSETS.fetch(new Request(new URL("/", url), request));
     const headers = new Headers(shell.headers);
     for (const [k, v] of Object.entries(SECURITY_HEADERS)) headers.set(k, v);
     if (verdict.status === 404) headers.set("X-Robots-Tag", "noindex");

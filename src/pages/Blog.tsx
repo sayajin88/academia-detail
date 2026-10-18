@@ -1,12 +1,12 @@
-import { lazy, Suspense, useCallback, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { SEO } from '@/components/SEO';
 import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
 import { BlogCard } from '@/components/blog/BlogCard';
 import { BlogSearch } from '@/components/blog/BlogSearch';
 import { BlogCategories } from '@/components/blog/BlogCategories';
-import { BlogPagination } from '@/components/blog/BlogPagination';
+import { BlogPagination, blogPageUrl } from '@/components/blog/BlogPagination';
 import { BLOG_CATEGORY_LABELS, BLOG_CATEGORY_ORDER, normalizeCategory } from '@/components/blog/blogUtils';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 
@@ -22,24 +22,37 @@ export default function Blog() {
   const initialQuery = searchParams.get('q') ?? '';
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  // La página va en la URL (/blog/pagina/N) para que cada una se pueda rastrear y enlazar.
+  const { page } = useParams<{ page?: string }>();
+  const pageParam = page === undefined ? 1 : /^\d+$/.test(page) ? Number(page) : NaN;
+  const navigate = useNavigate();
   const listRef = useRef<HTMLElement>(null);
-  const { posts, isLoading } = useBlogPosts();
+  const { posts, isLoading, isError } = useBlogPosts();
 
+  // Al buscar o filtrar se vuelve a la primera página. El buscador avisa también al
+  // montarse (con el texto inicial): eso no cuenta como búsqueda nueva.
+  const lastQuery = useRef(initialQuery);
   const handleSearch = useCallback((query: string) => {
+    if (query === lastQuery.current) return;
+    lastQuery.current = query;
     setSearchQuery(query);
-    setCurrentPage(1);
-  }, []);
+    navigate('/blog', { preventScrollReset: true });
+  }, [navigate]);
 
   const handleCategoryChange = useCallback((category: string | null) => {
     setActiveCategory(category);
-    setCurrentPage(1);
-  }, []);
+    navigate('/blog', { preventScrollReset: true });
+  }, [navigate]);
 
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
+  // Al cambiar de página se baja a la lista (no en la primera carga).
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     listRef.current?.scrollIntoView({ block: 'start' });
-  }, []);
+  }, [pageParam]);
 
   const searched = useMemo(() => {
     const q = normalize(searchQuery.trim());
@@ -69,10 +82,15 @@ export default function Blog() {
   const hasFilters = searchQuery.trim().length > 0 || activeCategory !== null;
   // Artículo destacado: solo en la primera página y sin filtros
   const featured = hasFilters ? undefined : filtered.find((p) => p.featured) ?? filtered[0];
+  const currentPage = pageParam;
   const lead = currentPage === 1 ? featured : undefined;
   const rest = featured ? filtered.filter((p) => p.slug !== featured.slug) : filtered;
   const totalPages = Math.max(1, Math.ceil(rest.length / POSTS_PER_PAGE));
   const pagePosts = rest.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
+
+  // /blog/pagina/1, /blog/pagina/0, /blog/pagina/abc o una página que ya no existe → /blog.
+  const pageMissing = !Number.isInteger(currentPage) || currentPage < 1 || (!isLoading && !isError && currentPage > totalPages);
+  if (page !== undefined && (currentPage === 1 || pageMissing)) return <Navigate to="/blog" replace />;
 
   const blogSchema = {
     '@context': 'https://schema.org',
@@ -104,10 +122,10 @@ export default function Blog() {
   return (
     <>
       <SEO
-        title="Blog Detailing Profesional | Guías y Consejos"
-        description="Guías y consejos sobre detailing profesional, PPF, car wrapping y cómo montar tu negocio de detailing, escritos por el equipo de Detail Park en Alicante."
+        title={currentPage > 1 ? `Blog Detailing Profesional | Página ${currentPage}` : 'Blog Detailing Profesional | Guías y Consejos'}
+        description={`Guías y consejos sobre detailing profesional, PPF, car wrapping y cómo montar tu negocio de detailing, escritos por el equipo de Detail Park en Alicante.${currentPage > 1 ? ` Página ${currentPage}.` : ''}`}
         keywords="blog detailing, guías detailing profesional, consejos car wrapping, artículos PPF, montar negocio detailing, tips pulido coches"
-        url="/blog"
+        url={blogPageUrl(currentPage)}
         // Solo con la lista completa: si el marcado cambia al llegar los datos, Helmet deja el antiguo duplicado
         schema={isLoading ? [] : [blogSchema]}
       />
@@ -165,7 +183,7 @@ export default function Blog() {
                     <BlogCard key={post.slug} post={post} headingLevel="h2" />
                   ))}
                 </div>
-                <BlogPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+                <BlogPagination currentPage={currentPage} totalPages={totalPages} />
               </>
             )}
           </div>

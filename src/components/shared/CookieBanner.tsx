@@ -47,6 +47,7 @@ export function CookieBanner() {
 
   return (
     <div
+      data-no-prerender
       role="dialog"
       aria-label="Aviso de cookies"
       className="fixed inset-x-3 bottom-3 z-[52] md:inset-x-auto md:bottom-6 md:left-6 md:max-w-md"

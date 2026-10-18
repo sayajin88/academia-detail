@@ -50,7 +50,7 @@ function dbPostToBlogPost(db: DbBlogPost): BlogPost {
 }
 
 export function useBlogPosts() {
-  const { data: dbPosts = [], isLoading } = useQuery({
+  const { data: dbPosts = [], isLoading, isError } = useQuery({
     queryKey: ['blog-posts-published'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -83,7 +83,7 @@ export function useBlogPosts() {
     ...staticPosts.filter(p => !dbSlugs.has(p.slug)),
   ].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
-  return { posts: mergedPosts, isLoading };
+  return { posts: mergedPosts, isLoading, isError };
 }
 
 export function useDbBlogPost(slug: string | undefined) {

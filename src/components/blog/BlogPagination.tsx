@@ -1,15 +1,22 @@
+import type { ReactNode } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 interface BlogPaginationProps {
   currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
 }
 
 const btn = 'inline-flex h-10 min-w-10 items-center justify-center rounded-lg px-3 text-sm font-semibold transition-colors';
+const quiet = 'border border-border bg-card text-muted-foreground hover:border-white/25 hover:text-foreground';
 
-export function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPaginationProps) {
+/** URL de cada página del blog: la 1 es /blog y las demás /blog/pagina/N. */
+export const blogPageUrl = (page: number) => (page <= 1 ? '/blog' : `/blog/pagina/${page}`);
+
+// Enlaces de verdad (no botones) para que Google y los demás rastreadores lleguen a los
+// artículos de la página 2 en adelante (18-10-2026: OpenSEO los marcaba como huérfanos).
+export function BlogPagination({ currentPage, totalPages }: BlogPaginationProps) {
   if (totalPages <= 1) return null;
 
   const pages: (number | 'gap')[] = [];
@@ -18,47 +25,36 @@ export function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPa
     else if (pages[pages.length - 1] !== 'gap') pages.push('gap');
   }
 
+  const arrow = (page: number, label: string, children: ReactNode) =>
+    page < 1 || page > totalPages ? (
+      <span aria-hidden="true" className={cn(btn, 'border border-border bg-card text-foreground opacity-40')}>
+        {children}
+      </span>
+    ) : (
+      <Link to={blogPageUrl(page)} rel={page < currentPage ? 'prev' : 'next'} aria-label={label} className={cn(btn, 'border border-border bg-card text-foreground hover:border-white/25')}>
+        {children}
+      </Link>
+    );
+
   return (
     <nav aria-label="Paginación del blog" className="mt-12 flex items-center justify-center gap-1.5">
-      <button
-        type="button"
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        aria-label="Página anterior"
-        className={cn(btn, 'border border-border bg-card text-foreground hover:border-white/25 disabled:pointer-events-none disabled:opacity-40')}
-      >
-        <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-      </button>
+      {arrow(currentPage - 1, 'Página anterior', <ChevronLeft className="h-4 w-4" aria-hidden="true" />)}
       {pages.map((p, i) =>
         p === 'gap' ? (
           <span key={`gap-${i}`} className="px-1 text-muted-foreground" aria-hidden="true">…</span>
         ) : (
-          <button
+          <Link
             key={p}
-            type="button"
-            onClick={() => onPageChange(p)}
+            to={blogPageUrl(p)}
             aria-current={p === currentPage ? 'page' : undefined}
             aria-label={`Página ${p}`}
-            className={cn(
-              btn,
-              p === currentPage
-                ? 'bg-primary text-primary-foreground'
-                : 'border border-border bg-card text-muted-foreground hover:border-white/25 hover:text-foreground',
-            )}
+            className={cn(btn, p === currentPage ? 'bg-primary text-primary-foreground' : quiet)}
           >
             {p}
-          </button>
+          </Link>
         ),
       )}
-      <button
-        type="button"
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        aria-label="Página siguiente"
-        className={cn(btn, 'border border-border bg-card text-foreground hover:border-white/25 disabled:pointer-events-none disabled:opacity-40')}
-      >
-        <ChevronRight className="h-4 w-4" aria-hidden="true" />
-      </button>
+      {arrow(currentPage + 1, 'Página siguiente', <ChevronRight className="h-4 w-4" aria-hidden="true" />)}
     </nav>
   );
 }
