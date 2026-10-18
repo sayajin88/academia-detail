@@ -32,6 +32,8 @@ const REDIRECTS: Record<string, string> = {
   "/centros-detailing-espana": "/",
   "/centros-detailing-espana/unete": "/",
   "/admin/applications": "/admin/profiles",
+  // La primera página del blog es /blog (la app ya lo hacía; esto lo convierte en un 301 real).
+  "/blog/pagina/1": "/blog",
 };
 
 // Rutas de la app que no dependen de datos. La mayoría están pre-renderizadas y ni

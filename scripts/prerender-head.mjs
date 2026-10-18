@@ -103,7 +103,15 @@ function buildHtml(title, helmetTags, body, route) {
 const browser = await puppeteer.launch({
   executablePath: findChrome(),
   headless: true,
-  args: ["--no-sandbox", "--disable-dev-shm-usage"],
+  // Sin frenar las pestañas en segundo plano: Helmet escribe la <head> en un requestAnimationFrame, que Chrome no
+  // ejecuta en ellas (18-10-2026: la mitad de las páginas agotaba la espera del canonical).
+  args: [
+    "--no-sandbox",
+    "--disable-dev-shm-usage",
+    "--disable-background-timer-throttling",
+    "--disable-backgrounding-occluded-windows",
+    "--disable-renderer-backgrounding",
+  ],
 });
 
 // PRERENDER_ONLY="/,/blog,/glosario-detailing/abrasividad" limita a esas rutas (pruebas en local).
@@ -119,6 +127,12 @@ async function worker() {
   await page.setRequestInterception(true);
   // Vídeo y audio tampoco: no cambian el HTML y, en streaming, la red nunca queda en reposo.
   page.on("request", (r) => (BLOCKED.test(r.url()) || r.resourceType() === "media" ? r.abort() : r.continue()));
+  // Helmet escribe la <head> en un requestAnimationFrame, y Chrome no lo ejecuta en las pestañas en segundo plano
+  // (3 de las 4 aquí): se cambia por un temporizador, que sí corre siempre.
+  await page.evaluateOnNewDocument(() => {
+    window.requestAnimationFrame = (cb) => window.setTimeout(() => cb(performance.now()), 16);
+    window.cancelAnimationFrame = (id) => window.clearTimeout(id);
+  });
   while (queue.length) {
     const p = queue.shift();
     try {
@@ -126,7 +140,9 @@ async function worker() {
       await page.waitForSelector('link[rel="canonical"][data-rh]', { timeout: 30000 });
       // Las páginas con datos (blog, directorio) actualizan Helmet al llegar la respuesta.
       await page.waitForNetworkIdle({ idleTime: 600, timeout: 15000 }).catch(() => {});
-      await page.waitForFunction(() => !document.querySelector("[data-page-fallback]"), { timeout: 15000 });
+      // polling por tiempo, no por requestAnimationFrame (el de por defecto): con 4 pestañas a la vez, las que
+      // quedan en segundo plano no ejecutan rAF y la espera se agotaba siempre.
+      await page.waitForFunction(() => !document.querySelector("[data-page-fallback]"), { timeout: 15000, polling: 100 });
       const { title, tags, body, links } = await page.evaluate(() => {
         const root = document.getElementById("root").cloneNode(true);
         // Fuera lo que no es contenido (aviso de cookies) y el estado de la animación de
