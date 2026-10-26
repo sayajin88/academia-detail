@@ -116,6 +116,7 @@ export type Database = {
           email: string
           formation_slug: string
           id: string
+          marketing_consent: boolean
           name: string | null
           notified: boolean | null
         }
@@ -124,6 +125,7 @@ export type Database = {
           email: string
           formation_slug: string
           id?: string
+          marketing_consent?: boolean
           name?: string | null
           notified?: boolean | null
         }
@@ -132,6 +134,7 @@ export type Database = {
           email?: string
           formation_slug?: string
           id?: string
+          marketing_consent?: boolean
           name?: string | null
           notified?: boolean | null
         }
@@ -158,6 +161,7 @@ export type Database = {
           followup_email_sent_at: string | null
           id: string
           inversion: string
+          marketing_consent: boolean
           mensaje: string | null
           nombre: string
           telefono: string
@@ -184,6 +188,7 @@ export type Database = {
           followup_email_sent_at?: string | null
           id?: string
           inversion: string
+          marketing_consent?: boolean
           mensaje?: string | null
           nombre: string
           telefono: string
@@ -210,6 +215,7 @@ export type Database = {
           followup_email_sent_at?: string | null
           id?: string
           inversion?: string
+          marketing_consent?: boolean
           mensaje?: string | null
           nombre?: string
           telefono?: string
@@ -653,18 +659,21 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          marketing_consent: boolean
           name: string | null
         }
         Insert: {
           created_at?: string
           email: string
           id?: string
+          marketing_consent?: boolean
           name?: string | null
         }
         Update: {
           created_at?: string
           email?: string
           id?: string
+          marketing_consent?: boolean
           name?: string | null
         }
         Relationships: []

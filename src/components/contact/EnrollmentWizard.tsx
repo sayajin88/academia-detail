@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { SITE } from "@/data/site";
+import { MarketingConsent } from "@/components/shared/MarketingConsent";
 import {
   CENTRO_OPTIONS,
   ChoiceGroup,
@@ -35,6 +36,7 @@ const contactSchema = z.object({
   acepto_privacidad: z.boolean().refine((val) => val === true, {
     message: "Necesitamos tu permiso para responderte",
   }),
+  marketing_consent: z.boolean(),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -63,6 +65,7 @@ const EnrollmentWizard = ({ initialInterest }: EnrollmentWizardProps) => {
       tipo_formacion: initialInterest ?? "",
       mensaje: "",
       acepto_privacidad: false,
+      marketing_consent: false,
     },
     mode: "onTouched",
   });
@@ -87,6 +90,7 @@ const EnrollmentWizard = ({ initialInterest }: EnrollmentWizardProps) => {
         tipo_formacion: data.tipo_formacion,
         mensaje: data.mensaje,
         acepto_privacidad: data.acepto_privacidad,
+        marketing_consent: data.marketing_consent,
       });
       if (dbError) console.error("DB save error:", dbError);
     } catch (err) {
@@ -286,6 +290,12 @@ const EnrollmentWizard = ({ initialInterest }: EnrollmentWizardProps) => {
               </div>
             </FormItem>
           )}
+        />
+
+        <FormField
+          control={form.control}
+          name="marketing_consent"
+          render={({ field }) => <MarketingConsent id="contacto-novedades" checked={field.value} onChange={field.onChange} />}
         />
 
         <Button type="submit" size="lg" className="h-12 w-full text-base font-semibold" disabled={isSubmitting}>

@@ -7,11 +7,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Section } from '@/components/ds/Section';
 import { supabase } from '@/integrations/supabase/client';
+import { MarketingConsent } from '@/components/shared/MarketingConsent';
 
 /** Lista de espera de un curso en preparación (sin ventana emergente). */
 export function CourseWaitlist({ slug, name }: { slug: string; name: string }) {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle');
 
   const submit = async (e: React.FormEvent) => {
@@ -20,7 +22,7 @@ export function CourseWaitlist({ slug, name }: { slug: string; name: string }) {
     setStatus('sending');
     const { error } = await supabase
       .from('coming_soon_subscribers')
-      .insert({ email, name: fullName || null, formation_slug: slug });
+      .insert({ email, name: fullName || null, formation_slug: slug, marketing_consent: consent });
     if (error && error.code !== '23505') {
       setStatus('idle');
       toast.error('No se ha podido guardar. Inténtalo de nuevo o escríbenos por WhatsApp.');
@@ -54,6 +56,7 @@ export function CourseWaitlist({ slug, name }: { slug: string; name: string }) {
                 <Label htmlFor="espera-email">Email</Label>
                 <Input id="espera-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
               </div>
+              <MarketingConsent id="espera-novedades" checked={consent} onChange={setConsent} />
               <Button type="submit" size="lg" className="h-12 text-base font-semibold" disabled={status === 'sending'}>
                 {status === 'sending' && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
                 Apuntarme a la lista

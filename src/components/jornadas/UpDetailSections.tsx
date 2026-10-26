@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Section, SectionHeader } from '@/components/ds/Section';
 import { Img } from '@/components/ds/Img';
 import { supabase } from '@/integrations/supabase/client';
+import { MarketingConsent } from '@/components/shared/MarketingConsent';
 import { NEXT_EDITION, SITE } from '@/data/site';
 import { JORNADA_ZERO, UP_DETAIL } from '@/data/jornadas';
 import danielImg from '@/assets/daniel-lopez-updetail.jpg?w=320;480;640&format=webp&as=picture';
@@ -150,6 +151,7 @@ export function UpDetailSpeakers() {
 export function UpDetailWaitlist() {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle');
 
   const submit = async (e: React.FormEvent) => {
@@ -159,7 +161,7 @@ export function UpDetailWaitlist() {
     setStatus('sending');
     const { error } = await supabase
       .from('up_detail_preregistrations')
-      .insert({ email: cleanEmail, name: fullName.trim() || null });
+      .insert({ email: cleanEmail, name: fullName.trim() || null, marketing_consent: consent });
     // 23505: el email ya estaba en la lista; para el usuario es lo mismo
     if (error && error.code !== '23505') {
       setStatus('idle');
@@ -211,6 +213,7 @@ export function UpDetailWaitlist() {
                 <Label htmlFor="espera-email">Email</Label>
                 <Input id="espera-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
               </div>
+              <MarketingConsent id="updetail-novedades" checked={consent} onChange={setConsent} />
               <Button type="submit" size="lg" className="h-12 text-base font-semibold" disabled={status === 'sending'}>
                 {status === 'sending' && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
                 Apuntarme a la lista
